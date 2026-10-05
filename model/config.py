@@ -1,6 +1,9 @@
 """Config for the car-price linear regression notebook."""
 
-DATA_PATH = r"C:\Users\putaw\Downloads\car_dataset_v5.1.csv"
+import os
+
+# repo-relative: <repo>/data/car_dataset_v5.2.csv, works from any working directory
+DATA_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "car_dataset_v5.2.csv")
 SEED = 99
 
 # --- features ---
