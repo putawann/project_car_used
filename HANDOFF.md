@@ -1,11 +1,61 @@
 # HANDOFF — project_car_used (โมเดลทำนายราคารถมือสอง)
 
-อัปเดต: 9 ต.ค. 2026 · ผู้เขียน: Claude Code (ส่งต่อให้เครื่อง/เซสชันอื่นทำต่อ)
+อัปเดต: 11 ต.ค. 2026 · ผู้เขียน: Claude Code (ส่งต่อให้เครื่อง/เซสชันอื่นทำต่อ)
 
+> **สิ่งที่ส่งมอบหลักตอนนี้ = โน้ตบุ๊ก Colab เวอร์ชัน 3 ทั้ง 4 ตัว (ดูข้อ 0)** ส่วนข้อ 1–9 เป็นสถานะของโน้ตบุ๊กในเครื่อง (split 70/15/15) ซึ่งเก็บไว้เป็นประวัติ
 > ไฟล์นี้คือสถานะ **ล่าสุด** ของโปรเจกต์ ถ้าขัดกับ `docs/PLAN.md` (แผนเดิม 1 ต.ค. ตอนยังรันบน Colab, split 80/20) ให้ยึดไฟล์นี้
 > `Project_note.md` เป็นโน้ตของเจ้าของโปรเจกต์ — ห้ามแก้
 
 ---
+
+## 0. สถานะล่าสุด (11 ต.ค. 2026) — โน้ตบุ๊ก Colab เวอร์ชัน 3
+
+### 0.1 ไฟล์ส่งมอบหลัก
+- `colab/MLR3.ipynb`, `colab/DT3.ipynb`, `colab/RF3.ipynb`, `colab/XGB3.ipynb` (มีสำเนาบน Google Drive โฟลเดอร์ Colab Notebooks ด้วย)
+- แต่ละไฟล์ **รันได้เดี่ยว ๆ** ใช้แค่ `data/car_dataset_v5.1.csv` (บน Drive: `/content/drive/MyDrive/Project/cardb/car_dataset_v5.1.csv`, มี fallback อ่านจากเครื่อง) ไม่พึ่งกันและไม่พึ่ง `config.py`/`tree_data.py` — คำอธิบายเป็นภาษาไทยสำหรับมือใหม่
+- โน้ตบุ๊กในเครื่องเดิม (`linear_regression`, `decision_tree`, `random_forest`, `xgboost_model`, `variable_selection`) เก็บไว้เป็นประวัติ; `colab/RF2.ipynb`, `colab/XGB2.ipynb` คือ Colab รุ่นก่อน (split 70/15/15) **ถูกแทนที่แล้ว**
+
+### 0.2 ลำดับ pipeline (เหมือนกันทั้ง 4 ตัว)
+1. โหลดข้อมูล
+2. ตรวจข้อมูล: sha256 ของ bytes ที่ตัด `` ออกต้องเป็น `d2c6f2c9f6a601406920c9c6fe2da71807137ef4590136f4a621f304f44fa96b`; dtype, missing, duplicate, ช่วงค่า, `year == 2026 - car_age`
+3. เตรียมแถว: `car_age ≤ 25`, ทิ้ง `year`, รวมชื่อรุ่น
+4. split **80/10/10** seed 99 (ดึงรถ 1 คันของทุก (brand, model) เข้า train ก่อน) → train / val / test = **23,854 / 2,981 / 2,982** (หลังตัด 287 แถวที่ car_age > 25)
+5. เลือกตัวแปรจาก **train อย่างเดียว** ด้วย KFold 5 seed 99: ชั้น 1 กรองตัวซ้ำซ้อน; ชั้น 2 MLR = GVIF + backward joint F-test + CV MAE ไม่แย่ลงเกิน 2%; โมเดล tree = permutation importance + backward elimination
+6. จูนบน val (กฎเลือก: val MAE ห่างจากดีสุดไม่เกิน 2% แล้วเลือกตัวที่ gap น้อยสุด)
+7. แตะ test ครั้งเดียว
+
+เหตุผลที่เลือกตัวแปรหลัง split: กัน test leakage (scikit-learn "Common pitfalls: data leakage"; ESL 7.10.2)
+
+### 0.3 ตัวแปรที่เลือก
+- MLR: 7 ตัว (engine_capacity, mileage, car_age, model, fuel_type, gear_type, color) — `brand` และ `car_type` ถูกตัดเพราะซ้ำซ้อนกับ `model`
+- โมเดล tree: ครบ 9 ตัว (เพิ่ม brand, car_type); color สำคัญน้อยสุดแต่ importance > 0
+
+### 0.4 การเลือกสัดส่วน split (กติกาเจ้าของโปรเจกต์)
+ใช้ 80/10/10 ก่อน ถ้า MLR ไม่ผ่านครบ 5 assumption ให้ลอง 70/15/15, 75/12.5/12.5, 85/7.5/7.5 ตามลำดับ และใช้อันแรกที่ผ่าน (ใช้ split เดียวกันทุกโมเดล)
+
+ผล: ทุก split MLR ผ่าน **15/16 test** ตกเฉพาะ **Ramsey RESET** (Linearity, power 3, F-test บน whitened WLS): F = 51.80 / 35.53 / 50.79 / 71.45 (80/10/10, 70/15/15, 75/12.5/12.5, 85/7.5/7.5), p ≈ 0 → **เจ้าของเลือกรับ RESET เป็นข้อจำกัดที่ทราบ (known limitation) และคง 80/10/10**
+
+ผล MLR3 บน 80/10/10: DW 1.7035 ผ่าน; BP 129.49 p 1.000 ผ่าน; White 1.067 p 0.5865 ผ่าน; KS 0.0036 p 0.9116; Shapiro-Wilk (5,000) 0.9996 p 0.3609; Lilliefors 0.0036 p 0.5885; VIF ทุกตัว < 7 (สูงสุด slope_MERCEDES-BENZ 3.46); RESET **ไม่ผ่าน**
+
+กราฟ linearity (LOWESS): ช่วงกลางของข้อมูล (~90%) อยู่ภายใน ±0.2 SD; ความโค้งจริงอยู่ที่ปลายที่มีรถน้อย — รถถูกมาก (ŷ < 18, สูงถึง +1.2 SD), log_mileage > 12.5 (−0.65 SD), car_age > 15 (+0.6 SD), engine_capacity > 3,000 (+0.6 SD)
+
+### 0.5 ผล test (80/10/10, สเกลราคา)
+
+| โมเดล | พารามิเตอร์ | val MAE | RMSE | MAE | MAPE | R² |
+|---|---|---|---|---|---|---|
+| MLR3 | — | 85,604 | 282,765 | 88,096 | 0.1357 | 0.802 |
+| DT3 | max_depth None, leaf 1, ccp_alpha 1e-5 | 89,504 | 231,128 | 83,953 | 0.134 | 0.868 |
+| RF3 | max_features 0.8, leaf 1, 500 ต้น | 71,756 | 185,387 | 69,450 | 0.112 | 0.915 |
+| XGB3 | depth 6, min_child_weight 20, reg_lambda 1, 643 ต้น | 67,889 | 228,573 | 69,742 | 0.1085 | 0.871 |
+
+**ช่องว่าง val vs test:** MLR val R² 0.917 แต่ test 0.802 ทั้งที่ MAE/MAPE เกือบเท่ากัน สาเหตุคือรถ 5 คันที่ error สูงสุดใน test รวมเป็น **68.6% ของ squared error ทั้งหมด** (Range Rover อายุ 1–2 ปี 2 คัน: 13.99 ล้านทายได้ 4.31 ล้าน, 11.49 ล้านทายได้ 5.23 ล้าน; Maybach S580; Subaru Impreza; Mercedes S350) ถ้าไม่นับ 5 คันนี้ R² = 0.914 (รายงานเฉย ๆ การประเมินจริงใช้ทุกแถว) XGB เป็นรูปแบบเดียวกัน (val R² 0.948 vs test 0.871)
+
+### 0.6 ไฟล์ข้อมูล
+`data/car_dataset_v5.1.csv` ปัจจุบันแก้ `fuel_type` PHEV→Hybrid แล้ว (~1,645 แถว) เทียบกับ `car_dataset_v5.1_backup_before_hybrid.csv` (LF sha `b0540422…` ซึ่งเป็นค่าที่ `Project_note.md` เคยระบุ) ตอนนี้ `Project_note.md` ระบุ `d2c6f2c9…` แล้ว และสำเนาบน Drive (อัปโหลด 2 ต.ค.) เป็นเวอร์ชันที่แก้แล้ว
+
+---
+
+> ข้อ 1–9 ด้านล่างอธิบายโน้ตบุ๊กในเครื่อง (split 70/15/15, ตัวแปรกำหนดเอง) — เป็น **ประวัติ/ถูกแทนที่ด้วยข้อ 0** ตัวเลขในนั้นเทียบตรงกับ v3 ไม่ได้
 
 ## 1. สรุปสั้นที่สุด
 
@@ -77,7 +127,7 @@ project_car_used/
 
 - `data/car_dataset_v5.1.csv` — 30,104 แถว, คอลัมน์: brand, model, car_type, fuel_type, gear_type, color, engine_capacity, mileage, year, car_age, price
 - sha256 ของไฟล์ใน repo: `d2c6f2c9f6a601406920c9c6fe2da71807137ef4590136f4a621f304f44fa96b` (ตรงกับไฟล์ที่ใช้รันโน้ตบุ๊กทุกตัว)
-- ⚠️ `Project_note.md` ระบุ sha ไว้เป็น `b05404228d26...` ซึ่ง **ไม่ตรง** กับไฟล์ที่ใช้จริง ยังไม่ได้ตรวจว่าต่างกันเพราะอะไร (อาจเป็น line ending CRLF/LF หรือเป็นไฟล์คนละเวอร์ชัน) — ควรถามเจ้าของโปรเจกต์
+- เคยมี sha ใน `Project_note.md` (`b0540422…`) ไม่ตรงกับไฟล์ — **แก้แล้ว**: เป็นไฟล์ก่อนแก้ PHEV→Hybrid (ดูข้อ 0.6) ตอนนี้ `Project_note.md` ระบุ `d2c6f2c9…` ตรงกัน
 - การคลีนใน `tree_data.load()` (ใช้กับทุกโมเดล ยกเว้น feature_selection):
   1. ตัดรถ `car_age > 25` (รถคลาสสิก/สะสม) → ตัดออก 287 แถว เหลือ 29,817
   2. ทิ้ง `year` (= 2026 − car_age เป๊ะ มี assert ตรวจ) และ `car_type` (ซ้อนอยู่ใน model)
@@ -93,7 +143,7 @@ project_car_used/
 - target ฝึกบนสเกล log (tree) หรือ Box-Cox (MLR) แต่วัดผล (RMSE/MAE/MAPE/R²) บน **สเกลราคาจริง**
 - ⚠️ ต่างจาก `docs/PLAN.md` ซึ่งเขียนว่า 80/20 + KFold 5 — ตอนนี้ใช้ train/val/test แทน CV
 
-## 6. MLR (`linear_regression.ipynb`) — งานหลัก
+## 6. MLR (`linear_regression.ipynb`) — งานหลักของรอบเก่า (ประวัติ; รุ่นปัจจุบันคือ `colab/MLR3.ipynb` ข้อ 0)
 
 ### 6.1 Assumption tests และเกณฑ์ (ค่าอยู่ใน `config.py`)
 
@@ -147,7 +197,7 @@ residual ที่นำไป test = **internally studentized whitened residual
 - λ = 0.08 เลือกจาก residual skewness ≈ 0 (Hinkley 1975) ไม่ใช่ profile likelihood (ซึ่งชอบ λ < 0) — ตารางเทียบ λ อยู่ใน section 6 ของโน้ตบุ๊ก
 - F-test รายตัวแปร: ทุกตัวมีนัยสำคัญ **ยกเว้น `km_unknown`** (p = 0.836) — ตัดออกได้
 
-## 7. ผลเทียบทุกโมเดล (test set, สเกลราคา, ชุดข้อมูล/split เดียวกัน)
+## 7. ผลเทียบทุกโมเดล — ⚠️ ประวัติ/ถูกแทนที่ด้วยข้อ 0.5 (split 70/15/15, โน้ตบุ๊กเก่าในเครื่อง)
 
 | โมเดล | RMSE | MAE | MAPE | R² |
 |---|---|---|---|---|
@@ -184,11 +234,12 @@ residual ที่นำไป test = **internally studentized whitened residual
 
 ## 10. งานที่ยังค้าง / ทำต่อได้
 
-1. **ยังไม่ได้สรุปว่าจะเลือกโมเดลไหนเป็นตัวจบ** — XGBoost แม่นสุด, MLR อธิบายได้และผ่าน assumption (ตาม PLAN ข้อ 9 ต้องมีตารางเทียบ + เหตุผล + ตัวอย่างทำนายรถจริง 1–2 คัน)
-2. ตัด `km_unknown` ออกจาก MLR (ไม่มีนัยสำคัญ) แล้วรัน test ใหม่ให้ยืนยันว่ายังผ่าน → อัปเดต `LR_TEST` ใน `tree_data.py`
-3. ตรวจเรื่อง sha ใน `Project_note.md` ที่ไม่ตรงกับไฟล์ข้อมูล (ข้อ 4)
-4. อัปเดต `docs/PLAN.md` ให้ตรงกับสถานะจริง (ถ้าเจ้าของต้องการ)
-5. มีเว็บแอปแยกอีก repo: `putawann/webapp_car_used` (ทำนายราคารถ) — ยังไม่ได้ตรวจว่าใช้โมเดลตัวไหนจาก repo นี้
+1. **เลือกโมเดลตัวจบ (เจ้าของตัดสินใจ)** — ข้อเสนอแนะที่บันทึกไว้: **RF3 เป็นโมเดลทำนาย** (test R²/RMSE ดีสุด, MAE ใกล้เคียง XGB, gap val–test เล็กสุดในกลุ่มที่แม่น) และ **MLR3 เป็นโมเดลอธิบาย** (อ่านสัมประสิทธิ์ได้, ผ่าน 4 จาก 5 กลุ่ม assumption; ข้อจำกัด RESET ที่ปลายช่วง) ยังต้องทำตาม PLAN ข้อ 9: ตารางเทียบ + เหตุผล + ตัวอย่างทำนายรถจริง 1–2 คัน
+2. รถแพง/หายาก (Range Rover, Maybach, S-class) ทำให้ error ใหญ่ในทุกโมเดล — ทำต่อได้ในอนาคต
+3. `km_unknown` ยังอยู่ใน MLR3 (F-test รายตัวแปรไม่มีนัยสำคัญ p ≈ 0.98) — ถ้าจะตัดต้องรัน assumption test ใหม่ให้ยืนยันว่ายังผ่านเท่าเดิม
+4. ตัวเลข `LR_TEST`/`MLR_TEST` ที่ hardcode ในโน้ตบุ๊กเก่า (`tree_data.py`) **ล้าสมัยแล้ว**; โน้ตบุ๊ก v3 ไม่พึ่งกัน จึงไม่กระทบ
+5. `docs/PLAN.md` ล้าสมัย (ถ้าเจ้าของต้องการให้อัปเดต)
+6. เว็บแอป repo `putawann/webapp_car_used` — ยังไม่ได้ตรวจว่าใช้โมเดลตัวไหน
 
 ## 11. ประวัติย่อ
 
@@ -197,3 +248,4 @@ residual ที่นำไป test = **internally studentized whitened residual
 - 7 ต.ค. — remedy ladder → MLR ผ่าน 15/15; ทำ DT/RF/XGB บน split เดียวกัน; ลดความซับซ้อนโค้ด (backup `before_ponytail`)
 - 8 ต.ค. — รัน `linear_regression.ipynb` รอบสุดท้าย (output ที่เซฟไว้)
 - 9 ต.ค. — ย้าย `DATA_PATH` ให้ชี้ `data/` ใน repo, เพิ่ม `requirements.txt`, `.gitignore`, ไฟล์นี้ และ push ขึ้น GitHub
+- 11 ต.ค. — โน้ตบุ๊ก Colab เวอร์ชัน 3 (MLR3/DT3/RF3/XGB3) split 80/10/10, เลือกตัวแปรจาก train, เพิ่ม Ramsey RESET (ตก = ข้อจำกัดที่ทราบ), อัปเดตไฟล์นี้
