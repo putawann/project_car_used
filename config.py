@@ -10,6 +10,7 @@ NUM_COLS = ["engine_capacity", "mileage", "car_age"]
 CAT_COLS = ["model", "fuel_type", "gear_type", "color"]
 DROP_COLS = ["year", "car_type"]  # year == 2026 - car_age, car_type nested in model
 # brand stays in the data but NOT in X: it is only the fallback group for rare models
+REDUNDANT_MAX = 0.95             # variable_selection.ipynb layer 1: |r| or Cramer's V or eta >= this = redundant pair
 MAX_CAR_AGE = 25                 # rows with car_age > MAX_CAR_AGE are removed (classic / collector cars)
 
 # model-name cleanup: names are compared after removing spaces/hyphens (key),

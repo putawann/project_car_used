@@ -11,12 +11,13 @@ FEATS = C.NUM_COLS + CATS
 LR_TEST = dict(model="MLR final (from LR notebook)", RMSE=192_232, MAE=85_432, MAPE=0.1380, R2=0.9050)
 
 
-def load():
+def load(drop=True):
     df = pd.read_csv(C.DATA_PATH)
     assert (df["year"] + df["car_age"]).nunique() == 1, "year/car_age no longer redundant"
     n0 = len(df); df = df[df["car_age"] <= C.MAX_CAR_AGE]
     print(f"removed {n0 - len(df)} rows with car_age > {C.MAX_CAR_AGE}")
-    df = df.drop(columns=C.DROP_COLS)
+    if drop:
+        df = df.drop(columns=C.DROP_COLS)
     # model-name cleanup (no target used): compare names without spaces/hyphens, merge aliases, show most common spelling
     df["model_raw"] = df["model"]
     key = df["model"].str.upper().str.replace(r"[^A-Z0-9]", "", regex=True).replace(C.MODEL_ALIASES)
