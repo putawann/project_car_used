@@ -179,9 +179,9 @@
 | brand | 10 | MERCEDES-BENZ→TOYOTA (10) |
 | model | 23 | CLA250→ALPHARD (8), YARIS ATIV→YARIS (4), CLS 350→CLS350 (3), CLA250→HARRIER (2) |
 | prod_year | 47 | 2018→2020 (7), 2018→2022 (4), 2020→2019 (4), 2020→2021 (3) |
-| price_thb | 5,979 | 399000→379000 (41), 499000→479000 (30), 419000→399000 (30), 459000→439000 (27) |
-| mileage_km | 306 | 162500→152500 (8), 112500→102500 (7), 117500→102500 (5), 2500→102500 (5) |
-| engine_capacity_cc | 14 | 2000→2500 (10), 2400→2500 (1), 4000→3000 (1), 3000→4700 (1) |
+| price_thb | 5,979 | 399000→379000 (41), 419000→399000 (30), 499000→479000 (30), 459000→439000 (27) |
+| mileage_km | 306 | 162500→152500 (8), 112500→102500 (7), 2500→102500 (5), 117500→102500 (5) |
+| engine_capacity_cc | 14 | 2000→2500 (10), 2500→2400 (1), 3000→4700 (1), 4000→3000 (1) |
 | transmission | 2 | Automatic→Manual (2) |
 | fuel_type | 1,547 | Hybrid(EV/Benzine)→Hybrid (717), EV→Electric (337), EV→Diesel (230), Hybrid(EV/Benzine)→Benzine (131) |
 | exterior_color | 578 | Grey→Grey Bronze (357), Silver→Silver Bronze (183), Light Blue→Light blue (8), Others→Other (5) |
