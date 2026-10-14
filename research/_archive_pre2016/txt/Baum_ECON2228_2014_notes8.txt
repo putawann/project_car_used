@@ -1,0 +1,497 @@
+               ECON2228 Notes 8
+
+                   Christopher F Baum
+
+                    Boston College Economics
+
+                         2014-2015
+
+cfb (BC Econ)  ECON2228 Notes 6               2014-2015 1 / 35
+                                         Functional form misspecification
+
+Chapter 9: More on specification and data
+problems
+
+We may have a model that is correctly specified, in terms of including
+the appropriate explanatory variables, yet commit functional form
+misspecification. In this case, the model does not properly account for
+the form of the relationship between dependent and observed
+explanatory variables.
+
+cfb (BC Econ)  ECON2228 Notes 6  2014-2015 2 / 35
+                                        Functional form misspecification
+
+We have considered this sort of problem when discussing polynomial
+models; omitting a squared term, for instance, and constraining y /x
+to be constant, rather than linear in x), would be a functional form
+misspecification. We may also encounter difficulties of this sort with
+respect to interactions among the regressors.
+
+cfb (BC Econ)  ECON2228 Notes 6  2014-2015 3 / 35
+                                        Functional form misspecification
+
+If omitted, the effects of those regressors will be estimated as
+constant, rather than varying as they would in the case of interacted
+variables. In the context of models with more than one categorical
+variable, assuming that their effects can be treated as independent
+(thus omitting interaction terms) would yield the same difficulty.
+
+cfb (BC Econ)  ECON2228 Notes 6  2014-2015 4 / 35
+                                        Functional form misspecification
+
+We may, of course, use the tools already developed to deal with these
+problems, in the sense that if we first estimate a general model that
+allows for powers, interaction terms, etc. and then "test down" with joint
+F tests, we can be confident that the more specific model we develop
+will not have imposed inappropriate restrictions along the way. But how
+can we consider the possibility that there are missing elements even in
+the context of our general model?
+
+cfb (BC Econ)  ECON2228 Notes 6  2014-2015 5 / 35
+                                        Functional form misspecification
+
+One quite useful approach to a general test for functional form
+misspecification is Ramsey's RESET (regression specification error
+test). The idea behind RESET is quite simple; if we have properly
+specified the model, no nonlinear functions of the independent
+variables should be significant when added to our estimated equation.
+
+As the fitted, or predicted values (y^) of the estimated model are linear
+in the independent variables, we may consider powers of the predicted
+values as additional regressors.
+
+cfb (BC Econ)  ECON2228 Notes 6  2014-2015 6 / 35
+                                        Functional form misspecification
+
+Clearly the y^ values themselves cannot be added to the regression,
+since they are by construction linear combinations of the x variables.
+But their squares, cubes,... are not.
+The RESET formulation reestimates the original equation, augmented
+by powers of y^ (usually squares, cubes, and fourth powers are
+sufficient) and conducts an F-test for the joint null hypothesis that
+those variables have no significant explanatory power.
+
+cfb (BC Econ)  ECON2228 Notes 6  2014-2015 7 / 35
+                                        Functional form misspecification
+
+This test is easy to implement, but many computer programs have it
+already programmed; for instance, in Stata one may just specify
+estat ovtest (omitted variable test) after any regression, and the
+Ramsey RESET will be produced. However, as Wooldridge cautions,
+RESET should not be considered a general test for omission of
+relevant variables; it is a test for misspecification of the relationship
+between y and the x values in the model, and nothing more.
+
+cfb (BC Econ)  ECON2228 Notes 6  2014-2015 8 / 35
+                Functional form misspecification
+
+. qui reg price mpg headroom turn
+
+. estat ovtest
+
+Ramsey RESET test using powers of the fitted values of price
+
+Ho: model has no omitted variables
+
+                F(3, 67) =         8.39
+
+                Prob > F =         0.0001
+
+This linear specification is clearly rejected by RESET.
+
+cfb (BC Econ)                      ECON2228 Notes 6           2014-2015 9 / 35
+                Functional form misspecification
+
+. g lp = log(price/1000)
+
+. g gp100m = 100/mpg
+
+. qui reg lp c.gp100m##c.gp100m c.headroom##c.headroom c.turn##c.turn ///
+> c.gp100m#c.headroom c.gp100m#c.turn
+
+. estat ovtest
+
+Ramsey RESET test using powers of the fitted values of lp
+
+Ho: model has no omitted variables
+
+                F(3, 62) =  1.39
+
+                Prob > F =  0.2555
+
+With this reformulation of the equation, RESET no longer rejects.
+
+cfb (BC Econ)               ECON2228 Notes 6               2014-2015 10 / 35
+                                   Tests against nonnested alternatives
+
+Tests against nonnested alternatives
+
+The standard joint testing framework is not helpful in the context of
+"competing models," or nonnested alternatives. These alternatives can
+also arise in the context of functional form: for instance,
+
+               y = 0 + 1x1 + 2x2 + u                                     (1)
+
+               y = 0 + 1 log x1 + 2 log x2 + u
+
+are nonnested models.
+
+cfb (BC Econ)          ECON2228 Notes 6                                  2014-2015 11 / 35
+                                  Tests against nonnested alternatives
+
+The mechanical alternative, in which we construct an artificial model
+that contains each model as a special case, is often not very attractive,
+and sometimes will not even be feasible due to perfect collinearity.
+An alternative approach is that of Davidson and MacKinnon. Using the
+same logic applied in developing Ramsey's RESET, we can estimate
+each of the models in (1), generate their predicted values, and include
+them in the other equation.
+
+cfb (BC Econ)  ECON2228 Notes 6  2014-2015 12 / 35
+                                  Tests against nonnested alternatives
+
+Under the null hypothesis that the first form of the model is correctly
+specified, a linear combination of the logs of the x variables should
+have no power to improve it, and that coefficient should be
+insignificant.
+
+Likewise, one can reestimate the second model, including the
+predicted values from the first model. This testing strategy, often
+termed the Davidson-MacKinnon "J test", may indicate that one of the
+models is robust against the other.
+
+cfb (BC Econ)  ECON2228 Notes 6  2014-2015 13 / 35
+                                  Tests against nonnested alternatives
+
+There are no guarantees, though, in that applying the J test to these
+two equations may generate zero, one, or two rejections. If neither
+hypothesis is rejected, then the data are not helpful in ranking the
+models.
+If both hypotheses are rejected, we are given an indication that neither
+model is adequate, and that a continued specification search should
+be conducted.
+
+cfb (BC Econ)  ECON2228 Notes 6  2014-2015 14 / 35
+                                  Tests against nonnested alternatives
+
+If one rejection is received, then the J test is definitive in indicating that
+one of the models dominates (or subsumes) the other, and not vice
+versa. However, this does not imply that the preferred model is well
+specified; again, this test is against a very specific alternative, and
+does not deliver a "clean bill of health" for the preferred model should
+one emerge.
+
+cfb (BC Econ)  ECON2228 Notes 6  2014-2015 15 / 35
+              Tests against nonnested alternatives
+
+. eststo,ti("ModelA"): qui reg price mpg headroom turn
+(est1 stored)
+. qui predict modela_hat, xb
+. eststo,ti("ModelB"): qui reg price c.gp100m##c.gp100m headroom turn
+(est2 stored)
+. qui predict modelb_hat, xb
+. esttab, star(* 0.1 ** 0.05 *** 0.01) nogap nonum noobs mti
+
+               ModelA           ModelB
+
+mpg             -270.1***        -319.8
+headroom       (-3.45)          (-0.90)
+turn
+gp100m          -316.5           -161.0*
+c.gp100~100m   (-0.77)          (-1.72)
+_cons                           -1602.2
+                -22.05          (-1.14)
+               (-0.21)
+                                   325.8**
+               13739.1**         (2.57)
+                (2.56)          12813.5***
+                                 (3.12)
+
+t statistics in parentheses
+* p<0.1, ** p<0.05, *** p<0.01
+
+cfb (BC Econ)                   ECON2228 Notes 6    2014-2015 16 / 35
+                                  Tests against nonnested alternatives
+
+. eststo,ti("ModelA"): qui reg price mpg headroom turn modelb_hat
+(est1 stored)
+. eststo,ti("ModelB"): qui reg price c.gp100m##c.gp100m headroom turn modela_ha
+>t
+(est2 stored)
+
+cfb (BC Econ)  ECON2228 Notes 6  2014-2015 17 / 35
+              Tests against nonnested alternatives
+
+. esttab, star(* 0.1 ** 0.05 *** 0.01) nogap nonum noobs mti
+
+               ModelA           ModelB
+
+mpg               0.441          -335.9
+headroom        (0.01)          (-0.47)
+turn
+modelb_hat        0.445          -162.1
+gp100m          (0.00)          (-1.57)
+c.gp100~100m
+modela_hat        0.250         -1449.3
+_cons           (0.00)          (-0.24)
+
+                  1.001***         316.0
+                (5.05)           (0.79)
+                                -0.0422
+                -24.52          (-0.03)
+               (-0.00)          12658.8*
+                                 (1.74)
+
+t statistics in parentheses
+* p<0.1, ** p<0.05, *** p<0.01
+
+Model A: rejected, Model B: not rejected.
+
+cfb (BC Econ)                   ECON2228 Notes 6              2014-2015 18 / 35
+                 Proxy variables
+
+Proxy variables
+
+So far, we have discussed issues of misspecification resulting from
+improper handling of the x variables. In many economic models, we
+are forced to employ "proxy variables": approximate measures of an
+unobservable phenomenon.
+
+For instance, admissions officers use SAT scores and high school
+GPAs as proxies for applicants' ability and intelligence. No one argues
+that standardized tests or grade point averages are actually measuring
+aptitude, or intelligence; but there are reasons to believe that the
+observable variable is well correlated with the unobservable, or latent,
+variable.
+
+cfb (BC Econ)    ECON2228 Notes 6  2014-2015 19 / 35
+                                                              Proxy variables
+
+To what extent will a model estimated using such proxies for the
+variables in the underlying relationship be successful, in terms of
+delivering consistent estimates of its parameters?
+
+First, of course, it must be established that there is a correlation
+between the observable variable and the latent variable. If we consider
+the latent variable as having a linear relation to a measurable proxy
+variable, the error in that relation must not be correlated with other
+regressors.
+
+cfb (BC Econ)  ECON2228 Notes 6  2014-2015 20 / 35
+                                                              Proxy variables
+
+When we estimate the relationship including the proxy variable, it
+should be apparent that the measurement error from the latent
+variable equation ends up in the error term, as an additional source of
+uncertainty. This is an incentive to avoid proxy variables where one
+can, since they will inexorably inflate the error variance in the
+estimated regression.
+
+Usually proxy variables are employed out of necessity, in models for
+which we have no ability to measure the latent variable. If there are
+several potential proxy measures, they might each be tested, to
+attempt to ascertain whether bias is being introduced to the
+relationship.
+
+cfb (BC Econ)  ECON2228 Notes 6  2014-2015 21 / 35
+                                                              Proxy variables
+
+In some cross-sectional relationships, we have the opportunity to use
+a lagged value of the dependent variable as a proxy variable. For
+instance, if we are trying to explain cities' crime rates, we might
+consider that there are likely to be similarities, irregardless of the
+effectiveness of anti-crime strategies, between current crime rates and
+last year's values.
+
+Thus, a prior value of the dependent variable, understandably
+independent of this year's value, may be a useful proxy for a number of
+factors that cannot otherwise be quantified.
+
+cfb (BC Econ)  ECON2228 Notes 6  2014-2015 22 / 35
+                                                              Proxy variables
+
+This approach might often be used to deal with factors such as
+"business climate," in which some states or municipalities are viewed
+as more welcoming to business; there may be many aspects to this
+perception, some of them more readily quantifiable, such as tax rates;
+some of them not so, such as local officials' willingness to negotiate
+infrastructure improvements, or assist in funding for a new facility.
+
+In the absence of radical changes in localities' stance in this regard,
+the prior year's (or decade's) business investment in the locality may
+be a good proxy for those factors, perceived much more clearly by the
+business decisionmakers than by the econometrician.
+
+cfb (BC Econ)  ECON2228 Notes 6  2014-2015 23 / 35
+                                                          Measurement error
+
+Measurement error
+
+We often must deal with the issue of measurement error: that the
+variable that theory tells us belongs in the relationship cannot be
+precisely measured in the available data.
+
+For instance, the exact marginal tax rate that an individual faces will
+depend on many factors, only some of which we might be able to
+observe: even if we knew the individual's income, number of
+dependents, and homeowner status, we could only approximate the
+effect of a change in tax law on his or her tax liability.
+
+cfb (BC Econ)  ECON2228 Notes 6  2014-2015 24 / 35
+                                                         Measurement error
+
+We are faced, therefore, with using an approximate measure, including
+some error of measurement, whenever we might attempt to formulate
+and implement such a model. This is conceptually similar to the proxy
+variable problem we have already discussed, but in this case it is not a
+latent variable problem. There is an observable magnitude, but we do
+not necessarily observe it.
+
+cfb (BC Econ)  ECON2228 Notes 6  2014-2015 25 / 35
+                                                         Measurement error
+
+For instance, reported income is an imperfect measure of actual
+income, while IQ score is only a proxy for ability. Why is measurement
+error a serious concern? Because the behavior we're trying to model,
+be it of individuals, firms, or nations, is presumably driven by the actual
+measures, not our mismeasured approximations of those factors. To
+the extent that we fail to capture the actual measure, we may
+misinterpret the behavioral response.
+
+cfb (BC Econ)  ECON2228 Notes 6  2014-2015 26 / 35
+                                                         Measurement error
+
+If measurement error is observed in the dependent variable: for
+instance, if the true relationship explains y , but we only observe
+y = y  + , where is a meanzero error process, then becomes a
+component of the regression error term: yet another reason why the
+relationship does not fit perfectly. We assume that is not systematic,
+in particular, that it is not correlated with the independent variables X .
+
+As long as that is the case, then this form of measurement error does
+no real harm. It merely weakens the model, without introducing bias in
+either point or interval estimates. If the magnitude of the measurement
+error in y is correlated with one or more of the X variables, then we will
+have a problem of bias.
+
+cfb (BC Econ)  ECON2228 Notes 6  2014-2015 27 / 35
+               Measurement error
+
+Measurement error in an explanatory variable, on the other hand, is a
+far more serious problem. Say that the true model is
+
+               y = 0 + 1x1 + u                             (2)
+
+but that x1 is not observed. Instead, we observe x1 = x1 + 1. We can
+assume that E( 1) = 0 with generality.
+
+But what should be assumed about the relationship between
+ 1 and x 1 ?
+
+cfb (BC Econ)  ECON2228 Notes 6   2014-2015 28 / 35
+               Measurement error
+
+First, let us assume that 1 is uncorrelated with the observed measure
+x1. Larger values of x1 do not give rise to systematically larger (or
+smaller) errors of measurement. This can be written as
+
+Cov ( 1, x1) = 0.
+
+But if this is the case, it must be true that Cov ( 1, x1 ) = 0 : that is, the
+error of measurement must be correlated with the actual explanatory
+
+variable x1 , so that we can write the estimated equation (in which x1 is
+replaced with the observable x1) as
+
+               y = 0 + 1x1 + (u - 1 1)  (3)
+
+cfb (BC Econ)  ECON2228 Notes 6         2014-2015 29 / 35
+                             Measurement error
+
+As both u and 1 have zero mean and are uncorrelated (by
+
+assumption) with x1, the presence of measurement error merely
+
+inflates  the  error  term:  that  is,  Var     (u  - 1   1)  =  2    + 21 21 ,  given  that
+
+                                                                   u
+
+we have assumed that u and 1 are uncorrelated with each other.
+
+In this case, measurement error in x1 does not negatively affect the
+regression of y on x1; it merely inflates the error variance, like
+measurement error in the dependent variable.
+
+cfb (BC Econ)                           ECON2228 Notes 6                         2014-2015 30 / 35
+                                                         Measurement error Errors-in-variables
+
+However, this is not the case that we usually consider under the
+heading of errors-in-variables. It is perhaps more reasonable to
+assume that the measurement error is uncorrelated with the true
+explanatory variable: Cov ( 1, x1 ) = 0.
+If this is so, then Cov ( 1, x1) = Cov ( 1, x1 + 1 ) = 0 by construction,
+and the regression (3) will have a correlation between its explanatory
+variable x1 and the composite error term.
+
+cfb (BC Econ)  ECON2228 Notes 6  2014-2015 31 / 35
+               Measurement error Errors-in-variables
+
+The covariance of (x1, u - 1 1) = -1Cov ( 1, x1) = -121 = 0,
+causing the OLS regression of y on x1 to be biased and inconsistent.
+
+In this simple case of a single explanatory variable measured with
+error, we can determine the nature of the bias:
+
+               plim(b1) = 1 + Cov (x1, u - 1 1) (4)
+                                               Var (x1)
+
+               = 1     2
+
+                           x1
+
+                    x21 + 21
+
+demonstrating that the OLS point estimate will be attenuated, or
+biased toward zero, as the bracketed expression must be a fraction.
+
+cfb (BC Econ)  ECON2228 Notes 6                       2014-2015 32 / 35
+                            Measurement error Errors-in-variables
+
+Clearly,  in  the  absence  of  measurement  error,  2                    0,  and  the  OLS
+
+                                                         1         2
+
+coefficient   becomes  unbiased  and  consistent.    As                1  increases     relative
+
+to the variance in the (correctly measured) explanatory variable, the
+
+OLS coefficient becomes more and more unreliable, shrinking toward
+
+zero.
+
+       cfb (BC Econ)             ECON2228 Notes 6                             2014-2015 33 / 35
+                                                         Measurement error Errors-in-variables
+
+What can we conclude in a multiple regression equation, in which
+perhaps one of the explanatory variables is subject to measurement
+error? If the measurement error is uncorrelated to the true (correctly
+measured) explanatory variable, then the result we have here applies.
+
+The OLS coefficients will be biased and inconsistent for all of the
+explanatory variables, not merely the variable measured with error, but
+we can no longer predict the direction of bias in general terms.
+Realistically, more than one explanatory variable may be subject to
+measurement error (e.g., both reported household income and
+household wealth may be erroneous).
+
+cfb (BC Econ)  ECON2228 Notes 6  2014-2015 34 / 35
+                                                         Measurement error Errors-in-variables
+
+We might be discouraged by these findings, but fortunately there are
+solutions to these problems. The models in question, in which we
+suspect the presence of serious errors of measurement, may be
+estimated by techniques other than OLS regression: specifically,
+instrumental variables methods, which we will discuss, time permitting.
+
+cfb (BC Econ)  ECON2228 Notes 6  2014-2015 35 / 35
+

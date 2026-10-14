@@ -1,0 +1,740 @@
+KJA Korean Journal of Anesthesiology                                             Statistical Round
+
+                                                                                                 pISSN 2005-6419 · eISSN 2005-7563
+
+                                      Multicollinearity and misleading
+                                      statistical results
+
+Jong Hae Kim
+
+Department of Anesthesiology and Pain Medicine, School of Medicine, Daegu Catholic University, Daegu, Korea
+
+Multicollinearity represents a high degree of linear intercorrelation between explanatory variables in a multiple regres-
+sion model and leads to incorrect results of regression analyses. Diagnostic tools of multicollinearity include the variance
+inflation factor (VIF), condition index and condition number, and variance decomposition proportion (VDP). The mul-
+ticollinearity can be expressed by the coefficient of determination (Rh2) of a multiple regression model with one explana-
+tory variable (Xh) as the model's response variable and the others (Xi [i  h]) as its explanatory variables. The variance (h2)
+
+                                                                                                                                                                            1
+
+of the regression coefficients constituting the final regression model are proportional to the VIF ( 1-R 2h ). Hence, an in-
+crease in Rh2 (strong multicollinearity) increases h2. The larger h2 produces unreliable probability values and confidence
+intervals of the regression coefficients. The square root of the ratio of the maximum eigenvalue to each eigenvalue from
+the correlation matrix of standardized explanatory variables is referred to as the condition index. The condition number
+is the maximum condition index. Multicollinearity is present when the VIF is higher than 5 to 10 or the condition indi-
+ces are higher than 10 to 30. However, they cannot indicate multicollinear explanatory variables. VDPs obtained from the
+eigenvectors can identify the multicollinear variables by showing the extent of the inflation of h2 according to each con-
+dition index. When two or more VDPs, which correspond to a common condition index higher than 10 to 30, are higher
+than 0.8 to 0.9, their associated explanatory variables are multicollinear. Excluding multicollinear explanatory variables
+leads to statistically stable multiple regression models.
+
+Keywords: Biomedical research; Biostatistics; Multivariable analysis; Regression; Statistical bias; Statistical data analysis.
+
+Introduction                                                       minimized by randomization [1]. However, in observational or
+                                                                   retrospective studies, randomization is not performed before
+   A prospective randomized controlled trial assesses the effects  the collection of data and there exist the confounding effects of
+of a single explanatory variable on its primary outcome variable   explanatory variables other than the one of interest. To control
+and the unknown effects of the other explanatory variables are     the confounding effects on a single response variable, multivari-
+                                                                   able regression analyses are used. However, most of the time,
+Corresponding author: Jong Hae Kim, M.D.                           explanatory variables are intercorrelated and produce significant
+Department of Anesthesiology and Pain Medicine, School of Medi­    effects on one another. This relationship between explanatory
+cine, Daegu Catholic University, 33 Duryugongwon-ro 17-gil, Nam-   variables compromises the results of multivariable regression
+gu, Daegu 42472, Korea                                             analyses. The intercorrelation between explanatory variables
+Tel: +82-53-650-4979, Fax: +82-53-650-4517                         is termed as "multicollinearity." In this review, the definition
+Email: usmed12@gmail.com                                           of multicollinearity, measures to detect it, and its effects on the
+ORCID: https://orcid.org/0000-0003-1222-0054                       results of multiple linear regression analyses will be discussed.
+                                                                   In the appendix following the main text, the concepts of multi-
+Received: March 3, 2019.                                           collinearity and measures for its detection are described with as
+Revised: May 17, 2019.                                             much detail as possible along with mathematical equations to
+Accepted: July 8, 2019.                                            aid readers who are unfamiliar with statistical mathematics.
+
+Korean J Anesthesiol 2019 December 72(6): 558-569
+https://doi.org/10.4097/kja.19087
+
+CC This is an open-access article distributed under the terms of the Creative Commons Attribution Non-Commercial License (http://creativecommons.org/
+licenses/by-nc/4.0/), which permits unrestricted non-commercial use, distribution, and reproduction in any medium, provided the original work is properly cited.
+
+Copyright  The Korean Society of Anesthesiologists, 2019           Online access in http://ekja.org
+KOREAN J ANESTHESIOL                                                                                                                                       Jong Hae Kim
+
+Multicollinearity                                                      10A
+
+   Exact collinearity is a perfect linear relationship between two                9A
+explanatory variables X1 and X2. In other words, exact collin-
+earity occurs if one variable determines the other variable (e.g.,                8A
+X1 = 100 - 2X2). If such relationship exists between more than
+two explanatory variables (e.g., X1 = 100 - 2X2 + 3X3), the rela-                 7A
+tionship is defined as multicollinearity. Under multicollinearity,
+more than one explanatory variable is determined by the others.                   6A
+However, collinearity or multicollinearity do not need to be ex-
+act to determine their presence. A strong relationship is enough                  5A A
+to have significant collinearity or multicollinearity. A coefficient              4A
+of determination is the proportion of the variance in a response
+variable predicted by the regression model built upon the ex-                     3A
+planatory variable (s). However, the coefficient of determination
+(R2) from a multiple linear regression model whose response                       2A
+and explanatory variables are one explanatory variable and the
+rest, respectively, can also be used to measure the extent of mul-                1A
+ticollinearity between explanatory variables. R2 = 0 represents
+the absence of multicollinearity between explanatory variables,                   0A
+while R2 = 1 represents the presence of exact multicollinearity
+between them. The removal of one or more explanatory vari-                            0.0           0.2                0.4              0.6                0.8                1.0
+ables from variables with exact multicollinearity does not cause
+loss of information from a multiple linear regression model.           Fig. 1. The effects of the coefficient of determination (Rj2) from a re­
+                                                                                                             k
+Variance Inflation Factor                                              gres­sion  model    [Xij  =  0  +         lXil  +  i  (i  =  1,  2,  ...  ,  n;  l  =  1,  2,  ...  ,  k;  l  
+                                                                                                           l =1
+   The variance of regression coefficients is proportional to
+                                                                       j)] on the variance of a regression coefficient of interest [Var(j)]. The
+                                     1                                 presence of multicollinearity (an increase in Rj2) inflates Var(j). Xij: jth
+                                  1 - R2
+                                                                       explanatory variable of a regression model [Yi = 0 + 1Xi1 + 2Xi2 + , ... ,
+which is called the variance inflation factor. Considering the
+range of R2 (0  R2  1), R2 = 0 (complete absence of multicol-          + kXik + i (i = 1,2, ... , n)].
+linearity) minimizes the variance of the regression coefficient
+of interest, while R2 = 1 (exact multicollinearity) makes this         whether the regression coefficient is 0. With a low t-statistic
+variance infinite (Fig. 1). The reciprocal of the variance inflation   value, the regression coefficient becomes insignificant. The wide
+factor (1 - R2) is known as the tolerance. If the variance infla-      confidence interval and insignificant regression coefficient make
+tion factor and tolerance are greater than 5 to 10 and lower than      the final predictive regression model unreliable.
+0.1 to 0.2, respectively (R2 = 0.8 to 0.9), multicollinearity exists.
+Although the variance inflation factor helps to determine the          Condition Number and Condition Index
+presence of multicollinearity, it cannot detect the explanatory
+variables causing the multicollinearity.                                  The eigenvalues () obtained from the calculation using a
+                                                                       matrix composed of standardized explanatory variables can be
+   As previously mentioned, strong multicollinearity increas-          used to diagnose multicollinearity. The total number and sum of
+es the variance of a regression coefficient. The increase in the       the eigenvalues are equal to the number of explanatory variables.
+variance also increases the standard error of the regression           The average of the eigenvalues is 1. Because the total sum of the
+coefficient (because the standard error is the square root of the      eigenvalues is constant, the presence of their high maximum
+variance). The increase in the standard error leads to a wide 95%      value indicates that the other eigenvalues are low relative to the
+confidence interval of the regression coefficient. The inflated        maximum (max). Eigenvalues close to 0 indicate the presence
+variance also results in a reduction in the t-statistic to determine   of multicollinearity, in which explanatory variables are highly
+                                                                       intercorrelated and even small changes in the data lead to large
+                                                                       changes in regression coefficient estimates. The square root of
+                                                                       the ratio between the maximum and each eigenvalue (1, 2, ... ,
+                                                                       k) is referred to as the condition index:
+
+                                                                                           s =s = mamx a(xs(=s =1,12,,2..,..,.k.,)k)
+                                                                                                    ss
+
+                                                                       The largest condition index is called the condition number. A
+                                                                       condition number between 10 and 30 indicates the presence of
+                                                                       multicollinearity and when a value is larger than 30, the multi-
+                                                                       collinearity is regarded as strong.
+
+Online access in http://ekja.org                                                                                                                                              559
+Multicollinearity
+
+Variance Decomposition Proportion                                  80% to 90%, it is determined that multicollinearity is present be-
+                                                                   tween the explanatory variables corresponding to the exceeding
+   Eigenvectors derived from eigenvalues are used to calculate     variance decomposition proportions.
+the variance decomposition proportions, which represent the
+extent of variance inflation by multicollinearity and enable the   Strategies to Deal with Multicollinearity
+determination of the variables involved in the multicollinearity.
+Each explanatory variable has variance decomposition propor-          Erroneous recording or coding of data may inadvertently
+tions corresponding to each condition index. The total sum of      cause multicollinearity. For example, the unintentional duplica-
+the variance decomposition proportions for one explanatory         tive inclusion of the same variable in a regression analysis yields
+variable is 1. If two or more variance decomposition proportions   a multicollinear regression model. Therefore, preventing human
+corresponding to condition indices higher than 10 to 30 exceed     errors in data handling is very important. Theoretically, increas-
+
+Table 1. Raw Data from Reference [4]
+
+ Serial             PVV/GW              PSV/GW       EDV/GW         HVV/GW       GW/SLV (%)  GRWR (%)  Regeneration
+number             (cm/s/100 g)       (cm/s/100 g)  (cm/s/100 g)   (cm/s/100 g)                           rate (%)
+
+     1             16.36              8.9           3.47           6.02          57.42       1.11      158.76
+
+     2             26.68              21.22         3.53           12.07         61.38       1.36      197.19
+
+     3             12.49              16.62         2              8.88          67.42       1.47      144.73
+
+     4             8.45               22.86         6.71           7.46          69.94       1.31      140.06
+
+     5             10.19              14.23         4.75           2.06          65.68       1.25      129.71
+
+     6             19.53              17.35         1.95           7.54          59.63       1.14      162.59
+
+     7             20.65              10.48         2.21           4.88          59.42       1.07      178.48
+
+     8             22.96              14.23         4.25           3.69          75.08       1.73      120.9
+
+     9             21.22              21.64         4.1            11.94         43.42       0.87      191.24
+
+     10            8.11               3.16          0.78           8.82          75.12       1.47      150.03
+
+     11            24.74              7.84          1.68           3.68          57.65       1.08      173.44
+
+     12            11.38              15.71         3.56           7.2           39.93       0.74      211.98
+
+     13            15.82              15.04         2.4            9.89          51.27       1.02      193.49
+
+     14            8.36               9.01          2.01           3.4           50.52       0.94      164.04
+
+     15            12.04              9.72          2.27           6.03          51.6        1.05      156.97
+
+     16            10.97              4.58          1.73           5.55          56.63       1.03      208.36
+
+     17            7.97               9.33          0.57           4.17          79.09       1.61      154.62
+
+     18            7.46               6.11          1.73           2.99          57.2        1.07      137.38
+
+     19            29.09              15.71         3.41           9.35          56.44       1.1       180.15
+
+     20            10.3               8.54          2.32           10.78         60.43       1.17      228.47
+
+     21            7.82               4.41          1.07           4.19          59.52       1         153.62
+
+     22            14.71              6.29          1.77           6.16          65.05       1.3       121.31
+
+     23            8.54               6.73          1.27           5.52          65.65       1.17      157.37
+
+     24            23.05              11.34         5.39           3             33.57       0.63      211.27
+
+     25            13.12              5.86          1.89           10.92         52.93       0.9       178.16
+
+     26            7.41               9.11          2.05           5.5           53.72       0.91      174.89
+
+     27            14.59              5.59          1.26           3.75          58.62       1.14      142.98
+
+     28            8.52               6.52          1              6.92          56.61       1.11      165.59
+
+     29            18.97              6.35          2.94           5.61          56.41       1.07      141.54
+
+     30            35.41              36.36         14.23          15            41.52       0.89      238.22
+
+     31            4.55               1.27          3.13           2.83          70.91       1.27      138.42
+
+     32            22.59              28.7          10.51          10.35         32.74       0.66      247.45
+
+     33            9.21               4.55          1.19           7.92          72.2        1.34      140.27
+
+     34            18.32              11.61         2.91           8.07          52.23       1.02      216.06
+
+     35            5.69               6.88          1.18           2.78          72.12       1.39      144.18
+
+     36            11.21              11.92         3.31           10.29         60.65       1.69      156.22
+
+PVV/GW: peak portal venous flow velocity per 100 g of the initial graft weight, PSV/GW: peak systolic velocity of the hepatic artery per 100 g of the
+initial graft weight, EDV/GW: end diastolic velocity of the hepatic artery per 100 g of the initial graft weight, HVV/GW: peak hepatic venous flow
+velocity per 100 g of the initial graft weight, GW/SLV: graft-to-standard liver volume ratio, GRWR: graft-to-recipient weight ratio.
+
+560                                                                                          Online access in http://ekja.org
+KOREAN J ANESTHESIOL                                                                                                    Jong Hae Kim
+
+ing the sample size reduces the standard errors of regression co-     Numerical Example
+efficients and hence, decreases the degree of multicollinearity [2].
+However, standard errors are not always reduced under strong             In this section, multicollinearity is assessed from variance
+multicollinearity. Old explanatory variables can be replaced with     inflation factors, condition numbers, condition indices, and
+newly collected ones, which predict a response variable more          variance decomposition proportions, using data (Table 1)
+accurately. However, the inclusion of new cases or explanatory        from a previously published paper [4]. The response variable
+variables to an already completed study requires significant ad-      considered, is the liver regeneration rate two weeks after living
+ditional time and cost or is simply technically impossible.           donor liver transplantation (LDLT). Four of the six explanato-
+                                                                      ry variables considered, are hepatic hemodynamic parameters
+   Combining multicollinear variables into one can be another         measured one day after LDLT, which include the peak portal
+option. Variables that belong to a common category are usually        venous flow velocity (PVV), the peak systolic velocity (PSV)
+multicollinear. Hence, combining each variable into a higher hi-      and the end diastolic velocity (EDV) of the hepatic artery, and
+erarchical variable can reduce the multicollinearity. In addition,    the peak hepatic venous flow velocity (HVV). These parameters
+one of the variables in nearly exact collinearity can be presented    are standardized by dividing them by 100 g of the initial graft
+by an equation with the other variable. The inclusion of the          weight (GW). The other explanatory variables considered are
+equation in the multiple regression model removes one of the          the graft-to-recipient weight ratio (GRWR) and the GW to stan-
+collinear variables. Principal component analysis or factor anal-     dard liver volume ratio (GW/SLV).
+ysis can also generate a single variable that combines multicol-
+linear variables. However, with this procedure, it is not possible       Because the shear stress generated by the inflow from the
+to assess the effect of individual multicollinear variables.          portal vein and hepatic artery into a partial liver graft serves
+                                                                      as a driving force for liver regeneration [5], it is assumed that
+   Finally, the multicollinear variables identified by the variance   the standardized PPV, PSV, and EDV (PVV/GW, PSV/GW,
+decomposition proportions can be discarded from the regres-           and EDV/GW, respectively) are positively correlated with the
+sion model, making it more statistically stable. However, the         liver regeneration rate. A positive correlation between the stan-
+principled exclusion of multicollinear variables alone does not       dardized HVV (HVV/GW) and liver regeneration rate is also
+guarantee the remaining of the relevant variables, whose effects      expected because the inflow constitutes the outflow through the
+on the response variable should be investigated in the multi-         hepatic vein from a liver graft. In addition, the smaller is a liver
+variable regression analysis. The exclusion of relevant variables     graft, the higher is the shear stress. Hence, the graft weight rela-
+produces biased regression coefficients, leading to issues more       tive to the recipient weight and standard liver volume is expect-
+serious than multicollinearity. Ridge regression is an alternative    ed to be negatively correlated with the liver regeneration rate.
+modality to include all the multicollinear variables in a regres-     The expected univariate correlations between each explanatory
+sion model [3].                                                       variable and liver regeneration rate were found in the above-cit-
+                                                                      ed paper [4]. Significant correlations between the hepatic hemo-
+
+Table 2. Correlation Matrix between Explanatory Variables
+
+                                                            PVV/GW PSV/GW EDV/GW HVV/GW                         GW/SLV  GRWR
+                                                           (cm/s/100 g) (cm/s/100 g) (cm/s/100 g) (cm/s/100 g)     (%)    (%)
+
+PVV/GW  Pearson's correlation coefficient                  1          0.649    0.591    0.456                   -0.459  -0.262
+PSV/GW  Two-tailed P value
+EDV/GW  Pearson's correlation coefficient                             < 0.001  < 0.001  0.005                    0.005   0.122
+HVV/GW  Two-tailed P value                                              1        0.841  0.610                   -0.442  -0.217
+GW/SLV  Pearson's correlation coefficient
+GRWR    Two-tailed P value                                                     < 0.001  < 0.001                  0.007   0.203
+        Pearson's correlation coefficient                                        1        0.450                 -0.504  -0.330*
+        Two-tailed P value
+        Pearson's correlation coefficient                                               0.006                   0.002   0.049
+        Two-tailed P value
+        Pearson's correlation coefficient                                               1                       -0.310  -0.109
+        Two-tailed P value
+                                                                                                                0.066   0.528
+                                                                                                                1       0.886
+
+                                                                                                                        < 0.001
+
+                                                                                                                        1
+
+PVV/GW: peak portal venous flow velocity per 100 g of the initial graft weight, PSV/GW: peak systolic velocity of the hepatic artery per 100 g of the
+initial graft weight, EDV/GW: end diastolic velocity of the hepatic artery per 100 g of the initial graft weight, HVV/GW: peak hepatic venous flow
+velocity per 100 g of the initial graft weight, GW/SLV: graft-to-standard liver volume ratio, GRWR: graft-to-recipient weight ratio. *P < 0.05, P < 0.01.
+
+Online access in http://ekja.org                                                                                                 561
+Multicollinearity
+
+dynamic parameters (PVV/GW, PSV/GW, EDV/GW, and HVV/                       linear regression analysis [4] a unit increase in the PSV/GW
+GW) and between the relative graft weights (GRWR and GW/                   reduces, albeit insignificantly, the regeneration rate by 0.05%. In
+SLV) are anticipated because they share common characteristics.            addition, although the effect of a unit change in the GRWR on
+Therefore, the use of all of these explanatory variables for multi-        the regeneration rate is the strongest (37.954% decrease in the
+ple linear regression analysis might lead to multicollinearity.            regeneration rate per unit increase), its regression coefficient
+                                                                           is not statistically significant due to its inflated variance, which
+   As expected, the correlation matrix of the explanatory vari-            leads to a high standard error of 32.665 and a wide 95% con-
+ables shows a significant correlation between the variables                fidence interval between -104.4 and 29.213. These unreliable
+(Table 2). Based on the regression coefficients calculated from            results are produced by multicollinearity presented by the high
+the multiple linear regression analysis using the six explanatory          variance inflation factors of the regression coefficients for GW/
+variables (Table 3A), we obtain the following regression model.            SLV, GRWR, and PSV/GW (more than or very close to 5), which
+Liver regeneration rate                                                    are 7.384, 6.011, and 4.948, respectively. They are indicated with
+                                                                           asterisks in Table 3A. The three condition indices of more than
+   = 232.797 + 0.221 × PPV / GW - 0.050 × PSV / GW + 0.690 ×               10 (daggers in Table 3B) also indicate that there are three linear
+   EDV / GW + 4.083 × HVV / GW - 0.905 × GW / SLV - 37.594                 dependencies that arise from multicollinearity. However, they
+   × GRWR                                                                  cannot identify the explanatory variables with multicollinearity.
+
+                        (R2 = 0.682, P < 0.001)                               The variance decomposition proportions exceeding 0.8 are
+While an increase in the PSV/GW leads to an increase in the
+liver regeneration rate, according to the results of the simple
+
+Table 3A. Regression Coefficients of Multiple Linear Regression Model for Six Explanatory Variables
+
+                                                                                             95% Confidence interval
+
+                                                                                             for the unstandardized     Collinearity statistics
+
+                   Unstandardized   Standard   Standardized                                          coefficients
+                     coefficients     error     coefficients
+                                                              t-statistic    P
+
+                                                                                                                                     Variance
+
+                                                                                       Lower bound Upper bound Tolerance inflation
+
+                                                                                                                                     factor
+
+Intercept          232.797          29.542      0.050          7.880         < 0.001          172.376         293.217         0.525  1.905
+PVV/GW                0.221          0.642     -0.011          0.344           0.733           -1.093           1.534         0.202  4.948*
+PSV/GW                               1.026                    -0.048           0.962*          -2.148           2.049         0.261
+EDV/GW              -0.050*          2.506      0.056          0.275           0.785           -4.435           5.816         0.585  3.834
+HVV/GW                0.690          1.411      0.396          2.893           0.007                            6.970         0.135
+GW/SLV                4.083          0.845     -0.305         -1.071           0.293             1.197          0.823         0.166  1.709
+GRWR                                32.665*    -0.295         -1.151           0.259*          -2.633          29.213*               7.387*
+                    -0.905                                                                   -104.400*                               6.011*
+                   -37.594*
+
+*Refer to the main text for details. PVV/GW: peak portal venous flow velocity per 100 g of the initial graft weight, PSV/GW: peak systolic velocity of
+the hepatic artery per 100 g of the initial graft weight, EDV/GW: end diastolic velocity of the hepatic artery per 100 g of the initial graft weight, HVV/
+GW: peak hepatic venous flow velocity per 100 g of the initial graft weight, GW/SLV: graft-to-standard liver volume ratio, GRWR: graft-to-recipient
+weight ratio.
+
+Table 3B. Collinearity Diagnostics
+
+                                                                      Variance decomposition proportions
+
+Eigenvalue Condition Index
+
+                                    Intercept  PVV/GW                PSV/GW     EDV/GW HVV/GW                           GW/SLV       GRWR
+
+     6.164         1.000            0.00       0.00                   0.00             0.00             0.00            0.00         0.00
+
+     0.555         3.332            0.00       0.00                   0.02             0.07             0.00            0.00         0.00
+
+     0.119         7.209            0.00       0.09                   0.00             0.25             0.45            0.00         0.00
+
+     0.099         7.883            0.00       0.74                   0.02             0.02             0.24            0.00         0.00
+
+     0.043         11.938           0.01       0.01                   0.87*            0.55             0.22            0.00         0.00
+
+     0.017         18.975           0.47       0.09                   0.08             0.11             0.04            0.00         0.15
+
+     0.003         47.323           0.51       0.06                   0.02             0.00             0.04            0.99*        0.84*
+
+*Refer to the main text for details, Refer to the main text for details. PVV/GW: peak portal venous flow velocity per 100 g of the initial graft weight,
+PSV/GW: peak systolic velocity of the hepatic artery per 100 g of the initial graft weight, EDV/GW: end diastolic velocity of the hepatic artery per 100
+g of the initial graft weight, HVV/GW: peak hepatic venous flow velocity per 100 g of the initial graft weight, GW/SLV: graft-to-standard liver volume
+ratio, GRWR: graft-to-recipient weight ratio.
+
+562                                                                                                           Online access in http://ekja.org
+KOREAN J ANESTHESIOL                                                                                                         Jong Hae Kim
+
+Table 4A. Regression Coefficients of Multiple Linear Regression Model for Four Explanatory Variables Following the Exclusion of Two Variables
+
+                                                                                      95% Confidence interval
+
+                                                                                      for the unstandardized          Collinearity statistics
+
+            Unstandardized          Standard  Standar­dized                                   coefficients
+              coefficients            error    coefficients
+                                                             t-statistic    P
+
+                                                                                                                             Variance
+
+                                                                                      Lower bound Upper bound Tolerance inflation
+
+                                                                                                                             factor
+
+Intercept   209.393                 19.653     0.088         10.655         < 0.001   169.311   249.476               0.599  1.670
+PVV/GW         0.392                 0.593     0.082          0.661           0.514    -0.817      1.601              0.575  1.738
+EDV/GW         1.006                 1.664     0.428          0.605           0.550    -2.388      4.401              0.738  1.355
+HVV/GW         4.410                 1.239    -0.541          3.559           0.001                6.937              0.879  1.137*
+GRWR                                14.014*                  -4.912                      1.882
+            -68.832                                                         < 0.001*  -97.413*  -40.251*
+
+*Refer to the main text for details. PVV/GW: peak portal venous flow velocity per 100 g of the initial graft weight, EDV/GW: end diastolic velocity of
+the hepatic artery per 100 g of the initial graft weight, HVV/GW: peak hepatic venous flow velocity per 100 g of the initial graft weight, GRWR: graft-
+to-recipient weight ratio.
+
+Table 4B. Collinearity Diagnostics
+
+                                                                            Variance decomposition proportions
+
+Eigenvalue  Condition Index
+
+                                              Intercept      PVV/GW                   EDV/GW    HVV/GW                       GRWR
+
+4.409                 1.000                   0.00                    0.01            0.01                      0.01         0.00
+
+0.369                 3.456                   0.01                    0.01            0.39                      0.00         0.03
+
+0.107                 6.410                   0.02                    0.07            0.38                      0.69         0.05
+
+0.096                 6.766                   0.00                    0.85            0.18                      0.30         0.00
+
+0.018       15.697                            0.97                    0.06            0.03                      0.01         0.91*
+
+*Refer to the main text for details, Refer to the main text for details. PVV/GW: peak portal venous flow velocity per 100 g of the initial graft weight,
+EDV/GW: end diastolic velocity of the hepatic artery per 100 g of the initial graft weight, HVV/GW: peak hepatic venous flow velocity per 100 g of
+the initial graft weight, GRWR: graft-to-recipient weight ratio.
+
+indicated with asterisks in Table 3B. Those corresponding to                regression model (Table 4A) which is
+the highest condition index (condition number), i.e., 0.99 and              Liver regeneration rate
+0.84, indicate that the most dominant linear dependence of the
+regression model is explained by 99% and 84% of the variance                   = 209.393 + 0.392 × PVV / GW + 1.006 × EDV / GW + 4.410
+inflation in the regression coefficients of GW/SLV and GRWR.                × HVV / GW - 68.832 × GRWR
+The strong linear dependence between the two explanatory
+variables is also supported by the highest Pearson's correlation                                    (R2 = 0.669, P < 0.001)
+coefficient (R = 0.886) between them (Table 2). However, the                All the variance inflation factors became less than 2. Particularly,
+second strongest correlation between PSV/GW and EDV/GW                      the variance inflation factor of the regression coefficient for the
+(R = 0.841), which can be found in Table 2, does not seem to                GRWR was reduced from 6.011 to 1.137 with a decrease in its
+cause multicollinearity in the multiple linear regression model.            standard error from 32.665 to 14.014 and narrowing of its 95%
+Although the variance inflation factor of the PSV/GW (4.948) is             confidence interval from (-104.4, 29.213) to (-97.413, -40.251).
+lower than 5, it is very close to it. In addition, only one of their        In accordance with the above changes, the probability value for
+variance decomposition proportions corresponding to the con-                the regression coefficient became less than 0.05 (from 0.259 to <
+dition index of 11.938 is over 0.8. However, if the cut-off value           0.001). Although there is still a condition number of more than
+of the variance decomposition proportion for the diagnosis of               10, only one variance decomposition proportion of more than
+multicollinearity is set to 0.3 according to the work of Liao et al.        0.9 is present (Table 4B). It needs to be noted that the intercept
+[6], the two explanatory variables are multicollinear. Therefore,           term is not important for this analysis. The small change in the
+excluding the GW/SLV from the regression model is justified,                coefficient of determination (R2) from 0.682 to 0.669 indicates a
+but whether the PSV/GW is removed from the regression model                 negligible loss of information.
+is not clear.
+                                                                            Conclusions
+   The exclusion of GW/SLV and PSV/GW produced a stable
+                                                                               Multicollinearity distorts the results obtained from multiple
+
+Online access in http://ekja.org                                                                                                               563
+Multicollinearity
+
+linear regression analysis. The inflation of the variances of the    decomposition proportions corresponding to common condi-
+regression coefficients due to multicollinearity makes the coeffi-   tion indices, are multicollinear. In conclusion, the diagnosis of
+cients statistically insignificant and widens their confidence in-   multicollinearity and exclusion of multicollinear explanatory
+tervals. Multicollinearity is determined to be present if the vari-  variables enable the formulation of a reliable multiple linear re-
+ance inflation factor and condition number are more than 5 to        gression model.
+10 and 10 to 30, respectively. However, they cannot detect which
+explanatory variables are multicollinear. To identify the variables  Conflicts of Interest
+with multicollinearity, the variance decomposition proportion is
+used. If the variance decomposition proportions of more than 0.8        No potential conflict of interest relevant to this article was
+to 0.9 correspond to the condition indices of more than 10 to 30,    reported.
+the explanatory variables, which are associated with the variance
+
+References
+
+ 1. Kim JH, Kim TK, In J, Lee DK, Lee S, Kang H. Assessment of risk of bias in quasi-randomized controlled trials and randomized controlled
+     trials reported in the Korean Journal of Anesthesiology between 2010 and 2016. Korean J Anesthesiol 2017; 70: 511-9.
+
+ 2. Vatcheva KP, Lee M, McCormick JB, Rahbar MH. Multicollinearity in regression analyses conducted in epidemiologic studies.
+     Epidemiology (Sunnyvale) 2016; 6: 227.
+
+ 3. McDonald GC. Ridge regression. Wiley Interdiscip Rev Comput Stat 2009; 1: 93-100.
+ 4. Byun SH, Yang HS, Kim JH. Liver graft hyperperfusion in the early postoperative period promotes hepatic regeneration 2 weeks after living
+
+     donor liver transplantation: a prospective observational cohort study. Medicine (Baltimore) 2016; 95: e5404.
+ 5. Sato Y, Tsukada K, Hatakeyama K. Role of shear stress and immune responses in liver regeneration after a partial hepatectomy. Surg Today
+
+     1999; 29: 1-9.
+ 6. Liao D, Valliant R. Condition indexes and variance decompositions for diagnosing collinearity in linear model analysis of survey data. Surv
+
+     Method 2012; 38: 189-202.
+
+564                                                                  Online access in http://ekja.org
+KOREAN J ANESTHESIOL                                                                                                         Jong Hae Kim
+
+Appendix
+
+   This appendix shows the mathematical description of the definition of multicollinearity and its diagnostics, which was not present-
+ed in the main text.
+
+Multicollinearity
+
+If two explanatory variables X1 and X2 have a linear relationship, as follows,
+
+                                                    c1X1 + c2X2 = c0
+
+                                                   X1 = c0 - c2 X2
+                                                                c1
+
+                                                   X2 = c0 - c1 X1,
+                                                                c2
+
+where c0, c1, and c2 are arbitrary constants, the relationship is called exact collinearity. If the relationship between more than two ex-
+planatory variables (X1, X2, ... , Xk, k > 2, k is a natural number) is or approximates
+
+                                                               c1X1 + c2X2 + ... + ckXk = c0,
+
+where ck (k > 2, k is a natural number) is an arbitrary constant, multicollinearity occurs. Under multicollinearity, more than one ex-
+planatory variable Xh is determined by the other explanatory variables as follows:
+
+                                     X  XcXh h-c0c-0 -ccXjcXj Xj j //c/chc(hj((=jj=1,=12,,21..,..,,.2.k,)k,j.).j.,hkh) j  h
+                                     h    0   jhjjh j   h
+                                             jh
+
+Variance Inflation Factor
+
+   A multiple linear regression model with n sample observations of k explanatory variables (X1, X2, ... , Xk) and a response variable (Y)
+is given by
+
+                                       Yi = 0 + 1Xi1 + 2Xi2 + , ... , + kXik + i (i = 1,2, ... , n) i ~ N(0, 2),
+
+where j(j = 0,1,2, ... , k) and i are the regression coefficients and error, respectively. Each error (1, 2, ... , n) is stochastically inde-
+pendent and is normally distributed with a mean of 0 and a variance of 2. The variance of j [Var(j)] is
+
+                                        Var(j ) =        1                      1                 
+                                                                                                   
+                                                   2
+                                                                                                  2
+                                                      1  -  R  2             i=1 ( Xijn -  X  j)   
+
+                                                               j
+
+nwhere i=1(Xij - X j ) = (X1j - X j ) + (X2 j - X j ) +L+ (Xnj - X j ) is the sum of squares of the difference between each value of Xij2222
+
+and the mean of Xij (Xj) and Rj2 is the coefficient of determination from the regression model [Xij = 0 + l=1 k lXil + i (i = 1, 2, ... , n; l =
+
+1,2, ... , k; l  j)] with the response variable of Xij, the explanatory variables of Xil, the regression coefficients of 0 and l, and the error
+
+of i. Assuming that ni=1(Xij - X j )2 and 2 are constant, Var(j) is solely dependent on 1 -1R2j and an increase in Rj2 leads to an increase
+
+in Var(j) and vice versa. Because 0  Rj2  1, Rj2 = 0 minimizes Var(j) while Rj2  1 makes Var(j) infinite (Fig. 1). This means that the
+complete absence of multicollinearity (Rj2 = 0) between explanatory variables minimizes the variance of the regression coefficient for
+an explanatory variable of interest, whereas exact multicollinearity (Rj2 = 1) between them inflates the variance infinitely. Because of its
+
+significant effects on the variance of a regression coefficient, the term
+
+Online access in http://ekja.org                                                                                             565
+Multicollinearity
+
+                                                                              1
+                                                                           1 - Rj2
+is called the variance inflation factor; its reciprocal is known as the tolerance.
+
+ The variance inflated by strong multicollinearity increases the standard error of the regression coefficient ( Var(j ) ) and widens
+
+the 95% confidence interval of a regression coefficient (j), which is
+
+                                j ± t(n - k - 1; 0.025) ( Var(j ) ),
+
+                                                                                   100 - 95
+
+where t(n - k - 1; 0.025) is the critical t-statistic at 2.5% (= 2 %) level under the degree of freedom n - k - 1. The increase in the variance
+also results in a reduction in t-statistic
+
+                                                                  T = j -0
+                                                                         Var(j )
+
+for the hypothesis test (H0: j = 0 versus H1: j  0), which produces an insignificant result.
+
+Condition Number and Condition Index
+
+   Each explanatory variable (Xij) from a multiple linear regression Yi = 0 + 1Xi1 + 2Xi2 + , ... , + kXik + i (i = 1,2, ... , n) can be stan-
+dardized by dividing the difference between each of its values (Xij) and their mean (Xj) by the square root of the sum of squares of all
+the differences:
+
+                                      Zij =     Xij - X j ( j = 1, 2, ... , k)
+                                             ni=1(Xij - X j ) 2
+
+Then, we obtain an n × k matrix (Z) of the standardized explanatory variables:
+
+                                              Z11 Z12 L Z1k 
+                                              Z21 Z22 L Z  2k
+                                             Z  =  M                
+                                                      M O M
+                                              Zn1 Zn2 L Znk 
+
+By transposing Z, so that the rows become columns and vice versa, we obtain the k × n transposed matrix (ZT):
+
+                                                 Z11 Z21 L Zn1 
+                                                 Z12 Z22 L Z  n2
+                                      ZT =  M                       
+                                                      M O M
+                                                 Z1k Z2k L Znk 
+
+The multiplication of ZT by Z produces a k × k square matrix. As shown below, the multiplications of each element from the ath row of
+ZT and the bth column of Z yield the element from the bth column of the ath row in ZT × Z:
+
+                                       Z11 Z21 L Zn1   Z11 Z12 L Z1k 
+                                       Z12 Z22 L Z   n2 Z21 Z22 L Z  2k
+     ZT × Z =  M                                           ×                                  
+                                             M O M M                            M O M
+                                       Z1k Z2k L Znk   Zn1 Zn2 L Znk 
+
+566                                                                                             Online access in http://ekja.org
+KOREAN J ANESTHESIOL                                                                                                          Jong Hae Kim
+
+  Z 11Z 11 + Z 21Z 21 + L + Zn1Zn1  Z11Z12 + Z21Z22 + L + Zn1Zn2             L Z11Z1k + Z21Z2k + L + Zn1Z1k 
+  Z12 Z11 + Z22 Z21 + L + Zn2 Zn1   Z12 Z12 + Z22 Z22 + L + Zn2 Zn2          L Z12 Z1k + Z22 Z2k + L + Zn2 Znk 
+=
+      M                                            M                         O                  M
+ Z1k Z11 + Z2k Z21 +L + Znk Zn1     Z1k Z12 + Z2k Z22 + L + Znk Zn2          L Z1k Z1k + Z2k Z2k +L + Znk Znk      
+
+Each element of the square matrix is equivalent to a correlation coefficient (r) of two explanatory variables (Xih and Xij).
+   Z1hZ1j + Z2hZ2j + ... + ZnhZnj
+
+ = X1h - Xh           X1j - X j +                    X2h - Xh            X2j - X j +L+             Xnh - Xh             X nj- X j = rhj
+
+   ni=1(Xih - Xh ) 2  i=1(Xij - X j )n 2             ni=1(Xih - Xh ) 2  ni=1(Xij - X j ) 2      i=1(Xih - Xh )n 2    i=1(Xij - X j )n 2
+
+Therefore, the matrix ZTZ can be expressed as follows:
+
+                                                                r11 r11 L r1k 
+                                                               r        r22  L     r
+                                                                   21               2k
+                                                        ZTZ =  M M O M 
+                                                               r r L r 
+                                                                k1 2k              kk 
+
+To calculate the eigenvalues of a square matrix, its determinant needs to be known. The determinant of a 2 × 2 matrix is
+                                                                  ab
+                                                                  c d = ad - bc
+
+The determinant of a 3 × 3 matrix is
+
+             ab c                         e f -b d             f +c d e                e f d f de
+             d e f =a                     hi g                 i gh                =a h i -b g i +c g h
+             gh i
+
+                                                        = a(ei - fh) - b(di - fg) + c(dh - eg)
+
+Using the above equations for the determinant of a square matrix, the eigenvalues (1, 2) of the 2 × 2 correlation matrix can be ob-
+tained:
+
+                                                         r11 r12           1 0
+                                                        r r - ×0 1 = 0
+                                                         21 22                  
+
+                                                        r11 -             r12 = 0
+                                                          r21           r22 - 
+
+                                                         (r11 - )(r22 - ) - r12r21 = 0
+                                                        2-(r11 + r22) + r11r22 - r12r21 = 0
+
+                                   = (r11 + r22 ) ±  (r11 + r22 )2 - 4(r11r22 - r12r21) Qax2 + bx + c = 0  x
+                                                           2
+
+                                  = - b ± b2 - 4ac
+                                            2a
+
+Online access in http://ekja.org                                                                                                         567
+Multicollinearity
+
+If generalized, the eigenvalues (1, 2, ... , k) of the correlation matrix can be calculated.
+
+                                    r11 r12 L r1k                    1 0 L 0
+                                    r21 r22 L r2k    -  ×  0 1 L 0 = 0
+                                    M M O M  M M O M
+                                   r    r2k          r               0        0      1
+                                    k1            L  kk                          L    
+
+                                        r11 -  r12 L r1k
+                                             r21 r22 -  L r2k = 0
+                                             M                 MOM
+                                             rk1               r2k L rkk - 
+
+                         r22 -  L r2k                          r21 r23 L r2k            r12   L  r
+                                                                                                  2( k -1)
+                   (r11 - ) M O M + r21 M M O M + L + r1k M O M = 0
+                         r2k L rkk -                           rk1 r3k Lrkk -           r1k L rk(k-1)
+
+                                                                ( - 1)( - 2)...( - k) = 0
+
+By solving the kth degree polynomial equation of the variable , we can obtain k eigenvalues (1, 2, ... , k). The number of eigenvalues
+(1, 2, ..., k) from the k × k matrix is k and their mean and total sum are 1 and k, respectively.
+
+   The square root of the ratio between the maximum and each eigenvalue (1, 2 , ... , k) is termed "condition index" and is expressed as
+
+                                             s = max (s = 1, 2, ... , k)
+                                                     s
+
+The largest condition index is called the "condition number."
+
+Variance Decomposition Proportion
+
+   Eigenvectors are calculated from their corresponding eigenvalues. The relationship between two eigenvalues (1, 2) and their ei-
+genvectors (1, 2) is as follows:
+
+                          r11 r12                 1 0  1s  0
+                         r r  - s × 0 1 ×   = 0 (s = 1, 2)
+                          21 22                      2s   
+
+By solving the above equation, the ratio (Rs) between the two elements (1s = Rs × 2s) is obtained. As long as the ratio is maintained, the
+values of the two elements can be chosen arbitrarily. Then, two eigenvectors can be obtained.
+
+                                                      11              12 
+                                             1 =  , 2 =  
+                                                      21              22 
+
+With
+
+                    r11 r12 L r1k                              1 0 L 0  1s  0
+                   r r L r                                     0 1 L 0 2s  0
+                     21  22             2k   - s ×                                ×   =  
+
+                    M M O M   M M O M   M   M 
+                    rk1  r2 k      L    r                      0  0  L           1               0
+                                        kk                                            ks         
+
+we have k eigenvectors (1, 2, ... , k) consisting of k elements in one column, which correspond to k eigenvalues (1, 2, ... , k).
+   The eigenvector corresponding to the eigenvalue s (s = 1, 2, ... , k) are expressed as
+
+568                                                                                                         Online access in http://ekja.org
+KOREAN J ANESTHESIOL                                                                                                       Jong Hae Kim
+
+                                                                      1s 
+                                                                  =  2s 
+                                                                 s M
+
+                                                                      
+                                                                      ks 
+
+There are k variance decomposition proportions for the regression coefficient j (j = 1, 2, ... , k), which are defined as
+
+                                                    js 2  js 2
+
+                                     js =  j12       s           jk 2 =          2 s (s = 1, 2, ... , k)
+                                                   j22                          k  js
+                                                   + +L                       s=1
+                                    1 2                              k                 s
+
+The  total  sum  of  the  variance  decomposition  proportions  for  j  (j1  +  j2  +  ...  +  jk  =    k    js)  is  1.
+                                                                                                        s=1
+
+Online access in http://ekja.org                                                                                           569
+

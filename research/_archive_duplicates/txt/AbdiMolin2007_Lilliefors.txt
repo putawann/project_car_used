@@ -1,0 +1,449 @@
+           Lilliefors/Van Soest's
+              test of normality
+
+                 Hervé Abdi1 & Paul Molin
+
+1 Overview
+
+The normality assumption is at the core of a majority of standard
+statistical procedures, and it is important to be able to test this
+assumption. In addition, showing that a sample does not come
+from a normally distributed population is sometimes of impor-
+tance per se. Among the many procedures used to test this as-
+sumption, one of the most well-known is a modification of the
+Kolomogorov-Smirnov test of goodness of fit, generally referred to
+as the Lilliefors test for normality (or Lilliefors test, for short). This
+test was developed independently by Lilliefors (1967) and by Van
+Soest (1967). The null hypothesis for this test is that the error is
+normally distributed (i.e., there is no difference between the ob-
+served distribution of the error and a normal distribution). The
+alternative hypothesis is that the error is not normally distributed.
+
+    Like most statistical tests, this test of normality defines a cri-
+terion and gives its sampling distribution. When the probability
+associated with the criterion is smaller than a given -level, the
+
+   1In: Neil Salkind (Ed.) (2007). Encyclopedia of Measurement and Statistics.
+Thousand Oaks (CA): Sage.
+Address correspondence to: Hervé Abdi
+Program in Cognition and Neurosciences, MS: Gr.4.1,
+The University of Texas at Dallas,
+Richardson, TX 75083-0688, USA
+E-mail: herve@utdallas.edu http://www.utd.edu/herve
+
+                                            1
+      H. Abdi & P. Molin: Lilliefors / Van Soest Normality Test
+
+alternative hypothesis is accepted (i.e., we conclude that the sam-
+ple does not come from a normal distribution). An interesting pe-
+culiarity of the Lilliefors' test is the technique used to derive the
+sampling distribution of the criterion. In general, mathematical
+statisticians derive the sampling distribution of the criterion us-
+ing analytical techniques. However in this case, this approach fails
+and consequently, Lilliefors decided to calculate an approximation
+of the sampling distribution by using the Monte-Carlo technique.
+Essentially, the procedure consists of extracting a large number of
+samples from a Normal Population and computing the value of the
+criterion for each of these samples. The empirical distribution of
+the values of the criterion gives an approximation of the sampling
+distribution of the criterion under the null hypothesis.
+
+    Specifically, both Lilliefors and Van Soest used, for each sample
+size chosen, 1000 random samples derived from a standardized
+normal distribution to approximate the sampling distribution of a
+Kolmogorov-Smirnov criterion of goodness of fit. The critical val-
+ues given by Lilliefors and Van Soest are quite similar, the relative
+error being of the order of 10-2.
+
+    According to Lilliefors (1967) this test of normality is more pow-
+erful than others procedures for a wide range of nonnormal con-
+ditions. Dagnelie (1968) indicated, in addition, that the critical
+values reported by Lilliefors can be approximated by an analyti-
+cal formula. Such a formula facilitates writing computer routines
+because it eliminates the risk of creating errors when keying in the
+values of the table. Recently, Molin and Abdi (1998), refined the
+approximation given by Dagnelie and computed new tables using
+a larger number of runs (i.e., K = 100, 000) in their simulations.
+
+2 Notation
+
+The sample for the test is made of N scores, each of them denoted
+Xi . The sample mean is denoted MX is computed as
+
+                                            1N
+                                   MX = N i Xi , (1)
+
+                                            2
+    H. Abdi & P. Molin: Lilliefors / Van Soest Normality Test
+
+the sample variance is denoted
+
+                 N
+
+                  (Xi - MX )2
+       SX2 = i N - 1 , (2)
+
+and the standard deviation of the sample denoted SX is equal to
+the square root of the sample variance.
+
+    The first step of the test is to transform each of the Xi scores
+into Z -scores as follows:
+
+                  Zi = Xi - MX . (3)
+                            SX
+
+    For each Zi -score we compute the proportion of score smaller
+
+or equal to its value: This is called the frequency associated with
+
+this score and it is denoted S (Zi ). For each Zi -score we also com-
+
+pute the probability associated with this score if is comes from a
+
+"standard" normal distribution with a mean of 0 and a standard
+
+deviation of 1. We denote this probability by N (Zi ), and it is equal
+
+to                Zi 1             12
+
+       N (Zi ) =                   exp - Zi .                  (4)
+                  - 2              2
+
+    The criterion for the Lilliefors' test is denoted L. It is calculated
+from the Z-scores, and it is equal to
+
+    L = max {|S (Zi ) - N (Zi )|, |S (Zi ) - N (Zi-1)|} .      (5)
+    i
+
+So L is the absolute value of the biggest split between the proba-
+bility associated to Zi when Zi is normally distributed, and the fre-
+quencies actually observed. The term |S (Zi )-N (Zi-1)| is needed
+to take into account that, because the empirical distribution is dis-
+crete, the maximum absolute difference can occur at either end-
+points of the empirical distribution.
+
+    The critical values are given by Table 2. Lcritical is the critical
+value. The Null hypothesis is rejected when the L criterion is greater
+than or equal to the critical value Lcritical.
+
+                                3
+H. Abdi & P. Molin: Lilliefors / Van Soest Normality Test
+
+3 Numerical example
+
+As an illustration, we will look at an analysis of variance exam-
+ple for which we want to test the so-called "normality assump-
+tion" that states that the within group deviations (i.e., the "resid-
+uals") are normally distributed. The data are from Abdi (1987, p.
+93ff.) and correspond to memory scores obtained by 20 subjects
+who were assigned to one of 4 experimental groups (hence 5 sub-
+jects per group). The score of the sth subject in the ath group is
+denoted Ya,s, and the mean of each group is denoted Ma.. The
+within-group mean square MSS(A) is equal to 2.35, it correspond
+to the best estimation of the population error variance.
+
+             G. 1 G. 2 G. 3 G. 4
+               3525
+               3944
+               2853
+               4445
+               3914
+
+     Ya. 15 35 16 21
+     Ma. 3 7 3.2 4.2
+
+    The Normality assumption states that the error is normally dis-
+tributed. In the analysis of variance framework, the error corre-
+sponds to the residuals which are equal to the deviations of the
+scores to the mean of their group. So in order to test the normality
+assumption for the analysis of variance, the first step is to com-
+pute the residuals from the scores. We denote Xi the residual cor-
+responding to the i th observation (with i going from 1 to 20). The
+residuals are given in the following table:
+
+Yas  33 24     35 9               84 9
+
+Xi   0 0 -1 1  0 -2 2             1 -3 2
+
+Yas  24 54     1        54        3  54
+                                     .8 -.2
+Xi -1.2 .8 1.8 .8 -2.2  .8 -.2 -1.2
+
+               4
+      H. Abdi & P. Molin: Lilliefors / Van Soest Normality Test
+
+    Next we transform the Xi values into Zi values using the fol-
+lowing formula:
+
+                                   Zi = Xi (6)
+                                             MSS(A)
+
+because MSS(A) is the best estimate of the population variance,
+and the mean of Xi is zero. Then, for each Zi value, the frequency
+associated with S (Zi ) and the probability associated with Zi un-
+der the Normality condition N (Zi ) are computed [we use a table
+of the Normal Distribution to obtain N (Zi )]. The results are pre-
+sented in Table 1.
+
+    The value of the criterion is (see Table 1)
+
+       L = max{|S (Zi ) - N (Zi )|, |S (Zi ) - N (Zi-1)|} = .250 . (7)
+
+                     i
+
+Taking an  level of  = .05, with N = 20, we find (from Table 2)
+that the critical value is equal Lcritical = .192. Because L is larger
+than Lcritical, the null hypothesis is rejected and we conclude that
+the residuals in our experiment are not distributed normally.
+
+4 Numerical approximation
+
+The available tables for the Lilliefors' test of normality typically re-
+port the critical values for a small set of alpha values. For example,
+the present table reports the critical values for
+
+                            = [.20, .15, .10, .05, .01].
+
+These values correspond to the alpha values used for most tests
+involving only one null hypothesis, as this was the standard pro-
+cedure in the late sixties. The current statistical practice, however,
+favors multiple tests (maybe as a consequence of the availability
+of statistical packages). Because using multiple tests increases the
+overall Type I error (i.e., the Familywise Type I error or PF ), it has
+become customary to recommend testing each hypothesis with a
+corrected  level (i.e., the Type I error per comparison, or PC )
+such as the Bonferonni or Sidák corrections. For example, using
+a Bonferonni approach with a familywise value of PF = .05, and
+
+                                            5
+H. Abdi & P. Molin: Lilliefors / Van Soest Normality Test
+
+Table 1: How to compute the criterion for the Lilliefors' test of
+
+normality. Ni stands for the absolute frequency of a given value
+of Xi , Fi stands for the absolute frequency associated with a given
+value of Xi (i.e., the number of scores smaller or equal to Xi ),
+Zi is the Z -score corresponding to Xi , S (Zi ) is the proportion of
+scores smaller than Zi , N (Zi ) is the probability associated with
+Zi for the standard normal distribution, D0 =| S (Zi ) - N (Zi ) |,
+D-1 =| S (Zi ) - N (Zi-1) |, and max is the maximum of {D0, D-1}.
+The value of the criterion is L = .250.
+
+Xi Ni Fi          Zi S (Zi ) N (Zi ) D0 D-1 max
+
+-3.0 1 1 -1.96              .05 .025 .025 .050 .050
+
+-2.2 1 2 -1.44              .10 .075 .025 .075 .075
+
+-2.0 1 3 -1.30              .15 .097 .053 .074 .074
+
+-1.2 2 5 -.78               .25 .218 .032 .154 .154
+
+-1.0 1 6 -.65               .30 .258 .052 .083 .083
+
+-.2 2 8 -.13                .40 .449 .049 .143 .143
+
+.0 3 11 .00                 .55 .500 .050 .102 .102
+
+.8 4 15 .52                 .75 .699 .051 .250 .250
+
+1.0 2 17 .65                .85 .742 .108 .151 .151
+
+1.8 1 18 1.17               .90 .879 .021 .157 .157
+
+2.0 2 20 1.30 1.00 .903 .097 .120 .120
+
+testing J = 3 hypotheses requires that each hypothesis is tested at
+
+the level of
+
+              PC  =  1      =  1  × .05  =  .0167  .            (8)
+                               3
+                     J P F
+
+With a Sidák approach, each hypothesis will be tested at the level
+
+of 1 1                                                          (9)
+              PC = 1 - (1 - PF ) J = 1 - (1 - .05) 3 = .0170 .
+
+As this example illustrates, both procedures are likely to require us-
+ing different  levels than the ones given by the tables. In fact, it is
+rather unlikely that a table could be precise enough to provide the
+wide range of alpha values needed for multiple testing purposes. A
+
+                               6
+      H. Abdi & P. Molin: Lilliefors / Van Soest Normality Test
+
+more practical solution is to generate the critical values for any al-
+pha value, or, alternatively, to obtain the probability associated to
+any value of the Kolmogorov-Smirnov criterion. Such an approach
+can be implemented by approximating the sampling distribution
+"on the fly" for each specific problem and deriving the critical val-
+ues for unusual values of .
+
+    Another approach to finding critical values for unusual values
+of , is to find a numerical approximation for the sampling distri-
+butions. Molin and Abdi (1998) proposed such an approximation
+and showed that it was accurate for at least the first two signifi-
+cant digits. Their procedure, somewhat complex, is better imple-
+mented with a computer and comprises two steps.
+
+    The first step is to compute a quantity called A obtained from
+the following formula:
+
+      A=  -(b1 + N ) + (b1 + N )2 - 4b2 b0 - L-2  ,              (10)
+
+          2b2
+
+with
+
+          b2 = 0.08861783849346
+
+          b1 = 1.30748185078790
+
+          b0 = 0.37872256037043 .                                (11)
+
+    The second step implements a polynomial approximation and
+estimates the probability associated to a given value L as:
+
+Pr(L)  -.37782822932809 + 1.67819837908004A
+
+          - 3.02959249450445A2 + 2.80015798142101A3
+
+          - 1.39874347510845A4 + 0.40466213484419A5
+
+          - 0.06353440854207A6 + 0.00287462087623A7
+
+          + 0.00069650013110A8 - 0.00011872227037A9
+
+          + 0.00000575586834A10 .                                (12)
+
+    For example, suppose that we have obtained a value of L =
+.1030 from a sample of size N = 50. (Table 2 shows that Pr(L) = .20.)
+
+          7
+H. Abdi & P. Molin: Lilliefors / Van Soest Normality Test
+
+To estimate Pr(L) we need first to compute A, and then use this
+value in Equation 12. From Equation 10, we compute the estimate
+of A as:
+
+     -(b1 + N ) +  (b1 + N )2 - 4b2 b0 - L-2
+A=                     2b2
+
+   -(b1 + 50) +    (b1 + 50)2 - 4b2 b0 - .1030-2
+=                         2b2
+
+= 1.82402308769590 .                                       (13)
+
+Plugging in this value of A in Equation 12 gives
+
+Pr(L) = .19840103775379  .20 .                             (14)
+
+As illustrated by this example, the approximated value of Pr(L) is
+correct for the first two decimal values.
+
+References
+
+ [1] Abdi, H. (1987). Introduction au traitement statistique des
+      données expérimentales. Grenoble: Presses Universitaires de
+      Grenoble.
+
+ [2] Dagnelie, P. (1968). A propos de l'emploi du test de
+      Kolmogorov-Smirnov comme test de normalité, Biométrie et
+      Praximétrie 9, 3-13.
+
+ [3] Lilliefors, H. W. (1967). On the Kolmogorov-Smirnov test for
+      normality with mean and variance unknown, Journal of the
+      American Statistical Association, 62, 399-402.
+
+ [4] Molin, P., Abdi H. (1998). New Tables and nu-
+      merical approximation for the Kolmogorov-
+      Smirnov/Lillierfors/Van Soest test of normality. Tech-
+      nical report, University of Bourgogne. Available from
+      www.utd.edu/herve/MA_Lilliefors98.pdf.
+
+ [5] Van Soest, J. (1967). Some experimental results concerning
+      tests of normality. Statistica. Neerlandica, 21, 91-97, 1967.
+
+                                            8
+Table 2: Table of the critical values for the Kolmogorov-Smir-
+nov/Lillefors test of normality obtained with K = 100,000 samples
+for each sample size. The intersection of a given row and column
+shows the critical value Lcritical for the sample size labelling the row
+and the alpha level labelling the column. For N > 50 the critical
+value can be found by using fN = .83 + N - .01.
+
+                                                  N
+
+N  = .20  = .15  = .10  = .05  = .01
+
+4 .3027   .3216  .3456  .3754  .4129
+5 .2893   .3027  .3188  .3427  .3959
+6 .2694   .2816  .2982  .3245  .3728
+7 .2521   .2641  .2802  .3041  .3504
+8 .2387   .2502  .2649  .2875  .3331
+9 .2273   .2382  .2522  .2744  .3162
+10 .2171  .2273  .2410  .2616  .3037
+11 .2080  .2179  .2306  .2506  .2905
+12 .2004  .2101  .2228  .2426  .2812
+13 .1932  .2025  .2147  .2337  .2714
+14 .1869  .1959  .2077  .2257  .2627
+15 .1811  .1899  .2016  .2196  .2545
+16 .1758  .1843  .1956  .2128  .2477
+17 .1711  .1794  .1902  .2071  .2408
+18 .1666  .1747  .1852  .2018  .2345
+19 .1624  .1700  .1803  .1965  .2285
+20 .1589  .1666  .1764  .1920  .2226
+21 .1553  .1629  .1726  .1881  .2190
+22 .1517  .1592  .1690  .1840  .2141
+23 .1484  .1555  .1650  .1798  .2090
+24 .1458  .1527  .1619  .1766  .2053
+25 .1429  .1498  .1589  .1726  .2010
+26 .1406  .1472  .1562  .1699  .1985
+27 .1381  .1448  .1533  .1665  .1941
+28 .1358  .1423  .1509  .1641  .1911
+
+Table continues on the following page . . .
+H. Abdi & P. Molin: Lilliefors / Van Soest Normality Test
+
+Table 3: . . . Continued. Table of the critical values for the Kolmogo-
+rov-Smirnov/Lillefors test of normality obtained with K = 100,000
+samples for each sample size. The intersection of a given row and
+column shows the critical value Lcritical for the sample size labelling
+the row and the alpha level labelling the column. For N > 50 the
+critical value can be found by using fN = .83 + N - .01.
+
+                                                            N
+
+N  = .20  = .15  = .10  = .05  = .01
+
+29 .1334     .1398  .1483  .1614  .1886
+30 .1315     .1378  .1460  .1590  .1848
+31 .1291     .1353  .1432  .1559  .1820
+32 .1274     .1336  .1415  .1542  .1798
+33 .1254     .1314  .1392  .1518  .1770
+34 .1236     .1295  .1373  .1497  .1747
+35 .1220     .1278  .1356  .1478  .1720
+36 .1203     .1260  .1336  .1454  .1695
+37 .1188     .1245  .1320  .1436  .1677
+38 .1174     .1230  .1303  .1421  .1653
+39 .1159     .1214  .1288  .1402  .1634
+40 .1147     .1204  .1275  .1386  .1616
+41 .1131     .1186  .1258  .1373  .1599
+42 .1119     .1172  .1244  .1353  .1573
+43 .1106     .1159  .1228  .1339  .1556
+44 .1095     .1148  .1216  .1322  .1542
+45 .1083     .1134  .1204  .1309  .1525
+46 .1071     .1123  .1189  .1293  .1512
+47 .1062     .1113  .1180  .1282  .1499
+48 .1047     .1098  .1165  .1269  .1476
+49 .1040     .1089  .1153  .1256  .1463
+50 .1030     .1079  .1142  .1246  .1457
+
+> 50  0.741  0.775  0.819  0.895  1.035
+        fN
+               fN     fN     fN     fN
+
+                    10
+

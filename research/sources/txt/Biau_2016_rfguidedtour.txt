@@ -1,0 +1,1839 @@
+arXiv:1511.05741v1 [math.ST] 18 Nov 2015              A Random Forest Guided Tour
+
+                                          G´erard Biau
+                                          Sorbonne Universit´es, UPMC Univ Paris 06, F-75005, Paris, France
+                                          & Institut universitaire de France
+                                          gerard.biau@upmc.fr
+
+                                          Erwan Scornet
+                                          Sorbonne Universit´es, UPMC Univ Paris 06, F-75005, Paris, France
+                                          erwan.scornet@upmc.fr
+
+                                                                                         Abstract
+
+                                                  The random forest algorithm, proposed by L. Breiman in 2001, has
+                                                  been extremely successful as a general-purpose classification and re-
+                                                  gression method. The approach, which combines several randomized
+                                                  decision trees and aggregates their predictions by averaging, has shown
+                                                  excellent performance in settings where the number of variables is
+                                                  much larger than the number of observations. Moreover, it is versa-
+                                                  tile enough to be applied to large-scale problems, is easily adapted to
+                                                  various ad-hoc learning tasks, and returns measures of variable im-
+                                                  portance. The present article reviews the most recent theoretical and
+                                                  methodological developments for random forests. Emphasis is placed
+                                                  on the mathematical forces driving the algorithm, with special atten-
+                                                  tion given to the selection of parameters, the resampling mechanism,
+                                                  and variable importance measures. This review is intended to provide
+                                                  non-experts easy access to the main ideas.
+                                                  Index Terms -- Random forests, randomization, resampling, param-
+                                                  eter tuning, variable importance.
+                                                  2010 Mathematics Subject Classification: 62G05, 62G20.
+
+                                          1 Introduction
+
+                                          To take advantage of the sheer size of modern data sets, we now need learn-
+                                          ing algorithms that scale with the volume of information, while maintaining
+                                          sufficient statistical efficiency. Random forests, devised by L. Breiman in
+                                          the early 2000s (Breiman, 2001), are part of the list of the most successful
+                                          methods currently available to handle data in these cases. This supervised
+
+                                                                                          1
+learning procedure, influenced by the early work of Amit and Geman (1997),
+Ho (1998), and Dietterich (2000), operates according to the simple but ef-
+fective "divide and conquer" principle: sample fractions of the data, grow a
+randomized tree predictor on each small piece, then paste (aggregate) these
+predictors together.
+
+What has greatly contributed to the popularity of forests is the fact that
+they can be applied to a wide range of prediction problems and have few
+parameters to tune. Aside from being simple to use, the method is generally
+recognized for its accuracy and its ability to deal with small sample sizes and
+high-dimensional feature spaces. At the same time, it is easily parallelizable
+and has therefore the potential to deal with large real-life systems. The
+corresponding R package randomForest can be freely downloaded on the
+CRAN website (http://www.r-project.org), while a MapReduce (Jeffrey and
+Sanja, 2008) open source implementation called Partial Decision Forests is
+available on the Apache Mahout website at https://mahout.apache.org. This
+allows the building of forests using large data sets as long as each partition
+can be loaded into memory.
+
+The random forest methodology has been successfully involved in various
+practical problems, including a data science hackathon on air quality pre-
+diction (http://www.kaggle.com/c/dsg-hackathon), chemoinformatics (Svet-
+nik et al., 2003), ecology (Prasad et al., 2006; Cutler et al., 2007), 3D ob-
+ject recognition (Shotton et al., 2011), and bioinformatics (D´iaz-Uriarte and
+de Andr´es, 2006), just to name a few. J. Howard (Kaggle) and M. Bowles
+(Biomatica) claim in Howard and Bowles (2012) that ensembles of deci-
+sion trees--often known as "random forests"--have been the most successful
+general-purpose algorithm in modern times, while H. Varian, Chief Economist
+at Google, advocates in Varian (2014) the use of random forests in econo-
+metrics.
+
+On the theoretical side, the story of random forests is less conclusive and,
+despite their extensive use, little is known about the mathematical proper-
+ties of the method. The most celebrated theoretical result is that of Breiman
+(2001), which offers an upper bound on the generalization error of forests in
+terms of correlation and strength of the individual trees. This was followed
+by a technical note (Breiman, 2004), which focuses on a stylized version
+of the original algorithm (see also Breiman, 2000a,b). A critical step was
+subsequently taken by Lin and Jeon (2006), who highlighted an interesting
+connection between random forests and a particular class of nearest neighbor
+predictors, further developed by Biau and Devroye (2010). In recent years,
+various theoretical studies have been performed (e.g., Meinshausen, 2006;
+
+                                                2
+Biau et al., 2008; Ishwaran and Kogalur, 2010; Biau, 2012; Genuer, 2012;
+Zhu et al., 2015), analyzing more elaborate models and moving ever closer to
+the practical situation. Recent attempts towards narrowing the gap between
+theory and practice include that of Denil et al. (2013), who prove the con-
+sistency of a particular online forest, Wager (2014) and Mentch and Hooker
+(2015), who study the asymptotic distribution of forests, and Scornet et al.
+(2015), who show that Breiman's (2001) forests are consistent in an additive
+regression framework.
+
+The difficulty in properly analyzing random forests can be explained by the
+black-box flavor of the method, which is indeed a subtle combination of dif-
+ferent components. Among the forests' essential ingredients, both bagging
+(Breiman, 1996) and the Classification And Regression Trees (CART)-split
+criterion (Breiman et al., 1984) play critical roles. Bagging (a contraction
+of bootstrap-aggregating) is a general aggregation scheme, which generates
+bootstrap samples from the original data set, constructs a predictor from
+each sample, and decides by averaging. It is one of the most effective compu-
+tationally intensive procedures to improve on unstable estimates, especially
+for large, high-dimensional data sets, where finding a good model in one step
+is impossible because of the complexity and scale of the problem (Bu¨hlmann
+and Yu, 2002; Kleiner et al., 2014; Wager et al., 2014). As for the CART-split
+criterion, it originates from the influential CART program of Breiman et al.
+(1984), and is used in the construction of the individual trees to choose the
+best cuts perpendicular to the axes. At each node of each tree, the best cut is
+selected by optimizing the CART-split criterion, based on the so-called Gini
+impurity (for classification) or the prediction squared error (for regression).
+
+However, while bagging and the CART-splitting scheme play key roles in the
+random forest mechanism, both are difficult to analyze with rigorous math-
+ematics, thereby explaining why theoretical studies have so far considered
+simplified versions of the original procedure. This is often done by simply ig-
+noring the bagging step and/or replacing the CART-split selection by a more
+elementary cut protocol. As well as this, in Breiman's (2001) forests, each
+leaf (that is, a terminal node) of individual trees contains a small number of
+observations, typically between 1 and 5.
+
+The goal of this survey is to embark the reader on a guided tour of ran-
+dom forests. We focus on the theory behind the algorithm, trying to give an
+overview of major theoretical approaches while discussing their inherent pros
+and cons. For a more methodological review covering applied aspects of ran-
+dom forests, we refer to the surveys by Criminisi et al. (2011) and Boulesteix
+et al. (2012). We start by gently introducing the mathematical context in
+
+                                                3
+Section 2 and describe in full detail Breiman's (2001) original algorithm. Sec-
+tion 3 focuses on the theory for a simplified forest model called purely random
+forests, and emphasizes the connections between forests, nearest neighbor es-
+timates and kernel methods. Section 4 provides some elements of theory
+about resampling mechanisms, the splitting criterion and the mathematical
+forces at work in Breiman's approach. Section 5 is devoted to the theoretical
+aspects of associated variable selection procedures. Section 6 discusses vari-
+ous extensions to random forests including online learning, survival analysis
+and clustering problems. A short discussion follows in Section 7.
+
+2 The random forest estimate
+
+2.1 Basic principles
+
+Let us start with a word of caution. The term "random forests" is a bit
+ambiguous. For some authors, it is but a generic expression for aggregating
+random decision trees, no matter how the trees are obtained. For others,
+it refers to Breiman's (2001) original algorithm. We essentially adopt the
+second point of view in the present survey.
+
+As mentioned above, the forest mechanism is versatile enough to deal with
+both supervised classification and regression tasks. However, to keep things
+simple, we focus in this introduction on regression analysis, and only briefly
+survey the classification case. Our objective in this section is to provide a
+concise but mathematically precise presentation of the algorithm for building
+a random forest. The general framework is nonparametric regression estima-
+tion, in which an input random vector X  X  Rp is observed, and the goal
+is to predict the square integrable random response Y  R by estimating the
+regression function m(x) = E[Y |X = x]. With this aim in mind, we assume
+we are given a training sample Dn = ((X1, Y1), . . . , (Xn, Yn)) of independent
+random variables distributed as the independent prototype pair (X, Y ). The
+goal is to use the data set Dn to construct an estimate mn : X  R of the
+function m. In this respect, we say that the regression function estimate mn
+is (mean squared error) consistent if E[mn(X) - m(X)]2  0 as n   (the
+expectation is evaluated over X and the sample Dn).
+
+A random forest is a predictor consisting of a collection of M randomized
+regression trees. For the j-th tree in the family, the predicted value at the
+query point x is denoted by mn(x; j, Dn), where 1, . . . , M are indepen-
+dent random variables, distributed the same as a generic random variable 
+
+                                                4
+and independent of Dn. In practice, the variable  is used to resample the
+training set prior to the growing of individual trees and to select the succes-
+sive directions for splitting--more precise definitions will be given later. In
+mathematical terms, the j-th tree estimate takes the form
+
+mn(x; j, Dn) =           1XiAn(x;j ,Dn)Yi ,
+                         Nn(x; j, Dn)
+                iDn(j )
+
+where Dn(j) is the set of data points selected prior to the tree construction,
+An(x; j, Dn) is the cell containing x, and Nn(x; j, Dn) is the number of
+(preselected) points that fall into An(x; j, Dn).
+
+At this stage, we note that the trees are combined to form the (finite) forest
+estimate
+
+                                                      1M
+                 mM,n(x; 1, . . . , M , Dn) = M mn(x; j, Dn). (1)
+
+                                                                                      j=1
+
+In the R package randomForest, the default value of M (the number of
+trees in the forest) is ntree = 500. Since M may be chosen arbitrarily
+large (limited only by available computing resources), it makes sense, from
+a modeling point of view, to let M tends to infinity, and consider instead of
+(1) the (infinite) forest estimate
+
+                           m,n(x; Dn) = E [mn(x; , Dn)] .
+
+In this definition, E denotes the expectation with respect to the random
+parameter , conditional on Dn. In fact, the operation "M  " is justified
+by the law of large numbers, which asserts that almost surely, conditional on
+Dn,
+
+                    lim mM,n(x; 1, . . . , M , Dn) = m,n(x; Dn)
+
+                             M 
+
+(see for instance Breiman, 2001, and Scornet, 2015a, for more information on
+this limit calculation). In the following, to lighten notation we will simply
+write m,n(x) instead of m,n(x; Dn).
+
+2.2 Algorithm
+
+We now provide some insight on how the individual trees are constructed and
+how randomness kicks in. In Breiman's (2001) original forests, each node of
+a single tree is associated with a hyperrectangular cell. The root of the tree
+is X itself and, at each step of the tree construction, a node (or equivalently
+
+                                                5
+its corresponding cell) is split in two parts. The terminal nodes (or leaves),
+taken together, form a partition of X .
+
+The algorithm works by growing M different (randomized) trees as follows.
+Prior to the construction of each tree, an observations are drawn at random
+with (or without) replacement from the original data set. These--and only
+these--an observations (with possible repetitions) are taken into account in
+the tree building. Then, at each cell of each tree, a split is performed by
+maximizing the CART-criterion (see below) over mtry directions chosen uni-
+formly at random among the p original ones. (The resulting subset of se-
+lected coordinates is called Mtry.) Lastly, construction of individual trees is
+stopped when each cell contains less than nodesize points. For any query
+point x  X , each regression tree predicts the average of the Yi (that were
+among the an points) for which the corresponding Xi falls into the cell of
+x. We draw attention to the fact that growing the tree and making the fi-
+nal estimation only depends on the an preselected data points. Algorithm 1
+describes in full detail how to compute a forest's prediction.
+
+Algorithm 1 may seem a bit complicated at first sight, but the underlying
+ideas are simple. We start by noticing that this algorithm has three important
+parameters:
+
+   1. an  {1, . . . , n}: the number of sampled data points in each tree;
+
+   2. mtry  {1, . . . , p}: the number of possible directions for splitting at
+       each node of each tree;
+
+   3. nodesize  {1, . . . , an}: the number of examples in each cell below
+       which the cell is not split.
+
+By default, in the regression mode of the R package randomForest, the pa-
+rameter mtry is set to p/3 ( · is the ceiling function), an is set to n, and
+nodesize is set to 5. The role and influence of these three parameters on
+the accuracy of the method will be thoroughly discussed in the next section.
+
+We still have to describe how the CART-split criterion operates. As for now,
+we consider for the ease of understanding a tree with no subsampling, which
+uses the entire and original data set Dn for its construction. Also, we let A
+be a generic cell and denote by Nn(A) the number of data points falling in A.
+A cut in A is a pair (j, z), where j is some value (dimension) from {1, . . . , p}
+and z the position of the cut along the j-th coordinate, within the limits of
+A. Let CA be the set of all such possible cuts in A. Then, with the notation
+
+                                                6
+    Algorithm 1: Breiman's random forest predicted value at x.
+
+    Input: Training set Dn, number of trees M > 0, an  {1, . . . , n},
+              mtry  {1, . . . , p}, nodesize  {1, . . . , an}, and x  X .
+
+    Output: Prediction of the random forest at x.
+
+1 for j = 1, . . . , M do
+
+2 Select an points, with (or without) replacement, uniformly in Dn. In the
+       following steps, only these an observations are used.
+
+3 Set P = (X ) the list containing the cell associated with the root of the
+
+    tree.
+
+4 Set Pfinal =  an empty list.
+5 while P =  do
+
+6   Let A be the first element of P.
+
+7   if A contains less than nodesize points or if all Xi  A are equal
+
+    then
+
+8          Remove the cell A from the list P.
+
+9          Pfinal  Concatenate(Pfinal, A).
+
+10  else
+
+11         Select uniformly, without replacement, a subset Mtry  {1, . . . ,
+
+           p} of cardinality mtry.
+
+12         Select the best split in A by optimizing the CART-split criterion
+
+           along the coordinates in Mtry (see text for details).
+
+13         Cut the cell A according to the best split. Call AL and AR the
+
+           two resulting cells.
+
+14         Remove the cell A from the list P.
+
+15         P  Concatenate(P, AL, AR).
+
+16  end
+
+17 end
+
+18 Compute the predicted value mn(x; j, Dn) at x equal to the average of
+        the Yi falling in the cell of x in partition Pfinal.
+
+19 end
+
+20 Compute the random forest estimate mM,n(x; 1, . . . , M , Dn) at the query
+   point x according to (1).
+
+    Xi = (Xi(1), . . . , Xi(p)), for any (j, z)  CA, the CART-split criterion takes the
+
+                                    7
+form
+
+                    1  n
+Lreg,n(j, z) =
+      Nn(A) i=1           (Yi - Y¯A)21XiA
+
+            1             n
+      -
+                             (Yi - Y¯AL 1X(j)<z - Y¯AR 1X(j)z)21XiA, (2)
+      Nn(A) i=1 i i
+
+where AL = {x  A : x(j) < z}, AR = {x  A : x(j)  z}, and Y¯A
+(resp., Y¯AL, Y¯AR) is the average of the Yi belonging to A (resp., AL, AR),
+with the convention that the average is equal to 0 when no point Xi belongs
+
+to A (resp., AL, AR). For each cell A, the best cut (jn, zn) is selected by
+maximizing Lreg,n(j, z) over Mtry and CA; that is,
+
+                       (jn, zn)  arg max Lreg,n(j, z).
+
+                                            jMtry
+                                           (j,z)CA
+
+(To remove some of the ties in the argmax, the best cut is always performed
+in the middle of two consecutive data points.) Let us finally notice that the
+above optimization program extends effortlessly to the resampling case, by
+optimizing over the an preselected observations instead of the original data
+set Dn.
+
+Thus, at each cell of each tree, the algorithm chooses uniformly at random
+mtry coordinates in {1, . . . , p}, evaluates criterion (2) over all possible cuts
+along the directions in Mtry, and returns the best one. The quality measure
+(2) is the criterion used in the influential CART algorithm of Breiman et al.
+(1984). This criterion computes the (renormalized) difference between the
+empirical variance in the node before and after a cut is performed. There
+are three essential differences between CART and a tree of Breiman's (2001)
+forest. First of all, in Breiman's forests, the criterion (2) is evaluated over a
+subset Mtry of randomly selected coordinates, and not over the whole range
+{1, . . . , p}. Besides, the individual trees are not pruned, and the final cells
+do not contain more than nodesize observations (unless all data points in
+the cell have the same Xi). At last, each tree is constructed on a subset of
+an examples picked within the initial sample, not on the whole sample Dn;
+and only these an observations are used to calculate the estimation. When
+an = n (and the resampling is done with replacement), the algorithm runs
+in bootstrap mode, whereas an < n corresponds to subsampling (with or
+without replacement).
+
+                             8
+2.3 Supervised classification
+
+For simplicity, we only consider here the binary classification problem, keep-
+ing in mind that random forests are intrinsically capable of dealing with
+multi-class problems (see, e.g., D´iaz-Uriarte and de Andr´es, 2006). In this
+setting (Devroye et al., 1996), the random response Y takes values in {0, 1}
+and, given X, one has to guess the value of Y . A classifier, or classification
+rule, mn is a Borel measurable function of X and Dn that attempts to es-
+timate the label Y from X and Dn. In this framework, one says that the
+classifier mn is consistent if its conditional probability of error
+
+                            L(mn) = P[mn(X) = Y ]  L ,
+
+                                                                                         n
+
+where L is the error of the optimal--but unknown--Bayes classifier:
+
+m (x) =         1 if P[Y = 1|X = x] > P[Y = 0|X = x]
+                0 otherwise.
+
+In the classification context, the random forest classifier is obtained via a
+majority vote among the classification trees, that is,
+
+mM,n(x; 1, . . . , M , Dn) =  1 if M j=1 1 M mn(x; j, Dn) > 1/2
+                              0 otherwise.
+
+If a leaf represents region A, then a randomized tree classifier takes the simple
+form
+
+mn(x; j, Dn) =  1 if iDn() 1XiA,Yi=1 >  iDn() 1XiA,Yi=0, x  A
+                0 otherwise,
+
+where Dn() contains the data points selected in the resampling step. That
+is, in each leaf, a majority vote is taken over all (Xi, Yi) for which Xi is in the
+same region. Ties are broken, by convention, in favor of class 0. Algorithm
+1 can be easily adapted to do classification by modifying the CART-split
+criterion for the binary setting. To see this, let us consider a single tree with
+no subsampling step. For any generic cell A, let p0,n(A) (resp., p1,n(A)) be
+the empirical probability of a data point in the cell A having label 0 (resp.,
+label 1). Then, for any (j, z)  CA, the classification CART-split criterion
+reads
+
+           Lclass,n(j, z) = p0,n(A)p1,n(A) - Nn(AL) × p0,n(AL)p1,n(AL)
+                                                    Nn(A)
+
+                                - Nn(AR) × p0,n(AR)p1,n(AR).
+                                    Nn(A)
+
+                              9
+This criterion is based on the so-called Gini impurity measure 2p0,n(A)p1,n(A)
+(Breiman et al., 1984), which has the following simple interpretation. To
+classify a data point that falls in cell A, one uses the rule that assigns a
+point, uniformly selected from {Xi  A : (Xi, Yi)  Dn}, to label with
+probability p ,n(A), for j  {0, 1}. The estimated probability that the item
+has actually label is p ,n(A). Therefore the estimated error under this rule
+is the Gini index 2p0,n(A)p1,n(A).
+
+We note that whenever Y  {0, 1}, optimizing the classification criterion
+Lclass,n is equivalent to optimizing its regression counterpart Lreg,n. Thus, in
+this case, the trees obtained with Lclass,n and Lreg,n are identical. However,
+the prediction strategy is different: in the classification regime, each tree uses
+a local majority vote, whereas in regression the prediction is achieved by a
+local averaging.
+
+When dealing with classification problems, it is usually recommended to set
+                                  
+
+nodesize = 1 and mtry = p (see, e.g., Liaw and Wiener, 2002).
+
+We draw attention to the fact that regression estimation may also have an
+interest in the context of dichotomous and multicategory outcome variables
+(in this case, it is often termed probability estimation). For example, esti-
+mating outcome probabilities for individuals is important in many areas of
+medicine, with applications to surgery, oncology, internal medicine, pathol-
+ogy, pediatrics, and human genetics. We refer the interested reader to Malley
+et al. (2012) and to the survey papers by Kruppa et al. (2014a) and Kruppa
+et al. (2014b).
+
+2.4 Parameter tuning
+
+Literature focusing on tuning the parameters M , mtry, nodesize and an is
+unfortunately rare, with the notable exception of D´iaz-Uriarte and de Andr´es
+(2006), Bernard et al. (2008), and Genuer et al. (2010). According to Schwarz
+et al. (2010), tuning the forest parameters may result in a computational bur-
+den, in particular for big data sets, with hundreds and thousands of samples
+and variables. To circumvent this issue, Schwarz et al. (2010) implement a
+fast version of the original algorithm, which they name Random Jungle.
+
+It is easy to see that the forest's variance decreases as M grows. Thus, more
+accurate predictions are likely to be obtained by choosing a large number of
+trees. Interestingly, picking a large M does not lead to overfitting. In effect,
+
+                                               10
+following an argument of Breiman (2001), we have
+
+        lim E[mM,n(X; 1, . . . , M ) - m(X)]2 = E[m,n(X) - m(X)]2.
+
+           n
+
+However, the computational cost for inducing a forest increases linearly with
+M , so a good choice results from a trade-off between computational complex-
+ity (M should not be too large for the computations to finish in a reasonable
+time) and accuracy (M must be large enough for predictions to be stable).
+In this respect, D´iaz-Uriarte and de Andr´es (2006) argue that the value of
+M is irrelevant (provided that M is large enough) in a prediction problem
+involving microarray data sets, where the aim is to classify patients according
+to their genetic profiles (typically, less than one hundred patients for several
+thousand genes). For more details we refer the reader to Genuer et al. (2010),
+who offer a thorough discussion on the choice of this parameter in various
+regression problems. Another interesting and related approach is by Latinne
+et al. (2001), who propose a simple procedure that determines a priori a min-
+imum number of tree estimates to combine in order to obtain a prediction
+accuracy level similar to that of a larger forest. Their experimental results
+show that it is possible to significantly limit the number of trees.
+
+In the R package randomForest, the default value of the parameter nodesize
+is 1 for classification and 5 for regression. These values are often reported
+to be good choices (e.g., D´iaz-Uriarte and de Andr´es, 2006), despite the fact
+that this is not supported by solid theory. A simple algorithm to tune the
+parameter nodesize in the classification setting is discussed in Kruppa et al.
+(2013).
+
+The effect of mtry is thoroughly investigated in D´iaz-Uriarte and de Andr´es
+(2006), who show that this parameter has a little impact on the performance
+of the method, though larger values may be associated with a reduction in
+the predictive performance. On the other hand, Genuer et al. (2010) claim
+that the default value of mtry is either optimal or too small. Therefore, a
+conservative approach is to take mtry as large as possible (limited by available
+computing resources) and set mtry = p (recall that p is the dimension of the
+Xi). A data-driven choice of mtry is implemented in the algorithm Forest-RK
+of Bernard et al. (2008).
+
+Let us finally notice that even if there is no theoretical guarantee to sup-
+port the default values of the parameters, they are nevertheless easy to tune
+without requiring an independent validation set. Indeed, the procedure ac-
+curacy is estimated internally, during the run, as follows. Since each tree is
+constructed using a different bootstrap sample from the original data, about
+
+                                               11
+one-third of the observations are left out of the bootstrap sample and not
+used in the construction of the j-th tree. In this way, for each tree, a test
+set--disjoint from the training set--is obtained, and averaging over all these
+left-out data points and over all trees is known as the out-of-bag error esti-
+mate. Thus, the out-of-bag error, computed on the observations set aside by
+the resampling prior to the tree building, offers a simple way to adjust the
+parameters without the need of a validation set. (e.g., Kruppa et al., 2013).
+
+3 Simplified models and local averaging esti-
+     mates
+
+3.1 Simplified models
+
+Despite their widespread use, a gap remains between the theoretical under-
+standing of random forests and their practical performance. This algorithm,
+which relies on complex data-dependent mechanisms, is difficult to analyze
+and its basic mathematical properties are still not well understood.
+
+As observed by Denil et al. (2014), this state of affairs has led to polarization
+between theoretical and empirical contributions to the literature. Empiri-
+cally focused papers describe elaborate extensions to the basic random forest
+framework but come with no clear guarantees. In contrast, most theoretical
+papers focus on simplifications or stylized versions of the standard algorithm,
+where the mathematical analysis is more tractable.
+
+A basic framework to assess the theoretical properties of forests involves mod-
+els in which trees are designed independently of the training set Dn. This
+family of simplified models is often called purely random forests, for which
+X = [0, 1]d. A widespread example is the centered forest, whose principle is
+as follows: (i) there is no resampling step; (ii) at each node of each individ-
+ual tree, a coordinate is uniformly chosen in {1, . . . , p}; and (iii) a split is
+performed at the center of the cell along the selected coordinate. The opera-
+tions (ii)-(iii) are recursively repeated k times, where k  N is a parameter
+of the algorithm. The procedure stops when a full binary tree with k levels
+is reached, so that each tree ends up with exactly 2k leaves. The final esti-
+mation at the query point x is achieved by averaging the Yi corresponding
+to the Xi in the cell of x. The parameter k acts as a smoothing parameter
+that controls the size of the terminal cells (see Figure 1 for an example in
+two dimensions). It should be chosen large enough in order to detect lo-
+cal changes in the distribution, but not too much to guarantee an effective
+
+                                               12
+averaging process in the leaves. In uniform random forests, a variant of cen-
+tered forests, cuts are performed uniformly at random over the range of the
+selected coordinate, not at the center. Modulo some minor modifications,
+their analysis is similar.
+
+  6,2           5,5
+6,8    5,7
+
+7,1 6,0 5,7
+
+             5,3
+
+   5,8               15,1  16,2
+4,9                                  14,8
+
+                                         16,9
+                           18 17,1
+
+                         Figure 1: A centered tree at level 2.
+
+The centered forest rule was first formally analyzed by Breiman (2004), and
+then later by Biau et al. (2008) and Scornet (2015a), who proved that the
+method is consistent (both for classification and regression) provided k  
+and n/2k  . The proof relies on a general consistency result for random
+trees stated in Devroye et al. (1996, Chapter 6). If X is uniformly distributed
+in X = [0, 1]p, then there are on average about n/2k data points per terminal
+node. In particular, the choice k  log n corresponds to obtaining a small
+number of examples in the leaves, in accordance with Breiman's (2001) idea
+that the individual trees should not be pruned. Unfortunately, this choice
+of k does not satisfy the condition n/2k  , so something is lost in the
+analysis. Moreover, the bagging step is absent, and forest consistency is
+obtained as a by-product of tree consistency. Overall, this model does not
+demonstrate the benefit of using forests in place of individual trees and is
+too simple to explain the mathematical forces driving Breiman's forests.
+
+The rates of convergence of centered forests are discussed in Breiman (2004)
+and Biau (2012). In their approach, the covariates X(j) are independent and
+the target regression function m(x) = E[Y |X = x], which is originally a
+function of x = (x(1), . . . , x(p)), is assumed to depend only on a nonempty
+subset S (for Strong) of the p features. Thus, letting XS = (X(j) : j  S),
+
+                                               13
+we have
+
+         m(x) = E[Y |XS = xS].
+
+The variables of the remaining set {1, . . . , p}\S have no influence on the
+function m and can be safely removed. The ambient dimension p can be large,
+much larger than the sample size n, but we believe that the representation is
+sparse, i.e., that a potentially small number of arguments of m are active--
+the ones with indices matching the set S. Letting |S| be the cardinality of
+S, the value |S| characterizes the sparsity of the model: the smaller |S|, the
+sparser m. In this dimension-reduction scenario, Breiman (2004) and Biau
+(2012) proved that if the probability pj,n of splitting along the j-th direction
+tends to 1/S and m satisfies a Lipschitz-type smoothness condition, then
+
+         E [m,n(X) - m(X)]2 = O n |S| log 2+0.75 -0.75 .
+
+This equality shows that the rate of convergence of m,n to m depends only
+on the number |S| of strong variables, not on the dimension p. This rate is
+strictly faster than the usual rate n-2/(p+2) as soon as |S|  0.54p ( · is the
+floor function). In effect, the intrinsic dimension of the regression problem
+is |S|, not p, and we see that the random forest estimate adapts itself to the
+sparse framework. Of course, this is achieved by assuming that the procedure
+succeeds in selecting the informative variables for splitting, which is indeed
+a strong assumption.
+
+An alternative model for pure forests, called purely uniform random forests
+(PURF) is discussed in Genuer (2012). For p = 1, a PURF is obtained by
+drawing k random variables uniformly on [0, 1], and subsequently dividing
+[0, 1] into random sub-intervals. (Note that as such, the PURF can only be
+defined for p = 1.). Although this construction is not exactly recursive, it is
+equivalent to growing a decision tree by deciding at each level which node to
+split with a probability equal to its length. Genuer (2012) proves that PURF
+are consistent and, under a Lipschitz assumption, that the estimate satisfies
+
+                          E[m,n(X) - m(X)]2 = O n-2/3 .
+
+This rate is minimax over the class of Lipschitz functions (Stone, 1980, 1982).
+
+It is often acknowledged that random forests reduce the estimation error of a
+single tree, while maintaining the same approximation error. In this respect,
+Biau (2012) argues that the estimation error of centered forests tends to
+zero (at the slow rate 1/ log n) even if each tree is fully grown (i.e., k 
+log n). This result is a consequence of the tree-averaging process, since the
+estimation error of an individual fully grown tree does not tend to zero.
+
+         14
+Unfortunately, the choice k  log n is too large to ensure consistency of the
+corresponding forest, whose approximation error remains constant. Similarly,
+Genuer (2012) shows that the estimation error of PURF is reduced by a
+factor of 0.75 compared to the estimation error of individual trees. The
+most recent attempt to assess the gain of forests in terms of estimation and
+approximation errors is by Arlot and Genuer (2014), who claim that the
+rate of the approximation error of certain models is faster than that of the
+individual trees.
+
+3.2 Forests, neighbors and kernels
+
+Let us consider a sequence of independent and identically distributed ran-
+dom variables X1, . . . , Xn. In random geometry, an observation Xi is said to
+be a layered nearest neighbor (LNN) of a point x (from X1, . . . , Xn) if the
+hyperrectangle defined by x and Xi contains no other data points (Barndorff-
+Nielsen and Sobel, 1966; Bai et al., 2005; see also Devroye et al., 1996, Chap-
+ter 11, Problem 6). As illustrated in Figure 2, the number of LNN of x is
+typically larger than one and depends on the number and configuration of
+the sample points.
+
+Surprisingly, the LNN concept is intimately connected to random forests that
+ignore the resampling step. Indeed, if exactly one point is left in the leaves
+and if there is no resampling, then no matter what splitting strategy is used,
+the forest estimate at x is a weighted average of the Yi whose corresponding
+Xi are LNN of x. In other words,
+
+n
+
+m,n(x) = Wni(x)Yi,                         (3)
+
+i=1
+
+where the weights (Wn1, . . . , Wnn) are nonnegative functions of the sample
+Dn that satisfy Wni(x) = 0 if Xi is not a LNN of x and i=1 n Wni = 1.
+This important connection was first pointed out by Lin and Jeon (2006),
+who proved that if X is uniformly distributed on [0, 1]p then, provided tree
+
+growing is independent of Y1, . . . , Yn (such simplified models are sometimes
+called non-adaptive), we have
+
+E [m,n(X) - m(X)]2 = O nmax(log n)p-1 1 ,
+
+where nmax is the maximal number of points in the terminal cells (Biau and
+Devroye, 2010, extended this inequality to the case where X has a density on
+
+15
+Figure 2: The layered nearest neighbors (LNN) of a point x in dimension
+p = 2.
+
+[0, 1]p). Unfortunately, the exact values of the weight vector (Wn1, . . . , Wnn)
+attached to the original random forest algorithm are unknown, and a general
+theory of forests in the LNN framework is still undeveloped.
+
+It remains however that equation (3) opens the way to the analysis of random
+forests via a local averaging approach, i.e., via the average of those Yi for
+which Xi is "close" to x (Gyo¨rfi et al., 2002). Indeed, observe starting from
+(1), that for a finite forest with M trees and without resampling, we have
+
+            1M                           n Yi1XiAn(x;j )
+mM,n(x; 1, . . . , M ) = M                                 ,
+                            j=1 i=1      Nn(x; j)
+
+where An(x; j) is the cell containing x and Nn(x; j) =    i=1 n 1XiAn(x;j )
+is the number of data points falling in An(x; j). Thus,
+
+                                                n
+
+mM,n(x; 1, . . . , M ) = Wni(x)Yi,
+
+                                               i=1
+
+where the weights Wni(x) are defined by
+
+1 M 1XiAn(x;j )
+Wni(x) = M                                             .
+            j=1                          Nn(x; j)
+
+It is easy to see that the Wni are nonnegative and sum to one if the cell
+containing x is not empty. Thus, the contribution of observations falling
+
+            16
+into cells with a high density of data points is smaller than the contribution
+of observations belonging to less-populated cells. This remark is especially
+true when the forests are built independently of the data set--for example,
+PURF--since, in this case, the number of examples in each cell is not con-
+trolled. Next, if we let M tend to infinity, then the estimate m,n may be
+written (up to some negligible terms)
+
+                     i=1 n YiKn(Xi, x)
+                     m,n(x)  n                ,                      (4)
+                     j=1 Kn(Xj, x)
+
+where
+
+                     Kn(x, z) = P [z  An(x, )] .
+
+The function Kn(·, ·) is called the kernel and characterizes the shape of the
+"cells" of the infinite random forest. The quantity Kn(x, z) is nothing but
+the probability that x and z are connected (i.e., they fall in the same cell) in
+a random tree. Therefore, the kernel Kn can be seen as a proximity measure
+between two points in the forest. Hence, any forest has its own metric Kn,
+but unfortunately the one associated with the CART-splitting strategy is
+strongly data-dependent and therefore complicated to work with.
+
+It should be noted that Kn does not necessarily belong to the family of
+Nadaraya-Watson-type kernels (Nadaraya, 1964; Watson, 1964), which sat-
+
+isfy a translation-invariant homogeneous property of the form Kh(x, z) =
+h1 K((x - z)/h) for some smoothing parameter h > 0. The analysis of esti-
+mates of the form (4) is, in general, more complicated, depending of the type
+
+of forest under investigation. For example, Scornet (2015b) proved that for
+a centered forest defined on [0, 1]p with parameter k, we have
+
+       Kn,k(x, z) =                k!         1 kp
+                     k1,...,kp k1! . . . kp!  p 1 2kj xj = 2kj zj .
+
+                     j=1 p kj =k                      j=1
+
+As an illustration, Figure 3 shows the graphical representation for k = 1, 2
+and 5 of the function fk defined by
+
+       fk : [0, 1] × [0, 1]  [0, 1]
+              z = (z1, z2)  Kn,k ( 12 , 12 ), z .
+
+The connection between forests and kernel estimates is mentioned in Breiman
+(2000a) and developed in detail in Geurts et al. (2006). The most recent ad-
+vances in this direction are by Arlot and Genuer (2014), who show that a
+simplified forest model can be written as a kernel estimate, and provide its
+
+                     17
+               Figure 3: Representations of f1, f2 and f5 in [0, 1]2.
+
+rates of convergence. On the practical side, Davies and Ghahramani (2014)
+plug a specific (random forest-based) kernel--seen as a prior distribution
+over the piecewise constant functions--into a standard Gaussian process al-
+gorithm, and empirically demonstrate that it outperforms the same algorithm
+ran with linear and radial basis kernels. Besides, forest-based kernels can be
+used as the input for a large variety of existing kernel-type methods such as
+Kernel Principal Component Analysis and Support Vector Machines.
+
+4 Theory for Breiman's forests
+
+This section deals with Breiman's (2001) original algorithm. Since the con-
+struction of Breiman's forests depends on the whole sample Dn, a mathe-
+matical analysis of the entire algorithm is difficult. To move forward, the
+individual mechanisms at work in the procedure have been investigated sep-
+
+                                               18
+arately, namely the resampling step and the splitting scheme.
+
+4.1 The resampling mechanism
+
+The resampling step in Breiman's (2001) original algorithm is performed by
+choosing n times from n points with replacement to compute the individual
+tree estimates. This procedure, which traces back to the work of Efron (1982)
+(see also Politis et al., 1999), is called the bootstrap in the statistical literature.
+The idea of generating many bootstrap samples and averaging predictors is
+called bagging (bootstrap-aggregating). It was suggested by Breiman (1996)
+as a simple way to improve the performance of weak or unstable learners.
+Although one of the great advantages of the bootstrap is its simplicity, the
+theory turns out to be complex. In effect, the distribution of the bootstrap
+sample Dn is different from that of the original one Dn, as the following
+example shows. Assume that X has a density, and note that whenever the
+data points are sampled with replacement then, with positive probability, at
+least one observation from the original sample is selected more than once.
+Therefore, with positive probability, there exist two identical data points in
+Dn, and the distribution of Dn cannot be absolutely continuous.
+
+The role of the bootstrap in random forests is still poorly understood and, to
+date, most analyses are doomed to replace the bootstrap by a subsampling
+scheme, assuming that each tree is grown with an < n examples randomly
+chosen without replacement from the initial sample (Mentch and Hooker,
+2015; Wager, 2014; Scornet et al., 2015). Most of the time, the subsampling
+rate an/n is assumed to tend to zero at some prescribed rate--an assumption
+that excludes de facto the bootstrap regime. In this respect, the analysis of
+so-called median random forests by Scornet (2015a) provides some insight as
+to the role and importance of subsampling.
+
+A median forest resembles a centered forest. Once the splitting direction is
+chosen, the cut is performed at the empirical median of the Xi in the cell. In
+addition, the construction does not stop at level k but continues until each cell
+contains exactly one observation. Since the number of cases left in the leaves
+does not grow with n, each tree of a median forest is in general inconsistent
+(see Gy¨orfi et al., 2002, Problem 4.3). However, Scornet (2015a) shows that
+if an/n  0, then the median forest is consistent, despite the fact that the
+individual trees are not. The assumption an/n  0 guarantees that every
+single observation pair (Xi, Yi) is used in the j-th tree's construction with a
+probability that becomes small as n grows. It also forces the query point x
+to be disconnected from (Xi, Yi) in a large proportion of trees. Indeed, if this
+
+                                               19
+were not the case, then the predicted value at x would be overly influenced
+by the single pair (Xi, Yi), which would make the ensemble inconsistent.
+In fact, the estimation error of the median forest estimate is small as soon
+as the maximum probability of connection between the query point and all
+observations is small. Thus, the assumption an/n  0 is but a convenient
+way to control these probabilities, by ensuring that partitions are dissimilar
+enough.
+
+Biau and Devroye (2010) noticed that Breiman's bagging principle has a
+simple application in the context of nearest neighbor methods. Recall that
+the 1-nearest neighbor (1-NN) regression estimate sets rn(x) = Y(1)(x), where
+Y(1)(x) corresponds to the feature vector X(1)(x) whose Euclidean distance
+to x is minimal among all X1, . . . , Xn. (Ties are broken in favor of smallest
+indices.) It is clearly not, in general, a consistent estimate (Devroye et al.,
+1996, Chapter 5). However, by subbagging, one may turn the 1-NN estimate
+into a consistent one, provided that the size of subsamples is sufficiently
+small. We proceed as follows, via a randomized basic regression estimate ran
+in which 1  an < n is a parameter. The elementary predictor ran is the 1-NN
+rule for a random subsample of size an drawn with (or without) replacement
+from Dn. We apply subbagging, that is, we repeat the random subsampling
+an infinite number of times and take the average of the individual outcomes.
+Thus, the subbagged regression estimate rn is defined by
+
+                                    rn(x) = E [ran(x)] ,
+
+where E denotes expectation with respect to the resampling distribution,
+conditional on the data set Dn. Biau and Devroye (2010) proved that the es-
+timate rn is universally (i.e., without conditions on the distribution of (X, Y ))
+mean squared consistent, provided an   and an/n  0. The proof relies
+on the observation that rn is in fact a local averaging estimate (Stone, 1977)
+with weights
+
+      Wni(x) = P[Xi is the 1-NN of x in a random selection of size an].
+
+The connection between bagging and nearest neighbor estimation is further
+explored by Biau et al. (2010), who prove that the subbagged estimate rn
+achieves optimal rate of convergence over Lipschitz smoothness classes, inde-
+pendently from the fact that resampling is done with or without replacement.
+
+4.2 Decision splits
+
+The coordinate-split process of the random forest algorithm is not easy to
+grasp, essentially because it uses both the Xi and Yi variables to make its
+
+                                               20
+decision. Building upon the ideas of Bu¨hlmann and Yu (2002), Banerjee and
+McKeague (2007) establish a limit law for the split location in the context
+of a regression model of the form Y = m(X) + , where X is real-valued
+and  an independent Gaussian noise. In essence, their result is as follows.
+Assume for now that the distribution of (X, Y ) is known, and denote by d
+the (optimal) split that maximizes the theoretical CART-criterion at a given
+node. In this framework, the regression estimate restricted to the left (resp.,
+right) child of the cell takes the form
+
+ ,n = E[Y |X  d ] resp., r,n = E[Y |X > d ] .
+
+When the distribution of (X, Y ) is unknown, so are  , r and d , and these
+quantities are estimated by their natural empirical counterparts:
+
+                                                n                                                2
+
+(^ ,n, ^r,n, d^n)  arg min                         Yi -  1Xid - r1Xi>d .
+
+                                  ,r,d i=1
+
+Assuming that the model satisfies some regularity assumptions (in particu-
+lar, X has a density f , and both f and m are continuously differentiable),
+Banerjee and McKeague (2007) prove that
+
+ ^ ,n -            D  
+                         c1
+n1/3                                                arg max(aW (t) - bt2),
+       ^r,n - r         c2                                                                          (5)
+
+       d^n - d          1                          t
+
+where D denotes convergence in distribution, and W is a standard two-sided
+Brownian motion process on the real line. Both a and b are positive con-
+stants that depend upon the model parameters and the unknown quantities
+ , r and d . The limiting distribution in (5) allows one to construct confi-
+dence intervals for the position of CART-splits. Interestingly, Banerjee and
+McKeague (2007) refer to the study of Qian et al. (2003) on the effects of
+phosphorus pollution in the Everglades, which uses split points in a novel
+way. There, the authors identify threshold levels of phosphorus concentra-
+tion that are associated with declines in the abundance of certain species. In
+their approach, split points are not just a means to build trees and forests,
+but can also provide important information on the structure of the underlying
+distribution.
+
+A further analysis of the behavior of forest splits is performed by Ishwaran
+(2013), who argues that the so-called End-Cut Preference (ECP) of the
+CART-splitting procedure (that is, the fact that splits along non-informative
+
+                        21
+variables are likely to be near the edges of the cell--see Breiman et al., 1984)
+can be seen as a desirable property. Given the randomization mechanism
+at work in forests, there is indeed a positive probability that none of the
+preselected variables at a node are informative. When this happens, and if
+the cut is performed, say, at the center of a side of the cell (assuming that
+X = [0, 1]d), then the sample size of the two resulting cells is drastically
+reduced by a factor of two--this is an undesirable property, which may be
+harmful for the prediction task. Thus, Ishwaran (2013) stresses that the
+ECP property ensures that a split along a noisy variable is performed near
+the edge, thus maximizing the tree node sample size and making it possible
+for the tree to recover from the split downstream. Ishwaran (2013) claims
+that this property can be of benefit even when considering a split on an in-
+formative variable, if the corresponding region of space contains little signal.
+
+It is shown in Scornet et al. (2015) that random forests asymptotically per-
+form, with high probability, splits along the S informative variables (in the
+sense of Section 3.1). Denote by jn,1(X), . . . , jn,k(X) the first k cut direc-
+tions used to construct the cell of X, with the convention that jn,q(X) = 
+if the cell has been cut strictly less than q times. Assuming some regular-
+ity conditions on the regression model, and considering a modification of
+Breiman's forests in which all directions are preselected for splitting, Scornet
+et al. (2015) prove that, with probability 1 - , for all n large enough and all
+1  q  k,
+
+                                   jn,q(X)  {1, . . . , S}.
+
+This result offers an interesting perspective on why random forests nicely
+adapt to the sparsity setting. Indeed, it shows that the algorithm selects
+splits mostly along the S informative variables, so that everything happens
+as if data were projected onto the vector space spanned by these variables.
+
+There exists a variety of random forest variants based on the CART-criterion.
+For example, the Extra-Tree algorithm of Geurts et al. (2006) consists in ran-
+domly selecting a set of split points and then choosing the split that maxi-
+mizes the CART-criterion. This algorithm has similar accuracy performance
+while being more computationally efficient. In the PERT (Perfect Ensemble
+Random Trees) approach of Cutler and Zhao (2001), one builds perfect-fit
+classification trees with random split selection. While individual trees clearly
+overfit, the authors claim that the whole procedure is eventually consistent
+since all classifiers are believed to be almost uncorrelated. As a variant of the
+original algorithm, Breiman (2001) considered splitting along linear combi-
+nations of features (this procedure has been implemented by Truong, 2009,
+
+                                               22
+in the package obliquetree of the statistical computing environment R). As
+noticed by Menze et al. (2011), the feature space separation by orthogonal
+hyperplanes in random forests results in box-like decision surfaces, which
+may be advantageous for some data but suboptimal for other, particularly
+for collinear data with correlated features .
+
+With respect to the tree building process, selecting uniformly at each cell a
+set of features for splitting is simple and convenient, but such procedures in-
+evitably select irrelevant variables. Therefore, several authors have proposed
+modified versions of the algorithm that incorporate a data-driven weighing
+of variables. For example, Kyrillidis and Zouzias (2014) study the effec-
+tiveness of non-uniform randomized feature selection in classification tree,
+and experimentally show that such an approach may be more effective com-
+pared to naive uniform feature selection. Enriched Random Forests, designed
+by Amaratunga et al. (2008) choose at each node the eligible subsets by
+weighted random sampling with the weights tilted in favor of informative
+features. Similarly, the Reinforcement Learning Trees (RLT) of Zhu et al.
+(2015) build at each node a random forest to determine the variable that
+brings the greatest future improvement in later splits, rather than choosing
+the one with largest marginal effect from the immediate split. Splits in ran-
+dom forests are known to be biased toward covariates with many possible
+splits (Breiman et al., 1984; Segal, 1988) or with missing values (Kim and
+Loh, 2001). Hothorn et al. (2006) propose a two-step procedure to correct
+this situation by first selecting the splitting variable and then the position
+of the cut along the chosen variable. The predictive performance of the re-
+sulting trees is empirically shown to be as good as the performance of the
+exhaustive search procedure. We also refer the reader to Ziegler and Ko¨nig
+(2014), who review the different splitting strategies.
+
+Choosing weights can also be done via regularization. Deng and Runger
+(2012) propose a Regularized Random Forest (RRF), which penalizes select-
+ing a new feature for splitting when its gain is similar to the features used in
+previous splits. Deng and Runger (2013) suggest a Guided RRF (GRRF), in
+which the importance scores from an ordinary random forest are used to guide
+the feature selection process in RRF. Lastly, a Garrote-style convex penalty,
+proposed by Meinshausen (2009), selects functional groups of nodes in trees,
+yielding to parcimonious estimates. We also mention the work of Konukoglu
+and Ganz (2014) who address the problem of controlling the false positive
+rate of random forests and present a principled way to determine thresholds
+for the selection of relevant features without any additional computational
+load.
+
+                                               23
+4.3 Consistency, asymptotic normality, and more
+
+All in all, little has been proven mathematically for the original procedure
+of Breiman. A seminal result by Breiman (2001) shows that the error of the
+forest is small as soon as the predictive power of each tree is good and the
+correlation between the tree errors is low. More precisely, independently of
+the type of forest, one has
+
+       EX,Y [Y - m,n(X)]2  ¯ E,X,Y [Y - mn(X; )]2,
+
+where
+
+       ¯ =  E, [(,  )g()g( )]  ,
+
+            E[g()]2
+
+with  and  independent and identically distributed,
+
+       (,  ) = CorrX,Y Y - mn(X; ), Y - mn(X;  ) ,
+
+and g() = EX,Y [Y - mn(X; )]2. Similarly, Friedman et al. (2009) de-
+compose the variance of the forest as a product of the correlation between
+trees and the variance of a single tree. Thus, for all x,
+
+       Var[m,n(x)] = (x)(x),
+
+where (x) = Corr[mn(x; ), mn(x;  )] and (x) = Var[mn(x; )].
+
+A link between the error of the finite and infinite forests is established in Scor-
+net (2015a), who shows, provided some regularity assumptions are satisfied,
+that
+
+        0  E[mM,n(X; 1, . . . , M ) - m(X)]2 - E[m,n(X) - m(X)]2
+           8 × m  2 + 2(1 + 4 log n) .
+              M
+
+This inequality provides an interesting solution for choosing the number of
+trees, by making the error of the finite forest arbitrary close to that of the
+infinite one.
+
+Consistency and asymptotic normality of the whole algorithm were recently
+proved, replacing bootstrap by subsampling and simplifying the splitting
+step. So, Wager (2014) shows the asymptotic normality of Breiman's infinite
+forests, assuming that (i) cuts are spread along all the p directions and do
+not separate a small fraction of the data set; and (ii) two different data set
+
+            24
+are used to respectively build the tree and estimate the value within a leaf.
+He also establishes that the infinitesimal jackknife (Efron, 1979) consistently
+estimates the forest variance.
+
+Mentch and Hooker (2015) prove a similar result for finite forests, which
+
+mainly relies on the assumption that the prediction of the forests does not
+
+much vary when the label of one point in the training set is slightly modified.
+
+These authors show that whenever Mn (the number of trees) is allowed to
+vary with n, and when an = o( n) and limn n/Mn = 0, then, for a fixed
+
+x,  
+
+      n(mM,n(x; 1, . . . , M ) - E[m,n(x)]) D
+                                                N,
+      a2n1,an
+
+where N is a standard normal random variable,
+
+        1,an = Cov mn(X1, X2, . . . , Xan; ), mn(X1, X2, . . . , Xan;  ) ,
+
+Xi an independent copy of Xi and  an independent copy of . It is worth
+noting that both Mentch and Hooker (2015) and Wager et al. (2014) provide
+corrections for estimating the forest variance 1,an.
+
+Scornet et al. (2015) proved a consistency result in the context of additive
+regression models for the pruned version of Breiman's forest. Unfortunately,
+the consistency of the unpruned procedure comes at the price of a conjecture
+regarding the behavior of the CART algorithm that is difficult to verify.
+
+We close this section with a negative but interesting result due to Biau et al.
+(2008). In this example, the total number k of cuts is fixed and mtry = 1.
+Furthermore, each tree is built by minimizing the true probability of error
+at each node. Consider the joint distribution of (X, Y ) sketched in Figure 4
+and let m(x) = E[Y |X = x]. The variable X has a uniform distribution on
+[0, 1]2  [1, 2]2  [2, 3]2 and Y is a function of X--that is, m(x)  {0, 1} and
+L = 0--defined as follows. The lower left square [0, 1] × [0, 1] is divided into
+countably infinitely many vertical strips in which the strips with m(x) = 0
+and m(x) = 1 alternate. The upper right square [2, 3] × [2, 3] is divided
+similarly into horizontal strips. The middle rectangle [1, 2] × [1, 2] is a 2 × 2
+checkerboard. It is easy to see that no matter what the sequence of random
+selection of split directions is and no matter for how long each tree is grown,
+no tree will ever cut the middle rectangle and therefore the probability of error
+of the corresponding random forest classifier is at least 1/6. This example
+illustrates that consistency of greedily grown random forests is a delicate
+issue. We note however that if Breiman's (2001) original algorithm is used
+in this example (that is, each cell contains exactly one data point) then
+
+      25
+one obtains a consistent classification rule. We also note that the regression
+function m is not Lipschitz--a smoothness assumption on which many results
+on random forests rely.
+
+5 Variable importance
+
+5.1 Variable importance measures
+
+Random forests can be used to rank the importance of variables in regression
+or classification problems via two measures of significance. The first, called
+Mean Decrease Impurity (MDI; see Breiman, 2003a), is based on the total de-
+crease in node impurity from splitting on the variable, averaged over all trees.
+The second, referred to as Mean Decrease Accuracy (MDA), first defined by
+Breiman (2001), stems from the idea that if the variable is not important,
+then rearranging its values should not degrade prediction accuracy.
+
+Set X = (X(1), . . . , X(p)). For a forest resulting from the aggregation of M
+trees, the MDI of the variable X(j) is defined by
+
+MDI(X(j)) = 1        M
+                  M
+                               pn,tLreg,n(jn,t, zn,t),
+
+                     =1 tT
+                          jn,t =j
+
+where pn,t is the fraction of observations falling in the node t, {T }1 M the
+collection of trees in the forest, and (jn,t, zn,t) the split that maximizes the
+empirical criterion (2) in node t. Note that the same formula holds for clas-
+
+sification random forests by replacing the criterion Lreg,n by its classification
+version Lclass,n. Thus, the MDI of X(j) computes the weighted decrease of
+impurity corresponding to splits along the variable X(j) and averages this
+
+quantity over all trees.
+
+The MDA relies on a different principle and uses the out-of-bag error estimate
+
+(see Section 2.4). To measure the importance of the j-th feature, we randomly
+permute the values of variable X(j) in the out-of-bag observations and put
+these examples down the tree. The MDA of X(j) is obtained by averaging
+
+the difference in out-of-bag error estimation before and after the permutation
+over all trees. In mathematical terms, consider a variable X(j) and denote
+by D ,n the out-of-bag data set of the -th tree and D ,n j the same data set
+where the values of X(j) have been randomly permuted. Recall that mn(·;  )
+
+                     26
+stands for the -th tree estimate. Then, by definition,
+
+1                     M
+
+MDA(X(j)) =               Rn mn(·;  ), D ,n - Rn mn(·;  ), D ,n , (6)j
+                   M
+                      =1
+
+where Rn is defined for D = D ,n or D = D ,n j by
+
+                           1                      (Yi - mn(Xi;  ))2.  (7)
+Rn mn(·;  ), D =
+                                 |D|
+                                      i:(Xi,Yi)D
+
+It is easy to see that the population version of MDA(X(j)) is
+
+           MDA (X(j)) = E Y - mn(Xj; ) 2 - E Y - mn(X; ) 2,
+
+where Xj = (X(1), . . . , X (j), . . . , X(p)) and X (j) is an independent copy of
+X(j). For classification purposes, the MDA still satisfies (6) and (7) since
+Yi  {0, 1} (so, Rn(mn(·; ), D) is also the proportion of points that are
+correctly classified by mn(·; ) in D).
+
+5.2 Theoretical results
+
+In the context of a pair of categorical variables (X, Y ), where X takes finitely
+many values in, say, X1 × · · · × Xd, Louppe et al. (2013) consider an infinite
+ensemble of totally randomized and fully developed trees. At each cell, the
+ -th tree is grown by selecting a variable X(j) uniformly among the features
+that have not been used in the parent nodes, and by subsequently dividing
+the cell into |Xj| children (so the number of children equals the number of
+modalities of the selected variable). In this framework, it can be shown that
+the population version of MDI(X(j)) computed with the whole forest satisfies
+
+                            p-1      1                I(X(j); Y |B),
+
+MDI (X(j)) =                     k
+                                 p (p - k) BPk(V -j)
+                            k=0
+
+where V -j = {1, . . . , j - 1, j + 1, . . . , p}, Pk(V -j) the set of subsets of V -j of
+cardinality k, and I(X(j); Y |B) the conditional mutual information of X(j)
+and Y given the variables in B. In addition,
+
+                                      p
+
+                             MDI (X(j)) = I(X(1), . . . , X(p); Y ).
+
+                                    j=1
+
+                                        27
+These results show that the information I(X(1), . . . , X(p); Y ) is the sum of
+the importances of each variable, which can itself be made explicit using the
+information values I(X(j); Y |B) between each variable X(j) and the output
+Y , conditional on variable subsets B of different sizes.
+
+Louppe et al. (2013) define a variable X(j) as irrelevant with respect to B 
+V = X1 × · · · × Xp whenever I(X(j); Y |B) = 0. Thus, X(j) is irrelevant
+with respect to V if and only if MDI (X(j)) = 0. It is easy to see that
+if an additional irrelevant variable X(p+1) is added to the list of variables,
+then, for any j, the variable importance MDI (X(j)) computed with a single
+tree does not change if the tree is built with the new collection of variables
+V  {X(p+1)}. In other words, building a tree with an additional irrelevant
+variable does not alter the importances of the other variables in an infinite
+sample setting.
+
+The most notable results regarding MDA are due to Ishwaran (2007), who
+studies a slight modification of the criterion replacing permutation by feature
+noising. To add noise to a variable X(j), one considers a new observation X,
+take X down the tree and stop when a split is made according to the variable
+X(j). Then the right or left child node is selected with probability 1/2, and
+this procedure is repeated for each subsequent node (whether it is performed
+along the variable X(j) or not). The variable importance MDA (X(j)) is
+still computed by comparing the error of the forest with that of the "noisy"
+forest. Assuming that the forest is consistent and that the regression func-
+tion is piecewise constant, Ishwaran (2007) gives the asymptotic behavior of
+MDA (X(j)) when the sample size tends to infinity. This behavior is inti-
+mately related to the set of subtrees (of the initial regression tree) whose
+roots are split along the coordinate X(j).
+
+Let us lastly mention the approach of Gregorutti et al. (2013), who compute
+the MDA criterion for several distributions of (X, Y ). For example, consider
+a model of the form
+
+                                       Y = m(X) + ,
+
+where (X, ) is a Gaussian random vector, and assume that the correlation
+matrix C satisfies C = [Cov(X(j), X(k))]1j,kp = (1 - c)Ip + c11 (the
+symbol denotes transposition, 1 = (1, . . . , 1) , and c is a constant in
+(0, 1)). Assume, in addition, that Cov(X(j), Y ) = 0 for all j  {1, . . . , p}.
+Then, for all j,
+
+                            MDA (X(j)) = 2 0 2.
+                                                    1 - c + pc
+
+                                               28
+Thus, in the Gaussian setting, the variable importance decreases as the in-
+verse of the square of p when the number of correlated variables p increases.
+
+5.3 Related works
+
+The empirical properties of the MDA criterion have been extensively ex-
+plored and compared in the statistical computing literature. Indeed, Archer
+and Kimes (2008), Strobl et al. (2008), Nicodemus and Malley (2009), Auret
+and Aldrich (2011), and Tolo¸si and Lengauer (2011) stress the negative effect
+of correlated variables on MDA performance. In this respect, Genuer et al.
+(2010) noticed that MDA is less able to detect the most relevant variables
+when the number of correlated features increases. Similarly, the empirical
+study of Archer and Kimes (2008) points out that both MDA and MDI be-
+have poorly when correlation increases--these results have been experimen-
+tally confirmed by Auret and Aldrich (2011) and Tolo¸si and Lengauer (2011).
+An argument of Strobl et al. (2008) to justify the bias of MDA in the presence
+of correlated variables is that the algorithm evaluates the marginal impor-
+tance of the variables instead of taking into account their effect conditional
+on each other. A way to circumvent this issue is to combine random forests
+and the Recursive Feature Elimination algorithm of Guyon et al. (2002), as
+in Gregorutti et al. (2013). Detecting relevant features can also be achieved
+via hypothesis testing (Mentch and Hooker, 2015)--a principle that may be
+used to detect more complex structures of the regression function, like for
+instance its additivity (Mentch and Hooker, 2014).
+
+6 Extensions
+
+Weighted forests. In Breiman's (2001) forests, the final prediction is the
+average of the individual tree outcomes. A natural way to improve the
+method is to incorporate tree-level weights to emphasize more accurate trees
+in prediction (Winham et al., 2013). A closely related idea, proposed by
+Bernard et al. (2012), is to guide tree building--via resampling of the train-
+ing set and other ad hoc randomization procedures--so that each tree will
+complement as much as possible the existing trees in the ensemble. The
+resulting Dynamic Random Forest (DRF) shows significant improvement in
+terms of accuracy on 20 real-based data sets compared to the standard, static,
+algorithm.
+
+                                               29
+Online forests. In its original version, random forests is an offline algo-
+rithm, which is given the whole data set from the beginning and required
+to output an answer. In contrast, online algorithms do not require that the
+entire training set is accessible at once. These models are appropriate for
+streaming settings, where training data is generated over time and must be
+incorporated into the model as quickly as possible. Random forests have been
+extended to the online framework in several ways (Saffari et al., 2009; De-
+nil et al., 2013; Lakshminarayanan et al., 2014). In Lakshminarayanan et al.
+(2014), so-called Mondrian forests are grown in an online fashion and achieve
+competitive predictive performance comparable with other online random
+forests while being faster. When building online forests, a major difficulty
+is to decide when the amount of data is sufficient to cut a cell. Exploring
+this idea, Yi et al. (2012) propose Information Forests, whose construction
+consists in deferring classification until a measure of classification confidence
+is sufficiently high, and in fact break down the data so as to maximize this
+measure. An interesting theory related to these greedy trees can be found in
+Biau and Devroye (2013).
+
+Survival forests. Survival analysis attempts to deal with analysis of time
+duration until one or more events happen. Most often, survival analysis is
+also concerned with incomplete data, and particularly right-censored data,
+in fields such as clinical trials. In this context, parametric approaches such as
+proportional hazards are commonly used, but fail to model nonlinear effects.
+Random forests have been extended to the survival context by Ishwaran et al.
+(2008), who prove consistency of Random Survival Forests (RSF) algorithm
+assuming that all variables are categorical. Yang et al. (2010) showed that
+by incorporating kernel functions into RSF, their algorithm KIRSF achieves
+better results in many situations. Ishwaran et al. (2011) review the use of the
+minimal depth, which measures the predictive quality of variables in survival
+trees.
+
+Ranking forests. Cl´emen¸con et al. (2013) have extended random forests to
+deal with ranking problems and propose an algorithm called Ranking Forests
+based on the ranking trees of Cl´emen¸con and Vayatis (2009). Their approach
+relies on nonparametric scoring and ROC curve optimization in the sense of
+the AUC criterion.
+
+Clustering forests. Yan et al. (2013) present a new clustering ensemble
+method called Cluster Forests (CF) in the context of unsupervised classifi-
+cation. CF randomly probes a high-dimensional data cloud to obtain good
+local clusterings, then aggregates via spectral clustering to obtain cluster
+assignments for the whole data set. The search for good local clusterings
+
+                                               30
+is guided by a cluster quality measure, and CF progressively improves each
+local clustering in a fashion that resembles tree growth in random forests.
+
+Quantile forests. Meinshausen (2006) shows that random forests provide
+information about the full conditional distribution of the response variable,
+and thus can be used for quantile estimation.
+
+Missing data. One of the strengths of random forests is that they can
+handle missing data. The procedure, explained in Breiman (2003b), takes
+advantage of the so-called proximity matrix, which measures the proximity
+between pairs of observations in the forest, to estimate missing values. This
+measure is the empirical counterpart of the kernels defined in Section 3.2.
+Data imputation based on random forests has further been explored by Rieger
+et al. (2010), Crookston and Finley (2008), and extended to unsupervised
+classification by Ishioka (2013).
+
+Single class data. One-class classification is a binary classification task for
+which only one class of samples is available for learning. D´esir et al. (2013)
+study the One Class Random Forests algorithm, which is designed to solve
+this particular problem. Geremia et al. (2013) have introduced a supervised
+learning algorithm called Spatially Adaptive Random Forests to deal with
+semantic image segmentation applied to medical imaging protocols. Lastly,
+in the context of multi-label classification, Joly et al. (2014) adapt the idea
+of random projections applied to the output space to enhance tree-based
+ensemble methods by improving accuracy while significantly reducing the
+computational burden.
+
+Unbalanced data set. Random forests can naturally be adapted to fit
+the unbalanced data framework by down-sampling the majority class and
+growing each tree on a more balanced data set (Chen et al., 2004; Kuhn and
+Johnson, 2013). An interesting application in which unbalanced data sets are
+involved is by Fink et al. (2010), who explore the continent-wide inter-annual
+migrations of common North American birds. They use random forests for
+which each tree is trained and allowed to predict on a particular (random)
+region in space and time.
+
+7 Conclusion and perspectives
+
+The authors trust that this review paper has provided an overview of some of
+the recent literature on random forests and offered insights into how new and
+emerging fields are impacting the method. As statistical applications become
+
+                                               31
+increasingly sophisticated, massive and complex data sets require today the
+development of algorithms that ensure global competitiveness, achieving both
+computational efficiency and safe with high-dimension models and huge num-
+ber of samples. It is our belief that forests and their basic principles ("divide
+and conquer", resampling, aggregation, random search of the feature space)
+offer simple but fundamental ideas that may leverage new state-of-the-art
+algorithms.
+
+It remains however that the present results are insufficient to explain in full
+generality the remarkable behavior of random forests. The authors' intuition
+is that tree aggregation models are able to estimate patterns that are more
+complex than classical ones--patterns that cannot be simply characterized
+by standard sparsity or smoothness conditions. These patterns, which are
+beyond the reach of classical methods, are still to be discovered, quantified,
+and mathematically described.
+
+It is sometimes alluded to that random forests have the flavor of deep net-
+work architectures (e.g., Bengio, 2009), insofar as ensemble of trees allow to
+discriminate between a very large number of regions. Indeed, the identity
+of the leaf node with which a data point is associated for each tree forms a
+tuple that can represent a considerable quantity of possible patterns, because
+the total intersections of the leaf regions can be exponential in the number of
+trees. This point of view, largely unexamined, could be one of the reasons for
+the success of forests on large-scale data. As a matter of fact, the connection
+between random forests and neural networks is largely unexamined (Welbl,
+2014).
+
+Another critical issue is how to choose tuning parameters that are optimal
+in a certain sense, especially the size an of the preliminary resampling. By
+default, the algorithm runs in bootstrap mode (i.e., an = n points selected
+with replacement) and although this seems to give excellent results, there
+is to date no theory to support this choice. Furthermore, although random
+forests are fully grown in most applications, the impact of tree depth on the
+statistical performance of the algorithm is still an open question.
+
+Acknowledgments. We thank the Editors and three anonymous referees
+for valuable comments and insightful suggestions.
+
+                                               32
+References
+
+D. Amaratunga, J. Cabrera, and Y.-S. Lee. Enriched random forests. Bioin-
+  formatics, 24:2010-2014, 2008.
+
+Y. Amit and D. Geman. Shape quantization and recognition with randomized
+  trees. Neural Computation, 9:1545-1588, 1997.
+
+K.J. Archer and R.V. Kimes. Empirical characterization of random forest
+  variable importance measures. Computational Statistics & Data Analysis,
+  52:2249-2260, 2008.
+
+S. Arlot and R. Genuer.   Analysis of purely random forests bias.
+  arXiv:1407.3939, 2014.
+
+L. Auret and C. Aldrich. Empirical comparison of tree ensemble variable
+  importance measures. Chemometrics and Intelligent Laboratory Systems,
+  105:157-170, 2011.
+
+Z.-H. Bai, L. Devroye, H.-K. Hwang, and T.-H. Tsai. Maxima in hypercubes.
+  Random Structures & Algorithms, 27:290-309, 2005.
+
+M. Banerjee and I.W. McKeague. Confidence sets for split points in decision
+  trees. The Annals of Statistics, 35:543-574, 2007.
+
+O. Barndorff-Nielsen and M. Sobel. On the distribution of the number of
+  admissible points in a vector random sample. Theory of Probability and
+  Its Applications, 11:249-269, 1966.
+
+Y. Bengio. Learning deep architectures for AI. Foundations and Trends in
+  Machine Learning, 2:1-127, 2009.
+
+S. Bernard, L. Heutte, and S. Adam. Forest-RK: A new random forest induc-
+  tion method. In D.-S. Huang, D.C. Wunsch II, D.S. Levine, and K.-H. Jo,
+  editors, Advanced Intelligent Computing Theories and Applications. With
+  Aspects of Artificial Intelligence, pages 430-437, Berlin, 2008. Springer.
+
+S. Bernard, S. Adam, and L. Heutte. Dynamic random forests. Pattern
+  Recognition Letters, 33:1580-1586, 2012.
+
+G. Biau. Analysis of a random forests model. Journal of Machine Learning
+  Research, 13:1063-1095, 2012.
+
+                          33
+G. Biau and L. Devroye. On the layered nearest neighbour estimate, the
+  bagged nearest neighbour estimate and the random forest method in re-
+  gression and classification. Journal of Multivariate Analysis, 101:2499-
+  2518, 2010.
+
+G. Biau and L. Devroye. Cellular tree classifiers. Electronic Journal of
+  Statistics, 7:1875-1912, 2013.
+
+G. Biau, L. Devroye, and G. Lugosi. Consistency of random forests and other
+  averaging classifiers. Journal of Machine Learning Research, 9:2015-2033,
+  2008.
+
+G. Biau, F. C´erou, and A. Guyader. On the rate of convergence of the
+  bagged nearest neighbor estimate. Journal of Machine Learning Research,
+  11:687-712, 2010.
+
+A.-L. Boulesteix, S. Janitza, J. Kruppa, and I.R. K¨onig. Overview of ran-
+  dom forest methodology and practical guidance with emphasis on compu-
+  tational biology and bioinformatics. Wiley Interdisciplinary Reviews: Data
+  Mining and Knowledge Discovery, 2:493-507, 2012.
+
+L. Breiman. Bagging predictors. Machine Learning, 24:123-140, 1996.
+
+L. Breiman. Some infinity theory for predictor ensembles. Technical Report
+  577, University of California, Berkeley, 2000a.
+
+L. Breiman. Randomizing outputs to increase prediction accuracy. Machine
+  Learning, 40:229-242, 2000b.
+
+L. Breiman. Random forests. Machine Learning, 45:5-32, 2001.
+
+L. Breiman. Setting up, using, and understanding random forests
+  V3.1. https://www.stat.berkeley.edu/~breiman/Using_random_
+  forests_V3.1.pdf, 2003a.
+
+L. Breiman. Setting up, using, and understanding random forests
+  V4.0. https://www.stat.berkeley.edu/~breiman/Using_random_
+  forests_v4.0.pdf, 2003b.
+
+L. Breiman. Consistency for a simple model of random forests. Technical
+  Report 670, University of California, Berkeley, 2004.
+
+L. Breiman, J.H. Friedman, R.A. Olshen, and C.J. Stone. Classification and
+  Regression Trees. Chapman & Hall/CRC, Boca Raton, 1984.
+
+                                               34
+P. Bu¨hlmann and B. Yu. Analyzing bagging. The Annals of Statistics, 30:
+  927-961, 2002.
+
+C. Chen, A. Liaw, and L. Breiman. Using random forest to learn imbalanced
+  data. Technical Report 666, University of California, Berkeley, 2004.
+
+S. Cl´emen¸con, M. Depecker, and N. Vayatis. Ranking forests. Journal of
+  Machine Learning Research, 14:39-73, 2013.
+
+S. Cl´emen¸con and N. Vayatis. Tree-based ranking methods. IEEE Transac-
+  tions on Information Theory, 55:4316-4336, 2009.
+
+A. Criminisi, J. Shotton, and E. Konukoglu. Decision forests: A unified
+  framework for classification, regression, density estimation, manifold learn-
+  ing and semi-supervised learning. Foundations and Trends in Computer
+  Graphics and Vision, 7:81-227, 2011.
+
+N.L. Crookston and A.O. Finley. yaImpute: An R package for kNN imputa-
+  tion. Journal of Statistical Software, 23:1-16, 2008.
+
+A. Cutler and G. Zhao. PERT - perfect random tree ensembles. Computing
+  Science and Statistics, 33:490-497, 2001.
+
+D.R. Cutler, T.C. Edwards Jr., K.H. Beard, A. Cutler, K.T. Hess, J. Gibson,
+  and J.J. Lawler. Random forests for classification in ecology. Ecology, 88:
+  2783-2792, 2007.
+
+A. Davies and Z. Ghahramani. The Random Forest Kernel and creating
+  other kernels for big data from random partitions. arXiv:1402.4293, 2014.
+
+H. Deng and G. Runger. Feature selection via regularized trees. In The 2012
+  International Joint Conference on Neural Networks, pages 1-8, 2012.
+
+H. Deng and G. Runger. Gene selection with guided regularized random
+  forest. Pattern Recognition, 46:3483-3489, 2013.
+
+M. Denil, D. Matheson, and N. de Freitas. Consistency of online random
+  forests. In International Conference on Machine Learning (ICML), 2013.
+
+M. Denil, D. Matheson, and N. de Freitas. Narrowing the gap: Random
+  forests in theory and in practice. In International Conference on Machine
+  Learning (ICML), 2014.
+
+C. D´esir, S. Bernard, C. Petitjean, and L. Heutte. One class random forests.
+  Pattern Recognition, 46:3490-3506, 2013.
+
+                                               35
+L. Devroye, L. Gyo¨rfi, and G. Lugosi. A Probabilistic Theory of Pattern
+  Recognition. Springer, New York, 1996.
+
+R. D´iaz-Uriarte and S. Alvarez de Andr´es. Gene selection and classification of
+  microarray data using random forest. BMC Bioinformatics, 7:1-13, 2006.
+
+T.G. Dietterich. Ensemble methods in machine learning. In Multiple Classi-
+  fier Systems, pages 1-15. Springer, 2000.
+
+B. Efron. Bootstrap methods: Another look at the jackknife. The Annals of
+  Statistics, 7:1-26, 1979.
+
+B. Efron. The Jackknife, the Bootstrap and Other Resampling Plans, vol-
+  ume 38. CBMS-NSF Regional Conference Series in Applied Mathematics,
+  Philadelphia, 1982.
+
+D. Fink, W.M. Hochachka, B. Zuckerberg, D.W. Winkler, B. Shaby, M.A.
+  Munson, G. Hooker, M. Riedewald, D. Sheldon, and S. Kelling. Spa-
+  tiotemporal exploratory models for broad-scale survey data. Ecological
+  Applications, 20:2131-2147, 2010.
+
+J. Friedman, T. Hastie, and R. Tibshirani. The Elements of Statistical Learn-
+  ing. Second Edition. Springer, New York, 2009.
+
+R. Genuer. Variance reduction in purely random forests. Journal of Non-
+  parametric Statistics, 24:543-562, 2012.
+
+R. Genuer, J.-M. Poggi, and C. Tuleau-Malot. Variable selection using ran-
+  dom forests. Pattern Recognition Letters, 31:2225-2236, 2010.
+
+E. Geremia, B.H. Menze, and N. Ayache. Spatially adaptive random forests.
+  In IEEE International Symposium on Biomedical Imaging: From Nano to
+  Macro, pages 1332-1335, 2013.
+
+P. Geurts, D. Ernst, and L. Wehenkel. Extremely randomized trees. Machine
+  Learning, 63:3-42, 2006.
+
+B. Gregorutti, B. Michel, and P. Saint Pierre. Correlation and variable im-
+  portance in random forests. arXiv:1310.5726, 2013.
+
+I. Guyon, J. Weston, S. Barnhill, and V. Vapnik. Gene selection for cancer
+  classification using support vector machines. Machine Learning, 46:389-
+  422, 2002.
+
+                                               36
+L. Gy¨orfi, M. Kohler, A. Krzyzak, and H. Walk. A Distribution-Free Theory
+  of Nonparametric Regression. Springer, New York, 2002.
+
+T. Ho. The random subspace method for constructing decision forests. Pat-
+  tern Analysis and Machine Intelligence, 20, 832-844, 1998.
+
+T. Hothorn, K. Hornik, and A. Zeileis. Unbiased recursive partitioning: A
+  conditional inference framework. Journal of Computational and Graphical
+  Statistics, 15:651-674, 2006.
+
+J. Howard and M. Bowles. The two most important algorithms in predictive
+  modeling today. In Strata Conference: Santa Clara. http://strataconf.
+  com/strata2012/public/schedule/detail/22658, 2012.
+
+T. Ishioka. Imputation of missing values for unsupervised data using the
+  proximity in random forests. In eLmL 2013, The Fifth International Con-
+  ference on Mobile, Hybrid, and On-line Learning, pages 30-36. Interna-
+  tional Academy, Research, and Industry Association, 2013.
+
+H. Ishwaran. Variable importance in binary regression trees and forests.
+  Electronic Journal of Statistics, 1:519-537, 2007.
+
+H. Ishwaran. The effect of splitting on random forests. Machine Learning,
+  99:75-118, 2013.
+
+H. Ishwaran and U.B. Kogalur. Consistency of random survival forests.
+  Statistics & Probability Letters, 80:1056-1064, 2010.
+
+H. Ishwaran, U.B. Kogalur, E.H. Blackstone, and M.S. Lauer. Random sur-
+  vival forests. The Annals of Applied Statistics, 2:841-860, 2008.
+
+H. Ishwaran, U.B. Kogalur, X. Chen, and A.J. Minn. Random survival forests
+  for high-dimensional data. Statistical Analysis and Data Mining: The ASA
+  Data Science Journal, 4:115-132, 2011.
+
+D. Jeffrey and G. Sanja. Simplified data processing on large clusters. Com-
+  munications of the ACM, 51:107-113, 2008.
+
+A. Joly, P. Geurts, and L. Wehenkel. Random forests with random projec-
+  tions of the output space for high dimensional multi-label classification.
+  In T. Calders, F. Esposito, E. Hu¨llermeier, and R. Meo, editors, Machine
+  Learning and Knowledge Discovery in Databases, pages 607-622, Berlin,
+  2014. Springer.
+
+                                               37
+H. Kim and W.-Y. Loh. Classification trees with unbiased multiway splits.
+  Journal of the American Statistical Association, 96:589-604, 2001.
+
+A. Kleiner, A. Talwalkar, P. Sarkar, and M.I. Jordan. A scalable bootstrap for
+  massive data. Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology), 76:795-816, 2014.
+
+E. Konukoglu and M. Ganz. Approximate false positive rate control in se-
+  lection frequency for random forest. arXiv:1410.2838, 2014.
+
+J. Kruppa, A. Schwarz, G. Arminger, and A. Ziegler. Consumer credit risk:
+  Individual probability estimates using machine learning. Expert Systems
+  with Applications, 40:5125-5131, 2013.
+
+J. Kruppa, Y. Liu, G. Biau, M. Kohler, I.R. K¨onig, J.D. Malley, and
+  A. Ziegler. Probability estimation with machine learning methods for di-
+  chotomous and multicategory outcome: Theory. Biometrical Journal, 56:
+  534-563, 2014a.
+
+J. Kruppa, Y. Liu, H.-C. Diener, T. Holste, C. Weimar, I.R. K¨onig, and
+  A. Ziegler. Probability estimation with machine learning methods for di-
+  chotomous and multicategory outcome: Applications. Biometrical Journal,
+  56:564-583, 2014b.
+
+M. Kuhn and K. Johnson. Applied Predictive Modeling. Springer, New York,
+  2013.
+
+A. Kyrillidis and A. Zouzias. Non-uniform feature sampling for decision tree
+  ensembles. In IEEE International Conference on Acoustics, Speech and
+  Signal Processing, pages 4548-4552, 2014.
+
+B. Lakshminarayanan, D.M. Roy, and Y.W. Teh. Mondrian forests: Efficient
+  online random forests. In Z. Ghahramani, M. Welling, C. Cortes, N.D.
+  Lawrence, and K.Q. Weinberger, editors, Advances in Neural Information
+  Processing Systems, pages 3140-3148, 2014.
+
+P. Latinne, O. Debeir, and C. Decaestecker. Limiting the number of trees
+  in random forests. In J. Kittler and F. Roli, editors, Multiple Classifier
+  Systems, pages 178-187, Berlin, 2001. Springer.
+
+A. Liaw and M. Wiener. Classification and regression by randomForest. R
+  News, 2:18-22, 2002.
+
+Y. Lin and Y. Jeon. Random forests and adaptive nearest neighbors. Journal
+  of the American Statistical Association, 101:578-590, 2006.
+
+                                               38
+G. Louppe, L. Wehenkel, A. Sutera, and P. Geurts. Understanding variable
+  importances in forests of randomized trees. In C.J.C. Burges, L. Bottou,
+  M. Welling, Z. Ghahramani, and K.Q. Weinberger, editors, Advances in
+  Neural Information Processing Systems, pages 431-439, 2013.
+
+J.D. Malley, J. Kruppa, A. Dasgupta, K.G. Malley, and A. Ziegler. Prob-
+  ability machines: consistent probability estimation using nonparametric
+  learning machines. Methods of Information in Medicine, 51:74-81, 2012.
+
+N. Meinshausen. Quantile regression forests. Journal of Machine Learning
+  Research, 7:983-999, 2006.
+
+N. Meinshausen. Forest Garrote. Electronic Journal of Statistics, 3:1288-
+  1304, 2009.
+
+L. Mentch and G. Hooker. A novel test for additivity in supervised ensemble
+  learners. arXiv:1406.1845, 2014.
+
+L. Mentch and G. Hooker. Ensemble trees and CLTs: Statistical inference
+  for supervised learning. Journal of Machine Learning Research, in press,
+  2015.
+
+B.H. Menze, B.M. Kelm, D.N. Splitthoff, U. Koethe, and F.A. Hamprecht.
+  On oblique random forests. In Machine Learning and Knowledge Discovery
+  in Databases, pages 453-469. Springer, 2011.
+
+E.A. Nadaraya. On estimating regression. Theory of Probability and Its
+  Applications, 9:141-142, 1964.
+
+K.K. Nicodemus and J.D. Malley. Predictor correlation impacts machine
+  learning algorithms: Implications for genomic studies. Bioinformatics, 25:
+  1884-1890, 2009.
+
+D.N. Politis, J.P. Romano, and M. Wolf. Subsampling. Springer, New York,
+  1999.
+
+A.M. Prasad, L.R. Iverson, and A. Liaw. Newer classification and regres-
+  sion tree techniques: Bagging and random forests for ecological prediction.
+  Ecosystems, 9:181-199, 2006.
+
+S.S. Qian, R.S. King, and C.J. Richardson. Two statistical methods for the
+  detection of environmental thresholds. Ecological Modelling, 166:87-97,
+  2003.
+
+                                               39
+A. Rieger, T. Hothorn, and C. Strobl. Random forests with missing values in
+  the covariates. Technical Report 79, University of Munich, Munich, 2010.
+
+A. Saffari, C. Leistner, J. Santner, M. Godec, and H. Bischof. On-line ran-
+  dom forests. In IEEE 12th International Conference on Computer Vision
+  Workshops, pages 1393-1400, 2009.
+
+D.F. Schwarz, I.R. Ko¨nig, and A. Ziegler. On safari to random jungle: A
+  fast implementation of random forests for high-dimensional data. Bioin-
+  formatics, 26:1752-1758, 2010.
+
+E. Scornet. On the asymptotics of random forests. Journal of Multivariate
+  Analysis, in press, 2015a.
+
+E. Scornet. Random forests and kernel methods. arXiv:1502.03836, 2015b.
+
+E. Scornet, G. Biau, and J.-P. Vert. Consistency of random forests. The
+  Annals of Statistics, 43:1716-1741, 2015.
+
+M.R. Segal. Regression trees for censored data. Biometrics, 44:35-47, 1988.
+
+J. Shotton, A. Fitzgibbon, M. Cook, T. Sharp, M. Finocchio, R. Moore,
+  A. Kipman, and A. Blake. Real-time human pose recognition in parts
+  from single depth images. In IEEE Conference on Computer Vision and
+  Pattern Recognition, pages 1297-1304, 2011.
+
+C.J. Stone. Consistent nonparametric regression. The Annals of Statistics,
+  5:595-645, 1977.
+
+C.J. Stone. Optimal rates of convergence for nonparametric estimators. The
+  Annals of Statistics, 8:1348-1360, 1980.
+
+C.J. Stone. Optimal global rates of convergence for nonparametric regression.
+  The Annals of Statistics, 10:1040-1053, 1982.
+
+C. Strobl, A.-L. Boulesteix, T. Kneib, T. Augustin, and A. Zeileis. Con-
+  ditional variable importance for random forests. BMC Bioinformatics, 9:
+  307, 2008.
+
+V. Svetnik, A. Liaw, C. Tong, J.C. Culberson, R.P. Sheridan, and B.P.
+  Feuston. Random forest: A classification and regression tool for compound
+  classification and QSAR modeling. Journal of Chemical Information and
+  Computer Sciences, 43:1947-1958, 2003.
+
+                                               40
+L. Tolo¸si and T. Lengauer. Classification with correlated features: Unre-
+  liability of feature ranking and solutions. Bioinformatics, 27:1986-1994,
+  2011.
+
+A.K.Y. Truong. Fast Growing and Interpretable Oblique Trees via Logistic
+  Regression Models. PhD thesis, University of Oxford, Oxford, 2009.
+
+H. Varian. Big data: New tricks for econometrics. Journal of Economic
+  Perspectives, 28:3-28, 2014.
+
+S. Wager. Asymptotic theory for random forests. arXiv:1405.0352, 2014.
+
+S. Wager, T. Hastie, and B. Efron. Confidence intervals for random forests:
+  The jackknife and the infinitesimal jackknife. Journal of Machine Learning
+  Research, 15:1625-1651, 2014.
+
+G.S. Watson. Smooth regression analysis. Sankhya¯ Series A, pages 359-372,
+  1964.
+
+J. Welbl. Casting random forests as artificial neural networks (and profit-
+  ing from it). In X. Jiang, J. Hornegger, and R. Koch, editors, Pattern
+  Recognition, pages 765-771. Springer, 2014.
+
+S.J. Winham, R.R. Freimuth, and J.M. Biernacka. A weighted random forests
+  approach to improve predictive performance. Statistical Analysis and Data
+  Mining: The ASA Data Science Journal, 6:496-505, 2013.
+
+D. Yan, A. Chen, and M.I. Jordan. Cluster forests. Computational Statistics
+  & Data Analysis, 66:178-192, 2013.
+
+F. Yang, J. Wang, and G. Fan. Kernel induced random survival forests.
+  arXiv:1008.3952, 2010.
+
+Z. Yi, S. Soatto, M. Dewan, and Y. Zhan. Information forests. In 2012
+  Information Theory and Applications Workshop, pages 143-146, 2012.
+
+R. Zhu, D. Zeng, and M.R. Kosorok. Reinforcement learning trees. Journal
+  of the American Statistical Association, accepted, 2015.
+
+A. Ziegler and I.R. Ko¨nig. Mining data with random forests: Current options
+  for real-world applications. Wiley Interdisciplinary Reviews: Data Mining
+  and Knowledge Discovery, 4:55-63, 2014.
+
+                                               41
+Figure 4: An example of a distribution for which greedy random forests
+are inconsistent. The distribution of X is uniform on the union of the three
+large squares. White areas represent the set where m(x) = 0 and grey where
+m(x) = 1.
+
+                                               42
+

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Principles of Econometrics with R</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="This is a beginner’s guide to applied econometrics using the free statistics software R.">
+  <meta name="generator" content="bookdown 0.1 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Principles of Econometrics with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://bookdown.org/ccolonescu/RPoE4/" />
+  
+  <meta property="og:description" content="This is a beginner’s guide to applied econometrics using the free statistics software R." />
+  <meta name="github-repo" content="ccolonescu/RPoE" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Principles of Econometrics with R" />
+  
+  <meta name="twitter:description" content="This is a beginner’s guide to applied econometrics using the free statistics software R." />
+  
+
+<meta name="author" content="Constantin Colonescu">
+
+<meta name="date" content="2016-09-01">
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+
+<link rel="next" href="intro.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">PoE with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>.</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#the-rstudio-screen"><i class="fa fa-check"></i><b>1.1</b> The RStudio Screen</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="intro.html"><a href="intro.html#the-script-or-data-view-window"><i class="fa fa-check"></i><b>1.1.1</b> The <code>Script</code>, or <code>data view</code> window</a></li>
+<li class="chapter" data-level="1.1.2" data-path="intro.html"><a href="intro.html#the-console-or-output-window"><i class="fa fa-check"></i><b>1.1.2</b> The <code>console</code>, or <code>output</code> window</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#intro_s1"><i class="fa fa-check"></i><b>1.2</b> How to Open a Data File</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#creating-graphs"><i class="fa fa-check"></i><b>1.3</b> Creating Graphs</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#an-r-cheat-sheet"><i class="fa fa-check"></i><b>1.4</b> An R Cheat Sheet</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="simplelm.html"><a href="simplelm.html"><i class="fa fa-check"></i><b>2</b> The Simple Linear Regression Model</a><ul>
+<li class="chapter" data-level="2.1" data-path="simplelm.html"><a href="simplelm.html#the-general-model"><i class="fa fa-check"></i><b>2.1</b> The General Model</a></li>
+<li class="chapter" data-level="2.2" data-path="simplelm.html"><a href="simplelm.html#food_exmpl"><i class="fa fa-check"></i><b>2.2</b> Example: Food Expenditure versus Income</a></li>
+<li class="chapter" data-level="2.3" data-path="simplelm.html"><a href="simplelm.html#estimating-a-linear-regression"><i class="fa fa-check"></i><b>2.3</b> Estimating a Linear Regression</a></li>
+<li class="chapter" data-level="2.4" data-path="simplelm.html"><a href="simplelm.html#prediction-with-the-linear-regression-model"><i class="fa fa-check"></i><b>2.4</b> Prediction with the Linear Regression Model</a></li>
+<li class="chapter" data-level="2.5" data-path="simplelm.html"><a href="simplelm.html#repeated-samples-to-assess-regression-coefficients"><i class="fa fa-check"></i><b>2.5</b> Repeated Samples to Assess Regression Coefficients</a></li>
+<li class="chapter" data-level="2.6" data-path="simplelm.html"><a href="simplelm.html#estimated-variances-and-covariance-of-regression-coefficients"><i class="fa fa-check"></i><b>2.6</b> Estimated Variances and Covariance of Regression Coefficients</a></li>
+<li class="chapter" data-level="2.7" data-path="simplelm.html"><a href="simplelm.html#non-linear-relationships"><i class="fa fa-check"></i><b>2.7</b> Non-Linear Relationships</a></li>
+<li class="chapter" data-level="2.8" data-path="simplelm.html"><a href="simplelm.html#using-indicator-variables-in-a-regression"><i class="fa fa-check"></i><b>2.8</b> Using Indicator Variables in a Regression</a></li>
+<li class="chapter" data-level="2.9" data-path="simplelm.html"><a href="simplelm.html#monte-carlo-simulation"><i class="fa fa-check"></i><b>2.9</b> Monte Carlo Simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="intervalest.html"><a href="intervalest.html"><i class="fa fa-check"></i><b>3</b> Interval Estimation and Hypothesis Testing</a><ul>
+<li class="chapter" data-level="3.1" data-path="intervalest.html"><a href="intervalest.html#edrc"><i class="fa fa-check"></i><b>3.1</b> The Estimated Distribution of Regression Coefficients</a></li>
+<li class="chapter" data-level="3.2" data-path="intervalest.html"><a href="intervalest.html#cig"><i class="fa fa-check"></i><b>3.2</b> Confidence Interval in General</a></li>
+<li class="chapter" data-level="3.3" data-path="intervalest.html"><a href="intervalest.html#ecifm"><i class="fa fa-check"></i><b>3.3</b> Example: Confidence Intervals in the <em>food</em> Model</a></li>
+<li class="chapter" data-level="3.4" data-path="intervalest.html"><a href="intervalest.html#cirs"><i class="fa fa-check"></i><b>3.4</b> Confidence Intervals in Repeated Samples</a></li>
+<li class="chapter" data-level="3.5" data-path="intervalest.html"><a href="intervalest.html#hypotests"><i class="fa fa-check"></i><b>3.5</b> Hypothesis Tests</a></li>
+<li class="chapter" data-level="3.6" data-path="intervalest.html"><a href="intervalest.html#the-p-value"><i class="fa fa-check"></i><b>3.6</b> The <em>p</em>-Value</a></li>
+<li class="chapter" data-level="3.7" data-path="intervalest.html"><a href="intervalest.html#testing-linear-combinations-of-parameters"><i class="fa fa-check"></i><b>3.7</b> Testing Linear Combinations of Parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html"><i class="fa fa-check"></i><b>4</b> Prediction, R-squared, and Modeling</a><ul>
+<li class="chapter" data-level="4.1" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#forecasting-predicting-a-particular-value"><i class="fa fa-check"></i><b>4.1</b> Forecasting (Predicting a Particular Value)</a></li>
+<li class="chapter" data-level="4.2" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#goodness-of-fit"><i class="fa fa-check"></i><b>4.2</b> Goodness-of-Fit</a></li>
+<li class="chapter" data-level="4.3" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#linear-log-models"><i class="fa fa-check"></i><b>4.3</b> Linear-Log Models</a></li>
+<li class="chapter" data-level="4.4" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#residuals-and-diagnostics"><i class="fa fa-check"></i><b>4.4</b> Residuals and Diagnostics</a></li>
+<li class="chapter" data-level="4.5" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#polynomial-models"><i class="fa fa-check"></i><b>4.5</b> Polynomial Models</a></li>
+<li class="chapter" data-level="4.6" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#log-linear-models"><i class="fa fa-check"></i><b>4.6</b> Log-Linear Models</a></li>
+<li class="chapter" data-level="4.7" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#the-log-log-model"><i class="fa fa-check"></i><b>4.7</b> The Log-Log Model</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="multiplereg.html"><a href="multiplereg.html"><i class="fa fa-check"></i><b>5</b> The Multiple Regression Model</a><ul>
+<li class="chapter" data-level="5.1" data-path="multiplereg.html"><a href="multiplereg.html#the-general-model-1"><i class="fa fa-check"></i><b>5.1</b> The General Model</a></li>
+<li class="chapter" data-level="5.2" data-path="multiplereg.html"><a href="multiplereg.html#example-big-andys-hamburger-sales"><i class="fa fa-check"></i><b>5.2</b> Example: Big Andy’s Hamburger Sales</a></li>
+<li class="chapter" data-level="5.3" data-path="multiplereg.html"><a href="multiplereg.html#interval-estimation-in-multiple-regression"><i class="fa fa-check"></i><b>5.3</b> Interval Estimation in Multiple Regression</a></li>
+<li class="chapter" data-level="5.4" data-path="multiplereg.html"><a href="multiplereg.html#hypothesis-testing-in-multiple-regression"><i class="fa fa-check"></i><b>5.4</b> Hypothesis Testing in Multiple Regression</a></li>
+<li class="chapter" data-level="5.5" data-path="multiplereg.html"><a href="multiplereg.html#polynomial-regression-models"><i class="fa fa-check"></i><b>5.5</b> Polynomial Regression Models</a></li>
+<li class="chapter" data-level="5.6" data-path="multiplereg.html"><a href="multiplereg.html#interaction-terms-in-linear-regression"><i class="fa fa-check"></i><b>5.6</b> Interaction Terms in Linear Regression</a></li>
+<li class="chapter" data-level="5.7" data-path="multiplereg.html"><a href="multiplereg.html#goodness-of-fit-in-multiple-regression"><i class="fa fa-check"></i><b>5.7</b> Goodness-of-Fit in Multiple Regression</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html"><i class="fa fa-check"></i><b>6</b> Further Inference in Multiple Regression</a><ul>
+<li class="chapter" data-level="6.1" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#joint-hypotheses-and-the-f-statistic"><i class="fa fa-check"></i><b>6.1</b> Joint Hypotheses and the F-statistic</a></li>
+<li class="chapter" data-level="6.2" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#testing-simultaneous-hypotheses"><i class="fa fa-check"></i><b>6.2</b> Testing Simultaneous Hypotheses</a></li>
+<li class="chapter" data-level="6.3" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#omitted-variable-bias"><i class="fa fa-check"></i><b>6.3</b> Omitted Variable Bias</a></li>
+<li class="chapter" data-level="6.4" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#irrelevant-variables"><i class="fa fa-check"></i><b>6.4</b> Irrelevant Variables</a></li>
+<li class="chapter" data-level="6.5" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#model-selection-criteria"><i class="fa fa-check"></i><b>6.5</b> Model Selection Criteria</a></li>
+<li class="chapter" data-level="6.6" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#collinearity"><i class="fa fa-check"></i><b>6.6</b> Collinearity</a></li>
+<li class="chapter" data-level="6.7" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#prediction-and-forecasting"><i class="fa fa-check"></i><b>6.7</b> Prediction and Forecasting</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="indvars.html"><a href="indvars.html"><i class="fa fa-check"></i><b>7</b> Using Indicator Variables</a><ul>
+<li class="chapter" data-level="7.1" data-path="indvars.html"><a href="indvars.html#factor-variables"><i class="fa fa-check"></i><b>7.1</b> Factor Variables</a></li>
+<li class="chapter" data-level="7.2" data-path="indvars.html"><a href="indvars.html#examples"><i class="fa fa-check"></i><b>7.2</b> Examples</a></li>
+<li class="chapter" data-level="7.3" data-path="indvars.html"><a href="indvars.html#comparing-two-regressions-the-chow-test"><i class="fa fa-check"></i><b>7.3</b> Comparing Two Regressions: the Chow Test</a></li>
+<li class="chapter" data-level="7.4" data-path="indvars.html"><a href="indvars.html#indicator-variables-in-log-linear-models"><i class="fa fa-check"></i><b>7.4</b> Indicator Variables in Log-Linear Models</a></li>
+<li class="chapter" data-level="7.5" data-path="indvars.html"><a href="indvars.html#the-linear-probability-model"><i class="fa fa-check"></i><b>7.5</b> The Linear Probability Model</a></li>
+<li class="chapter" data-level="7.6" data-path="indvars.html"><a href="indvars.html#treatment-effects"><i class="fa fa-check"></i><b>7.6</b> Treatment Effects</a></li>
+<li class="chapter" data-level="7.7" data-path="indvars.html"><a href="indvars.html#the-difference-in-differences-estimator"><i class="fa fa-check"></i><b>7.7</b> The Difference-in-Differences Estimator</a></li>
+<li class="chapter" data-level="7.8" data-path="indvars.html"><a href="indvars.html#using-panel-data"><i class="fa fa-check"></i><b>7.8</b> Using Panel Data</a></li>
+<li class="chapter" data-level="7.9" data-path="indvars.html"><a href="indvars.html#r-practicum"><i class="fa fa-check"></i><b>7.9</b> R Practicum</a><ul>
+<li class="chapter" data-level="7.9.1" data-path="indvars.html"><a href="indvars.html#extracting-various-information"><i class="fa fa-check"></i><b>7.9.1</b> Extracting Various Information</a></li>
+<li class="chapter" data-level="7.9.2" data-path="indvars.html"><a href="indvars.html#ggplot2-an-excellent-data-visualising-tool"><i class="fa fa-check"></i><b>7.9.2</b> <code>ggplot2</code>, An Excellent Data Visualising Tool</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html"><i class="fa fa-check"></i><b>8</b> Heteroskedasticity</a><ul>
+<li class="chapter" data-level="8.1" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#spotting-heteroskedasticity-in-scatter-plots"><i class="fa fa-check"></i><b>8.1</b> Spotting Heteroskedasticity in Scatter Plots</a></li>
+<li class="chapter" data-level="8.2" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#heteroskedasticity-tests"><i class="fa fa-check"></i><b>8.2</b> Heteroskedasticity Tests</a></li>
+<li class="chapter" data-level="8.3" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#heteroskedasticity-consistent-standard-errors"><i class="fa fa-check"></i><b>8.3</b> Heteroskedasticity-Consistent Standard Errors</a></li>
+<li class="chapter" data-level="8.4" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#gls-known-form-of-variance"><i class="fa fa-check"></i><b>8.4</b> GLS: Known Form of Variance</a></li>
+<li class="chapter" data-level="8.5" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#grouped-data"><i class="fa fa-check"></i><b>8.5</b> Grouped Data</a></li>
+<li class="chapter" data-level="8.6" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#gls-unknown-form-of-variance"><i class="fa fa-check"></i><b>8.6</b> GLS: Unknown Form of Variance</a></li>
+<li class="chapter" data-level="8.7" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#heteroskedasticity-in-the-linear-probability-model"><i class="fa fa-check"></i><b>8.7</b> Heteroskedasticity in the Linear Probability Model</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html"><i class="fa fa-check"></i><b>9</b> Time-Series: Stationary Variables</a><ul>
+<li class="chapter" data-level="9.1" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#an-overview-of-time-series-tools-in-r"><i class="fa fa-check"></i><b>9.1</b> An Overview of Time Series Tools in <em>R</em></a></li>
+<li class="chapter" data-level="9.2" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#finite-distributed-lags"><i class="fa fa-check"></i><b>9.2</b> Finite Distributed Lags</a></li>
+<li class="chapter" data-level="9.3" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#serial-correlation"><i class="fa fa-check"></i><b>9.3</b> Serial Correlation</a></li>
+<li class="chapter" data-level="9.4" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#estimation-with-serially-correlated-errors"><i class="fa fa-check"></i><b>9.4</b> Estimation with Serially Correlated Errors</a></li>
+<li class="chapter" data-level="9.5" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#nonlinear-least-squares-estimation"><i class="fa fa-check"></i><b>9.5</b> Nonlinear Least Squares Estimation</a></li>
+<li class="chapter" data-level="9.6" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#a-more-general-model"><i class="fa fa-check"></i><b>9.6</b> A More General Model</a></li>
+<li class="chapter" data-level="9.7" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#autoregressive-models"><i class="fa fa-check"></i><b>9.7</b> Autoregressive Models</a></li>
+<li class="chapter" data-level="9.8" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#forecasting"><i class="fa fa-check"></i><b>9.8</b> Forecasting</a></li>
+<li class="chapter" data-level="9.9" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#multiplier-analysis"><i class="fa fa-check"></i><b>9.9</b> Multiplier Analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="random-regressors.html"><a href="random-regressors.html"><i class="fa fa-check"></i><b>10</b> Random Regressors</a><ul>
+<li class="chapter" data-level="10.1" data-path="random-regressors.html"><a href="random-regressors.html#the-instrumental-variables-iv-method"><i class="fa fa-check"></i><b>10.1</b> The Instrumental Variables (IV) Method</a></li>
+<li class="chapter" data-level="10.2" data-path="random-regressors.html"><a href="random-regressors.html#specification-tests"><i class="fa fa-check"></i><b>10.2</b> Specification Tests</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="simultaneous-equations-models.html"><a href="simultaneous-equations-models.html"><i class="fa fa-check"></i><b>11</b> Simultaneous Equations Models</a></li>
+<li class="chapter" data-level="12" data-path="time-series-nonstationarity.html"><a href="time-series-nonstationarity.html"><i class="fa fa-check"></i><b>12</b> Time Series: Nonstationarity</a><ul>
+<li class="chapter" data-level="12.1" data-path="time-series-nonstationarity.html"><a href="time-series-nonstationarity.html#ar1-the-first-order-autoregressive-model"><i class="fa fa-check"></i><b>12.1</b> AR(1), the First-Order Autoregressive Model</a></li>
+<li class="chapter" data-level="12.2" data-path="time-series-nonstationarity.html"><a href="time-series-nonstationarity.html#spurious-regression"><i class="fa fa-check"></i><b>12.2</b> Spurious Regression</a></li>
+<li class="chapter" data-level="12.3" data-path="time-series-nonstationarity.html"><a href="time-series-nonstationarity.html#unit-root-tests-for-stationarity"><i class="fa fa-check"></i><b>12.3</b> Unit Root Tests for Stationarity</a></li>
+<li class="chapter" data-level="12.4" data-path="time-series-nonstationarity.html"><a href="time-series-nonstationarity.html#cointegration"><i class="fa fa-check"></i><b>12.4</b> Cointegration</a></li>
+<li class="chapter" data-level="12.5" data-path="time-series-nonstationarity.html"><a href="time-series-nonstationarity.html#the-error-correction-model"><i class="fa fa-check"></i><b>12.5</b> The Error Correction Model</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="vec-and-var-models.html"><a href="vec-and-var-models.html"><i class="fa fa-check"></i><b>13</b> VEC and VAR Models</a><ul>
+<li class="chapter" data-level="13.1" data-path="vec-and-var-models.html"><a href="vec-and-var-models.html#var-and-vec-models"><i class="fa fa-check"></i><b>13.1</b> VAR and VEC Models</a></li>
+<li class="chapter" data-level="13.2" data-path="vec-and-var-models.html"><a href="vec-and-var-models.html#estimating-a-vec-model"><i class="fa fa-check"></i><b>13.2</b> Estimating a VEC Model</a></li>
+<li class="chapter" data-level="13.3" data-path="vec-and-var-models.html"><a href="vec-and-var-models.html#estimating-a-var-model"><i class="fa fa-check"></i><b>13.3</b> Estimating a VAR Model</a></li>
+<li class="chapter" data-level="13.4" data-path="vec-and-var-models.html"><a href="vec-and-var-models.html#impulse-responses-and-variance-decompositions"><i class="fa fa-check"></i><b>13.4</b> Impulse Responses and Variance Decompositions</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="time-varying-volatility-and-arch-models.html"><a href="time-varying-volatility-and-arch-models.html"><i class="fa fa-check"></i><b>14</b> Time-Varying Volatility and ARCH Models</a><ul>
+<li class="chapter" data-level="14.1" data-path="time-varying-volatility-and-arch-models.html"><a href="time-varying-volatility-and-arch-models.html#the-arch-model"><i class="fa fa-check"></i><b>14.1</b> The ARCH Model</a></li>
+<li class="chapter" data-level="14.2" data-path="time-varying-volatility-and-arch-models.html"><a href="time-varying-volatility-and-arch-models.html#the-garch-model"><i class="fa fa-check"></i><b>14.2</b> The GARCH Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="panel-data-models.html"><a href="panel-data-models.html"><i class="fa fa-check"></i><b>15</b> Panel Data Models</a><ul>
+<li class="chapter" data-level="15.1" data-path="panel-data-models.html"><a href="panel-data-models.html#organizing-the-data-as-a-panel"><i class="fa fa-check"></i><b>15.1</b> Organizing the Data as a Panel</a></li>
+<li class="chapter" data-level="15.2" data-path="panel-data-models.html"><a href="panel-data-models.html#the-pooled-model"><i class="fa fa-check"></i><b>15.2</b> The Pooled Model</a></li>
+<li class="chapter" data-level="15.3" data-path="panel-data-models.html"><a href="panel-data-models.html#the-fixed-effects-model"><i class="fa fa-check"></i><b>15.3</b> The Fixed Effects Model</a></li>
+<li class="chapter" data-level="15.4" data-path="panel-data-models.html"><a href="panel-data-models.html#the-random-effects-model"><i class="fa fa-check"></i><b>15.4</b> The Random Effects Model</a></li>
+<li class="chapter" data-level="15.5" data-path="panel-data-models.html"><a href="panel-data-models.html#grunfelds-investment-example"><i class="fa fa-check"></i><b>15.5</b> Grunfeld’s Investment Example</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html"><i class="fa fa-check"></i><b>16</b> Qualitative and LDV Models</a><ul>
+<li class="chapter" data-level="16.1" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-linear-probability-model-1"><i class="fa fa-check"></i><b>16.1</b> The Linear Probability Model</a></li>
+<li class="chapter" data-level="16.2" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-probit-model"><i class="fa fa-check"></i><b>16.2</b> The Probit Model</a></li>
+<li class="chapter" data-level="16.3" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-transportation-example"><i class="fa fa-check"></i><b>16.3</b> The Transportation Example</a></li>
+<li class="chapter" data-level="16.4" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-logit-model-for-binary-choice"><i class="fa fa-check"></i><b>16.4</b> The Logit Model for Binary Choice</a></li>
+<li class="chapter" data-level="16.5" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#multinomial-logit"><i class="fa fa-check"></i><b>16.5</b> Multinomial Logit</a></li>
+<li class="chapter" data-level="16.6" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-conditional-logit-model"><i class="fa fa-check"></i><b>16.6</b> The Conditional Logit Model</a></li>
+<li class="chapter" data-level="16.7" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#ordered-choice-models"><i class="fa fa-check"></i><b>16.7</b> Ordered Choice Models</a></li>
+<li class="chapter" data-level="16.8" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#models-for-count-data"><i class="fa fa-check"></i><b>16.8</b> Models for Count Data</a></li>
+<li class="chapter" data-level="16.9" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-tobit-or-censored-data-model"><i class="fa fa-check"></i><b>16.9</b> The Tobit, or Censored Data Model</a></li>
+<li class="chapter" data-level="16.10" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-heckit-or-sample-selection-model"><i class="fa fa-check"></i><b>16.10</b> The Heckit, or Sample Selection Model</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Principles of Econometrics with <span class="math inline">\(R\)</span></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Principles of Econometrics with <span class="math inline">\(R\)</span></h1>
+<h4 class="author"><em>Constantin Colonescu</em></h4>
+<h4 class="date"><em>2016-09-01</em></h4>
+</div>
+<div id="section" class="section level1 unnumbered">
+<h1>.</h1>
+<p><img src="Figs/coverGraphIndex-1.png" width="75%" style="display: block; margin: auto auto auto 0;" /></p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="intro.html" class="navigation navigation-next navigation-unique" aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/index.Rmd",
+"text": null
+},
+"download": ["RPoE.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

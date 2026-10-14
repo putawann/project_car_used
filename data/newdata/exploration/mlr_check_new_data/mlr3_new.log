@@ -1,0 +1,164 @@
+##### CELL 2 #####
+##### CELL 4 #####
+(57050, 11)
+##### CELL 6 #####
+sha256 ตรงกับไฟล์ที่คาดไว้: a5ef4f69891d99b7 ...
+
+shape: (57050, 11)
+
+dtypes:
+brand                str
+model                str
+car_type             str
+fuel_type            str
+gear_type            str
+color                str
+engine_capacity    int64
+mileage            int64
+year               int64
+car_age            int64
+price              int64
+
+ค่าว่างต่อคอลัมน์:
+brand              0
+model              0
+car_type           0
+fuel_type          0
+gear_type          0
+color              0
+engine_capacity    0
+mileage            0
+year               0
+car_age            0
+price              0
+
+แถวซ้ำทั้งแถว: 566
+
+ค่าต่ำสุด / สูงสุดของตัวเลข:
+                   min      max
+engine_capacity    600     6200
+mileage              1  3006700
+year              2000     2026
+car_age              0       26
+price            27900  2999000
+
+ผ่าน: price > 0, car_age >= 0, year == 2026 - car_age ทุกแถว
+
+จำนวน levels ของตัวแปรกลุ่ม:
+brand         44
+model        490
+car_type       7
+fuel_type      3
+gear_type      2
+color         21
+##### CELL 8 #####
+ตัดรถอายุเกิน 25 ปี: 60 แถว
+(56990, 10)
+##### CELL 10 #####
+train / val / test: 45592 5699 5699
+##### CELL 12 #####
+##### CELL 14 #####
+ตัวแปรที่ถูกตัดในชั้น 1 (MLR):
+brand          brand x model: Cramér's V = 0.986
+car_type    model x car_type: Cramér's V = 0.976
+
+MLR   -> ไปชั้น 2: ['engine_capacity', 'mileage', 'car_age', 'model', 'fuel_type', 'gear_type', 'color']
+ต้นไม้ -> ไปชั้น 2: ['engine_capacity', 'mileage', 'car_age', 'brand', 'model', 'car_type', 'fuel_type', 'gear_type', 'color']
+##### CELL 16 #####
+##### CELL 18 #####
+                  raw  engine_capacity centred in model  pass (centred)
+engine_capacity  7.44                              1.08            True
+mileage          1.43                              1.43            True
+car_age          2.17                              2.17            True
+model            1.01                              1.01            True
+fuel_type        4.74                              4.74            True
+gear_type        2.27                              2.27            True
+color            1.07                              1.07            True
+หลังตรวจ GVIF: ['engine_capacity', 'mileage', 'car_age', 'model', 'fuel_type', 'gear_type', 'color']
+##### CELL 19 #####
+ใช้เวลา 101 วินาที | CV MAE ตอนมีครบ 81,229
+ตัวแปรที่เลือก: ['engine_capacity', 'mileage', 'car_age', 'model', 'fuel_type', 'gear_type', 'color']
+ตัวแปรที่ถูกตัด: ['brand', 'car_type']
+##### CELL 21 #####
+MLR ใช้ตัวเลข: ['engine_capacity', 'mileage', 'car_age'] | ตัวแปรกลุ่ม: ['model', 'fuel_type', 'gear_type', 'color']
+ไมล์ไม่ทราบ (train): 2586 แถว
+X: 394 คอลัมน์, 347 กลุ่มรุ่น, slope อายุแยกยี่ห้อ 22 + 1
+ไมล์ที่ใส่แทนแถวไมล์ไม่ทราบ = 15,417 กม./ปี x อายุ
+##### CELL 23 #####
+fit เสร็จใน 663 วินาที | ตัด outlier 150 จาก 45592 แถว train
+##### CELL 25 #####
+           assumption                                   test  statistic  p_value                           rule result
+0        Independence                          Durbin-Watson     1.6995      NaN                        1.5-2.5   PASS
+1    Homoscedasticity                          Breusch-Pagan   192.2991   1.0000                          p > α   PASS
+2    Homoscedasticity            White (special form: ŷ, ŷ²)    10.5789   0.0050                          p > α   FAIL
+3           Normality                     Kolmogorov-Smirnov     0.0037   0.5481                          p > α   PASS
+4           Normality  Shapiro-Wilk (random 5,000 residuals)     0.9996   0.4350                          p > α   PASS
+5           Normality                             Lilliefors     0.0037   0.0941                          p > α   PASS
+6   Multicollinearity                    VIF engine_capacity     1.1450      NaN   < 7 (max at engine_capacity)   PASS
+7   Multicollinearity                        VIF log_mileage     1.8140      NaN       < 7 (max at log_mileage)   PASS
+8   Multicollinearity                         VIF km_unknown     1.0267      NaN        < 7 (max at km_unknown)   PASS
+9   Multicollinearity                             VIF age_c2     3.0588      NaN            < 7 (max at age_c2)   PASS
+10  Multicollinearity             VIF model (max of dummies)     6.6054      NaN      < 7 (max at model_JOLION)   PASS
+11  Multicollinearity         VIF fuel_type (max of dummies)     1.1318      NaN  < 7 (max at fuel_type_Hybrid)   PASS
+12  Multicollinearity         VIF gear_type (max of dummies)     2.2629      NaN  < 7 (max at gear_type_Manual)   PASS
+13  Multicollinearity             VIF color (max of dummies)     1.3461      NaN       < 7 (max at color_Black)   PASS
+14  Multicollinearity             VIF brand age slopes (max)    11.7595      NaN       < 7 (max at slope_HAVAL)   FAIL
+15          Linearity         Ramsey RESET (power 3, F-test)   243.0915   0.0000                          p > α   FAIL
+                   tests passed  tests total  group passes
+assumption                                                
+Independence                  1            1          True
+Homoscedasticity              1            2         False
+Normality                     3            3          True
+Multicollinearity             8            9         False
+Linearity                     0            1         False
+ผ่านทั้งหมด: 13 / 16 tests | ครบทั้ง 5 กลุ่ม = False
+##### CELL 27 #####
+residual ทั้งหมด 45,442 ตัว: W = 0.99978, p = 0.0001  (p-value นี้อยู่นอกช่วงที่ใช้ได้ n <= 5,000)
+สุ่ม 5,000 ตัว 500 ครั้ง: อัตราผ่าน 84%, มัธยฐานของ p = 0.214
+##### CELL 29 #####
+C:\Users\putaw\AppData\Local\Temp\claude\D--Claude\3d49421d-72d6-4620-b25f-98cea8a7a23a\scratchpad\run_mlr3_new.py:535: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+fitted ŷ (Box-Cox scale)   LOWESS ต่ำสุด -0.150  สูงสุด +1.109
+engine_capacity            LOWESS ต่ำสุด -0.169  สูงสุด +0.725
+log_mileage                LOWESS ต่ำสุด -0.526  สูงสุด +0.177
+car_age                    LOWESS ต่ำสุด -0.288  สูงสุด +0.563
+##### CELL 31 #####
+C:\Users\putaw\AppData\Local\Temp\claude\D--Claude\3d49421d-72d6-4620-b25f-98cea8a7a23a\scratchpad\run_mlr3_new.py:556: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+##### CELL 33 #####
+##### CELL 35 #####
+##### CELL 37 #####
+               brand        model  car_age    price       pred    abs_err
+38647          HONDA        CIVIC        9  2390000   407056.0  1982944.0
+1597          TOYOTA   HILUX REVO        1  2790000   852410.0  1937590.0
+39445  MERCEDES-BENZ         E350        2  2790000  1416326.0  1373674.0
+13935           MINI       COOPER        6  2490000  1185257.0  1304743.0
+26154            BMW         530E        3  2790000  1492925.0  1297075.0
+41437  MERCEDES-BENZ     SPRINTER        2  2690000  3885529.0  1195529.0
+10221            BMW         530E        2  2990000  1827479.0  1162521.0
+41263  MERCEDES-BENZ         E350        0  2990000  1849299.0  1140701.0
+29976            BMW         520D        4  2690000  1653997.0  1036003.0
+49613     LAND ROVER  RANGE ROVER       11  2480000  1464719.0  1015281.0
+                                    n         RMSE         MAE    MAPE      R2
+ชุดที่วัด                                                                     
+test ทั้งหมด                     5699  134870.2319  77412.1488  0.1300  0.9068
+test ไม่นับ 1 แถวที่พลาดมากสุด   5698  132299.2581  77077.7277  0.1299  0.9100
+test ไม่นับ 3 แถวที่พลาดมากสุด   5696  128525.6956  76523.4601  0.1297  0.9144
+test ไม่นับ 5 แถวที่พลาดมากสุด   5694  126214.9494  76093.3984  0.1296  0.9168
+test ไม่นับ 10 แถวที่พลาดมากสุด  5689  121888.6605  75184.7030  0.1294  0.9208
+val ทั้งหมด                      5699  128094.9941  77899.1460  0.1362  0.9140
+5 แถวที่พลาดมากสุดคิดเป็น 12.5% ของผลรวม error²
+ราคาสูงสุด val: 2,999,000 | ราคาสูงสุด test: 2,999,000
+##### CELL 40 #####
+C:\Users\putaw\AppData\Local\Temp\claude\D--Claude\3d49421d-72d6-4620-b25f-98cea8a7a23a\scratchpad\run_mlr3_new.py:619: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+##### CELL 42 #####
+             n         MAE   MAPE
+age_bin                          
+(-1, 2]    342  132021.751  0.148
+(2, 5]    1792   91143.262  0.115
+(5, 8]    1710   67866.299  0.115
+(8, 12]   1092   65715.145  0.140
+(12, 16]   563   62026.564  0.213
+(16, 20]   120   62676.874  0.227
+(20, 25]    80   65157.238  0.294

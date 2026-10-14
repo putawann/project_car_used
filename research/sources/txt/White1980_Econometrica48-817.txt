@@ -1,0 +1,1486 @@
+A Heteroskedasticity-Consistent Covariance Matrix Estimator and a Direct Test for
+Heteroskedasticity
+Author(s): Halbert White
+Source: Econometrica, May, 1980, Vol. 48, No. 4 (May, 1980), pp. 817-838
+Published by: The Econometric Society
+Stable URL: https://www.jstor.org/stable/1912934
+Accessibility support:
+If you experience accessibility issues with this file, report them here
+
+JSTOR is a not-for-profit service that helps scholars, researchers, and students discover, use, and build upon a wide
+range of content in a trusted digital archive. We use information technology and tools to increase productivity and
+.facilitate new forms of scholarship. For more information about JSTOR, please contact support@jstor.org
+Your use of the JSTOR archive indicates your acceptance of the Terms & Conditions of Use, available at
+https://about.jstor.org/terms
+
+                 The Econometric Society is collaborating with JSTOR to digitize, preserve and extend access to Econometrica
+
+                                                                               This content downloaded from
+                                              27.130.6.29 on Tue, 13 Oct 2026 16:10:34 UTC
+
+                                                                  All use subject to https://about.jstor.org/terms
+    E C O N O M E T R I C A
+
+VOLUME 48 MAY, 1980 NUMBER 4
+
+        A HETEROSKEDASTICITY-CONSISTENT COVARIANCE
+                  MATRIX ESTIMATOR AND A DIRECT TEST
+
+                                  FOR HETEROSKEDASTICITY
+
+                                                BY HALBERT WHITE1
+
+           This paper presents a parameter covariance matrix estimator which is consistent even
+       when the disturbances of a linear regression model are heteroskedastic. This estimator
+      does not depend on a formal model of the structure of the heteroskedasticity. By
+       comparing the elements of the new estimator to those of the usual covariance estimator,
+       one obtains a direct test for heteroskedasticity, since in the absence of heteroskedasticity,
+       the two estimators will be approximately equal, but will generally diverge otherwise. The
+       test has an appealing least squares interpretation.
+
+                                                         1. INTRODUCTION
+
+IT IS WELL KNOWN that the presence of heteroskedasticity in the disturbanc
+an otherwise properly specified linear model leads to consistent but inef
+parameter estimates and inconsistent covariance matrix estimates. As a r
+faulty inferences will be drawn when testing statistical hypotheses in the pr
+of heteroskedasticity.
+
+   If the investigator has a formal model of the process generating the differing
+variances, these difficulties are easily eliminated by performing an appropriate
+linear transformation on the data, based on this model. However, even when such
+a model is available, it may be incorrect. Often, several models are considered
+(e.g., Griliches [10]), but still without the certain knowledge that any of them is
+correct. In this situation one can test each of the alternative transformed models
+for remaining heteroskedasticity (using any of several available tests), and eli-
+minate those which fail. But what is one to do if all fail the heteroskedasticity test?
+Although the investigator will have a fairly good idea of the parameter values of
+the linear model, there remains a considerable difficulty in assessing the precision
+of the parameter estimates and testing hypotheses due to the possible inconsis-
+tency of the usual covariance matrix estimator.
+
+    In this paper I resolve this difficulty by presenting a covariance matrix estimator
+which is consistent in the presence of heteroskedasticity, but does not rely on a
+ (possibly incorrect) specific formal model of the structure of the heteroskedasti-
+ city. Thus, even when heteroskedasticity cannot be completely eliminated, proper
+
+ inferences can be drawn. Under appropriate conditions, a natural test for
+ heteroskedasticity can be obtained by comparing the consistent estimator to the
+ usual covariance matrix estimator; in the absence of heteroskedasticity, both
+
+ estimators will be about the same-otherwise, they will generally diverge. The test
+ shares the advantage of the covariance estimator, in that no formal structure on
+ the nature of the heteroskedasticity is imposed, in contrast to the tests suggested
+
+     1 I am greatly indebted to David Tanny, Jon Wellner, Dennis Carlton, the referees, and the
+participants of the University of Western Ontario and Harvard/MIT econometrics workshops for
+helpful comments and suggestions. Any errors are mine alone.
+
+                                                                                              817
+
+                                         This content downloaded from
+        27.130.6.29 on Tue, 13 Oct 2026 16:10:34 UTC
+
+                            All use subject to https://about.jstor.org/terms
+ 818 HALBERT WHITE
+
+by Goldfeld and Quandt [8], Rutemiller and Bowers [20], Glejser [6], or Harvey
+[12].
+
+       2. THE HETEROSKEDASTICITY-CONSISTENT COVARIANCE ESTIMATOR
+   To begin, assume that the model has the following structure:
+
+    ASSUMPTION 1: The model is known to be
+
+                   Yi = X,lo + (il, .n)
+where (Xi, E,) is a sequence of independent not (necessarily) identically dis-
+tributed (i.n.i.d.) random vectors, such that Xi (a 1 x K vector) and Ei (a scalar)
+satisfy E(X!Ei) = 0. Ei is unobservable while Yi and Xi are observable. /3o is a finite
+unknown K x 1 parameter vector to be estimated.
+
+   By assuming that the elements of the sequence (Xi, E,) are i.n.i.d., the case of
+fixed regressors with (possibly) heteroskedastic errors is automatically covered.
+Also covered by this assumption is the case in which observations are obtained not
+from a controlled experiment (as the fixed regressor assumption requires) but
+rather from a (possibly) stratified cross section, a case frequently encountered in
+applied microeconomics. Note that by assuming only that Xi and Ei are uncor-
+related, we automatically cover the less general but frequently encountered cases
+in which E(Es jXj) = 0 or Xi and Ei are independent, with E(Ej) = 0. Thus, we allow
+heteroskedasticity of the form E(E Xi) =g(X), where g is a known (possibly
+parametric) function. Such a situation arises, for example, in the random
+
+coefficients model of Hildreth and Houck [14].
+    Next, we make the following assumption.
+
+    ASSUMPTION 2: (a) There exist positive finite constants a and A such
+
+that, for all i, E(de2|1+8)<A and E(LXlJXikL1I8)<A (j, k=..... , K); (b)
+ n'1 X;?n=1 E(X'Xi) is nonsingular for (all) n sufficiently large,2 such that
+
+ > 0.
+
+    The first part of this assumption ensures that the error variances are uniformly
+bounded (the condition being slightly stronger than this) and that the elements of
+the average covariance matrix of the regressors are also uniformly bounded. In the
+ fixed regressor case, the condition requires that the regressors themselves be
+ uniformly bounded. The second part ensures the eventual nonsingularity of the
+average covariance matrix of the regressors and the uniform boundedness of the
+ elements of the inverse. Note that Mn is not required to converge to any particular
+limit.
+
+     2 In what follows the qualifier "all" will be implicitly understood.
+
+                                          This content downloaded from
+         27.130.6.29 on Tue, 13 Oct 2026 16:10:34 UTC
+
+                             All use subject to https://about.jstor.org/terms
+                                           COVARIANCE MATRIX ESTIMATOR 819
+
+    Define the ordinary least squares (OLS) estimator 13n = (XX)-XX' Y, where X
+is the n x K matrix with rows Xi and Y is the n x 1 vector with elements Y1. It is
+simple to prove the following lemma.
+
+    LEMMA 1 - Given Assumptions 1 and 2, 13 exists almost surely for n sufficiently
+large and 13n - /30.
+
+    Proofs are given in the Mathematical Appendix. Thus, OLS provides a strongly
+consistent estimator for 80 in the i.n.i.d. regressor and error case defined by
+Assumptions 1 and 2.
+
+    With the next assumption, an asymptotic normality result can be obtained.
+
+    ASSUMPTION 3: (a) There exist positive finite constants 8 and a such that for all
+
+ i E(I EXiiXikIl+8) <A (j, k = 1,.. ., K); (b) The average covariance matrix
+ Vn= n1 i=1 E(EiX Xi) is nonsingular for n sufficiently large, such that
+ det Vn>S>O.
+
+    Note that with fixed regressors or stochastic regressors independent of Ei,
+ Assumption 3(a) is implied by Assumption 2 (a).
+
+    The uniform boundedness of the elements of Vn in Assumption 3 is guaranteed
+ by Assumption 3 (a). Assumption 3 (a) and (b) ensure the uniform boundedness of
+
+     Together, Assumptions 1-3 allow the multivariate Liapounov central limit
+ theorem given by White [23] to be applied.
+
+     The asymptotic normality result is as follows.
+
+     LEMMA 2. Under Assumptions 1-3,
+
+               ,In nA (n -130) -N(O, IK).
+
+ This result is slightly more general than the asymptotic normality results usually
+
+ given since the "asymptotic covariance matrix" f1Vn- 1J1 is not required to
+ converge to any particular limit. In the fixed regressor case, M2-h VnMIn- has the
+ familiar form (X'X/n)-1(X'QX/nn)(X'X/n )-1, where Q2 is the n x n diagonal
+ matrix with diagonal elements oK" = E(E 2 ).
+
+     Now consider the problem of testing hypotheses. In particular, consider testing
+ the linear hypotheses
+
+                Ho: R/3o = r vs. H1: R,fo 3 r,
+ where R is a finite q x K matrix of full row rank and r is a finite q x 1 vector. It can
+ be shown that given Ho
+
+                                                                                                                      A 2
+
+                                          This content downloaded from
+         27.130.6.29 on Tue, 13 Oct 2026 16:10:34 UTC
+
+                             All use subject to https://about.jstor.org/terms
+ 820 HALBERT WHITE
+
+under Assumptions 1-3. This statistic is not computable however, since
+Mn- 1/,,Mn1 is not known. If it were possible to replace Mn-VnMn with a
+consistent estimator, the usual asymptotic tests (the normal and x2 tests analogous
+to the familiar finite sample t and F tests) could be performed.
+
+   The difficulty evidently arises in estimating Vn. If we consider the fixed
+regressor case in which Vn = (X'QX/nn), it might appear that we must successfully
+estimate each diagonal element of Q2. As the model has been set out, this could
+require estimating n different variances o2, obviously an impossible task when
+only n observations are available (cf. Goldfeld and Quandt [9, p. 86]). But this
+way of looking at the problem is misleading. What is actually required is to
+estimate n 1 X>i =1 E(E4X'Xi), an average of expectations. To do this it is not
+necessary to estimate each expectation separately. Under the conditions given
+above, a consistent estimator is n1 X'=- I XiX1. Unfortunately, Ei is not
+observable; however, Ei can be estimated by ? = Y1 -Xij3, which leads us to
+consider the estimator
+
+                                                                       n
+
+                                 ^ 1 vA2 wrX
+
+                 Vn = n ? in iAi
+
+                                                           i=l
+
+ In the fixed regressor case, this amounts to replacing the
+ 12, oK2, with s,n the ith squared residual.
+
+     With the next condition, the estimator Vn becomes t
+ problem of obtaining a heteroskedasticity-consistent c
+
+     AsSUMPTION 4: There exist positive constants 8 and A
+
+            (IvJX2 ikX1 I 1 +) < a (j, k, l = 1,.. .,K).
+
+ Uniformly bounded fixed or stochastic regressors are sufficient for Assump
+ to hold.3
+
+     We now present the first main result.
+
+                                                                     a.s.
+
+    THEOREM 1: (i) V n,- Vf|-0 under Assumptions 1, 2, 3(a) and 4; (ii)
+
+                                                                                                               a.s.
+
+            I(X'X/n)F1 Vn(X'X/n)-1 pM-n V M-l - 0
+
+ under Assumptions 1, 2, 3(a), and 4; (iii)
+
+                                                                                                                                              A 2
+
+               n (R/3n - r)'[R (X'X/n Y-1 Vn (X'X/n 1R']- (R,3n - r) -x,
+
+ given Ho and Assumptions 1-4.
+
+     The first part of Theorem 1 states that Vn consistently estimates Vn, resolv-
+ ing the difficulty discussed in the preceding paragraphs. The second part
+
+      3Note also that Assumption 4 is sufficient for the second condition in Assumption 2(a), since
+
+                              ZS'{l- 1r11+88 FrX2iX2. 11+^8 + 1.
+
+                                          This content downloaded from
+         27.130.6.29 on Tue, 13 Oct 2026 16:10:34 UTC
+
+                             All use subject to https://about.jstor.org/terms
+                                                    COVARIANCE MATRIX ESTIMATOR 821
+
+provides the heteroskedasticity-consistent covariance matrix estimator,
+(X'X/n)- Vn(X'X/n)-. Using this estimator to test linear hypotheses in the
+usual way gives correct results asymptotically, as the third part of the theorem
+demonstrates. This result fills a substantial gap in the econometrics literature, and
+should be useful in a wide variety of applications. Since the convergence to
+normality of In(8n3-,,- ) can be shown to be uniform, the heteroskedasticity-
+consistent covariance estimator can also be shown to be appropriate for use in
+constructing asymptotic confidence intervals.
+
+    In fact, results similar to propositions (i) and (ii) of Theorem 1 were stated over a
+decade ago by Eicker [5], although Eicker considers only fixed and not stochastic
+regressors. Also, if r =0 and if R is the 1 x K vector with ith element equal to
+unity and the rest zero, then the X test statistic of (iii) is precisely the square of th
+asymptotic normal statistic (analogous to the t test) proposed by Eicker [4] for the
+heteroskedastic case in an even earlier classic paper. It is somewhat surprising that
+these very useful facts have remained unfamiliar to practicing econometricians for
+so long.
+
+    The estimator Vn is also similar to an estimator proposed by Hartley, J. N. K.
+Rao, and Kiefer [11] and C. R. Rao [18], namely
+
+                                                                            n
+
+                     Vn = n E Sin i i
+
+                                                        i=l
+
+ where 5in is the minimum norm quadratic unbiased estimator
+ discussed by C. R. Rao [18] and Chew [2]. i2n is not a MINQUE for Oq;
+ nevertheless, it is straightforward to show that Vn and Vn are asymptotically
+ equivalent, so that Theorem 1 also holds for Vn. Note, however, that due to the
+ complexity of the formula for 5i2n, Vn is always more difficult to compute than Vn
+ and becomes more so as n increases.
+
+     The results of Theorem 1 can be extended to the nonlinear case Yi=
+ f(Xi, 0) + Ei by replacing Xi1 with af(Xi, 0)/1aj in all computations, und
+ tions given by White [23]. In this case, it resembles the covariance matrix
+ estimator given by Berndt, Hall, Hall, and Hausman [1]. An expression analogous
+ to Vn can also be easily obtained for instrumental variables estimators. (In the
+ framework of two-stage least squares, one simply replaces Xi with Xi, the
+ projection of X, on the space spanned by the instruments; however, as usual, ',, i
+ still computed using Xi.)
+
+                                     3. A DIRECT TEST FOR HETEROSKEDASTICITY
+
+     Goldfeld and Quandt [9, Ch. 3] provide several examples to show that
+ heteroskedasticity can result in serious inconsistencies in the usual least squares
+
+ covariance matrix estimator4 an(X'X/n)-l where 02n = n 1 (Yi -XXifn)2.
+
+       The estimator 5n is used instead of sn =(n -K)'% X1 (Y la-XI3n)2 to avoid unnecessarily
+  cluttering the proofs. Obviously, all asymptotic results are valid if sn replaces arn.
+
+                                          This content downloaded from
+         27.130.6.29 on Tue, 13 Oct 2026 16:10:34 UTC
+
+                             All use subject to https://about.jstor.org/terms
+822 HALBERT WHITE
+
+Similar problems can be caused by a
+
+absence of heteroskedasticity. Of course, the heteroskedasticity consistent
+
+covariance matrix given in Theorem 1 allows one to make proper inferences and
+
+construct appropriate confidence intervals regardless of these complications.
+
+However, this estimator is not as simple to compute as 6-n(X'X/n)j, so it is
+
+particularly useful to have a simple indicator of whether or not 5n(X'X/n)-l is i
+
+fact inconsistent which does not rely on direct computation of
+
+(X'X/n) 1 Vn (X'X/n) 1. Further, if this inconsistency can be attributed to
+
+heteroskedasticity (as will often be possible) one also has an indication of whether
+
+there is a potential efficiency payoff to a more careful modeling of the variance
+
+structure.
+
+In this section, we derive a simple test for conditions which ensure the
+
+consistency of A2 (X'X/n)-l. The test is based on the fact that in the pr
+
+homoskedasticity ( 0-0= u, for all i) and with si independent of Xi4, =               be
+
+   2 1 EX1. cae cno
+
+ o0n ) X7I =1 E(X,Xj. In this case 4n can
+by 2n(X'X/n). Comparing the elements of Vn and A 2(X'X/n) thus provides an
+
+indication of whether or not A2 (X'X/n)-l is a consistent covariance matrix
+
+estimator. Theorem 2 below makes precise the sense in which V4 and Ar (X'X/ n)
+
+must be sufficiently far apart to indicate inconsistency, and Corollary 1 provides a
+
+simple procedure for detecting possible inconsistency. To obtain these results, we
+
+must add additional structure.
+
+First, we make the following assumption.
+
+   AsSUMPTION 5: There exist positive constants 8 and A such that, for all i,
+
+E(I4| 1+8) <A, and E(jXijXikXiaXimI1l+8) <A (j, k, 1, m = 1, K).
+
+   Note that Assumption 5 is sufficient for Assumption 4 and Assumption 2(a).
+Next, define the products
+
+               'pis XikXii (s=, . K(K +1)/2; k= 1,. . ., K;I =1, . k)
+
+and let Vi be the 1 x K(K + 1)/2 vector with elements t!s. Thus, VJ
+containing the elements of the lower triangle of the matrix X'
+
+                                                          i=l
+
+The vector Tn with elements Tn, contains the elements of
+Mn. Similarly, we define the 1 x K(K + 1)/2 vector t!n =
+the elements of the lower triangle of X'X/n. Now assume the following:
+
+ASSUMPTION 6: The average covariance matrix                                     _
+
+                                                                             n
+
+         Bn =n-l > E(E _ ](i_n)(-n)
+
+                                                   i=l
+
+                                This content downloaded from
+27.130.6.29 on Tue, 13 Oct 2026 16:10:34 UTC
+
+                    All use subject to https://about.jstor.org/terms
+                                          COVARIANCE MATRIX ESTIMATOR 823
+
+is nonsingular for n sufficiently large such that det Bn > > 0; also, for n
+sufficiently large n -1 in 1 E((F 2 _O o2)2) > > O.
+
+    In the theorem which follows, we are particularly concerned with the behavior
+
+of the random variables (I'i- -ny[ 2 2-7 ]. Assumptions 5 and 6 help to ensure
+that the appropriate conditions are satisfied to invoke asymptotic normality. Bn is
+the average covariance matrix of these random variables; with Xi independent of
+Ei, its elements are uniformly bounded by Assumption 5. The inverse B-1 exists
+for n sufficiently large, and with Xi independent of Ei has uniformly bounded
+
+elements by Assumptions 5 and 6.
+    Finally, we make the following assumption:
+
+    ASSUMPTION 7: There exist positive constants 8 and a such that for all i
+
+           E(IX4f1isPitll+j)< A (j= 1,. ..,K; s,t, =1,. ..,K(K + 1)/2).
+
+    In vector notation, we can express the lower triangle of the matrix difference
+ Vn- Un(X'X/n) as the difference vector
+
+                                                                                   n
+
+               Dn 66n, OB n) = n -1 'P in [E in -( On]
+
+                                                                              i=l
+
+ We also use an estimator of B,n defined as
+
+                                                  n
+
+              Bn = n 1E [in -(J'n] (-n) A'Pi tn)
+
+                                                       i=l
+
+With this structure, we can now give a direct test for inconsistency of the usual
+least squares covariance matrix estimator, 5Jn (X'X/n )-1
+
+       THEOREM 2: Given Assumptions 1, 2(b), 3(b), and 5-7, if Eiis independentof
+Xi and E(E2) = o_2 for all i, then
+
+                                          A 2 1 A 2A 2
+         (1 nDn (.n, O n) B n Dn (X(n, O n) - X K(K +1) /2 .
+
+    Note that the null hypothesis maintains not only that the errors are homoske-
+dastic, but also that they are independent of the regressors, and that the model is
+correctly specified in the sense that Assumptions 1, 2(b), 3(b), and 5-7 hold.
+Failure of any of these conditions can lead to a statistically significant test statistic.
+Essentially, the statistic (1) is testing a joint hyoothesis that the model's
+specification of the first and second moments of the dependent variable is corr
+To discover that (1) is not statistically significant for a given model is particularly
+good news since it implies that not only is the variance specification of the model
+
+correct (subject to caveats below) but also that the linear specification Yi =
+Xi40 + Ei is correct. In this sense, the test based on (1) is a general test for model
+
+misspecification.
+
+                                          This content downloaded from
+         27.130.6.29 on Tue, 13 Oct 2026 16:10:34 UTC
+
+                             All use subject to https://about.jstor.org/terms
+824 HALBERT WHITE
+
+    In fact, the test statistic of Theorem 2 is computationally identical to the linear
+version of a test for model misspecification proposed in White [22] for the i.i.d.
+regressor nonlinear model case. In that situation, the power of this statistic with
+respect to the null hypothesis that the explanatory model is correct up to an
+independent additive disturbance derives from the fact that
+(X'X/n)-1Vn(X'X/n)-Y is a consistent estimator of the parameter covariance
+
+matrix even when the model is misspecified, while 2 (X'X/n)-1 is inconsistent.
+
+This inconsistency arises from the fact that when the model is misspecified, the
+disturbance of the incorrect specification contains the specification error, so that it
+is impossible for the regressors to be independent of the disturbance term, as the
+
+consistency of 2 (X'X/n)-1 requires. (See White [22 and 24] for further dis
+
+cussion.)
+    When the null hypothesis of Theorem 2 is rejected, the appropriate conclusion
+
+to be drawn depends upon whether one is willing to maintain the correctness of
+the model's specification (most importantly, that the true relation is indeed
+ Yi = Xi4o + Ei). If so, the most plausible reason for rejection is heteroskedasti
+In the regressor case, this is the only reason. In the stochastic regressor case, lack
+of independence of regressors and errors alone can lead to rejection; however, in
+the most commonly encountered models, it is heteroskedasticity which leads to
+lack of independence, through a dependence of the error variance on the
+regressors. Thus, when the model is maintained to be correct, rejection may
+reasonably be attributed to heteroskedasticity, so that there is a potential
+efficiency gain to be realized from a more careful modeling of the variance
+structure.
+
+    If the investigator is less confident about the correctness of the linear model, the
+test indicates only that something is wrong, but not what. A more thorough
+investigation of the model's specification is indicated.S In what follows, we assume
+the model is correct and treat (1) as a heteroskedasticity test.
+
+    As given, the statistic (1) is even more cumbersome to compute than Vn.
+ However, by slightly modifying the conditions of Theorem 2, we can obtain a
+ comparable statistic which is very easy to obtain. In particular, replace Assump-
+ tion 7 in Theorem 2 with the assumption that the Ei are homokurtic-that is,
+E(E 4=,14 for all i. Now consider the artificial regression
+
+(2) i= ao + a 1 IF1 + a2 2J2+ +aK(K+1)/21'K(K+1)/2
+
+               K K   E  E  aXjXk                                      n)
+
+=ato+
+
+            j=1 k=j
+
+     5 If the investigator is unsure about the correctness of the model's                                      specifi
+proceeding would be to use the statistic (1), and if rejection occurs, apply a specification test of the type
+proposed by Hausman [13] or White [24]. These latter tests are sensitive to model misspecification, but
+not heteroskedasticity. Hence, accepting the null hypothesis of no model misspecification would
+
+indicate that rejection of the null hypothesis of Theorem 2 is indeed due to heteroskedasticity, whereas
+rejection of the null hypothesis of no misspecification indicates that rejection of the null hypothesis of
+Theorem 2 is due to model misspecification. Since these tests are in general dependent, the formal size
+of this sequential procedure will be difficult to determine. Note also that both specification tests
+mentioned above may detect only a lack of independence between errors and regressors, instead of
+misspecification.
+
+                                This content downloaded from
+27.130.6.29 on Tue, 13 Oct 2026 16:10:34 UTC
+
+                    All use subject to https://about.jstor.org/terms
+                                         COVARIANCE MATRIX ESTIMATOR 825
+
+where the a's are parameters to be estimated by OLS. Equation (2) directs us to
+regress the squared estimated residuals on all second order products and cross-
+products of the original regressors. The next result uses the fact that (1) is
+asymptotically equivalent to testing the joint hypothesis a1 = a2 = . . . =
+aK(K+1)/2 = 0 using the standard R2 statistic from the regression (2), given the
+homokurtosis assumption. Formally, we have the following corollary.
+
+   COROLLARY 1: Given Assumptions 1, 2(b), 3(b), 4-6, if Ei is independent of Xi,
+and E(E2) = CO-, E(E 4) = 1 for all i, then
+
+                         2 A 2
+
+(3) nR ~- XK(K?1/2
+
+ where R2 is the (constant-adjusted) squared multiple correlation co
+regression (2).
+
+    All the remarks made following Theorem 2 apply here as well. It is useful to
+note at this point, however, that Assumption 6 can fail identically. In particular, if
+
+the estimating equation contains a constant term, say X1, 1, then equation (2)
+
+contains a redundant constant; equivalently, the corresponding (first) element of
+
+Dn (Wm 5n) and the row and column of Bn corresponding to the constant will b
+identically zero, implying a singular Bn. In this case, it is entirely appropriate to
+delete the redundant constant from (2) (equivalently, the corresponding element
+of Dn( (5nn) and row and column of Bn) and proceed, reducing the x2 degrees o
+freedom by one. Redundancies will also occur if the Xi contains a constant and
+polynomial terms (e.g., the translog production function). For example if Xi,- 1
+and X13 = Xi2, then Xi1Xi3 = X12X12. Again, the redundant term is simply dropped
+
+and degrees of freedom are reduced by one.
+    Note that when the homokurtosis assumption fails (so that (1) is appropriate),
+
+the only effect is that the nominal size of the test associated with (3) becomes
+incorrect. The test statistic (3) will still have unit power asymptotically.
+
+    This result allows one to perform the test without first computing the matrix Vn.
+ If the test is passed, it indicates the adequacy of A2 (X'X/n)-l for hypothesis
+testing, and one could stop at this point (although in some cases further efficiency
+ gains might be possible-see below). If the test is failed, one can proceed to
+ calculate the heteroskedasticity-consistent covariance matrix estimator using the
+ identity
+
+               Dn (O2ng 0r )-( it n ))cn
+
+ where an is the K(K + 1)/2 x 1 vector containing the OLS estimates of
+ a1,... , aK(K+1)/2. By adding the appropriate element of Dn(f3ng, 5) to each
+ element of 52 (X'X/n), one obtains V^.
+
+     In the form (3), the test resembles a Lagrange multiplier test for a specific class
+ of normal heteroskedastic alternatives considered by Godfrey [7]. Note that
+  normality is not assumed here. From the discussion above, it is clear that the
+
+                                          This content downloaded from
+         27.130.6.29 on Tue, 13 Oct 2026 16:10:34 UTC
+
+                             All use subject to https://about.jstor.org/terms
+ 826 HALBERT WHITE
+
+power of Godfrey's test must derive, as does that of the statistic (3), from the
+inconsistency of 5, (X'X/ n) for '4.
+
+    The present testing procedure is also similar to the modified Glejser procedure
+proposed by Goldfeld and Quandt [9, p. 93]; however, while Goldfeld and
+Quandt accepted or rejected the homoskedasticity hypothesis on the basis of
+unidirectional t tests associated with the estimated a's, the test proposed here
+considers all a's jointly. Its performance as a heteroskedasticity test should
+compare to the modified Gleijser test in a manner roughly analogous to the
+performance of Goldfeld and Quandt's FIML x2 test relative to their FIML t test
+[9, pp. 94-100].
+
+    Although most previous tests for heteroskedasticity have relied upon imposing
+some more or less formal structure on the nature of the heteroskedasticity and
+then testing to see if this structure is found (e.g., Goldfeld and Quandt [8], Glejser
+[6], Rutemiller and Bowers [20], Harvey [12], and Godfrey [7]), the present test
+does not require specifying the heteroskedastic structure. Heuristically, one
+expects the statistics (1) or (3) to have good power against all heteroskedastic
+alternatives which result in inconsistency for the usual covariance matrix estima-
+tor; for n sufficiently large, the power of the test in these cases will approach unity.
+Tests which correctly formalize the heteroskedasticity should have some power
+advantage in finite samples, but (1) or (3) should equal or dominate tests which
+incorrectly specify the variance structure. If theory suggests that some of the a 's in
+(2) should be zero (as in the original Hildreth-Houck [14] model) or negligible,
+power (and degrees of freedom) may be gained by omitting some terms in (2). A
+finite sample investigation of the power of (3) absolutely and relative to existing
+tests will be undertaken in future work.
+
+   Are there cases in which heteroskedasticity does not result in inconsistency for
+5rn(X'X/n)Y1? If so, one should expect the power of (1) and (3) to be low in
+absolute terms for these cases. Such circumstances are easily characterized,
+although it might sometimes be difficult to detect these cases independently of the
+statistics given. This characterization is given by the next simple result.
+
+   THEOREM 3: Given Assumptions 1, 2(a) and Ei independent of Xi,
+0In (X'X/n )- Vn| a0 if and only if
+
+            | n-f (2 2) (E0(XXi)- ) 0 as n-* ox.
+
+The necessary and sufficient condition for the implied consistency of
+
+5rn(X'X/n)-l provided above says essentially that the second mom
+errors, Ei, must be "uncorrelated" with (asymptotically orthogonal to) all second
+moments and cross-moments of the regressors, Xi. Obviously, this occurs when
+
+     2 _2
+
+- cro, the case of homoskedasticity; but it can also occur when E(XX'Xi) MO (a
+fixed finite matrix), e.g. when the Xi are obtained from a truly random sample, so
+that the regressors are i.i.d. In this last mentioned case, it can be shown that (1) has
+
+                                         This content downloaded from
+        27.130.6.29 on Tue, 13 Oct 2026 16:10:34 UTC
+
+                            All use subject to https://about.jstor.org/terms
+                                                          COVARIANCE MATRIX ESTIMATOR 827
+
+precisely the same XK(K+1)/2 distribution, so that in the presence of heteroske-
+dasticity the power of the test is precisely the apparent size of the test.
+Unfortunately, these cases are not the only possible ones for which the test will
+have low power, since one can construct an unlimited number of them simply by
+letting o_ and E(X'Xi) be independent random variables with finite means
+(taking these moments as fixed a posteriori). A small x2 statistic will indicate either
+homoskedasticity or any of these other possibilities. Note, however, that if a
+variance structure satisfies E(E 2 IQi) = g(Qi) for some variables Qi, then
+have to be appropriately orthogonal to Xi for the conditions of Theorem 3 to hold;
+usually Qi = Xi, so this cannot occur.
+
+    Theorem 3 generalizes a simple result given by Malinvaud [16, pp. 303-04] for
+the single regressor case. There, Malinvaud shows sufficiency; the present result
+shows that necessity is also valid. This result indicates that heteroskedasticity will
+be easily detected only when it makes a difference for drawing inferences using the
+usual least squares covariance matrix estimator. However, it does not necessarily
+follow that in such cases efficiency cannot be improved. The effects of heteroske-
+dasticity on the usual covariance matrix estimator and on the efficiency of the least
+squares estimator are quite separate. In the case of a diagonal error covariance
+matrix, the necessary and sufficient condition for the efficiency of least squares is
+precisely homoskedasticity (cf. McElroy [17]). Thus, taking proper account even
+of variance structures which satisfy the conditions of Theorem 3 can improve
+estimator efficiency. The extent of the improvement can be directly assessed (at
+least asymptotically) by comparing the heteroskedasticity-consistent covariance
+matrix of the appropriate weighted least squares estimator to that of the OLS
+estimator.
+
+    In fact, since the covariance matrix is being consistently estimated, any number
+of alternative variance structures may be evaluated in this way, and the structure
+with the greatest resulting efficiency can be chosen. One particular such structure
+suggested by equation (2) involves choosing weights
+
+                coin= (max [on + aIn S > >0])
+
+(where 8 is arbitrarily chosen) and forming the weighted least squares estimator
+O3n = (X'In- X)-YX'12n Y, where f2n is the diagonal matrix with diagonal ele-
+ments Cin. Both Glejser [6] and Goldfeld and Quandt [9] have found in Monte
+ Carlo studies that even incorrect heteroskedasticity corrections can improve
+estimator efficiency over OLS. In future work, possible efficiency improvements
+from the above choice of weights will be investigated using the heteroskedasticity-
+ consistent covariance matrix.
+
+                                             4. SUMMARY AND CONCLUDING REMARKS
+
+     This paper has presented general conditions under which a consistent estimator
+ of the OLS parameter covariance matrix can be obtained, regardless of the
+ presence of heteroskedasticity in the disturbances of a properly specified linear
+ model. Since this estimator does not require a formal modeling of the structure of
+
+                                         This content downloaded from
+        27.130.6.29 on Tue, 13 Oct 2026 16:10:34 UTC
+
+                             All use subject to https://about.jstor.org/terms
+ 828 HALBERT WHITE
+
+the heteroskedasticity and since it requires only the regressors and the estimated
+least squares residuals for its computation, the estimator of Theorem 1 should
+have wide applicability. Additional conditions are given which allow the investi-
+gator to test directly for the presence of heteroskedasticity. If found, elimination
+of the heteroskedasticity by a more careful modeling of the stochastic structure of
+the model can yield improved estimator efficiency.
+
+    Until now, one had either to model heteroskedasticity correctly or suffer the
+consequences. The fact that the covariance matrix estimator and heteroskedasti-
+city test given here do not require formal modeling of the heteroskedastic
+structure is a great convenience, but it does not relieve the investigator of the
+burden of carefully specifying his models. Instead, it is hoped that the statistics
+presented here will enable researchers to be even more careful in specifying and
+estimating econometric models. Thus, when a formal model for heteroskedasti-
+city is available, application of the tools presented here will allow one to check the
+validity of this model, and undertake further modeling if indicated. But even when
+heteroskedasticity cannot be completely eliminated, the heteroskedasticity-
+consistent covariance matrix of Theorem 1 allows correct inferences and
+confidence intervals to be obtained.
+
+     University of Rochester
+
+                            Manuscript received August, 1978; revision received March, 1979.
+
+                                                           MATHEMATICAL APPENDIX
+    All symbols, definitions, and assumptions are as given in the text.
+
+    LEMMA 1: Given Assumptions 1 and 2, 3,n exists almost surely for (all) n sufficiently large and
+ /3~nn ,a.s>. g/o3o
+
+    PROOF: 3,n exists almost surely for (all) n sufficiently large provided (X'X/n) is nonsingular alm
+ surely for n sufficiently large. When this is true, Assumption 1 allows us to write
+
+                 /3,n = (X'X/n)-1(X' Yln) = g3o+ (X'X/n)-1(X'E/n).
+ Now E(IXijXVk I'+)<A for all i and j, k = 1, . . ., K by Assumption 2(a); since the Xi are mutually
+
+ independent, it follows by Markov's strong law of large numbers (e.g. Chung [3, p. 125]) that
+
+              |(X'X/n) -M l- o
+
+ where the notation is understood to indicate convergence of the matrices element by element. Now by
+ Assumption 2(b) Mn is nonsingular for n sufficiently large. By the continuity of the matrix inverse,
+ follows that (X'X/n) is nonsingular almost surely for n sufficiently large (so that 3,n exists); the
+ elements of Mf l are uniformly bounded for n sufficiently large, so that
+
+               L(X'X/n)-l _M-1 -*0.
+
+ Next, E(IXj1ej L' +") < A for all i and j = 1,.., K as a result of the Holder inequality and Assumption
+ 2(a) which ensures E(XI'+") <<a, E(Ieii1 ?) < A. Since the X'e, are independent, Markov's strong
+
+                                         This content downloaded from
+        27.130.6.29 on Tue, 13 Oct 2026 16:10:34 UTC
+
+                            All use subject to https://about.jstor.org/terms
+                                                COVARIANCE MATRIX ESTIMATOR 829
+
+law implies
+
+                  (X'e/n)-n1 Z E(Xei,) - 0.
+Since M-1 has uniformly bounded elements for n sufficiently large by Assump
+E(X'ej) has uniformly bounded elements, uniform continuity implies
+
+                 (X'X/n)' (X'e/n) -MRjn1 Z E (X1)| 0.
+
+But E(Xei) = 0 under Assumption 1. Thus
+                 (X'X/n)-1(X'e/n) --O
+
+ given Assumptions 1 and 2, implying I3n -> -o Q.E.D.
+
+    LEMMA 2: Under Assumptions 1-3,
+
+                  .In Vn M n (W(n - J0) ~(,I
+
+                                                                                               A
+
+   PROOF: Consider the quantity n-I 1;,=j X'e1. Under Assumption 1 the random vectors X'ej are
+independent with E(X'ej) = 0 and average covariance matrix
+
+                                                        n
+
+                 Vn, = n1 E(E2XXi)
+
+                                                           i=1
+
+which is positive definite for n sufficiently large by Assumption 3(a). Thus, we can defi
+positive definite matrix V'2 such that (V5 )2 - V1. The elements of V ' are uniformly bounded
+under Assumptions 2 and 3, as are E(IX1ei I2+8) for some 8 > 0 and all i, j given Assumption 3(b). Thus,
+
+ by the Minkowski inequality for some E>0, I Af ElAVn-XieII2+/n(2+ /2 *0 for all A in RK.
+ Hence, the multivariate Liapounov central limit theorem (White [23, Theorem 3.1]) implies that
+
+                Vn5n E XIe -N(0, IK).
+
+                                                            i=l
+
+Now
+
+                n V- Mn (n3 - 3O) = V Mn (XX/ n) 1V V- n Xi ,
+
+almost surely for n sufficiently large. Next,
+
+                 | V n2Mn (X'X/n ) V n-IKI-*O?
+
+ by Lemma 3.2 of White [23], since I(X'X/n)F - M a l- 0 under Assumption 2 as argued in Lem
+
+ 1, so that
+
+ (a. 1) | oIn V,- Z Mn ( 1n- ( So)- n XiEi -*0.
+
+ It then follows from Lemma 3.3 of White [23] that
+                                   -n VMN I).A
+
+                                         This content downloaded from
+        27.130.6.29 on Tue, 13 Oct 2026 16:10:34 UTC
+
+                            All use subject to https://about.jstor.org/terms
+830 HALBERT WHITE
+ THEOREM 1: (i) V4,- 14 -0 under Assumptions 1, 2, 3(a) and 4; (ii)
+
+               I(X'X/n)-l Vn(X'X/n)-l-M- ,V Mn- 1 - 0
+
+under Assumptions 1, 2, 3(a) and 4; (iii)
+
+                n(Rf3n - r)'[R(X'X/n)-l VYn(X'X1n)-1R'1-1(R,n - r) >X2q
+
+given Ho and Assumptions 1-4.
+
+   PROOF: (i) Since P3o is finite, there exists a compact neighborhood I of flo such that (flj - i3oi) is finite,
+j= 1. K, where 16i and 16o1 are the jth elements of P3 and flo in IJ, respectively. There also exists a
+finite vector 13 (not necessarily in ii) with elements 13j such that (13 0 - 13j) 6 (13 i - 1o1)2 for all 1P in ii, so
+that for all 1P in v
+
+                      IXi; (j-o>)XikXill." | i 16|,: iO)2 XikXill
+
+Now
+
+                 l(Yi -Xip) 2XikXil = ( i -X(6 -1o))2 XikXill
+
+under Assumption 1, and it is a direct consequence of the elementary inequality
+                   a + b Ir 2'- aI r+2r- bI (r- 1)
+
+that there exist finite positive constants AO. ... AK such that for all P in v
+
+                                                                                                     K
+
+(a.2) V -X1)XikXil i A eXikCXil + 1X ~-Io)XikXilI
+
+                                             -<AoIeiXikXi11+ E AlXy,XikXil (3I -oj ) mk1(Xi,ei).
+
+                                                                                                                I1=1
+
+Thus |(Yi - Xi8) 2XikXilI is dominated by mkl(Xi, Ei)-
+   Now it also follows from the above inequality that there exist finite positive constants ,0. P . AK
+
+such that, for 8 > 0,
+
+E(|Mk1(Xi9 Ei)|l+") --- ,oA '+"E( E2 XikXilll8
+
+                                                 K
+
+                              K E piAil+8E(lXi2lxikxilll+8)(:i_:oi2+28.
+
+                                                    j=l
+
+2   +  i   1i  niorl
+Since     E(|                                       UEiXik
+
+bounded by Assumption 4, j = 1, ... . K, and since ,. ..., K AO, ... . AK, and (1j -
+
+1301)2+2, ... (3(OK - 13OK )2+2 are finite positive constants, E( mkl (Xi,e E) I +'6) is uniform
+
+P. It then follows from White [23, Lemma 2.3] that
+
+sup |n- E ( y, _Xi6)2 XikXil -n _, E(( Yi _Xip)2XikXi1) |0.
+
+Since 1n a,S.160 under Assumptions 1 and 2 as established by Lemma 1, it follows fr
+Lemma 2.6] that
+
+In 1 E (Yi-X X4)2XiEkXil- n E E(2XiX I)- 0 (k, I = 1, .. ., K)
+i=l   i=l
+
+or  I  4n,-                                                              V            a
+
+(ii)   In                                           Lemm
+
+                                This content downloaded from
+27.130.6.29 on Tue, 13 Oct 2026 16:10:34 UTC
+
+                    All use subject to https://about.jstor.org/terms
+                                                    COVARIANCE MATRIX ESTIMATOR 831
+
+elements for n sufficiently large under Assumption 2. Combining this result with (i) above,
+
+                I(X'X/ n) V (X'X/n )- l1 M- L V MV1- lIa.s O
+
+follows by uniform continuity, since Vn has uniformly bounded elements under Assumption 3(a).
+    (iii) We can write
+
+               Rf3n -r=Rf30-r+R(3n -f30).
+
+Applying Ho: R130 = r and multiplying by In yields
+                  l n (R,n - r) = dnR (l3n - 10).
+
+For convenience let Fn, =-RM- Vn,M-R' (which exists, has uniformly bounded elements, and
+nonsingular for n sufficientl2y large given Assumptions 1-3) and define the symmetric positive definit
+matrix rF, such that (F2) )r The elements of rF' are also uniformly bounded by Assumption
+
+and 3. Consider the quantity
+
+                 lnrE- (R,Bn - r) = d nr2R (1,n - 13-
+Since FT,'R is uniformly bounded, it follows from (a.1) that
+
+and by Lemma 3.3 of White [24] that InFI2R(/3fn -,Bo) has the same asymptotic distribution as
+
+                                         n
+
+,=1
+
+provided this is multivariate normal. The random variables r' RRM2X'"ej are indepe
+E(f,R'RM_1X'j) = 0 and covariance matrix
+
+                                         n
+
+                1 E FRMT,'E(e2X,X)MT,1RTT,'
+
+                                     1i=
+
+     n nViRMn-l V,MT,IR'FT, - F2F,,F2
+
+     I- '
+
+By the multivariate Liapounov central limit theorem,
+
+      n    I A                                                        -N(O,  IK3
+           E, j;n3RRnlXiij
+n-I
+
+      i=l
+
+provided that for some 8 > 0,
+
+(a.3) E E|A'Z nRR1Xi_-*0+8/n 0
+
+                                i=l
+
+for all A in R'.
+   Equation (a.3) holds by the Minkowski inequality since F7, RMt 1 ha
+
+given 2 and 3 and since for some 3, E(1XjTej12+1) is uniformly bounde
+Thus, we may infer
+
+                                                                              A
+
+(a.4) VniE , (R On - r) -N(O, IK).
+
+   Since f,n is not computable, consider the quantity
+
+             j~nf _ (R nr)
+
+where PT1n is the symmetric positive definite matrix such that (Fn)2 = PT1, andP
+R(X'X/n)-flVn(X'X/n)-1R' exists and is nonsingular almost surely for n sufficiently large given
+
+                                This content downloaded from
+27.130.6.29 on Tue, 13 Oct 2026 16:10:34 UTC
+
+                    All use subject to https://about.jstor.org/terms
+  832 HALBERT WHITE
+
+Assumptions 1-4. Since R is finite it follows from (ii) above that
+
+                                                     _ P
+
+                      Fn-rn |-o.
+
+It then follows from Lemma 3.3 of White [23] that
+
+                                                                                       A
+
+                  1/n17 (R3n- r) -N(O, IK)
+
+and that
+
+or, substituting for En,
+
+                          n (Rn -r)'[R(X'X/n)-F Vn(X'X/n)-1R']-P(R/ -r) AXq Q.E.D.
+
+   THEOREM 2: Given Assumptions 1,2(b), 3(b), 5-7, if eiisindependentofX andE(Ei ) = cr for all i,
+
+then
+
+                 nDn(3n, 5n )'Bn Dn (3n, 5n) AXK(K+1)/2-
+
+    PROOF: Let 0 =(p, ar) and consider the quantities
+
+                                                                   n
+
+                  Ds (0) = n-1 'I-ns) (s =1. K(K + 1)/2)
+
+where
+
+                 tVns = n E(tVs), tVis = XikXil
+                                                                           (s =1. K(K + 1)/2; k = 1, K;= 1 . k).
+
+ With homoskedastic disturbances independent of Xi, the random varia
+ expectation zero. Define the average covariance matrix Bn(O) with elements
+
+                                                                   n
+
+                 Bns(0) = n _ E Y([(i ' Xj3)2 - _2]2(' - 'nI)( I'- In)) (s, t = 1,...,K(K + 1)/2).
+
+                                                                      i=l
+
+ By Assumption 6, Bn(0O) is nonsingular for n sufficiently large, with uniformly bounded elements
+ given Assumption 5 and independence of Xi and Ei. For n sufficiently large, we can define the
+ symmetric positive definite matrix Bn(00) 2 such that [Bn(O0)]2 =Bn (0) 1
+
+    Assumptions 5, 6, and the independence of Xi and Ei ensure the eventual uniform boundedness of
+ the elements of Bn(o0Y1. Let Dn(O0) be the K(K + 1)/2 x 1 vector with elements Ds(O0). Then
+
+                                                                                                A
+
+ by the multivariate Liapounov central limit theorem, provided that for some 8 > 0
+
+                EA'B(o)2( - )'(E 2 _ aO )12+8n (2+8)/2 _ O
+
+                                 i=l
+                                       K(K+1)2
+
+ for all A in R But this holds by the Minkowski inequality since Bn(00)-f has uniformly
+ bounded elements and since E (pi, - - ns)(Ei 2+ is uniformly bounded for some 8 >0 given
+ Assumption 5 and the independence of Xi and Ei.
+
+                                          This content downloaded from
+          27.130.6.29 on Tue, 13 Oct 2026 16:10:34 UTC
+
+                              All use subject to https://about.jstor.org/terms
+                                            COVARIANCE MATRIX ESTIMATOR 833
+
+To obtain the desired result, we first show that
+
+       JInD s (in) )- nD s (0,,) v
+
+where
+
+                                                         n
+
+       Ds (6n) = n - R: i [Y- XiOn )2 2 ]pi'
+
+                                          i=1
+
+and
+
+                                         n
+
+       Oan =n ( -XO)
+
+                                 i=l
+
+Since
+
+                      n
+
+       n-i E [(RYi -X ] tn
+
+                 i=l
+
+is identically zero, we have
+
+                                                                                          n
+
+                Dsn (6n ) = n_1 i [(i Y-X48 )2 _2a ]( Vis-Tlns )
+
+                                                                      i=1
+
+Next, 6,n ->s 6o under Assumption 1, 2, and the homoskedasticity assumption, so tha
+sequence (6,n) which is tail equivalent to (6n) such that each 6n takes its values in
+neighborhood ii of 6o, such that all 0 in v are finite. Let /n = (/3nl ... .83nK) and let ,Bo =
+
+(01.I3oK). Since Ds(0) satisfies the conditions of Jennrich [15, Lemma 3], there exists a
+
+measurable function 6n lying between 6,n and 00 such that
+
+                                                                                        K
+
+              Ds (in)=Ds (00)+ Z(nj- Poi)aDs (Wn)/a.;
+                                                                                j=l
+
+                              + (n-c2)_ D (6_2 )/ao2.
+
+Rearranging and multiplying by 'In gives
+
+                                                                                                           K
+
+                jVinDs(jn )-VnDs(Oo)j= | -1n(3,nj-30oj)dDsn(jna)/a3j+ n (&2 _ a2 )aDs (Jn )/au2
+
+Using the triangle inequality and factoring yields
+
+                                                                                                        K
+
+(a.S5) |,1nDs(jn)-,1nDsn(O)1--:: E l/n(X3nj-,8oj)j * JaDsn(0n)1adSj
+
+                                            + 1jVn(5-, - _1_2I1 laDs (6,)/da|2.
+
+Now each term 1In( 3,nj - 8Oj)j is Op(l) by the tail equivalence of p3,n and 3,n and Lemma 2, given
+Assumptions 1-3. Also, I 'n (ern -aO) is easily shown to be Op(l) given Assumptions 1-3, provided th
+e2 are uniformly asymptotically negligible, as ensured by Assumption 5. Next,
+
+                                                                                      n
+
+       aDn(On )1a3j =-2n- , (Yi-Xil#n)Xij(!P's-'Fns)
+                                                                 i=l
+
+and
+
+                                                                                  n
+
+       aDs ( 6)/aa =n E 'P is-Tlns,
+
+                                                              i=1
+
+Assumptions 1, 2, and 5 ensure that (Y, -Xj3)X1jj's 5 and (Y, -Xj3)X,1 I are a
+
+dominated (arguing as in part (i) of Theorem 1 above) so that Lemma 2.3 of White [23] can be applied
+
+to obtain
+
+                                            n               n
+
+       a s'v i=1                            sup
+
+                                       This content downloaded from
+       27.130.6.29 on Tue, 13 Oct 2026 16:10:34 UTC
+
+                           All use subject to https://about.jstor.org/terms
+ 834 HALBERT WHITE
+
+                        a.s.
+
+Since n, >,Bo, it follows from White [23, Lemma 2.6] that
+
+n- 1 (Y-Xi3,,)Xi't3-Y'n,)-n I Z E(Ej)E(Xij(lI'15t, -5n)) |O.
+
+Under Assumption 1, and independence of Xi and Ei, E(ei) = O, sol dD n O(O,,)/831 0. In Lemma 1, it
+was shown that I(X'X/ n) - 0Mn |-a s o under Assumption 2, so IaDs n(O)/ao_2 a-s > O. Hence, (a.6) and
+
+the immediately preceding arguments imply
+
+                                                                                                     P
+
+                 J/nDs (in) -nDs(Oo) 0 (s=1... K(K + 1)/2)
+
+by 2c.4x(a) of Rao [19]. The uniform boundedness of the elements of B (00)Y2 then ensures that
+
+                  1K/nB,n(Ooh) Dn(On)--/nB,n(6o)32Dn (Go)I -0.
+
+    The desired result will follow in a straightforward way from Lemma 3.3 of White [24] if we can find a
+consistent estimator for Bn(0O). Accordingly, consider the estimator Bn with elements
+
+                                                         n
+
+                Snt = n- 1 [Y-in)2_ 2]2(,Tis-lns)(tpit-t
+
+                                                         i=1
+
+                                              n
+
+where (tns = n 1 X 'i,. Expanding BA"' gives
+
+                                              i=1
+
+                                           n
+
+                n [(Y_Xi-Xn)2 -a]2(tis Ins)(1pit n
+
+i=l~~n ~~~~~~~~=  n
+
+=                                                             n                                                                              X
+
+i=                i=l
+
+n                 n
+
++                                                             c4                                                                             n
+
+0n n
+
+n                    n
+
+i=l t~~~~=1
+
+n                 n
+
+--Pntnt i2 ) pis + 2snt n i Yii
+
+As = i 1i= Lema                                                                                                                              1,~
+
+                                                                                 n
+
+           -2Pn,Pntn l (Yi-Xi^On) + 11nsPntCrn,
+
+As in Lemma 1, I 0n n |- under Assumption 2, and T ns is uniformly bounded by Assumption
+2. Also 5fn- - 0 .0 under Assumptions 1, 2, and the homoskedasticity assumption. Consider a
+convex compact neighborhood a of ,Bo such that all 13 in i' are finite. Using the same kind of argument
+
+as that at the outset of the proof of Theorem 1, part (i), there exists ,B * finite with elements ,3 j* such that
+(pi_ -oi)4 , -3 Boi)4 for all 13 in v, so that for all 13 in v
+
+                                                                                                                                          K
+
+                 1(y _X 4Bpi pit I Ao| if 4!'isji? | + AjIX4,pisIt,i(138 - -4st(Xi ei)
+
+                                                                                     i-l1
+
+                                This content downloaded from
+27.130.6.29 on Tue, 13 Oct 2026 16:10:34 UTC
+
+                    All use subject to https://about.jstor.org/terms
+    COVARIANCE MATRIX ESTIMATOR 835
+
+where Ao,..., AK are finite positive constants. Similarly,
+
+                                                                                                 K
+
+                I( Yi-X_i3) 41 AO| li I + I AijX4j (f3 -Oj)4 -1(Xi, Ei)
+
+                                                                    j=1
+
+for all , in v. Since 1I sVi V2P + 1, it follows that
+
+               1(yi_Xi,3)4 tisl_<I(yi_Xig)4ti21+1(yi_Xig)41_-Ss(Xi, i)+ 'q(Xi, i)
+
+for all 63 in v. Similarly, for all 63 in z'
+
+                   1( yi _XijG)2,ispitl _- vs(Xi' Ei) + 1,pispitl
+and
+
+                   i( Yi _Xi8)2 jis I _-: vss (Xi, Ei) + 1.
+Continuing the same kind of argument as in part (i) of Theorem 1, it is easily shown that
+E(J4s,(Xi, e)j1+^) is uniformly bounded under Assumptions 5, 7 and independence of Xi an
+that E(l(Xi, Ei)11+8) is uniformly bounded under Assumption 5. It is also easily shown tha
+
+      E(|ss(XiEi)+(Xi,Ei) ) t(Xiei) tisit ), and E( ss(Xi Ei)+1l1 )
+
+are uniformly bounded given Assumptions 5, 7 and independence of Xi and Ei
+White [23]
+
+             sup in - 1Z (Yi-Xii6)4[isjpiJ'-n1 I E((Yi-Xi3 )4 'pri) ?0,
+
+             sup n_1 , (Yi-Xigj)2 Vis '-n-1 fn E((Yi-Xi3)2 is'i) -*0,
+
+sup | n - 1 i ( Y-Xi3)4 [i'_-n1 a. Es((Y-Xj3)4x') --?,
+
+    j3v i= i=l
+
+sup n n (Y-X113)2tfr-n' Z E((Yi-Xig)24i) - 0,
+3ev         ii=
+
+and
+
+sup n-1 Z (Yi-Xi3)4-n-1 Z E((Yi-Xi3)4) -0 (s,t=l. K(K?1)/2).
+
+    (3v i=l i=l
+
+     Since       j35n                              s                  ,o  un
+Lemma 2.6] that
+
+n 2i-(Yni X4iBini-)iit1isni-n(-eE4 EaisisPit)| ?-
+
+    i=l          i=l
+
+In yi (Y Xi~n titt-n1 E E(i ts 'PO 0?
+
+           In yi Y- X4n it-n1 Y E(E tit 30,
+
+                                         i=l1i=l
+
+           In yi Y- Xifn) t-n1 E E(i 0,)| >
+
+                                       i=l i=l1
+
+and
+
+n-  Xiin)4  -n-1 E  E(E  0.
+
+    i=l     i=l
+
+                                This content downloaded from
+27.130.6.29 on Tue, 13 Oct 2026 16:10:34 UTC
+
+                    All use subject to https://about.jstor.org/terms
+836 HALBERT WHITE
+
+By Markov's strong law of large numbers
+
+               |n-1 EPiPit-n 1 fiE(Ii,i,) a.s.
+
+                                                   i=l i=l
+
+given Assumption 5. Since all relevant expectations are contained in a compact subset of a Euclidean
+space, uniform continuity and the foregoing facts imply B3n - Bn,(O0-l s, t = 1,..., K(K + 1)/2,
+as straightforward (but tedious) algebra will verify. It then follows from White [23, Lemma 3.3] that
+
+       nD(0n)'B - Dn( -)XK(K+1)12- QED
+
+    COROLLARY 1: Given Assumptions 1, 2(b), 3(b), 4-6, if Ei is inde
+E(E i) = 4 for all i, then
+
+                                                 A
+
+                   nR XK(K+1)/2
+
+where R2 is the (constant-adjusted) squared multiple correlation coefficient of the regression
+
+PROOF: If Xi and Ei are independent, E(Ei) = 0o and E(E4) = ,U4 for all i, then
+
+                                                                                                                 n
+
+       Bsn(60)=(A4-ao)*n 1 E E((Vis- Ins)(tPit- ')) (s, t 1. K(K + 1)/2)
+
+                                                           i=l
+
+for which a strongly consistent estimator is
+
+       n    n
+
+       Bnt                                                                                                             =
+       i=l  i=l
+
+given Assumption 5. Arguing exactly as in Theorem 2 above, it follows that
+
+                                                                                                                    A
+
+where fin is the matrix with elements A3,'. The left-hand side of (a.7) can be written more explicitly as
+(a.8) nDn (ens imn )ae Dn - fon th r
+
+       =n n( i i [Ein -rn] (n E 'Pn A )t(i- 'Pn
+
+       i=l                               i=l
+
+The                    -1 )/( i-1             -/)2      aK(K+1)/2                                                      fr
+       estimates of                           a,. .o.,
+
+       o n n t c diven b(yiThei [21n p. 17 tion) ()in- Hnc
+
+Since
+
+       n    n
+
+       n f3 ,i [Ein- n,] = ni YK(K?/2-
+
+(a.8) becomes
+(a.9) nDn , ( n) Dn (~n )r
+
+                                         no n ti nA )V - ti-n )) 'tn i(Ein-f On))-
+
+Except for the proportionalitzy factor n, the right-hand side of (a.9) is easily recognized to be in the
+for the constant-adjusted R given by Theil [21, p. 176, equation (4.4)]. Hence
+
+                                                                                                                 A
+
+                nDn (fin, a () n Dn (fin, = nR XK(K+1/
+
+                                       This content downloaded from
+       27.130.6.29 on Tue, 13 Oct 2026 16:10:34 UTC
+
+                           All use subject to https://about.jstor.org/terms
+    COVARIANCE MATRIX ESTIMATOR 837
+
+where R is the constant-adjusted squared multiple correlation coefficient for the regression (2).
+                                                                                                                                                                 Q.E.D.
+
+   THEOREM 3: Given Assumptions 1, 2(a), and ei independent of Xi,
+
+              | n (X'Xl n) )-Vn 0
+
+if and only if
+
+                      | n 1 i(i-2)(E(X'Xi)-JMn ) -O.
+
+   PROOF: (i) By the triangle inequality
+
+                (a n (X'X/ n) )-n C Ffn (X'X/ n) )2n n n lnM-n |-
+                      2 -~~~~rn - &Rf
+
+Since -,, and Mn are uniformly bounded by Assumption 2(a) and since oa2 -2 I-2a.s0 and
+ (X'X/n) -M_Ln-Is >0 by Markov's strong law of large numbers, Lemma 3.2 of White [23] implies
+ a-n (X'X/n)) -JnM-n | O. With Xi and Ei independent,
+
+             |n E1 (0_2 &2)(E(XiXi) - n) & V-2nRn 0
+
+                                          11 -
+
+by hypothesis. Hence, I2n (X'Xln) - Vn, j-0.
+
+     (ii) Suppose
+
+                  n-l (oF2-_a2)(E(X'Xi)-Mn) O
+
+                                             i =l
+
+does not hold. Then there exists 8 > 0 such that if n is any natural number there is a natural n
+m(n) > n such that
+
+                  | Vmnik- inMmik i S
+for some indices j, k E{1, . . . K}. Given Assumptions 1 and 2(a), there exists no(8/2) such that
+
+I nn E XqjXikO-nMnik <8/2
+
+almost surely for all n ? no(8/2). The triangle inequality implies
+
+-2  -1                    2
+Crnn                         XijXik
+
+In  view                     of                                     the
+
+|amm E_ Xi,Xk jVmik :8/2
+
+so that 0 n (X'X/n) - Vn ' 0 cannot hold, a contradiction. Q.E.D.
+
+                                                                        REFERENCES
+
+[1] BERNDT, E. K., B. H. HALL, R. E. HALL, AND J. A. HAUSMAN: "Estimation and Inference in
+          Nonlinear Structural Models," Annals of Economic and Social Measurement, 3/4 (1974),
+          653-665.
+
+                                        This content downloaded from
+       27.130.6.29 on Tue, 13 Oct 2026 16:10:34 UTC
+
+                           All use subject to https://about.jstor.org/terms
+  838 HALBERT WHITE
+
+    [2] CHEW, VICTOR: "Covariance Mat
+
+            Statistical Association, 65 (1970), 173-181.
+ [3] CHUNG, K. L.: A Course in Probability Theory. New York: Harcourt, Brace and World, 1968.
+ [4] EICKER, F.: "Asymptotic Normality and Consistency of the Least Squares Estimators for
+
+           Families of Linear Regressions," Annals of Mathematical Statistics, 34 (1963), 447-456.
+ [5] : "Limit Theorems for Regressions with Unequal and Dependent Errors," in Proceedings
+
+           of the Fifth Berkeley Symposium on Mathematical Statistics and Probability, Vol. 1. Berkeley:
+            University of California Press, 1967, pp. 59-82.
+ [6] GLEJSER, H.: "A New Test for Heteroskedasticity," Journal of the American Statistical
+            Association, 64(1969), 316-323.
+ [7] GODREY, L. G.: "Some Tests for Specification Error," unpublished paper, University of York,
+             February, 1978.
+ [8] GOLDFELD, S. M., AND R. E. QUANDT: "Some Tests for Homoskedasticity," Journal of the
+            American Statistical Association, 60 (1965), 539-5 59.
+ [9] - : Nonlinear Methods in Econometrics. Amsterdam: North Holland Publishing Co., 1972.
+[10] GRILICHES, ZVI: "Cost Allocation in Railroad Regulation," The Bell Journal of Economics and
+            Management Science, 3 (1972), 26-41.
+[11] HARTLEY, H. O., J. N. K. RAO, AND G. KIEFER: "Variance Estimation with One Unit Per
+            Stratum," Journal of the American Statistical Association, 64(1969), 841-851.
+[12] HARVEY, A. C.: "Estimating Regression Models with Multiplicative Heteroskedasticity,"
+            Econometrica, 44(1976), 461-466.
+[13] HAUSMAN, J. A.: "Specification Tests in Econometrics," Econometrica, 46 (1978), 1251-
+[14] HILDRETH, C., AND J. P. HoUCK: "Some Estimators for a Linear Model with Random
+           Coefficients," Journal of the American Statistical Association, 68(1968), 584-595.
+[15] JENNRICH, ROBERT I.: "Asymptotic Properties of Non-linear Least Squares Estimators,"
+            Annals of Mathematical Statistics, 40 (1969), 633-643.
+[16] MALINVAUD, E.: Statistical Methods of Econometrics. Amsterdam: North Holland Publishin
+             Co., 1970.
+[17] McELROY, F. W.: "A Necessary and Sufficient Condition that Ordinary Least-Squares Estim
+           tors Be Best Linear Unbiased," Journal of the American Statistical Association, 62(1967),
+              1302-1304.
+[18] RAO, C. R.: "Estimation of Heteroskedastic Variances in Linear Models," Journal of the
+            American Statistical Association, 65(1970), 161-172.
+[19] -- : Linear Statistical Inference and Its Applications. New York: John Wiley and Sons, 197
+[20] RUTEMILLER, H. C., AND D. A. BOWERS: "Estimation in a Heteroskedastic Regression
+           Model," Journal of the American Statistical Association, 63(1968), 552-557.
+[21] THEIL, H.: Principles of Econometrics. New York: John Wiley and Sons, 1971.
+[22] WHITE, HALBERT: "Using Nonlinear Least Squares to Approximate Unknown Regression
+            Functions," University of Rochester Department of Economics Discussion Paper, Rochester,
+             April, 1978.
+[23] : "Nonlinear Regression on Cross-Section Data," Econometrica, 48 (1980), 721-746.
+[24] : "Using Least Squares to Approximate Unknown Regression Functions," International
+            Economic Review, forthcoming.
+
+                                          This content downloaded from
+         27.130.6.29 on Tue, 13 Oct 2026 16:10:34 UTC
+
+                             All use subject to https://about.jstor.org/terms
+

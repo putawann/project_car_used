@@ -1,0 +1,1983 @@
+regress postestimation -- Postestimation tools for regress
+
+Postestimation commands      Predictions                         margins
+DFBETA influence statistics  Tests for violation of assumptions  Variance inflation factors
+Measures of effect size      Methods and formulas                Acknowledgments
+References                   Also see
+
+Postestimation commands
+
+      The following postestimation commands are of special interest after regress:
+
+Command         Description
+
+dfbeta          DFBETA influence statistics
+estat hettest   tests for heteroskedasticity
+estat imtest    information matrix test
+estat ovtest    Ramsey regression specification-error test for omitted variables
+estat szroeter  Szroeter's rank test for heteroskedasticity
+estat vif       variance inflation factors for the independent variables
+estat esize     2, 2, and 2 effect sizes
+estat moran     Moran's test of residual correlation with nearby residuals
+lassogof        calculate goodness-of-fit predictions
+
+These commands are not appropriate with svy estimation results.
+
+                             1
+                               regress postestimation -- Postestimation tools for regress 2
+
+The following standard postestimation commands are also available:
+
+Command           Description
+
+ contrast         contrasts and ANOVA-style joint tests of parameters
+ estat ic         Akaike's, consistent Akaike's, corrected Akaike's, and Schwarz's Bayesian infor-
+
+ estat summarize     mation criteria (AIC, CAIC, AICc, and BIC, respectively)
+ estat vce        summary statistics for the estimation sample
+ estat (svy)      variance-covariance matrix of the estimators (VCE)
+ estimates        postestimation statistics for survey data
+ etable           cataloging estimation results
+ forecast         table of estimation results
+ hausman          dynamic forecasts and simulations
+ lincom           Hausman's specification test
+                  point estimates, standard errors, testing, and inference for linear combinations of
+ linktest
+ lrtest              parameters
+                  link test for model specification
+ margins          likelihood-ratio test
+ marginsplot      marginal means, predictive margins, marginal effects, and average marginal effects
+ nlcom            graph the results from margins (profile plots, interaction plots, etc.)
+                  point estimates, standard errors, testing, and inference for nonlinear combinations
+ predict
+ predictnl           of parameters
+ pwcompare        predictions and their SEs, leverage statistics, distance statistics, etc.
+ suest            point estimates, standard errors, testing, and inference for generalized predictions
+ test             pairwise comparisons of parameters
+ testnl           seemingly unrelated estimation
+                  Wald tests of simple and composite linear hypotheses
+                  Wald tests of nonlinear hypotheses
+
+forecast, hausman, and lrtest are not appropriate with svy estimation results. forecast is also not appropriate with mi
+    estimation results.
+                                regress postestimation -- Postestimation tools for regress 3
+
+Predictions
+
+Description for predict
+
+      predict creates a new variable containing predictions such as linear predictions, residuals, standard-
+  ized residuals, Studentized residuals, Cook's distance, leverage, probabilities, expected values, DFBETAs
+  for varname, standard errors, COVRATIOs, DFITS, and Welsch distances.
+
+Menu for predict
+
+   Statistics > Postestimation
+
+Syntax for predict
+       predict [ type ] newvar [ if ] [ in ] [ , statistic ]
+
+statistic                       Description
+
+Main                            linear prediction; the default
+                                residuals
+ xb                             score; equivalent to residuals
+ residuals                      standardized residuals
+ score                          Studentized (jackknifed) residuals
+ rstandard                      Cook's distance
+ rstudent                       leverage (diagonal elements of hat matrix)
+ cooksd
+ leverage | hat                 Pr( |  <  < )
+
+ pr(a,b)                        ( |  <  < )
+                                (),  = max{, min(, )}
+ e(a,b)
+                                DFBETA for varname
+ ystar(a,b)                     standard error of the linear prediction
+                                standard error of the forecast
+ dfbeta(varname)                standard error of the residual
+ stdp
+ stdf                           COVRATIO
+ stdr
+                                DFITS
+ covratio
+ dfits                          Welsch distance
+ welsch
+
+Unstarred statistics are available both in and out of sample; type predict ... if e(sample) ... if wanted only for the
+    estimation sample. Starred statistics are calculated only for the estimation sample, even when if e(sample) is not
+    specified.
+
+rstandard, rstudent, cooksd, leverage, dfbeta(), stdf, stdr, covratio, dfits, and welsch are not available if any
+    vce() other than vce(ols) was specified with regress.
+
+xb, residuals, score, and stdp are the only options allowed with svy estimation results.
+
+where a and b may be numbers or variables; a missing (a  .) means -, and b missing (b  .) means +; see
+    [U] 12.2.1 Missing values.
+                                        regress postestimation -- Postestimation tools for regress 4
+
+Options for predict
+
+£  £
+
+   Main
+
+   xb, the default, calculates the linear prediction.
+
+   residuals calculates the residuals.
+
+   score is equivalent to residuals in linear regression.
+
+   rstandard calculates the standardized residuals.
+
+   rstudent calculates the Studentized (jackknifed) residuals.
+
+   cooksd calculates the Cook's  influence statistic (Cook 1977).
+
+   leverage or hat calculates the diagonal elements of the projection ("hat") matrix.
+
+   pr(a,b) calculates Pr(a < xb +  < b), the probability that |x would be observed in the interval
+      (a, b).
+
+   a and b may be specified as numbers or variable names; lb and ub are variable names;
+
+   pr(20,30) calculates Pr(20 < xb +  < 30);
+   pr(lb,ub) calculates Pr(lb < xb +  < ub); and
+   pr(20,ub) calculates Pr(20 < xb +  < ub).
+
+   a missing (a  .) means -; pr(.,30) calculates Pr(- < xb +  < 30);
+   pr(lb,30) calculates Pr(- < xb +  < 30) in observations for which lb  .
+   and calculates Pr( < xb +  < 30) elsewhere.
+
+   b missing (b  .) means +; pr(20,.) calculates Pr(+ > xb +  > 20);
+   pr(20,ub) calculates Pr(+ > xb +  > 20) in observations for which ub  .
+   and calculates Pr(20 < xb +  < ub) elsewhere.
+
+   e(a,b) calculates (xb +  | a < xb +  < b), the expected value of |x conditional on |x
+      being in the interval (a, b), meaning that |x is truncated. a and b are specified as they are for pr().
+
+   ystar(a,b) calculates (), where  =  if xb +   ,  =  if xb +   , and  = xb + 
+      otherwise, meaning that  is censored. a and b are specified as they are for pr().
+
+   dfbeta(varname) calculates the DFBETA for varname, the difference between the regression coefficient
+      when the th observation is included and excluded, said difference being scaled by the estimated stan-
+      dard error of the coefficient. varname must have been included among the regressors in the previously
+      fitted model. The calculation is automatically restricted to the estimation subsample.
+
+   stdp calculates the standard error of the prediction, which can be thought of as the standard error of the
+      predicted expected value or mean for the observation's covariate pattern. The standard error of the
+      prediction is also referred to as the standard error of the fitted value.
+
+   stdf calculates the standard error of the forecast, which is the standard error of the point prediction for
+      1 observation. It is commonly referred to as the standard error of the future or forecast value. By
+
+      construction, the standard errors produced by stdf are always larger than those produced by stdp;
+      see Methods and formulas.
+
+   stdr calculates the standard error of the residuals.
+
+   covratio calculates COVRATIO (Belsley, Kuh, and Welsch 1980), a measure of the influence of the th
+      observation based on considering the effect on the variance-covariance matrix of the estimates. The
+      calculation is automatically restricted to the estimation subsample.
+                                                        regress postestimation -- Postestimation tools for regress 5
+
+  dfits calculates DFITS (Welsch and Kuh 1977) and attempts to summarize the information in the lever-
+      age versus residual-squared plot into one statistic. The calculation is automatically restricted to the
+      estimation subsample.
+
+  welsch calculates Welsch distance (Welsch 1982) and is a variation on dfits. The calculation is auto-
+      matically restricted to the estimation subsample.
+
+Remarks and examples for predict
+
+      Remarks are presented under the following headings:
+
+                           Terminology
+                           Fitted values and residuals
+                           Prediction standard errors
+                           Prediction with weighted data
+                           Leverage statistics
+                           Standardized and Studentized residuals
+                           DFITS, Cook's Distance, and Welsch Distance
+                           COVRATIO
+
+Terminology
+
+      Many of these commands concern identifying influential data in linear regression. This is, unfortu-
+  nately, a field that is dominated by jargon, codified and partially begun by Belsley, Kuh, and Welsch
+  (1980). In the words of Chatterjee and Hadi (1986, 416), "Belsley, Kuh, and Welsch's book, Regression
+  Diagnostics, was a very valuable contribution to the statistical literature, but it unleashed on an unsus-
+  pecting statistical community a computer speak (à la Orwell), the likes of which we have never seen."
+  Things have only gotten worse since then. Chatterjee and Hadi's (1986, 1988) own attempts to clean up
+  the jargon did not improve matters (see Hoaglin and Kempthorne [1986], Velleman [1986], and Welsch
+  [1986]). We apologize for the jargon, and for our contribution to the jargon in the form of inelegant
+  command names, we apologize most of all.
+
+      Model sensitivity refers to how estimates are affected by subsets of our data. Imagine data on  and
+  , and assume that the data are to be fit by the regression  =  +  + . The regression estimates of
+   and  are  and , respectively. Now imagine that the estimated  and  would be different if a small
+  portion of the dataset, perhaps even one observation, were deleted. As a data analyst, you would like to
+  think that you are summarizing tendencies that apply to all the data, but you have just been told that the
+  model you fit is unduly influenced by one point or just a few points and that, as a matter of fact, there is
+  another model that applies to the rest of the data -- a model that you have ignored. The search for subsets
+  of the data that, if deleted, would change the results markedly is a predominant theme of this entry.
+
+      There are three key issues in identifying model sensitivity to individual observations, which go by
+  the names residuals, leverage, and influence. In our  =  +  +  regression, the residuals are, of
+  course,  -- they reveal how much our fitted value  =  +  differs from the observed . A point
+  (, ) with a corresponding large residual is called an outlier. Say that you are interested in outliers
+  because you somehow think that such points will exert undue influence on your estimates. Your feelings
+  are generally right, but there are exceptions. A point might have a huge residual and yet not affect the
+  estimated  at all. Nevertheless, studying observations with large residuals almost always pays off.
+
+      (, ) can be an outlier in another way -- just as  can be far from ,  can be far from the center of
+  mass of the other 's. Such an "outlier" should interest you just as much as the more traditional outliers.
+  Picture a scatterplot of  against  with thousands of points in some sort of mass at the lower left of the
+  graph and one point at the upper right of the graph. Now, run a regression line through the points -- the
+                              regress postestimation -- Postestimation tools for regress 6
+
+regression line will come close to the point at the upper right of the graph and may in fact, go through
+it. That is, this isolated point will not appear as an outlier as measured by residuals because its residual
+will be small. Yet this point might have a dramatic effect on our resulting estimates in the sense that,
+were you to delete the point, the estimates would change markedly. Such a point is said to have high
+leverage. Just as with traditional outliers, a high leverage point does not necessarily have an undue effect
+on regression estimates, but if it does not, it is more the exception than the rule.
+
+   Now, all of this is a most unsatisfactory state of affairs. Points with large residuals may, but need not,
+have a large effect on our results, and points with small residuals may still have a large effect. Points
+with high leverage may, but need not, have a large effect on our results, and points with low leverage
+may still have a large effect. Can you not identify the influential points and simply have the computer
+list them for you? You can, but you will have to define what you mean by "influential".
+
+   "Influential" is defined with respect to some statistic. For instance, you might ask which points in your
+data have a large effect on your estimated , which points have a large effect on your estimated , which
+points have a large effect on your estimated standard error of , and so on, but do not be surprised when
+the answers to these questions are different. In any case, obtaining such measures is not difficult -- all you
+have to do is fit the regression excluding each observation one at a time and record the statistic of interest
+which, in the day of the modern computer, is not too onerous. Moreover, you can save considerable
+computer time by doing algebra ahead of time and working out formulas that will calculate the same
+answers as if you ran each of the regressions. (Ignore the question of pairs of observations that, together,
+exert undue influence, and triples, and so on, which remains largely unsolved and for which the brute
+force fit-every-possible-regression procedure is not a viable alternative.)
+
+Fitted values and residuals
+
+      Typing predict newvar with no options creates newvar containing the fitted values. Typing predict
+  newvar, resid creates newvar containing the residuals.
+
+Example 1
+   Continuing with example 1 from [R] regress, we wish to fit the following model:
+                                     mpg = 0 + 1weight + 2foreign + 
+
+. use https://www.stata-press.com/data/r19/auto
+(1978 automobile data)
+
+. regress mpg weight foreign
+
+   Source         SS          df        MS       Number of obs =                          74
+                                                                                     69.75
+    Model   1619.2877                            F(2, 71)           =               0.0000
+Residual   824.171761                                                               0.6627
+                              2 809.643849 Prob > F                 =               0.6532
+    Total  2443.45946                                                               3.4071
+                              71 11.608053 R-squared                =
+
+                                                 Adj R-squared =
+
+                              73 33.4720474 Root MSE                =
+
+      mpg  Coefficient Std. err.        t        P>|t|  [95% conf. interval]
+
+ weight    -.0065879          .0006371  -10.34   0.000  -.0078583      -.0053175
+foreign    -1.650029          1.075994   -1.53   0.130     -3.7955      .4954422
+                              2.165547   19.25   0.000                  45.99768
+   _cons      41.6797                                    37.36172
+                                 regress postestimation -- Postestimation tools for regress 7
+
+That done, we can now obtain the predicted values from the regression. We will store them in a new
+variable called pmpg by typing predict pmpg. Because predict produces no output, we will follow
+that by summarizing our predicted and observed values.
+
+. predict pmpg
+(option xb assumed; fitted values)
+
+. summarize pmpg mpg
+
+    Variable          Obs        Mean Std. dev.      Min  Max
+
+    pmpg              74         21.2973 4.709779 9.794333 29.82151
+     mpg
+                      74         21.2973 5.785503    12   41
+
+Example 2: Out-of-sample predictions
+
+   We can just as easily obtain predicted values from the model by using a wholly different dataset from
+the one on which the model was fit. The only requirement is that the data have the necessary variables,
+which here are weight and foreign.
+
+   Using the data on two new cars (the Pontiac Sunbird and the Volvo 260) from newautos.dta, we
+can obtain out-of-sample predictions (or forecasts) by typing
+
+         . use https://www.stata-press.com/data/r19/newautos, clear
+         (New automobile models)
+         . predict pmpg
+         (option xb assumed; fitted values)
+         . list, divider
+
+              make weight foreign          pmpg
+
+1. Pont. Sunbird           2690  Domestic  23.95829
+                           3170   Foreign  19.14607
+2.  Volvo 260
+
+The Pontiac Sunbird has a predicted mileage rating of 23.96 mpg, whereas the Volvo 260 has a predicted
+rating of 19.15 mpg. In comparison, the actual mileage ratings are 24 for the Pontiac and 17 for the
+Volvo.
+
+Prediction standard errors
+
+      predict can calculate the standard error of the forecast (stdf option), the standard error of the
+  prediction (stdp option), and the standard error of the residual (stdr option). It is easy to confuse stdf
+  and stdp because both are often called the prediction error. Consider the prediction  = xb, where b
+  is the estimated coefficient (column) vector and x is a (row) vector of independent variables for which
+  you want the prediction. First,  has a variance due to the variance of the estimated coefficient vector b,
+
+                                                Var() = Var(xb) = 2
+
+  where  = x(XX)-1x and 2 is the mean squared error of the regression. Do not panic over the
+  algebra -- just remember that Var() = 2, whatever 2 and  are. stdp calculates this quantity.
+  This is the error in the prediction due to the uncertainty about b.
+                        regress postestimation -- Postestimation tools for regress 8
+
+   If you are about to hand this number out as your forecast, however, there is another error. According
+to your model, the true value of  is given by
+
+                                                = xb +  =  + 
+
+and thus the Var() = Var() + Var() = 2 + 2, which is the square of stdf. stdf, then, is the
+sum of the error in the prediction plus the residual error.
+
+   stdr has to do with an analysis-of-variance decomposition of 2, the estimated variance of . The
+standard error of the prediction is 2, and therefore 2 + 2(1 - ) = 2 decomposes 2 into the
+prediction and residual variances.
+
+Example 3: Standard error of the forecast
+
+   Returning to our model of mpg on weight and foreign, we previously predicted the mileage rating
+for the Pontiac Sunbird and Volvo 260 as 23.96 and 19.15 mpg, respectively. We now want to put a
+standard error around our forecast. Remember, the data for these two cars were in newautos.dta:
+
+         . use https://www.stata-press.com/data/r19/newautos, clear
+         (New automobile models)
+         . predict pmpg
+         (option xb assumed; fitted values)
+         . predict se_pmpg, stdf
+         . list, divider
+
+    make weight foreign           pmpg se_pmpg
+
+1. Pont. Sunbird  2690  Domestic  23.95829  3.462791
+                  3170   Foreign  19.14607  3.525875
+2.  Volvo 260
+
+Thus, an approximate 95% confidence interval for the mileage rating of the Volvo 260 is 19.15±23.53 =
+[ 12.09, 26.21 ].
+
+Prediction with weighted data
+
+      predict can be used after frequency-weighted (fweight) estimation, just as it is used after un-
+  weighted estimation. The technical note below concerns the use of predict after analytically weighted
+  (aweight) estimation.
+
+   Technical note
+
+      After analytically weighted estimation, predict is willing to calculate only the prediction (no op-
+  tions), residual (residual option), standard error of the prediction (stdp option), and diagonal ele-
+  ments of the projection matrix (hat option). For analytically weighted estimation, the standard error of
+  the forecast and residuals, the standardized and Studentized residuals, and Cook's  are not statistically
+  well-defined concepts.
+                           regress postestimation -- Postestimation tools for regress 9
+
+Leverage statistics
+
+      In addition to providing fitted values and the associated standard errors, the predict command can
+  also be used to generate various statistics used to detect the influence of individual observations. This
+  section provides a brief introduction to leverage (hat) statistics, and some of the following subsections
+  discuss other influence statistics produced by predict.
+
+Example 4: Diagonal elements of projection matrix
+
+   The diagonal elements of the projection matrix, obtained by the hat option, are a measure of distance
+in explanatory variable space. leverage is a synonym for hat.
+
+         . use https://www.stata-press.com/data/r19/auto, clear
+         (1978 automobile data)
+         . regress mpg weight foreign
+
+           (output omitted )
+
+         . predict xdist, hat
+         . summarize xdist, detail
+
+                                                  Leverage
+
+     Percentiles   Smallest
+                   .0192325
+1%   .0192325      .0192366
+
+5%   .0192686       .019241
+                   .0192686
+10%  .0193448                Obs                            74
+                    Largest  Sum of wgt.                    74
+25%  .0220291      .0880814
+                             Mean                  .0405405
+50%  .0383797       .099715  Std. dev.             .0207624
+                    .099715
+75%  .0494002      .1003283  Variance              .0004311
+                             Skewness              1.159745
+90%  .0693432                Kurtosis              4.083313
+
+95%  .0880814
+
+99%  .1003283
+
+Some 5% of our sample has an xdist measure in excess of 0.08. Let's force them to reveal their identities:
+
+         . list foreign make mpg if xdist>.08, divider
+
+     foreign make            mpg
+
+24. Domestic Ford Fiesta     28
+
+26. Domestic Linc. Continental 12
+
+27. Domestic Linc. Mark V    12
+
+43. Domestic Plym. Champ     34
+
+64. Foreign Peugeot 604      14
+
+To understand why these cars are on this list, we must remember that the explanatory variables in our
+model are weight and foreign and that xdist measures distance in this metric. The Ford Fiesta and
+the Plymouth Champ are the two lightest domestic cars in our data. The Lincolns are the two heaviest
+domestic cars, and the Peugeot is the heaviest foreign car.
+
+   See lvr2plot in [R] regress postestimation diagnostic plots for information on a leverage-versus-
+squared-residual plot.
+                                                       regress postestimation -- Postestimation tools for regress 10
+
+Standardized and Studentized residuals
+
+      The terms standardized and Studentized residuals have meant different things to different authors. In
+  Stata, predict defines the standardized residual as  = /(1 - ) and the Studentized residual as
+   = /(()1 - ), where () is the root mean squared error of a regression with the th observation
+  removed. Stata's definition of the Studentized residual is the same as the one given in Bollen and Jack-
+  man (1990, 264) and is what Chatterjee and Hadi (1988, 74) call the "externally Studentized" residual.
+  Stata's "standardized" residual is the same as what Chatterjee and Hadi (1988, 74) call the "internally
+  Studentized" residual.
+
+      Standardized and Studentized residuals are attempts to adjust residuals for their standard errors. Al-
+  though the  theoretical residuals are homoskedastic by assumption (that is, they all have the same
+  variance), the calculated  are not. In fact,
+
+                                                    Var() = 2(1 - )
+
+  where  are the leverage measures obtained from the diagonal elements of hat matrix. Thus, observations
+  with the greatest leverage have corresponding residuals with the smallest variance.
+
+      Standardized residuals use the root mean squared error of the regression for . Studentized residuals
+  use the root mean squared error of a regression omitting the observation in question for . In general,
+  Studentized residuals are preferable to standardized residuals for purposes of outlier identification. Stu-
+  dentized residuals can be interpreted as the  statistic for testing the significance of a dummy variable
+  equal to 1 in the observation in question and 0 elsewhere (Belsley, Kuh, and Welsch 1980). Such a
+  dummy variable would effectively absorb the observation and so remove its influence in determining the
+  other coefficients in the model. Caution must be exercised here, however, because of the simultaneous
+  testing problem. You cannot simply list the residuals that would be individually significant at the 5%
+  level -- their joint significance would be far less (their joint significance level would be far greater).
+
+  Example 5: Standardized and Studentized residuals
+
+      In the Terminology section of Remarks and examples for predict, we distinguished residuals from
+  leverage and speculated on the impact of an observation with a small residual but large leverage. If we
+  adjust the residuals for their standard errors, however, the adjusted residual would be (relatively) larger
+  and perhaps large enough so that we could simply examine the adjusted residuals. Taking our price on
+  weight and foreign##c.mpg model from example 1 of [R] regress postestimation diagnostic plots,
+  we can obtain the in-sample standardized and Studentized residuals by typing
+
+            . use https://www.stata-press.com/data/r19/auto, clear
+            (1978 automobile data)
+            . regress price weight foreign##c.mpg
+
+               (output omitted )
+            . predict esta if e(sample), rstandard
+            . predict estu if e(sample), rstudent
+                       regress postestimation -- Postestimation tools for regress 11
+
+In the lvr2plot section of [R] regress postestimation diagnostic plots, we discovered that the VW Diesel
+has the highest leverage in our data, but a corresponding small residual. The standardized and Studentized
+residuals for the VW Diesel are
+
+         . list make price esta estu if make=="VW Diesel"
+
+          make  price  esta  estu
+
+          71. VW Diesel 5,397 .6142691 .6114758
+
+The Studentized residual of 0.611 can be interpreted as the  statistic for including a dummy variable for
+VW Diesel in our regression. Such a variable would not be significant.
+
+DFITS, Cook's Distance, and Welsch Distance
+
+      DFITS (Welsch and Kuh 1977), Cook's Distance (Cook 1977), and Welsch Distance (Welsch 1982) are
+  three attempts to summarize the information in the leverage versus residual-squared plot into one statistic.
+  That is, the goal is to create an index that is affected by the size of the residuals -- outliers -- and the size
+  of  -- leverage. Viewed mechanically, one way to write DFITS (Bollen and Jackman 1990, 265) is
+
+                       DFITS =  
+                                        1 - 
+
+where  are the Studentized residuals. Thus, large residuals increase the value of DFITS, as do large
+values of . Viewed more traditionally, DFITS is a scaled difference between predicted values for the th
+case when the regression is fit with and without the th observation, hence the name.
+
+The mechanical relationship between DFITS and Cook's Distance,  (Bollen and Jackman 1990,
+
+266), is
+
+                             1 2()               2
+                        = 2 DFITS
+                             
+
+where  is the number of variables (including the constant) in the regression,  is the root mean squared
+
+error of the regression, and () is the root mean squared error when the th observation is omitted. Viewed
+more traditionally,  is a scaled measure of the distance between the coefficient vectors when the th
+observation is omitted.
+
+   The mechanical relationship between DFITS and Welsch's Distance,  (Chatterjee and Hadi 1988,
+123), is
+
+                                                                    -1
+                                                 = DFITS
+
+                                                                    1 - 
+
+The interpretation of  is more difficult because it is based on the empirical influence curve. Although
+DFITS and Cook's distance are similar, the Welsch distance measure includes another normalization by
+
+leverage.
+
+   Belsley, Kuh, and Welsch (1980, 28) suggest that DFITS values greater than 2/ deserve more
+investigation, and so values of Cook's distance greater than 4/ should also be examined (Bollen and
+Jackman 1990, 265 - 266). Through similar logic, the cutoff for Welsch distance is approximately 3 
+(Chatterjee and Hadi 1988, 124).
+                   regress postestimation -- Postestimation tools for regress 12
+
+Example 6: DFITS influence measure
+
+   Continuing with our model of price on weight and foreign##c.mpg, we can obtain the DFITS
+influence measure:
+
+         . predict e if e(sample), resid
+         . predict dfits, dfits
+
+We did not specify if e(sample) in computing the DFITS statistic. DFITS is available only over the
+estimation sample, so specifying if e(sample) would have been redundant. It would have done no
+harm, but it would not have changed the results.
+
+   Our model has  = 5 independent variables ( includes the constant) and  = 74 observations;
+following the 2/ cutoff advice, we type
+
+         . list make price e dfits if abs(dfits) > 2*sqrt(5/74), divider
+
+make               price     e         dfits
+
+12. Cad. Eldorado  14,500     7271.96  .9564455
+                             5036.348  1.356619
+13. Cad. Seville   15,906    3164.872  .5724172
+                             3109.193  .5200413
+24. Ford Fiesta    4,389     6560.912  .8760136
+
+27. Linc. Mark V   13,594
+
+28. Linc. Versailles 13,466
+
+42. Plym. Arrow    4,647 -3312.968 -.9384231
+
+We calculate Cook's distance and list the observations greater than the suggested 4/ cutoff:
+
+    . predict cooksd if e(sample), cooksd
+    . list make price e cooksd if cooksd > 4/74, divider
+
+make               price     e         cooksd
+
+12. Cad. Eldorado  14,500    7271.96 .1492676
+
+13. Cad. Seville   15,906 5036.348 .3328515
+
+24. Ford Fiesta    4,389 3164.872 .0638815
+
+28. Linc. Versailles 13,466 6560.912 .1308004
+
+42. Plym. Arrow    4,647 -3312.968 .1700736
+
+Here we used if e(sample) because Cook's distance is not restricted to the estimation sample by default.
+It is worth comparing this list with the preceding one.
+                                               regress postestimation -- Postestimation tools for regress 13
+
+                                                               
+Finally, we use Welsch distance and the suggested 3  cutoff:
+
+    . predict wd, welsch
+    . list make price e wd if abs(wd) > 3*sqrt(5), divider
+
+          make                      price   e                   wd
+
+12. Cad. Eldorado                   14,500  7271.96 8.394372
+
+13. Cad. Seville                    15,906 5036.348 12.81125
+
+28. Linc. Versailles 13,466 6560.912 7.703005
+
+42. Plym. Arrow                     4,647 -3312.968 -8.981481
+
+Here we did not need to specify if e(sample) because welsch automatically restricts the prediction to
+the estimation sample.
+
+COVRATIO
+
+   COVRATIO (Belsley, Kuh, and Welsch 1980) measures the influence of the th observation by con-
+sidering the effect on the variance-covariance matrix of the estimates. The measure is the ratio of the
+determinants of the covariances matrix, with and without the th observation. The resulting formula is
+
+                                            1  -  - 2 
+                   COVRATIO =               (                       )
+                                            1 -   -  - 1
+
+where  is the standardized residual.
+   For noninfluential observations, the value of COVRATIO is approximately 1. Large values of the resid-
+
+uals or large values of leverage will cause deviations from 1, although if both are large, COVRATIO may
+tend back toward 1 and therefore not identify such observations (Chatterjee and Hadi 1988, 139).
+
+   Belsley, Kuh, and Welsch (1980) suggest that observations for which
+
+                                                             3
+                                    |COVRATIO - 1|  
+
+are worthy of further examination.
+                   regress postestimation -- Postestimation tools for regress 14
+
+Example 7: COVRATIO influence measure
+
+   Using our model of price on weight and foreign##c.mpg, we can obtain the COVRATIO measure
+and list the observations outside the suggested cutoff by typing
+
+         . predict covr, covratio
+         . list make price e covr if abs(covr-1) >= 3*5/74, divider
+
+make               price     e          covr
+
+12. Cad. Eldorado  14,500     7271.96   .3814242
+                             5036.348   .7386969
+13. Cad. Seville   15,906    6560.912   .4761695
+                             1621.747
+28. Linc. Versailles 13,466  591.2883    1.27782
+                                        1.206842
+43. Plym. Champ    4,425
+
+53. Audi 5000      9,690
+
+57. Datsun 210      4,589     19.81829  1.284801
+64. Peugeot 604    12,990     1037.184  1.348219
+66. Subaru                   -909.5894  1.264677
+71. VW Diesel       3,798     999.7209  1.630653
+74. Volvo 260       5,397     1327.668  1.211888
+                   11,995
+
+The covratio option automatically restricts the prediction to the estimation sample.
+                                regress postestimation -- Postestimation tools for regress 15
+
+margins
+
+Description for margins
+      margins estimates margins of response for linear predictions.
+
+Menu for margins
+
+   Statistics > Postestimation
+
+Syntax for margins
+      margins [ marginlist ] [ , options ]
+      margins [ marginlist ] , predict(statistic ...) [ options ]
+
+statistic                       Description
+
+xb                              linear prediction; the default
+pr(a,b)                         not allowed with margins
+e(a,b)                          not allowed with margins
+ystar(a,b)                      not allowed with margins
+residuals                       not allowed with margins
+score                           not allowed with margins
+rstandard                       not allowed with margins
+rstudent                        not allowed with margins
+cooksd                          not allowed with margins
+leverage | hat                  not allowed with margins
+
+dfbeta(varname)                 not allowed with margins
+stdp                            not allowed with margins
+stdf                            not allowed with margins
+stdr                            not allowed with margins
+covratio                        not allowed with margins
+dfits                           not allowed with margins
+welsch                          not allowed with margins
+                                not allowed with margins
+
+Statistics not allowed with margins are functions of stochastic quantities other than e(b).
+For the full syntax, see [R] margins.
+                                                       regress postestimation -- Postestimation tools for regress 16
+
+DFBETA influence statistics
+
+Description for dfbeta
+      dfbeta will calculate one, more than one, or all the DFBETAs after regress. Although predict will
+
+  also calculate DFBETAs, predict can do this for only one variable at a time. dfbeta is a convenience
+  tool for those who want to calculate DFBETAs for multiple variables. The names for the new variables
+  created are chosen automatically and begin with the letters dfbeta .
+
+Menu for dfbeta
+
+   Statistics > Linear models and related > Regression diagnostics > DFBETAs
+
+Syntax for dfbeta
+      dfbeta [ indepvar [ indepvar [. . .] ] ] [ , stub(name) ]
+
+Option for dfbeta
+  stub(name) specifies the leading characters dfbeta uses to name the new variables to be generated.
+      The default is stub( dfbeta ).
+
+Remarks and examples for dfbeta
+      DFBETAs are perhaps the most direct influence measure of interest to model builders. DFBETAs focus
+
+  on one coefficient and measure the difference between the regression coefficient when the th observation
+  is included and excluded, the difference being scaled by the estimated standarderror of the coefficient.
+  Belsley, Kuh, and Welsch (1980, 28) suggest observations with |DFBETA| > 2/  as deserving special
+  attention, but it is also common practice to use 1 (Bollen and Jackman 1990, 267), meaning that the
+  observation shifted the estimate at least one standard error.
+
+  Example 8: DFBETAs influence measure; the dfbeta() option
+      Using our model of price on weight and foreign##c.mpg, let's first ask which observations have
+
+  thegreatest impact on the determination of the coefficient on 1.foreign. We will use the suggested
+  2/  cutoff:
+
+            . use https://www.stata-press.com/data/r19/auto, clear
+            (1978 automobile data)
+            . regress price weight foreign##c.mpg
+
+               (output omitted )
+                   regress postestimation -- Postestimation tools for regress 17
+
+. sort foreign make
+. predict dfor, dfbeta(1.foreign)
+. list make price foreign dfor if abs(dfor) > 2/sqrt(74), divider
+
+make               price foreign            dfor
+
+12. Cad. Eldorado  14,500 Domestic -.5290519
+
+13. Cad. Seville   15,906 Domestic .8243419
+
+28. Linc. Versailles 13,466 Domestic -.5283729
+
+42. Plym. Arrow    4,647 Domestic -.6622424
+
+43. Plym. Champ    4,425 Domestic .2371104
+
+64. Peugeot 604    12,990    Foreign  .2552032
+69. Toyota Corona   5,719    Foreign  -.256431
+
+The Cadillac Seville shifted the coefficient on 1.foreign 0.82 standard deviations!
+   Now let us ask which observations have the greatest effect on the mpg coefficient:
+
+         . predict dmpg, dfbeta(mpg)
+         . list make price mpg dmpg if abs(dmpg) > 2/sqrt(74), divider
+
+make               price mpg          dmpg
+
+12. Cad. Eldorado  14,500    14 -.5970351
+                             21 1.134269
+13. Cad. Seville   15,906    14 -.6069287
+                             28 -.8925859
+28. Linc. Versailles 13,466  34 .3186909
+
+42. Plym. Arrow    4,647
+
+43. Plym. Champ    4,425
+
+Once again, we see the Cadillac Seville heading the list, indicating that our regression results may be
+dominated by this one car.
+
+Example 9: DFBETAs influence measure; the dfbeta command
+
+   We can use predict, dfbeta() or the dfbeta command to generate the DFBETAs. dfbeta makes
+up names for the new variables automatically and, without arguments, generates the DFBETAs for all the
+variables in the regression:
+
+         . dfbeta
+         Generating DFBETA variables ...
+
+               _dfbeta_1: DFBETA weight
+               _dfbeta_2: DFBETA 1.foreign
+               _dfbeta_3: DFBETA mpg
+               _dfbeta_4: DFBETA 1.foreign#c.mpg
+
+dfbeta created four new variables in our dataset: dfbeta 1, containing the DFBETAs for weight;
+ dfbeta 2, containing the DFBETAs for mpg; and so on. Had we wanted only the DFBETAs for mpg and
+weight, we might have typed
+
+         . dfbeta mpg weight
+         Generating DFBETA variables ...
+
+               _dfbeta_5: DFBETA weight
+               _dfbeta_6: DFBETA mpg
+                                                       regress postestimation -- Postestimation tools for regress 18
+
+  In the example above, we typed dfbeta mpg weight instead of dfbeta; if we had typed dfbeta followed
+  by dfbeta mpg weight, here is what would have happened:
+
+            . dfbeta
+            Generating DFBETA variables ...
+
+                  _dfbeta_7: DFBETA weight
+                  _dfbeta_8: DFBETA 1.foreign
+                  _dfbeta_9: DFBETA mpg
+                _dfbeta_10: DFBETA 1.foreign#c.mpg
+            . dfbeta mpg weight
+            Generating DFBETA variables ...
+                _dfbeta_11: DFBETA weight
+                _dfbeta_12: DFBETA mpg
+
+  dfbeta would have made up different names for the new variables. dfbeta never replaces existing
+  variables -- it instead makes up a different name, so we need to pay attention to dfbeta's output.
+
+Tests for violation of assumptions
+
+Description for estat hettest
+
+      estat hettest performs three versions of the Breusch-Pagan (1979) and Cook-Weisberg (1983)
+  test for heteroskedasticity. All three versions of this test present evidence against the null hypothesis that
+  t = 0 in Var() = 2exp(zt). In the normal version, performed by default, the null hypothesis also
+  includes the assumption that the regression disturbances are independent-normal draws with variance
+  2. The normality assumption is dropped from the null hypothesis in the iid and fstat versions, which
+  respectively produce the score and  tests discussed in Methods and formulas. If varlist is not specified,
+  the fitted values are used for z. If varlist or the rhs option is specified, the variables specified are used
+  for z.
+
+Menu for estat
+
+   Statistics > Postestimation
+
+Syntax for estat hettest
+      estat hettest [ varlist ] [ , rhs [ normal | iid | fstat ] mtest[ (spec) ] ]
+
+   collect is allowed with estat hettest; see [U] 11.1.10 Prefix commands.
+
+Options for estat hettest
+
+  rhs specifies that tests for heteroskedasticity be performed for the right-hand-side (explanatory) variables
+      of the fitted regression model. The rhs option may be combined with a varlist.
+
+  normal, the default, causes estat hettest to compute the original Breusch-Pagan/Cook-Weisberg
+      test, which assumes that the regression disturbances are normally distributed.
+
+  iid causes estat hettest to compute the   2 version of the score test that drops the normality
+      assumption.
+
+  fstat causes estat hettest to compute the -statistic version that drops the normality assumption.
+                                regress postestimation -- Postestimation tools for regress 19
+
+mtest[ (spec) ] specifies that multiple testing be performed. The argument specifies how -values are
+   adjusted. The following specifications, spec, are supported:
+
+bonferroni                      Bonferroni's multiple testing adjustment
+    holm                        Holm's multiple testing adjustment
+   sidak                        Sidák's multiple testing adjustment
+                                no adjustment is made for multiple testing
+ noadjust
+
+mtest may be specified without an argument. This is equivalent to specifying mtest(noadjust);
+that is, tests for the individual variables should be performed with unadjusted -values. By default,
+estat hettest does not perform multiple testing. mtest may not be specified with iid or fstat.
+
+Description for estat imtest
+
+      estat imtest performs an information matrix test for the regression model and an orthogonal de-
+  composition into tests for heteroskedasticity, skewness, and kurtosis due to Cameron and Trivedi (1990);
+  White's test for homoskedasticity against unrestricted forms of heteroskedasticity (1980) is available as
+  an option. White's test is usually similar to the first term of the Cameron-Trivedi decomposition.
+
+Menu for estat
+
+   Statistics > Postestimation
+
+Syntax for estat imtest
+      estat imtest [ , preserve white ]
+
+   collect is allowed with estat imtest; see [U] 11.1.10 Prefix commands.
+
+Options for estat imtest
+
+  preserve specifies that the data in memory be preserved, all variables and cases that are not needed
+      in the calculations be dropped, and at the conclusion the original data be restored. This option is
+      costly for large datasets. However, because estat imtest has to perform an auxiliary regression on
+      ( + 1)/2 temporary variables, where  is the number of regressors, it may not be able to perform
+      the test otherwise.
+
+  white specifies that White's original heteroskedasticity test also be performed.
+                                regress postestimation -- Postestimation tools for regress 20
+
+Description for estat ovtest
+
+      estat ovtest performs two versions of the Ramsey (1969) regression specification-error test (RE-
+  SET) for omitted variables. This test amounts to fitting  = xb + zt +  and then testing t = 0. If the
+  rhs option is not specified, powers of the fitted values are used for z. If rhs is specified, powers of the
+  individual elements of x are used.
+
+Menu for estat
+
+   Statistics > Postestimation
+
+Syntax for estat ovtest
+      estat ovtest [ , rhs ]
+
+   collect is allowed with estat ovtest; see [U] 11.1.10 Prefix commands.
+
+Option for estat ovtest
+
+  rhs specifies that powers of the right-hand-side (explanatory) variables be used in the test rather than
+      powers of the fitted values.
+
+Description for estat szroeter
+
+      estat szroeter performs Szroeter's rank test for heteroskedasticity for each of the variables in
+  varlist or for the explanatory variables of the regression if rhs is specified.
+
+Menu for estat
+
+   Statistics > Postestimation
+
+Syntax for estat szroeter
+      estat szroeter [ varlist ] [ , rhs mtest(spec) ]
+
+       Either varlist or rhs must be specified.
+
+Options for estat szroeter
+
+  rhs specifies that tests for heteroskedasticity be performed for the right-hand-side (explanatory) variables
+      of the fitted regression model. The rhs option may be combined with a varlist.
+
+  mtest(spec) specifies that multiple testing be performed. The argument specifies how -values are
+      adjusted. The following specifications, spec, are supported:
+
+bonferroni                      Bonferroni's multiple testing adjustment
+    holm                        Holm's multiple testing adjustment
+   sidak                        Sidák's multiple testing adjustment
+                                no adjustment is made for multiple testing
+ noadjust
+
+estat szroeter always performs multiple testing. By default, it does not adjust the -values.
+                                                       regress postestimation -- Postestimation tools for regress 21
+
+Remarks and examples for estat hettest, estat imtest, estat ovtest, and estat
+  szroeter
+
+      We introduce some regression diagnostic commands that are designed to test for certain violations
+  that rvfplot (see [R] regress postestimation diagnostic plots) less formally attempts to detect. estat
+  ovtest provides Ramsey's test for omitted variables -- a pattern in the residuals. estat hettest pro-
+  vides a test for heteroskedasticity -- the increasing or decreasing variation in the residuals with fitted
+  values, with respect to the explanatory variables, or with respect to yet other variables. The score test
+  implemented in estat hettest (Breusch and Pagan 1979; Cook and Weisberg 1983) performs a score
+  test of the null hypothesis that  = 0 against the alternative hypothesis of multiplicative heteroskedas-
+  ticity. estat szroeter provides a rank test for heteroskedasticity, which is an alternative to the score
+  test computed by estat hettest. Finally, estat imtest computes an information matrix test, includ-
+  ing an orthogonal decomposition into tests for heteroskedasticity, skewness, and kurtosis (Cameron and
+  Trivedi 1990). The heteroskedasticity test computed by estat imtest is similar to the general test for
+  heteroskedasticity that was proposed by White (1980). Cameron and Trivedi (2022, chap. 3) discuss
+  most of these tests and provides more examples.
+
+  Example 10: estat ovtest, estat hettest, estat szroeter, and estat imtest
+
+      We use our model of price on weight and foreign##c.mpg.
+
+            . use https://www.stata-press.com/data/r19/auto, clear
+            (1978 automobile data)
+            . regress price weight foreign##c.mpg
+
+               (output omitted )
+
+            . estat ovtest
+            Ramsey RESET test for omitted variables
+            Omitted: Powers of fitted values of price
+            H0: Model has no omitted variables
+            F(3, 66) = 7.77
+            Prob > F = 0.0002
+            . estat hettest
+            Breusch-Pagan/Cook-Weisberg test for heteroskedasticity
+            Assumption: Normal error terms
+            Variable: Fitted values of price
+            H0: Constant variance
+
+                   chi2(1) = 6.50
+            Prob > chi2 = 0.0108
+                           regress postestimation -- Postestimation tools for regress 22
+
+   Testing for heteroskedasticity in the right-hand-side variables is requested by specifying the rhs op-
+tion. By specifying the mtest(bonferroni) option, we request that tests be conducted for each of the
+variables, with a Bonferroni adjustment for the -values to accommodate our testing multiple hypotheses.
+
+         . estat hettest, rhs mtest(bonf)
+
+         Breusch-Pagan/Cook-Weisberg test for heteroskedasticity
+         Assumption: Normal error terms
+         H0: Constant variance
+
+Variable      chi2 df                 p
+
+   weight     15.24        1 0.0004*
+ foreign
+Foreign        6.15        1 0.0525*
+               9.04        1 0.0106*
+       mpg
+ foreign#     6.02 1 0.0566*
+
+    c.mpg
+Foreign
+
+Simultaneous  15.60 4 0.0036
+
+* Bonferroni-adjusted p-values
+. estat szroeter, rhs mtest(holm)
+Szroeter's test for homoskedasticity
+H0: Variance constant
+Ha: Variance monotonic in variables
+
+Variable      chi2 df                 p
+
+   weight     17.07        1 0.0001*
+ foreign
+Foreign        6.15        1 0.0260*
+              11.45        1 0.0021*
+       mpg
+ foreign#     6.17 1 0.0260*
+
+    c.mpg
+Foreign
+
+* Holm-adjusted p-values
+
+   Finally, we request the information matrix test, which is a conditional moments test with second-,
+third-, and fourth-order moment conditions.
+
+         . estat imtest
+         Cameron & Trivedi's decomposition of IM-test
+
+                   Source   chi2         df  p
+
+Heteroskedasticity         18.86         10 0.0420
+               Skewness    11.69          4 0.0198
+               Kurtosis                   1 0.1273
+                            2.33
+                    Total                15 0.0049
+                           32.87
+
+We find evidence for omitted variables, heteroskedasticity, and nonnormal skewness.
+                                                    regress postestimation -- Postestimation tools for regress 23
+
+   So, why bother with the various graphical commands when the tests seem so much easier to interpret?
+In part, it is a matter of taste: both are designed to uncover the same problem, and both are, in fact, going
+about it in similar ways. One is based on a formal calculation, whereas the other is based on personal
+judgment in evaluating a graph. On the other hand, the tests are seeking evidence of specific problems,
+whereas judgment is more general. The careful analyst will use both.
+
+   We performed the omitted-variable test first. Omitted variables are a more serious problem than het-
+eroskedasticity or the violations of higher moment conditions tested by estat imtest. If this were not
+a manual, having found evidence of omitted variables, we would never have run the estat hettest,
+estat szroeter, and estat imtest commands, at least not until we solved the omitted-variable prob-
+lem.
+
+Technical note
+
+   estat ovtest and estat hettest both perform two flavors of their respective tests. By default,
+estat ovtest looks for evidence of omitted variables by fitting the original model augmented by 2, 3,
+and 4, which are the fitted values from the original model. Under the assumption of no misspecification,
+the coefficients on the powers of the fitted values will be zero. With the rhs option, estat ovtest
+instead augments the original model with powers (second through fourth) of the explanatory variables
+(except for dummy variables).
+
+   estat hettest, by default, looks for heteroskedasticity by modeling the variance as a function of the
+fitted values. If, however, we specify a variable or variables, the variance will be modeled as a function of
+the specified variables. In our example, if we had, a priori, some reason to suspect heteroskedasticity and
+that the heteroskedasticity is a function of a car's weight, then using a test that focuses on weight would be
+more powerful than the more general tests such as White's test or the first term in the Cameron-Trivedi
+decomposition test.
+
+   estat hettest, by default, computes the original Breusch-Pagan/Cook-Weisberg test, which in-
+cludes the assumption of normally distributed errors. Koenker (1981) derived an   2 version of this
+test that drops the normality assumption. Wooldridge (2020, 270) gives an -statistic version that does
+not require the normality assumption.
+
+Stored results for estat hettest, estat imtest, and estat ovtest
+
+estat hettest stores the following results for the (multivariate) score test in r():
+
+Scalars        2 test statistic
+      r(chi2)  #df for the asymptotic 2 distribution under 0
+      r(df)    -value
+      r(p)
+
+estat hettest, fstat stores results for the (multivariate) score test in r():
+
+Scalars        test statistic
+      r(F)
+      r(df m)  #df of the test for the  distribution under 0
+      r(df r)  #df of the residuals for the  distribution under 0
+      r(p)     -value
+                 regress postestimation -- Postestimation tools for regress 24
+
+estat hettest (if mtest is specified) and estat szroeter store the following in r():
+
+Matrices         a matrix of test results, with rows corresponding to the univariate tests
+      r(mtest)         mtest[.,1] 2 test statistic
+                       mtest[.,2] #df
+                       mtest[.,3] unadjusted -value
+                       mtest[.,4] adjusted -value (if an mtest() adjustment method is specified)
+
+Macros
+      r(mtmethod) adjustment method for -value
+
+estat imtest stores the following in r():
+
+Scalars          IM-test statistic (= r(chi2 h) + r(chi2 s) + r(chi2 k))
+                 df for limiting 2 distribution under 0 (= r(df h) + r(df s) + r(df k))
+      r(chi2 t)  heteroskedasticity test statistic
+      r(df t)    df for limiting 2 distribution under 0
+      r(chi2 h)  skewness test statistic
+      r(df h)    df for limiting 2 distribution under 0
+      r(chi2 s)  kurtosis test statistic
+      r(df s)    df for limiting 2 distribution under 0
+      r(chi2 k)  White's heteroskedasticity test (if white specified)
+      r(df k)    df for limiting 2 distribution under 0
+      r(chi2 w)
+      r(df w)
+
+estat ovtest stores the following in r():
+
+Scalars          two-sided -value
+      r(p)        statistic
+      r(F)       degrees of freedom
+      r(df)      residual degrees of freedom
+      r(df r)
+
+Variance inflation factors
+
+Description for estat vif
+      estat vif calculates the centered or uncentered variance inflation factors (VIFs) for the independent
+
+  variables specified in a linear regression model.
+
+Menu for estat
+
+   Statistics > Postestimation
+
+Syntax for estat vif
+      estat vif [ , uncentered ]
+
+Option for estat vif
+  uncentered requests the computation of the uncentered variance inflation factors. The uncentered VIFs
+      are often used to detect the collinearity of the regressors with the constant. uncentered must be spec-
+      ified if the regression model did not include a constant term because centered VIFs are not appropriate
+      for these models.
+                                                       regress postestimation -- Postestimation tools for regress 25
+
+Remarks and examples for estat vif
+
+      Problems arise in regression when the predictors are highly correlated. In this situation, there may
+  be a significant change in the regression coefficients if you add or delete an independent variable. The
+  estimated standard errors of the fitted coefficients are inflated, or the estimated coefficients may not be
+  statistically significant even though a statistical relation exists between the dependent and independent
+  variables.
+
+      Data analysts rely on these facts to check informally for the presence of multicollinearity. estat vif,
+  another command for use after regress, calculates the variance inflation factors and tolerances for each
+  of the independent variables.
+
+      The output shows the variance inflation factors together with their reciprocals. Some analysts com-
+  pare the reciprocals with a predetermined tolerance. In the comparison, if the reciprocal of the VIF is
+  smaller than the tolerance, the associated predictor variable is removed from the regression model. How-
+  ever, most analysts rely on informal rules of thumb applied to the VIF; see Chatterjee and Hadi (2012).
+  According to these rules, there is evidence of multicollinearity if
+
+      1. The largest VIF is greater than 10 (some choose a more conservative threshold value of 30).
+
+      2. The mean of all the VIFs is considerably larger than 1.
+
+Example 11: estat vif
+
+We examine a regression model fit using the ubiquitous automobile dataset:
+
+. use https://www.stata-press.com/data/r19/auto
+(1978 automobile data)
+
+. regress price mpg rep78 trunk headroom length turn displ gear_ratio
+
+   Source                SS    df         MS     Number of obs =                     69
+                                                                                  6.33
+    Model          264102049                     F(8, 60)                   =  0.0000
+Residual           312694909                                                   0.4579
+                               8 33012756.2 Prob > F                        =  0.3856
+    Total          576796959                                                   2282.9
+                               60 5211581.82 R-squared                      =
+
+                                                 Adj R-squared =
+
+                               68 8482308.22 Root MSE                       =
+
+           price   Coefficient Std. err.      t  P>|t|  [95% conf. interval]
+
+              mpg     -144.84  82.12751   -1.76  0.083  -309.1195              19.43948
+           rep78    727.5783   337.6107    2.16  0.035   52.25638                 1402.9
+           trunk    44.02061               0.41  0.685
+      headroom     -807.0996    108.141          0.069  -172.2935              260.3347
+         length    -8.688914   435.5802   -1.85  0.804   -1678.39              64.19062
+                   -177.9064   34.89848   -0.25  0.200                         61.11843
+            turn    30.73146   137.3455   -1.30  0.000  -78.49626              96.82551
+displacement        1500.119   7.576952          0.182  -452.6383              45.88762
+                    6691.976   1110.959    4.06  0.373                         3722.368
+   gear_ratio                  7457.906    1.35            15.5753             21610.01
+           _cons                           0.90         -722.1303
+                                                        -8226.058
+                               regress postestimation -- Postestimation tools for regress 26
+
+. estat vif        VIF         1/VIF
+      Variable
+
+         length    8.22        0.121614
+displacement       6.50        0.153860
+                   4.85        0.205997
+            turn   3.45        0.290068
+   gear_ratio      3.03        0.330171
+                   2.88        0.347444
+              mpg  1.80        0.554917
+           trunk   1.46        0.686147
+      headroom
+           rep78
+
+Mean VIF           4.02
+
+The results are mixed. Although we have no VIFs greater than 10, the mean VIF is greater than 1, though
+not considerably so. We could continue the investigation of collinearity, but given that other authors
+advise that collinearity is a problem only when VIFs exist that are greater than 30 (contradicting our rule
+above), we will not do so here.
+
+Example 12: estat vif, with strong evidence of multicollinearity
+
+   This example comes from a dataset described in Kutner, Nachtsheim, and Neter (2004, 257) that
+examines body fat as modeled by caliper measurements on the triceps, midarm, and thigh.
+
+. use https://www.stata-press.com/data/r19/bodyfat
+(Body fat)
+
+. regress bodyfat tricep thigh midarm
+
+   Source                 SS   df         MS        Number of obs =         20
+                                                                       21.52
+    Model          396.984607                       F(3, 16)       =  0.0000
+Residual           98.4049068                                         0.8014
+                               3 132.328202 Prob > F               =  0.7641
+    Total          495.389513
+                               16 6.15030667 R-squared             =     2.48
+
+                                                    Adj R-squared =
+
+                               19 26.0731323 Root MSE              =
+
+bodyfat            Coefficient Std. err.      t  P>|t|  [95% conf. interval]
+
+triceps             4.334085   3.015511    1.44  0.170  -2.058512     10.72668
+   thigh           -2.856842   2.582015   -1.11  0.285  -8.330468     2.616785
+                   -2.186056   1.595499   -1.37  0.190  -5.568362
+ midarm                        99.78238          0.258  -94.44474      1.19625
+   _cons            117.0844               1.17                       328.6136
+
+. estat vif            VIF         1/VIF
+      Variable
+                   708.84      0.001411
+       triceps     564.34      0.001772
+           thigh   104.61      0.009560
+
+         midarm    459.26
+
+      Mean VIF
+                            regress postestimation -- Postestimation tools for regress 27
+
+Here we see strong evidence of multicollinearity in our model. More investigation reveals that the mea-
+surements on the thigh and the triceps are highly correlated:
+
+. correlate triceps thigh midarm        midarm
+(obs=20)
+
+                         triceps thigh
+
+triceps         1.0000      1.0000      1.0000
+   thigh        0.9238      0.0847
+                0.4578
+ midarm
+
+If we remove the predictor tricep from the model (because it had the highest VIF), we get
+
+. regress bodyfat thigh midarm
+
+Source          SS                      df      MS  Number of obs =            20
+                                                                          29.40
+                                                    F(2, 17)          =  0.0000
+                                                                         0.7757
+    Model       384.279748              2 192.139874 Prob > F         =  0.7493
+Residual        111.109765                                               2.5565
+                                        17 6.53586854 R-squared       =
+
+                                                    Adj R-squared =
+
+Total 495.389513                        19 26.0731323 Root MSE        =
+
+bodyfat         Coefficient Std. err.           t   P>|t|  [95% conf. interval]
+
+   thigh         .8508818   .1124482         7.57   0.000   .6136367     1.088127
+ midarm          .0960295   .1613927         0.60   0.560  -.2444792     .4365383
+                -25.99696                   -3.72   0.002  -40.76001     -11.2339
+   _cons                     6.99732
+
+. estat vif     VIF             1/VIF
+      Variable
+
+midarm          1.01        0.992831
+ thigh          1.01        0.992831
+
+Mean VIF        1.01
+
+Note how the coefficients change and how the estimated standard errors for each of the regression coef-
+ficients become much smaller. The calculated value of 2 for the overall regression for the subset model
+does not appreciably decline when we remove the correlated predictor. Removing an independent vari-
+able from the model is one way to deal with multicollinearity. Other methods include ridge regression,
+weighted least squares, and restricting the use of the fitted model to data that follow the same pattern of
+multicollinearity. In economic studies, it is sometimes possible to estimate the regression coefficients
+from different subsets of the data by using cross-section and time series.
+
+   All examples above demonstrated the use of centered VIFs. As pointed out by Belsley (1991), the
+centered VIFs may fail to discover collinearity involving the constant term. One solution is to use the
+uncentered VIFs instead. According to the definition of the uncentered VIFs, the constant is viewed as a
+legitimate explanatory variable in a regression model, which allows one to obtain the VIF value for the
+constant term.
+                            regress postestimation -- Postestimation tools for regress 28
+
+Example 13: estat vif, with strong evidence of collinearity with the constant term
+
+   Consider the extreme example in which one of the regressors is highly correlated with the constant.
+We simulate the data and examine both centered and uncentered VIF diagnostics after fitted regression
+model as follows.
+
+. use https://www.stata-press.com/data/r19/extreme_collin
+
+. regress y one x z
+
+   Source              SS   df         MS     Number of obs =         100
+
+    Model       223801.985                    F(3, 96)                = 2710.27
+Residual        2642.42124
+                            3 74600.6617 Prob > F                     = 0.0000
+    Total       226444.406
+                            96 27.5252213 R-squared                   = 0.9883
+
+                                              Adj R-squared = 0.9880
+
+                            99 2287.31723 Root MSE                    = 5.2464
+
+      y         Coefficient Std. err.      t  P>|t|        [95% conf. interval]
+
+   one          -3.278582    10.5621   -0.31  0.757        -24.24419  17.68702
+      x          2.038696   .0242673   84.01  0.000         1.990526  2.086866
+      z          4.863137   .2681036   18.14  0.000         4.330956  5.395319
+                 9.760075   10.50935          0.355                   30.62097
+_cons                                   0.93               -11.10082
+
+. estat vif
+
+Variable             VIF        1/VIF
+
+             z       1.03   0.968488
+                            0.971307
+             x       1.03   0.995425
+
+one                  1.00       1/VIF
+
+Mean VIF             1.02   0.002482
+                            0.002492
+. estat vif, uncentered     0.341609
+                            0.888705
+Variable             VIF
+
+   one          402.94
+_cons           401.26
+
+      z            2.93
+      x            1.13
+
+Mean VIF        202.06
+
+   According to the values of the centered VIFs (1.03, 1.03, 1.00), no harmful collinearity is detected in
+
+the model. However, by the construction of these simulated data, we know that one is highly collinear
+with the constant term. As such, the large values of uncentered VIFs for one (402.94) and cons (401.26)
+reveal high collinearity of the variable one with the constant term.
+                                regress postestimation -- Postestimation tools for regress 29
+
+Measures of effect size
+
+Description for estat esize
+
+      estat esize calculates effect sizes for linear models after regress or anova. By default, estat
+  esize reports 2 estimates (Kerlinger and Lee 2000), which are equivalent to 2 estimates. If the option
+  epsilon is specified, estat esize reports 2 estimates (Grissom and Kim 2012). If the option omega
+  is specified, estat esize reports 2 estimates (Grissom and Kim 2012). Both 2 and 2 are adjusted
+  2 estimates. Confidence intervals for 2 estimates are estimated by using the noncentral  distribution
+
+  (Smithson 2001). See Kline (2013) or Thompson (2006) for further information.
+
+Menu for estat
+
+   Statistics > Postestimation
+
+Syntax for estat esize
+      estat esize [ , epsilon omega level(#) ]
+
+   collect is allowed with estat esize; see [U] 11.1.10 Prefix commands.
+
+Options for estat esize
+
+  epsilon specifies that the 2 estimates of effect size be reported. The default is 2 estimates.
+  omega specifies that the 2 estimates of effect size be reported. The default is 2 estimates.
+
+  level(#) specifies the confidence level, as a percentage, for confidence intervals. The default is
+      level(95) or as set by set level; see [U] 20.8 Specifying the width of confidence intervals.
+
+Remarks and examples for estat esize
+
+      Whereas -values are used to assess the statistical significance of a result, measures of effect size are
+  used to assess the practical significance of a result. Effect sizes can be broadly categorized as "mea-
+  sures of group differences" (the  family) and "measures of association" (the  family); see Ellis (2010,
+  table 1.1). The  family includes estimators such as Cohen's , Hedges's , and Glass's  (also see
+  [R] esize). The  family includes estimators such as the point-biserial correlation coefficient, 2, 2, and
+  2. For an introduction to the concepts and calculation of effect sizes, see Kline (2013) or Thompson
+  (2006). For a more detailed discussion, see Kirk (1996), Ellis (2010), Cumming (2012), Grissom and
+  Kim (2012), and Kelley and Preacher (2012).
+                            regress postestimation -- Postestimation tools for regress 30
+
+Example 14: Calculating effect sizes for a linear regression model
+
+Suppose we fit a linear regression model for low-birthweight infants.
+
+. use https://www.stata-press.com/data/r19/lbw
+(Hosmer & Lemeshow data)
+
+. regress bwt smoke i.race
+
+   Source         SS             df            MS  Number of obs =            189
+                                                                             8.69
+    Model  12346897.6                              F(3, 185)           =  0.0000
+Residual   87568400.9                                                     0.1236
+                                 3 4115632.54 Prob > F                 =  0.1094
+    Total  99915298.6
+                            185 473342.708 R-squared                   =      688
+
+                                                   Adj R-squared =
+
+                            188 531464.354 Root MSE                    =
+
+    bwt    Coefficient Std. err.          t        P>|t|   [95% conf. interval]
+            -428.0254 109.0033        -3.93        0.000  -643.0746 -212.9761
+ smoke
+              -450.54        153.066  -2.94        0.004  -752.5194       -148.5607
+   race    -454.1813         116.436  -3.90        0.000  -683.8944       -224.4683
+Black                                 36.35        0.000
+Other       3334.858        91.74301                         3153.86       3515.855
+
+ _cons
+
+   We can use the estat esize command to calculate 2 for the entire model and a partial 2 for each
+term in the model.
+
+         . estat esize
+         Effect sizes for linear models
+
+           Source Eta-squared         df       [95% conf. interval]
+
+           Model  .1235736            3        .0399862 .2041365
+
+           smoke  .0769345            1        .0193577 .1579213
+            race  .0908394
+                                      2        .0233037 .1700334
+
+Note: Eta-squared values for individual model terms are partial.
+
+The overall model effect size is 0.124. This means that roughly 12.4% of the variation in bwt is explained
+by the model. The partial effect size for smoke is 0.077. This means that roughly 7.7% of the variation
+in bwt is explained by smoke after you remove the variation explained by all other terms.
+
+   The omega option causes estat esize to report 2 and partial 2.
+
+         . estat esize, omega
+         Effect sizes for linear models
+
+           Source Omega-squared            df
+
+           Model       .1088457            3
+
+           smoke       .0715877            1
+
+           race        .0806144            2
+
+Note: Omega-squared values for individual
+         model terms are partial.
+                             regress postestimation -- Postestimation tools for regress 31
+
+Example 15: Calculating effect size for an ANOVA model
+
+We can use estat esize after ANOVA models as well.
+
+. anova bwt smoke race
+
+                             Number of obs =        189  R-squared     =  0.1236
+                                              687.999                     0.1094
+                             Root MSE   =                Adj R-squared =
+                                                 df                       Prob>F
+               Source Partial SS                         MS         F
+
+                      Model  12346898         3 4115632.5           8.69 0.0000
+
+                      smoke  7298536.6        1 7298536.6           15.42 0.0001
+                       race  8749453.3        2 4374726.6            9.24 0.0001
+
+               Residual      87568401         185 473342.71
+
+                      Total  99915299         188 531464.35
+
+. estat esize
+
+Effect sizes for linear models
+
+               Source Eta-squared       df    [95% conf. interval]
+
+               Model     .1235736       3     .0399862 .2041365
+
+               smoke     .0769345       1     .0193577 .1579213
+                race     .0908394
+                                        2     .0233037 .1700334
+
+Note: Eta-squared values for individual model terms are partial.
+
+Technical note
+
+   2 was developed in the context of analysis of variance. Thus, the published research on the calcu-
+lation of confidence intervals focuses on cases where the numerator degrees of freedom are relatively
+small (for example, df < 20).
+
+   Some combinations of the  statistic, numerator degrees of freedom, and denominator degrees of
+freedom yield confidence limits that do not contain the corresponding estimated value for an 2. This
+problem is most commonly observed for larger numerator degrees of freedom.
+
+   Nothing in the literature suggests alternative methods for constructing confidence intervals in such
+cases; therefore, we recommend cautious interpretation of confidence intervals for 2 when the numerator
+degrees of freedom are greater than 20.
+                                regress postestimation -- Postestimation tools for regress 32
+
+Stored results for estat esize
+
+estat esize stores the following results in r():
+
+Scalars         confidence level
+      r(level)
+                a matrix of effect sizes, confidence intervals, degrees of freedom, and  statistics with rows corre-
+Matrices            sponding to each term in the model
+      r(esize)        esize[.,1] 2
+                      esize[.,2] lower confidence bound for 2
+                      esize[.,3] upper confidence bound for 2
+                      esize[.,4] 2
+                      esize[.,5] 2
+                      esize[.,6] numerator degrees of freedom
+                      esize[.,7] denominator degrees of freedom
+                      esize[.,8]  statistic
+
+Methods and formulas
+
+      See Hamilton (2013, chap. 7), Kohler and Kreuter (2012, sec. 9.3), or Baum (2006, chap. 5) for an
+  overview of using Stata to perform regression diagnostics. See Peracchi (2001, chap. 8) for a mathemat-
+  ically rigorous discussion of diagnostics.
+
+      Methods and formulas are presented under the following headings:
+
+                           predict
+                           Special-interest postestimation commands
+
+predict
+
+      Assume that you have already fit the regression model
+
+                                                          y = Xb + e
+
+  where X is  × .
+      Denote the previously estimated coefficient vector by b and its estimated variance matrix by V.
+
+  predict works by recalling various aspects of the model, such as b, and combining that information
+  with the data currently in memory. Let x be the th observation currently in memory, and let 2 be the
+  mean squared error of the regression.
+
+      If the user specified weights in regress, then XX in the following formulas is replaced by XDX,
+  where D is defined in Weighted regression under Methods and formulas in [R] regress.
+
+      Let V = 2(XX)-1. Let  be the number of independent variables including the intercept, if any,
+  and let  be the observed value of the dependent variable.
+
+      The predicted value (xb option) is defined as  = xb.
+regress postestimation -- Postestimation tools for regress 33
+
+   Let  represent a lower bound for an observation  and  represent an upper bound. The probability
+that |x would be observed in the interval (, ) -- the pr(, ) option -- is
+
+ (, ) = Pr( < xb +  < ) =  (  -  ) -  (  -  )
+                                                                             
+
+where for the pr(, ), e(, ), and ystar(, ) options,  and  can be anywhere in the range
+(-, +).
+
+   The option e(, ) computes the expected value of |x conditional on |x being in the interval
+(, ), that is, when |x is truncated. It can be expressed as
+
+                                                                (  - ) -  (  - )
+(, ) = (xb +  |  < xb +  < ) =  -   -
+                                                                                 -
+                                                                (    ) -  (    )
+
+where  is the normal density and  is the cumulative normal.
+
+   You can also compute ystar(, ) -- the expected value of |x, where  is assumed censored at
+ and :
+
+          if xb +   
+      {   if  < xb +  < 
+ = xb +   if xb +   
+      {
+
+   This computation can be expressed in several ways, but the most intuitive formulation involves a
+combination of the two statistics just defined:
+
+ =  (-, ) +  (, )(, ) +  (, +)
+
+A diagonal element of the projection matrix (hat) or (leverage) is given by
+                                                = x(XX)-1x
+
+   The standard error of the prediction (the stdp option) is defined as  = xVx
+
+and can also be written as  = .
+   The standard error of the forecast (stdf) is defined as  = 1 + .
+   The standard error of the residual (stdr) is defined as  = 1 - .
+   The residuals (residuals) are defined as  =  - .
+   The standardized residuals (rstandard) are defined as  = /.
+                                                    regress postestimation -- Postestimation tools for regress 34
+
+The Studentized residuals (rstudent) are defined as
+
+                                                                = 
+                                                                     ()1 - 
+
+where () represents the root mean squared error with the th observation removed, which is given by
+
+                                         2 2( - )                                      2
+                                      () =                                -
+                                                     -  - 1 ( -  - 1)(1 - )
+
+where  is the number of observations and  is the number of right-hand-side variables (including the
+constant).
+
+Cook's  (cooksd) is given by
+
+                                                      2 ( / )2                               2
+                                             =  = 2(1 - )2
+
+DFITS (dfits) is given by
+
+                                                         DFITS =  
+                                                                           1 - 
+
+Welsch distance (welsch) is given by
+
+                                                                 ( - 1)
+                                                          = 1 - 
+
+COVRATIO (covratio) is given by
+
+                                                                             1        -  - 2 
+
+                                                                                                               
+                                         COVRATIO = 1 -  (  -  - 1 )
+
+The DFBETAs (dfbeta) for a particular regressor  are given by
+
+                                                    DFBETA =                         
+
+                                                                                2(1 - )
+
+where  are the residuals obtained from a regression of  on the remaining 's and  2 =  2 .
+
+                                                                                                                                                                
+
+Special-interest postestimation commands
+
+The omitted-variable test (Ramsey 1969) reported by estat ovtest fits the regression  = xb +
+zt +  and then performs a standard  test of t = 0. The default test uses z = (2, 3, 4). If
+                              2       3       4       2                   4
+rhs  is  specified,  z  =  (  1  ,    1  ,    1  ,    2  ,  .  .  .  ,       ).  In  either  case,  the  variables  are  normalized  to                           have
+
+minimum 0 and maximum 1 before powers are calculated.
+
+   The test for heteroskedasticity (Breusch and Pagan 1979; Cook and Weisberg 1983) models Var() =
+2 exp(zt), where z is a variable list specified by the user, the list of right-hand-side variables, or the
+
+fitted values x. The test is of t = 0. Mechanically, estat hettest fits the augmented regression
+2 /2 =  + zt + .
+regress postestimation -- Postestimation tools for regress 35
+
+   The original Breusch-Pagan/Cook-Weisberg version of the test assumes that the  are normally
+distributed under the null hypothesis which implies that the score test statistic  is equal to the model
+sum of squares from the augmented regression divided by 2. Under the null hypothesis,  has the 2
+
+distribution with  degrees of freedom, where  is the number of columns of z.
+
+   Koenker (1981) derived a score test of the null hypothesis that t = 0 under the assumption that the 
+are independent and identically distributed (i.i.d.). Koenker showed that  =   2 has a large-sample
+2 distribution with  degrees of freedom, where  is the number of observations and 2 is from the
+
+augmented regression and  is the number of columns of z. estat hettest, iid produces this version
+of the test.
+
+   Wooldridge (2020, 270) showed that an  test of t = 0 in the augmented regression can also be used
+under the assumption that the  are i.i.d. estat hettest, fstat produces this version of the test.
+
+   Szroeter's class of tests for homoskedasticity against the alternative that the residual variance increases
+in some variable  is defined in terms of
+
+=  =1  ()2
+   2
+   =1 
+
+where () is some weight function that increases in  (Szroeter 1978).  is a weighted average of the
+
+(), with the squared residuals serving as weights. Under homoskedasticity,  should be approximately
+equal to the unweighted average of (). Large values of  suggest that 2 tends to be large where ()
+is large; that is, the variance indeed increases in , whereas small values of  suggest that the variance
+
+actually decreases in . estat szroeter uses () = rank( in 1 . . . ); see Judge et al. [1985,
+452] for details. estat szroeter displays a normalized version of ,
+
+                                                     =  26- 1 
+
+which is approximately  (0, 1) distributed under the null (homoskedasticity).
+
+   estat hettest and estat szroeter provide adjustments of -values for multiple testing. The sup-
+ported methods are described in [R] test.
+
+   estat imtest performs the information matrix test for the regression model, as well as an orthogonal
+decomposition into tests for heteroskedasticity 1, nonnormal skewness 2, and nonnormal kurtosis 3
+(Cameron and Trivedi 1990; Long and Trivedi 1993). The decomposition is obtained via three auxiliary
+regressions. Let  be the regression residuals, 2 be the maximum likelihood estimate of 2 in the
+regression,  be the number of observations,  be the set of  variables specified with estat imtest,
+and 2un be the uncentered 2 from a regression. 1 is obtained as u2n from a regression of 2 - 2
+on the cross products of the variables in . 2 is computed as u2n from a regression of 3 - 32
+on . Finally, 3 is obtained as u2n from a regression of 4 - 622 - 34 on . 1, 2, and 3
+are asymptotically 2 distributed with 1/2( + 1), , and 1 degree of freedom. The information test
+statistic  = 1 + 2 + 3 is asymptotically 2 distributed with 1/2( + 3) degrees of freedom. White's
+test for heteroskedasticity is computed as 2 from a regression of 2 on  and the cross products of
+the variables in . This test statistic is usually close to 1.
+                                                       regress postestimation -- Postestimation tools for regress 36
+
+      estat vif calculates the centered variance inflation factor (VIF) (Chatterjee and Hadi 2012,
+  248 - 251) for , given by
+
+                                                                        1
+                                                     1 -  VIF() = 2
+
+  where 2 is the square of the centered multiple correlation coefficient that results when  is regressed
+  against all other explanatory variables, including the constant.
+
+      The uncentered variance inflation factor (VIF) (Belsley 1991, 28 - 29) for  is given by
+
+                                                                        1
+                                                    1 -  VIF() = 2
+
+  where 2 is the square of the uncentered multiple correlation coefficient that results when  is regressed
+  against all other explanatory variables and a constant of 1. If the original regression model was fit without
+  a constant, the constant would also be omitted from the regression of .
+
+      The methods and formulas for estat esize are described in Methods and formulas of [R] esize.
+
+Acknowledgments
+
+  estat ovtest and estat hettest are based on programs originally written by Richard Goldstein.
+  estat imtest, estat szroeter, and the current version of estat hettest were written by Jeroen
+  Weesie of the Department of Sociology at Utrecht University, The Netherlands. estat imtest is based
+  in part on code written by J. Scott Long of the Department of Sociology at Indiana University, coauthor
+  of the Stata Press book Regression Models for Categorical and Limited Dependent Variables, and author
+  of the Stata Press book The Workflow of Data Analysis Using Stata.
+
+References
+
+   Adkins, L. C., and R. C. Hill. 2011. Using Stata for Principles of Econometrics. 4th ed. Hoboken, NJ: Wiley.
+   Baum, C. F. 2006. An Introduction to Modern Econometrics Using Stata. College Station, TX: Stata Press.
+   Belsley, D. A. 1991. Conditional Diagnostics: Collinearity and Weak Data in Regression. New York: Wiley.
+   Belsley, D. A., E. Kuh, and R. E. Welsch. 1980. Regression Diagnostics: Identifying Influential Data and Sources of
+
+      Collinearity. New York: Wiley. https://doi.org/10.1002/0471725153.
+   Bollen, K. A., and R. W. Jackman. 1990. "Regression diagnostics: An expository treatment of outliers and influential
+
+      cases". In Modern Methods of Data Analysis, edited by J. Fox and J. S. Long, 257-291. Newbury Park, CA: Sage.
+   Breusch, T. S., and A. R. Pagan. 1979. A simple test for heteroscedasticity and random coefficient variation. Econometrica
+
+      47: 1287-1294. https://doi.org/10.2307/1911963.
+   Cameron, A. C., and P. K. Trivedi. 1990. The information matrix test and its applied alternative hypotheses. Working
+
+      Paper Series 372, University of California-Davis, Institute of Governmental Affairs. https://cameron.econ.ucdavis.
+      edu/research/imtest_impliedalternatives_ucdwp372.pdf.
+   ------. 2022. Microeconometrics Using Stata. 2nd ed. College Station, TX: Stata Press.
+   Chatterjee, S., and A. S. Hadi. 1986. Influential observations, high leverage points, and outliers in linear regression.
+      Statistical Science 1: 379-393. https://doi.org/10.1214/ss/1177013622.
+   ------. 1988. Sensitivity Analysis in Linear Regression. New York: Wiley. https://doi.org/10.1002/9780470316764.
+   ------. 2012. Regression Analysis by Example. 5th ed. New York: Wiley.
+   Cook, R. D. 1977. Detection of influential observation in linear regression. Technometrics 19: 15-18. https://doi.org/10.
+      1080/00401706.1977.10489493.
+                                                    regress postestimation -- Postestimation tools for regress 37
+
+Cook, R. D., and S. Weisberg. 1982. Residuals and Influence in Regression. New York: Chapman and Hall/CRC.
+------. 1983. Diagnostics for heteroscedasticity in regression. Biometrika 70: 1-10. https://doi.org/10.2307/2335938.
+Cox, N. J. 2004. Speaking Stata: Graphing model diagnostics. Stata Journal 4: 449-475.
+Cumming, G. 2012. Understanding the New Statistics: Effect Sizes, Confidence Intervals, and Meta-Analysis. New York:
+
+   Routledge.
+DeMaris, A. 2004. Regression with Social Data: Modeling Continuous and Limited Response Variables. Hoboken, NJ:
+
+   Wiley. https://doi.org/10.1002/0471677566.
+Ellis, P. D. 2010. The Essential Guide to Effect Sizes: Statistical Power, Meta-Analysis, and the Interpretation of Research
+
+   Results. Cambridge: Cambridge University Press.
+Grissom, R. J., and J. J. Kim. 2012. Effect Sizes for Research: Univariate and Multivariate Applications. 2nd ed. New York:
+
+   Routledge.
+Hamilton, L. C. 2013. Statistics with Stata: Updated for Version 12. 8th ed. Boston: Brooks/Cole.
+Hill, R. C., W. E. Griffiths, and G. C. Lim. 2018. Principles of Econometrics. 5th ed. Hoboken, NJ: Wiley.
+Hoaglin, D. C., and P. J. Kempthorne. 1986. Comment [on Chatterjee and Hadi 1986]. Statistical Science 1: 408-412.
+
+   https://doi.org/10.1214/ss/1177013627.
+Hoaglin, D. C., and R. E. Welsch. 1978. The hat matrix in regression and ANOVA. American Statistician 32: 17-22.
+
+   https://doi.org/10.1080/00031305.1978.10479237.
+Huber, C. 2013. Measures of effect size in Stata 13. The Stata Blog: Not Elsewhere Classified. https://blog.stata.com/
+
+   2013/09/05/measures-of-effect-size-in-stata-13/.
+Judge, G. G., W. E. Griffiths, R. C. Hill, H. Lütkepohl, and T.-C. Lee. 1985. The Theory and Practice of Econometrics.
+
+   2nd ed. New York: Wiley.
+Kelley, K., and K. J. Preacher. 2012. On effect size. Psychological Methods 17: 137-152. https://doi.org/10.1037/
+
+   a0028086.
+Kerlinger, F. N., and H. B. Lee. 2000. Foundations of Behavioral Research. 4th ed. Belmont, CA: Wadsworth.
+Kirk, R. E. 1996. Practical significance: A concept whose time has come. Educational and Psychological Measurement
+
+   56: 746-759. https://doi.org/10.1177/0013164496056005002.
+Kline, R. B. 2013. Beyond Significance Testing: Statistics Reform in the Behavioral Sciences. 2nd ed. Washington, DC:
+
+   American Psychological Association.
+Koenker, R. 1981. A note on studentizing a test for heteroskedasticity. Journal of Econometrics 17: 107-112. https:
+
+   //doi.org/10.1016/0304-4076(81)90062-2.
+Kohler, U., and F. Kreuter. 2012. Data Analysis Using Stata. 3rd ed. College Station, TX: Stata Press.
+Kutner, M. H., C. J. Nachtsheim, and J. Neter. 2004. Applied Linear Regression Models. 4th ed. New York: McGraw-Hill.
+Lindsey, C., and S. J. Sheather. 2010a. Optimal power transformation via inverse response plots. Stata Journal 10:
+
+   200-214.
+------. 2010b. Model fit assessment via marginal model plots. Stata Journal 10: 215-225.
+Long, J. S., and P. K. Trivedi. 1993. Some specification tests for the linear regression model. Sociological Methods and
+
+   Research 21: 161-204e. Reprinted in Testing Structural Equation Models, pp. 66-110. Newbury Park, CA: Sage.
+Peracchi, F. 2001. Econometrics. Chichester, UK: Wiley.
+Ramsey, J. B. 1969. Tests for specification errors in classical linear least-squares regression analysis. Journal of the Royal
+
+   Statistical Society, B ser., 31: 350-371. https://doi.org/10.1111/j.2517-6161.1969.tb00796.x.
+Ramsey, J. B., and P. Schmidt. 1976. Some further results on the use of OLS and BLUS residuals in specification error
+
+   tests. Journal of the American Statistical Association 71: 389-390. https://doi.org/10.1080/01621459.1976.10480355.
+Rousseeuw, P. J., and A. M. Leroy. 1987. Robust Regression and Outlier Detection. New York: Wiley. https://doi.org/10.
+
+   1002/0471725382.
+Smithson, M. 2001. Correct confidence intervals for various regression effect sizes and parameters: The importance
+
+   of noncentral distributions in computing intervals. Educational and Psychological Measurement 61: 605-632. https:
+   //doi.org/10.1177/00131640121971392.
+                                                       regress postestimation -- Postestimation tools for regress 38
+
+   Studenmund, A. H. 2017. Using Econometrics: A Practical Guide. 7th ed. Boston: Pearson.
+   Szroeter, J. 1978. A class of parametric tests for heteroscedasticity in linear econometric models. Econometrica 46:
+
+      1311-1327. https://doi.org/10.2307/1913831.
+   Thompson, B. 2006. Foundations of Behavioral Statistics: An Insight-Based Approach. New York: Guilford Press.
+   Velleman, P. F. 1986. Comment [on Chatterjee and Hadi 1986]. Statistical Science 1: 412-413. https://doi.org/10.1214/
+
+      ss/1177013628.
+   Velleman, P. F., and R. E. Welsch. 1981. Efficient computing of regression diagnostics. American Statistician 35: 234-242.
+
+      https://doi.org/10.2307/2683296.
+   Weisberg, S. 2014. Applied Linear Regression. 4th ed. Hoboken, NJ: Wiley.
+   Welsch, R. E. 1982. "Influence functions and regression diagnostics". In Modern Data Analysis, edited by R. L. Launer
+
+      and A. F. Siegel, 149-169. New York: Academic Press. https://doi.org/10.1016/B978-0-12-438180-3.50014-1.
+   ------. 1986. Comment [on Chatterjee and Hadi 1986]. Statistical Science 1: 403-405. https://doi.org/10.1214/ss/
+
+      1177013625.
+   Welsch, R. E., and E. Kuh. 1977. Linear Regression Diagnostics. Working Paper 0173, National Bureau of Economic
+
+      Research. https://doi.org/10.3386/w0173.
+   White, H. L., Jr. 1980. A heteroskedasticity-consistent covariance matrix estimator and a direct test for heteroskedasticity.
+
+      Econometrica 48: 817-838. https://doi.org/10.2307/1912934.
+   Wooldridge, J. M. 2020. Introductory Econometrics: A Modern Approach. 7th ed. Boston: Cengage.
+
+Also see
+
+  [R] regress -- Linear regression+
+  [R] regress postestimation diagnostic plots -- Postestimation plots for regress
+  [R] regress postestimation time series -- Postestimation tools for regress with time series
+  [SP] estat moran -- Moran's test of residual correlation with nearby residuals
+  [LASSO] lassogof -- Goodness of fit after lasso for prediction
+  [U] 20 Estimation and postestimation commands
+
+Stata, Stata Press, Mata, NetCourse, and NetCourseNow are registered trademarks of StataCorp
+
+LLC. Stata and Stata Press are registered trademarks with the World Intellectual Property Or-   ®
+
+ganization of the United Nations. StataNow is a trademark of StataCorp LLC. Other brand and
+
+product names are registered trademarks or trademarks of their respective companies. Copyright
+
+© 1985-2025 StataCorp LLC, College Station, TX, USA. All rights reserved.
+
+For suggested citations, see the FAQ on citing Stata documentation.
+

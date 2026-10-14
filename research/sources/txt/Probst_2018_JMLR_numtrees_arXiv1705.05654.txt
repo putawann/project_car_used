@@ -1,0 +1,1050 @@
+                                                   To tune or not to tune the number of trees in random forest?
+
+                                          To tune or not to tune the number of trees in random forest?
+
+                                          Philipp Probst                      probst@ibe.med.uni-muenchen.de
+
+                                          Institut fu¨r medizinische Informationsverarbeitung, Biometrie und Epidemiologie
+
+                                          Marchioninistr. 15, 81377 Mu¨nchen
+
+                                          Anne-Laure Boulesteix               boulesteix@ibe.med.uni-muenchen.de
+
+arXiv:1705.05654v1 [stat.ML] 16 May 2017  Institut fu¨r medizinische Informationsverarbeitung, Biometrie und Epidemiologie
+
+                                          Marchioninistr. 15, 81377 Mu¨nchen
+
+                                          Editor:
+
+                                                                                          Abstract
+
+                                                The number of trees T in the random forest (RF) algorithm for supervised learning has to
+                                                be set by the user. It is controversial whether T should simply be set to the largest com-
+                                                putationally manageable value or whether a smaller T may in some cases be better. While
+                                                the principle underlying bagging is that more trees are better, in practice the classification
+                                                error rate sometimes reaches a minimum before increasing again for increasing number of
+                                                trees. The goal of this paper is four-fold: (i) providing theoretical results showing that the
+                                                expected error rate may be a non-monotonous function of the number of trees and explain-
+                                                ing under which circumstances this happens; (ii) providing theoretical results showing that
+                                                such non-monotonous patterns cannot be observed for other performance measures such as
+                                                the Brier score and the logarithmic loss (for classification) and the mean squared error (for
+                                                regression); (iii) illustrating the extent of the problem through an application to a large
+                                                number (n = 306) of datasets from the public database OpenML; (iv) finally arguing in
+                                                favor of setting it to a computationally feasible large number, depending on convergence
+                                                properties of the desired performance measure.
+                                                Keywords: Random forest, number of trees, bagging, out-of-bag, error rate
+
+                                          1. Introduction
+
+                                          The random forest (RF) algorithm for classification and regression, which is based on the
+                                          aggregation of a large number T of decision trees, was first described in its entirety by
+                                          Breiman (2001). T is one of several important parameters which have to be carefully
+                                          chosen by the user. It is controversial, however, whether the number of trees T should
+                                          simply be set to the largest computationally manageable value or whether a smaller T may
+                                          in some cases be better, in which case T should ideally be tuned carefully. This question
+                                          is relevant to any user of RF and has been the topic of much informal discussion in the
+                                          scientific community, but has to our knowledge never been addressed systematically from a
+                                          theoretical and empirical point of view.
+
+                                              Breiman (2001) provides proofs of convergence for the generalization error in the case
+                                          of classification random forest for growing number of trees. This means that the error rate
+                                          for a given test or training dataset converges to a certain value. Moreover, Breiman (2001)
+                                          proves that there exists an upper bound for the generalization error. Similarly he proves the
+                                          convergence of the mean squared generalization error for regression random forests and also
+
+                                                                                                          1
+                                               Probst and Boulesteix
+
+provides an upper bound. However, these results do not answer the question of whether the
+number of trees is a tuning parameter or should be set as high as computationally feasible,
+although convergence properties may at first view be seen as an argument in favor of a high
+number of trees. Since each tree is trained individually and without knowledge of previously
+trained trees, the risk of overfitting when adding more trees discussed by Friedman (2001)
+in the case of boosting is not relevant here.
+
+    These arguments however do not give us confidence that a larger T is always better. As
+a matter of fact, the number of trees is sometimes considered as a tuning parameter in the
+literature (Raghu et al., 2015); see also Barman et al. (2014) for a study in which different
+random seeds are tested to obtain better forests. The R package RFmarkerDetector (Palla
+and Armano, 2016) even provides a function, 'tuneNTREE', to tune the number of trees.
+Of note, the question of whether a smaller number of trees may be better has often been
+discussed in online forums (see Supplementary File (at the end of the article) for a non-
+exhaustive list of links) and seems to remain a controversial issue to date.
+
+    A related but different question is whether a smaller number of trees is sufficient (as
+opposed to "better") in the sense that more trees do not improve accuracy. This question
+is examined, for example, in the very early study by Latinne et al. (2001) or by Hern´andez-
+Lobato et al. (2013). Another important contribution to our question is the study by
+Oshiro et al. (2012), which compared the performance in terms of the Area Under the ROC
+Curve (AUC) of random forests with different numbers of trees on 29 datasets. Their main
+conclusion is that the performance of the forest does not always substantially improve as
+the number of trees grow and after having trained a certain number of trees (in their case
+128) the AUC performance gain obtained by adding more trees is minimal. The study of
+Oshiro et al. (2012) provides important empirical support for the existence of a "plateau",
+but does not directly address the question of whether a smaller number of trees may be
+substantially better and does not investigate this issue from a theoretical perspective, thus
+making the conclusions dependent on the 29 examined datasets.
+
+    In this context, the goal of our paper is four-fold: (i) providing theoretical results showing
+that the expected error rate may be a non-monotonous function of the number T of trees
+and an explanation in which circumstance this happens; (ii) providing theoretical results
+showing that such a non-monotonous pattern can also be observed for the AUC but not
+for the probability based measures Brier score and logarithmic loss (for classification) and
+the mean squared error (for regression); (iii) illustrating the extent of the problem through
+an application to a large number (n = 306) of datasets from a public database; (iv) finally
+arguing, based on the theoretical results and empirical illustration, against tuning of T in
+practice or, in other words, in favor of setting it to a computationally feasible large number,
+depending on convergence properties of the desired performance measure, which can be
+examined with the help of our new R package OOBCurve.
+
+    To set the scene, we first address this issue empirically by looking at the curve depicting
+the out-of-bag (OOB) error rate (see Section 2 for a definition of the OOB error) for different
+number of trees (also called OOB error rate curve) for various datasets from the OpenML
+database (Vanschoren et al., 2013). To obtain more stable results and better estimations for
+the expected error rate we repeat this procedure 1000 times for each dataset and average
+the results. Interestingly, on most datasets we observe monotonously decreasing curves with
+growing number of trees, while others yield strange non-monotonous patterns. Two of these
+
+                                                                2
+To tune or not to tune the number of trees in random forest?
+
+strange error rate curve examples are depicted in Figure 1 as an illustration. It can be seen
+from these curves that the initial error rate drops steeply before starting to increase after a
+certain number of trees to finally reach a plateau.
+
+Dataset with OpenML ID 938                                                            Dataset with OpenML ID 862
+mean OOB error rate
+   0.37 0.39 0.41 0.43
+
+                                                               mean OOB error rate
+                                                                   0.320 0.330 0.340
+
+0  500 1000 1500 2000                                                                 0  500 1000 1500 2000
+
+   number of trees                                                                       number of trees
+
+Figure 1: Mean OOB error rate curves for OpenML dataset 938 (left) and OpenML dataset
+             862 (right). The curves are averaged over 1000 independent runs of random forest
+             with different seeds.
+
+    At first view, such non-monotonous patterns are a clear argument in favor of tuning T .
+We claim, however, that it is important to understand why and in which circumstances such
+patterns happen in order to decide whether or not T should be tuned in general. In Section
+3, we address this issue from a theoretical point of view, by formulating the expected error
+rate as a function of the probabilities i of correct classification by a single tree for each
+observation i of the training dataset, for i = 1, . . . , n (with n denoting the size of the training
+dataset). This theoretical view provides a clear explanation of the non-monotonous error
+rate curve patterns in the case of classification. With a similar approach, we show that such
+non-monotonous patterns cannot be obtained with the Brier score or the logarithmic loss
+as performance measures, which are based on probability estimations and also not for the
+mean squared error in the case of regression. Only for the AUC we can see non-monotonous
+curves as well.
+
+    The rest of this paper is structured as follows. Section 2 is a brief introduction into
+random forest and performance estimation. Theoretical results are presented in Section 3,
+while the results of a large empirical study based on 306 datasets from the public database
+OpenML (Vanschoren et al., 2013) are reported in Section 4. More precisely, we empirically
+validate our theoretical model for the error as a function of the trees as well as our statements
+regarding the properties of datasets yielding non-monotonous patterns. We finally argue in
+
+                                                                3
+                                               Probst and Boulesteix
+
+Section 5 that there is no inconvenience--except additional computational cost--in adding
+trees to a random forest and that T should thus not be seen as a tuning parameter.
+
+2. Background: random forest and measures of performance
+
+In this section we will tell some general things about random forest and introduce the
+general notation and some well known performance measures.
+
+2.1 Random forest
+
+The random forest (RF) is an ensemble learning technique consisting of the aggregation of
+a large number T of decision trees, resulting in a reduction of variance compared to the
+single decision trees. In this paper we consider the original version of RF first described
+by (Breiman, 2001), while acknowledging that other variants exist, for example RF based
+on conditional inference trees (Hothorn et al., 2006) which address the problem of variable
+selection bias investigated by Strobl et al. (2007), extremely randomized trees (Geurts et al.,
+2006) or ensembles of optimal trees (Khan et al., 2016). Our considerations are however
+generalizable to many of the available RF variants and other methods that use bagging.
+
+    Each tree of the random forest is built based on a bootstrap sample (or a subsample)
+drawn randomly from the original training dataset using the CART method and the Gini
+impurity (Breiman et al., 1984) as the splitting criterion. In regression the split criterion is
+the residual sum of squares. During the building of each tree of the forest, at each split, only
+a given number of candidate variables are considered. Random forest is considered a black-
+box algorithm, as gaining insight on a RF prediction rule is hard due to the large number of
+trees. One of the most common approaches to extract from the random forest interpretable
+information on the contribution of the different variables consists in the computation of the
+so-called variable importance.
+
+    A prediction is obtained for a new observation by aggregating the predictions made by
+the T single trees. In the case of regression RF, the most straightforward and common
+procedure consists of averaging the prediction of the single trees, while majority voting is
+usually applied to aggregate classification trees. This means that the new observation is
+assigned to the class that was most often predicted by the T trees.
+
+    While RF can be used for various types of response variables including censored survival
+times or multicategorical variables, in this paper we mainly focus on the two most common
+cases, binary classification and regression except if otherwise stated.
+
+2.2 General notations
+
+From now on, we consider a fixed training dataset D consisting of n observations, which
+is used to derive prediction rules by applying the RF algorithm with a number T of trees.
+Ideally, the performance of these prediction rules is estimated based on an independent test
+dataset, denoted as Dtest, consisting of ntest test observations.
+
+    Considering the ith observation from the test dataset (i = 1, . . . , ntest), we denote its
+true response as yi, which can be either a numeric value (in the case of regression) or the
+binary label 0 vs. 1 (in the case of binary classification). The predicted value output by
+tree t (with t = 1, . . . , T ) is denoted as y^it, while y^i stands for the predicted value output
+
+                                                                4
+To tune or not to tune the number of trees in random forest?
+
+by the whole random forest. Note that, in the case of regression, y^i is usually obtained by
+averaging as
+
+                                                         1T
+                                                  y^i = T y^it.
+
+                                                                                   t=1
+
+In the case of classification, y^i is usually obtained by majority voting with a threshold of 0.5.
+
+For binary classification, it is equivalent to computing the same average as for regression,
+
+which now takes the form         1T
+                          p^i = T I(y^it = 1)
+
+                                       t=1
+
+and is denoted as p^i (standing for probability), and finally deriving y^i as
+
+                          y^i = 1 if p^i > 0.5,
+                                  0 otherwise.
+
+2.3 Measures of perfomance for binary classification and regression
+
+In regression as well as in classification, the performance of a RF for observation i is usually
+quantified through a so-called loss function measuring the discrepancy between the true
+response yi and the predicted response y^i or, in the case of binary classification, between yi
+and p^i.
+
+    For both regression and binary classification, the classical and most straightforward
+measure is defined for observation i as
+
+                                         ei = (yi - y^i)2 = L(yi, y^i)
+
+with L(., .) standing for the loss function L(x, y) = (x - y)2. In the case of regression this
+is simply the squared error. Another common loss function in the regression case is the
+absolute loss L(x, y) = |x - y|. For binary classification both measures simplify to
+
+                              0 if observation i is classified correctly by the RF
+                     ei =
+
+                              1 otherwise,
+
+which we will simply denote as error from now on. One can also consider the performance
+of single trees, i.e., the discrepancy between yi and y^it. We define eit as
+
+                                          eit = L(yi, y^it) = (yi - y^it)2
+
+and the mean error--a quantity we need to derive our theoretical results on the dependence
+of performance measures on the number of tree T --as
+
+                                                    i = E(eit),
+
+where the expectation is taken over the possible trees conditionally on D. The term i
+can be interpreted as the difficulty to predict yi with single trees. In the case of binary
+classification, we have (yi - y^it)2 = |yi - y^it| and i can be simply estimated as |yi - p^i| from
+a RF with a large number of trees.
+
+                          5
+                            Probst and Boulesteix
+
+    In the case of binary classification, it is also common to quantify performance through
+the use of the Brier score, which has the form
+
+                                          bi = (yi - p^i)2 = L(yi, p^i)
+
+or of the logarithmic loss
+
+                            li = -(yi ln(p^i) + (1 - yi) ln(1 - p^i)).
+
+Both of them are based on p^i rather than y^i, and can thus be only defined for the whole
+RF and not for single trees.
+
+    The area under the ROC curve (AUC) cannot be expressed in terms of single observa-
+tions, as it takes into account all observations at once by ranking the p^i-values. It can be
+interpreted as the probability that the classifier ranks a randomly chosen observation with
+yi = 1 higher than a randomly chosen observation with yi = 0. The larger the AUC, the
+better the discrimination between the two classes. The (empirical) AUC is defined as
+
+                            AUC =  i=1 j=1 n1 n2 S(p^i , p^j )
+                                                            ,
+
+                                          n1n2
+
+where p^1, ..., p^n1 are probability estimations for the n1 observations with yi = 1, p^1 , ..., p^n2
+probability estimations for the n2 observations with yi = 0 and S(., .) is defined as
+
+                                              if p < q
+                                        0     if p = q
+                            S(p, q) = 0.5     if p > q.
+
+                                           1
+
+The AUC can also be interpreted as the Mann-Whitney U-Statistic divided by the product
+of n1 and n2.
+
+2.4 Measures for multiclass classification
+The measures defined in the previous section can be extended to the multiclass classification
+case. Let K denote the number of classes (K > 2). The response yi takes values in {1, ..., K}.
+The error for observation i is then defined as
+
+                                                 ei = I(yi = y^i).
+
+We denote the estimated probability of class k for observation i as
+
+                                                     1T
+                                             p^ik = T I(y^it = k).
+
+                                                                             t=1
+
+The logarithmic loss is then defined as
+
+                                                                   K
+
+                                          li = -I(yi = k) log(p^ik)
+
+                                                                 k=1
+
+                                   6
+         To tune or not to tune the number of trees in random forest?
+
+and the generalized Brier score is defined as
+
+                   K
+
+         bi = (p^ik - I(yi = k))2,
+
+                 k=1
+
+which in the binary case is twice the value of the definition that was used in the previous
+
+section. Following Hand and Till (2001), the AUC can also be generalized to the multiclass
+
+case as         1 KK
+
+         AUC =  K(K - 1) j=1 k=1                       AUC(j, k),
+
+                                                  k=j
+
+where AUC(j, k) is the AUC between class k and j, see also Ferri et al. (2009) for more
+details. It is equivalent to the definition given in Section 2.3 in the binary classification
+case.
+
+2.5 Test dataset error vs. out-of-bag error
+
+In the cases where a test dataset Dtest is available, performance can be assessed by averaging
+the chosen performance measure (as described in the previous paragraphs) over the ntest
+observations. For example the classical error rate (for binary classification) and the mean
+squared error (for regression) are computed as
+
+                                                  1 ntest
+                                                            L(yi, y^i),
+
+                                                ntest i=1
+
+with L(x, y) = (x-y)2, while the mean absolute error (for regression) is obtained by defining
+L(., .) as L(x, y) = |x - y|. Instead of averaging it is also possible (in the regression case)
+to consider the median
+
+                                     median (L(yi, y^1), ..., L(yi, y^ntest)) ,
+
+of these values, which results in the median squared error for the loss function L(x, y) =
+(x - y)2 and in the median absolute error for the loss function L(x, y) = |x - y|.
+
+    An alternative for using a test dataset is the out-of-bag error which is calculated by
+using the out-of-bag (OOB) estimations of the training observations. OOB estimations are
+calculated by predicting the class, the probability (in the classification case) or the real
+value (in the regression case) for each training observation i (for i = 1, . . . , n) by using only
+the trees for which this observation was not included in the bootstrap sample, i.e., was not
+used to construct the tree. These estimations are compared to the true values by calculating
+some performance measure such as those mentioned in Section 2.3, 2.4 and 2.5.
+
+                                               7
+                                         Probst and Boulesteix
+
+3. Theoretical results
+
+In this section we compute the expected performance--according to the error, the Brier score
+and the logarithmic loss outlined in Section 2.3--of a binary classification or regression RF
+consisting of T trees as estimated based on the ntest test observations, while considering
+the training dataset as fixed. For the AUC we prove that it can be a non-monotonous
+function in T . The case of other measures and multiclass classification will be investigated
+empirically in Section 4.
+
+    In this section we are concerned with expected performances, where expectation is taken
+over the sets of T trees. Our goal is to study the monotonicity of the expected errors
+with respect to T . The number T of trees is considered a parameter of the RF and now
+mentioned in parentheses everytime we refer to the whole forest.
+
+3.1 Error rate (binary classification)
+
+We first show that for single observations the OOB error rate curve can be increasing and
+then show exemplified how this can influence the shape of the average curve of several
+observations.
+
+3.1.1 Theoretical considerations
+
+Let us first consider the classical error rate ei(T ) for observation i with a RF including T
+trees and derive its expectation, conditionally on the training set D.
+
+                                                             1T
+                               E(ei(T )) = E I T eit > 0.5
+
+                                                                            t=1
+
+                                                       T
+
+                                         =P               eit > 0.5 · T .
+
+                                             t=1
+
+We note that eit is a binary variable with E(eit) = i. Given a fixed training dataset D
+
+and observation i, the eit, t = 1, ..., T are mutually independent. It follows that the sum
+      T
+Xi =  t     eit  follows  the  binomial  distribution  B(T, i).  It  is  immediate        that   the  contribution
+
+of observation i to the expected error rate, P (Xi > 0.5 · T ), is an increasing function in T
+
+for i > 0.5 and a decreasing function in T for i < 0.5.
+                                                          T
+Note that so far we ignored the case where                t=1  eit  =  0.5       ·  T  ,  which  may  happen  when
+
+T is even. In this case, the standard implementation in R (randomForest) assigns the
+
+observation randomly to one of the two classes. This implies that the term 0.5·P ( t=1 T eit =
+
+0.5 · T ) has to be added to the above term, which does not affect our considerations on the
+
+role of i.
+
+3.1.2 Impact on error rate curves
+
+The error rate curve for observation i is defined as the curve described by the function
+ei : T  R. The expectation E(ei(T )) of the error rate curve for observation i with the
+mentioned adjustment in the case of an even number of trees can be seen in the left plot
+of Figure 2 for different values of i. Very high and very low values of i lead to rapid
+convergence, while for i-values close to 0.5 more trees are needed to reach the plateau.
+
+                                                       8
+To tune or not to tune the number of trees in random forest?
+
+E(ei(T))                                                                                   i
+    0.0 0.2 0.4 0.6 0.8 1.0                                                                0.95
+                                                                                           0.85
+                                                   E(ei(T))                                0.75
+                                                                                           0.65
+                                                                   0.24 0.26 0.28 0.30 0.320.55
+                                                                                           0.45
+                                                                                           0.35
+                                                                                           0.25
+                                                                                           0.15
+                                                                                           0.05
+
+0 100 200 300 400 500                                                                            0 100 200 300 400 500
+             number of trees                                                                                  number of trees
+
+Figure 2: Left: Expected error rate curves for different i values // Right: Plot of the
+             average curve of the curves with 1 = 0.05, 2 = 0.1, 3 = 0.15, 4 = 0.2,
+             5 = 0.55 and 6 = 0.6
+
+    The error rate curve obtained for a test dataset consists of the average of the error
+rate curves of the single observations. Of course, if trees are good classifiers we should
+have i < 0.5 for most observations. In many cases, observations with i > 0.5 will be
+compensated by observations with i < 0.5 in such a way that the expected error rate curve
+is monotonously decreasing. This is typically the case if there are many observations with
+i  0 and a few with i  1.
+
+    However, if there are many observations with i  0 and a few observations with i  0.5
+that are close to 0.5, the expected error rate curve initially falls down quickly because of
+the observation with i  0 and then grows again slowly as the number of trees increases
+because of the observations with i  0.5 close to 0.5. In the right plot of Figure 2 we can
+see the mean of the expected error rate curves for 1 = 0.05, 2 = 0.1, 3 = 0.15, 4 = 0.2,
+5 = 0.55 and 6 = 0.6 and can see exactly the pattern that we expected. In Section 4 we
+will see that the two example datasets whose non-monotonous out-of-bag error rate curves
+are depicted in the introduction have a similar distribution of i.
+
+    We see that the convergence rate of the error rate curve is only dependent on the
+distribution of the i of the observations. Hence, the convergence rate of the error rate
+curve is not directly dependent on the number of observations n or the number of features,
+but these characteristics could influence the empirical distribution of the i's and hence
+possibly the convergence rate as outlined in Section 4.3.1.
+
+                                                                9
+                                       Probst and Boulesteix
+
+3.2 Brier Score (binary classification) and squared error (regression)
+
+We now turn to the Brier score and compute the expected Brier score contribution of
+observation i for a RF including T trees, conditional on the training set D. We obtain
+
+                                 E(bi(T )) = E((yi - p^i(T ))2)                  2
+                                                       
+
+                                               = E  yi -          1T        y^it 
+
+                                                                  T    t=1
+
+                                                                                   2
+
+                                               = E            1T       (yi - y^it) 
+
+                                                              T   t=1
+
+                                                                            2
+
+                                               = E            1T       eit  .
+
+                                                              T   t=1
+
+From      E (Z 2 )   =  E (Z )2  +  V  ar(Z )  with    Z   =   1  t=1 T eit it follows:
+                                                               T
+
+                                    E(bi(T )) = E(eit)2 + V ar(eit) ,
+                                                                         T
+
+which is obviously a strictly monotonous decreasing function of T . This also holds for the
+
+average over the observations of the test dataset. In the case of binary classification, we have
+
+eit  B(1, i), yielding E(eit) = i and V ar(eit) = i(1 - i), thus allowing the formulation
+of E(bi(T )) as E(bi(T )) = i2 + T i(1-i) .
+
+    Note that the formula E(bi(T )) = E(eit)2 + V ar(eit)/T is also valid for the squared
+error in the regression case, except that in this case we would write y^i instead of p^i in the
+first line.
+
+3.3 Logarithmic Loss (binary classification)
+
+As outlined in Section 2.3, another usual performance measure based on the discrepancy
+
+between yi and p^i is the logarithmic loss li(T ) = -(yi ln(p^i(T )) + (1 - yi) ln(1 - p^i(T ))).
+                                       t=1 T eit                                      t=1 T eit for yi = 0, it can
+Noticing  that   p^i(T )  =   1  -  1             for  yi  =   1  and  p^i(T )  =  1
+                                    T                                              T
+
+be in both cases yi = 0 and yi = 1 reformulated as
+
+                                                               1T
+                                       li(T ) = - ln 1 - T eit .
+
+                                                                            t=1
+
+In the following we ensure that the term inside the logarithm is never zero by adding a very
+
+small  value  a  to  1  -  1     t=1 T eit. The logarithmic loss li(T ) is then always defined and its
+                           T
+expectation exists. This is similar to the solution adopted in the mlr package, where 10-15
+
+is added in case that the inner term of the logarithm equals zero.
+
+                                                           10
+        To tune or not to tune the number of trees in random forest?
+
+With    Z  :=     1  -  1  t=1 T eit + a, we can use the Taylor expansion (Casella and Berger,
+                        T
+
+2002),
+
+           E [f (Z)]       =E [f (µZ + (Z - µZ ))]
+
+                                                                      1  (µZ ) (Z - µZ )2
+                           E f (µZ ) + f (µZ ) (Z - µZ ) + 2 f
+
+                           =f (µZ ) + f (µZ ) · V ar(Z)
+                                             2
+
+                           =f (E(Z)) +  f (E(Z))    · V ar(Z),
+
+                                        2
+
+where µZ stands for E(Z) and f (.) as f (.) = - ln(.). We have
+
+                             V ar(Z) = i(1 - i)
+                                                 T
+
+                                E(Z) = 1 - i + a
+                            f (E(Z)) = - ln(1 - i + a)
+                           f (E(Z)) = (1 - i + a)-2,
+
+finally yielding
+
+                           E(li(T ))  - ln(1 - i + a) +  i(1 - i)
+                                                                       2,
+                                                         2T (1 - i + a)
+
+which is obviously a decreasing function of T . The Taylor approximation gets better and
+better for increasing T , since the variance of li(T ) decreases with increasing T and thus
+li(T ) tends to get closer to its expectancy.
+
+3.4 Area Under Curve (AUC)
+
+For the AUC, considerations such as those we made for the error rate, the Brier score and
+the logarithmic loss are impossible, since the AUC is not the sum of individual contributions
+of the observations. It is however relatively easy to see that the expected AUC is not always
+an increasing function of the number T of trees. For example, think of the trivial example of
+a test dataset consisting of two observations with responses y1 resp. y2 and E(p^1(T )) = 0.4
+resp. E(p^2(T )) = 0.6. If y1 = 0 and y2 = 1, the expected AUC curve increases monotonously
+with T , as the probability of a correct ordering according to the calculated scores p^1(T )
+and p^2(T ) increases. However, if y1 = 1 and y2 = 0, we obtain a monotonously decreasing
+function, as the probability of a wrong ordering gets higher with increasing number of trees.
+It is easy to imagine that, for different combinations of E(p^i(T )), one can obtain increasing
+curves, decreasing curves or non-monotonous curves.
+
+3.5 Adapting the models to the OOB error
+
+If we consider the OOB error instead of the test error from an independent dataset, the
+formulas given in the previous subsections are not directly applicable. After having trained
+T trees, for making an OOB estimation for an observation we can only use the trees for which
+the observation was out-of-bag. If we take a simple bootstrap sample from the n training
+
+                                           11
+                                               Probst and Boulesteix
+
+observation when bagging we have on average only T · (1 - 1n )n  T · exp (-1)  T · 0.367
+trees for predicting the considered observation. This means that we would have to replace
+T by T · exp (-1) in the above formulas and that the formulas are no longer exact because
+T · exp (-1) is only an average. Nonetheless it is still a good approximation as confirmed
+in our benchmark experiments.
+
+4. Empirical results
+
+This section shows a large-scale empirical study based on 193 classification tasks and 113
+regression tasks from the public database OpenML (Vanschoren et al., 2013). The datasets
+were downloaded with the help of the OpenML R package (Casalicchio et al., 2017). The
+goals of this study are to (i) give an order of magnitude of the frequency of non-monotonous
+patterns of the error rate curve in real data settings; (ii) empirically confirm our statement
+that observations with i greater than (but close to) 0.5 are responsible for non-monotonous
+patterns; (iii) analyse the results for other classification measures, the multiclass classifica-
+tion and several regression measures; (iv) analyse the convergence rate of the OOB curves.
+
+4.1 Study design
+
+We select the 193 classification tasks and 113 regression tasks from the OpenML platform
+(Vanschoren et al., 2013) satisfying the following criteria: the datasets have predefined tasks
+in OpenML (see Vanschoren et al. (2013) for details on the OpenML nomenclature) and
+they include less than 1000 observations and less than 1000 features, in order to keep the
+computation time for training RF feasible. Cleaning procedures such as the deletion of
+duplicated datasets are also applied to obtain a decent collection of datasets. From the 193
+classification tasks, 149 are binary classification tasks and 44 multiclass classification tasks.
+
+    For each dataset we run the RF algorithm with T = 2000 trees 1000 times successively
+with different seeds using the R package randomForest (Liaw and Wiener, 2002) with the
+default parameter settings. We choose 2000 trees because in a preliminary study on a subset
+of the datasets we could observe that convergence of the OOB curves was reached within
+these 2000 trees.
+
+    For the classification tasks we calculate the OOB curves for the error rate, the balanced
+error rate, the (multiclass) Brier score, the logarithmic loss and the (multiclass) AUC using
+our new package OOBCurve, see details in the next section.
+
+    For the regression tasks we calculate the OOB curves using the mean squared error,
+the mean absolute error, the median squared error and the median of absolute error as
+performance measures. We parallelize the computations using the R package batchtools
+(Bischl et al., 2015). For each measure and each dataset, the final curve is obtained by
+simply averaging over the 1000 runs of RF. We plot each of them in three files separetely
+for binary classification, multiclass classification and regression. In the plots the x-axis
+starts at T = 11 since overall performance estimates are only defined if each observation
+was out-of-bag in at least one of the T trees, which is not always the case in practice for
+T < 10. We plot the curves only until T = 500, as no interesting patterns can be observed
+after this number of trees (data not shown). The graphics, the R-codes and the results of the
+benchmark experiment can be found on https://github.com/PhilippPro/tuneNtree.
+
+                                                                12
+              To tune or not to tune the number of trees in random forest?
+
+4.2 The R package OOBCurve
+
+The calculation of out-of-bag estimates for different performance measures is implemented
+in our new R package OOBCurve. More precisely, it takes a random forest constructed with
+the R package randomForest (Liaw and Wiener, 2002) or ranger (Wright, 2016) as input
+and can calculate the OOB curve for any measure that is available from the mlr package
+(Bischl et al., 2016). See our R-code for application examples. The OOBCurve package
+will soon be available on CRAN R package repository and is already available on Github
+(https://github.com/PhilippPro/OOBCurve).
+
+4.3 Results for binary classification
+
+The average gain in performance in the out-of-bag performance for 2000 trees instead of 11
+trees is -0.0324 for the error rate, -0.0683 for the brier score, -2.383 for the logarithmic loss
+and 0.0553 for the AUC. In the following we will concentrate on the visual analysis of the
+graphs and are especially interested in the results of the error rate.
+
+4.3.1 Overall results for the OOB error rate curves
+
+We observe in the graphs of the OOB error rate curves that for most datasets the curve is
+quickly decreasing until it converges to a dataset-specific plateau value. In 15 cases which
+make approximately 10% of the datasets, however, the curve grows again after reaching
+its lowest value, leading to a value at 2000 trees that is by at least 0.005 bigger than the
+lowest value of the OOB error rate curve for T  [10, 150]. This happens mainly for smaller
+datasets, where a few observations can have a high impact on the error curve. Of these 15
+cases 14 belong to the smaller half of the datasets--ordered by the number of observations
+multiplied with the number of features.
+
+4.3.2 Datasets with non-monotonous OOB error rate curve
+
+We now examine in more detail the datasets yielding non-monotonous patterns. In partic-
+ular, the histograms of the estimates ^i = |yi - p^i| of the observation-specific errors i are
+of interest, since our theoretical results prove that the distribution of the i determines the
+form of the expected error rate curve. To get these histograms we compute the estimates
+^i of the observation-specific errors i (as defined in Section 2.3) from a RF with a huge
+number T = 100000: the more trees, the more accurate the estimates of i.
+
+    Such a histogram is displayed in Figure 3. The average OOB error rate curve (left
+panel) shows the typical pattern of a quickly decreasing OOB error rate. The corresponding
+histogram of the i is shown in the right panel. Most ^i are smaller than 0.5, yielding a
+monotonously decreasing error rate curve.
+
+    Representative examples of histograms in the case of non-monotonous error rate curves
+can be seen in Figure 4. The histograms belong to the datasets with OpenML ID 938 and
+862 for which the OOB error rate curve was already depicted in the introduction in Figure
+1. In both cases we see that a non-negligible proportion of observations have i larger than
+but close to 0.5. This is in agreement with our theoretical results. With growing number of
+trees the chance that these observations are incorrectly classified increases, while the chance
+for observations with i  0 is already very low-- and thus almost constant.
+
+                                                                13
+                           Probst and Boulesteix
+
+                        Averaged OOB error rate curve                                    Histogram
+
+mean OOB error rate                                               Frequency  50 100 150
+   0.15 0.20 0.25 0.30
+
+                                                                             0
+
+                        0  500 1000 1500 2000                                            0.0 0.2 0.4 0.6 0.8 1.0
+                                                                                           Probabilities for false classification
+                           number of trees
+
+Figure 3: Dataset with OpenML ID 37: Mean OOB error rate curve over 1000 runs of
+             random forests (left) and histogram of the estimates of i (i = 1, . . . , n) from a
+             random forest with 100000 trees
+
+                        Dataset with OpenML ID 938                                       Dataset with OpenML ID 862
+
+Frequency                                                                    15
+   0 2 4 6 8 10
+                                                                  Frequency  10
+
+                                                                             5
+
+                                                                             0
+
+                        0.0 0.2 0.4 0.6 0.8 1.0                                          0.0 0.2 0.4 0.6 0.8
+                          Probabilities for false classification                           Probabilities for false classification
+
+Figure 4: Histogram of the estimates of i (i = 1, . . . , n) from random forests with 100000
+             trees for dataset 938 (left) and dataset 862 (right)
+
+                                                    14
+To tune or not to tune the number of trees in random forest?
+
+4.3.3 Other measures
+
+For the Brier score and the logarithmic loss we observe, as expected, monotonically decreas-
+ing curves for all datasets. The expected AUC curve usually appears as growing function
+in T . In a few datasets such as the third binary classification example (OpenML ID 905),
+however, it falls after reaching a maximum.
+
+    To measure the relationship between the different curves, we calculated the Bravais-
+Pearson linear correlation and Kendall's  rank correlation between the values of the OOB
+curves of the different performance measures and averaged these correlation matrices over
+all datasets. Note that we do not perform any correlation tests, since the assumption of
+independent identically distributed observations required by these tests is not fulfilled: our
+correlation analyses are meant to be explorative. The results can be seen in Table 1. The
+Brier score and logarithmic loss have the highest correlation. They are also more correlated
+to the AUC than to the error rate, which has the lowest correlation to all other measures.
+
+        error rate  error rate   Brier score   logarithmic loss     AUC
+      Brier score          1.00          0.28                 0.27  -0.18
+logarithmic loss           0.72          1.00                 0.96  -0.63
+                           0.65          0.93                 1.00  -0.63
+              AUC         -0.64         -0.84                -0.81   1.00
+
+Table 1: Linear (bottom-left) and rank (top-right) correlation results for binary classifica-
+            tion datasets
+
+        error rate  error rate   Brier score   logarithmic loss     AUC
+      Brier score          1.00          0.44                 0.45  -0.43
+logarithmic loss           0.86          1.00                 0.98  -0.87
+                           0.84          0.95                 1.00  -0.87
+              AUC         -0.85         -0.95                -0.92   1.00
+
+Table 2: Linear (bottom-left) and rank (top-right) correlation results for multiclass classi-
+            fication datasets
+
+4.4 Results for multiclass classification
+The average gain in performance in the out-of-bag performance for 2000 trees instead of 11
+trees is -0.0753 for the error rate, -0.1282 for the brier score, -5.3486 for the logarithmic loss
+and 0.0723 for the AUC. These values are higher than the ones from binary classification.
+The visual observations we made for the binary classification also hold for the multiclass
+classification. The results for the correlation are quite similar, although the correlation (see
+Table 2) is in general higher than in the binary case.
+
+4.5 Results for regression
+The average performance gain regarding the out-of-bag performance of the R2 for 2000
+trees compared to 11 trees is 0.1249. In the OOB curves for regression we can observe
+
+                                                                15
+                                               Probst and Boulesteix
+
+the monotonously decreasing pattern expected from theory in the case of the most widely
+used mean squared error (mse). The mean absolute error (mae) seems also to be strictly
+decreasing. In contrast, for the median squared error (medse) and the median absolute
+error (medae), we observe cases where the curve grows with T either in the small T or in
+the large T region, although in most of the cases using more trees leads to better results.
+The correlation coefficients between the measures can be seen in Table 3.
+
+                                               mse mae medse medae
+                                      mse 1.00 0.88 0.20 0.17
+                                      mae 0.96 1.00 0.19 0.17
+                                   medse 0.49 0.50 1.00 0.97
+                                   medae 0.43 0.45 0.99 1.00
+
+    Table 3: Linear (bottom-left) and rank (top-right) correlation results for all dataset
+
+    We observe a high correlation between the measures which take the mean of the losses of
+all observations and between the measures which take the median of the losses. Correlation
+between these two groups of measures are around 0.5 for the linear correlation coefficient
+and around 0.2 for the rank correlation coefficient.
+
+4.6 Convergence
+
+It is clearly visible in the graphs (https://github.com/PhilippPro/tuneNtree/tree/
+master/graphics) that increasing the number of trees from 10 to 500 yields a substantial
+performance gain in most of the cases. In most datasets the biggest gain of performance is
+reached within the first 250 trees. In all datasets and for all measures, at 250 trees at most
+the curve reaches a value that cannot be improved a lot by adding more trees.
+
+    It is important to remember that for the calculation of the OOB error curve at T
+only exp(-1) · T trees where used. Thus, as far as future independent data is concerned,
+the convergence of the performances is by exp(1)  2.718 faster than observed from our
+OOB curves. Having this in mind, our observations are in agreement with the results of
+Oshiro et al. (2012), which conclude that after growing 128 trees no big gain in the AUC
+performance could be achieved by growing more trees. Admittedly, we only examined small
+datasets with number of observations and number of features smaller than 1000, so we did
+not investigate, if our results are generalizable to bigger datasets as mentioned in their
+paper.
+
+    For the assessment of the convergence rate we generally recommend using measures
+other than the error rate, such as the Brier score or the logarithmic loss. Their convergence
+rate is not so dependent on observations with i close to 0.5 (in the binary classification
+case), and they give an indication of the general stability of the probability estimations of
+all observations. This can be especially important if the threshold for classification is not
+set prior to 0.5. The new OOBCurve R package is a tool to examine the rate of convergence
+of the trained random forest with any measure that is available in mlr.
+
+                                                                16
+              To tune or not to tune the number of trees in random forest?
+
+5. Discussion and extensions
+
+In this section we first discuss the main results of this paper and finally think about possible
+extensions of our work.
+
+5.1 Why more trees are better
+
+Non-monotonous expected error rate curves observed in the case of binary classification
+might be seen as an argument in favour of tuning the number T of trees. Based on our
+results, we argue, however, that tuning is not recommendable.
+
+    Firstly, non-monotonous patterns are observed only with some performance measures
+like the error rate and the AUC in case of classification. Measures such as the Brier score or
+the logarithmic loss, which are based on probabilities rather than on the predicted class and
+can thus be seen as more refined, do not yield non-monotonous patterns, as theoretically
+proved in Section 3 and empirically observed based on a very large number of datasets in
+Section 4.
+
+    Secondly, non-monotonous patterns in the expected error rate curves are the result of
+a particular rare combination of i's in the training data. Especially if the training dataset
+is small, the chance is high that the distribution of the i will be different for independent
+test data, for example values of i close to but larger than 0.5 may not be present. In
+this case, the expected error rate curve for this independent future dataset would not be
+non-monotonous, and a large T is better.
+
+    Thirdly, even in the case of non-monotonous expected error rate curves, the minimal
+error rate value is usually only slightly (by less than 0.01) smaller than the value at con-
+vergence. We argue that this very small gain--which, as outlined above, is relevant only
+for future observations with i > 0.5--probably does not compensate the advantage of us-
+ing more trees in terms of other performance measures or in terms of the precision of the
+variable importance measures, which are very commonly used in practice.
+
+    A term that is commonly used in relation to ensemble methods and tuning parameters
+is overfitting. In boosting (Friedman, 2001), including too many trees yields overfitting. A
+natural question is whether the occasional error rate increase for large T discussed in this
+paper in the case of RF can be seen as a form of overfitting. We claim on the contrary that
+in the non-monotonous patterns overfitting occurs for smaller T values, in the sense that
+the minimal value reached for a small T is the result of the very specific combination of i's
+in the training set.
+
+5.2 Extensions
+
+Note that our theoretical results are in principle generalizable to most methods based on
+bagging, since the fact that the base learners are trees does not play any role in our proofs.
+Our theoretical results could possibly be generalised to the multiclass case, as supported by
+our results obtained with 44 multiclass datasets. More research is needed.
+
+    Although we claim that increasing the number of trees cannot harm, our empirical results
+show that, for most of the examined datasets, the biggest performance gain is achieved when
+training the first 100 trees. However, the rate of convergence may be influenced by other
+hyperparameters of the RF. For example lower sample size while taking bootstrap samples
+
+                                                                17
+                                               Probst and Boulesteix
+
+for each tree, bigger constraints on the tree depth or more variables lead to less correlated
+trees and hence more trees are needed to reach convergence.
+
+    One could also think of an automatic break criterion which stops the training automat-
+ically according to the convergence of the OOB curves. If variable importance measures
+are computed, it may be recommended to also consider their convergence. This issue also
+requires more research.
+
+Acknowledgments
+
+We would like to thank Alexander Du¨rre for useful comments on the approximation of the
+logarithmic loss and Jenny Lee for language editing.
+
+References
+
+Ranjan Kumar Barman, Sudipto Saha, and Santasabuj Das. Prediction of interactions
+   between viral and host proteins using supervised machine learning methods. PLOS ONE,
+   9(11):1-10, 11 2014.
+
+Bernd Bischl, Michel Lang, Olaf Mersmann, J¨org Rahnenfu¨hrer, and Claus Weihs.
+   BatchJobs and BatchExperiments: Abstraction mechanisms for using R in batch en-
+   vironments. Journal of Statistical Software, 64(11):1-25, 2015.
+
+Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Erich Studerus,
+   Giuseppe Casalicchio, and Zachary M. Jones. mlr: Machine learning in R. Journal of
+   Machine Learning Research, 17(170):1-5, 2016. R package version 2.9.
+
+Leo Breiman. Random forests. Machine Learning, 45:5-32, 2001.
+
+Leo Breiman, Jerome Friedman, Charles J Stone, and Richard A Olshen. Classification and
+   regression trees. CRC press, 1984.
+
+G. Casalicchio, J. Bossek, M. Lang, D. Kirchhoff, P. Kerschke, B. Hofner, H. Seibold,
+   J. Vanschoren, and B. Bischl. OpenML: An R package to connect to the networked
+   machine learning platform OpenML. ArXiv e-prints, 2017.
+
+George Casella and Roger L Berger. Statistical inference, volume 2. Duxbury Pacific Grove,
+   CA, 2002.
+
+C´esar Ferri, Jos´e Hern´andez-Orallo, and R Modroiu. An experimental comparison of per-
+   formance measures for classification. Pattern Recognition Letters, 30(1):27-38, 2009.
+
+Jerome H. Friedman. Greedy function approximation: a gradient boosting machine. Annals
+   of Statistics, 29(5):1189-1232, 2001.
+
+Pierre Geurts, Damien Ernst, and Louis Wehenkel. Extremely randomized trees. Machine
+   Learning, 63(1):3-42, 2006.
+
+David J Hand and Robert J Till. A simple generalisation of the area under the ROC curve
+   for multiple class classification problems. Machine Learning, 45(2):171-186, 2001.
+
+                                                                18
+              To tune or not to tune the number of trees in random forest?
+
+Daniel Hern´andez-Lobato, Gonzalo Mart´inez-Mun~oz, and Alberto Su´arez. How large should
+   ensembles of classifiers be? Pattern Recognition, 46(5):1323-1336, 2013.
+
+Torsten Hothorn, Kurt Hornik, and Achim Zeileis. Unbiased recursive partitioning: A
+   conditional inference framework. Journal of Computational and Graphical Statistics, 15
+   (3):651-674, 2006.
+
+Zardad Khan, Asma Gul, Aris Perperoglou, Miftahuddin Miftahuddin, Osama Mahmoud,
+   Werner Adler, and Berthold Lausen. An ensemble of optimal trees for classification and
+   regression (OTE). Pattern Recognition, 2016.
+
+Patrice Latinne, Olivier Debeir, and Christine Decaestecker. Limiting the number of trees
+   in random forests. In International Workshop on Multiple Classifier Systems, pages 178-
+   187. Springer, 2001.
+
+Andy Liaw and Matthew Wiener. Classification and regression by randomForest. R News,
+   2(3):18-22, 2002. R package version 4.6-12.
+
+Thais Mayumi Oshiro, Pedro Santoro Perez, and Jos´e Augusto Baranauskas. How many
+   trees in a random forest? In International Workshop on Machine Learning and Data
+   Mining in Pattern Recognition, pages 154-168. Springer, 2012.
+
+Piergiorgio Palla and Giuliano Armano. RFmarkerDetector: Multivariate Analysis of
+   Metabolomics Data using Random Forests, 2016. R package version 1.0.1.
+
+Arvind Raghu, Praveen Devarsetty, Peiris David, Tarassenko Lionel, and Clifford Gari. Im-
+   plications of cardiovascular disease risk assessment using the who/ish risk prediction
+   charts in rural india. PLOS ONE, 10(8):1-13, 08 2015. doi: 10.1371/journal.pone.
+   0133618.
+
+Carolin Strobl, Anne-Laure Boulesteix, Achim Zeileis, and Torsten Hothorn. Bias in ran-
+   dom forest variable importance measures: Illustrations, sources and a solution. BMC
+   Bioinformatics, 8:25, 2007.
+
+Joaquin Vanschoren, Jan N. van Rijn, Bernd Bischl, and Luis Torgo. OpenML: Networked
+   science in machine learning. SIGKDD Explorations, 15(2):49-60, 2013.
+
+Marvin N. Wright. ranger: A Fast Implementation of Random Forests, 2016. R package
+   version 0.6.0.
+
+                                                                19
+                                               Probst and Boulesteix
+
+Supplementary File
+Online discussions
+
+    · Is the out-of-bag error the optimal parameter to find the right number of trees? http:
+       //stackoverflow.com/questions/18541923/what-is-out-of-bag-error-in-random-
+       forests
+
+    · What parameters to tune in random forest? http://stats.stackexchange.com/
+       questions/53240/practical-questions-on-tuning-random-forests
+
+    · Does the optimal number of trees in a random forest depend on the number of predic-
+       tors? http://stats.stackexchange.com/questions/36165/does-the-optimal-number-
+       of-trees-in-a-random-forest-depend-on-the-number-of-pred/36183#36183
+
+    · Should random forests based on same data but different random seeds be com- pared?
+       http://stats.stackexchange.com/questions/222279/should-random-forests-based-
+       on-same-data-but-different-random-seeds-be-compared/222771#222771
+
+    · Is the number of trees a tuning parameter? http://stats.stackexchange.com/
+       questions/50210/caret-and-randomforest-number-of-trees
+
+    · Does random forest overfit? http://stats.stackexchange.com/questions/183973/
+       how-not-to-overfit-a-random-forest-in-r, http://stats.stackexchange.com/
+       questions/144305/should-you-tune-ntree-in-the-random-forest-algorithm
+
+    · Evaluate random forest with OOB or with cross validation? http://stats.stackexchange.
+       com/questions/198839/evaluate-random-forest-oob-vs-cv/199201#199201
+
+    · Does the out-of-bag error increase with number of trees? http://stats.stackexchange.
+       com/questions/183569/random-forest-out-of-bag-error-increases-with-number-
+       of-trees
+
+    · How is the relation between the tree depth and the number of trees? http://
+       stackoverflow.com/questions/34997134/random-forest-tuning-tree-depth-and-
+       number-of-trees2
+
+    · How to determine the number of trees? https://www.researchgate.net/post/How_
+       to_determine_the_number_of_trees_to_be_generated_in_Random_Forest_algorithm
+
+                                                                20
+

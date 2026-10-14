@@ -1,0 +1,401 @@
+
+ statsmodels.stats.stattools.durbin_watson — statsmodels 0.15.0 
+ Skip to main content 
+ Back to top 
+ Ctrl + K 
+ statsmodels 
+ Installing
+ Getting started
+ User Guide
+ Examples
+ More
+ API Reference
+ About statsmodels
+ Developer Page
+ Release 0.15.0
+ Search 
+ Ctrl + K 
+ Choose version 
+ System Settings 
+ Light 
+ Dark 
+ GitHub 
+ PyPI 
+ DOI 
+ Search 
+ Ctrl + K 
+ Installing
+ Getting started
+ User Guide
+ Examples
+ API Reference
+ About statsmodels
+ Developer Page
+ Release 0.15.0
+ Choose version 
+ System Settings 
+ Light 
+ Dark 
+ GitHub 
+ PyPI 
+ DOI 
+ Collapse Sidebar 
+ Expand Sidebar 
+ Section Navigation 
+ endog , exog , what’s that? 
+ Import Paths and Structure 
+ Fitting models using R-style formulas 
+ Pitfalls 
+ Linear Regression 
+ Generalized Linear Models 
+ Generalized Estimating Equations 
+ Generalized Additive Models (GAM) 
+ Robust Linear Models 
+ Linear Mixed Effects Models 
+ Regression with Discrete Dependent Variable 
+ Generalized Linear Mixed Effects Models 
+ ANOVA 
+ Other Models othermod 
+ Time Series analysis tsa 
+ Time Series Analysis by State Space Methods statespace 
+ Vector Autoregressions tsa.vector_ar 
+ Methods for Survival and Duration Analysis 
+ Nonparametric Methods nonparametric 
+ Generalized Method of Moments gmm 
+ Other Models miscmodels 
+ Multivariate Statistics multivariate 
+ Statistics stats 
+ statsmodels.stats.stattools.durbin_watson 
+ statsmodels.stats.diagnostic.acorr_breusch_godfrey 
+ statsmodels.stats.diagnostic.acorr_ljungbox 
+ statsmodels.stats.diagnostic.acorr_lm 
+ statsmodels.stats.diagnostic.LMTestResult 
+ statsmodels.stats.diagnostic.pesaran_timmermann 
+ statsmodels.stats.diagnostic.PesaranTimmermannResult 
+ statsmodels.tsa.stattools.diebold_mariano_test 
+ statsmodels.tsa.stattools.DieboldMarianoResult 
+ statsmodels.stats.diagnostic.het_arch 
+ statsmodels.stats.diagnostic.het_breuschpagan 
+ statsmodels.stats.diagnostic.het_goldfeldquandt 
+ statsmodels.stats.diagnostic.GoldfeldQuandtResult 
+ statsmodels.stats.diagnostic.het_white 
+ statsmodels.stats.stattools.robust_kurtosis 
+ statsmodels.stats.stattools.expected_robust_kurtosis 
+ statsmodels.stats.stattools.jarque_bera 
+ statsmodels.stats.stattools.omni_normtest 
+ statsmodels.stats.outliers_influence.OLSInfluence 
+ statsmodels.stats.outliers_influence.GLMInfluence 
+ statsmodels.stats.outliers_influence.MLEInfluence 
+ statsmodels.stats.outliers_influence.variance_inflation_factor 
+ statsmodels.stats.stattools.medcouple 
+ statsmodels.stats.stattools.robust_skewness 
+ statsmodels.stats.diagnostic.breaks_cusumolsresid 
+ statsmodels.stats.diagnostic.breaks_hansen 
+ statsmodels.stats.diagnostic.recursive_olsresiduals 
+ statsmodels.stats.diagnostic.compare_cox 
+ statsmodels.stats.diagnostic.compare_encompassing 
+ statsmodels.stats.diagnostic.compare_j 
+ statsmodels.stats.diagnostic.NonNestedTestResult 
+ statsmodels.stats.diagnostic.spec_white 
+ statsmodels.stats.diagnostic.linear_harvey_collier 
+ statsmodels.stats.diagnostic.linear_lm 
+ statsmodels.stats.diagnostic.linear_rainbow 
+ statsmodels.stats.diagnostic.linear_reset 
+ statsmodels.stats.sandwich_covariance.cov_hac 
+ statsmodels.stats.sandwich_covariance.cov_nw_panel 
+ statsmodels.stats.sandwich_covariance.cov_nw_groupsum 
+ statsmodels.stats.sandwich_covariance.cov_cluster 
+ statsmodels.stats.sandwich_covariance.cov_cluster_2groups 
+ statsmodels.stats.sandwich_covariance.cov_white_simple 
+ statsmodels.stats.sandwich_covariance.weights_bartlett 
+ statsmodels.stats.sandwich_covariance.weights_uniform 
+ statsmodels.stats.sandwich_covariance.cov_hc0 
+ statsmodels.stats.sandwich_covariance.cov_hc1 
+ statsmodels.stats.sandwich_covariance.cov_hc2 
+ statsmodels.stats.sandwich_covariance.cov_hc3 
+ statsmodels.stats.sandwich_covariance.se_cov 
+ statsmodels.stats.gof.powerdiscrepancy 
+ statsmodels.stats.gof.gof_chisquare_discrete 
+ statsmodels.stats.gof.gof_binning_discrete 
+ statsmodels.stats.gof.chisquare_effectsize 
+ statsmodels.stats.gof.chisquare 
+ statsmodels.stats.gof.ChisquareResult 
+ statsmodels.stats.diagnostic.anderson_statistic 
+ statsmodels.stats.diagnostic.normal_ad 
+ statsmodels.stats.diagnostic.kstest_exponential 
+ statsmodels.stats.diagnostic.kstest_fit 
+ statsmodels.stats.diagnostic.kstest_normal 
+ statsmodels.stats.diagnostic.lilliefors 
+ statsmodels.sandbox.stats.runs.mcnemar 
+ statsmodels.sandbox.stats.runs.symmetry_bowker 
+ statsmodels.sandbox.stats.runs.median_test_ksample 
+ statsmodels.sandbox.stats.runs.runstest_1samp 
+ statsmodels.sandbox.stats.runs.runstest_2samp 
+ statsmodels.stats.descriptivestats.sign_test 
+ statsmodels.stats.nonparametric.rank_compare_2indep 
+ statsmodels.stats.nonparametric.rank_compare_2ordinal 
+ statsmodels.stats.nonparametric.samplesize_rank_compare_onetail 
+ statsmodels.stats.nonparametric.SamplesizeRankCompareResult 
+ statsmodels.stats.nonparametric.RankCompareResult 
+ statsmodels.stats.nonparametric.ProbSuperiorResult 
+ statsmodels.stats.nonparametric.TostProbSuperiorResult 
+ statsmodels.stats.nonparametric.cohensd2problarger 
+ statsmodels.stats.nonparametric.prob_larger_continuous 
+ statsmodels.stats.nonparametric.rankdata_2samp 
+ statsmodels.stats.nonparametric.jonckheere_terpstra 
+ statsmodels.stats.nonparametric.JonckheereTerpstraResult 
+ statsmodels.stats.descriptivestats.describe 
+ statsmodels.stats.descriptivestats.Description 
+ statsmodels.stats.inter_rater.cohens_kappa 
+ statsmodels.stats.inter_rater.fleiss_kappa 
+ statsmodels.stats.inter_rater.to_table 
+ statsmodels.stats.inter_rater.aggregate_raters 
+ statsmodels.stats.multitest.multipletests 
+ statsmodels.stats.multitest.fdrcorrection 
+ statsmodels.stats.multitest.local_fdr_correction 
+ statsmodels.stats.multitest.LocalFDRCorrectionResult 
+ statsmodels.sandbox.stats.multicomp.GroupsStats 
+ statsmodels.sandbox.stats.multicomp.MultiComparison 
+ statsmodels.sandbox.stats.multicomp.TukeyHSDResults 
+ statsmodels.sandbox.stats.multicomp.tukeyhsd 
+ statsmodels.stats.multicomp.pairwise_tukeyhsd 
+ statsmodels.stats.multitest.local_fdr 
+ statsmodels.stats.multitest.fdrcorrection_twostage 
+ statsmodels.stats.multitest.NullDistribution 
+ statsmodels.stats.multitest.RegressionFDR 
+ statsmodels.stats.knockoff_regeffects.CorrelationEffects 
+ statsmodels.stats.knockoff_regeffects.OLSEffects 
+ statsmodels.stats.knockoff_regeffects.ForwardEffects 
+ statsmodels.stats.knockoff_regeffects.RegModelEffects 
+ statsmodels.sandbox.stats.multicomp.varcorrection_pairs_unbalanced 
+ statsmodels.sandbox.stats.multicomp.varcorrection_pairs_unequal 
+ statsmodels.sandbox.stats.multicomp.varcorrection_unbalanced 
+ statsmodels.sandbox.stats.multicomp.varcorrection_unequal 
+ statsmodels.sandbox.stats.multicomp.StepDown 
+ statsmodels.sandbox.stats.multicomp.catstack 
+ statsmodels.sandbox.stats.multicomp.ccols 
+ statsmodels.sandbox.stats.multicomp.compare_ordered 
+ statsmodels.sandbox.stats.multicomp.distance_st_range 
+ statsmodels.sandbox.stats.multicomp.get_tukeyQcrit 
+ statsmodels.sandbox.stats.multicomp.homogeneous_subsets 
+ statsmodels.sandbox.stats.multicomp.maxzero 
+ statsmodels.sandbox.stats.multicomp.maxzerodown 
+ statsmodels.sandbox.stats.multicomp.mcfdr 
+ statsmodels.sandbox.stats.multicomp.qcrit 
+ statsmodels.sandbox.stats.multicomp.randmvn 
+ statsmodels.sandbox.stats.multicomp.rankdata 
+ statsmodels.sandbox.stats.multicomp.rejectionline 
+ statsmodels.sandbox.stats.multicomp.set_partition 
+ statsmodels.sandbox.stats.multicomp.set_remove_subs 
+ statsmodels.sandbox.stats.multicomp.tiecorrect 
+ statsmodels.stats.multitest._ecdf 
+ statsmodels.stats.weightstats.DescrStatsW 
+ statsmodels.stats.weightstats.CompareMeans 
+ statsmodels.stats.weightstats.ttest_ind 
+ statsmodels.stats.weightstats.ttost_ind 
+ statsmodels.stats.weightstats.ttost_paired 
+ statsmodels.stats.weightstats.ztest 
+ statsmodels.stats.weightstats.ztost 
+ statsmodels.stats.weightstats.zconfint 
+ statsmodels.stats.weightstats._tconfint_generic 
+ statsmodels.stats.weightstats._tstat_generic 
+ statsmodels.stats.weightstats._zconfint_generic 
+ statsmodels.stats.weightstats._zstat_generic 
+ statsmodels.stats.weightstats._zstat_generic2 
+ statsmodels.stats.power.TTestIndPower 
+ statsmodels.stats.power.TTestPower 
+ statsmodels.stats.power.GofChisquarePower 
+ statsmodels.stats.power.NormalIndPower 
+ statsmodels.stats.power.FTestAnovaPower 
+ statsmodels.stats.power.FTestPower 
+ statsmodels.stats.power.normal_power_het 
+ statsmodels.stats.power.normal_sample_size_one_tail 
+ statsmodels.stats.power.tt_solve_power 
+ statsmodels.stats.power.tt_ind_solve_power 
+ statsmodels.stats.power.zt_ind_solve_power 
+ statsmodels.stats.proportion.proportion_confint 
+ statsmodels.stats.proportion.proportion_effectsize 
+ statsmodels.stats.proportion.binom_test 
+ statsmodels.stats.proportion.binom_test_reject_interval 
+ statsmodels.stats.proportion.binom_tost 
+ statsmodels.stats.proportion.binom_tost_reject_interval 
+ statsmodels.stats.proportion.multinomial_proportions_confint 
+ statsmodels.stats.proportion.proportions_ztest 
+ statsmodels.stats.proportion.proportions_ztost 
+ statsmodels.stats.proportion.proportions_chisquare 
+ statsmodels.stats.proportion.proportions_chisquare_allpairs 
+ statsmodels.stats.proportion.proportions_chisquare_pairscontrol 
+ statsmodels.stats.proportion.power_binom_tost 
+ statsmodels.stats.proportion.power_ztost_prop 
+ statsmodels.stats.proportion.samplesize_confint_proportion 
+ statsmodels.stats.proportion.test_proportions_2indep 
+ statsmodels.stats.proportion.Proportions2indepTestResult 
+ statsmodels.stats.proportion.confint_proportions_2indep 
+ statsmodels.stats.proportion.power_proportions_2indep 
+ statsmodels.stats.proportion.PowerProportionsResult 
+ statsmodels.stats.proportion.tost_proportions_2indep 
+ statsmodels.stats.proportion.TostProportionsResult 
+ statsmodels.stats.proportion.samplesize_proportions_2indep_onetail 
+ statsmodels.stats.proportion.score_test_proportions_2indep 
+ statsmodels.stats.proportion.ScoreTestProportionsResult 
+ statsmodels.stats.proportion._score_confint_inversion 
+ statsmodels.stats.rates.test_poisson 
+ statsmodels.stats.rates.PoissonTestResult 
+ statsmodels.stats.rates.confint_poisson 
+ statsmodels.stats.rates.confint_quantile_poisson 
+ statsmodels.stats.rates.tolerance_int_poisson 
+ statsmodels.stats.rates.test_poisson_2indep 
+ statsmodels.stats.rates.PoissonTest2indepResult 
+ statsmodels.stats.rates.etest_poisson_2indep 
+ statsmodels.stats.rates.confint_poisson_2indep 
+ statsmodels.stats.rates.tost_poisson_2indep 
+ statsmodels.stats.rates.TostPoissonResult 
+ statsmodels.stats.rates.nonequivalence_poisson_2indep 
+ statsmodels.stats.rates.NonequivalencePoissonResult 
+ statsmodels.stats.rates.PowerResult 
+ statsmodels.stats.rates.power_poisson_ratio_2indep 
+ statsmodels.stats.rates.PowerRatioResult 
+ statsmodels.stats.rates.power_equivalence_poisson_2indep 
+ statsmodels.stats.rates.PowerEquivalenceResult 
+ statsmodels.stats.rates.power_poisson_diff_2indep 
+ statsmodels.stats.rates.PowerDiffResult 
+ statsmodels.stats.rates.power_negbin_ratio_2indep 
+ statsmodels.stats.rates.PowerNegbinRatioResult 
+ statsmodels.stats.rates.power_equivalence_neginb_2indep 
+ statsmodels.stats.multivariate.test_mvmean 
+ statsmodels.stats.multivariate.confint_mvmean 
+ statsmodels.stats.multivariate.confint_mvmean_fromstats 
+ statsmodels.stats.multivariate.test_mvmean_2indep 
+ statsmodels.stats.multivariate.HotellingResult 
+ statsmodels.stats.multivariate.test_cov 
+ statsmodels.stats.multivariate.test_cov_blockdiagonal 
+ statsmodels.stats.multivariate.test_cov_diagonal 
+ statsmodels.stats.multivariate.test_cov_oneway 
+ statsmodels.stats.multivariate.CovOnewayResult 
+ statsmodels.stats.multivariate.test_cov_spherical 
+ statsmodels.stats.multivariate.CovTestResult 
+ statsmodels.stats.multivariate_tools.cancorr 
+ statsmodels.stats.multivariate_tools.cc_ranktest 
+ statsmodels.stats.multivariate_tools.CCRankTestResult 
+ statsmodels.stats.multivariate_tools.cc_stats 
+ statsmodels.stats.multivariate_tools.CCStatsResult 
+ statsmodels.stats.oneway.anova_oneway 
+ statsmodels.stats.oneway.anova_generic 
+ statsmodels.stats.oneway.AnovaResult 
+ statsmodels.stats.oneway.equivalence_oneway 
+ statsmodels.stats.oneway.equivalence_oneway_generic 
+ statsmodels.stats.oneway.EquivalenceOnewayResult 
+ statsmodels.stats.oneway.power_equivalence_oneway 
+ statsmodels.stats.oneway._power_equivalence_oneway_emp 
+ statsmodels.stats.oneway.test_scale_oneway 
+ statsmodels.stats.oneway.ScaleAnovaResult 
+ statsmodels.stats.oneway.equivalence_scale_oneway 
+ statsmodels.stats.oneway.ScaleEquivalenceResult 
+ statsmodels.stats.oneway.confint_effectsize_oneway 
+ statsmodels.stats.oneway.ConfintEffectSizeResult 
+ statsmodels.stats.oneway.confint_noncentrality 
+ statsmodels.stats.oneway.convert_effectsize_fsqu 
+ statsmodels.stats.oneway.EffectSizeFsquResult 
+ statsmodels.stats.oneway.effectsize_oneway 
+ statsmodels.stats.oneway.f2_to_wellek 
+ statsmodels.stats.oneway.fstat_to_wellek 
+ statsmodels.stats.oneway.wellek_to_f2 
+ statsmodels.stats.oneway._fstat2effectsize 
+ statsmodels.stats.oneway.FstatEffectSizeResult 
+ statsmodels.stats.oneway.scale_transform 
+ statsmodels.stats.oneway.simulate_power_equivalence_oneway 
+ statsmodels.stats.oneway.SimulatePowerEquivalenceResult 
+ statsmodels.stats.robust_compare.TrimmedMean 
+ statsmodels.stats.robust_compare.scale_transform 
+ statsmodels.stats.robust_compare.trim_mean 
+ statsmodels.stats.robust_compare.trimboth 
+ statsmodels.stats.correlation_tools.corr_clipped 
+ statsmodels.stats.correlation_tools.corr_nearest 
+ statsmodels.stats.correlation_tools.corr_nearest_factor 
+ statsmodels.stats.correlation_tools.corr_thresholded 
+ statsmodels.stats.correlation_tools.cov_nearest 
+ statsmodels.stats.correlation_tools.CovNearestResult 
+ statsmodels.stats.correlation_tools.cov_nearest_factor_homog 
+ statsmodels.stats.correlation_tools.FactoredPSDMatrix 
+ statsmodels.stats.correlation_tools.kernel_covariance 
+ statsmodels.stats.regularized_covariance.RegularizedInvCovariance 
+ statsmodels.stats.covariance.transform_corr_normal 
+ statsmodels.stats.covariance.corr_normal_scores 
+ statsmodels.stats.covariance.corr_quadrant 
+ statsmodels.stats.covariance.corr_rank 
+ statsmodels.stats.moment_helpers.cum2mc 
+ statsmodels.stats.moment_helpers.mc2mnc 
+ statsmodels.stats.moment_helpers.mc2mvsk 
+ statsmodels.stats.moment_helpers.mnc2cum 
+ statsmodels.stats.moment_helpers.mnc2mc 
+ statsmodels.stats.moment_helpers.mnc2mvsk 
+ statsmodels.stats.moment_helpers.mvsk2mc 
+ statsmodels.stats.moment_helpers.mvsk2mnc 
+ statsmodels.stats.moment_helpers.cov2corr 
+ statsmodels.stats.moment_helpers.Cov2CorrResult 
+ statsmodels.stats.moment_helpers.corr2cov 
+ statsmodels.stats.moment_helpers.se_cov 
+ statsmodels.stats.mediation.Mediation 
+ statsmodels.stats.mediation.MediationResults 
+ statsmodels.stats.oaxaca.OaxacaBlinder 
+ statsmodels.stats.oaxaca.OaxacaResults 
+ statsmodels.stats.dist_dependence_measures.distance_covariance_test 
+ statsmodels.stats.dist_dependence_measures.distance_statistics 
+ statsmodels.stats.dist_dependence_measures.distance_correlation 
+ statsmodels.stats.dist_dependence_measures.distance_covariance 
+ statsmodels.stats.dist_dependence_measures.distance_variance 
+ statsmodels.stats.meta_analysis.combine_effects 
+ statsmodels.stats.meta_analysis.effectsize_2proportions 
+ statsmodels.stats.meta_analysis.effectsize_smd 
+ statsmodels.stats.meta_analysis.CombineResults 
+ statsmodels.stats.meta_analysis.HomogeneityTestResult 
+ statsmodels.stats.meta_analysis._fit_tau_iter_mm 
+ statsmodels.stats.meta_analysis._fit_tau_iterative 
+ statsmodels.stats.meta_analysis._fit_tau_mm 
+ Contingency tables 
+ Multiple Imputation with Chained Equations 
+ Treatment Effects treatment 
+ Empirical Likelihood emplike 
+ Distributions 
+ Graphics 
+ Input-Output iolib 
+ Tools 
+ Working with Large Data Sets 
+ Optimization 
+ The Datasets Package 
+ Sandbox 
+ User Guide 
+ Statistics stats 
+ statsmodels.stats.stattools.durbin_watson 
+ statsmodels.stats.stattools.durbin_watson # 
+ statsmodels.stats.stattools. durbin_watson ( resids , axis = 0 ) [source] # 
+ Calculates the Durbin-Watson statistic 
+ Parameters : 
+ resids array_like Data for which to compute the Durbin-Watson statistic. Usually
+regression model residuals. 
+ axis int , optional Axis to use if data has more than 1 dimension. Default is 0. 
+ Returns : 
+ dw float or ndarray The Durbin-Watson statistic. 
+ Notes 
+ The null hypothesis of the test is that there is no serial correlation
+in the residuals.
+The Durbin-Watson test statistic is defined as: 
+\[\sum_{t=2}^T((e_t - e_{t-1})^2)/\sum_{t=1}^Te_t^2\] 
+ The test statistic is approximately equal to 2*(1-r) where r is the
+sample autocorrelation of the residuals. Thus, for r == 0, indicating no
+serial correlation, the test statistic equals 2. This statistic will
+always be between 0 and 4. The closer to 0 the statistic, the more
+evidence for positive serial correlation. The closer to 4, the more
+evidence for negative serial correlation. 
+ previous 
+ Statistics stats 
+ next 
+ statsmodels.stats.diagnostic.acorr_breusch_godfrey 
+ On this page
+ durbin_watson 
+ Show Source
+ so the DOM is not blocked -->
+ © Copyright 2009-2025, Josef Perktold, Skipper Seabold, Jonathan Taylor, statsmodels-developers.
+ Created using Sphinx 9.1.0.
+ Built with the PyData Sphinx Theme 0.21.0.
+ 

@@ -1,0 +1,297 @@
+                                                                  Future of Information and Communications Conference (FICC) 2018
+
+How much is my car worth? A methodology for
+predicting used cars prices using Random Forest
+
+                       Nabarun Pal                                       Dhanasekar Sundararaman
+
+Department of Metallurgical and Materials Engineering               Department of Information Technology
+         Indian Institute of Technology Roorkee                           SSN College of Engineering
+                        Roorkee, India                                             Chennai, India
+                        pal@nabarun.in
+                                                                        dhanasekar312213@gmail.com
+                       Priya Arora
+                                                                                 Puneet Kohli
+             Department of Computer Science
+                  Texas A & M University                               Department of Computer Science
+                     Texas, United States                                   Texas A & M University
+                                                                               Texas, United States
+                arora.priya4172@gmail.com                                      punkohl@gmail.com
+
+             Sai Sumanth Palakurthy
+
+Department of Computer Science and Engineering
+                  IIT (ISM) Dhanbad
+                     Dhanbad, India
+
+              sumanth4591@gmail.com
+
+    Abstract--Cars are being sold more than ever. Developing           customers to buy new cars due to the lack of funds, used
+countries adopt the lease culture instead of buying a new car due   cars sales are on a global increase. Predicting the prices of
+to affordability. Therefore, the rise of used cars sales is         used cars is an interesting and much-needed problem to be
+exponentially increasing. Car sellers sometimes take advantage of   addressed. Customers can be widely exploited by fixing
+this scenario by listing unrealistic prices owing to the demand.    unrealistic prices for the used cars and many falls into this
+Therefore, arises a need for a model that can assign a price for a  trap. Therefore, rises an absolute necessity of a used car price
+vehicle by evaluating its features taking the prices of other cars  prediction system to effectively determine the worthiness of
+into consideration. In this paper, we use supervised learning       the car using a variety of features. Due to the adverse pricing
+method namely Random Forest to predict the prices of used cars.     of cars and the nomadic nature of people in developed
+The model has been chosen after careful exploratory data            countries, the cars are mostly bought on a lease basis, where
+analysis to determine the impact of each feature on price. A        there is an agreement between the buyer and seller. These cars
+Random Forest with 500 Decision Trees were created to train the     upon completion of the agreement are resold. So reselling has
+data. From experimental results, the training accuracy was found    become an essential part of today's world. Given the
+out to be 95.82%, and the testing accuracy was 83.63%. The          description of used cars, the prediction of used cars is not an
+model can predict the price of cars accurately by choosing the      easy task. There are a variety of features of a car like the age
+most correlated features.                                           of the car, its make, the origin of the car (the original country
+                                                                    of the manufacturer), its mileage (the number of kilometers it
+    Keywords--Car price prediction; Random Forests; Regression;     has run) and its horsepower. Due to rising fuel prices, fuel
+Decision Trees;                                                     economy is also of prime importance. Other factors such as
+                                                                    the type of fuel it uses, style, braking system, the volume of its
+                           I. INTRODUCTION                          cylinders (measured in cc), acceleration, the number of doors,
+                                                                    safety index, size, weight, height, paint color, consumer
+   The prices of new cars in the industry is fixed by the           reviews, prestigious awards won by the car manufacturer.
+manufacturer with some additional costs incurred by the             Other options such as sound system, air conditioner, power
+Government in the form of taxes. So customers buying a new          steering, cosmic wheels, GPS navigator all may influence the
+car can be assured of the money they invest to be worthy. But       price as well. Some of the important features of this and their
+due to the increased price of new cars and the incapability of      influence on price is detailed in Section III.
+
+                                                                    1|P a g e
+Future of Information and Communications Conference (FICC) 2018
+
+          So, we propose a methodology using Machine              sellingTime, VehicleAge) to perform the classification task
+Learning model namely random forest to predict the prices of      after removal of irrelevant features and outliers from the
+used cars given the features. The price is estimated based on     dataset which gives an accuracy of 83.08% on the test data.
+the number of features as mentioned above. The intricate          We also use Kaggle data-set to perform prediction of used-car
+details about this model on the used car's data set along with    prices. However, the difference lies in the inclusion of few
+the accuracy are narrated in depth in Section V. We then          more relevant features in prediction model - the price of the
+deploy a website to display our results which are capable of      car, and vehicleType. These two features play an important
+predicting the price of a car given so many features of it. This  role in predicting the price of a used car which seems to be
+deployed service is a result of our work, and it incorporates     given less importance in the paper [2]. In addition to this, the
+the data, ML model with the features.                             range of features year of registration, PowerPS, the price
+                                                                  seems to be narrowed down in work [2] due to which test
+To summarize,                                                     data-set gives less accuracy w.r.t what we evaluate by
+                                                                  broadening the range of the above-said features.
+ First, we collect the data about used cars, identify
+     important features that reflect the price.                      The report by Awad et al. [3] is more of an educational
+                                                                  paper than a research paper. The author reviews six most
+ Second, we preprocess and remove entries with NA                 popular classification methods (Bayesian classification,
+     values. Discard features that are not relevant for the       ANNs, SVMs, k-NN, Rough sets, and Artificial immune
+     prediction of the price.                                     system) to perform a spam email classification task. The
+                                                                  reason for choosing this paper is to understand these popular
+ Third, we apply random forest model on the preprocessed          classification models in detail, and its applicability to the spam
+     dataset with features as inputs and the price as output.     email classification problem since this paper gives much
+                                                                  insight into each method. The main difference, however,
+ Finally, we deploy a web page as a service which                 between classifying price range and spam mail, is that spam
+     incorporates all the features of the used cars and the       email classification task is a binary one, whereas our motive is
+     random forest model to predict the price of a car.           mainly one-vs-the-rest. The author uses Naive Bayes for
+                                                                  classification which does not give accurate results due to its
+   The paper is organized as follows. Section II talks about the  major concern of feature dependency as pointed out by the
+other works that predict the price of used cars. Section III      author. Due to this reason, we also did not try to evaluate the
+details about the dataset and preprocessing. In Section IV we     performance of our data-set using Naive Bayes model since
+share the results of exploratory data analysis on our dataset.    our dataset has heavily feature dependency. To predict results
+Section V talks about our proposed methodology of using           with good accuracy, the author suggests a hybrid system
+random forests to predict car prices with details about the       which applies to our work by using Random Forest. A
+accuracy of training and test data. We conclude in Section VI     manipulation of various decorrelated decision trees, the
+with our future works in the last section.                        Random Forest gives pretty good accuracy in comparison to
+                                                                  prior work.
+                          II. RELATED WORK
+                                                                     Work by Durgesh et al. [4] gives a good introductory paper
+   We use dataset from Kaggle for used car price prediction.      on Support Vector Machine. The authors assess the
+The dataset contains various features as mentioned in section     performance of several classification techniques (K-NN, Rule-
+III of this paper that are required to predict and classify the   Based Classifiers, etc.) by performing the comparative
+range of prices of used cars. The literature survey provides      assessment of SVM with others. This comparative study is
+few papers where researchers have used similar data set or        done using several data-sets taken from the UCI Machine
+related data-set for such price prediction.                       Learning Repository. This assessment yields that SVM gives
+                                                                  much better classification accuracy in comparison to others.
+   [1] This patent describes a generic engine platform for        This gives us a baseline for prediction of tasks by using a
+assessing the price of an asset. This platform provides a price   simple linear model which gives good accuracy to let us use
+computation matrix for asset price prediction. To compute the     complex systems - random forest - which ultimately provides
+price for vehicles, this platform may compute linear regression   pretty good results for prediction of the used-cars price.
+model that defines a set of input variables. However, it does
+not give details as what features can be used for specific type      The Author of the paper [5] predicts the price of used cars
+of vehicles for such prediction. We have taken important          in Mauritius by using four comparable machine learning
+features for predicting the price of used cars using random       algorithms - multiple linear regression, k-nearest neighbors,
+forest models.                                                    naive Bayes and decision trees algorithm. The author uses
+                                                                  historical data collected from daily newspapers in Mauritius.
+   Zhang et al. [2] use Kaggle data-set to perform price          The application of listed learning algorithms on this data
+prediction of a used car. The author evaluates the performance    provides comparable results with not-so-good prediction
+of several classification methods (logistic regression, SVM,
+decision tree, Extra Trees, AdaBoost, random forest) to assess
+the performance. Among all these models, random forest
+classifier proves to perform the best for their prediction task.
+This work uses five features (brand, powerPS, kilometer,
+
+                                                                  2|P a g e
+Future of Information and Communications Conference (FICC) 2018
+
+accuracy. The main difference, however, between classifying            1. Keep only listings for cars sold by private owners
+price range and spam mail, is that spam email classification                and filter out those sold by dealerships
+task is a binary one, whereas our motive is mainly one-vs-the-
+rest. The difference between our analysis of this work is that         2. Keep only listings for cars being sold, and filter out
+we perform our assessment on data from Kaggle, whereas                      all request for purchase listings
+theirs is based on the data collected from the daily newspaper.
+In addition to this, the author uses simple and comparable             3. Filter out cars manufactured before 1863 and after
+classification algorithms that conform to our findings that                 2017, and derive the car's age
+using a sophisticated algorithm like random forest on our data-
+set can give pretty good results, and which has proved to be           4. Filter out all cars with unrealistic Power values
+so.                                                                    5. Filter out listings which don't have an associated
+
+   Multiple regression models help in the classification of                 price
+numerical values when there is more than one independent               6. Filter out all cars listed as unavailable
+variable with one dependent variable. Noor et al. [6], hence,          7. Filter out invalid registration dates
+use this model to evaluate the prediction using                        8. Convert boolean (true/false) fields to numeric (0/1)
+https://www.pakwheels.com/ dataset. The authors use data-set
+of 2000 records collected within the duration of one or two                 based
+months. The collected data includes features like color,               9. Filter out all data with value as `NA' (Not Available)
+advertisement date, etc. which seem to be not-so-relevant for
+such prediction, whereas, our model uses relevant features like        After pre-processing, the final dataset contains ten
+the brand, kilometer, etc. which helps in predicting good         features for second hand cars - 'price', 'vehicleType', `age',
+accuracy using random forest on data-set obtained from            'powerPS', 'model', 'kilometer', 'fuelType', 'brand', and
+Kaggle.                                                           'damageRepaied', `isAutomatic'. Out of these features, the
+                                                                  most important for our prediction model is
+   Researchers in the paper [7] use multivariate regression
+model in classification and prediction of used car prices. The         1. price: The specified asking amount for the car
+authors use 2005 General Motor (GM) cars data-set for this             2. kilometer: A number of Kilometers the car has driven
+classification task. They introduce variable selection                 3. brand: The car's manufacturing company
+techniques for determination of relevant features for such             4. vehicleType: Whether a small car, limousine, bus,
+prediction tasks which provide insights of its applicability in
+several domains. The main emphasis of this paper is to discuss              etc.
+this model for learning and encouraging students to perform in
+this field. The model used in this work does not require any         Just based on analyzing our input data set, we can see that
+special knowledge of the dataset used. Hence the portal data      on average, used cars were priced at approximately 11000
+(www.pakwheels.com) was sufficient to use. The difference,        with an average kilometer reading of 125000 Km. 50% of cars
+however, of their work with ours is that our work focusses        from our dataset were being sold after 12 years of being used.
+upon preprocessing/filtering of data obtained from Kaggle
+with a selection of relevant features for prediction. This                       IV. EXPLORATORY DATA ANALYSIS
+motivates us to generalize the model for a variety of brands
+with a range of years to predict prices using several relevant              After preprocessing the data, it is analyzed through
+features.                                                            visual exploration to gather insights about the model that
+                                                                     can be applied to the data, understand the diversity in the
+               III. DATA SET AND PREPROCESSING                       data and the range of every field. We use a bar chart, box
+                                                                     plot, distribution graph, etc. to explore each feature varies
+   To accurately predict the prices of used cars, we used an         and its relation with other features including the target
+open dataset to train our model. We used the 'Used Car               feature.
+Database' from Kaggle which is scraped from eBay-
+Kleinanzeigen, the German subsidiary of eBay, a publicly                    Figure 1 shows the distribution of age of the vehicle.
+listed online classified portal. The dataset contains the prices     The age is calculated using yearOfRegistration feature and
+and attributes of over 370,000 used cars sold on the website         current year (2017). Apparently, it is the number of years
+across 40 brands. Our dataset contains 20 unique attributes of       between the year of registration and 2017
+a car being sold, out of which we removed a few irrelevant
+columns that have little to no impact on a car's price from our
+analysis, such as some pictures, postal code, and
+advertisement name. Additionally, we perform the following
+preprocessing steps on the data set helping us narrowing down
+the features -
+
+                                                                  3|P a g e
+Future of Information and Communications Conference (FICC) 2018
+
+Fig. 1. Fuel Type vs. Price                                       Fig. 3. Distribution of age of vehicle
+
+          Figure 2 shows the average prices of each vehicle                 Figure 4 shows the top ten average prices by brand.
+type. It shows that vehicle types like suv, coupe, and cabrio     This bar graph shows that average price of Porsche is much
+have higher average prices. This information can be used to       higher, which is around 40000 while the next highest is
+analyze the vehicle type people generally tend to buy.            around 20000
+
+Fig. 2. Average Price for a specific vehicle type                 Fig. 4. Average Price for a specific brand of vehicle
+
+          Figure 3 shows the distribution of age of the vehicle.            Figure 5 shows that the average prices of these cars
+The age is calculated using yearOfRegistration feature and        where the damage is repaired are higher than others. This may
+current year (2017). Apparently, it is the number of years        be obvious, but offers insights to the cost of a vehicle.
+between the year of registration and 2017. From the graph, it
+is evident that most of the vehicles are listed between 5 -15               Figure 6 shows the number of entries having
+years old. The graph provides us the insight that, people tend    particular fuel type. From previous figures, it is evident that
+not to sell their vehicle neither too early, as it defeats the    most of the cars have fuel type as benzin or diesel and they
+purpose of buying sometimes, nor too late as the worth of the     have a wide range of price distribution compared to the other
+car goes down dramatically.                                       fuel types.
+
+                                                                  4|P a g e
+Future of Information and Communications Conference (FICC) 2018
+
+Fig. 5. Box plot of damageRepaired vs. price                    A. Model Parameters
+
+Fig. 6. Counts per type of fuel type                               Random Forest has several parameters to be tuned to which
+                                                                   certain parameters have higher importance and are
+                      V. MODEL DESCRIPTION                         described below:
+   The problem at hand is a regression problem. We tried with
+linear regression and random forest regression. After much        1. Number of Estimators: This is the number of decision
+testing, it was found that random forest regression performed
+much better as it overcame the overfitting problem. The                 trees constituting the forest.
+accuracy of the regression was less than 75% even in training
+data.                                                             2. A maximum number of features: It defines the
+   Random forest is primarily used for classification, but we
+used it as a regression model by converting the problem into            maximum number of features a single decision tree
+an equivalent regression problem. Random forest comes under             should be trained.
+the category of ensemble learning methods, which contains a
+cluster of decision trees, usually hundreds or thousands in        A Grid Search Algorithm was employed to find the
+number. These trees are individually trained on parts of the    optimum number of trees, and best accuracy was found when
+dataset and help in learning highly unpredictable patterns by   500 decision trees were used to build the forest. This was
+growing very deep. However, this may create an overfitting      confirmed after iteratively increasing the number of decision
+issue. This is overcome by averaging out the predictions of     trees in the multiples of 50.
+individual trees with a goal to reduce the variance and ensure
+consistency.                                                       Now, the maximum number of features is chosen to be
+                                                                equal to the number of features in the input data in case of
+                                                                regression problems and the square root of some features in
+                                                                case of classification. Since the problem at hand is a
+                                                                regression problem; we are going to the former.
+
+                                                                B. Training and Testing
+
+                                                                    We split our input data into training, testing data and cross-
+                                                                validation with a 70:20:10 split ratio. The splitting was done by
+                                                                picking at random which results in a balance between the
+                                                                training data and testing data amongst the whole dataset. This
+                                                                is done to avoid overfitting and enhance generalization.
+
+                                                                C. Accuracy
+                                                                   The model score is the coefficient of determination R2 of
+
+                                                                the prediction. The training score was found out to be 95.82%,
+                                                                and the testing score was 83.63%.
+
+                                                                   The model was tuned in such a way that, only important
+                                                                features are taken and the rest are discarded. The important
+                                                                features are found using correlation, measuring their
+                                                                importance towards the estimation of the price of a vehicle.
+                                                                Overall, the random forest model effectively captured the
+                                                                nuances of the data and produced accurate predictions on the
+                                                                price of the vehicle.
+
+                                                                                           VI. CONCLUSION
+
+                                                                    This paper evaluates used-car price prediction using Kaggle
+                                                                dataset which gives an accuracy of 83.62% for test data and
+                                                                95% for train-data. The most relevant features used for this
+                                                                prediction are price, kilometer, brand, and vehicleType by
+                                                                filtering out outliers and irrelevant features of the dataset.
+                                                                Being a sophisticated model, Random Forest gives good
+                                                                accuracy in comparison to prior work using these datasets.
+
+                                                                                      VII. FUTURE WORKS
+
+                                                                          Keeping the current model as a baseline, we intend to
+                                                                   use some advanced techniques like fuzzy logic and genetic
+                                                                   algorithms to predict car prices as our future work. We
+                                                                   intend to develop a fully automatic, interactive system that
+                                                                   contains a repository of used-cars with their prices. This
+                                                                   enables a user to know the price of a similar car using a
+
+                                                                5|P a g e
+Future of Information and Communications Conference (FICC) 2018
+
+   recommendation engine, which we would work in the                       [4] Durgesh K. Srivastava, Lekha Bhambhu, "Data Classification Method
+   future.                                                                       using Support Vector Machine", 2009
+
+                              REFERENCES                                   [5] Pudaruth, Sameerchand. "Predicting the price of used cars using
+                                                                                 machine learning techniques." Int. J. Inf. Comput. Technol 4.7 (2014):
+[1] Strauss, Oliver Thomas, and Morgan Scott Hansen. "Advanced data              753-764.
+      science systems and methods useful for auction pricing optimization
+      over network." U.S. Patent Application No. 15/213,941.               [6] Noor, Kanwal, and Sadaqat Jan. "Vehicle Price Prediction System using
+                                                                                 Machine Learning Techniques." International Journal of Computer
+[2] Xinyuan Zhang , Zhiye Zhang and Changtong Qiu, "Model of                     Applications 167.9 (2017).
+      Predicting the Price Range of Used Car", 2017
+                                                                           [7] Kuiper, Shonda. "Introduction to Multiple Regression: How Much Is
+[3] W.A. Awad and S.M. ELseuofi, "Machine Learning Method for Spam-              Your Car Worth?." Journal of Statistics Education 16.3 (2008).
+      Email Classification", 2011
+
+                                                                           6|P a g e
+

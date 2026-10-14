@@ -1,0 +1,401 @@
+Wooldridge, Introductory Econometrics, 4th
+ed.
+
+Chapter 8: Heteroskedasticity
+
+In laying out the standard regression model,
+we made the assumption of homoskedasticity
+of the regression error term: that its variance
+is assumed to be constant in the population,
+conditional on the explanatory variables. The
+assumption of homoskedasticity fails when the
+variance changes in different segments of the
+population: for instance, if the variance of the
+unobserved factors influencing individuals' sav-
+ing increases with their level of income. In such
+a case, we say that the error process is het-
+eroskedastic. This does not affect the opti-
+mality of ordinary least squares for the compu-
+tation of point estimates-and the assumption
+of homoskedasticity did not underly our deriva-
+tion of the OLS formulas. But if this assump-
+tion is not tenable, we may not be able to rely
+on the interval estimates of the parameters-on
+their confidence intervals, and t-statistics de-
+rived from their estimated standard errors. In-
+deed, the Gauss-Markov theorem, proving the
+optimality of least squares among linear un-
+biased estimators of the regression equation,
+does not hold in the presence of heteroskedas-
+ticity. If the error variance is not constant,
+then OLS estimators are no longer BLUE.
+
+How, then, should we proceed? The classical
+approach is to test for heteroskedasticity, and
+if it is evident, try to model it. We can de-
+rive modified least squares estimators (known
+as weighted least squares) which will regain
+some of the desirable properties enjoyed by
+OLS in a homoskedastic setting. But this ap-
+proach is sometimes problematic, since there
+are many plausible ways in which the error vari-
+ance may differ in segments of the population-
+depending on some of the explanatory variables
+in our model, or perhaps on some variables
+that are not even in the model. We can use
+weighted least squares effectively if we can de-
+rive the correct weights, but may not be much
+better off if we cannot convince ourselves that
+our application of weighted least squares is
+valid.
+
+Fortunately, fairly recent developments in econo-
+metric theory have made it possible to avoid
+these quandaries. Methods have been devel-
+oped to adjust the estimated standard errors
+in an OLS context for heteroskedasticity of
+unknown form-to develop what are known as
+robust standard errors. Most statistical pack-
+ages now support the calculation of these ro-
+bust standard errors when a regression is esti-
+mated. If heteroskedasticity is a problem, the
+robust standard errors will differ from those
+calculated by OLS, and we should take the for-
+mer as more appropriate. How can you com-
+pute these robust standard errors? In Stata,
+one merely adds the option ,robust to the regress
+command. The ANOVA F-table will be sup-
+pressed (as will the adjusted R2 measure), since
+neither is valid when robust standard errors are
+being computed, and the term "robust" will be
+displayed above the standard errors of the co-
+efficients to remind you that robust errors are
+in use.
+
+How are robust standard errors calculated? Con-
+sider a model with a single explanatory vari-
+able. The OLS estimator can be written as:
+
+b1 = 1 +     (xi - x¯) ui
+             (xi - x¯)2
+
+This gives rise to an estimated variance of the
+slope parameter:
+
+V ar (b1) =  (xi - x¯)2 2i    (1)
+
+             (xi - x¯)2    2
+This expression reduces to the standard ex-
+
+pression from Chapter 2 if 2i = 2 for all ob-
+servations:
+
+V ar (b1) =     2
+             (xi - x¯)2
+
+But if 2i = 2 this simplification cannot be
+performed on (1). How can we proceed? Hal-
+
+bert White showed (in a famous article in Econo-
+
+metrica, 1980) that the unknown error vari-
+
+ance of the ith observation, i2, can be consis-
+tently estimated by e2i -that is, by the square
+of the OLS residual from the original equation.
+
+This enables us to compute robust variances of
+
+the parameters-for instance, (1) can now be
+
+computed from OLS residuals, and its square
+
+root will be the robust standard error of b1.
+
+This carries over to multiple regression; in the
+
+general case of k explanatory variables,
+
+V ar bj =    r2ij e2i   2 2 (2)
+
+             xij - x¯j
+where e2i is the square of the ith OLS residual,
+and rijis the ith residual from regressing vari-
+able j on all other explanatory variables. The
+square root of this quantity is the heteroskedasticity-
+robust standard error, or the "White" stan-
+dard error, of the jth estimated coefficient. It
+may be used to compute the heteroskedasticity-
+robust t-statistic, which then will be valid for
+tests of the coefficient even in the presence of
+heteroskedasticity of unknown form. Likewise,
+F -statistics, which would also be biased in the
+presence of heteroskedasticity, may be consis-
+tently computed from the regression in which
+the robust standard errors of the coefficients
+are available.
+
+If we have this better mousetrap, why would
+we want to report OLS standard errors-which
+would be subject to bias, and thus unreliable,
+if there is a problem of heteroskedasticity? If
+(and only if) the assumption of homoskedas-
+ticity is valid, the OLS standard errors are pre-
+ferred, since they will have an exact t-distribution
+at any sample size. The application of robust
+standard errors is justified as the sample size
+becomes large. If we are working with a sam-
+ple of modest size, and the assumption of ho-
+moskedasticity is tenable, we should rely on
+OLS standard errors. But since robust stan-
+dard errors are very easily calculated in most
+statistical packages, it is a simple task to esti-
+mate both sets of standard errors for a partic-
+ular equation, and consider whether inference
+based on the OLS standard errors is fragile.
+In large data sets, it has become increasingly
+common practice to report the robust standard
+errors.
+
+Testing for heteroskedasticity
+
+We may want to demonstrate that the model
+we have estimated does not suffer from het-
+eroskedasticity, and justify reliance on OLS and
+OLS standard errors in this context. How might
+we evaluate whether homoskedasticity is a rea-
+sonable assumption? If we estimate the model
+via standard OLS, we may then base a test
+for heteroskedasticity on the OLS residuals.
+If the assumption of homoskedasticity, condi-
+tional on the explanatory variables, holds, it
+may be written as:
+
+             H0 : V ar (u|x1, x2, ..., xk) = 2
+
+And a test of this null hypothesis can evalu-
+ate whether the variance of the error process
+appears to be independent of the explanatory
+variables. We cannot observe the variances
+of each observation, of course, but as above
+we can rely on the squared OLS residual, e2i ,
+to be a consistent estimator of i2. One of
+the most common tests for heteroskedastic-
+ity is derived from this line of reasoning: the
+Breusch-Pagan test. The BP test involves
+regressing the squares of the OLS residuals on
+a set of variables--such as the original explana-
+tory variables--in an auxiliary regression:
+
+      e2i = d0 + d1x1 + d2x2 + ...dkxk + v (3)
+
+If the magnitude of the squared residual--a
+consistent estimator of the error variance of
+that observation--is not related to any of the
+explanatory variables, then this regression will
+have no explanatory power: its R2 will be small,
+and its ANOVA F -statistic will indicate that
+it does not explain any meaningful fraction of
+the variation of e2i around its own mean. (Note
+that although the OLS residuals have mean
+zero, and are in fact uncorrelated by construc-
+tion with each of the explanatory variables,
+that does not apply to their squares). The
+Breusch-Pagan test can be conducted by ei-
+ther the ANOVA F -statistic from (3), or by a
+large-sample form known as the Lagrange mul-
+tiplier statistic: LM = n × R2 from the auxil-
+iary regression. Under H0 of homoskedasticity,
+LM  2k.
+
+The Breusch-Pagan test can be computed with
+the estat hettest command after regress.
+
+regress price mpg weight length
+estat hettest
+
+which would evaluate the residuals from the re-
+gression for heteroskedasticity, with respect to
+the original explanatory variables. The null hy-
+pothesis is that of homoskedasticity; if a small
+p-value is received, the null is rejected in fa-
+vor of heteroskedasticity (that is, the auxiliary
+regression (which is not shown) had a mean-
+ingful amount of explanatory power). Therou-
+tine displays the LM statistic and its p-value
+versus the 2k distribution. If a rejection is re-
+ceived, one should rely on robust standard er-
+rors for the original regression. Although we
+have demonstrated the Breusch-Pagan test by
+employing the original explanatory variables,
+the test may be used with any set of variables-
+including those not in the regression, but sus-
+pected of being systematically related to the
+error variance, such as the size of a firm, or
+the wealth of an individual.
+
+The Breusch-Pagan test is a special case of
+White's general test for heteroskedastic-
+ity. The sort of heteroskedasticity that will
+damage OLS standard errors is that which in-
+volves correlations between squared errors and
+explanatory variables. White's test takes the
+list of explanatory variables {x1, x2, ..., xk} and
+augments it with squares and cross products
+of each of these variables. The White test
+then runs an auxiliary regression of e2i on the
+explanatory variables, their squares, and their
+cross products. Under the null hypothesis, none
+of these variables should have any explanatory
+power, if the error variances are not system-
+atically varying. The White test is another
+LM test, of the n × R2 form, but involves a
+much larger number of regressors in the aux-
+iliary regression. In the example above, rather
+than just including mpg weight length,we would
+also include mpg2, weight2, length2, mpg×weight,
+mpg×length, and weight×length: 9 regressors
+in all, giving rise to a test statistic with a 2(9)
+distribution.
+
+How can you perform White's test? Give the
+command ssc install whitetst (you only need
+do this once) and it will install this routine in
+Stata. The whitetst command will automat-
+ically generate these additional variables and
+perform the test after a regress command.
+Since Stata knows what explanatory variables
+were used in the regression, you need not spec-
+ify them; just give the command whitetst after
+regress. You may also use the fitted option to
+base the test on powers of the predicted val-
+ues of the regression rather than the full list of
+regressors, squares and cross products.
+
+Weighted least squares estimation
+
+As an alternative to using heteroskedasticity-
+robust standard errors, we could transform the
+regression equation if we had knowledge of the
+form taken by heteroskedasticity. For instance,
+if we had reason to believe that:
+
+                     V ar(u|x) = 2h(x)
+
+where h(x) is some function of the explana-
+tory variables that could be made explicit (e.g.
+h(x) = income), we could use that informa-
+tion to properly specify the correction for het-
+eroskedasticity. What would this entail? Since
+in this case we are saying that V ar(u|x) 
+income, then the standard deviation of ui, con-
+
+                                 
+ditional on incomei, is incomei. Thus could be
+used to perform weighted least squares: a
+technique in which we transform the variables
+in the regression, and then run OLS on the
+transformed equation. For instance, if we were
+estimating a simple savings function from the
+dataset saving.dta, in which sav is regressed
+on inc, and believed that there might be het-
+eroskedasticity of the form above, we would
+perform the following transformations:
+
+gen sd=sqrt(inc)
+gen wsav=sav/sd
+gen kon=1/sd
+gen winc=inc/sd
+regress wsav kon winc,noc
+Note that there is no constant term in the
+weighted least squares (WLS) equation, and
+that the coefficient on winc still has the same
+connotation: that of the marginal propensity
+to save. In this case, though, we might be
+thankful that Stata (and most modern pack-
+ages) have a method for estimating WLS mod-
+els by merely specifying the form of the weights:
+
+regress sav inc [aw=1/inc]
+
+In this case, the "aw" indicates that we are us-
+ing "analytical weights"--Stata's term for this
+sort of weighting--and the analytical weight
+is specified to be the inverse of the observa-
+tion variance (not its standard error). If you
+run this regression, you will find that its coef-
+ficient estimates and their standard errors are
+identical to those of the transformed equation-
+with less hassle than the latter, in which the
+summary statistics (F-statistic, R2, predicted
+values, residuals, etc.) pertain to the trans-
+formed dependent variable (wsav) rather than
+the original variable.
+
+The use of this sort of WLS estimation is less
+popular than it was before the invention of
+"White" standard errors; in theory, the trans-
+formation to homoskedastic errors will yield
+more attractive properties than even the use
+of "White" standard errors, conditional on our
+proper specification of the form of the het-
+eroskedasticity. But of course we are not sure
+about that, and imprecise treatment of the
+errors may not be as attractive as the less
+informed technique of using the robust esti-
+mates.
+
+One case in which we do know the form of
+the heteroskedasticity is that of grouped data,
+in which the data we are using has been ag-
+gregated from microdata into groups of dif-
+ferent sizes. For instance, a dataset with 50
+states' average values of income, family size,
+etc. calculated from a random sample of the
+U.S. population will have widely varying preci-
+sion in those average values. The mean val-
+ues for a small state will be computed from
+relatively few observations, whereas the coun-
+terpart values for a large state will be more
+precisely estimated. Since we know that the
+
+                                                 
+standard error of the mean is / n, we recog-
+nize how this effect will influence the precision
+of the estimates. How, then, can we use this
+dataset of 50 observations while dealing with
+the known heteroskedasticity of the states' er-
+rors? This too is weighted least squares, where
+the weight on the individual state should be its
+population. This can be achieved in Stata by
+specifying "frequency weights"-a variable con-
+taining the number of observations from which
+each sample observation represents. If we had
+state-level data on saving, income and popula-
+tion, we might regress saving income [fw=pop]
+to achieve this weighting.
+One additional observation regarding heteroskedas-
+ticity. We often see, in empirical studies, that
+an equation has been specified in some ra-
+tio form--for instance, with per capita depen-
+dent and independent variables for data on
+states or countries, or in terms of financial ra-
+tios for firm- or industry-level data. Although
+there may be no mention of heteroskedastic-
+ity in the study, it is very likely that these ra-
+tio forms have been chosen to limit the po-
+tential damage of heteroskedasticity in the es-
+timated model. There can certainly be het-
+eroskedasticity in a per-capita form regression
+on country-level data, but it is much less likely
+to be a problem than it would be if, say, the lev-
+els of GDP were used in that model. Likewise,
+scaling firms' values by total assets, or total
+revenues, or the number of employees will tend
+to mitigate the difficulties caused by extremes
+in scale between large corporations and corner
+stores. Such models should still be examined
+for their errors' behavior, but the popularity of
+the ratio form in these instances is an implicit
+consideration of potential heteroskedasticity.
+

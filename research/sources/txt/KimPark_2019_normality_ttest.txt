@@ -1,0 +1,255 @@
+KJA Korean Journal of Anesthesiology                                             Statistical Round
+
+                                                                                                 pISSN 2005-6419 · eISSN 2005-7563
+
+                                      More about the basic assumptions
+                                      of t-test: normality and sample size
+
+Tae Kyun Kim1 and Jae Hong Park2
+
+1Department of Anesthesia and Pain Medicine, Pusan National University School of Medicine, 2Department of
+Anesthesiology and Pain Medicine, Haeundae Paik Hospital, Inje University College of Medicine, Busan, Korea
+
+Most parametric tests start with the basic assumption on the distribution of populations. The conditions required to con-
+duct the t-test include the measured values in ratio scale or interval scale, simple random extraction, normal distribution
+of data, appropriate sample size, and homogeneity of variance. The normality test is a kind of hypothesis test which has
+Type I and II errors, similar to the other hypothesis tests. It means that the sample size must influence the power of the
+normality test and its reliability. It is hard to find an established sample size for satisfying the power of the normality test.
+In the current article, the relationships between normality, power, and sample size were discussed. As the sample size
+decreased in the normality test, sufficient power was not guaranteed even with the same significance level. In the inde-
+pendent t-test, the change in power according to sample size and sample size ratio between groups was observed. When
+the sample size of one group was fixed and that of another group increased, power increased to some extent. However, it
+was not more efficient than increasing the sample sizes of both groups equally. To ensure the power in the normality test,
+sufficient sample size is required. The power is maximized when the sample size ratio between two groups is 1 : 1.
+
+Keywords: Biostatistics; Normal distribution; Power; Probability; P value; Sample size; T-test.
+
+Introduction                                                       (left) or false (alternative hypothesis is true, right). They show
+                                                                   the typical curves that approach but never reach the x-axis on
+   Science is based on probability. It is impossible to say with   both ends. Whether the assumption is true or not, the proba-
+certainty whether the events observed in nature will occur or      bility never becomes zero; this means that any result obtained
+not. The same rule applies when testing hypotheses through         from research always has a possibility of unreliability. It is always
+research. Null hypotheses are basically assumed to be true. Fig.   possible for conclusions from research to be wrong, and an ap-
+1 presents two normal distribution probability density curves      propriate hypothesis is required to conduct research as well as to
+under the respective assumptions that the null hypothesis is true  reduce the risk of false conclusions.
+
+Corresponding author: Jae Hong Park, M.D., Ph.D.                       If the null hypothesis is concluded to be true when the value
+Department of Anesthesiology and Pain Medicine, Haeundae Paik      is less than a specific point on the x-axis, and false when the val-
+Hospital, Inje University College of Medicine, 875 Haeun-daero,    ue is greater, then the point is called the critical value. The prob-
+Haeundae-gu, Busan 48108, Korea                                    ability curve of the null hypothesis partially exists on the right
+Tel: +82-51-797-0427, Fax: +82-51-797-0422                         side of the critical value. This means that the null hypothesis is
+Email: H00150@paik.ac.kr                                           true, but as it exceeds the critical value, it is mistakenly thought
+ORCID: https://orcid.org/0000-0003-0779-4483                       to be false; this is called a Type I error. In contrast, even if the
+                                                                   null hypothesis is false (orange probability distribution curve),
+Received: October 11, 2018.                                        because it exceeds the critical value, it is mistakenly accepted to
+Revised: March 6, 2019.                                            be true; this is called a Type II error. The size of the error can be
+Accepted: March 25, 2019.                                          represented with a probability, which is the area under the curve
+                                                                   lying outside the critical value. The probability of a Type I error
+Korean J Anesthesiol 2019 August 72(4): 331-335                    is called the  or level of significance. The probability of a Type
+https://doi.org/10.4097/kja.d.18.00292
+
+CC This is an open-access article distributed under the terms of the Creative Commons Attribution Non-Commercial License (http://creativecommons.org/
+licenses/by-nc/4.0/), which permits unrestricted non-commercial use, distribution, and reproduction in any medium, provided the original work is properly cited.
+
+Copyright  The Korean Society of Anesthesiologists, 2019           Online access in http://ekja.org
+Normality and sample size of groups                                 VOL. 72, NO. 4, August 2019
+
+Fig. 1. Concept of hypothesis testing in independent t-test. H0: null hypothesis, H1: alternative hypothesis, 1 and 2: mean values of two groups.
+
+II error is called . Subtracting  from the probability of the null  power of the normality test. Is it possible to conclude that the
+hypothesis becomes the confidence interval, and subtracting         data follows a normal distribution if the P value is greater than
+from the probability of the alternative hypothesis becomes the      or equal to  in the normality test? This article starts from this
+power. Under the assumption that the null hypothesis is true,       question and discusses the relationships between the sample
+the P value--the probability of observing the test statistic of     size, normality, and power.
+the data--can be obtained. In order to determine whether the
+hypothesis is true or false, it is necessary to confirm whether     Normality
+the observed event is statistically likely to occur under the as-
+sumption that the hypothesis is true. The P value is compared          Statistical analysis methods based on acquired data are di-
+to a preset standard that determines the null hypothesis as false,  vided into parametric methods and nonparametric methods,
+which is the . The  is the standard which has been agreed           according to the normality of the data. When the data satisfies
+upon by researchers seeking the unknown truth, but the truth        the normality, it shows a probability distribution curve with the
+cannot be certain even if the P value is less than the . The con-   highest frequency of occurrence at the center, and the frequen-
+clusion drawn from data analysis may not be the truth, and this     cy decreases with distance from the center. The distance from
+is the error previously mentioned. Type I and Type II errors oc-    the center of the curve makes it easier to statistically determine
+cur once we set a critical value; they show a pattern of trade-off  whether the data obtained is frequently observed. Since most
+between  and , the probabilities of error. As can be seen in Fig.   of the data are gathered around the mean value, it reflects the
+1, the power means the probability of rejecting the null hypoth-    nature of the group and gives information on whether there is a
+esis when the alternative hypothesis is true; the power increases   difference between groups and the magnitude of the difference.
+as the sample size increases.                                       On the other hand, if the data does not follow the normal dis-
+                                                                    tribution, there is no guarantee that it is centered on the mean.
+   The same rule applies to the normality test. The conditions      Therefore, the comparison of characteristics between groups
+required to conduct a t-test include the measured values in ratio   using the mean value is not possible. In this case, the nonpara-
+scale or interval scale, simple random extraction, homogeneity      metric test is used, in which the observations are ranked or
+of variance, appropriate sample size, and normal distribution of    signed (e.g., + or ­-), and the sums are compared. However, the
+data. The normality assumption means that the collected data        nonparametric test is somewhat less powerful than the paramet-
+follows a normal distribution, which is essential for parametric    ric test [1]. Moreover, it is only possible to detect the difference
+assumption. Most statistical programs basically support the         between the values of groups but not to compare the magnitude
+normality test, but the results only include P values and not the
+
+332                                                                 Online access in http://ekja.org
+KOREAN J ANESTHESIOL                                                   Kim and Park
+
+of these differences. Therefore, it is recommended that statistical    not normally distributed. Khan and Ahmad [4] reported the
+analysis be performed using the parametric test if possible [1],       change of power according to sample sizes under different alter-
+and that the normality of the data be the first thing confirmed        nate non-normal distributions (Fig. 2). In fact, the types of dis-
+by the parametric test. The hypothesis in normality testing is as      tributions mentioned in the figure are not commonly observed
+follows:                                                               in clinical studies, and are not essential to understand this
+                                                                       figure. We do not explained in detail about that becauseit goes
+   H0: The data follows a normal distribution.                         beyond our scope. The x-axis represents the number of samples
+   H1: The data does not follow a normal distribution.                 extracted from each distribution type, and the y-axis represents
+                                                                       the power of the normality test corresponding to the number
+   Thus, how many samples would be appropriate to assume               of extracted samples. Fig. 2 shows that, although there are some
+normal distribution and to perform parametric tests?                   degree of difference depending on the patterns of distribution,
+                                                                       the power tends to decrease when the sample size decreases
+   According to the central limit theorem, the distribution of         even if the significance level is fixed at 0.05. Therefore, in typical
+sample mean values tends to follow the normal distribution re-         circumstances where the distribution pattern of the population
+gardless of the population distribution if the sample size is large    is unknown, the normality test should be conducted with a suf-
+enough [2]. For this reason, there are some books which suggest        ficient sample size.
+that if the sample size per group is large enough, the t-test can be
+applied without the normality test. Strictly speaking, this is not     Sample size: Should the sample size ratio
+true. Although the central limit theorem guarantees the normal         of the control group and the experimental
+distribution of the sample mean values, it does not guarantee the      group be 1 : 1?
+normal distribution of samples in the population. The purpose
+of the t-test is to compare certain characteristics representing          When designing a study using the t-test, it is ideal to have the
+groups, and the mean values become representative when the             same sample size for the experimental and control groups [5].
+population has a normal distribution. This is the reason why           However, as in cases of studying the therapeutic effects of drugs
+satisfaction of the normality assumption is essential in the t-test.   on rare diseases, there are cases in which it is difficult to secure
+Therefore, even if the sample size is sufficient, it is recommend-
+ed that the results of the normality test be checked first. Well-      Fig. 2. Power results of Shapiro-Wilks test under different alternate
+known methods of normality testing include the Shapiro-Wilks           non-normal distributions at  = 0.05. Power tends to decrease when the
+test and the Kolmogorov-Smirnov test. Hence, can the t-test be         sample size decreases. Logistic distribution: alternate Logistic (Location
+conducted with a very small sample size (e.g., 3) if the normality     = 0, Scale = 1) distribution, Weibull distribution: alternate Weibull (Scale
+test is satisfied?                                                     = 2, Shape = 3) distribution (Modified from Khan RA, Ahmad F. Power
+                                                                       Comparison of Various Normality Tests. Pakistan Journal of Statistics and
+   In the Shapiro-Wilks test, which is known as one of the most        Operation Research 2015; 11. Available from http://pjsor.com/index.php/
+powerful normality tests, it is theoretically possible to perform      pjsor/article/view/1082).
+the normality test with three samples [3,4]. However, even if the
+P value is greater than the significance level of 0.05, this does not
+automatically mean that the data follows a normal distribution.
+Type I and Type II errors occur in all hypothesis tests, which
+are detected using the significance levels and power. In general,
+statistical programs provide only a P value for the Type I error
+as a result of normality testing, and do not provide power for
+the Type II error. The power of the normality test indicates the
+ability to discriminate non-normal distributions from normal
+distributions. Since there is no formula that can calculate the
+power of the normality test directly, it is estimated by computer
+simulation. In the simulation, the computer repeatedly extracts
+samples of a certain size from the distribution to be tested, and
+tests whether the extracted samples have a normal distribution
+at a determined significance level. The power is the rate at which
+the null hypothesis is rejected from the data obtained through
+simulations repeated over several hundred times. If there are
+only three samples, it may be difficult to ensure that these are
+
+Online access in http://ekja.org                                       333
+Normality and sample size of groups                                                                  VOL. 72, NO. 4, August 2019
+
+enough samples for the experimental group. It is well under-                                               t2  23 t1
+stood that increasing the sample size is a good way to improve
+both the significance level and the power. If so, would it be ef-             When the sample size of the control group is doubled, the
+fective to increase only the sample size of control group without                                       2
+increasing that of the experimental group?
+                                                                           t-statistic increases by 3 times compared with the t-statistic
+   Assume that both sample groups follow the normal distribu-              when the sample size is not changed. This change results in the
+tion and the variances are homogeneous. Assuming that sample               decrease of the P value. Therefore, if it is difficult to increase
+group 1 is the experimental group and sample group 2 is the                the sample size of the experimental group, it can be helpful to
+control group, the t- statistic can be expressed as [6]                    increase the sample size of the control group instead to improve
+                                                                           the results. However, in such cases, relatively larger sample sizes
+     t  X1  X2 1 1   ~ t(n1  n2  2)                                        are needed to obtain similar statistical results.
+
+     S(12)                                                                    Table 1 shows the results of the minimum sample size calcu-
+              n1 n2                                                        lation required to obtain a statistically significant result in the
+                                                                           two-tailed independent t-test at a significance level of 0.05 and
+   where X1 and X2 are the mean values of sample groups 1 and              power of 0.8, when the ratios of sample sizes between groups
+2, n1 and n2 are the sample sizes of sample groups 1 and 2, and            are 1 : 1 and 1 : 2, respectively. Increasing the sample size of the
+S(1+2) is the pooled standard deviation of the two sample groups.          control group can also reduce the size of the experimental group
+Assume that t1 is a t-statistic when the sample sizes of the two           required to achieve the same statistical result. However, instead
+groups are the same (n1=n2), and t2 is a t-statistic when the sam-         of reducing the sample size of the experimental group by 25%,
+ple size of the control group is two times larger than that of the         the size of the control group should be increased by 50%, which
+experimental group (2n1=n2). In the equation, n2 can be replaced           involves additional effort, time, and cost. Power becomes max-
+by n1 and summarized as follows:                                           imum when the sample sizes of the two groups are the same.
+                                                                           When the variances of the two groups to be compared are sim-
+     t1  12  X1  X2 1 , t2  23  X1  X2 1                                   ilar, the smallest sample size is acquired when those of the two
+     S(12)                                 S(12)                           groups are the same [5]. Table 2 shows the change of power in
+              n1                                  n1                       two-tailed independent t-tests under the same sample size but
+                                                                           different sample size ratios. These results suggest that increasing
+   The above two equations can be concatenated so that t2 can              the sample size of the control group cannot be used as a shortcut
+be expressed as a relation with t1 as follows:                             and should only be considered in unavoidable circumstances.
+
+Table 1. Minimum Sample Size Required to Obtain a Significant                 It should be noted that, when the sample size ratios between
+Result according to Different Sample Size Ratios in the Two-tailed         groups is different, more attention should be paid to the homo-
+Independent t-test                                                         geneity of variance, one of the basic assumptions of the t-test.
+                                                                           Clinical studies generally have small sample sizes. The smaller
+
+     Tail(s)                                             Two
+
+Effect size d                                            0.5               Table 2. Results of Post-hoc Power Analysis of Two-tailed Independent
+ err prob                                                                  t-test under the Same Sample Size but Various Sample Size Ratios
+Power (1- err prob)                                      0.05              between Two Groups
+Sample size ratio between group (G1 : G2)
+Noncentrality parameter                                  0.8
+Critical t value
+Degree of freedom                                 1 : 1        1 : 2       Tail(s)                           Two
+G1
+G2                                                2.83         2.83
+Total sample size
+Actual power                                      1.98         1.98        Effect size d                     0.5
+                                                                            err prob
+                                                  126          142         Sample size group 1               0.05
+                                                                           Sample size group 2
+                                                  64           48          Noncentrality parameter   80  100 120 140
+                                                                           Critical t value
+                                                  64           96          Degree of freedom         80  60        40  20
+                                                                           Power (1- err prob)
+                                                  128          144                                   3.16 3.06 2.74 2.09
+
+                                                  0.80         0.80                                  1.98 1.98 1.98 1.98
+
+ err prob: probability of Type I error,  err prob: probability of Type II                            158 158 158 158
+error. Actual power: power acquired by statistical program after sample
+size calculation. Noncentrality parameter , G1: sample size group 1,                                 0.88 0.86 0.78 0.55
+G2: sample size group 2, critical t value and actual power were rounded
+to the third decimal place.                                                 err prob: probability of Type I error,  err prob: probability of Type
+                                                                           II error. Noncentrality parameter , critical t value and power were
+                                                                           rounded to the third decimal place.
+
+334                                                                                                  Online access in http://ekja.org
+KOREAN J ANESTHESIOL                                                  Kim and Park
+
+the sample size, the greater the influence of the values of indi-     statistical analysis and interpretation of results.
+vidual samples on variance. This variability becomes stable as
+the sample size increases. If the sample sizes of the groups are      Conflicts of Interest
+different, then this difference in variability may result in differ-
+ent variances.                                                           No potential conflict of interest relevant to this article was
+                                                                      reported.
+   Thus far, we have dealt with questions related to the basic
+assumptions of the t-test that can be found in the research de-       Author Contributions
+sign process. In the normality test, if the sample size is small,
+the power is not guaranteed. Therefore, it is necessary to secure     Tae Kyun Kim (Conceptualization; Writing - review & editing)
+a sufficient sample size. In order to maximize the power in the       Jae Hong Park (Visualization; Writing - original draft)
+t-test, it is most efficient to increase the sample size of both
+groups equally. The above information may not be necessary            ORCID
+for a researcher who has a sufficient sample size and conducts
+formal research. However, a deep understanding of the basic           Tae Kyun Kim, https://orcid.org/0000-0002-4790-896X
+assumptions of the t-test will help you to understand a high-         Jae Hong Park, https://orcid.org/0000-0003-0779-4483
+er-level statistical analysis method. This will help you to take a
+leading role in the research process from research design to the
+
+References
+
+ 1. Nahm FS. Nonparametric statistical tests for the continuous data: the basic concept and the practical use. Korean J Anesthesiol 2016; 69:
+     8-14.
+
+ 2. Kwak SG, Kim JH. Central limit theorem: the cornerstone of modern statistics. Korean J Anesthesiol 2017; 70: 144-56.
+ 3. PASS Sample Size Software Documentation | PASS Software Help [Internet]. NCSS Statistical Software [cited 2018 Nov 12]. Available from
+
+     https://www.ncss.com/software/pass/pass-documentation/#Normality.
+ 4. Khan RA, Ahmad F. Power Comparison of Various Normality Tests. Pak J Stat Oper Res 2015; 11: 331-45.
+ 5. List JA, Sadoff S, Wagner M. So you want to run an experiment, now what? Some simple rules of thumb for optimal experimental design.
+
+     Exp Econ 2011; 14: 439-57.
+ 6. Kim TK. T test as a parametric statistic. Korean J Anesthesiol 2015; 68: 540-6.
+
+Online access in http://ekja.org                                      335
+

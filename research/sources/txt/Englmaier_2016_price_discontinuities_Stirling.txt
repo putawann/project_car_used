@@ -1,0 +1,1858 @@
+   Price Discontinuities in an Online Market
+                      for Used Cars
+
+        Florian Englmaier Arno Schmöller Till Stowasser§
+
+                                               June 7, 2016
+
+                                                       Abstract
+
+        We study the price-setting behavior in a competitive market for used cars and
+        provide empirical evidence for coarse information processing. Based on detailed
+        field data from one of Europe's largest online marketplaces for automotive vehi-
+        cles, we document systematic and sizable price discontinuities at salient car-age
+        and mileage thresholds. The price difference between two otherwise identical
+        cars across registration years (where one was first registered in January and the
+        other in December of the previous year) is up to five times larger than that
+        between two cars first registered in any two subsequent months within a reg-
+        istration year. A similar pattern can be observed in the mileage dimension at
+       10,000-km odometer marks, which is in line with earlier findings by Lacetera
+        et al. (2012). Being able to study discontinuities along two dimensions of the
+        same good allows us to further our understanding towards a more general no-
+        tion of inattentive behavior. While our results are compatible with a behavioral
+        model of limited attention, we also provide evidence for a more traditional ex-
+        planation based on search frictions.
+
+        Keywords: Price discontinuities, inattention, bounded rationality, information ne-
+        glect, heuristics, search frictions, search cost, internet markets.
+        JEL classification: D12, D83, L62
+
+    We are grateful to Anton Vasilev for his invaluable support during data collection. We thank partic-
+ipants at the 2013 IIOC conference in Boston, the 2013 VfS Meeting in Düsseldorf, the 2014 German IO
+comittee meeting in Hamburg, and in particular Maximilian Breu, Matthias Dischinger, Thomas Fack-
+ler, Nicola Lacetera, Devin Pope, Stephen Ryan, Klaus Schmidt, Peter Schwardmann, Justin Sydnor,
+and Steve Tadelis for their helpful comments and suggestions. Ines Helm provided excellent research
+assistance. This research was partially funded through DFG grant SFB/TR-15.
+
+     University of Munich (LMU), florian.englmaier@econ.lmu.de
+     TWS Partners, info@schmoeller.org
+     §University of Munich (LMU), till.stowasser@econ.lmu.de
+1 Introduction
+
+Economic theory suggests that a rational agent should incorporate all relevant infor-
+mation when making a decision. However, at least since Simon (1955), economists
+have proposed models that relax this strong assumption. In these models, individuals
+simplify complex decisions, for example, by processing only a subset of information.
+Moreover, recent empirical research convincingly documents that consumers fail to ef-
+ficiently process available information and instead rely on heuristic evaluation rules.1
+In particular, Lacetera et al. (2012) analyze data from US used-car auctions, find sys-
+tematic and substantial price drops at 10,000-mile odometer marks, and explain this
+pattern with a model of inattention based on left-digit bias (the tendency to focus on
+the left-most digit of a number and partially ignoring other digits).2
+
+   We use comprehensive field data on used-car offers from the German website
+mobile.de, one of Europe's largest online marketplaces for automotive vehicles, and
+are able to replicate the Lacetera et al. (2012) findings. But the German context
+allows for an additional line of inquiry, which helps us to gain a better understanding
+of the mechanism driving our results: In Germany, cars have an official and legally
+mandated documentation record that makes the year (or "vintage") and the month
+of first registration verifiable information.3 Importantly, the US "model-year" concept
+is neither used for German cars nor the German market as a whole.4 Instead of
+issuing (or advertising) a new model each year, German manufacturers produce a
+given model generation without significant changes for a period of several years.
+Hence, our dataset provides the unique opportunity to study a second dimension of
+coarse information processing within the same decision problem.
+
+   We find strong threshold effects on prices at first-registration-year changes. All
+else equal, the price differential between two cars, across vintages (where one car
+was first registered in January and the other in December of the previous year) is
+up to five times larger than that between two cars first registered in any two subse-
+quent months within the same vintage. We document our results by implementing
+a regression-discontinuity design and by performing various robustness and placebo
+tests. A linear approximation of a limited-attention model in the spirit of DellaVigna
+(2009) and Lacetera et al. (2012) suggests that the inattention parameter - capturing
+
+    1See, among others, Malmendier and Lee (2011) and Brown et al. (2010) on internet auctions, or
+Chetty et al. (2009) and Finkelstein (2009) on taxes and tolls.
+
+    2For example, cars with odometer values between 59,000 and 59,999 miles are sold only slightly
+cheaper than cars with odometer readings between 58,000 and 58,999 miles, whereas the price drop
+to the 60,000-60,999 miles bin is substantially larger.
+
+    3The official notation states the month first and the vintage second, divided by a forward slash. For
+instance, a car first registered on April 24th, 2016 would be labeled as 04/2016.
+
+    4A model-year concept would have confounded our analysis, given its inherent salience of the
+registration year where, say, the "New 2016 Toyota Corolla" would be advertised on billboards, TV
+spots, and magazine ads.
+
+                                                       1
+the discontinuous price drops at thresholds - lies in the neighborhood of 0.3 to 0.4 for
+both dimensions, which is well within the range of parameter estimates documented
+in the literature.
+
+   While our results build on existing work on mileage discontinuities, we provide
+new evidence for the effects of inattention in another dimension, namely product
+age, which is applicable to a broader set of situations than odometer readings. In
+addition, both product dimensions differ with respect to their endogeneity, which
+generates contrasting predictions about the incidence of manipulative sorting: The
+date of first registration is an innate and unalterable feature of a used car, whereas
+its mileage can be strategically influenced by varying the date it is put up for sale.5
+As a consequence, we should only expect anomalous bunching of car offers around
+salient thresholds in the mileage, but not in the vintage dimension. Moreover, study-
+ing discontinuities along two dimensions of the same good allows us to further our un-
+derstanding towards a more general notion of inattention: Such a framework would
+be readily applicable to a wide set of domains where underlying continuous charac-
+teristics are mapped into discrete categories (such as classifications of French wine,
+star-based reviews of hotels, or ratings of financial assets) and for which "inefficient"
+price discontinuities might also exist.
+
+   The paramount role of information provision in online markets is underlined by
+Lewis (2011). Tadelis and Zettelmeyer (2015) document it for the used-car market
+also studied by Lacetera et al. (2012). Busse et al. (2013) add to the insights from the
+wholesale market studied in Lacetera et al. (2012) and document that price drops at
+10,000-mile odometer thresholds are also prevalent for retail consumers. They argue
+that effects are driven by consumers who devote too little attention to evaluating ve-
+hicle mileage. Limited attention has also been documented for purchase decisions in
+other markets. For instance, Malmendier and Lee (2011) analyze individual bidding
+behavior in auctions on eBay and find that people tend to anchor on an irrelevant re-
+tail price for a board game if the seller mentions that price in the product description.
+At the same time, many of the winning bids exceed a more relevant outside option,
+the so-called "buy-it-now" price, which is a fixed strike price set by the seller as an
+alternative to the auction process.6 Pope (2009) shows that patients strongly react to
+changes in coarse rankings of hospitals while ignoring more informative continuous
+measures of hospital quality. In a similar vein, the degree of salience of taxes appears
+
+    5Note that while the date of first registration is an exogenous feature when selling a used car, it is
+certainly endogenous to the initial purchase decision when the car was new. We discuss this issue in
+Section 3.1.
+
+    6Schneider (2016) offers a follow-up comment on Malmendier and Lee (2011) and suggests that
+their results are potentially driven not by limited attention but by specific features of eBay's search
+filters that do not necessarily return all relevant alternatives for a specific good. As a result, auction
+prices may exceed fixed prices because consumers are simply unaware that the fixed-price option is
+available for the item in question.
+
+                                                       2
+to affect consumption behavior. For example, Chetty et al. (2009) conduct a field ex-
+periment at a grocery store and find that posting tax-inclusive prices reduces demand.
+Finkelstein (2009) shows that reduced salience of road tolls (caused by the introduc-
+tion of electronic toll-collection systems) leads to higher tolls. Analyzing stock market
+data, Gilbert et al. (2012) provide evidence that investors with limited attention have
+an incentive to focus on summary statistics rather than individual pieces of informa-
+tion. They analyze the market response to the U.S. Leading Economic Index (LEI), a
+macroeconomic release that is purely a summary statistic, and show that the LEI an-
+nouncement has an impact on aggregate stock returns, return volatility, and trading
+volume. In a recent article, Luca (2016) studies consumer demand for restaurants
+and documents discontinuous responses to online ratings. We add to these findings
+by demonstrating that inattention affects high-stake purchase decisions even if the
+relevant information is readily available at basically no cost and by being able to
+study discontinuities along two dimensions of the same good.
+
+   The remainder of this paper is structured as follows. Section 2 describes the data.
+Section 3 presents the graphical and regression analysis for vintage and mileage dis-
+continuities. An extensive set of robustness and placebo tests is summarized in Sec-
+tion 4. Section 5 discusses the implications of our results and concludes.
+
+2 Data
+
+2.1 Data source: The mobile.de website
+
+We collected detailed information on more than 63,000 cars offered during July and
+August of 2009 on mobile.de, one of Europe's largest online marketplaces for automo-
+tive vehicles. Founded in 1996, mobile.de takes the role of an intermediary between
+supply and demand within a two-sided market. It provides a platform for sellers
+to place advertisements for new and used cars in exchange for a fixed fee, and it
+provides a free comprehensive search tool for prospective buyers to screen through
+roughly 1.5 million total offers. The company itself is not involved in the purchase or
+the sale of a vehicle and a successful transaction does not invoke any fees.
+
+   To borrow from mobile.de's self description, prospective buyers "can limit search
+results by setting individual preferences and like this obtain customized offers with
+just a few clicks", providing them "with an overview of the market and information
+about prices".7 The same is true for sellers who want to evaluate their car before
+offering it for sale.
+
+   Figure 1 shows the interface on mobile.de's main page. It is a simplified search form
+that allows to filter for makes, models, and a number of other basic characteristics.
+An advanced search form provides a large additional set of filter options. Conducting
+
+    7Source: http://cms.mobile.de/en/company/portrait_mobile.html; last accessed: April 24th, 2016
+
+                                                       3
+       Figure 1. Main page - www.mobile.de
+
+       Figure 2. List of search results - www.mobile.de
+
+either type of a search, returns a list of all vehicles that match the chosen filters. By
+default, the search results are sorted by price, and their main attributes are summa-
+rized as shown in Figure 2. This preview explicitly states the first-registration date
+(e.g. "04/2016", if the car was first registered in April of 2016) besides additional
+information on price, mileage, color, motor power, and some additional features. It is
+also possible to save a specific car for later access (to "park" a vehicle), and to directly
+compare it to other selected cars. Figure 3 depicts an example profile page for a car
+offer, which is accessed by clicking the respective search result.
+
+   Since mobile.de is not an auction market, we only observe the asking prices of sell-
+ers. These may deviate from final prices due to negotiations during the actual sale
+of the car. However, for this to be a concern for our analysis, these deviations would
+have to systematically differ between pre- and post-threshold cars, which seems im-
+
+                                                       4
+        Figure 3. Car details - www.mobile.de
+
+plausible. Nevertheless, we took two steps to validate that the asking price is indeed
+a reasonable proxy for the final price in this market environment: First, on mobile.de
+sellers have the option to declare the asking price as either "fixed" or "negotiable".
+For our analysis, we exclusively collected data from offers with fixed prices. Second,
+we extensively searched the web for guides on "how to buy a used car" or "how to
+negotiate a good deal when buying a used car". While there is an abundance of such
+handbooks, there is no mention of inflated prices (and bargaining opportunities) for
+January cars or that December cars are generally better deals. We regard the notable
+absence of such suggestions to be supportive of our argument. For simplicity, we use
+the terms "price" and "asking price" interchangeably throughout the paper.
+
+2.2 Sample composition
+
+Due to scarce resources during data collection, we limited our sample to the best-
+selling car model by each of the five leading German manufacturers. The five chosen
+models are also among the top ten of Germany's overall vehicle population according
+
+                                                       5
+to the Federal Office for Motor Vehicles (Kraftfahrtbundesamt/KBA).8 Specifically, we
+collected information on 14,780 Volkswagen (VW) Golf (KBA-rank 1), 10,841 Opel
+Astra (KBA rank 2), 18,470 BMW 3 series (KBA rank 4), 14,219 Audi A4 (KBA rank 7),
+and 5,030 Mercedes Class A (KBA rank 9).9
+
+   We selected cars whose date of first registration falls between December 2007
+and January 2000. Having collected the data in the summer of 2009, this implies
+that the youngest car in our sample is 20 months old, whereas the oldest car has
+an age of 116 months (roughly nine and a half years). This selection guarantees the
+exclusion of a particular market segment with quite idiosyncratic features, known
+as "Jahreswagen". Such cars are typically given to employees for roughly one year
+as part of their compensation package and differ substantially (both with respect to
+their characteristics and the way they were used) from privately owned vehicles that
+dominate the used-car market.10
+
+   Because the introduction of a new model generation affects prices substantially,
+we control for such model revisions. Information on the exact dates of the respective
+market launches are available through the so-called Schwacke list, the Deutsche Au-
+tomobil Treuhand (DAT), and the manufacturers' websites. For an overview of model
+updates that occurred in our sample, see Table A.1 in Appendix A, and note that
+model updates do not happen around year changes in our sample. However, control-
+ling for model revisions is not trivial because we only know when factories switched
+production from one generation to the next but cannot distinguish if a given car in
+our sample is in fact the new model or rather the previous one that has been sitting
+at the dealer's lot for a few months. For our main specifications, we classify a car as
+having undergone a model update if it was first registered more than three months
+after the factories switched production. In Section 4 we document that our results
+are robust to alternative definitions of these model-generation indicators.
+
+2.3 Summary statistics
+
+Table 1 provides the summary statistics of the main variables used for analysis. These
+include a whole roster of car features that will likely affect the seller's asking price.
+The two most important determinants for our analysis are a car's age and mileage.
+The age of a car is measured in months and normalized relative to the youngest
+
+    8Source: http://www.kba.de.
+    9KBA ranks not reported were either held by non-German automakers or by other models of VW
+(Passat, Polo) and Opel (Corsa).
+  10This Jahreswagen option is particularly attractive in Germany because of its tax-preferred status,
+which makes it a hidden subsidy to the car industry. Results - which are available upon request - that
+include Jahreswagen show that our general results remain stable while discontinuities are unsystem-
+atic for this market segment.
+
+                                                       6
+Table 1. Summary statistics of key variables
+
+Variable                  N       Mean St. Dev. Min          Max
+
+Price (in EUR)            63,340  13,209      5,909   1,750    48,890
+Car age (in months)       63,340  39.14       25.82     1         96
+Mileage (in km)           63,340  87,338      51,629
+Horsepower (in PS)        63,289  97.26       28.94   1,000  1,499,000
+Indicator variables:                                    44       309
+- Diesel engine           63,322   0.58        0.49
+- Automatic transmission  63,018   0.21        0.40     0         1
+- Metallic paint          63,340   0.79        0.41     0         1
+- Air conditioning        63,340   0.97        0.17     0         1
+- Leather trim            63,340   0.16        0.37     0         1
+- Airbag                  63,340   0.49        0.50     0         1
+- Power windows           63,340   0.96        0.21     0         1
+- Sunroof                 63,340   0.18        0.38     0         1
+- Four-wheel drive        63,340   0.05        0.22     0         1
+- Seat heating            63,340   0.45        0.50     0         1
+- Cruise control          63,340   0.43        0.50     0         1
+- Private seller          63,340   0.13        0.34     0         1
+                                                        0         1
+
+Notes: Car age is measured relative to December 2007. N denotes the number of obser-
+vations, St. Dev. stands for standard deviation, Min and Max are the minimum and the
+maximum value for each variable, respectively.
+
+car in the sample.11 Additional car characteristics that are useful as control variables
+include engine power and several special features for which we define indicator vari-
+ables. The final row of Table 1 indicates that roughly 87% of offers come from pro-
+fessional car dealers.
+
+   Unconditional correlations between these variables are in line with conventional
+wisdom: Car prices are strongly negatively correlated with car age ( = -0.85)
+and with mileage ( = -0.78). Conversely, horsepower ( = 0.45), diesel engines
+( = 0.11), five-door options ( = 0.16), and all other special features are positively
+correlated with prices. While not listed in Table 1, another determinant for the price
+of a car is its color. We therefore also define a set of color indicators to control for
+their impact on prices, where the effects are measured relative to the color black.
+We find that prices are indeed somewhat responsive to different colors. To improve
+readability, however, we omit the coefficients for the color dummies in the regression
+tables that follow.
+
+   11The information on the month and year of first registration are stored in the variables fr_month
+ [1, 12] and fr_year  [2000, 2007], respectively. We combine these to define the variable totalage
+ [1, 96] that captures the precise age of a car measured in months: totalage  12 · (2007 - fr_year) +
+(13 - fr_month). As a result, the youngest car in our sample (first-registration date of 12/2007) will
+be assigned a totalage value of 1 month.
+
+                                                       7
+             Figure 4. Distribution of car mileage
+
+               Notes: Plotted is the distribution of car mileage, measured in 1,000-km bins.
+               Vertical lines indicate 10,000-km thresholds.
+             Figure 5. Distribution of car age
+
+               Notes: Plotted is the distribution of car age, measured in months (relative to
+               the youngest car in the sample). Vertical lines indicate vintage thresholds.
+
+   Note that our two key explanatory variables - mileage and vintage of a car - are
+self-reported. While this is unlikely to be a concern for the latter because the date of
+first registration is officially mandated and easily verifiable, we suspect our odometer
+data to be more susceptible to measurement error. In fact, when plotting the raw
+mileage data (not depicted here for lack of space), we observe a discontinuous distri-
+bution, where much of the mass is on exact multiples of 1,000 km, which indicates
+
+                                                      8
+             Figure 6. Distribution of car prices
+
+                Notes: Plotted is the distribution of car prices, measured in EUR 1,000 bins.
+
+considerable rounding. A similar picture emerges in Figure 4, where the distribution
+of car mileage is measured in 1,000-km bins: There is considerably more mass in the
+neighborhood to the left of 10,000-km thresholds (including the threshold itself) than
+to the right of the thresholds - a pattern that we discuss in Section 3.2. The distribu-
+tion of car age is depicted in Figure 5. We find some fluctuations across registration
+months with a relative mass between roughly 18 and 40 months. Importantly, there
+are no systematic jumps around vintage thresholds but the data follows the seasonal
+pattern of first registrations that the Federal Office for Motor Vehicles records since
+1970: There are generally few registrations in winter, then numbers pick up in spring,
+peak in summer, and decrease throughout the fall before reaching the low winter
+levels again. Finally, Figure 6 reveals that the distribution of our dependent variable
+- car prices - is somewhat right-skewed but approximately normally distributed.
+
+3 Empirical analysis
+
+3.1 Vintage discontinuities
+
+Graphical analysis
+We begin our empirical analysis by plotting the price data as a function of car age. In
+Figure 7, each dot represents the average adjusted12 residual asking price (after con-
+trolling for a fifth-order age polynomial, mileage, horsepower, model updates, and
+
+   12To facilitate the readability of Figure 7, we add the estimated age polynomial and a constant back
+into the residual.
+
+                                                       9
+Figure 7. Average adjusted residual car prices by car age
+
+Notes: Plotted are average adjusted residual car prices (after controlling for
+car characteristics) as a function of car age measured on a monthly basis. Age
+is measured relative to the date of first registration 12/2007. Vertical dashed
+lines indicate vintage (or registration year) thresholds. Solid lines represent
+linear fits within each vintage.
+
+other car features) for all cars first registered in a given month of a given year.13
+The vertical lines represent the vintage thresholds. As one would expect, prices de-
+crease with age. While the decline in prices is continuous and approximately linear
+within each vintage, there are systematic and substantial discontinuities between vin-
+tages. This pattern is consistent with inattentive price-setting behavior where too
+much weight is given to the registration year of a car as opposed to the much more
+informative registration date.
+
+Regression analysis
+
+To corroborate the graphical analysis and to obtain numerical estimates for the ob-
+served price discontinuities, we continue with econometric analysis. Our identifica-
+tion strategy is based on a regression discontinuity (RD) design (see Lee and Lemieux
+(2010) for an overview). Particularly, to identify the discontinuities at vintage thresh-
+olds, we estimate the OLS regression
+
+                     7
+
+                     pi =  vy Dvyi + f (ai)v + Xiv + vi ,                          (1)
+
+                     y =1
+
+where pi is the price of car i, and Xi is a vector of observable car characteristics, f (·)
+is a polynomial function of car age, ai, and captures the continuous relationship be-
+
+13See Figure A.1 in Online Appendix A for the same analysis using raw price data.
+
+                           10
+tween the age of a car and its price.14 We also include seven (one for each of the
+seven registration-year thresholds covered by our sample) dummy variables, Dyiv that
+indicate whether a car has crossed a given vintage threshold. The corresponding yv
+coefficients are the parameters of interest, as they measure the discontinuous differ-
+ence in prices - conditional on precise car age ai - between cars that were registered
+in subsequent years. The intuition of this approach is that the coarse registration-year
+information should have no additional impact on car prices, once the much finer car-
+age information is accounted for.
+
+   Table 2 presents estimation results for Regression 1 with varying sets of controls.15
+Column (1) merely controls for a fifth-order age polynomial and the full set of thresh-
+old indicators and provides estimates of the price discontinuities before accounting
+for any heterogeneity in the car population. Given the important role of (thus far
+uncontrolled) model updates, these somewhat unsystematic results should be inter-
+preted with caution. In Columns (2) through (5), we increase the number of control
+variables. Column (2) adds controls for the car features listed in Table 1, which sub-
+stantially increases R2 and affects significance, size, and in some cases even the sign
+of the coefficients. In Column (3) we augment the control vector by information on
+model updates while Column (4) includes model fixed effects. Column (5) is the
+most encompassing specification as it simultaneously controls for all of the aforemen-
+tioned characteristics. Once heterogeneity in car features is accounted for, five out of
+seven of the coefficients of interest are significantly negative, whereas the other two
+are indistinguishable from zero. These results closely mirror the graphical analysis
+above and provide strong evidence for systematic price discontinuities when passing
+vintage threshold, even after controlling for precise car age and a large number of
+additional car features.
+
+   The estimated discontinuities are also economically significant. For instance, the
+average price drop at vintage thresholds in the specification without car-model fixed
+effects (Column (3)) is EUR 418.79, whereas the average devaluation within vintages
+amounts to only EUR 79.80 per month. Assuming a linear relationship between car
+prices and age allows for a back-of-the-envelope approximation of an inattention
+parameter in the spirit of Lacetera et al. (2012):16 The average car in our sample
+loses EUR 1,296.59 per year in value, which implies an inattention parameter of
+418.79 1,296.59 = 0.32, suggesting that roughly 32% of the annual depreciation occurs in a
+
+  14In our main specification, we use a fifth-order polynomial to control for age. This specific func-
+tional form was chosen based on the Akaike Information-Criterion Test. Our results are robust to
+using lower-order and higher-order polynomials, as discussed in Section 4.
+
+  15The drop in sample size from Column (1) to Column (2) is due to variation in the availability of
+information on certain car features, especially horsepower, engine displacement, transmission kind,
+and fuel kind.
+
+  16While this specific functional form is unlikely to be the best fit for our data, it is a simplification
+commonly used in the literature, see, e.g., DellaVigna (2009) or Lacetera et al. (2012).
+
+                                                      11
+Table 2. The impact of vintage thresholds on car prices
+
+Dependent variable: Car prices
+
+                                                          Regression coefficients
+
+                                                      (Robust standard errors in brackets)
+
+Explanatory variables                 (1)        (2)      (3)         (4)             (5)       (6)             (7)
+
+Indicator for...                430.7* 54.7 -203.0 -14.4 -221.4* -219.0* -848.8*
+...FR before 2007
+...FR before 2006               (176.9)          (108.4)  (108.0)     (92.1)          (91.8)    (92.4)   (394.5)
+...FR before 2005
+...FR before 2004               -501.8*** -613.7*** -858.4*** -580.5*** -780.3*** -796.1*** -570.5*
+...FR before 2003
+...FR before 2002               (116.4)          (66.0)   (67.5)      (55.4)          (56.6)    (56.8)   (281.2)
+...FR before 2001
+                                -1228.1*** -581.3*** -698.6*** -516.0*** -609.2*** -530.4*** -744.0***
+
+                                (96.0)           (63.5)   (63.6)      (54.6)          (54.9)    (59.5)   (156.6)
+
+                                576.9*** -51.0 -23.7 -30.7                            -3.7      87.0 -551.6***
+
+                                (119.5)          (87.4)   (87.1)      (79.2)          (77.7)    (84.0)   (167.8)
+
+                                -42.0            -61.6 -129.6 105.6 44.3 124.7 -339.6**
+
+                                (100.5)          (77.2)   (76.8)      (69.4)          (68.9)    (81.0)   (128.8)
+
+                                -895.0*** -394.3*** -568.4*** -293.2*** -437.9*** -412.9*** -383.6**
+
+                                (107.2)          (88.7)   (88.6)      (82.7)          (83.5)    (101.5)  (142.2)
+
+                                -959.6*** -414.2*** -449.7*** -316.7*** -345.1*** -387.5*** -108.6
+
+                                (94.1)           (93.7)   (93.5)      (90.9)          (91.7)    (112.3)  (146.5)
+
+Controls
+
+- Car-age polynomial                  X          X              X     X               X              X          X
+
+- Car features                                   X              X     X               X              X          X
+
+- Car-model updates                                             X                     X              X          X
+
+- Car-model fixed effects                                             X               X              X          X
+
+- Seller type                         X          X              X     X               X
+
+Sample selection
+
+- Commercial sellers                  X          X              X     X               X              X
+
+- Private sellers                     X          X              X     X               X                         X
+
+R2                              0.4543 0.8148 0.8161 0.8576 0.8584 0.8630 0.8376
+
+N                               63,340 50,872 50,872 50,872 50,872 43,020 7,852
+
+Notes:  Results  are  for  the  main  empirical  specification  (see  Section  3.1).  Depicted  are  estimates  for    v  .
+                                                                                                                       y
+
+FR stands for "first registered". Car age is controlled for by a fifth-order polynomial (chosen based on the
+
+Akaike Information Criterion Test). Car features include all car characteristics listed in Table 1. Seller
+
+type distinguishes between commercial and private sellers. Robust standard errors are stated in brackets.
+
+*, **, and *** indicate statistical significance at the 5%, the 1%, and the 0.1% level, respectively.
+
+threshold month - a value that falls well within the range of inattention parameters
+documented in the literature (see DellaVigna, 2009).17
+
+   We continue by studying the heterogeneity of results with respect to the identity of
+the vendor and stratify our sample by seller type. Column (6) re-estimates the speci-
+
+  17For comparison, the specification with car-model fixed effects (Column (5)) yields a slightly
+smaller inattention parameter of 336.20 1,320.95 = 0.25.
+
+                                                     12
+fication from Column (5) in a sample of commercial sellers. Given that such institu-
+tional vendors make up almost 90% of our sample, it is hardly surprising that results
+closely mirror those from the main analysis. Interestingly, results become even more
+consistent in a sample of private sellers (Column (7)). Not only do we find negative
+discontinuities at all seven thresholds, but the average price drop is also significantly
+larger than for professional sellers (EUR 506.67 vs. EUR 304.88). This provides sug-
+gestive evidence that less experienced market participants may be more susceptible
+to underestimating the importance of accounting for the exact registration date when
+evaluating their car and setting the price.
+
+   A threat for identification in research-discontinuity settings is manipulative sorting
+around the thresholds, since asymmetric supply may potentially drive the observed
+price drops. Recall that we should not expect any anomalous bunching in the vintage
+dimension because the date of first registration is an inherent feature of a used car
+that cannot be changed by expediting or delaying its sale. Hence, it is impossible to
+strategically alter a car's relative position to the vintage thresholds. In fact, Figure 5
+documents that there are no systematic differences in the supply of December and
+January cars but that the distribution of used-car offers follows the same seasonal
+pattern as that for new cars (see Section 2.3).
+
+   While we deem it plausible to interpret the uncovered discontinuities as due to
+inattention, our results could potentially be driven by other factors as well. For in-
+stance, unobservable heterogeneity around registration-year thresholds could pro-
+duce similar patterns in the data. To use an example by an anonymous referee, cars
+that were first registered in December, say as a Christmas gift, may have been treated
+systematically different than cars that were first registered in January. While it will
+always be possible to construct such examples of alternative explanations as long
+as there is unobservable information - which is invariably the case in any empirical
+work with observational data - there are several features of the German market for
+new cars that work in our favor: In most cases, buyers of factory-new cars are unable
+to choose precisely when their car is delivered and, consequently, first registered.
+With waiting periods ranging from several weeks to even months (depending on the
+specific car model), the actual purchase of "December cars" and "January cars" (ac-
+cording to their first registration) will likely have occurred in the preceding fall. For
+the purpose of our study, this waiting time is an advantage, as it adds randomness to
+the date of first registration. As a result, the initial buyer lacks full control over the
+timing of events, which moves us closer to an ideal experiment where registration
+dates would be randomly allocated. Moreover, uncontrolled climatic differences are
+unlikely to be at work either because German Decembers and Januaries are equally
+prone to snow and the use of corroding road salt. There are also no general market
+
+                                                      13
+patterns that would suggest differences in prices (including discounts) or the amount
+of cars sold between December and January when the cars were new.18
+
+   In a similar vein, another anonymous referee suggested that a discussion of car
+warranties - which could potentially be behind the vintage discontinuities - was war-
+ranted. In Germany, there is a legally mandated two-year warranty for any product
+upon purchase.19 In addition, car manufacturers often provide additional voluntary
+warranties that are defined for a certain time period (usually two years) after first reg-
+istration. Since our data is from the summer of 2009, the vast majority of warranties
+in our sample will already have expired, and even the ones that are still effective
+are not on the brink of systematically elapsing for December cars. For these reasons,
+it is highly unlikely that product warranties can explain the observed price drops at
+vintage thresholds.
+
+   While our case against the confounding influence of unobservable heterogeneity
+relies on verbal arguments alone, we are able to methodologically address the issue
+of observable heterogeneity around vintage thresholds. In Appendix B, we show that
+there are no systematic changes in observable car characteristics (other than price) at
+vintage thresholds, which suggests that December cars and January cars are indeed
+close substitutes and not drawn from inherently different populations.
+
+3.2 Mileage discontinuities
+
+We now turn to another car feature that could potentially be associated with price
+discontinuities: the odometer reading as stated in the sales offer. Recall that our car-
+mileage data is likely subject to misreporting, which may explain that our results in
+this dimension are less robust than in the vintage dimension. Despite these concerns
+of measurement error, we are able to replicate the main findings by Lacetera et al.
+(2012).
+
+Graphical analysis
+
+We begin by plotting the price data as a function of car mileage. In Figure 8, each
+dot shows the average adjusted20 residual price (after controlling for a second-order
+mileage polynomial, car age, horsepower, model updates, horsepower, model up-
+
+   18For details, see the registration statistics by the Federal Office for Motor Vehicles and the monthly
+discount index ("Rabattindex") published by the Center for Automotive Research (CAR) at the Univer-
+sity of Duisburg-Essen: https://www.uni-due.de/~hk0378/Rabatte_Index/CAR-Rabatt-Index-Dez12.
+pdf.
+
+   19This type of warranty, known as "Gewährleistung", also applies to the sale of used cars. However,
+non-commercial transactions are exempt from this regulation - a fact that is in line with our data:
+Controlling for car characteristics, cars offered by private sellers, not liable for Gewährleistung, are
+roughly 10% cheaper than those offered by professional dealerships.
+
+   20Again, we adjust residuals by adding the estimated mileage polynomial and a constant.
+
+                                                      14
+Figure 8. Average adjusted residual car prices by car mileage
+
+Notes: Plotted are average adjusted residual car prices (after controlling for
+car characteristics) as a function of car mileage measured in 1,000-km bins.
+Vertical dashed lines indicate 10,000-km mileage thresholds. Solid lines rep-
+resent linear fits between thresholds.
+
+dates, and other car features) for all cars that lie in the same 1,000-km odometer
+bin.21 The vertical lines represent 10,000-km thresholds. Unsurprisingly, prices de-
+crease with mileage. Within each 10,000-km bin, prices decline continously but there
+are systematic (albeit small) drops at the 10,000-km marks.22 With no apparent ex-
+planation for the importance of 10,000-km thresholds, this result is in line with the
+interpretation by Lacetera et al. (2012) that heuristic decision making plays a role in
+the mileage dimension as well.
+
+Regression analysis
+
+The regression approach follows the same logic as that for the vintage thresholds. To
+identify the 10,000-km mileage discontinuities, we implement an RD design where
+we estimate the following regression with OLS:
+
+                     10
+
+                     pi =  mk Dmki + g(oi)m + Xim + mi ,                        (2)
+
+                     k=1
+
+The dependent variable is the car price and controls for car characteristics are col-
+lected in Xi. The continuous relationship between price and odomoter readings, oi,
+
+  21See Figure A.2 in Online Appendix A for the same analysis using raw price data.
+  22Note that the trend lines, while helpful to visualize the downward price trend within and across
+
+bins, impair the visibility of the discontinuities. To see the latter, focus on the triangles right before
+
+and after each of the 10,000-km thresholds.
+
+                          15
+is captured with the polynomial function g(·).23 To measure the impact of crossing
+a given 10,000-km threshold, we include ten dummy variables, Dmki. The correspond-
+ing  m coefficients are the parameters of interest, as they measure the discontinuous
+difference in prices - conditional on the exact (stated) odometer reading oi - when a
+car crosses a 10,000-km mark.
+
+   Even though the graphical evidence appears less striking than was the case for
+the vintage discontinuities, the corresponding regression results in Table 3 are reas-
+suring.24 As before, Column (1) controls only for the mileage polynomial and the
+full set of indicator variables. As we move trough Columns (2) to (5), control for car
+heterogeneity becomes more encompassing. When accounting for all observable char-
+acteristics in Column (5), each threshold coefficient is significantly negative and siz-
+able, suggesting economically meaningful price discontinuities at 10,000-km marks.
+The average price drop at 10,000-km thresholds in Column (3) amounts to EUR
+367.33 compared to an average price decrease between thresholds of EUR 63.26 per
+1,000 km. The corresponding inattention parameter in the spirit of Lacetera et al.
+(2012) would be approximated by 367.33 936.65 = 0.39, implying that about 39% of the de-
+preciation per 10,000 km occurs at the moment a car passes a threshold.25
+
+   When dividing the sample with respect to seller type in Columns (6) and (7),
+results are markedly different from those in the vintage dimension, where the dis-
+continuities were more pronounced and consistent for private sellers. In the mileage
+dimension, the average price drop at 10,000-km thresholds is roughly the same for
+private and commercial sellers (EUR 350.17 versus EUR 362.37). Moreover, the esti-
+mates from the private-seller sample greatly suffer from increased imprecision, result-
+ing in a less consistent pattern for this type of vendor. It is possible that this blurred
+evidence is attributable to the measurement concerns of our odometer data, assum-
+ing that commercial (and legally liable) vendors report car mileage with more accu-
+racy than private sellers. On this account, it is not surprising that our results mirror
+those by Lacetera et al. (2012) - who rely on verifiable mileage data from commer-
+cial auctions - more closely in the subsample that is institutionally more similar to
+theirs.
+
+   In contrast to the distribution of car age - and in line with expectations - Figure 4
+provides evidence for manipulative sorting in the mileage dimension, as there is con-
+siderable bunching of offers right before a car passes 10,000-km thresholds. This
+may either be misreporting or the result of a strategic decision to sell a car before the
+
+   23In our main specification we use a second-order polynomial to control for mileage. Again, this
+specific functional form was chosen based on the Akaike Information-Criterion test. The robustness
+with respect to other polynomials is discussed in Section 4.
+
+   24Again, the drop in sample size from Column (1) to (2) is due to variation in the availability of
+information on certain car features.
+
+   25Results from the specification with car-model fixed effects (Column (5)) suggest a nearly identical
+inattention parameter of 375.80 960.44 = 0.39.
+
+                                                      16
+Table 3. The impact of mileage thresholds on car prices
+
+Dependent variable: Car prices
+
+                                                 Regression coefficients
+
+                                         (Robust standard errors in brackets)
+
+Explanatory variables      (1)      (2)          (3)      (4)      (5)         (6)      (7)
+
+Indicator for...           -1,582.4***-994.5***-1,022.9***-888.7***-905.9***-868.5*** -1093.1
+...more than 10K km
+...more than 20K km        (249.1)  (174.2)      (173.4)  (160.8)  (160.5)     (162.5)  (823.6)
+...more than 30K km
+...more than 40K km        -1075.1*** -789.7*** -779.4*** -758.0***-749.2***-775.7*** -71.3
+...more than 50K km
+...more than 60K km        (164.7)  (109.1)      (108.3)  (96.2)   (95.7)      (100.0)  (301.7)
+...more than 70K km
+...more than 80K km        -420.1** -359.1*** -368.6*** -362.3***-368.8***-416.6*** 101.3
+...more than 90K km
+...more than 100K km       (133.8)  (83.1)       (82.7)   (71.6)   (71.4)      (75.0)   (251.3)
+
+                           -576.3*** -372.6*** -378.8*** -424.1***-428.4***-382.2***-782.6***
+
+                           (120.9)  (69.8)       (69.6)   (59.2)   (59.1)      (62.2)   (215.2)
+
+                           -442.4*** -146.1* -141.0* -168.5***-163.9*** -91.2 -568.3**
+
+                           (113.7)  (60.5)       (60.4)   (51.6)   (51.6)      (54.6)   (180.4)
+
+                           -101.1 -210.7*** -212.3*** -241.2***-242.9***-243.9*** -162.9
+
+                           (111.3)  (57.5)       (57.6)   (48.9)   (48.9)      (52.6)   (151.2)
+
+                           -586.8*** -221.3*** -220.0*** -235.9***-234.6***-207.7*** -272.4*
+
+                           (106.2)  (55.2)       (55.3)   (46.9)   (46.8)      (50.7)   (138.5)
+
+                           -108.8 -143.9** -143.8** -213.3***-212.9***-201.5*** -247.9*
+
+                           (103.0)  (52.9)       (52.9)   (45.2)   (45.2)      (49.6)   (119.9)
+
+                           -414.1*** -289.5*** -284.9*** -284.9***-281.8***-269.1*** -250.8*
+
+                           (100.4)  (50.7)       (50.7)   (43.8)   (43.8)      (48.6)   (104.6)
+
+                           -71.2 -125.3* -121.6* -172.7***-169.6***-167.3*** -153.7
+
+                           (103.5)  (53.1)       (53.1)   (46.4)   (46.4)      (50.8)   (114.7)
+
+Controls
+
+- Car-mileage polynomial X          X            X        X        X           X        X
+
+- Car features                      X            X        X        X           X        X
+
+- Car-model updates                              X                 X           X        X
+
+- Car-model fixed effects                                 X        X           X        X
+
+- Seller type                   X   X            X        X        X
+
+Sample selection
+
+- Commercial sellers            X   X            X        X        X           X
+
+- Private sellers               X   X            X        X        X                    X
+
+R2                         0.2634 0.8141 0.8148 0.8572 0.8575 0.8595 0.8411
+
+N                          63,340 50,872 50,872 50,872 50,872 43,020 7,852
+
+Notes: Results are for the main empirical specification (see Section 3.2). Depicted are estimates for  mk .
+Car mileage is controlled for by a second-order polynomial (chosen based on the Akaike Information
+Criterion Test). Car features include all car characteristics listed in Table 1. Seller type distinguishes
+between commercial and private sellers. Robust standard errors are stated in brackets. *, **, and ***
+indicate statistical significance at the 5%, the 1%, and the 0.1% level, respectively.
+
+                                             17
+odometer passes a salient (and value-destroying) threshold. In any case, it suggests
+that sellers at least believe prospective buyers to be inattentive when evaluating car
+offers. Importantly, this pattern does not provide an alternative explanation for the
+observed price drops because excess supply of cars with odomoter values below the
+thresholds should depress, rather than inflate, prices for cars in this crowded market
+segment.
+
+   Unobserved heterogeneity in the car population around 10,000-km mileage thresh-
+olds is unlikely to be a concern in the mileage dimension because - in contrast to the
+vintage dimension - the relative position with respect to a threshold is neither an
+innate car feature, nor subject to the way a car was used. In addition, none of the
+manufacturers in our sample offers mileage-based warranties, eliminating this po-
+tential source of confounding as well. Of course, one could argue that vendors who
+strategically sell their car before a threshold is passed (or alternatively: who under-
+report odometer values to boost the car value) may also systematically treat their
+car differently. However, we believe such considerations to be largely speculative and
+even the direction of any potential bias would be ex-ante unclear. This is why we limit
+our discussion in Appendix C to documenting the absence of observable heterogeneity
+around 10,000-km thresholds.
+
+4 Robustness analysis
+
+Vintage discontinuities
+
+In Online Appendix B, we present an extensive set of robustness checks for our anal-
+ysis in the vintage dimension. We start by examining empirical pitfalls typical for
+research-discontinuity settings. In Figures B.1-B.4 we provide graphical evidence that
+our results are not driven by changing market compositions around the thresholds.
+We also perform placebo tests by creating indicators for artificial year thresholds. Re-
+sults in Table B.1 document that these placebo thresholds do not exhibit systematic
+discontinuities.
+
+   We continue by gauging the robustness of results to changes in the main empirical
+specification. Since prices have a long right tail (recall Figure 6), it seems appro-
+priate to log-linearize Regression 1. As results in Table B.2 reveal, this modification
+produces even more consistent results. In our main specification, we classify a car as
+having undergone a model update if its first registration occurred more than three
+months after factories switched production. Table B.3 documents that results are ro-
+bust to varying definitions of model-update dummies. Finally, results in Table B.4
+show that our conclusions remain intact when using lower-order or higher-order
+polynomials than those endorsed by the Akaike Information-Criterion Test.
+
+                                                      18
+Mileage discontinuities
+
+Online Appendix C repeats the analysis from Online Appendix B in the mileage di-
+mension. Figures C.1-C.4 provide evidence that cars to the left and to the right of
+mileage thresholds are comparable in their observable charcteristics. Moreover, we
+perform a placebo test by converting odometer readings from kilometers to US miles.
+Given that Germany exclusively uses the metric system, US-mile thresholds should
+be irrelevant even if heuristics play a role in decision making. Indeed, results in Ta-
+ble C.1 show that all but the first 10,000-mile placebo thresholds are associated with
+insignificant coefficients.
+
+   Empirical robustness of results with respect to changes in the main specification
+is less convincing for the mileage dimension than it was for the vintage dimension.
+For instance, log-linearization is not innocuous but even reverses results for some of
+the 10,000-km thresholds (see Table C.2).26 While Table C.3 documents robustness
+to varying definitions of model-update dummies, results are somewhat sensitive to
+using mileage polynomials of orders higher than three, whereas lower-order polyno-
+mials work fine (see Table C.4). However, note that specifications that accommodate
+higher-order polynomials appear to suffer from multicollinearity and our statistical
+software fails to provide the F-Test statistic, which suggests that results are in line
+with expectations, as long as the econometric model is not misspecified.
+
+A horserace
+
+As a final robustness exercise, Online Appendix D implements a horserace specifica-
+tion by jointly controlling for mileage and vintage thresholds. Results in Table D.1
+show that both discontinuities exist independently of one another. Not only do ef-
+fects in either dimension survive, but especially the vintage discontinuities are even
+slightly more pronounced.
+
+5 Discussion and conclusion
+
+We study the price-setting behavior in a competitive market for used cars and pro-
+vide empirical evidence for coarse information processing. Based on detailed field
+data from one of Europe's largest online marketplaces for automotive vehicles, we
+document systematic and sizable price discontinuities at salient car-age and mileage
+thresholds. The price difference between two otherwise identical cars across registra-
+tion years (where one was first registered in January and the other in December of
+the previous year) is up to five times larger than that between two cars first regis-
+
+  26However, given the concerns of measurement error in our mileage data, we are certainly not
+inclined to call the findings by Lacetera et al. (2012) - who document systematic and sizable disconti-
+nuities with more reliable data in the mileage dimension - into question.
+
+                                                      19
+tered in any two subsequent months within a registration year. A similar pattern can
+be observed in the mileage dimension at 10,000-km odometer marks, which is in line
+with earlier findings by Lacetera et al. (2012).
+
+   Given the high-stake nature of a car sale, these price discontinuities are quite in-
+triguing and raise the natural question about the driving force behind this behavioral
+pattern. We argue that it can be explained by a simple model of limited attention in
+the spirit of DellaVigna (2009), where the overall value of a car, V , is the sum of a
+salient component, s, and an opaque component, o: V = s + o. In the context of the
+vintage (mileage) dimension, s would be determined by the registration year (the
+left-most digit in the odometer reading), whereas the value o would be influenced by
+the precise registration month (the digits to the right of the first odometer digit).27
+Limited attention is modeled by the assumption that market participants perceive the
+car value to be V^ = s + (1 -  )o, where  measures the degree of inattention. Note
+that the opaque information need not necessarily be hidden or difficult to access. As
+is the case with the exact date of registration and mileage of a car, o can be clearly
+visible at no cost, but individuals - for some reason - fail to fully process it at rate  .
+The key question in this framework is what this reason might be.
+
+   On the one hand, inattention may be driven by bounded rationality. According
+to this notion, individuals tend to follow heuristics, which imply optimization under
+the constraint that processing information, while beneficial, is psychologically costly.
+An example for such a heuristic is left-digit bias, which Lacetera et al. (2012) ar-
+gue to be the psychological mechanism behind price discontinuities in the mileage
+domain. Note that while left-digit bias - if applied narrowly - cannot explain that
+the price difference between two cars registered in December 2004 versus January
+2005 is larger than the one between January 2005 and February 2005, we do not
+interpret our results in the vintage domain to be at odds with their interpretation. In-
+stead, we believe that a more general notion of information-prominence bias (where
+left-digit bias can be thought of as a special case) can accommodate both our find-
+ings and those by Lacetera et al. (2012), and would be applicable to a wide set of
+domains where underlying continuous characteristics are mapped into discrete cate-
+gories (such as classifications of French wine, star-based reviews of hotels, or ratings
+of financial assets). Future research will likely shed additional light on the generality
+of inattention-induced discontinuities in other economic contexts.28
+
+   On the other hand, it is possible that inattention has a more rational footing.
+DellaVigna (2009) (p.349) emphasizes that "in general, models of limited attention
+can be rephrased as rational models with information costs in which less salient in-
+formation has higher costs of acquisition." While this alternative explanation seems
+to be inapplicable to our context (where the exact information on mileage and reg-
+
+  27For simplicity, we abstract from the impact of other car features on V .
+  28In fact, in a recent study, Luca (2016) finds evidence for coarse information processing by con-
+sumers when evaluating restaurant ratings from yelp.com.
+
+                                                      20
+istration date is readily visible at no cost) at first glance, we argue that at least part
+of the observed discontinuities may in fact be driven by implicit search costs. Our
+intuition is that inattentive individuals will evaluate a given vehicle relative to the
+average car from an easily accessible "comparison sample" (here: the same vintage
+or mileage bin), while the more relevant comparison group consists of cars of similar
+age or mileage, irrespective of the vintage or mileage bin they belong to. For instance,
+a car first registered in December of 2006 should be contrasted with cars of compara-
+ble age, say within a six-months window (cars first registered between September of
+2006 and March of 2007). However, mobile.de's search filter does not allow to adjust
+inquiries for the precise month of first registration. In order to obtain the desired in-
+formation, one would have to screen a substantially higher number of offers, namely
+the entire universe of cars registered in 2006 and 2007. These potential search costs
+discourage the comparison of offers across vintages and increase the likelihood that
+individuals are simply unaware of the systematic price differentials.29
+
+   Discriminating between the relative roles of behavioral bias and traditional search
+frictions in explaining price discontinuities is an important challenge for future re-
+search (see Schneider, 2016 and Malmendier, 2016). On this account, Englmaier
+et al. (2016) study an online market for virtual goods that exhibit similar price dis-
+continuities in the age domain: the soccer-manager game hattrick.org. Their paper
+exploits an exogenous change in the website's search interface that resulted in the
+elimination of search cost for precise product age and finds that while price drops at
+thresholds were significantly reduced, substantial discontinuities remained.
+
+   The presence, persistence, and relevance of coarse information processing docu-
+mented by this and other papers in various consumer-choice contexts has important
+managerial implications. Clearly, the scope of applications is not limited to the auto-
+motive sector but relates to any good for which consumers base their decisions on
+salient parameters. Examples are, as mentioned above, financial products (ratings),
+but also real estate (living space), computers (processor speed), or food (sugar con-
+tent). For instance, in the area of product design our results imply that endogenous
+product features should strategically stay below (sugar content of a beverage) or
+above (living space of a new construction) salient thresholds. In case of exogenous
+product features, attention needs to be devoted to making the "right" features salient.
+
+   Another relevant question aims at the economic and welfare implications of the
+price discontinuities in the investigated used-car market. Given that a substantial
+amount of cars will be overpriced relative to their objective characteristics, there
+will be redistributive effects to the detriment of inattentive buyers. At the same time,
+it is possible that overpricing leads to too little trade and a real loss in surplus, as
+overly expensive vehicles may be shunned by rational buyers, causing a welfare loss
+
+  29Since the website's filter mechanism only allows to narrow down search results along 10,000-km
+odometer brackets, a comparable argument applies to the mileage dimension as well.
+
+                                                      21
+among market participants who try (and fail) to sell their prohibitively priced January
+cars. Similarly, owners of December cars may be discouraged to even put their car
+up for sale at such low prices, reducing trade from the supply side as well. While
+these inefficiencies make the case for the elimination of price discontinuities from a
+social planner's point of view, it is not clear that marketplace providers would favor
+such action, too. Although market efficiency would likely be increased, a majority
+of sellers might prefer the market segmentation because their products will appear
+more differentiated than they really are, thereby weakening competition. Since in
+most two-sided markets of this kind, positive prices are only paid by sellers, the
+platform providers may have an incentive to cater to their preferences and hence
+prefer to keep the discontinuities in place. Analyzing these implications for platform
+pricing and more general industrial-organizational aspects are promising topics for
+future research.
+
+References
+
+Brown, J., Hossain, T. and Morgan, J. (2010). Shrouded attributes and information suppression: Evi-
+   dence from the field. Quarterly Journal of Economics, 125(2), 859-876. 1
+
+Busse, M. R., Lacetera, N., Pope, D. G., Silva-Risso, J. and Sydnor, J. R. (2013). Estimating the effect
+   of salience in wholesale and retail car markets. American Economic Review, 103 (3), 575-579. 2
+
+Chetty, R., Looney, A. and Kroft, K. (2009). Salience and taxation: Theory and evidence. American
+   Economic Review, 99(4), 1145-1177. 1, 3
+
+DellaVigna, S. (2009). Psychology and economics: Evidence from the field. Journal of Economic Liter-
+   ature, 47(2), 315-372. 1, 11, 12, 20
+
+Englmaier, F., Schmöller, A. and Stowasser, T. (2016). Price discontinuities in online auctions - Disen-
+   tangling search costs and limited attention. Working Paper. 21
+
+Finkelstein, A. (2009). Ez tax: Tax salience and tax rates. Quarterly Journal of Economics, 124(3),
+   969-1010. 1, 3
+
+Gilbert, T., Kogan, S., Lochstoer, L. A. and Ozyildirim, A. (2012). Investor inattention and the market
+   impact of summary statistics. Management Science, 58 (2), 336-350. 3
+
+Lacetera, N., Pope, D. G. and Sydnor, H. (2012). Heuristic thinking and limited attention in the car
+   market. American Economic Review, 102(5), 2206-2236. 1, 2, 11, 14, 15, 16, 19, 20, xv
+
+Lee, D. S. and Lemieux, T. (2010). Regression discontinuity designs in economics. Journal of Economic
+   Literature, 48(2), 281-355. 10, viii
+
+Lewis, G. (2011). Asymmetric information, adverse selection and online disclosure: The case of ebay
+   motors. American Economic Review, 101 (4), 1535-1546. 2
+
+Luca, M. (2016). Reviews, reputation, and revenue: The case of yelp.com. HBS Working Paper. 3, 20
+
+Malmendier, U. (2016). The bidder's curse: Reply. American Economic Review, Vol. 106(4), 1195-1213.
+   21
+
+-- and Lee, Y. H. (2011). The bidder's curse. American Economic Review, 101(2), 749-787. 1, 2
+
+Pope, D. G. (2009). Reacting to rankings: Evidence from "America's best hospitals". Journal of Health
+   Economics, Vol. 28(6), pp. 1154-1165. 2
+
+                                                     22
+Schneider, H. S. (2016). The bidder's curse: Comment. American Economic Review, Vol. 106(4), pp.
+   1182-1194. 2, 21
+
+Simon, H. A. (1955). A behavioral model of rational choice. Quarterly Journal of Economics, Vol. 69(1),
+   pp. 99-118. 1
+
+Tadelis, S. and Zettelmeyer, F. (2015). Information disclosure as a matching mechanism: Theory and
+   evidence from a field experiment. American Economic Review, 105 (2), 886-905. 2
+
+                                                     23
+                         Online Appendix for
+ "Price Discontinuities in an Online Market for Used Cars"
+
+                                     by
+   Florian Englmaier, Arno Schmöller, and Till Stowasser
+
+Online Appendix A contains additional tables and figures that complement the data
+description in Section 2.2 and the graphical analysis in Section 3. Online Appendix B
+contains the robustness analysis with respect to results in the vintage dimension,
+as summarized in Section 4. Online Appendix C contains the robustness analysis
+with respect to results in the mileage dimension, as summarized in Section 4. Online
+Appendix D contains the robustness analysis with respect to the horserace analysis,
+as summarized in Section 4.
+A Additional tables and figures
+
+Table A.1. Overview of car-model generations  Production span
+ Make and model Model generation
+
+Audi A4           B6       (limousine) 10/2000 - 11/2004
+
+                           (estate)           09/2001 - 11/2004
+
+                  B7       (limousine) 11/2004 - 11/2007
+
+                           (estate)           11/2004 - 03/2008
+
+BMW 3             E46                         04/1998 - 11/2004
+
+                  E90      (limousine) 12/2004 - 09/2008
+
+                           (estate)           06/2005 - 09/2008
+
+Mercedes A Class  W168                        09/1997 - 09/2004
+                  W169                        10/2004 - 04/2012
+
+Opel Astra        G                           02/1998 - 01/2004
+                                              02/2004 - 10/2007
+                  H
+
+VW Golf           IV                          10/1997 - 09/2003
+                                              10/2003 - 07/2008
+                  V
+
+Notes: Depicted are the production spans of model generations for all cars in our
+sample.
+
+                        i
+Figure A.1. Average car prices by car age
+
+ Notes: Plotted are average car prices as a function of car age measured on
+ a monthly basis. Age is measured relative to the date of first registration
+12/2007. Vertical dashed lines indicate vintage (or registration year) thresh-
+ olds. Solid lines represent linear fits within each vintage.
+Figure A.2. Average car prices by car mileage
+
+ Notes: Plotted are average car prices as a function of car mileage measured in
+1,000-km bins. Vertical dashed lines indicate 10,000-km mileage thresholds.
+ Solid lines represent linear fits between thresholds.
+
+                                          ii
+B Robustness analysis: Vintage dimension
+
+B.1 Potential empirical pitfalls
+
+Observable heterogeneity around thresholds
+To assure that our results are not driven by differing car populations around the
+thresholds, we check whether January and December cars are comparable with re-
+spect to their average mileage (Figure B.1), their average horsepower (Figure B.2),
+their average fuel type (Figure B.3), and the composition of seller types (private ver-
+sus commercials sellers) (Figure B.4). These raw-data plots show somewhat erratic
+but certainly unsystematic patterns, which suggests that the observed price disconti-
+nuities are not driven by changes in the underlying market composition.
+
+             Figure B.1. Average car mileage by car age
+
+               Notes: Plotted is the average mileage of traded cars as a function of car age
+               measured on a monthly basis. Age is measured relative to the date of first
+               registration 12/2007. Vertical dashed lines indicate vintage (or registration
+               year) thresholds. Solid lines represent linear fits within each vintage.
+
+                                                      iii
+Figure B.2. Average horsepower by car age
+
+ Notes: Plotted is the average horsepower of traded cars as a function of car
+ age measured on a monthly basis. Age is measured relative to the date of first
+ registration 12/2007. Vertical dashed lines indicate vintage (or registration
+ year) thresholds. Solid lines represent linear fits within each vintage.
+Figure B.3. Share of cars with regular fuel by car age
+
+ Notes: Plotted is the share of traded cars with regular fuel as a function of car
+ age measured on a monthly basis. Age is measured relative to the date of first
+ registration 12/2007. Vertical dashed lines indicate vintage (or registration
+ year) thresholds. Solid lines represent linear fits within each vintage.
+
+                                          iv
+             Figure B.4. Share of private sellers by car age
+
+               Notes: Plotted is the share of cars offered by private sellers as a function of car
+               age measured on a monthly basis. Age is measured relative to the date of first
+               registration 12/2007. Vertical dashed lines indicate vintage (or registration
+               year) thresholds. Solid lines represent linear fits within each vintage.
+
+Placebo tests
+In another important consistency check we perform placebo tests by creating indica-
+tors for artificial year thresholds and testing whether these are associated with dis-
+continuities as well. Even though we observe significant coefficients for a few placebo
+thresholds, these are unsystematic, both with respect to their sign and their size. Re-
+sults for three different placebo tests that move the vintage thresholds to the other
+three end-of-quarter months - March, June, and September - can be found in Ta-
+ble B.1.
+
+                                                      v
+Table B.1. Robustness analysis (vintage): Placebo thresholds
+
+  Dependent variable: Car prices
+                                                     Regression coefficients
+
+                                            (Robust standard errors in brackets)
+
+                            (1)         (2)         (3)
+
+Indicator for...              -151.3    636.2***    -588.5**
+...FR before 2007
+...FR before 2006              (110.4)     (146.0)     (181.0)
+...FR before 2005
+...FR before 2004              79.7     455.0***    466.8***
+...FR before 2003
+...FR before 2002               (55.5)      (75.9)      (90.3)
+...FR before 2001
+                            -263.0***   -305.1***   -224.5***
+
+                                (57.3)      (59.6)      (57.4)
+
+                             229.6**       18.0      195.0**
+
+                                (77.4)      (73.9)      (65.3)
+
+                             225.5**      177.7     374.6***
+
+                                (73.6)      (94.1)      (93.7)
+
+                              -131.6       -8.5      185.2*
+
+                                (81.7)      (89.4)      (82.4)
+
+                            -313.6***    -207.2*      104.6
+
+                                (85.3)      (98.4)      (93.6)
+
+Car-age polynomial          X           X           X
+
+Controls for car features   X           X           X
+
+Controls for model updates  X           X           X
+
+Car-model fixed effects     X           X           X
+
+Placebo threshold month     March       June        September
+
+R2                          0.8586      0.8588      0.8588
+
+N                           50,872      50,872      50,872
+
+Notes: Depicted are estimates for  vy (see Section 3.1) when applied to the
+respective placebo thresholds. FR stands for "first registered". All regressions
+include the original non-placebo December thresholds, for which estimates
+do not significantly change. Control variables are the same as in the main
+empirical specification. Robust standard errors are stated in brackets. *, **,
+and *** indicate statistical significance at the 5%, the 1%, and the 0.1% level,
+respectively.
+
+                            vi
+Table B.2. Robustness analysis (vintage): Log-linearization
+
+Dependent variable: Log of car prices
+
+                                           Regression coefficients
+
+                                        (Robust standard errors in brackets)
+
+                            (1)         (2)                  (3)  (4)         (5)
+
+Indicator for...             0.024*       -0.008    -0.041***     -0.032***   -0.043***
+...FR before 2007
+...FR before 2006              (0.010)     (0.006)     (0.006)       (0.005)     (0.005)
+...FR before 2005
+...FR before 2004           -0.027***   -0.034***   -0.049***     -0.033***   -0.043***
+...FR before 2003
+...FR before 2002              (0.008)     (0.004)     (0.004)       (0.003)     (0.004)
+...FR before 2001
+                            -0.087***   -0.044***   -0.045***     -0.034***   -0.039***
+
+                               (0.008)     (0.005)     (0.005)       (0.004)     (0.004)
+
+                              0.017     -0.025**    -0.020**      -0.034***   -0.018**
+
+                               (0.011)     (0.007)     (0.007)       (0.006)     (0.006)
+
+                              -0.014     -0.017*    -0.020**        -0.008      -0.007
+
+                               (0.011)     (0.007)     (0.008)       (0.006)     (0.006)
+
+                            -0.087***   -0.052***   -0.060***     -0.046***   -0.053***
+
+                               (0.013)     (0.009)     (0.009)       (0.008)     (0.008)
+
+                            -0.111***   -0.075***   -0.076***     -0.070***   -0.071***
+
+                               (0.013)     (0.009)     (0.010)       (0.008)     (0.008)
+
+Car-age polynomial          X           X                    X      X         X
+
+Controls for car features               X                    X      X         X
+
+Controls for model updates                                   X                X
+
+Car-model fixed effects                                             X         X
+
+R2                          0.5340 0.8450 0.8416 0.8941 0.8945
+
+N                           63,340 50,872 50,872 50,872 50,872
+
+Notes: Depicted are estimates for  vy (see Section 3.1) after taking the log of car prices. Car age
+is controlled for by a fifth-order polynomial (chosen based on the Akaike Information Criterion
+Test). Car features include all car characteristics listed in Table 1. Robust standard errors are
+stated in brackets. *, **, and *** indicate statistical significance at the 5%, the 1%, and the 0.1%
+level, respectively.
+
+B.2 Robustness to changes in the main specification
+
+Log-linearization
+Since the distribution of prices is right-skewed (recall Figure 6), a sensible robustness-
+check is to log-linearize Regression 1. As results in Table B.2 reveal, this modification
+produces results that are even more consistent than those from our main specification,
+which is particularly reassuring given the long right tail in prices.
+
+                                                      vii
+Alternative model-update indicators
+In our main specification, we classify a car as having undergone a model update if its
+date of first registration was more than three months after factories switched produc-
+tion. Our results are robust to varying definitions of model-update indicators, which
+suggests that the potential measurement error when assigning the model-generation
+information is unlikely to be harmful. Table B.3 collects the results for the following
+dummy definitions that we used for robustness analysis:30
+
+   · D1: Model-generation indicator (measuring fixed effects for each model gener-
+      ation) imposing no insecurity: We treat all cars registered one month or later
+      after the official model switch as being a new model.
+
+   · D2: Model-generation indicator (measuring fixed effects for each model gen-
+      eration) with five-months insecurity window: Like D1 but we treat the model
+      status of cars registered within three months after a model switch as unknown.
+      Effectively, these cars are not used to identify our model.
+
+   · D3: Model-update dummy imposing no insecurity: Takes on the value of one if
+      a model update happened in a given month.
+
+   · D4: Model-update dummy, with five-months insecurity window: Like D3 but the
+      five months after the introduction of a new model are also labeled as a model-
+      update month.
+
+Alternative car-age polynomials
+A key identifying assumption of any research-discontinuity design is that the contin-
+uous relationship between the forcing variable (here: car age) and the outcome vari-
+able (here: car price) is adequately captured by the polynomial function f (·). Since
+this assumption is inherently untestable, the literature (see e.g., Lee and Lemieux,
+2010) stresses that results should be robust to varying polynomial functions in or-
+der to be credible. As can be seen in Table B.4, this is indeed the case, as our key
+results stay stable even when lower-order and higher-order polynomials than those
+endorsed by the Akaike Information-Criterion Test are used.
+
+  30We have also experimented with smaller and larger insecurity windows (three to six months) but
+omitted these results to save space. Results are very similar.
+
+                                                     viii
+Table B.3. Robustness analysis (vintage): Alternative model-update indicators
+
+Dependent variable: Car prices
+
+                                                   Regression coefficients
+
+                                           (Robust standard errors in brackets)
+
+                           (1)     (2)     (3)     (4)     (5)              (6)     (7)     (8)
+
+Indicator for...           44.3 -56.5 126.4 -72.0 25.9 -33.8 -152.8 -158.6
+...FR before 2007
+...FR before 2006          (108.3) (89.4) (108.4) (90.7) (107.7) (91.8) (108.2) (91.9)
+...FR before 2005
+...FR before 2004          -603.2***-636.3***-524.5***-549.3***-581.0***-557.4***-833.6***-736.7***
+...FR before 2003
+...FR before 2002          (65.7)  (54.0)  (66.0)  (54.9)  (65.8)           (55.3)  (66.9)  (56.0)
+...FR before 2001
+                           -725.7*** -83.4 -505.9***-352.0***-751.0***-643.2***-547.9***-492.1***
+
+                           (62.7)  (52.8)  (65.3)  (57.3)  (64.3)           (56.1)  (62.8)  (54.0)
+
+                           -122.1 70.8 51.1 53.3 -192.6* -134.3 146.4 111.6
+
+                           (86.0)  (76.6)  (92.7)  (84.4)  (88.1)           (78.5)  (87.6)  (77.9)
+
+                           -29.2 -314.9*** -29.7 -86.3 -177.9* 20.6 -67.0 96.5
+
+                           (74.9)  (70.1)  (76.3)  (70.8)  (76.9)           (69.1)  (76.8)  (68.9)
+
+                           -417.2*** -202.4* -468.8*** -236.0** -399.4***-297.1***-568.3***-418.8***
+
+                           (86.1)  (84.6)  (87.6)  (84.3)  (88.4)           (82.4)  (88.2)  (83.3)
+
+                           -379.4*** 83.6 -389.8***-542.5***-445.7***-340.2***-402.9***-308.9***
+
+                           (91.4)  (91.4)  (98.0)  (97.3)  (94.1)           (91.9)  (93.2)  (91.7)
+
+Car-age polynomial              X  X       X       X       X                X       X       X
+
+Controls for car features       X  X       X       X       X                X       X       X
+
+Car-model fixed effects            X               X                        X               X
+
+Controls for model updates D1      D1      D2      D2      D3               D3      D4      D4
+
+R2                         0.8179 0.8650 0.8203 0.8621 0.8169 0.8587 0.8163 0.8583
+
+N                          50,872 50,872 50,872 50,872 50,872 50,872 50,872 50,872
+
+Notes: Depicted are estimates for  vy (see Section 3.1) for varying model-update indicators. Main-
+specification benchmark: A car is classified as a new model if its date of first registration is more
+than three months after an official model launch. D1: Model-generation indicator imposing no inse-
+curity (all cars registered at least one month after an official model launch are classified as a new
+model). D2: Model-generation indicator with five-months insecurity window (like D1 but the model
+status of cars registered within five months after a model launch is treated as unknown). D3: Model-
+update indicator imposing no insecurity (takes on the value of one if a model update happened in a
+given month). D4: Model-update dummy, with five-months insecurity window (like D3 but the three
+months after a market launch are also labeled as a model-update month). Car age is controlled for
+by a fifth-order polynomial (chosen based on the Akaike Information Criterion Test). Car features
+include all car characteristics listed in Table 1. Robust standard errors are stated in brackets. *, **,
+and *** indicate statistical significance at the 5%, the 1%, and the 0.1% level, respectively.
+
+                                           ix
+Table B.4. Robustness analysis (vintage): Alternative car-age polynomials
+
+Dep. Variable: Car price
+
+                            (1)            (2)      (3)                    (4)  (5)
+
+Indicator for...              -136.7       45.1     -325.7**    -606.1***       -677.9***
+...FR before 2007
+...FR before 2006               (93.8)     (105.9)     (116.6)     (130.5)         (141.1)
+...FR before 2005
+...FR before 2004           -276.8***   -654.7***   -575.8***   -436.3***       -397.0***
+...FR before 2003
+...FR before 2002               (51.1)      (60.4)      (64.5)      (66.6)          (70.9)
+...FR before 2001
+                            -512.7***   -908.7***   -306.0***   -330.0***       -389.4***
+
+                                (60.2)      (63.8)      (69.8)      (69.2)          (72.0)
+
+                            -898.5***   -514.2***    -205.7*    -499.4***       -465.3***
+
+                                (76.2)      (72.6)      (86.6)      (97.9)          (96.4)
+
+                            -266.7***   -199.9***   -464.8***   -334.4***       -269.0**
+
+                                (62.8)      (75.5)      (87.1)      (87.1)          (92.0)
+
+                              -160.6      -100.6    -319.2***     -119.8         -203.7*
+
+                                (68.3)      (81.3)      (88.1)      (93.4)          (96.7)
+
+                              114.2      -208.7*    -344.5***      -23.2         -272.5*
+
+                                (91.1)      (89.9)     (102.0)     (112.1)         (116.7)
+
+Order of age polynomial     3rd            4th      6th                    7th  8th
+
+Controls for car features   X              X        X                      X    X
+
+Controls for model updates  X              X        X                      X    X
+
+Car-model fixed effects     X              X        X                      X    X
+
+R2                          0.8594 0.8185 0.8178 0.8179 0.8179
+
+N                           50,872 50,872 50,872 50,872 50,872
+
+Notes: Depicted are estimates for  vy (see Section 3.1) for varying car-age polynomials. The main-
+specification benchmark is a fifth-order polynomial (chosen based on the Akaike Information Crite-
+rion Test). Robust standard errors are stated in brackets. *, **, and *** indicate statistical signifi-
+cance at the 5%, the 1%, and the 0.1% level, respectively.
+
+                                        x
+C Robustness analysis: Mileage dimension
+
+C.1 Potential empirical pitfalls
+
+Observable heterogeneity around thresholds
+To assure that our results are not driven by differing car populations around the
+thresholds, we check whether cars to the left and to the right of 10,000-km marks
+are comparable with respect to their average mileage (see Figure C.1), their average
+horsepower (see Figure C.2), their average fuel type (see Figure C.3), and the com-
+position of seller types (private versus commercials sellers) (see Figure C.4). As was
+the case for the vintage thresholds, these raw data plots show erratic but unsystem-
+atic patterns, which suggests that the observed price discontinuities are not driven by
+changes in the underlying market composition.
+
+             Figure C.1. Average car age by car mileage
+
+               Notes: Plotted is the average age of traded cars as a function of car mileage
+               measured in 1,000-km bins. Vertical dashed lines indicate 10,000-km thresh-
+               olds. Solid lines represent linear fits between thresholds.
+
+                                                      xi
+Figure C.2. Average horsepower by car mileage
+
+ Notes: Plotted is the average horsepower of traded cars as a function of car
+ mileage measured in 1,000-km bins. Vertical dashed lines indicate 10,000-km
+ thresholds. Solid lines represent linear fits between thresholds.
+Figure C.3. Share of cars with regular fuel by car mileage
+
+ Notes: Plotted is the share of traded cars with regular fuel as a function of car
+ mileage measured in 1,000-km bins. Vertical dashed lines indicate 10,000-km
+ thresholds. Solid lines represent linear fits between thresholds.
+
+                                         xii
+             Figure C.4. Share of private sellers by car mileage
+
+               Notes: Plotted is the share of cars offered by private sellers as a function of car
+               mileage measured in 1,000-km bins. Vertical dashed lines indicate 10,000-km
+               thresholds. Solid lines represent linear fits between thresholds.
+
+Placebo test
+For our placebo test in the mileage dimension, we convert odometer readings from
+kilometers to US miles and check for discontinuities in the converted data at 10,000-
+mile thresholds. Given that Germany exclusively uses the metric system, US miles
+thresholds should be irrelevant even if heuristics play a role in decision making. As
+is apparent from Table C.1, all but the very first 10,000-mile placebo threshold are
+statistically indistinguishable from zero, which is in line with expectations.
+
+                                                     xiii
+Table C.1. Robustness analysis (mileage): Placebo thresholds
+
+  Dependent variable: Car prices
+                                                   Regression coefficients
+
+                                          (Robust standard errors in brackets)
+                                                                (1)
+
+Indicator for...                 -709.0***
+...more than 10K miles
+...more than 20K miles              (176.7)
+...more than 30K miles
+...more than 40K miles              -97.1
+...more than 50K miles
+...more than 60K miles              (131.3)
+...more than 70K miles
+...more than 80K miles               1.6
+...more than 90K miles
+...more than 100K miles             (107.9)
+
+                                   -181.0
+
+                                     (79.3)
+
+                                   -105.6
+
+                                    (161.2)
+
+                                    -71.4
+
+                                     (74.3)
+
+                                    -45.3
+
+                                     (86.3)
+
+                                    34.9
+
+                                    (126.8)
+
+                                   -101.6
+
+                                    (100.1)
+
+                                    -35.4
+
+                                     (85.1)
+
+Car-mileage polynomial           X
+
+Controls for car features        X
+
+Controls for model updates       X
+
+Car-model fixed effects          X
+
+R2                               0.8172
+
+N                                50,872
+
+Notes: Depicted are estimates for  my (see Section 3.2) after converting the
+mileage data from kilometers to US miles. All regressions include the origi-
+nal 10,000-km thresholds, for which estimates do not significantly change.
+Control variables are the same as in the main empirical specification. Ro-
+bust standard errors are stated in brackets. *, **, and *** indicate statistical
+significance at the 5%, the 1%, and the 0.1% level, respectively.
+
+                            xiv
+C.2 Robustness to changes in the main specification
+
+Log-linearization
+As results in Table C.2 reveal, log-linearization of Regression 2 is not innocuous
+and even reverses results for some 10,000-km thresholds. This pattern is puzzling,
+since discontinuities in the mileage dimension have been convincingly documented
+to be systematic and sizable by Lacetera et al. (2012). However, we are certainly not
+inclined to call their findings into question but rather attribute the lack of robustness
+to the concerns of measurement error in our mileage data.
+Alternative model-update indicators
+As was the case for the vintage discontinuities, our mileage results are robust to
+varying definitions of model-update indicators. This suggests that the potential mea-
+surement error when assigning the model-generation information is unlikely to be
+harmful. Results in Table C.3 are for the same definitions of alternative indicators as
+described in Section B.2.
+Alternative car-age polynomials
+As was the case with log-linearization, results in the mileage domain are somewhat
+sensitive to using car-age polynomials of orders higher than three, whereas orders
+of one, two (the main-specification benchmark), and three work fine (see Table C.4).
+However, note that specifications that accommodate polynomials of orders higher
+than three appear to suffer from multicollinearity and that our statistical software
+fails to return the F-Test statistic, which suggests that results are in line with expecta-
+tions, as long as the econometric model is not misspecified.
+
+                                                      xv
+Table C.2. Robustness analysis (mileage): Log-linearization
+
+Dependent variable: Log of car prices
+
+                                                Regression coefficients
+
+                                        (Robust standard errors in brackets)
+
+                            (1)         (2)                  (3)  (4)         (5)
+
+Indicator for...             -0.057*    0.044***    0.041***      0.060***    0.058***
+...more than 10K km
+...more than 20K km            (0.011)     (0.008)     (0.006)       (0.005)     (0.005)
+...more than 30K km
+...more than 40K km         -0.033***   0.029***    0.029***      0.034***    0.035***
+...more than 50K km
+...more than 60K km            (0.009)     (0.006)     (0.004)       (0.003)     (0.004)
+...more than 70K km
+...more than 80K km           -0.001    0.050***    0.050***      0.052***    0.051***
+...more than 90K km
+...more than 100K km           (0.008)     (0.005)     (0.005)       (0.004)     (0.004)
+
+                             -0.015*    0.034***     0.033**      0.031***    0.030***
+
+                               (0.008)     (0.005)     (0.007)       (0.006)     (0.006)
+
+                             -0.016*      0.007       0.008         0.005       0.006
+
+                               (0.008)     (0.004)     (0.008)       (0.006)     (0.006)
+
+                             0.0107       0.006       0.006         0.003       0.003
+
+                               (0.008)     (0.004)     (0.009)       (0.008)     (0.008)
+
+                            -0.030***     -0.004      -0.004        -0.006      -0.006
+
+                               (0.008)     (0.004)     (0.009)       (0.008)     (0.008)
+
+                              0.006       0.000       0.000         -0.005     -0.005*
+
+                               (0.008)     (0.004)     (0.009)       (0.008)     (0.008)
+
+                            -0.024***   -0.017***   -0.017***     -0.017***   -0.017***
+
+                               (0.008)     (0.004)     (0.009)       (0.008)     (0.008)
+
+                              0.006       -0.002      -0.002        -0.005      -0.005
+
+                               (0.009)     (0.005)     (0.010)       (0.008)     (0.008)
+
+Car-mileage polynomial      X                X               X           X    X
+
+Controls for car features                    X               X           X    X
+
+Controls for model updates                                   X                X
+
+Car-model fixed effects                                                  X    X
+
+R2                          0.2930 0.8208 0.8215 0.8692 0.8699
+
+N                           63,340 50,872 50,872 50,872 50,872
+
+Notes: Depicted are estimates for  my (see Section 3.2) after taking the log of car prices. All
+regressions include the original 10,000-km thresholds, for which estimates do not significantly
+change. Control variables are the same as in the main empirical specification. Robust standard
+errors are stated in brackets. *, **, and *** indicate statistical significance at the 5%, the 1%, and
+the 0.1% level, respectively.
+
+                                        xvi
+Table C.3. Robustness analysis (mileage): Alternative model-update indicators
+
+Dependent variable: Log of car prices
+
+                                                         Regression coefficients
+
+                                                (Robust standard errors in brackets)
+
+                           (1)         (2)      (3)      (4)      (5)             (6)      (7)      (8)
+
+Indicator for...           -937.4***-1,143.9***-981.6***-1,024.6***-1,048.4***-926.0***-1,024.7***-903.8***
+...more than 10K km
+...more than 20K km        (173.9)     (157.2)  (173.5)  (158.0)  (170.7)         (158.9)  (173.6)  (160.7)
+...more than 30K km
+...more than 40K km        -762.3*** -788.6*** -775.0*** -756.6*** -739.2*** -722.1*** -784.0*** -754.0***
+...more than 50K km
+...more than 60K km        (109.0)     (92.9)   (109.2)  (94.1)   (105.4)         (93.9)   (108.4)  (95.9)
+...more than 70K km
+...more than 80K km        -322.2*** -455.7*** -355.0*** -378.9*** -353.5*** -356.8*** -369.9*** -367.9***
+...more than 90K km
+...more than 100K km       (82.9)      (69.9)   (83.5)   (70.7)   (81.4)          (70.5)   (82.9)   (71.5)
+
+                           -351.3*** -480.9*** -374.2*** -442.3*** -367.3*** -419.2*** -380.9*** -428.5***
+
+                           (69.5)      (58.0)   (70.6)   (59.0)   (69.1)          (58.7)   (69.7)   (59.2)
+
+                           -131.0* -153.3** -160.1** -144.7** -145.5* -167.1** -146.9* -168.3**
+
+                           (60.3)      (50.4)   (61.5)   (51.7)   (60.6)          (51.7)   (60.5)   (51.6)
+
+                           -208.1*** -214.4*** -226.7*** -214.3*** -203.7*** -235.2*** -209.1*** -240.3***
+
+                           (57.3)      (47.6)   (58.5)   (49.0)   (57.8)          (49.1)   (57.6)   (48.9)
+
+                           -220.3*** -218.1*** -271.5*** -229.3*** -223.1*** -236.6*** -224.8*** -237.6***
+
+                           (54.9)      (45.3)   (56.2)   (47.0)   (55.5)          (47.0)   (55.2)   (46.8)
+
+                           -144.0** -201.8*** -134.4* -187.5*** -142.1** -211.1*** -138.8** -209.8***
+
+                           (52.5)      (43.7)   (53.9)   (45.5)   (53.1)          (45.4)   (52.9)   (45.2)
+
+                           -285.6*** -257.3*** -292.0*** -249.9*** -284.5*** -281.3*** -285.3*** -282.6***
+
+                           (50.2)      (42.8)   (51.6)   (44.5)   (50.9)          (44.0)   (50.7)   (43.8)
+
+                           -122.9* -182.4*** -146.0** -165.9*** -122.9* -169.9*** -128.5* -174.2***
+
+                           (52.5)      (45.4)   (54.5)   (47.6)   (53.3)          (46.5)   (53.0)   (46.4)
+
+Car-mileage polynomial     X           X        X        X        X               X        X        X
+
+Controls for car features  X           X        X        X        X               X        X        X
+
+Controls for model updates D1          D1       D2       D2       D3              D3       D4       D4
+
+Car-model fixed effects                X                 X                        X                 X
+
+R2                         0.8160 0.8651 0.8173 0.8623 0.8160 0.8581 0.8148 0.8574
+
+N                          50,872 50,872 48,572 48,572 50,872 50,872 50,872 50,872
+
+Notes: Depicted are estimates for  my (see Section 3.2) for varying model-update indicators. Main-
+specification benchmark: A car is classified as a new model if its date of first registration is more than
+three months after an official model launch. D1: Model-generation indicator imposing no insecurity
+(all cars registered at least one month after an official model launch are classified as a new model).
+D2: Model-generation indicator with five-months insecurity window (like D1 but the model status
+of cars registered within five months after a model launch is treated as unknown). D3: Model-
+update indicator imposing no insecurity (takes on the value of one if a model update happened
+in a given month). D4: Model-update dummy, with five-months insecurity window (like D3 but
+the three months after a market launch are also labeled as a model-update month). Car mileage
+is controlled for by a second-order polynomial (chosen based on the Akaike Information Criterion
+Test). Car features include all car characteristics listed in Table 1. Robust standard errors are stated
+in brackets. *, **, and *** indicate statistical significance at the 5%, the 1%, and the 0.1% level,
+respectively.
+
+                                                xvii
+Table C.4. Robustness analysis (mileage): Alternative car-mileage polynomials
+
+Dep. Variable: Car price
+
+                             (1)            (2)        (3)         (4)         (5)
+
+Indicator for...             -1,039.5***   -804.1***   -585.7***   -476.5**    999.2**
+...more than 10K km
+...more than 20K km               (161.6)     (178.0)     (178.0)     (183.3)    (313.4)
+...more than 30K km
+...more than 40K km           -864.1***    -558.2***   -337.6***     -233.1    392.6*
+...more than 50K km
+...more than 60K km                (98.9)     (117.6)     (118.6)     (126.9)    (184.4)
+...more than 70K km
+...more than 80K km           -463.1***      -143.2       67.9       161.7      214.3
+...more than 90K km
+...more than 100K                  (75.3)      (93.6)      (93.8)     (101.9)    (127.2)
+
+                              -524.7***     -175.4*       19.7       100.2      -151.8
+
+                                   (62.6)      (81.7)      (82.5)      (90.2)    (115.0)
+
+                              -249.5***       83.6     254.4***    -319.2***    -20.3
+
+                                   (55.5)      (71.6)      (71.9)      (77.8)     (96.0)
+
+                              -369.1***       -38.7      114.7       167.7*     -138.7
+
+                                   (55.3)      (67.7)      (67.8)      (72.3)     (84.0)
+
+                              -352.6***       -39.0      103.9       148.0*     -99.2
+
+                                   (53.3)      (65.0)      (64.9)      (68.4)     (78.6)
+
+                              -344.9***       10.7      131.4*      163.8**       6.4
+
+                                   (51.9)      (60.7)      (60.4)      (62.6)     (75.5)
+
+                              -412.2***     -126.2*       -15.9        9.0      -96.4
+
+                                   (50.0)      (58.0)      (57.3)      (58.9)     (75.6)
+
+                              -297.5***       -11.6       77.6        93.7       30.8
+
+                                   (51.2)      (58.2)      (57.7)      (58.5)     (74.9)
+
+Order of mileage polynomial  1st            3rd        4th         5th         6th
+
+Controls for car features    X              X          X           X           X
+
+Controls for model updates   X              X          X           X           X
+
+Car-model fixed effects      X              X          X           X           X
+
+R2                           0.8605        0.8183 0.8184 0.8184 0.8178
+
+N                            50,872        50,872 50,872 50,872 50,872
+
+Notes: Depicted are estimates for  my (see Section 3.2) for varying car-mileage polynomials. The
+main-specification benchmark is a second-order polynomial (chosen based on the Akaike Infor-
+mation Criterion Test). Robust standard errors are stated in brackets. *, **, and *** indicate
+statistical significance at the 5%, the 1%, and the 0.1% level, respectively.
+
+                                     xviii
+D Robustness analysis: Horserace
+
+As a final robustness exercise, we implement a horserace specification by controlling
+for mileage and vintage thresholds at the same time. Results in Table D.1 show that
+both discontinuities exist independently of one another. Not only do effects in either
+dimension survive, but especially the vintage discontinuities are even slightly more
+pronounced.
+
+                                                     xix
+Table D.1. Robustness analysis: Horserace between vintage and mileage discontinuities
+
+Dependent variable: Car prices
+
+                                           Regression coefficients
+
+                                        (Robust standard errors in brackets)
+
+                                (1)                                (2)        (3)
+
+Indicator for...                 -221.4*                                -265.7**
+...older than 2007                (91.8)                                  (90.1)
+...older than 2006              -780.3***
+...older than 2005                (56.6)                                -805.9***
+...older than 2004              -609.2***                                 (55.5)
+...older than 2003                (54.9)
+...older than 2002                                                      -610.0***
+...older than 2001                 -3.7                                   (54.1)
+...more than 10K km               (77.7)                                    7.9
+...more than 20K km                44.3                                   (71.9)
+...more than 30K km               (68.9)                                   56.4
+...more than 40K km             -437.9***                                 (67.5)
+...more than 50K km               (83.5)
+...more than 60K km             -345.1***                               -441.3***
+...more than 70K km               (91.7)                                  (83.2)
+...more than 80K km
+...more than 90K km                        -905.9***                    -385.8***
+...more than 100K km                        (160.5)                       (90.6)
+                                           -749.2***
+                                             (95.7)                     -719.3**
+                                           -368.8***                     (159.5)
+                                             (71.4)                     -550.9***
+                                           -428.4***                      (93.4)
+                                             (59.2)                      -140.5*
+                                           -163.9***                      (69.8)
+                                             (51.6)                     -218.2***
+                                           -242.9***                      (56.9)
+                                             (48.9)
+                                           -234.6***                       -84.2
+                                             (46.8)                       (49.9)
+                                           -212.9***                    -174.2***
+                                             (45.2)                       (47.6)
+                                           -281.8***                    -190.7***
+                                             (43.8)                       (45.7)
+                                           -169.6***                    -210.8***
+                                             (46.4)                       (44.0)
+                                                                        -290.3***
+                                                                          (42.8)
+                                                                        -185.0***
+                                                                          (45.3)
+
+Car-age polynomial              X                                             X
+
+Car-mileage polynomial                                             X          X
+
+Controls for car features       X                                  X          X
+
+Controls for model updates      X                                  X          X
+
+Car-model fixed effects         X                                  X          X
+
+R2                              0.8584     0.8575                             0.8661
+
+N                               50,872     50,872                             50,872
+
+Notes: Depicted are estimates for  vy and  my when jointly controlling for car vintage and car
+mileage (see Sections 3.1 and 3.2). Control variables are the same as in the main empirical
+
+specification. Robust standard errors are stated in brackets. *, **, and *** indicate statistical
+
+significance at the 5%, the 1%, and the 0.1% level, respectively.
+
+                                                  xx
+

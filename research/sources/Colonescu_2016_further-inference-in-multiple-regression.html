@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Principles of Econometrics with R</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="This is a beginner’s guide to applied econometrics using the free statistics software R.">
+  <meta name="generator" content="bookdown 0.1 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Principles of Econometrics with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://bookdown.org/ccolonescu/RPoE4/" />
+  
+  <meta property="og:description" content="This is a beginner’s guide to applied econometrics using the free statistics software R." />
+  <meta name="github-repo" content="ccolonescu/RPoE" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Principles of Econometrics with R" />
+  
+  <meta name="twitter:description" content="This is a beginner’s guide to applied econometrics using the free statistics software R." />
+  
+
+<meta name="author" content="Constantin Colonescu">
+
+<meta name="date" content="2016-09-01">
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="multiplereg.html">
+<link rel="next" href="indvars.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">PoE with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>.</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#the-rstudio-screen"><i class="fa fa-check"></i><b>1.1</b> The RStudio Screen</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="intro.html"><a href="intro.html#the-script-or-data-view-window"><i class="fa fa-check"></i><b>1.1.1</b> The <code>Script</code>, or <code>data view</code> window</a></li>
+<li class="chapter" data-level="1.1.2" data-path="intro.html"><a href="intro.html#the-console-or-output-window"><i class="fa fa-check"></i><b>1.1.2</b> The <code>console</code>, or <code>output</code> window</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#intro_s1"><i class="fa fa-check"></i><b>1.2</b> How to Open a Data File</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#creating-graphs"><i class="fa fa-check"></i><b>1.3</b> Creating Graphs</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#an-r-cheat-sheet"><i class="fa fa-check"></i><b>1.4</b> An R Cheat Sheet</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="simplelm.html"><a href="simplelm.html"><i class="fa fa-check"></i><b>2</b> The Simple Linear Regression Model</a><ul>
+<li class="chapter" data-level="2.1" data-path="simplelm.html"><a href="simplelm.html#the-general-model"><i class="fa fa-check"></i><b>2.1</b> The General Model</a></li>
+<li class="chapter" data-level="2.2" data-path="simplelm.html"><a href="simplelm.html#food_exmpl"><i class="fa fa-check"></i><b>2.2</b> Example: Food Expenditure versus Income</a></li>
+<li class="chapter" data-level="2.3" data-path="simplelm.html"><a href="simplelm.html#estimating-a-linear-regression"><i class="fa fa-check"></i><b>2.3</b> Estimating a Linear Regression</a></li>
+<li class="chapter" data-level="2.4" data-path="simplelm.html"><a href="simplelm.html#prediction-with-the-linear-regression-model"><i class="fa fa-check"></i><b>2.4</b> Prediction with the Linear Regression Model</a></li>
+<li class="chapter" data-level="2.5" data-path="simplelm.html"><a href="simplelm.html#repeated-samples-to-assess-regression-coefficients"><i class="fa fa-check"></i><b>2.5</b> Repeated Samples to Assess Regression Coefficients</a></li>
+<li class="chapter" data-level="2.6" data-path="simplelm.html"><a href="simplelm.html#estimated-variances-and-covariance-of-regression-coefficients"><i class="fa fa-check"></i><b>2.6</b> Estimated Variances and Covariance of Regression Coefficients</a></li>
+<li class="chapter" data-level="2.7" data-path="simplelm.html"><a href="simplelm.html#non-linear-relationships"><i class="fa fa-check"></i><b>2.7</b> Non-Linear Relationships</a></li>
+<li class="chapter" data-level="2.8" data-path="simplelm.html"><a href="simplelm.html#using-indicator-variables-in-a-regression"><i class="fa fa-check"></i><b>2.8</b> Using Indicator Variables in a Regression</a></li>
+<li class="chapter" data-level="2.9" data-path="simplelm.html"><a href="simplelm.html#monte-carlo-simulation"><i class="fa fa-check"></i><b>2.9</b> Monte Carlo Simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="intervalest.html"><a href="intervalest.html"><i class="fa fa-check"></i><b>3</b> Interval Estimation and Hypothesis Testing</a><ul>
+<li class="chapter" data-level="3.1" data-path="intervalest.html"><a href="intervalest.html#edrc"><i class="fa fa-check"></i><b>3.1</b> The Estimated Distribution of Regression Coefficients</a></li>
+<li class="chapter" data-level="3.2" data-path="intervalest.html"><a href="intervalest.html#cig"><i class="fa fa-check"></i><b>3.2</b> Confidence Interval in General</a></li>
+<li class="chapter" data-level="3.3" data-path="intervalest.html"><a href="intervalest.html#ecifm"><i class="fa fa-check"></i><b>3.3</b> Example: Confidence Intervals in the <em>food</em> Model</a></li>
+<li class="chapter" data-level="3.4" data-path="intervalest.html"><a href="intervalest.html#cirs"><i class="fa fa-check"></i><b>3.4</b> Confidence Intervals in Repeated Samples</a></li>
+<li class="chapter" data-level="3.5" data-path="intervalest.html"><a href="intervalest.html#hypotests"><i class="fa fa-check"></i><b>3.5</b> Hypothesis Tests</a></li>
+<li class="chapter" data-level="3.6" data-path="intervalest.html"><a href="intervalest.html#the-p-value"><i class="fa fa-check"></i><b>3.6</b> The <em>p</em>-Value</a></li>
+<li class="chapter" data-level="3.7" data-path="intervalest.html"><a href="intervalest.html#testing-linear-combinations-of-parameters"><i class="fa fa-check"></i><b>3.7</b> Testing Linear Combinations of Parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html"><i class="fa fa-check"></i><b>4</b> Prediction, R-squared, and Modeling</a><ul>
+<li class="chapter" data-level="4.1" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#forecasting-predicting-a-particular-value"><i class="fa fa-check"></i><b>4.1</b> Forecasting (Predicting a Particular Value)</a></li>
+<li class="chapter" data-level="4.2" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#goodness-of-fit"><i class="fa fa-check"></i><b>4.2</b> Goodness-of-Fit</a></li>
+<li class="chapter" data-level="4.3" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#linear-log-models"><i class="fa fa-check"></i><b>4.3</b> Linear-Log Models</a></li>
+<li class="chapter" data-level="4.4" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#residuals-and-diagnostics"><i class="fa fa-check"></i><b>4.4</b> Residuals and Diagnostics</a></li>
+<li class="chapter" data-level="4.5" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#polynomial-models"><i class="fa fa-check"></i><b>4.5</b> Polynomial Models</a></li>
+<li class="chapter" data-level="4.6" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#log-linear-models"><i class="fa fa-check"></i><b>4.6</b> Log-Linear Models</a></li>
+<li class="chapter" data-level="4.7" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#the-log-log-model"><i class="fa fa-check"></i><b>4.7</b> The Log-Log Model</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="multiplereg.html"><a href="multiplereg.html"><i class="fa fa-check"></i><b>5</b> The Multiple Regression Model</a><ul>
+<li class="chapter" data-level="5.1" data-path="multiplereg.html"><a href="multiplereg.html#the-general-model-1"><i class="fa fa-check"></i><b>5.1</b> The General Model</a></li>
+<li class="chapter" data-level="5.2" data-path="multiplereg.html"><a href="multiplereg.html#example-big-andys-hamburger-sales"><i class="fa fa-check"></i><b>5.2</b> Example: Big Andy’s Hamburger Sales</a></li>
+<li class="chapter" data-level="5.3" data-path="multiplereg.html"><a href="multiplereg.html#interval-estimation-in-multiple-regression"><i class="fa fa-check"></i><b>5.3</b> Interval Estimation in Multiple Regression</a></li>
+<li class="chapter" data-level="5.4" data-path="multiplereg.html"><a href="multiplereg.html#hypothesis-testing-in-multiple-regression"><i class="fa fa-check"></i><b>5.4</b> Hypothesis Testing in Multiple Regression</a></li>
+<li class="chapter" data-level="5.5" data-path="multiplereg.html"><a href="multiplereg.html#polynomial-regression-models"><i class="fa fa-check"></i><b>5.5</b> Polynomial Regression Models</a></li>
+<li class="chapter" data-level="5.6" data-path="multiplereg.html"><a href="multiplereg.html#interaction-terms-in-linear-regression"><i class="fa fa-check"></i><b>5.6</b> Interaction Terms in Linear Regression</a></li>
+<li class="chapter" data-level="5.7" data-path="multiplereg.html"><a href="multiplereg.html#goodness-of-fit-in-multiple-regression"><i class="fa fa-check"></i><b>5.7</b> Goodness-of-Fit in Multiple Regression</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html"><i class="fa fa-check"></i><b>6</b> Further Inference in Multiple Regression</a><ul>
+<li class="chapter" data-level="6.1" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#joint-hypotheses-and-the-f-statistic"><i class="fa fa-check"></i><b>6.1</b> Joint Hypotheses and the F-statistic</a></li>
+<li class="chapter" data-level="6.2" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#testing-simultaneous-hypotheses"><i class="fa fa-check"></i><b>6.2</b> Testing Simultaneous Hypotheses</a></li>
+<li class="chapter" data-level="6.3" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#omitted-variable-bias"><i class="fa fa-check"></i><b>6.3</b> Omitted Variable Bias</a></li>
+<li class="chapter" data-level="6.4" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#irrelevant-variables"><i class="fa fa-check"></i><b>6.4</b> Irrelevant Variables</a></li>
+<li class="chapter" data-level="6.5" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#model-selection-criteria"><i class="fa fa-check"></i><b>6.5</b> Model Selection Criteria</a></li>
+<li class="chapter" data-level="6.6" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#collinearity"><i class="fa fa-check"></i><b>6.6</b> Collinearity</a></li>
+<li class="chapter" data-level="6.7" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#prediction-and-forecasting"><i class="fa fa-check"></i><b>6.7</b> Prediction and Forecasting</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="indvars.html"><a href="indvars.html"><i class="fa fa-check"></i><b>7</b> Using Indicator Variables</a><ul>
+<li class="chapter" data-level="7.1" data-path="indvars.html"><a href="indvars.html#factor-variables"><i class="fa fa-check"></i><b>7.1</b> Factor Variables</a></li>
+<li class="chapter" data-level="7.2" data-path="indvars.html"><a href="indvars.html#examples"><i class="fa fa-check"></i><b>7.2</b> Examples</a></li>
+<li class="chapter" data-level="7.3" data-path="indvars.html"><a href="indvars.html#comparing-two-regressions-the-chow-test"><i class="fa fa-check"></i><b>7.3</b> Comparing Two Regressions: the Chow Test</a></li>
+<li class="chapter" data-level="7.4" data-path="indvars.html"><a href="indvars.html#indicator-variables-in-log-linear-models"><i class="fa fa-check"></i><b>7.4</b> Indicator Variables in Log-Linear Models</a></li>
+<li class="chapter" data-level="7.5" data-path="indvars.html"><a href="indvars.html#the-linear-probability-model"><i class="fa fa-check"></i><b>7.5</b> The Linear Probability Model</a></li>
+<li class="chapter" data-level="7.6" data-path="indvars.html"><a href="indvars.html#treatment-effects"><i class="fa fa-check"></i><b>7.6</b> Treatment Effects</a></li>
+<li class="chapter" data-level="7.7" data-path="indvars.html"><a href="indvars.html#the-difference-in-differences-estimator"><i class="fa fa-check"></i><b>7.7</b> The Difference-in-Differences Estimator</a></li>
+<li class="chapter" data-level="7.8" data-path="indvars.html"><a href="indvars.html#using-panel-data"><i class="fa fa-check"></i><b>7.8</b> Using Panel Data</a></li>
+<li class="chapter" data-level="7.9" data-path="indvars.html"><a href="indvars.html#r-practicum"><i class="fa fa-check"></i><b>7.9</b> R Practicum</a><ul>
+<li class="chapter" data-level="7.9.1" data-path="indvars.html"><a href="indvars.html#extracting-various-information"><i class="fa fa-check"></i><b>7.9.1</b> Extracting Various Information</a></li>
+<li class="chapter" data-level="7.9.2" data-path="indvars.html"><a href="indvars.html#ggplot2-an-excellent-data-visualising-tool"><i class="fa fa-check"></i><b>7.9.2</b> <code>ggplot2</code>, An Excellent Data Visualising Tool</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html"><i class="fa fa-check"></i><b>8</b> Heteroskedasticity</a><ul>
+<li class="chapter" data-level="8.1" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#spotting-heteroskedasticity-in-scatter-plots"><i class="fa fa-check"></i><b>8.1</b> Spotting Heteroskedasticity in Scatter Plots</a></li>
+<li class="chapter" data-level="8.2" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#heteroskedasticity-tests"><i class="fa fa-check"></i><b>8.2</b> Heteroskedasticity Tests</a></li>
+<li class="chapter" data-level="8.3" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#heteroskedasticity-consistent-standard-errors"><i class="fa fa-check"></i><b>8.3</b> Heteroskedasticity-Consistent Standard Errors</a></li>
+<li class="chapter" data-level="8.4" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#gls-known-form-of-variance"><i class="fa fa-check"></i><b>8.4</b> GLS: Known Form of Variance</a></li>
+<li class="chapter" data-level="8.5" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#grouped-data"><i class="fa fa-check"></i><b>8.5</b> Grouped Data</a></li>
+<li class="chapter" data-level="8.6" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#gls-unknown-form-of-variance"><i class="fa fa-check"></i><b>8.6</b> GLS: Unknown Form of Variance</a></li>
+<li class="chapter" data-level="8.7" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#heteroskedasticity-in-the-linear-probability-model"><i class="fa fa-check"></i><b>8.7</b> Heteroskedasticity in the Linear Probability Model</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html"><i class="fa fa-check"></i><b>9</b> Time-Series: Stationary Variables</a><ul>
+<li class="chapter" data-level="9.1" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#an-overview-of-time-series-tools-in-r"><i class="fa fa-check"></i><b>9.1</b> An Overview of Time Series Tools in <em>R</em></a></li>
+<li class="chapter" data-level="9.2" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#finite-distributed-lags"><i class="fa fa-check"></i><b>9.2</b> Finite Distributed Lags</a></li>
+<li class="chapter" data-level="9.3" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#serial-correlation"><i class="fa fa-check"></i><b>9.3</b> Serial Correlation</a></li>
+<li class="chapter" data-level="9.4" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#estimation-with-serially-correlated-errors"><i class="fa fa-check"></i><b>9.4</b> Estimation with Serially Correlated Errors</a></li>
+<li class="chapter" data-level="9.5" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#nonlinear-least-squares-estimation"><i class="fa fa-check"></i><b>9.5</b> Nonlinear Least Squares Estimation</a></li>
+<li class="chapter" data-level="9.6" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#a-more-general-model"><i class="fa fa-check"></i><b>9.6</b> A More General Model</a></li>
+<li class="chapter" data-level="9.7" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#autoregressive-models"><i class="fa fa-check"></i><b>9.7</b> Autoregressive Models</a></li>
+<li class="chapter" data-level="9.8" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#forecasting"><i class="fa fa-check"></i><b>9.8</b> Forecasting</a></li>
+<li class="chapter" data-level="9.9" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#multiplier-analysis"><i class="fa fa-check"></i><b>9.9</b> Multiplier Analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="random-regressors.html"><a href="random-regressors.html"><i class="fa fa-check"></i><b>10</b> Random Regressors</a><ul>
+<li class="chapter" data-level="10.1" data-path="random-regressors.html"><a href="random-regressors.html#the-instrumental-variables-iv-method"><i class="fa fa-check"></i><b>10.1</b> The Instrumental Variables (IV) Method</a></li>
+<li class="chapter" data-level="10.2" data-path="random-regressors.html"><a href="random-regressors.html#specification-tests"><i class="fa fa-check"></i><b>10.2</b> Specification Tests</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="simultaneous-equations-models.html"><a href="simultaneous-equations-models.html"><i class="fa fa-check"></i><b>11</b> Simultaneous Equations Models</a></li>
+<li class="chapter" data-level="12" data-path="time-series-nonstationarity.html"><a href="time-series-nonstationarity.html"><i class="fa fa-check"></i><b>12</b> Time Series: Nonstationarity</a><ul>
+<li class="chapter" data-level="12.1" data-path="time-series-nonstationarity.html"><a href="time-series-nonstationarity.html#ar1-the-first-order-autoregressive-model"><i class="fa fa-check"></i><b>12.1</b> AR(1), the First-Order Autoregressive Model</a></li>
+<li class="chapter" data-level="12.2" data-path="time-series-nonstationarity.html"><a href="time-series-nonstationarity.html#spurious-regression"><i class="fa fa-check"></i><b>12.2</b> Spurious Regression</a></li>
+<li class="chapter" data-level="12.3" data-path="time-series-nonstationarity.html"><a href="time-series-nonstationarity.html#unit-root-tests-for-stationarity"><i class="fa fa-check"></i><b>12.3</b> Unit Root Tests for Stationarity</a></li>
+<li class="chapter" data-level="12.4" data-path="time-series-nonstationarity.html"><a href="time-series-nonstationarity.html#cointegration"><i class="fa fa-check"></i><b>12.4</b> Cointegration</a></li>
+<li class="chapter" data-level="12.5" data-path="time-series-nonstationarity.html"><a href="time-series-nonstationarity.html#the-error-correction-model"><i class="fa fa-check"></i><b>12.5</b> The Error Correction Model</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="vec-and-var-models.html"><a href="vec-and-var-models.html"><i class="fa fa-check"></i><b>13</b> VEC and VAR Models</a><ul>
+<li class="chapter" data-level="13.1" data-path="vec-and-var-models.html"><a href="vec-and-var-models.html#var-and-vec-models"><i class="fa fa-check"></i><b>13.1</b> VAR and VEC Models</a></li>
+<li class="chapter" data-level="13.2" data-path="vec-and-var-models.html"><a href="vec-and-var-models.html#estimating-a-vec-model"><i class="fa fa-check"></i><b>13.2</b> Estimating a VEC Model</a></li>
+<li class="chapter" data-level="13.3" data-path="vec-and-var-models.html"><a href="vec-and-var-models.html#estimating-a-var-model"><i class="fa fa-check"></i><b>13.3</b> Estimating a VAR Model</a></li>
+<li class="chapter" data-level="13.4" data-path="vec-and-var-models.html"><a href="vec-and-var-models.html#impulse-responses-and-variance-decompositions"><i class="fa fa-check"></i><b>13.4</b> Impulse Responses and Variance Decompositions</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="time-varying-volatility-and-arch-models.html"><a href="time-varying-volatility-and-arch-models.html"><i class="fa fa-check"></i><b>14</b> Time-Varying Volatility and ARCH Models</a><ul>
+<li class="chapter" data-level="14.1" data-path="time-varying-volatility-and-arch-models.html"><a href="time-varying-volatility-and-arch-models.html#the-arch-model"><i class="fa fa-check"></i><b>14.1</b> The ARCH Model</a></li>
+<li class="chapter" data-level="14.2" data-path="time-varying-volatility-and-arch-models.html"><a href="time-varying-volatility-and-arch-models.html#the-garch-model"><i class="fa fa-check"></i><b>14.2</b> The GARCH Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="panel-data-models.html"><a href="panel-data-models.html"><i class="fa fa-check"></i><b>15</b> Panel Data Models</a><ul>
+<li class="chapter" data-level="15.1" data-path="panel-data-models.html"><a href="panel-data-models.html#organizing-the-data-as-a-panel"><i class="fa fa-check"></i><b>15.1</b> Organizing the Data as a Panel</a></li>
+<li class="chapter" data-level="15.2" data-path="panel-data-models.html"><a href="panel-data-models.html#the-pooled-model"><i class="fa fa-check"></i><b>15.2</b> The Pooled Model</a></li>
+<li class="chapter" data-level="15.3" data-path="panel-data-models.html"><a href="panel-data-models.html#the-fixed-effects-model"><i class="fa fa-check"></i><b>15.3</b> The Fixed Effects Model</a></li>
+<li class="chapter" data-level="15.4" data-path="panel-data-models.html"><a href="panel-data-models.html#the-random-effects-model"><i class="fa fa-check"></i><b>15.4</b> The Random Effects Model</a></li>
+<li class="chapter" data-level="15.5" data-path="panel-data-models.html"><a href="panel-data-models.html#grunfelds-investment-example"><i class="fa fa-check"></i><b>15.5</b> Grunfeld’s Investment Example</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html"><i class="fa fa-check"></i><b>16</b> Qualitative and LDV Models</a><ul>
+<li class="chapter" data-level="16.1" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-linear-probability-model-1"><i class="fa fa-check"></i><b>16.1</b> The Linear Probability Model</a></li>
+<li class="chapter" data-level="16.2" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-probit-model"><i class="fa fa-check"></i><b>16.2</b> The Probit Model</a></li>
+<li class="chapter" data-level="16.3" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-transportation-example"><i class="fa fa-check"></i><b>16.3</b> The Transportation Example</a></li>
+<li class="chapter" data-level="16.4" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-logit-model-for-binary-choice"><i class="fa fa-check"></i><b>16.4</b> The Logit Model for Binary Choice</a></li>
+<li class="chapter" data-level="16.5" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#multinomial-logit"><i class="fa fa-check"></i><b>16.5</b> Multinomial Logit</a></li>
+<li class="chapter" data-level="16.6" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-conditional-logit-model"><i class="fa fa-check"></i><b>16.6</b> The Conditional Logit Model</a></li>
+<li class="chapter" data-level="16.7" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#ordered-choice-models"><i class="fa fa-check"></i><b>16.7</b> Ordered Choice Models</a></li>
+<li class="chapter" data-level="16.8" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#models-for-count-data"><i class="fa fa-check"></i><b>16.8</b> Models for Count Data</a></li>
+<li class="chapter" data-level="16.9" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-tobit-or-censored-data-model"><i class="fa fa-check"></i><b>16.9</b> The Tobit, or Censored Data Model</a></li>
+<li class="chapter" data-level="16.10" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-heckit-or-sample-selection-model"><i class="fa fa-check"></i><b>16.10</b> The Heckit, or Sample Selection Model</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Principles of Econometrics with <span class="math inline">\(R\)</span></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="further-inference-in-multiple-regression" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> Further Inference in Multiple Regression</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(<span class="dt">list=</span><span class="kw">ls</span>())
+<span class="kw">library</span>(PoEdata) <span class="co">#for PoE datasets</span>
+<span class="kw">library</span>(knitr) <span class="co">#for referenced tables with kable()</span>
+<span class="kw">library</span>(xtable) <span class="co">#makes data frame for kable</span>
+<span class="kw">library</span>(printr) <span class="co">#automatically prints output nicely</span>
+<span class="kw">library</span>(effects)
+<span class="kw">library</span>(car)
+<span class="kw">library</span>(AER)
+<span class="kw">library</span>(broom) <span class="co">#for tidy lm output and function glance()</span>
+<span class="kw">library</span>(stats)</code></pre></div>
+<p>New package: <code>broom</code> <span class="citation">(Robinson <a href="#ref-R-broom">2016</a>)</span>.</p>
+<div id="joint-hypotheses-and-the-f-statistic" class="section level2">
+<h2><span class="header-section-number">6.1</span> Joint Hypotheses and the F-statistic</h2>
+A joint hypothesis is a set of relationships among regression parameters, relationships that need to be simultaneously true according to the null hypothesis. Joint hypotheses can be tested using the <span class="math inline">\(F\)</span>-statistic that we have already met. Its formula is given by Equation \ref{eq:FstatFormula6}. The <span class="math inline">\(F\)</span>-statistic has an <span class="math inline">\(F\)</span> distribution with the degrees of freedom <span class="math inline">\(J\)</span> and <span class="math inline">\(N-K\)</span>.
+<span class="math display">\[\begin{equation}
+F=\frac{(SSE_{R}-SSE_{U})\,/\,J}{SSE_{U}\,/\,(N-K)} \sim F_{(J,\;N-K)}
+\label{eq:FstatFormula6}
+\end{equation}\]</span>
+<p>In Equation \ref{eq:FstatFormula6} the subscript <span class="math inline">\(U\)</span> stands for “unrestricted,” that is, the initial regression equation; the “restricted” equation is a new equation, obtained from the initial one, with the relationships in the null hypothesis assumed to hold. For example, if the initial equation is Equation \ref{eq:initeqF6} and the null hypothesis is Equation \ref{eq:nullHforF6}, then the restricted equation is Equation \ref{eq:restreqforF6}.</p>
+<span class="math display">\[\begin{equation}
+y=\beta_{1}+\beta_{2}x_{2}+\beta_{3}x_{3}+\beta_{4}x_{4}+e
+\label{eq:initeqF6}
+\end{equation}\]</span>
+<span class="math display">\[\begin{equation}
+H_{0}:\beta_{2}=0\;\;AND\;\;\beta_{3}=0; \;\;\;H_{A}:\beta_{2}\neq 0\;\;OR\;\;\beta_{3}\neq 0
+\label{eq:nullHforF6}
+\end{equation}\]</span>
+<span class="math display">\[\begin{equation}
+y=\beta_{1}+\beta_{4}x_{4}+e
+\label{eq:restreqforF6}
+\end{equation}\]</span>
+<p>The symbol <span class="math inline">\(J\)</span> in the <span class="math inline">\(F\)</span> formula (Equation \ref{eq:FstatFormula6}) is the first (<em>numerator</em>) degrees of freedom of the <span class="math inline">\(F\)</span> statistic and is equal to the number of simultaneous restrictions in the null hypothesis (Equation \ref{eq:nullHforF6}); the second (the <em>denominator</em>) degrees of freedom of the <span class="math inline">\(F\)</span>-statistic is <span class="math inline">\(N-K\)</span>, which is the usual degrees of freedom of the unrestricted regression model (Equation \ref{eq:initeqF6}). The practical procedure to test a joint hypothesis like the one in Equation \ref{eq:nullHforF6} is to estimate the two regressions (unrestricted and restricted) and to calculate the <span class="math inline">\(F\)</span>-statistic.</p>
+</div>
+<div id="testing-simultaneous-hypotheses" class="section level2">
+<h2><span class="header-section-number">6.2</span> Testing Simultaneous Hypotheses</h2>
+<p>Let’s look, again, at the quadratic form of the <em>andy</em> equation (Equation \ref{eq:quadraticandyagain6}).</p>
+<span class="math display">\[\begin{equation}
+sales=\beta_{1}+\beta_{2}price+\beta_{3}advert+\beta_{4}advert^2+e
+\label{eq:quadraticandyagain6}
+\end{equation}\]</span>
+<p>Equation \ref{eq:quadraticandyagain6} has two terms that involve the regressor <span class="math inline">\(advert\)</span>, of which at least one needs to be significant for a relationship between <span class="math inline">\(advert\)</span> and <span class="math inline">\(sales\)</span> to be established. To test if such a relationship exists, we can formulate the following test:</p>
+<span class="math display">\[\begin{equation}
+H_{0}:\beta_{3}=0\;\; AND \;\;\beta_{4}=0;\;\;\;H_{A}:\beta_{3}\neq 0\;\; OR\;\; \beta_{4}\neq 0
+\label{jointhypandysq6}
+\end{equation}\]</span>
+<p>I have already mentioned that <span class="math inline">\(R\)</span> can do an <span class="math inline">\(F\)</span> test quite easily (remember the function <code>linearHypothesis</code>?), but for learning purposes let us calculate the <span class="math inline">\(F\)</span>-statistic in steps. The next code sequence uses information in the <code>anova</code>-type object, which, remember, can be visualized simply by typing the name of the object in the RStudio’s <code>Console</code> window.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">alpha &lt;-<span class="st"> </span><span class="fl">0.05</span>
+<span class="kw">data</span>(<span class="st">&quot;andy&quot;</span>, <span class="dt">package=</span><span class="st">&quot;PoEdata&quot;</span>)
+N &lt;-<span class="st"> </span><span class="kw">NROW</span>(andy) <span class="co">#Number of observations in dataset</span>
+K &lt;-<span class="st"> </span><span class="dv">4</span> <span class="co">#Four Betas in the unrestricted model</span>
+J &lt;-<span class="st"> </span><span class="dv">2</span> <span class="co">#Because Ho has two restrictions</span>
+fcr &lt;-<span class="st"> </span><span class="kw">qf</span>(<span class="dv">1</span>-alpha, J, N-K)
+mod1 &lt;-<span class="st"> </span><span class="kw">lm</span>(sales~price+advert+<span class="kw">I</span>(advert^<span class="dv">2</span>), <span class="dt">data=</span>andy)
+anov &lt;-<span class="st"> </span><span class="kw">anova</span>(mod1)
+anov <span class="co"># prints &#39;anova&#39; table for the unrestricted model</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">Df</th>
+<th align="right">Sum Sq</th>
+<th align="right">Mean Sq</th>
+<th align="right">F value</th>
+<th align="right">Pr(&gt;F)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>price</td>
+<td align="right">1</td>
+<td align="right">1219.091</td>
+<td align="right">1219.0910</td>
+<td align="right">56.49523</td>
+<td align="right">0.000000</td>
+</tr>
+<tr class="even">
+<td>advert</td>
+<td align="right">1</td>
+<td align="right">177.448</td>
+<td align="right">177.4479</td>
+<td align="right">8.22331</td>
+<td align="right">0.005441</td>
+</tr>
+<tr class="odd">
+<td>I(advert^2)</td>
+<td align="right">1</td>
+<td align="right">186.858</td>
+<td align="right">186.8585</td>
+<td align="right">8.65941</td>
+<td align="right">0.004393</td>
+</tr>
+<tr class="even">
+<td>Residuals</td>
+<td align="right">71</td>
+<td align="right">1532.084</td>
+<td align="right">21.5787</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SSEu &lt;-<span class="st"> </span>anov[<span class="dv">4</span>, <span class="dv">2</span>]
+mod2 &lt;-<span class="st"> </span><span class="kw">lm</span>(sales~price, <span class="dt">data=</span>andy) <span class="co"># restricted</span>
+anov &lt;-<span class="st"> </span><span class="kw">anova</span>(mod2)
+anov <span class="co"># prints the &#39;anova&#39; table for the restrictred model</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">Df</th>
+<th align="right">Sum Sq</th>
+<th align="right">Mean Sq</th>
+<th align="right">F value</th>
+<th align="right">Pr(&gt;F)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>price</td>
+<td align="right">1</td>
+<td align="right">1219.09</td>
+<td align="right">1219.091</td>
+<td align="right">46.9279</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td>Residuals</td>
+<td align="right">73</td>
+<td align="right">1896.39</td>
+<td align="right">25.978</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SSEr &lt;-<span class="st"> </span>anov[<span class="dv">2</span>,<span class="dv">2</span>]
+fval &lt;-<span class="st"> </span>((SSEr-SSEu)/J) /<span class="st"> </span>(SSEu/(N-K))
+pval &lt;-<span class="st"> </span><span class="dv">1</span>-<span class="kw">pf</span>(fval, J, N-K)</code></pre></div>
+<p>The calculated <span class="math inline">\(F\)</span>-statistic is <span class="math inline">\(fval=8.441\)</span> and the critical value corresponding to a significance level <span class="math inline">\(\alpha =0.05\)</span> is <span class="math inline">\(3.126\)</span>, which rejects the null hypothesis that both <span class="math inline">\(\beta_{3}\)</span> and <span class="math inline">\(\beta_{4}\)</span> are zero. The <span class="math inline">\(p\)</span>-value of the test is <span class="math inline">\(p=0.0005\)</span>.</p>
+<p>Using the <code>linearHypothesis()</code> function should produce the same result:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Hnull &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;advert=0&quot;</span>, <span class="st">&quot;I(advert^2)=0&quot;</span>)
+<span class="kw">linearHypothesis</span>(mod1,Hnull)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Res.Df</th>
+<th align="right">RSS</th>
+<th align="right">Df</th>
+<th align="right">Sum of Sq</th>
+<th align="right">F</th>
+<th align="right">Pr(&gt;F)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">73</td>
+<td align="right">1896.39</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">71</td>
+<td align="right">1532.08</td>
+<td align="right">2</td>
+<td align="right">364.306</td>
+<td align="right">8.44136</td>
+<td align="right">0.000514</td>
+</tr>
+</tbody>
+</table>
+<p>The table generated by the <code>linearHypothesis()</code> function shows the same values of the <span class="math inline">\(F\)</span>-statistic and <span class="math inline">\(p\)</span>-value that we have calculated before, as well as the residual sum of squares for the restricted and unrestricted models. Please note how I formulate the joint hypothesis as a vector of character values in which the names of the variables perfectly match those in the unrestricted model.</p>
+<p>Testing the overall significance of a model amounts to testing the joint hypothesis that all the slope coefficients are zero. <span class="math inline">\(R\)</span> does automatically this test and the resulting <span class="math inline">\(F\)</span>-statistic and <span class="math inline">\(p\)</span>-value are reported in the regression output.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(mod1)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = sales ~ price + advert + I(advert^2), data = andy)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -12.255  -3.143  -0.012   2.851  11.805 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  109.719      6.799   16.14  &lt; 2e-16 ***
+## price         -7.640      1.046   -7.30  3.2e-10 ***
+## advert        12.151      3.556    3.42   0.0011 ** 
+## I(advert^2)   -2.768      0.941   -2.94   0.0044 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 4.65 on 71 degrees of freedom
+## Multiple R-squared:  0.508,  Adjusted R-squared:  0.487 
+## F-statistic: 24.5 on 3 and 71 DF,  p-value: 5.6e-11</code></pre>
+<p>The <span class="math inline">\(F\)</span>-statistic can be retrieved from <code>summary(mod1)</code> or by using the function <code>glance(modelname)</code> in package <code>broom</code>, as shown in the following code lines. The function <code>tidy</code>, also from package <code>broom</code> organizes regression output (mainly the coefficients and their statistics) in a neat table. Both <code>glance</code> and <code>tidy</code> create output in the form of <code>data.frame</code>, which makes it suitable for use by other functions such as <code>kable</code> and <code>ggplot2</code>. Please also note that <code>tidy(mod1)</code> and <code>tidy(summary(mod1))</code> produce the same result, as shown in Tables <a href="further-inference-in-multiple-regression.html#tab:usingglance6">6.1</a> and <a href="further-inference-in-multiple-regression.html#tab:usingglanceagain6">6.2</a>. As always, we can use the function <code>names</code> to obtain a list of the quantities available in the output of the <code>glance</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">smod1 &lt;-<span class="st"> </span><span class="kw">summary</span>(mod1)
+<span class="kw">kable</span>(<span class="kw">tidy</span>(smod1), <span class="dt">caption=</span><span class="st">&quot;Tidy &#39;summary(mod1)&#39; output&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:usingglance6">Table 6.1: </span>Tidy ‘summary(mod1)’ output</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">109.71904</td>
+<td align="right">6.799045</td>
+<td align="right">16.13742</td>
+<td align="right">0.000000</td>
+</tr>
+<tr class="even">
+<td align="left">price</td>
+<td align="right">-7.64000</td>
+<td align="right">1.045939</td>
+<td align="right">-7.30444</td>
+<td align="right">0.000000</td>
+</tr>
+<tr class="odd">
+<td align="left">advert</td>
+<td align="right">12.15124</td>
+<td align="right">3.556164</td>
+<td align="right">3.41695</td>
+<td align="right">0.001052</td>
+</tr>
+<tr class="even">
+<td align="left">I(advert^2)</td>
+<td align="right">-2.76796</td>
+<td align="right">0.940624</td>
+<td align="right">-2.94269</td>
+<td align="right">0.004393</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fval &lt;-<span class="st"> </span>smod1$fstatistic</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(broom)
+<span class="kw">kable</span>(<span class="kw">tidy</span>(mod1), <span class="dt">caption=</span><span class="st">&quot;&#39;Tidy(mod1)&#39; output&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:usingglanceagain6">Table 6.2: </span>‘Tidy(mod1)’ output</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">109.71904</td>
+<td align="right">6.799045</td>
+<td align="right">16.13742</td>
+<td align="right">0.000000</td>
+</tr>
+<tr class="even">
+<td align="left">price</td>
+<td align="right">-7.64000</td>
+<td align="right">1.045939</td>
+<td align="right">-7.30444</td>
+<td align="right">0.000000</td>
+</tr>
+<tr class="odd">
+<td align="left">advert</td>
+<td align="right">12.15124</td>
+<td align="right">3.556164</td>
+<td align="right">3.41695</td>
+<td align="right">0.001052</td>
+</tr>
+<tr class="even">
+<td align="left">I(advert^2)</td>
+<td align="right">-2.76796</td>
+<td align="right">0.940624</td>
+<td align="right">-2.94269</td>
+<td align="right">0.004393</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">glance</span>(mod1)$statistic <span class="co">#Retrieves the F-statistic</span></code></pre></div>
+<pre><code>## [1] 24.4593</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(<span class="kw">glance</span>(mod1)) <span class="co">#Shows what is available in &#39;glance&#39;</span></code></pre></div>
+<pre><code>##  [1] &quot;r.squared&quot;     &quot;adj.r.squared&quot; &quot;sigma&quot;         &quot;statistic&quot;    
+##  [5] &quot;p.value&quot;       &quot;df&quot;            &quot;logLik&quot;        &quot;AIC&quot;          
+##  [9] &quot;BIC&quot;           &quot;deviance&quot;      &quot;df.residual&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kable</span>(<span class="kw">glance</span>(mod1), 
+ <span class="dt">caption=</span><span class="st">&quot;Function &#39;glance(mod1)&#39; output&quot;</span>, <span class="dt">digits=</span><span class="dv">2</span>, 
+ <span class="dt">col.names=</span>(<span class="kw">c</span>(<span class="st">&quot;Rsq&quot;</span>,<span class="st">&quot;AdjRsq&quot;</span>,<span class="st">&quot;sig&quot;</span>,<span class="st">&quot;F&quot;</span>,
+ <span class="st">&quot;pF&quot;</span>,<span class="st">&quot;K&quot;</span>,<span class="st">&quot;logL&quot;</span>,<span class="st">&quot;AIC&quot;</span>,<span class="st">&quot;BIC&quot;</span>,<span class="st">&quot;dev&quot;</span>,<span class="st">&quot;df.res&quot;</span>)))</code></pre></div>
+<table>
+<caption><span id="tab:glanceoutput6">Table 6.3: </span>Function ‘glance(mod1)’ output</caption>
+<thead>
+<tr class="header">
+<th align="right">Rsq</th>
+<th align="right">AdjRsq</th>
+<th align="right">sig</th>
+<th align="right">F</th>
+<th align="right">pF</th>
+<th align="right">K</th>
+<th align="right">logL</th>
+<th align="right">AIC</th>
+<th align="right">BIC</th>
+<th align="right">dev</th>
+<th align="right">df.res</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0.51</td>
+<td align="right">0.49</td>
+<td align="right">4.65</td>
+<td align="right">24.46</td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">-219.55</td>
+<td align="right">449.11</td>
+<td align="right">460.7</td>
+<td align="right">1532.08</td>
+<td align="right">71</td>
+</tr>
+</tbody>
+</table>
+<p>Table <a href="further-inference-in-multiple-regression.html#tab:glanceoutput6">6.3</a> shows a summary of the quadratic <em>andy</em> model (<code>mod1</code>), where I have changed the names of various items so that the table fits the width of the page. When retrieving these variables, make sure you use the original names as indicated by the <code>names(glance(mod1))</code> command.</p>
+<p>When testing a two-tail single (not joint) null hypothesis, the <span class="math inline">\(t\)</span> and <span class="math inline">\(F\)</span> tests are equivalent. However, one-tail tests, single or joint cannot be easily performed by an <span class="math inline">\(F\)</span> test.</p>
+<p>Let us solve one more exercise involving a joint hypothesis with linear combinations of regression coefficients. Suppose we want to test the simultaneous hypotheses that the monthly advertising expenditure <span class="math inline">\(advert_{0}=\$1900\)</span> in the quadratic <em>andy</em> model (Equation \ref{eq:quadraticandyagain6}) satisfies the profit-maximizing condition <span class="math inline">\(\beta_{3}+2\beta_{4}advert_{0}=1\)</span> , and that, when <span class="math inline">\(price=\$6\)</span> and <span class="math inline">\(advert=\$1900\)</span> sales revenue is <span class="math inline">\(\$80\,000\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hyp &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;advert+3.8*I(advert^2)=1&quot;</span>, 
+<span class="st">&quot;(Intercept)+6*price+1.9*advert+3.61*I(advert^2)=80&quot;</span>)
+lhout &lt;-<span class="st"> </span><span class="kw">tidy</span>(<span class="kw">linearHypothesis</span>(mod1,hyp))
+<span class="kw">kable</span>(lhout,
+ <span class="dt">caption=</span><span class="st">&quot;Joint hypotheses with the &#39;linearHypothesis&#39; function&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:twojointhyp6">Table 6.4: </span>Joint hypotheses with the ‘linearHypothesis’ function</caption>
+<thead>
+<tr class="header">
+<th align="right">res.df</th>
+<th align="right">rss</th>
+<th align="right">df</th>
+<th align="right">sumsq</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">73</td>
+<td align="right">1779.86</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">71</td>
+<td align="right">1532.08</td>
+<td align="right">2</td>
+<td align="right">247.776</td>
+<td align="right">5.74123</td>
+<td align="right">0.004885</td>
+</tr>
+</tbody>
+</table>
+<p>Table <a href="further-inference-in-multiple-regression.html#tab:twojointhyp6">6.4</a> includes the <span class="math inline">\(F\)</span>-statistic of the test, <span class="math inline">\(F=5.741229\)</span> and its <span class="math inline">\(p\)</span>-value <span class="math inline">\(p=0.004885\)</span>. Please be aware that the function <code>tidy</code> changes the names in the output of <code>linearHypothesis</code>. A useful exercise is to compare the raw output of <code>linearHypothesis</code> with the output generated by <code>tidy(linearHypothesis(mod1))</code>. There are several other possibilities to compare two regression models, such as a restricted and unrestricted ones in <span class="math inline">\(R\)</span>, such as the <code>anova()</code> function or Wald tests. These are going to be mentioned in later chapters.</p>
+</div>
+<div id="omitted-variable-bias" class="section level2">
+<h2><span class="header-section-number">6.3</span> Omitted Variable Bias</h2>
+Consider the general model with two regressors in Equation \ref{eq:omittedgeneral}, a model that I will call the <em>true</em> model.
+<span class="math display">\[\begin{equation}
+y=\beta_{1}+\beta_{2}x_{2}+\beta_{3}x_{3}+e
+\label{eq:omittedgeneral}
+\end{equation}\]</span>
+<p>Suppose we are only interested in estimating <span class="math inline">\(\beta_{2}\)</span>, but there is no data available for <span class="math inline">\(x_{3}\)</span>, or for other reasons <span class="math inline">\(x_{3}\)</span> is omitted from the model in Equation \ref{eq:omittedgeneral}. What is the error in the estimate of <span class="math inline">\(\beta_{2}\)</span> introduced by omitting <span class="math inline">\(x_{3}\)</span>? Equation \ref{eq:omittedequation6} shows what is left of the <em>true</em> model after omitting <span class="math inline">\(x_{3}\)</span>.</p>
+<span class="math display">\[\begin{equation}
+y=\beta_{1}+\beta_{2}x_{2}+u
+\label{eq:omittedequation6}
+\end{equation}\]</span>
+<p>Let <span class="math inline">\(b_{2}^*\)</span> be the estimate of <span class="math inline">\(\beta_{2}\)</span> when <span class="math inline">\(x_{3}\)</span> is omitted. Equation \ref{eq:omittedbiasformula6} gives the bias in this simple, two-regressor case. The formula shows that bias depends on the direct relationship between the omitted regressor and response through <span class="math inline">\(\beta_{3}\)</span>, as well as the correlation between the omitted and the included regressors. When <span class="math inline">\(\beta_{3}\)</span> and <span class="math inline">\(cov(x_{2},\,x_{3})\)</span> are both positive or both negative the bias is positive (the incorrect model overestimates the true <span class="math inline">\(\beta_{2}\)</span>), and when they are of opposite signs the bias is negative (<span class="math inline">\(\beta_{2}\)</span> is underestimated)</p>
+<span class="math display">\[\begin{equation}
+bias(b_{2}^*)=E(b_{2})^*-\beta_{2}=\beta_{3}\frac{\widehat{cov(x_{2},x_{3})}}{var(x_{2})}
+\label{eq:omittedbiasformula6}
+\end{equation}\]</span>
+<p>The example in this section uses the dataset <span class="math inline">\(edu\_inc\)</span>, and two models: one where the response variable <em>family income</em> (<span class="math inline">\(faminc\)</span>) is explained by the regressors <em>husband’s education</em> (<span class="math inline">\(he\)</span>) and <em>wife’s education</em> (<span class="math inline">\(we\)</span>), and another model, where the <span class="math inline">\(we\)</span> regressor is omitted. The purpose is to compare the estimates coming from the two models and see if there is a significant difference between them.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;edu_inc&quot;</span>, <span class="dt">package=</span><span class="st">&quot;PoEdata&quot;</span>)
+mod1 &lt;-<span class="st"> </span><span class="kw">lm</span>(faminc~he+we, <span class="dt">data=</span>edu_inc)
+mod2 &lt;-<span class="st"> </span><span class="kw">lm</span>(faminc~he, <span class="dt">data=</span>edu_inc)
+<span class="kw">kable</span>(<span class="kw">tidy</span>(mod1), <span class="dt">caption=</span><span class="st">&quot;The correct model&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:omittededucinc6">Table 6.5: </span>The correct model</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-5533.63</td>
+<td align="right">11229.533</td>
+<td align="right">-0.492775</td>
+<td align="right">0.622426</td>
+</tr>
+<tr class="even">
+<td align="left">he</td>
+<td align="right">3131.51</td>
+<td align="right">802.908</td>
+<td align="right">3.900209</td>
+<td align="right">0.000112</td>
+</tr>
+<tr class="odd">
+<td align="left">we</td>
+<td align="right">4522.64</td>
+<td align="right">1066.327</td>
+<td align="right">4.241328</td>
+<td align="right">0.000027</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kable</span>(<span class="kw">tidy</span>(mod2), 
+  <span class="dt">caption=</span><span class="st">&quot;The incorrect model (&#39;we&#39; omitted)&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:omiteducin6">Table 6.6: </span>The incorrect model (‘we’ omitted)</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">26191.27</td>
+<td align="right">8541.108</td>
+<td align="right">3.06650</td>
+<td align="right">0.002304</td>
+</tr>
+<tr class="even">
+<td align="left">he</td>
+<td align="right">5155.48</td>
+<td align="right">658.457</td>
+<td align="right">7.82964</td>
+<td align="right">0.000000</td>
+</tr>
+</tbody>
+</table>
+<p>The marginal effect of husband’s education is much lower in the incorrect model. Let us apply the logic of Equation \ref{eq:omittedbiasformula6} to the <span class="math inline">\(edu\_inc\)</span> model. The direct effect of the omitted regressor (<span class="math inline">\(we\)</span>) on response (<span class="math inline">\(faminc\)</span>) is likely to be positive in theory (higher education generates higher income); the correlation between husband’s and wife’s education is also likely to be positive if we believe that people generally marry persons within their entourage. Thus, we should expect that omitting the regressor <span class="math inline">\(we\)</span> should produce an overestimated marginal effect of <span class="math inline">\(he\)</span>. Our data happen to confirm this supposition, though there is some chance that they might not.</p>
+<p>Understanding the problem of omitted variable is very important because it can justify the choice of a particular model. If one is not interested in the effect of variable <span class="math inline">\(x_{3}\)</span> on <span class="math inline">\(y\)</span> and can convince that <span class="math inline">\(x_{3}\)</span> is uncorrelated with <span class="math inline">\(x_{2}\)</span>, one can argue with criticism about omitting the important regressor <span class="math inline">\(x_{3}\)</span>.</p>
+</div>
+<div id="irrelevant-variables" class="section level2">
+<h2><span class="header-section-number">6.4</span> Irrelevant Variables</h2>
+<p>We have seen the effect of omitting a relevant regressor (the effect is biased estimates and lower variances of the included regressors). But what happens if irrelevant variables are incorrectly included? Not surprisingly, this increases the variances (lowers the precision) of the other variables in the model. The next example uses the same (<span class="math inline">\(edu\_inc\)</span>) dataset as above, but includes two artificially generated variables, <span class="math inline">\(xtra\_x5\)</span> and <span class="math inline">\(xtra\_x6\)</span> that are correlated with <span class="math inline">\(he\)</span> and <span class="math inline">\(we\)</span> but, obviously, have no role in determining <span class="math inline">\(y\)</span>. Let us compare two models, of which one includes these irrelevant variables.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod3 &lt;-<span class="st"> </span><span class="kw">lm</span>(faminc~he+we+kl6, <span class="dt">data=</span>edu_inc)
+mod4 &lt;-<span class="st"> </span><span class="kw">lm</span>(faminc~he+we+kl6+xtra_x5+xtra_x6, <span class="dt">data=</span>edu_inc)
+<span class="kw">kable</span>(<span class="kw">tidy</span>(mod3), <span class="dt">caption=</span><span class="st">&quot;Correct &#39;faminc&#39; model&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:irrelevantvarseduinc">Table 6.7: </span>Correct ‘faminc’ model</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-7755.33</td>
+<td align="right">11162.935</td>
+<td align="right">-0.694739</td>
+<td align="right">0.487599</td>
+</tr>
+<tr class="even">
+<td align="left">he</td>
+<td align="right">3211.53</td>
+<td align="right">796.703</td>
+<td align="right">4.031022</td>
+<td align="right">0.000066</td>
+</tr>
+<tr class="odd">
+<td align="left">we</td>
+<td align="right">4776.91</td>
+<td align="right">1061.164</td>
+<td align="right">4.501574</td>
+<td align="right">0.000009</td>
+</tr>
+<tr class="even">
+<td align="left">kl6</td>
+<td align="right">-14310.92</td>
+<td align="right">5003.928</td>
+<td align="right">-2.859937</td>
+<td align="right">0.004447</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kable</span>(<span class="kw">tidy</span>(mod4), 
+ <span class="dt">caption=</span><span class="st">&quot;Incorrect &#39;faminc&#39; with irrelevant variables&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:irrelevarseduinc6">Table 6.8: </span>Incorrect ‘faminc’ with irrelevant variables</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-7558.613</td>
+<td align="right">11195.41</td>
+<td align="right">-0.675153</td>
+<td align="right">0.499948</td>
+</tr>
+<tr class="even">
+<td align="left">he</td>
+<td align="right">3339.792</td>
+<td align="right">1250.04</td>
+<td align="right">2.671750</td>
+<td align="right">0.007838</td>
+</tr>
+<tr class="odd">
+<td align="left">we</td>
+<td align="right">5868.677</td>
+<td align="right">2278.07</td>
+<td align="right">2.576165</td>
+<td align="right">0.010329</td>
+</tr>
+<tr class="even">
+<td align="left">kl6</td>
+<td align="right">-14200.184</td>
+<td align="right">5043.72</td>
+<td align="right">-2.815419</td>
+<td align="right">0.005100</td>
+</tr>
+<tr class="odd">
+<td align="left">xtra_x5</td>
+<td align="right">888.843</td>
+<td align="right">2242.49</td>
+<td align="right">0.396364</td>
+<td align="right">0.692037</td>
+</tr>
+<tr class="even">
+<td align="left">xtra_x6</td>
+<td align="right">-1067.186</td>
+<td align="right">1981.69</td>
+<td align="right">-0.538524</td>
+<td align="right">0.590499</td>
+</tr>
+</tbody>
+</table>
+<p>A comparison of the two models shown in Tables <a href="further-inference-in-multiple-regression.html#tab:irrelevantvarseduinc">6.7</a> and <a href="further-inference-in-multiple-regression.html#tab:irrelevarseduinc6">6.8</a> indicates that the inclusion of the two irrelevant variables has increased the marginal effects, standard errors, and the <span class="math inline">\(p\)</span>-values of <span class="math inline">\(he\)</span> and <span class="math inline">\(we\)</span>. Thus, including irrelevant variables may incorrectly diminish the significance of the “true” regressors.</p>
+</div>
+<div id="model-selection-criteria" class="section level2">
+<h2><span class="header-section-number">6.5</span> Model Selection Criteria</h2>
+<p>The main tools of building a model should be economic theory, sound reasoning based on economic principles, and making sure that the model satisfies the Gauss-Markov assumptions. One should also consider the possibility of omitted variable bias and the exclusion of irrelevant variables that may increase variablility in the estimates. After all these aspects have been considered and a model established, there are a few quantities that help comparing different models. These are <span class="math inline">\(R^2\)</span>, adjusted <span class="math inline">\(R^2\)</span> (<span class="math inline">\(\bar R ^2\)</span>), the Akaike information criterion (<span class="math inline">\(AIC\)</span>), and the Schwarz (or Bayesian information) criterion (<span class="math inline">\(SC\)</span> or <span class="math inline">\(BIC\)</span>).</p>
+We have already seen how to calculate the coefficient of determination, <span class="math inline">\(R^2\)</span> and how it measures the distance between the regression line and the observation points. A major disadvantage of <span class="math inline">\(R^2\)</span> is that it increases every time a new regressor is included in the model, whether the regressor is relevant or not. The idea of counterbalancing this property of <span class="math inline">\(R^2\)</span> has lead to a new measure, adjusted <span class="math inline">\(R^2\)</span>, denoted by <span class="math inline">\(\bar R ^2\)</span>, given by Equation \ref{eq:adjrsq6}.
+<span class="math display">\[\begin{equation}
+\bar R^2=1-\frac{SSE\,/\,(N-K)}{SST\,/\,(N-1)}
+\label{eq:adjrsq6}
+\end{equation}\]</span>
+Adjusted <span class="math inline">\(R^2\)</span>, while addressing the problem with <span class="math inline">\(R^2\)</span>, introduces other problems. In general, no single goodness of fit measure is perfect. The Akaike information criterion (<span class="math inline">\(AIC\)</span>) and the Schwarz criterion use the same idea of penalizing the introduction of extra regressors. Their formulas are given in Equations \ref{eq:aicformula6} and \ref{eq:scformula6}.
+<span class="math display">\[\begin{equation}
+AIC=ln \left( \frac{SSE}{N}\right) +\frac{2K}{N}
+\label{eq:aicformula6}
+\end{equation}\]</span>
+<span class="math display">\[\begin{equation}
+SC=ln \left( \frac{SSE}{N} \right) + \frac{K\,ln(N)}{N}
+\label{eq:scformula6}
+\end{equation}\]</span>
+<p>Among several models, the best fit is the one that maximizes <span class="math inline">\(R^2\)</span> or <span class="math inline">\(\bar R^2\)</span>. On the contrary, the best model must <strong>minimize</strong> <span class="math inline">\(AIC\)</span> or <span class="math inline">\(BIC\)</span>. Some computer packages, <span class="math inline">\(R\)</span> included, calculate <span class="math inline">\(AIC\)</span> and <span class="math inline">\(BIC\)</span> differentlly than Equations \ref{eq:aicformula6} and \ref{eq:scformula6} indicate. However, the ranking of the various models is the same.</p>
+<p>The following code sequence needs some explanation. Function <code>as.numeric</code> extracts only the numbers from an object such as <code>glance(mod1)</code>, which also contains row and column names. The purpose is to put together a table with information comming from several models. Function <code>rbind</code> gathers several rows in a matrix, which then is made into a <code>data.frame</code> and given the name <code>tab</code>. The part of code <code>[,c(1,2,8,9)]</code> at the end of <code>rbind</code> instructs <span class="math inline">\(R\)</span> to pick all rows, but only columns <code>1, 2, 8, and 9</code> from the <code>glance</code> table. Function <code>row.names</code> assigns or changes the row names in a data frame; finally, <code>kable</code>, which we have already encountered several times, prints the table, assigns column names, and gives a caption to the table. While there are many ways to create a table in <span class="math inline">\(R\)</span>, I use <code>kable</code> from package <code>knitr</code> because it allows me to cross-reference tables within this book. <code>kable</code> only works with data frames.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod1 &lt;-<span class="st"> </span><span class="kw">lm</span>(faminc~he, <span class="dt">data=</span>edu_inc)
+mod2 &lt;-<span class="st"> </span><span class="kw">lm</span>(faminc~he+we, <span class="dt">data=</span>edu_inc)
+mod3 &lt;-<span class="st"> </span><span class="kw">lm</span>(faminc~he+we+kl6, <span class="dt">data=</span>edu_inc)
+mod4 &lt;-<span class="st"> </span><span class="kw">lm</span>(faminc~he+we+kl6+xtra_x5+xtra_x6, <span class="dt">data=</span>edu_inc)
+r1 &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">glance</span>(mod1))
+r2 &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">glance</span>(mod2))
+r3 &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">glance</span>(mod3))
+r4 &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">glance</span>(mod4))
+tab &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">rbind</span>(r1, r2, r3, r4))[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">8</span>,<span class="dv">9</span>)]
+<span class="kw">row.names</span>(tab) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;he&quot;</span>,<span class="st">&quot;he, we&quot;</span>,<span class="st">&quot;he, we, kl6&quot;</span>,
+                    <span class="st">&quot;he, we, kl6, xtra_x5, xtra_x6&quot;</span>)
+<span class="kw">kable</span>(tab, 
+ <span class="dt">caption=</span><span class="st">&quot;Model comparison, &#39;faminc&#39; &quot;</span>, <span class="dt">digits=</span><span class="dv">4</span>, 
+ <span class="dt">col.names=</span><span class="kw">c</span>(<span class="st">&quot;Rsq&quot;</span>,<span class="st">&quot;AdjRsq&quot;</span>,<span class="st">&quot;AIC&quot;</span>,<span class="st">&quot;BIC&quot;</span>))</code></pre></div>
+<table>
+<caption><span id="tab:modelselectioneduinc6">Table 6.9: </span>Model comparison, ‘faminc’</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">Rsq</th>
+<th align="right">AdjRsq</th>
+<th align="right">AIC</th>
+<th align="right">BIC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>he</td>
+<td align="right">0.1258</td>
+<td align="right">0.1237</td>
+<td align="right">10316.7</td>
+<td align="right">10328.8</td>
+</tr>
+<tr class="even">
+<td>he, we</td>
+<td align="right">0.1613</td>
+<td align="right">0.1574</td>
+<td align="right">10300.9</td>
+<td align="right">10317.1</td>
+</tr>
+<tr class="odd">
+<td>he, we, kl6</td>
+<td align="right">0.1772</td>
+<td align="right">0.1714</td>
+<td align="right">10294.7</td>
+<td align="right">10315.0</td>
+</tr>
+<tr class="even">
+<td>he, we, kl6, xtra_x5, xtra_x6</td>
+<td align="right">0.1778</td>
+<td align="right">0.1681</td>
+<td align="right">10298.4</td>
+<td align="right">10326.8</td>
+</tr>
+</tbody>
+</table>
+<p>Tabla <a href="further-inference-in-multiple-regression.html#tab:modelselectioneduinc6">6.9</a> shows the four model selection criteria for four different models based on the <span class="math inline">\(edu\_inc\)</span> dataset, with the first column showing the variables included in each model. It is noticeable that three of the criteria indicate the third model as the best fit, while one, namely <span class="math inline">\(R^2\)</span> prefers the model that includes the irrelevant variables <span class="math inline">\(xtra\_x5\)</span> and <span class="math inline">\(xtra\_x6\)</span>.</p>
+<p>As a side note, a quick way of extracting the information criteria from an <code>lm()</code> object is illustrated in the following code fragment.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(stats)
+smod1 &lt;-<span class="st"> </span><span class="kw">summary</span>(mod1)
+Rsq &lt;-<span class="st"> </span>smod1$r.squared
+AdjRsq &lt;-<span class="st"> </span>smod1$adj.r.squared
+aic &lt;-<span class="st"> </span><span class="kw">AIC</span>(mod1)
+bic &lt;-<span class="st"> </span><span class="kw">BIC</span>(mod1)
+<span class="kw">c</span>(Rsq, AdjRsq, aic, bic)</code></pre></div>
+<pre><code>## [1]     0.125801     0.123749 10316.651535 10328.828905</code></pre>
+<p>Another potentially useful tool for building an appropriate model is the Ramsey specification test, RESET. This method automatically adds higher-order polynomial terms to your model and tests the joint hypothesis that their coefficients are all zero. Thus, the null hypothesis of the test is <span class="math inline">\(H_{0}\)</span>: “No higher-order polynomial terms are necessary”; if we reject the null hypothesis we need to consider including such terms.</p>
+<p>The <span class="math inline">\(R\)</span> function that performs a RESET test is <code>resettest</code>, which requires the following argumets: <code>formula</code>, the formula of the model to be tested or the name of an already calculated <code>lm</code> object; <code>power</code>, a set of integers indicating the powers of the polynomial terms to be included; <code>type</code>, which could be one of “fitted”, “regressor”, or “princomp”, indicating whether the aditional terms should be powers of the regressors, fitted values, or the first principal component of the regressor matrix; and, finally, <code>data</code>, which specifies the dataset to be used if a formula has been provided and not a model object. The following code applies the test to the complete <span class="math inline">\(faminc\)</span> model, first using only quadratic terms of the fitted values, then using both quadratic and cubic terms.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod3 &lt;-<span class="st"> </span><span class="kw">lm</span>(faminc~he+we+kl6, <span class="dt">data=</span>edu_inc)
+<span class="kw">resettest</span>(mod3, <span class="dt">power=</span><span class="dv">2</span>, <span class="dt">type=</span><span class="st">&quot;fitted&quot;</span>)</code></pre></div>
+<pre><code>## 
+##  RESET test
+## 
+## data:  mod3
+## RESET = 5.984, df1 = 1, df2 = 423, p-value = 0.0148</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">resettest</span>(mod3, <span class="dt">power=</span><span class="dv">2</span>:<span class="dv">3</span>, <span class="dt">type=</span><span class="st">&quot;fitted&quot;</span>)</code></pre></div>
+<pre><code>## 
+##  RESET test
+## 
+## data:  mod3
+## RESET = 3.123, df1 = 2, df2 = 422, p-value = 0.0451</code></pre>
+<p>The number labeled as RESET in the output is the <span class="math inline">\(F\)</span>-statistic of the test under the null hypothesis followed by the two types of degrees of freedom of the <span class="math inline">\(F\)</span> distribution and the <span class="math inline">\(p\)</span>-value. In our case both <span class="math inline">\(p\)</span>-values are slightly lower than <span class="math inline">\(0.05\)</span>, indicating that the model marginally fails the specification test and some higher order terms may be necessary.</p>
+</div>
+<div id="collinearity" class="section level2">
+<h2><span class="header-section-number">6.6</span> Collinearity</h2>
+<p>There is collinearity among regressors when two or more regressors move closely with each other or display little variability. A consequence of collinearity is large variance in the estimated parameters, which increases the chances of not finding them significantly different from zero. The estimates are, however, unbiased since (imperfect) collinearity does not technically violate the Gauss-Markov assumptions. Collinearity tends to show insignificant coefficients even when measures of goodness-of-fit such as <span class="math inline">\(R^2\)</span> or overall significance (the <span class="math inline">\(F\)</span>-statistic) may be quite large.</p>
+<p>Let us consider the example of the dataset <em>cars</em>, where <em>mpg</em> is miles per gallon, <em>cyl</em> is number of cylinders, <em>eng</em> is engine displacement in cubic inches, and <em>wgt</em> is the weight of the vehicle in pounds.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;cars&quot;</span>, <span class="dt">package=</span><span class="st">&quot;PoEdata&quot;</span>)
+mod1 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg~cyl, <span class="dt">data=</span>cars)
+<span class="kw">kable</span>(<span class="kw">tidy</span>(mod1), <span class="dt">caption=</span><span class="st">&quot;A simple linear &#39;mpg&#39; model&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:mpgcylcollin6">Table 6.10: </span>A simple linear ‘mpg’ model</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">42.91551</td>
+<td align="right">0.834867</td>
+<td align="right">51.4040</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">cyl</td>
+<td align="right">-3.55808</td>
+<td align="right">0.145676</td>
+<td align="right">-24.4247</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p>This naive model suggests a strong effect of the number of cylinders on fuel economy, but if we introduce more terms in the equation this result changes substantially.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod2 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg~cyl+eng+wgt, <span class="dt">data=</span>cars)
+<span class="kw">kable</span>(<span class="kw">tidy</span>(mod2), <span class="dt">caption=</span><span class="st">&quot;Multivariate &#39;mpg&#39; model&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:mpgcomplexcollin6">Table 6.11: </span>Multivariate ‘mpg’ model</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">44.370962</td>
+<td align="right">1.480685</td>
+<td align="right">29.966509</td>
+<td align="right">0.000000</td>
+</tr>
+<tr class="even">
+<td align="left">cyl</td>
+<td align="right">-0.267797</td>
+<td align="right">0.413067</td>
+<td align="right">-0.648313</td>
+<td align="right">0.517166</td>
+</tr>
+<tr class="odd">
+<td align="left">eng</td>
+<td align="right">-0.012674</td>
+<td align="right">0.008250</td>
+<td align="right">-1.536225</td>
+<td align="right">0.125298</td>
+</tr>
+<tr class="even">
+<td align="left">wgt</td>
+<td align="right">-0.005708</td>
+<td align="right">0.000714</td>
+<td align="right">-7.995143</td>
+<td align="right">0.000000</td>
+</tr>
+</tbody>
+</table>
+<p>In the model summarized in Table <a href="further-inference-in-multiple-regression.html#tab:mpgcomplexcollin6">6.11</a> the number of cylinders becomes insignificant alltogether, a sharp change with respect to the previous specification. This high sensitivity of the estimates when other variables are introduced is also a sign of collinearity. Indeed, it is reasonable to believe that the characteristics of the vehicles vary together: heavier vehicles have more cylinders and bigger engines.</p>
+A test that may be useful in detecting collinearity is to calculate the <em>variance inflation factor</em>, <span class="math inline">\(VIF\)</span>, for each regressor. The rule of thumb is that a regressor produces collinearity if its <span class="math inline">\(VIF\)</span> is greater than <span class="math inline">\(10\)</span>. Equation \ref{eq:vifformula6} shows the formula for the variance inflation factor, where <span class="math inline">\(R_{k}^2\)</span> is the <span class="math inline">\(R^2\)</span> from regressing the variable <span class="math inline">\(x_{k}\)</span> on all the remaining regressors.
+<span class="math display">\[\begin{equation}
+VIF_{k}=\frac{1}{1-R_{k}^2}
+\label{eq:vifformula6}
+\end{equation}\]</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod2 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg~cyl+eng+wgt, <span class="dt">data=</span>cars)
+tab &lt;-<span class="st"> </span><span class="kw">tidy</span>(<span class="kw">vif</span>(mod2))
+<span class="kw">kable</span>(tab, 
+<span class="dt">caption=</span><span class="st">&quot;Variance inflation factors for the &#39;mpg&#39; regression model&quot;</span>,
+  <span class="dt">col.names=</span><span class="kw">c</span>(<span class="st">&quot;regressor&quot;</span>,<span class="st">&quot;VIF&quot;</span>))</code></pre></div>
+<table>
+<caption><span id="tab:vif6">Table 6.12: </span>Variance inflation factors for the ‘mpg’ regression model</caption>
+<thead>
+<tr class="header">
+<th align="left">regressor</th>
+<th align="right">VIF</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">cyl</td>
+<td align="right">10.51551</td>
+</tr>
+<tr class="even">
+<td align="left">eng</td>
+<td align="right">15.78646</td>
+</tr>
+<tr class="odd">
+<td align="left">wgt</td>
+<td align="right">7.78872</td>
+</tr>
+</tbody>
+</table>
+<p>The results in Table <a href="further-inference-in-multiple-regression.html#tab:vif6">6.12</a> show that the regressors <code>cyl</code> and <code>eng</code> fail the collinearity test, having <span class="math inline">\(VIF\)</span>s greater than 10.</p>
+</div>
+<div id="prediction-and-forecasting" class="section level2">
+<h2><span class="header-section-number">6.7</span> Prediction and Forecasting</h2>
+<p>We have previously discussed the semantic difference between prediction and forecasting, with prediction meaning the estimation of an expected value of the response and forecasting meaning an estimate of a particular value of the response. We mentioned that, for the same vector of regressors, prediction has a narrower confidence interval than forecasting because forecasting includes, besides the uncertainty of the expected value of the response, the variablility of a particular observation about its mean. I essentially repeat the same procedure here for the quadratic <em>andy</em> model, which regresses <span class="math inline">\(sales\)</span> on <span class="math inline">\(price\)</span>, <span class="math inline">\(advert\)</span>, and <span class="math inline">\(advert^2\)</span>. The key <span class="math inline">\(R\)</span> function to calculate both predictions and forecasts is the function <code>predict</code>, with the following arguments: <code>model</code>, which is the name of a model object; <code>newdata</code>, which contains the new data points where prediction is desired; if <code>newdata</code> is missing, predictions are calculated for all observations in the dataset; <code>interval</code>, which can be “none”, “confidence”, or “prediction”, and tells <span class="math inline">\(R\)</span> whether we want only a point estimate of the response, a prediction with its confidence interval, or a forecast with its confidence interval; <code>level</code>, which is the confidence level we want; if missing, <code>level</code> is <span class="math inline">\(95\%\)</span>; other arguments (see <code>?predict()</code> for more details).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">predpoint &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">price=</span><span class="dv">6</span>, <span class="dt">advert=</span><span class="fl">1.9</span>)
+mod3 &lt;-<span class="st"> </span><span class="kw">lm</span>(sales~price+advert+<span class="kw">I</span>(advert^<span class="dv">2</span>), <span class="dt">data=</span>andy)
+<span class="kw">kable</span>(<span class="kw">tidy</span>(<span class="kw">predict</span>(mod3, <span class="dt">newdata=</span>predpoint,
+    <span class="dt">interval=</span><span class="st">&quot;prediction&quot;</span>)), 
+    <span class="dt">caption=</span><span class="st">&quot;Forecasting in the quadratic &#39;andy&#39; model&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:predictandy6">Table 6.13: </span>Forecasting in the quadratic ‘andy’ model</caption>
+<thead>
+<tr class="header">
+<th align="right">fit</th>
+<th align="right">lwr</th>
+<th align="right">upr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">76.974</td>
+<td align="right">67.5326</td>
+<td align="right">86.4155</td>
+</tr>
+</tbody>
+</table>
+<p>Table <a href="further-inference-in-multiple-regression.html#tab:predictandy6">6.13</a> displays the point estimate and forecast interval estimate for the data point <span class="math inline">\(price=\$6\)</span> and <span class="math inline">\(advert=1.9\)</span>, which, remember, stands for advertising expenditure of <span class="math inline">\(\$1900\)</span>.</p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-R-broom">
+<p>Robinson, David. 2016. <em>Broom: Convert Statistical Analysis Objects into Tidy Data Frames</em>. <a href="https://CRAN.R-project.org/package=broom" class="uri">https://CRAN.R-project.org/package=broom</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="multiplereg.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="indvars.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/06-further_inference.Rmd",
+"text": null
+},
+"download": ["RPoE.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

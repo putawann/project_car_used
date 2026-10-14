@@ -1,0 +1,645 @@
+International Journal of Economics and Financial
+                           Issues
+
+                          ISSN: 2146-4138
+
+            available at http: www.econjournals.com
+
+ International Journal of Economics and Financial Issues, 2018, 8(1), 39-47.
+
+Robust and Resistant Estimations of Hedonic Prices for Second
+Hand Cars: An Application to the Istanbul Car Market
+
+Ebru Çalayan Akay1, Ömer Faruk Bölükbai2*, Engin Bekar3
+
+1Department of Econometrics, Marmara University, Istanbul, Turkey, 2Department of Econometrics, Recep Tayyip Erdoan
+University, Rize, Turkey, 3Department of Econometrics, Marmara University, Istanbul, Turkey.
+*Email: omerfarukbolukbasi@hotmail.com
+
+ABSTRACT
+In this study, the "hedonic price model" has been used in order to determine car characteristics that affect second hand car prices. The hedonic price
+model is estimated with 1032 observations involving Istanbul second hand car market data. In such a heterogeneous data set, there is often a problem
+of outliers. Standardized residuals, studentized residuals and DFBETAS criteria were applied to detect them. The hedonic price model is estimated
+by using robust and resistant methods because ordinary least squares method is sensitive to outliers. According to the results of the study, automobile
+features such as kilometer, fuel type, drivetrain type, body type, engine cylinder volume, transmission type, cruise control, sunroof, trip computer,
+rain sensor and changing parts affect car prices.
+
+Keywords: Hedonic Price Model, Outlier, Robust Estimation, Resistant Estimation
+JEL Classifications: C12, C13, L62
+
+                  1. INTRODUCTION                                        of transactions are carried out, were determined and the effect of
+                                                                         these factors on the prices was examined.
+Vehicles, one of the human being's earliest requirements, are
+demanded by consumers as a symbol of status besides transportation       The second-hand automobile market is the one where differentiated
+purposes such as travel, cargo and passenger transportation.             goods are formed by the combination of heterogeneous and diverse
+Various types of vehicles have been developed in order to meet           characteristics. Consumers will choose ones that will provide
+these needs via sea, air and road. The automotive industry, which        the maximum benefit from the cars that they can purchase at the
+produces motor vehicles to meet transportation services by road,         price they are willing to pay. At the market such as one of the
+has grown rapidly along with technological developments and the          automobile, where the differentiated products with heterogeneous
+impact of globalized markets. It has become easier for consumers         structure are located, one of the economic theories that determine
+to access the vehicles they need. As of 2016, there are 21090424         covered prices of product features based on the benefits of each
+registered motor vehicles in Turkey, and about 53% of this number        property by linking the prices of the products with their properties
+is composed of automobiles. When we look at the statistics of total      is the hedonic price theory. According to the hedonic price theory,
+motor vehicles landed on the road for the year 2016, it is seen          automobile prices are determined by automobile characteristics.
+that cars are headed again at a rate of 58%. In the year of 2016,        The relationship between product price and its properties described
+4727073 of the 6728894 motor vehicles, which are the subject             by Rosen (1974) is shown below:
+of second-hand trading, are made up of automobiles. Therefore,
+automobiles constitute 70% of the total vehicles involved in the         p(z)=p(z1,z2,....,zn)  i=1,2,...,n  (1)
+transfer. As indicated by the numbers, the second hand automobile
+market in Turkey is seriously big. In this study, the factors affecting  In the above equation, p(z) is the market equilibrium price.
+car prices in the second hand car market, where a large number           Z = z(z1,z2,....,zn) is the vector of n properties that make up the
+
+International Journal of Economics and Financial Issues | Vol 8 · Issue 1 · 2018                             39
+    Akay, et al.: Robust and Resistant Estimations of Hedonic Prices for Second Hand Cars: An Application to the Istanbul Car Market
+
+product. The effect of the properties forming the product on the         the hedonic model. They estimated the hedonic automobile price
+prices is obtained by calculating derivatives according to each          model under semi-logarithmic functional form. According to the
+ith feature.                                                             estimation results, variables such as length, weight, diesel fuel type
+                                                                         and engine cylinder volume have positive effects on the car prices.
+The aim of this study is to estimate the hedonic pricing model to
+determine the factors affecting second hand car prices through           In his study of the structural demand model for the automobile
+robust and resistant methods by using the dataset obtained from          market, Bajic (1993) estimated a hedonic price model for the US
+Istanbul second hand car market. Estimating the hedonic price            auto market. According to the estimation results, the width affects
+equations of automobiles taking into account outliers in the             car prices in the negative direction, while the variables of weight,
+framework of hedonic price theory makes this study different from        import and axle distance affect them positively. Another finding
+the others available in the literature. There may be extreme valued      is that the automobile brand has a significant effect on prices.
+observations in non-homogeneous markets such as the automobile
+market. Therefore, the use of the ordinary least squares (OLS)           Arguea et al. (1994) estimated the automobile hedonic price model
+method would not be appropriate for estimating model with data           in linear form for the United States via the OLS method. As a result
+containing outliers or extreme observations. In case of outliers,        of the work; horsepower, luggage volume and fuel efficiency of
+if the hedonic price equation is estimated by OLS method, the            the car have reached a positive effect on prices.
+estimators will not be efficient and may even be biased depending
+on the type of outliers and the assumptions of homoscedasticity          In their study of the hedonic price of the environmental and safety
+and normal distribution of error terms in the model will also not        features of the car on the French automobile market, Couton et al.
+be met. In this study, since OLS method is extremely sensitive to        (1996) have found that these features have a statistically significant
+outliers, hedonic price models are estimated by robust and resistant     positive effect on car prices.
+regressions that are not sensitive to them. Robust and resistant
+regression methods used in the study are least absolute deviation        Murray and Sarantis (1999) used the weighted LS method to avoid
+(LAD; Bickel, 1973), M (Huber, 1964), least trimmed squares              heteroscedasticity problem in their estimations of the automobile
+(LTS, Rousseeuw, 1984), S estimation (Rousseeuw and Yohai,               hedonic price model for the UK. According to the estimation
+1984), MM estimation (Yohai, 1987). In the study, because of the         results; comfort, luxury equipment, economy, performance,
+use of robust and resistant regression methods without outliers          maneuverability features of the car have strong effects on prices.
+being excluded, information loss was not caused. The study
+consists of 6 sections in total. These sections are respectively as      Pazarliolu and Güne (2000) estimated the hedonic price model
+follows; introduction, the second section in which the literature is     for the Turkish automobile market using Weighted LS method to
+reviewed, the third section in which the methodology is explained,       avoid heteroscedasticity problem. The main features of the car
+the fourth section in which the data set is given and the fifth section  which affect car prices according to the model estimation results
+in which the estimation results are interpreted. In the last part, the   are ABS braking system feature, engine cylinder volume, engine
+result section of the study is included.                                 power and fuel consumption.
+
+                2. EARLIER STUDIES                                       In the calculation of the hedonic price index, The German Federal
+                                                                         Statistical Office (2003) estimated the hedonic price model for the
+In this section, we briefly provide information on the empirical         second hand automobile market under semi-logarithmic functional
+studies examining the factors affecting car prices with the hedonic      form. Robust t values are calculated against heteroscedasticity
+price model. When the literature is examined, it is likely that this     problem. As a result, it was determined that the price of the new
+study will contribute to the literature as the first study to analyze    cars positively affected the prices of the second hand cars, while
+the automobile hedonic price model via robust and resistant              age and kilometers variables affected them negatively. As a result
+regressions.                                                             of the study, it was determined that automobile brands have a
+                                                                         statistically significant effect on the second hand prices.
+In the pioneering work of automobile hedonic price model, Court
+(1939) investigated the effects of length, weight and horsepower         Andersson (2005) aimed to determine the value of traffic safety
+on prices on the US automobile market.                                   for the Swedish automobile market by the hedonic regression
+                                                                         model. According to the findings of the study, there is a negative
+Cowling and Cubbin (1972) calculated the automobile hedonic              relationship between the automobile prices and the natural risk
+price index for the UK in their work. They estimated the hedonic         level of the car.
+price model under two different functional forms which are linear
+and semi logarithmic. According to the estimation results, the           Reis and Silva (2006) examined the effects of quality changes on
+variables of fuel consumption and passenger area affect the prices of    the automobile price index for the Portuguese new automobiles.
+automobiles negatively while the variables of transmission, length,      They estimated the hedonic automobile price model with the
+braking power, luxury interior standard affect them positively.          weighted LS method in order to obtain efficient estimators in
+                                                                         case of heteroscedasticity. According to the estimation results,
+Mertens and Ginsburgh (1985) investigated the determinants of            the effect of the front-wheel drive of the car on the prices is
+European and Japanese car prices in 5 European countries with            negative, while the variables of the car characteristics such as
+
+40  International Journal of Economics and Financial Issues | Vol 8 · Issue 1 · 2018
+Akay, et al.: Robust and Resistant Estimations of Hedonic Prices for Second Hand Cars: An Application to the Istanbul Car Market
+
+diesel fuel type, engine cylinder volume, maximum speed, coupé          Balce (2016) conducted a multi-factor design-based analysis
+and cabriolet body type, sunroof and fuel consumption affect the        of variance to determine factors affecting used car prices in the
+car prices positively.                                                  study. After the assumption of normal distribution was not met,
+                                                                        it was determined that an observation was an outlier and after
+Erdem and entürk (2009) estimated the hedonic price model in            removing it from the data set, normality and homoscedasticity
+order to determine car characteristics affecting the prices in the      assumptions tests resulted in that normal distribution with zero
+second hand car market in Turkey and to determine the effect of         mean and homoscedasticity assumptions were met. According to
+these characteristics on the prices. They have excluded marginal        the estimation results, year of manufacture, transmission type,
+vehicles in order to avoid the problem of outliers in the data          damage status and type of hardware are main factors affecting
+set of 1074 observations. The hedonic price model is estimated          used car prices. Although color and kilometer are not main factors,
+under logarithmic, semi-logarithmic and Box-Cox functional              they have interaction effects with other factors. The effect of the
+forms, including year of production, engine cylinder volume, fuel       position announced in the advertisement is unimportant on the
+type, production place, color, transmission type, sunroof, service      prices.
+supplier number and sale place characteristics as independent
+variables. White (1980) covariance matrix was used to avoid the         Datan (2016) estimated a hedonic price model using cross-
+heteroscedasticity problem. According to the estimation results;        section data with 1000 observations in order to determine the
+production place, diesel fuel type, whether the car is black or         characteristics that affect second hand car prices in Turkey. There
+gray, automatic transmission, sunroof, production year and engine       are three different models which are linear, logarithmic and semi-
+cylinder volume affect automobile prices positively. The number         logarithmic. In these models, variables such as brand, model, age
+of service suppliers and the fact that the sale place of the car is     and motor characteristics are included as explanatory variables
+stanbul have negative effects on the second hand car prices.            besides the characteristics of the interior and exterior of the car.
+                                                                        The semi-log model was judged to be most appropriate from the
+Matas and Raymond (2009) estimated the hedonic price model              models estimated by OLS and White robust standard errors were
+for the Spanish automobile market and investigated the effects          used to remove negative consequences of the heteroscedasticity
+of car characteristics on prices. They preferred White method           problem. According to the estimation results, variables such as
+against heteroscedasticity in the model they estimated under semi-      brand, model, kilometer, number of changing parts, driver and
+logarithmic functional form and calculated the variance-covariance      roof airbag and variables including comfort oriented features such
+matrix. According to the estimation results, the performance of the     as heated steering wheel, refrigerated torpedo have statistically
+car, driving convenience, size, safety and comfort have positive        significant effects on car prices. Features such as hardtop, sunroof,
+effects on car prices. Diesel fuel type affects them positively, while  start/stop, back view camera affect car prices positively. Finally,
+fuel consumption affects them negatively.                               manual transmission, front-wheel drive, number of changed parts,
+                                                                        cool torpedo, etc. affect second hand car prices negatively.
+Hadinejad and Shabgard (2011) estimated the hedonic price
+model for Iranian automobiles and determined car characteristics                  3. METHODOLOGY
+that affect car prices. They estimated the hedonic price model
+by the ordinary LS method under logarithmic functional form.            The main purpose of the regression analysis is to determine the line
+According to the estimation results, the 5 groups of properties         that fits data best and to examine the relation between variables.
+such as performance, ease of driving, size, fuel and security are       The model for examining the relationship between variables,
+influential on automobile prices and these effects are positive.
+They came to the conclusion that the most influential feature on car    y=X+                                                      (2)
+prices is the size of the car in the above - mentioned five groups.
+                                                                        Can be shown through this equation. Here, y is the dependent
+Abounoori and Rezvani (2012) aimed to estimate the hedonic price        variable vector, X is the matrix of explanatory variables and  is
+of each character of the automobile for Iranian automobile market.      the coefficient vector. The OLS method is commonly used in the
+According to the estimation of the hedonic price model obtained         regression analysis. The OLS method is related to conditional
+by the OLS method, the variables of the safety characteristics of       averaging and based on minimization of the sum of squared
+the car are the most important variables affecting car prices. It has   residuals. The LS estimator is calculated as follows:
+been found that the security variables affect car prices positively
+and the fuel consumption variable has a negative effect on them.                                     n
+
+In his study of determinants of second hand car prices in Turkey        ^ LS = arg min  ei2 (3)
+with hedonic price model, Ecer (2013) estimated the model                                          i=1
+with ordinary LS method. In order to remove negative effect
+of the heteroscedasticity, it is used White (1980) standard error       Here, ^ 's are estimated parameters. Residuals are obtained via
+correction method while constructing the variance-covariance            e=i Yi - Y^i . This method gives biased and inefficient estimates
+matrix of the estimators. According to the estimation results, the
+main determinants of second hand car prices are engine power,           in case of outliers. In this instance, estimates can be made with
+kilometers, age, fuel type, drivetrain type, car brand and car model.   the help of robust and resistant methods because these are less
+                                                                        sensitive to them. The main purpose of robust and resistant
+                                                                        methods is to obtain parameter estimates that are consistent with
+
+International Journal of Economics and Financial Issues | Vol 8 · Issue 1 · 2018                                                  41
+    Akay, et al.: Robust and Resistant Estimations of Hedonic Prices for Second Hand Cars: An Application to the Istanbul Car Market
+
+the desired assumptions that provide robust and stable results in        Table 1: Robust and resistant estimators
+case of outliers. When the methods are examined, it is seen that
+the robust estimators are resistant to vertical outlier situations       Method  Estimator                                         estimators
+and the resistant ones are strong against both vertical outliers and     Robust  LAD
+leverage points.                                                                                                                                               n
+
+LAD (Bickel, 1973), one of the robust estimators, is one of the                                                               ^LS = arg min  ei
+L estimators and is also called the L1 estimator. This estimator                                                                                              i =1
+also provides information about the midpoint (median) of the
+new conditional distribution of the dependent variable. The LAD                   M                                                   n         ei 
+estimator is based on the minimization of the sum of residuals
+in absolute value. Although this approach is resistant to vertical                                                         ^M = arg min   ^ 
+outliers, it does not show the same resistance to leverage points.
+                                                                                                                                      i =1
+M (Huber, 1964), another robust estimator, uses a decreasingly
+increasing function of the observation values rather than the            Resistant LTS                                                                           h
+squares of residuals to limit the effects of outliers in the estimators
+and in this way, residuals are weighted differently, not equally.                                                             ^LTS = arg min  e(i)2
+M estimators try to maintain both high breakpoint and efficiency.                                                                                              i =1
+This estimator provides transition between the efficiency of the
+OLS estimators and the robust nature of the LAD estimators.                      S                                            ^S = arg min S ( )
+
+Even if the robust estimators show resistance to vertical outliers,              MM                                                   n  ei 
+leverage points can suppress these estimators. For this reason,                                                            ^MM = arg min    s 
+estimators with high breakdown limits, which we will consider                                                                         i=1  ^ 
+as resistant estimators, are needed. These respond to the problem
+of obtaining reliable parameter estimates in the presence of both        (i) Residuals are obtained via e=i Yi - Y^i . (ii)  (.) is the loss function. (iii) h is some
+X and Y directional outliers.
+                                                                                                                           n       3n + p + 1
+One of the resistant estimation methods LTS was proposed by                                                                  +1 h
+Rousseeuw (1984). LTS performs a minimization similar to the             number less than n and h is defined in the range  2       4           s (). (iv) The
+OLS. Other commonly used resistant estimators are S and MM.
+                                                                                                           1 n  ei 
+S estimators (Rousseeuw and Yohai, 1984) are called by this name         dispersion of is the solution of      =  . (v) is the robust estimator of scale
+for the reason that they are obtained from the scale statistics.                                           n - p i=1  S 
+S estimators have been developed against the problem of low
+breakpoint of the M estimator and estimate parameters via                of registered cars in Turkey is in Istanbul and more importantly,
+minimization of dispersion of residuals. S estimators estimate scale     the rate of automobiles that form the basis of second-hand car
+before estimating the parameters contrary to the M estimators,           buying and selling is about 23% in Istanbul compared to Turkey.
+although they are based on them. MM estimators (Yohai, 1987)             10321 observations were used to estimate models. Variables and
+have taken this name because of their M estimations several times.       descriptive statistics included in the study are presented in Table 2.
+For these, we first obtain estimators with high deterioration limits.    The logarithmic automobile selling price is taken into account as
+Then the residuals are used from the resistant regression line with      dependent variable. The average logarithmic car sales price given
+an M scale estimate with a 50% distortion limit. Finally, estimates      in Table 2 is approximately 10.76, and the average automobile
+are made using this information. MM estimators aim to provide            kilometer is 86840. As can be understood from descriptive
+both high breakpoint and high efficiency.                                statistics on engine cylinder volume, automobiles with a maximum
+                                                                         engine cylinder volume of 1401-1600 have been included in the
+Parameter estimates for these models are given in Table 1.               analysis. In the automobile sector, engine cylinder volume plays
+                                                                         an important role because it is an important indicator of the level
+                          4. DATA                                        of taxation. According to this information, it can be argued that
+                                                                         automobiles with engine cylinder volume up to 1600 occupy an
+The dataset used in this study was obtained in May 2016 from the         important place in the sector.
+website www.sahibinden.com, which is very popular in Turkey
+and where second hand car sales announcements are included. In                         5. EMPIRICAL RESULTS
+order to examine the factors affecting second-hand car prices for
+Istanbul through the second hand automobile hedonic price model,         lnPricei =0 +1Kilometeri +2Dieseli +3Gasolinei
+the announcements in Istanbul city were taken into consideration.                   +4Front Wheel Drivei +5Body Typei
+The reason for choosing Istanbul is that 23% of the total number                    +6CV2i +7CV3i +8Geari +9Cruise Controli (4)
+                                                                                    +10Sunroofi +11Trip Computeri
+                                                                                    +12Rain Sensori +13Changing Partsi +i
+
+                                                                         The hedonic price model given in equation four constructed for
+                                                                         the second hand automobile market was firstly estimated by OLS
+                                                                         method. Findings obtained by the OLS method are summarized in
+
+                                                                         1 Sample size (n) was calculated by this formula: n=(NpqZ2)/((N-1)d2+pqZ2),
+                                                                               here N: population size, Z: Normal distribution critical value at the (1-)
+                                                                               confidence level, d: significance level, p: The probability of preferring to
+                                                                               buy automobile, q=The probability of not preferring to buy automobile.
+                                                                               Despite the fact that the number of observations is 661 according to the
+                                                                               given sample size calculation formula, it has been worked out with a greater
+                                                                               number of observations.
+
+42  International Journal of Economics and Financial Issues | Vol 8 · Issue 1 · 2018
+          Akay, et al.: Robust and Resistant Estimations of Hedonic Prices for Second Hand Cars: An Application to the Istanbul Car Market
+
+Table 2: Variables and descriptive statistics of the variables
+
+Variable                Description                                             Mean±Standard deviation  JarqueBera                         Probability
+                                                                                       10.7578±0.6181       18.0458                            0.0001
+lnPrice                 Logaritmic automobile selling price (TL)                                           228.0468                            0.0000
+Kilometer               Automobile kilometer                                        86840.18±65629.66      175.1603                            0.0000
+Diesel                  1 if fuel type is diesel, otherwise 0                          0.6259±0.4841       226.7029                            0.0000
+Gasoline                1 if fuel type is gasoline, otherwise 0                        0.2625±0.4418       1989.378                            0.0000
+LPG                     1 if fuel type is LPG, otherwise 0                             0.1065±0.3087       671.5842                            0.0000
+Front wheel drive       1 if drivetrain type is front wheel drive, otherwise 0         0.8391±0.3675       174.2491                            0.0000
+Body type               1 if body type is sedan, otherwise 0                           0.6162±0.4865       230.2834                            0.0000
+                        CV1, 1 if engine cylinder volume is 10001400,                  0.3197±0.4402
+                                                                                                           172.0002                            0.0000
+Engine cylinder volume  otherwise 0                                                    0.5116±0.5001
+                        CV2, 1 if engine cylinder volume is 14011600,                                      594.2987                            0.0000
+                                                                                       0.1686±0.3745
+                        otherwise 0                                                                        172.0103                            0.0000
+                        CV3, 1 if engine cylinder volume is 16012000,                  0.5310±0.4992       172.0038                            0.0000
+                                                                                       0.5245±0.4996       199.1112                            0.0000
+Gear                    otherwise 0                                                    0.2965±0.4569       267.8218                            0.0000
+Cruise Control          1 if transmision type is manual, otherwise 0                   0.7606±0.4268       172.1292                            0.0000
+Sunroof                 1 if automobile has cruise control, otherwise 0                0.4418±0.4968       909.1430                            0.0000
+Trip computer           1 if automobile has sunroof, otherwise 0                       0.1434±0.3506
+Rain sensor             1 if automobile has trip computer, otherwise 0
+                        1 if automobile has rain sensor, otherwise 0
+
+Changing parts          1 if automobile has changing part, otherwise 0
+
+the second column of Table 3. According to the estimation results,       M and the estimation results of resistant regression methods called
+the coefficients of explanatory variables are statistically significant  LTS, S, MM are given in Table 3.
+at the 1% significance level. The model is also significant as a
+whole according to the result of the F test. The coefficient of          When the estimation results of robust and resistant regression are
+determination, calculated as 0.8166, indicates that about 82% of the     evaluated, it is observed that all the variable coefficients, except
+variations in the dependent variable are explained by explanatory        changing part in S regression, are statistically significant. The
+variables in the model. Homoscedasticity and normal distribution         signs of estimated robust and resistant regressions coefficients
+of error terms are very important in terms of F and t tests validity     are in accordance with the expectations and they are in the same
+in the model estimated with the use of the OLS method. The result        directions with the signs of coefficients obtained from OLS.
+of the White (1980) test carried out according to the results of the     Estimated coefficients do not change in sign but they differ in
+OLS method indicates that there is heteroscedasticity problem.           magnitude. Vertical outliers and leverage points are detected in the
+According to the Jarque-Bera (1980) test result, the null hypothesis     data set according to studentized residuals, standartized residuals
+of normality is rejected. Although the estimated coefficients both       and DFBETAS criteria. As explained in the methodology part of
+individually and as a whole are significant, as a result of the          the study, robust estimators are resistant to vertical outliers but
+violation of homoscedasticity and normality assumptions, these           leverage points can supress them. Resistant regression methods
+findings will not be valid. Heteroscedasticity causes standard errors    provide robust estimators to vertical outliers and leverage points.
+to be biased. When heteroscedasticity is present, robust standard        The estimation result of the LTS regression is taken into account
+errors tend to be more trustworthy. The values in square brackets        when making coefficient interpratation because LTS regression has
+in the second column of Table 3 are robust standard errors.              the biggest explanation power among resistant regression models
+                                                                         estimated in this study.
+Studentized residuals, standardized residuals and DFBETAS
+were calculated respectively, in order to determine whether              According to the estimation results of the second hand automobile
+there are outliers in the model and to detect them if any. After         hedonic price model, the variables of kilometer, fuel type (diesel,
+these calculations, it is determined there are outliers in the data      gasoline), front wheel drive, body type, engine cylinder volume,
+set. Vertical outliers are detected by applying studentized and          transmission type, cruise control, sunroof, trip computer and
+standartized residulas criteria. Also, leverage points are detected by   changing part were determined to have statistically significant
+DFBETAS criterion. Outliers determined by Studentized residuals          effects on the automobile prices. In the light of these findings;
+(RStud), standardized residuals (R Stand) and DFBETAS criteria           kilometer, fuel type, front wheel driving or rear wheel driving,
+are presented in Tables 4-6, respectively. It was detected there are     body type, cylinder volume, transmission type, cruise control,
+outliers in 60, 28 and 61 observations according to the criteria         trip computer, sunroof, rain sensor and changing parts are the
+of studentized residuals, standardized residulas and DFBETAS,            basic features of the automobile that determine second hand
+respectively.                                                            automobile prices.
+
+As a result of the presence of heteroscedasticty, non-normality          The regression results show that there is a negative relationship
+and outliers in the model, robust and resistant regression methods       between the automobile kilometer and automobile prices. This
+were performed. The second hand automobile hedonic price model           finding also corresponds to expectations. Ten thousand unit
+was estimated by robust and resistant regression methods. The            increase in kilometer variable will decrease automobile prices
+estimation results of robust regression methods called LAD (L1),         3.19%. It has been determined that the front-wheel driving feature
+
+                International Journal of Economics and Financial Issues | Vol 8 · Issue 1 · 2018                                            43
+                Akay, et al.: Robust and Resistant Estimations of Hedonic Prices for Second Hand Cars: An Application to the Istanbul Car Market
+
+Table 3: The results of regressions
+
+Variables                                                        Methods
+                                                           M
+                   OLS                     LAD        11.03815*                          LTS                  S            MM
+                                        11.07004*    (0.0479829)                        11.03*             11.10*       11.0363*
+Constant           10.9570*            (0.0626913)                                     (0.0436)          (0.0559)       (0.0479)
+
+                   (0.0511)           -0.00000329*                                                    -0.00000310*   -0.00000347*
+                                      (0.000000191)                                                   (0.000000170)  (0.000000146)
+Kilometer             [0.0675]                       -0.00000347*                      -0.00000319*
+                   -0.00000339*        0.3345772*    (0.000000746)                     (0.000000131)      0.3077*        0.3225*
+                                       (0.0374574)                                                       (0.0334)       (0.0286)
+                   (0.000000156)
+                                       0.1898943*                                                         0.2028*        0.1704*
+Diesel             [0.000000172]       (0.0413907)   0.3226071*                         0.3571*          (0.0369)       (0.0316)
+                       0.3408*                       (0.0286692)                       (0.02545)
+                                      -0.6471241*                                                        -0.6557*       -0.5857*
+                   (0.0305)             (0.035565)                                                       (0.0317)       (0.0271)
+
+Gasoline           [0.0361]            0.0590703*    0.1708238*                        0.2151*            0.0606*        0.0782*
+                   0.1856*             (0.0226921)   (0.0316797)                       (0.02811)         (0.0202)       (0.0173)
+
+                   (0.0337)            0.0789845*                                                         0.0973*        0.0728*
+                                        (.0252614)                                                       (0.0225)       (0.0193)
+Front wheel drive  [0.0401]                          -0.5874483*                       -0.6171*
+                   -0.5393*            0.2326377*    (0.0272208)                       (0.02564)        0.0709***        0.2404*
+                                        (0.042892)                                                       (0.0382)       (0.0327)
+                   (0.0290)
+                                      -0.1970285*                                                        -0.1760*       -0.2034*
+Body type          [0.0398]            (0.0255968)   0.0781739*                        0.07348*          (0.0228)       (0.0195)
+                   0.0750*                           (0.0173681)                       (0.01546)
+                                       0.1159603*                                                         0.1134*        0.1023*
+                   (0.0185)            (0.0270797)                                                       (0.0241)       (0.0206)
+
+                   [0.0191]            0.0858848*                                                         0.0665*        0.1072*
+                                       (0.0273291)                                                       (0.0243)       (0.0208)
+CV2                0.0645*                            0.073364*                        0.08918*
+                                       0.1194365*    (0.0193346)                       (0.01710)         0.0615**        0.1318*
+                   (0.0206)            (0.0278554)                                                       (0.0248)       (0.0212)
+
+                   [0.0212]            0.1717769*                                                         0.1726*        0.1612*
+                                       (0.0279078)                                                       (0.0248)       (0.0213)
+CV3                0.2630*                           0.2406577*                        0.1073*
+                                      -0.0620619**   (0.0328288)                       (0.0304)           -0.0121       -0.0633*
+                   (0.0350)            (0.0295709)                                                       (0.0263)       (0.0225)
+
+                   [0.0456]               Pseudo                                                        R2=0.5774      R2=0.6478
+                                        R2=0.5777
+Gear               -0.2177*                          -0.2029899*                       -0.1936*       Adj.R2=0.5720  Adj.R2=0.6433
+                                                     (0.0195913)                       (0.01723)
+                   (0.0208)                                                                           Scale=0.2251   Scale=0.2251
+
+Cruise control     [0.0199]                          0.1022716*                         0.1091*
+                   0.1072*                           (0.0207263)                       (0.01838)
+
+                   (0.0221)
+
+Sunroof            [0.0201]                          0.1064534*                         0.0860*
+                   0.1278*                           (0.0209172)                       (0.01871)
+
+                   (0.0223)
+
+Trip computer      [0.0239]                                                 0.130692*  0.09235*
+                   0.1551*                                                  (0.02132)  (0.01923)
+
+                   (0.0227)
+
+Rain sensor        [0.0260]                          0.1610488*                         0.1599*
+                   0.1700*                           (0.0213601)                       (0.01890)
+
+                   (0.0227)
+
+Changing parts     [0.0221]                          -0.0627127*                       -0.0588*
+                   -0.0712*                           (0.022633)                       (0.0201)
+
+                   (0.0241)
+
+                    [0.0245]                                                R2=0.6416  R2=0.8515
+                   R2=0.8166
+
+                   Adj.R2=0.8143                     Adj.R2=0.6371                     Adj.R2=0.8495
+                   F*=348.7951                         F=382.56*                           F=422*
+
+                                                     Scale=0.2197                      Scale=0.2486
+
+                     White*=279.98
+                   JarqueBera*=72.98
+
+(i) Dependent variable is the logarithmic price of automobile. (ii) Numbers in parentheses are standard errors. Numbers in square brackets are robust standard errors.
+(iii) *, **, *** indicate significance at the level of 1%, 5% and 10%, respectively. (iv) White test (1980) indicates that the null hypothesis of homoscedasticity is rejected at the 1%
+significance level. (v) JarqueBera test (1980) indicates that the null hypothesis of normality is rejected at the 1% significance level
+
+of the automobile reduces car prices. When the coefficient value            results of the LTS regression, the average price of the front-wheel
+of front-wheel drive variable is interpreted2 in the estimation             drive automobiles is 46% lower than that of the rear-wheel drive
+                                                                            automobiles. According to the findings, the manual transmission
+2 Dummy variable coefficient interpretations were performed according       reduces the automobile prices. The average price of the automobiles
+      to the Halvorsen-Palmquist (1980) approach, which is recommended for  which have manuel transmission are 17.6% lower than those with
+      semi-logarithmic regression models.
+
+44                                    International Journal of Economics and Financial Issues | Vol 8 · Issue 1 · 2018
+             Akay, et al.: Robust and Resistant Estimations of Hedonic Prices for Second Hand Cars: An Application to the Istanbul Car Market
+
+Table 4: Studentized residulas
+
+Observation  Rstud                            Observation  Rstud     Observation               Rstud                                    Observation                         Rstud
+
+4                 2.87                             169      2.20          374                  -4.55                                         840                             4.19
+                                                   181      1.99          403                   2.47                                         851                            -2.58
+10           -2.45                                 192      2.64          462                   1.99                                         862                             2.92
+                                                   218     -2.34          502                  -2.28                                         874                             2.18
+21           -2.36                                 223      2.52          535                  -2.49                                         875                             3.83
+                                                   224     -2.52          540                   3.08                                         882                             3.24
+28           -2.55                                 246      3.87          541                  -2.79                                         929                            -2.58
+                                                   252     -1.99          544                   2.05                                         931                            -2.94
+40                2.25                             279      2.06          591                   2.14                                         969                            -2.75
+                                                   281     -2.40          677                   2.06                                         1011                            3.41
+51           -2.75                                 286     -2.78          756                  -2.11                                        1023                             2.01
+                                                   299     -2.27          762                   2.93                                        1030                             2.28
+64           -2.43                                 307     -2.28          778                   2.30
+                                                   343     -2.63          800                  -2.94
+68           -2.26                                 359     -2.12          817                  -2.33
+
+90                2.28                             360     -2.44          822                   2.06
+
+113               2.70
+
+115               2.17
+
+120          -2.98
+
+126               2.13
+
+145               2.14
+
+160               2.16
+
+162          -2.17
+
+(i) Studentized residual values (Rstud) were compared to the value of 1.96. (ii) Observations with Rstud values greater than 1.96 in absolute value were determined as outliers. (iii) Rstud
+
+values were obtained from the formula ei* =        ei . MSEi is the mean squared error calculated without ith observation and hi is the diagonal element of the hat matrix
+                                              MSEi (1 - hi )
+
+Table 5: Standardized residulas
+
+Observation  Rstand                           Observation  Rstand    Observation               Rstand                                   Observation                         Rstand
+
+4                 2.86                             160      2.16          544                   2.05                                         862                             2.91
+                                                   169      2.19          591                   2.14                                         874                             2.18
+40                2.25                             223      2.51          677                   2.06                                         875                             3.81
+                                                   246      3.84          762                   2.92                                         882                             3.22
+90                2.27                             279      2.05          778                   2.30                                        1011                             3.39
+                                                   403      2.46          822                   2.05                                        1023                             2.01
+113               2.69
+                                                   540      3.07          840                   4.16                                        1030                             2.28
+115               2.16
+
+126               2.12
+
+145               2.14
+
+(i) Standardized residual values (Rstand) were compared to the value of 2. (ii) Observations with Rstand values greater than 2 in absolute value were determined as outliers. (iii) Rstand
+                                                   ei . MSE is the mean squared error and hi is the diagonal element of the hat matrix
+values were obtained from the formula  es  =  MSEi (1 - hi )
+                                        i
+
+Table 6: DFBETAS
+
+Observation  DFBETAS                          Observation  DFBETAS   Observation               DFBETAS                                  Observation  DFBETAS
+
+19                0.07                             273        -0.07       588                      0.09                                      848        -0.09
+                                                   293         0.09       591                      0.16                                      851         0.15
+28           -0.07                                 299        -0.08       611                      0.07                                      864        -0.07
+                                                   309         0.09       614                     -0.11                                      874        -0.07
+51                0.11                             332        -0.07       629                     -0.07                                      882        -0.07
+                                                   354        -0.11       662                     -0.09                                      929         0.15
+69                0.07                             359        -0.14       688                     -0.09                                      931        -0.07
+                                                   360        -0.19       691                      0.11                                      935        -0.07
+90           -0.07                                 374         0.21       706                     -0.07                                      939        -0.07
+                                                   406         0.09       762                      0.23                                      972        -0.10
+115               0.19                             487        -0.07       776                     -0.07                                      990        -0.07
+                                                   489        -0.17       778                      0.09                                     1023        -0.08
+145          -0.08                                 494         0.10       784                     -0.08                                     1030        -0.07
+                                                   540         0.38       793                     -0.07
+162               0.08                             544         0.07       800                      0.22
+
+181          -0.07                                 571        -0.06       822                     -0.13
+
+192          -0.11
+
+218          -0.13
+
+223          -0.10
+
+239               0.07
+
+240               0.08
+
+246               0.13
+
+255               0.06
+
+                                                                                                                                                                                         ^J -  J (1)
+(i) DFBETAS criterion was performed for km only, since all the explanatory variables except km in the model are dummy variables. (ii) DFBETASij = MSEih jj j (i) is the jth
+
+parameter calculated without ith observation. MSEi is the mean squared error calculated without ith observation and hjj is the jth diagonal element of the (xx)-1. (iii) DFBETAS values
+were compared to the value of 2/n and observations with DFBETAS>0.06 in absolute value were determined as leverage points
+
+automatic transmission. Automobiles with automatic transmission      type are comfort oriented and provide ease of driving. For these
+type provide more comfortable driving in metropolitans such as       reasons, automobiles with manual transmisssion type have an
+stanbul where there is heavy traffic. Automobiles with manual        decreasing effect on the automobile prices when compared with
+transmission type are more tiring in terms of driver in challenging  those with the automatic transmision. According to the estimation
+traffic conditions while automobiles with automatic transmission     results, another variable which reduces the automobile price is the
+
+             International Journal of Economics and Financial Issues | Vol 8 · Issue 1 · 2018                                                                                                         45
+    Akay, et al.: Robust and Resistant Estimations of Hedonic Prices for Second Hand Cars: An Application to the Istanbul Car Market
+
+changing part. Changing parts at the automobile can be caused by       more aesthetically pleasing appearance of the automobile make
+automobile accidents or the replacement of old parts. As a result,     the sunroof a feature that increases the price.
+it is in accordance with expectations. The availability of changing
+part at the automobile reduces the prices and the avarage price of                         6. CONCLUSION
+the automobiles which have changing part are 5.7% lower than
+other ones without changing parts.                                     In this study, the factors affecting second hand automobile prices
+                                                                       and the magnitude of these factors on them have been examined
+According to the findings, it is observed that the coefficients of     via hedonic price theory using data set consisting of 1032
+diesel and gasoline variables have positive signs. Fuel types like     observations obtained from Istanbul car market. The results of
+diesel and gasoline increase automobile prices compared to LPG         hedonic price model estimated by OLS show that assumptions
+(gas). This finding shows that the avarege price of automobiles        of homoscedasticity and normal distribution of error terms are
+functioning with diesel and gasoline is higher than the average        not fulfilled. Existence of outliers in the data set is determined
+price of those with LPG. The average price of automobiles with         by standardized residuals, student t residuals, and DFBETAS
+diesel fuel type are 42.9% higher than that of automobiles with        criteria. After detection of outliers, the hedonic price equation
+LPG and the average price of automobiles with gasoline fuel type       was estimated by robust and resistant regression methods without
+are 23.9% higher than that of cars with LPG.                           excluding any outlier in the analysis. These robust and resistant
+                                                                       regression methods, called LAD, M, LTS, S, and MM are less
+This result may be induced by the fact that drivers are prejudiced     sensitive to outliers and this makes the estimation results more
+about safety against automobiles with LPG and there is a               reliable than OLS results.
+limited using of services for them like parking garage. When the
+coefficients of the diesel and gasoline variables are considered in    The empirical findings indicate that kilometer, fuel type, front
+terms of magnitude, the impact of the diesel fuel type is greater      wheel drive, body type, engine cylinder volume, transmission type,
+than that of gasoline fuel type on prices. Due to the fact that the    cruise control, sunroof, trip computer, rain sensor and changing
+price of diesel is cheaper than that of the gasoline and fuel economy  part are the features which have a statistically significant effect
+for the diesel automobiles is bigger than that of the gasoline         on the automobile prices. Manual transmission, front-wheel
+automobiles, diesel fuel type has a more increasing effect on the      drive, kilometer, changing part are the features of the automobile
+prices compared to the automobiles with gasoline.                      which decrease prices, while other variables analyzed in the study
+                                                                       increase prices. In addition to the features such as transmission
+The regression results show that the sedan body type of automobile     type, engine cylinder volume and fuel type that have significant
+increases automobile prices. According to the estimation results, the  effects on prices, it is determined that comfort-oriented features
+average price of automobiles with sedan body type, is 7.6% higher      are also important factors that affect automobile prices.
+than those with non-sedan body type. This is caused by the fact
+that sedan-type cars provide a larger internal volume than those of                         REFERENCES
+hatchbacks and they are superior in quality perception compared to
+station wagons. According to the findings, it is observed that as the  Abounoori, E., Rezvani, A. (2012), Using hedonic prices to estimate
+engine cylinder volume increases, the price of automobile increases.        quality changes concerning Iranian automobile market. Iranian
+The avarege prices of the automobiles with engine cylinder volume           Journal of Economic Studies, 1(1), 1-12.
+between 1401 and 1600 are %9.3 higher than the automobiles with
+engine cylinder volume <1401. Additionaly, the avarege price of the    Andersson, H. (2005), The value of safety as revealed in the swedish car
+automobiles with engine cylinder volume between 1601 and 2000               market: An application of the hedonic pricing approach. The Journal
+are 11.3% higher than the automobiles with engine cylinder volume           of Risk and Uncertainty, 30(3), 211-239.
+<1401. It has been found that the average price of automobiles with
+engine cylinder volumes between 1401 and 2000 are higher than          Arguea, N.M., Hsiao, C., Taylor, G.A. (1994), Estimating consumer
+those with engine cylinder volume <1401. The most important                 preferences using market data-an application to US automobile
+factor supporting this finding is that the higher the engine cylinder       demand. Journal of Applied Econometrics, 9, 1-18.
+volume, the better the performance of the automobile.
+                                                                       Bajic, V. (1993), Automobiles and implicit markets: An estimate of a
+According to the estimation results, comfort-oriented features such         structural demand model for automobile characteristics. Applied
+as cruise control, trip computer and rain sensor have a positive            Economics, 25, 541-551.
+effect on prices. The presence of a cruise control, trip computer
+and rain sensor features on the automobile play an increasing effect   Balce, A.O. (2016), Factors affecting prices in an used car e-market. Jornal
+on prices. The avarege price of the automobiles with features such          of Internet Applications and Management, 7(2), 5-20.
+that cruise control, trip computer and rain sensor is 11.5%, 9.6%,
+17.3% higher respectively than those without these features. It        Bickel, P.J. (1973), On some analogues to linear combinations of order
+has been observed that the sunroof is another variable that affects         statistics in the linear model. The Annals of Statistics, 1(4), 597-616.
+prices positively. According to this finding, the avarage price of
+the automobiles with sunroof is 8.9% higher than those without         Court, A.T. (1939), Hedonic price indexes with automotive examples.
+sunroof. The sensation of freshness in the car and providing a              In: The Dynamics of Automobile Demand. New York: General
+                                                                            Motors. p98-119.
+
+                                                                       Couton, C., Gardes, G., Thepaut, Y. (1996), Hedonic prices for
+                                                                            environmental and safety characteristics and the Akerloff effect in
+                                                                            the French car market. Applied Economics Letters, 3(7), 435-440.
+
+                                                                       Cowling, K., Cubbin, J. (1972), Hedonic price indexes for United Kingdom
+                                                                            cars. The Economic Journal, 82(327), 963-978.
+
+                                                                       Datan, H. (2016), Türkiye'de ikinci el otomobil fiyatini etkileyen
+
+46  International Journal of Economics and Financial Issues | Vol 8 · Issue 1 · 2018
+Akay, et al.: Robust and Resistant Estimations of Hedonic Prices for Second Hand Cars: An Application to the Istanbul Car Market
+
+     faktörlerin hedonik fiyat modeli ile belirlenmesi. Gazi Üniversitesi       discrimination in the European community: The case of automobiles.
+     ktisadi ve dari Bilimler Fakültesi Dergisi, 18(1), 303-327.                The Journal of Industrial Economics, 34(2), 151-166.
+Ecer, F. (2013), Türkiye'de 2, El otomobil fiyatlarinin tahmini ve fiyat   Murray, J., Sarantis, N. (1999), Price quality relations and hedonic price
+     belirleyicilerinin tespiti. Anadolu Üniversitesi Sosyal Bilimler           indexes for cars in the United Kingdom. International Journal of the
+     Dergisi, 13(4), 101-112.                                                   Economics of Business, 6(1), 5-27.
+Erdem, C., entürk, . (2009), A hedonic analysis of used car prices         Pazarliolu, V., Güne, M. (2000), The Hedonic Price Model for Fusion
+     in Turkey. International Journal of Economic Perspectives, 3(2),           on Car Market. Paris: International Conferenca of Information
+     141-149.                                                                   Fusion. p4-13.
+German Federal Statistical Office. (2003), Hedonic Methods of Price        Reis, H.J., Silva, J.M.C. (2006), Hedonic prices indexes for new passenger
+     Measurement for Used Cars. Available from: https://www.destatis.           cars in Portugal (1997-2001). Economic Modelling, 23, 890-908.
+     de/EN/FactsFigures/NationalEconomyEnvironment/Prices/                 Rosen, S. (1974), Hedonic prices and implicit markets: Product
+     HedonicUsedCars.pdf%3F__blob%3DpublicationFile.1-10.                       differentiation in pure competition. The Journal of PoliticalEconomy,
+Hadinejad, M., Shabgard, B. (2011), Hedonic price for car in Iran. Sosyal       82(1), 34-55.
+     Bilimler Dergisi, 2, 118-127.                                         Rousseeuw, P.J. (1984), Least median of squares regression. Journal of
+Halvorsen, R., Palmquist, R. (1980), The Interpration of dummy variables        the American Statistical Association, 79(388), 871-880.
+     in semilogaritmic equations. American Economic Review, 70(3),         Rousseeuw, P.J., Yohai, V. (1984), Robust regression by means of
+     474-475.                                                                   s-estimators. In: Franke, J., Hardle, W., Martin, R.D., editors. Robust
+Huber, P. (1964), Robust estimation of a location parameter. The Annals         and Time Series Analysis, Lecture Notes in Statistics 26. Berlin:
+     of Mathematical Statistics, 35(1), 73-101.                                 Springer-Verlag. p256-272.
+Jarque, C.M., Bera, A.K. (1980), Efficient test for normality,             Turkish Statistical Institute. (2016), Road Motor Vehicles Press Release.
+     homoscedasticty and serial independence of regression residulas.           Available from: http://www.tuik.gov.tr/PreHaberBultenleri.
+     Economics Letters, 6(3), 255-259.                                          do?id=21605.
+Matas, A., Raymond, J.L. (2009), Hedonic prices for cars: An application   White, H. (1980), A heteroskedasticity consistent estimator and a direct
+     to the Spanish car market, 1981-2005. Applied Economics, 41(22),           test of heteroskedsticity. Econometrica, 48(4), 817-838.
+     2887-2904.                                                            Yohai, V.J. (1987), High breakdown-point and high efficiency robust
+Mertens, Y., Ginsburgh, V. (1985), Product differentiation and price            estimates for regression. The Annals of Statistics, 15(2), 642-656.
+
+International Journal of Economics and Financial Issues | Vol 8 · Issue 1 · 2018                                                  47
+

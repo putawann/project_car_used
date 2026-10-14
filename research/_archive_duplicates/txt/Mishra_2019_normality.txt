@@ -1,0 +1,365 @@
+Original Article
+
+Descriptive Statistics and Normality Tests for Statistical Data
+
+Abstract                                                                                                                     Prabhaker Mishra,
+Descriptive statistics are an important part of biomedical research which is used to describe the                            Chandra M Pandey,
+basic features of the data in the study. They provide simple summaries about the sample and the                              Uttam Singh,
+measures. Measures of the central tendency and dispersion are used to describe the quantitative data.                        Anshul Gupta1,
+For the continuous data, test of the normality is an important step for deciding the measures of                             Chinmoy Sahu2,
+central tendency and statistical methods for data analysis. When our data follow normal distribution,                        Amit Keshri3
+parametric tests otherwise nonparametric methods are used to compare the groups. There are
+different methods used to test the normality of data, including numerical and visual methods, and                            Departments of Biostatistics
+each method has its own advantages and disadvantages. In the present study, we have discussed the                            and Health Informatics,
+summary measures and methods used to test the normality of the data.                                                         1Haematology, 2Microbiology
+                                                                                                                             and 3NeuroOtology, Sanjay
+Keywords: Biomedical research, descriptive statistics, numerical and visual methods, test of                                 Gandhi Postgraduate Institute
+normality                                                                                                                    of Medical Sciences, Lucknow,
+                                                                                                                             Uttar Pradesh, India
+Introduction                                                      terms of different groups, etc., statistical
+                                                                  methods are used. These statistical methods                Address for correspondence:
+A data set is a collection of the data of                         have some assumptions including normality                  Dr. Anshul Gupta,
+individual cases or subjects. Usually,                            of the continuous data. There are different                Department of Haematology,
+it is meaningless to present such data                            methods used to test the normality of                      Sanjay Gandhi Postgraduate
+individually because that will not produce                        data, including numerical and visual                       Institute of Medical Sciences,
+any important conclusions. In place of                            methods, and each method has its own                       Lucknow  226 014,
+individual case presentation, we present                          advantages and disadvantages.[5] Descriptive               Uttar Pradesh, India.
+summary statistics of our data set with or                        statistics and inferential statistics both are             Email: anshulhaemat@gmail.
+without analytical form which can be easily                       employed in scientific analysis of data and                com
+absorbable for the audience. Statistics                           are equally important in the statistics. In
+which is a science of collection, analysis,                       the present study, we have discussed the                        Access this article online
+presentation, and interpretation of the data,                     summary measures to describe the data                      Website: www.annals.in
+have two main branches, are descriptive                           and methods used to test the normality of                  DOI: 10.4103/aca.ACA_157_18
+statistics and inferential statistics.[1]                         the data. To understand the descriptive
+                                                                  statistics and test of the normality of the                      Quick Response Code:
+Summary measures or summary statistics or                         data, an example [Table 1] with a data
+descriptive statistics are used to summarize a                    set of 15 patients whose mean arterial                                                          67
+set of observations, in order to communicate                      pressure (MAP) was measured are given
+the largest amount of information as                              below. Further examples related to the
+simply as possible. Descriptive statistics                        measures of central tendency, dispersion,
+are the kind of information presented in                          and tests of normality are discussed based
+just a few words to describe the basic                            on the above data.
+features of the data in a study such as the
+mean and standard deviation (SD).[2,3] The                        Descriptive Statistics
+another is inferential statistics, which draw
+conclusions from data that are subject to                         There are three major types of descriptive
+random variation (e.g., observational errors                      statistics: Measures of frequency
+and sampling variation). In inferential                           (frequency, percent), measures of
+statistics, most predictions are for the future                   central tendency (mean, median and
+and generalizations about a population by                         mode), and measures of dispersion or
+studying a smaller sample.[2,4] To draw the                       variation (variance, SD, standard error,
+inference from the study participants in                          quartile, interquartile range, percentile,
+                                                                  range, and coefficient of variation [CV])
+This is an open access journal, and articles are                  provide simple summaries about the sample
+distributed under the terms of the Creative Commons
+AttributionNonCommercialShareAlike 4.0 License, which allows       How to cite this article: Mishra P, Pandey CM,
+others to remix, tweak, and build upon the work noncommercially,   Singh U, Gupta A, Sahu C, Keshri A. Descriptive
+as long as appropriate credit is given and the new creations are   statistics and normality tests for statistical data. Ann
+licensed under the identical terms.                                Card Anaesth 2019;22:67-72.
+
+For reprints contact: reprints@medknow.com
+
+© 2019 Annals of Cardiac Anaesthesia | Published by Wolters Kluwer  Medknow
+    Mishra, et al.: Descriptive statistics and normality tests
+
+and the measures. A measure of frequency is usually             Table 1: Distribution of mean arterial pressure (mmHg)
+used for the categorical data while others are used for                                       as per sex
+quantitative data.                                                                                 Patient number
+
+Measures of Frequency                                                    1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+                                                                MAP 82 84 85 88 92 93 94 95 98 100 102 107 110 116 116
+Frequency statistics simply count the number of times           Sex M F F M M F F M M F M F M F M
+that in each variable occurs, such as the number of males       MAP: Mean arterial pressure, M: Male, F: Female
+and females within the sample or population. Frequency
+analysis is an important area of statistics that deals with     Table 2: Descriptive statistics of the mean arterial
+the number of occurrences (frequency) and percentage.
+For example, according to Table 1, out of the 15 patients,      pressure (mmHg)
+frequency of the males and females were 8 (53.3%) and
+7 (46.7%), respectively.                                        Mean SD SE Q1 Q2 Q3 Minimum Maximum Mode
+
+Measures of Central Tendency                                    97.47 11.01 2.84 88 95 107 82            116                     116
+
+Data are commonly describe the observations in a measure        SD: Standard deviation, SE: Standard error, Q1: First quartile,
+of central tendency, which is also called measures of central
+location, is used to find out the representative value of a     Q2: Second quartile, Q3: Third quartile
+data set. The mean, median, and mode are three types of
+measures of central tendency. Measures of central tendency      one median of one data set which is useful when comparing
+give us one value (mean or median) for the distribution         between the groups. There is one disadvantage of median
+and this value represents the entire distribution. To make      over mean that it is not as popular as mean.[6] For example,
+comparisons between two or more groups, representative          according to Table 2, median MAP of the patients was
+values of these distributions are compared. It helps in         95 mmHg indicated that 50% observations of the data are
+further statistical analysis because many techniques            either less than or equal to the 95 mmHg and rest of the
+of statistical analysis such as measures of dispersion,         50% observations are either equal or greater than 95 mmHg.
+skewness, correlation, ttest, and ANOVA test are calculated
+using value of measures of central tendency. That is why        Mode
+measures of central tendency are also called as measures of
+the first order. A representative value (measures of central    Mode is a value that occurs most frequently in a set of
+tendency) is considered good when it was calculated using       observation, that is, the observation, which has maximum
+all observations and not affected by extreme values because     frequency is called mode. In a data set, it is possible to have
+these values are used to calculate for further measures.        multiple modes or no mode exists. Due to the possibility of
+                                                                the multiple modes for one data set, it is not used to compare
+Computation of Measures of Central Tendency                     between the groups. For example, according to Table 2,
+                                                                maximum repeated value is 116 mmHg (2 times) rest are
+Mean                                                            repeated one time only, mode of the data is 116 mmHg.
+
+Mean is the mathematical average value of a set of              Measures of Dispersion
+data. Mean can be calculated using summation of the
+observations divided by number of observations. It is the       Measures of dispersion is another measure used to show how
+most popular measure and very easy to calculate. It is a        spread out (variation) in a data set also called measures of
+unique value for one group, that is, there is only one answer,  variation. It is quantitatively degree of variation or dispersion
+which is useful when comparing between the groups. In the       of values in a population or in a sample. More specifically,
+computation of mean, all the observations are used.[2,5] One    it is showing lack of representation of measures of central
+disadvantage with mean is that it is affected by extreme        tendency usually for mean/median. These are indices that give
+values (outliers). For example, according to Table 2, mean      us an idea about homogeneity or heterogeneity of the data.[2,6]
+MAP of the patients was 97.47 indicated that average MAP
+of the patients was 97.47 mmHg.                                 Common measures
+
+Median                                                          Variance, SD, standard error, quartile, interquartile range,
+                                                                percentile, range, and CV.
+The median is defined as the middle most observation if
+data are arranged either in increasing or decreasing order      Computation of Measures of Dispersion
+of magnitude. Thus, it is one of the observations, which
+occupies the central place in the distribution (data). This     Standard deviation and variance
+is also called positional average. Extreme values (outliers)
+do not affect the median. It is unique, that is, there is only  The SD is a measure of how spread out values is from
+                                                                its mean value. Its symbol is  (the Greek letter sigma)
+                                                                or s. It is called SD because we have taken a standard
+                                                                value (mean) to measures the dispersion. Where xi is
+                                                                individual value, x is mean value. If sample size is <30,
+                                                                we use "n1" in denominator, for sample size 30, use "n"
+                                                                in denominator. The variance (s2) is defined as the average
+
+68  Annals of Cardiac Anaesthesia | Volume 22 | Issue 1 | JanuaryMarch 2019
+                           Mishra, et al.: Descriptive statistics and normality tests
+
+of the squared difference from the mean. It is equal to the       quartile in the data is 88 and 107. Hence, IQR of the data is
+square of the SD (s).                                             19 mmHg (also can write like: 88-107) [Table 2].
+
+             n                   n                                Percentile
+
+    å (xi - x )2       å (xi - x )2                               The percentiles are the 99 points that divide the data set
+                                                                  into 100 equal groups, each group comprising a 1% of the
+s = i=1           s2 = i=1                                        data, for a set of data values which are arranged in either
+           n -1               n -1                                ascending or descending order. About 25% percentile is
+                                                                  the first quartile, 50% percentile is the second quartile
+For example, in the above, SD is 11.01 mmHg When                  also called median value, while 75% percentile is the third
+n <30 which showed that approximate average deviation             quartile of the data.
+between mean value and individual values is 11.01.
+Similarly, variance is 121.22 [i.e., (11.01) 2], which showed     For ith percentile = [i * (n + 1)/100]th observation, where
+that average square deviation between mean value and              i = 1, 2, 3.,99.
+individual values is 121.22 [Table 2].
+                                                                  Example: In the above, 10th percentile = [10* (n + 1)/100]
+Standard error                                                    =1.6th observation from initial which is fall between
+                                                                  the first and second observation from the initial =
+Standard error is the approximate difference between              1st observation + 0.6* (difference between the second and
+sample mean and population mean. When we draw the                 first observation) = 83.20 mmHg, which indicated that 10%
+many samples from same population with same sample                of the data are either 83.20 and rest 90% observations are
+size through random sampling technique, then SD among             either 83.20.
+the sample means is called standard error. If sample SD
+and sample size are given, we can calculate standard error        Coefficient of Variation
+for this sample, by using the formula.
+                                                                  Interpretation of SD without considering the magnitude
+Standard error = sample SD/sample size.                           of mean of the sample or population may be misleading.
+                                                                  To overcome this problem, CV gives an idea. CV gives
+For example, according to Table 2, standard error                 the result in terms of ratio of SD with respect to its mean
+is 2.84 mmHg, which showed that average mean                      value, which expressed in %. CV = 100 × (SD/mean).
+difference between sample means and population mean is            For example, in the above, coefficient of the variation is
+2.84 mmHg [Table 2].                                              11.3% which indicated that SD is 11.3% of its mean value
+                                                                  [i.e., 100* (11.01/97.47)] [Table 2].
+Quartiles and interquartile range
+                                                                  Range
+The quartiles are the three points that divide the data set
+into four equal groups, each group comprising a quarter           Difference between largest and smallest observation is called
+of the data, for a set of data values which are arranged in       range. If A and B are smallest and largest observations in
+either ascending or descending order. Q1, Q2, and Q3 are          a data set, then the range (R) is equal to the difference of
+represent the first, second, and third quartile's value.[7]       largest and smallest observation, that is, R = A-B.
+
+For ith Quartile = [i * (n + 1)/4]th observation, where i = 1,    For example, in the above, minimum and maximum
+2, 3.                                                             observation in the data is 82 mmHg and 116 mmHg.
+                                                                  Hence, the range of the data is 34 mmHg (also can write
+For  example,     in  the                above,  first            like: 82-116) [Table 2].
+
+quartile (Q1) = (n + 1)/4= (15 + 1)/4 = 4th observation           Descriptive statistics can be calculated in the
+                                                                  statistical software "SPSS" (analyze  descriptive
+from initial = 88 mmHg (i.e., first 25% number of                 statistics  frequencies or descriptives.
+
+observations of the data are either 88 and rest 75%               Normality of data and testing
+
+observations are either 88), Q2 (also called median)              The standard normal distribution is the most important
+                                                                  continuous probability distribution has a bellshaped
+= [2* (n + 1)/4] = 8th observation from initial = 95 mmHg, that   density curve described by its mean and SD and extreme
+                                                                  values in the data set have no significant impact on
+is, first 50% number of observations of the data are either less
+
+or equal to the 95 and rest 50% observations are either 95,
+
+and similarly Q3 = [3* (n + 1)/4] = 12th observation from
+
+initial = 107 mmHg, i.e., indicated that first 75% number
+
+of observations of the data are either 107 and rest 25%
+
+observations are either 107. The interquartile range (IQR) is
+
+a measure of variability, also called the midspread or middle
+
+50%, which is a measure of statistical dispersion, being
+
+equal to the difference between 75th (Q3 or third quartile)
+
+and 25th (Q1 or first quartile) percentiles. For example,
+
+in the above example, three quartiles, that is, Q1, Q2, and
+
+Q3 are 88, 95, and 107, respectively. As the first and third
+
+Annals of Cardiac Anaesthesia | Volume 22 | Issue 1 | JanuaryMarch 2019                69
+    Mishra, et al.: Descriptive statistics and normality tests
+
+the mean value. If a continuous data is follow normal            be handling on larger sample size while Kolmogorov-
+distribution then 68.2%, 95.4%, and 99.7% observations           Smirnov test is used for n 50. For both of the above tests,
+are lie between mean ± 1 SD, mean ± 2 SD, and                    null hypothesis states that data are taken from normal
+mean ± 3 SD, respectively.[2,4]                                  distributed population. When P > 0.05, null hypothesis
+                                                                 accepted and data are called as normally distributed.
+Why to test the normality of data                                Skewness is a measure of symmetry, or more precisely, the
+                                                                 lack of symmetry of the normal distribution. Kurtosis is a
+Various statistical methods used for data analysis make          measure of the peakedness of a distribution. The original
+assumptions about normality, including correlation,              kurtosis value is sometimes called kurtosis (proper).
+regression, ttests, and analysis of variance. Central limit      Most of the statistical packages such as SPSS provide
+theorem states that when sample size has 100 or more             "excess" kurtosis (also called kurtosis [excess]) obtained
+observations, violation of the normality is not a major          by subtracting 3 from the kurtosis (proper). A distribution,
+issue.[5,8] Although for meaningful conclusions, assumption of   or data set, is symmetric if it looks the same to the left
+the normality should be followed irrespective of the sample      and right of the center point. If mean, median, and mode
+size. If a continuous data follow normal distribution, then      of a distribution coincide, then it is called a symmetric
+we present this data in mean value. Further, this mean value     distribution, that is, skewness = 0, kurtosis (excess)
+is used to compare between/among the groups to calculate         = 0. A distribution is called approximate normal if
+the significance level (P value). If our data are not normally   skewness or kurtosis (excess) of the data are between - 1
+distributed, resultant mean is not a representative value of     and + 1. Although this is a less reliable method in the
+our data. A wrong selection of the representative value of a     smalltomoderate sample size (i.e., n <300) because it can
+data set and further calculated significance level using this    not adjust the standard error (as the sample size increases,
+representative value might give wrong interpretation.[9] That    the standard error decreases). To overcome this problem,
+is why, first we test the normality of the data, then we decide  a ztest is applied for normality test using skewness and
+whether mean is applicable as representative value of the        kurtosis. A Z score could be obtained by dividing the
+data or not. If applicable, then means are compared using        skewness values or excess kurtosis value by their standard
+parametric test otherwise medians are used to compare the        errors. For small sample size (n <50), z value ± 1.96 are
+groups, using nonparametric methods.                             sufficient to establish normality of the data.[8] However,
+                                                                 mediumsized samples (50 n <300), at absolute
+Methods used for test of normality of data                       zvalue ± 3.29, conclude the distribution of the sample
+                                                                 is normal.[11] For sample size >300, normality of the data
+An assessment of the normality of data is a prerequisite         is depend on the histograms and the absolute values of
+for many statistical tests because normal data is an             skewness and kurtosis. Either an absolute skewness
+underlying assumption in parametric testing. There are           value 2 or an absolute kurtosis (excess) 4 may be
+two main methods of assessing normality: Graphical and           used as reference values for determining considerable
+numerical (including statistical tests).[3,4] Statistical tests  normality.[11] A histogram is an estimate of the probability
+have the advantage of making an objective judgment of            distribution of a continuous variable. If the graph is
+normality but have the disadvantage of sometimes not             approximately bellshaped and symmetric about the mean,
+being sensitive enough at low sample sizes or overly             we can assume normally distributed data[12,13] [Figure 1].
+sensitive to large sample sizes. Graphical interpretation        In statistics, a Q-Q plot is a scatterplot created by
+has the advantage of allowing good judgment to assess            plotting two sets of quantiles (observed and expected)
+normality in situations when numerical tests might be over       against one another. For normally distributed data,
+or undersensitive. Although normality assessment using           observed data are approximate to the expected data,
+graphical methods need a great deal of the experience            that is, they are statistically equal [Figure 2]. A P-P
+to avoid the wrong interpretations. If we do not have a          plot (probability-probability plot or percent-percent
+good experience, it is the best to rely on the numerical         plot) is a graphical technique for assessing how closely
+methods.[10] There are various methods available to test the     two data sets (observed and expected) agree. It forms
+normality of the continuous data, out of them, most popular      an approximate straight line when data are normally
+methods are Shapiro-Wilk test, Kolmogorov-Smirnov test,          distributed. Departures from this straight line indicate
+skewness, kurtosis, histogram, box plot, P-P Plot, Q-Q           departures from normality [Figure 3]. Box plot is another
+Plot, and mean with SD. The two wellknown tests of               way to assess the normality of the data. It shows the
+normality, namely, the Kolmogorov-Smirnov test and the           median as a horizontal line inside the box and the
+Shapiro-Wilk test are most widely used methods to test           IQR (range between the first and third quartile) as the
+the normality of the data. Normality tests can be conducted      length of the box. The whiskers (line extending from the
+in the statistical software "SPSS" (analyze  descriptive         top and bottom of the box) represent the minimum and
+statistics  explore  plots  normality plots with tests).         maximum values when they are within 1.5 times the
+                                                                 IQR from either end of the box (i.e., Q1 - 1.5* IQR and
+The Shapiro-Wilk test is more appropriate method for
+small sample sizes (<50 samples) although it can also
+
+70  Annals of Cardiac Anaesthesia | Volume 22 | Issue 1 | JanuaryMarch 2019
+Mishra, et al.: Descriptive statistics and normality tests
+
+Q3 + 1.5* IQR). Scores >1.5 times and 3 times the IQR                       were statistically insignificant, that is, data were considered
+are out of the box plot and are considered as outliers and                  normally distributed. As sample size is <50, we have to
+extreme outliers, respectively. A box plot that is symmetric                take Shapiro-Wilk test result and Kolmogorov-Smirnov
+with the median line at approximately the center of the                     test result must be avoided, although both methods
+box and with symmetric whiskers indicate that the data                      indicated that data were normally distributed. As SD of
+may have come from a normal distribution. In case                           the MAP was less than half mean value (11.01 <48.73),
+many outliers are present in our data set, either outliers                  data were considered normally distributed, although
+are need to remove or data should treat as nonnormally                      due to sample size <50, we should avoid this method
+distributed[8,13,14] [Figure 4]. Another method of normality                because it should use when our sample size is at least 50
+of the data is relative value of the SD with respect to                     [Tables 2 and 3].
+mean. If SD is less than half mean (i.e., CV <50%), data
+are considered normal.[15] This is the quick method to test                 Conclusions
+the normality. However this method should only be used
+when our sample size is at least 50.                                        Descriptive statistics are a statistical method to summarizing
+                                                                            data in a valid and meaningful way. A good and appropriate
+For example in Table 1, data of MAP of the 15 patients                      measure is important not only for data but also for statistical
+are given. Normality of the above data was assessed.                        methods used for hypothesis testing. For continuous data,
+Result showed that data were normally distributed as                        testing of normality is very important because based on the
+skewness (0.398) and kurtosis (-0.825) individually were                    normality status, measures of central tendency, dispersion,
+within ±1. Critical ratio (Z value) of the skewness (0.686)                 and selection of parametric/nonparametric test are decided.
+and kurtosis (-0.737) were within ±1.96, also evident                       Although there are various methods for normality testing
+to normally distributed. Similarly, Shapiro-Wilk                            but for small sample size (n <50), Shapiro-Wilk test should
+test (P = 0.454) and Kolmogorov-Smirnov test (P = 0.200)                    be used as it has more power to detect the nonnormality
+
+Figure 1: Histogram showing the distribution of the mean arterial pressure
+
+                                                                            Figure 2: Normal Q-Q Plot showing correlation between observed and
+                                                                            expected values of the mean arterial pressure
+
+Figure 3: Normal P-P Plot showing correlation between observed and          Figure 4: Boxplot showing distribution of the mean arterial pressure
+expected cumulative probability of the mean arterial pressure
+
+Annals of Cardiac Anaesthesia | Volume 22 | Issue 1 | JanuaryMarch 2019                                                                           71
+                       Mishra, et al.: Descriptive statistics and normality tests
+
+          Table 3: Skewness, kurtosis, and normality tests for mean arterial pressure (mmHg)
+
+Variable  Skewness     Kurtosis                                                          P
+
+          Value SE  Z  Value SE                                                Z  KS test with Lilliefors correction ShapiroWilk test
+
+MAP score 0.398 0.580 0.686 -0.825 1.12 -0.737                                    0.200       0.454
+
+KS: Kolmogorov-Smirnov, SD: Standard deviation, SE: Standard error
+
+and this is the most popular and widely used method.                                 University Press; 2015.
+When our sample size (n) is at least 50, any other                             4. Campbell MJ, Machin D, Walters SJ. Medical Statistics: A text book for
+methods (Kolmogorov-Smirnov test, skewness, kurtosis,
+z value of the skewness and kurtosis, histogram, box plot,                           the health sciences, 4th ed. Chichester: John Wiley & Sons, Ltd.; 2007.
+P-P Plot, Q-Q Plot, and SD with respect to mean) can be                        5. Altman DG, Bland JM. Statistics notes: The normal distribution. BMJ
+used to test of the normality of continuous data.
+                                                                                     1995;310:298.
+Acknowledgment                                                                 6. Altman DG. Practical Statistics for Medical Research Chapman and Hall/
+
+The authors would like to express their deep and sincere                             CRC Texts in Statistical Science. London: CRC Press; 1999.
+gratitude to Dr. Prabhat Tiwari, Professor, Department of                      7. Indrayan A, Sarmukaddam SB. Medical BioStatistics. New York: Marcel
+Anaesthesiology, Sanjay Gandhi Postgraduate Institute of
+Medical Sciences, Lucknow, for his critical comments and                             Dekker Inc.; 2000.
+useful suggestions that was very much useful to improve                        8. Ghasemi A, Zahediasl S. Normality tests for statistical analysis: A guide
+the quality of this manuscript.
+                                                                                     for nonstatisticians. Int J Endocrinol Metab 2012;10:4869.
+Financial support and sponsorship                                              9. Indrayan A, Satyanarayana L. Essentials of biostatistics. Indian Pediatr
+
+Nil.                                                                                 1999;36:112734.
+                                                                               10. Lund Research Ltd. Testing for Normality using SPSS Statistics. Available
+Conflicts of interest
+                                                                                     from: http://www.statistics.laerd.com. [Last accessed 2018 Aug 02].
+There are no conflicts of interest.                                            11. Kim HY. Statistical notes for clinical researchers: Assessing normal
+
+References                                                                           distribution (2) using skewness and kurtosis. Restor Dent Endod
+                                                                                     2013;38:524.
+1. Lund Research Ltd. Descriptive and Inferential Statistics. Available from:  12. Armitage P, Berry G. Statistical Methods in Medical Research. 2nd ed.
+      http://www.statistics.laerd.com. [Last accessed on 2018 Aug 02].               London: Blackwell Scientific Publications; 1987.
+                                                                               13. Barton B, Peat J. Medical Statistics: A Guide to SPSS, Data Analysis
+2. Sundaram KR, Dwivedi SN, Sreenivas V. Medical Statistics: Principles              and Clinical Appraisal. 2nd ed. Sydney: Wiley Blackwell, BMJ Books;
+      and Methods. 2nd ed. New Delhi: Wolters Kluwer India; 2014.                    2014.
+                                                                               14. Baghban AA, Younespour S, Jambarsang S, Yousefi M, Zayeri F,
+3. Bland M. An Introduction to Medical Statistics. 4th ed. Oxford: Oxford            Jalilian FA. How to test normality distribution for a variable: A real
+                                                                                     example and a simulation study. J Paramed Sci 2013;4:73-7.
+                                                                               15. Jeyaseelan L. Short Training Course Materials on Fundamentals of
+                                                                                     Biostatistics, Principles of Epidemiology and SPSS. CMC Vellore:
+                                                                                     Biostatistics Resource and Training Center (BRTC); 2007.
+
+72                               Annals of Cardiac Anaesthesia | Volume 22 | Issue 1 | JanuaryMarch 2019
+

@@ -1,0 +1,271 @@
+Car Price Prediction Based on Multiple Machine Learning Models
+
+                                                Hangzhi Chen a
+
+                            Wuhan Experimental Foreign Languages School, Wuhan, Hubei, China
+
+Keywords:  Car Price Prediction, Linear Regression, Random Forest, XGBoost.
+Abstract:
+           This article takes car price prediction based on three machine learning models as the topic. Cars, especially
+           in recent decades, are becoming increasingly necessary for companies and families around the world. As the
+           demand for cars grows, further concerns about purchasing vehicles emerge. Obviously, car price acts as a key
+           factor in making these decisions. Therefore, car price prediction becomes a meaningful topic to discuss about.
+           In this passage, comparisons between three machine learning models, Linear Regression, Random Forest and
+           XGBoost, are carried out. The three models are applied to a train and a test dataset and the performances are
+           evaluated by Root Mean Squared Error (RMSE) and accuracy. For the train dataset, the RMSE for Linear
+           Regression, Random Forest and XGBoost are 534,865.15, 155,706.68 and 302,861.88 while the accuracy
+           reveals to be 61.64%, 96.75% and 87.70%. For the test dataset, the RMSE for Linear Regression, Random
+           Forest and XGBoost are 555,802.12, 338,065.9 and 337,698.16 while the accuracy is 58.44%, 84.62% and
+           84.66%. The overall conclusion is that Random Forest learnt slightly faster and better than XGBoost but
+           performed almost the same in predicting car prices. Linear regression performed the worst throughout all
+           datasets.
+
+1 INTRODUCTION                                               making vehicle purchase decisions. Furthermore, this
+                                                             will also provide vehicle companies with
+Humans have taken advantage of an immense amount             convenience in pricing their automobiles and defining
+of means of transportation. One category of popular          future development direction.
+travel tools is cars. Invented in 1886, cars are now
+becoming an increasingly indispensable part of                   With the popularization of Artificial Intelligence
+people's life. More companies and families are               (AI) and relevant technologies (Roll, 2016; Chen,
+owning vehicles of different types recently, many of         2022; Patil, 1998), it is apparent that algorithms are
+which own two or more. Cars are often regarded as            playing vital roles on various occasions. In recent
+dependable tools during work period and are                  years, lots of representative algorithms have
+considered as reliable friends for travellers. From          appeared, including the random forest, decision tree,
+application scenarios of cars, it is easy to notice that     logistic regression etc. Machine learning algorithms
+the mobilization efficiency has been greatly increased       have been widely applied to various fields, such as
+and the range of human activities on land has been           chemistry, biomedicine and especially business
+greatly expanded. In recent years, the demand for cars       analytics. For instance, Diamantaras et al. used eight
+has met a substantial surge. When considering                machine learning models to predict airfare prices
+purchasing a car, the price of it serves as a vital factor,  (Diamantaras, 2017). Karthikeyan et al. used
+while it could differ greatly due to a variety of            ensemble-based machine learning techniques to carry
+aspects. After the pandemic and experiencing                 out gold price prediction (Karthikeyan, 2019).
+dramatic changes in energy resources, it has been            Michael et al. determined how variations in the
+widely acknowledged that wide swings can be                  Deoxyribonucleic Acid (DNA) of individuals can
+common in the car market over the near future.               affect the risk of different diseases through machine
+Therefore, more advanced methods are required to be          learning (Alipanahi, 2015). One important field
+applied to predict car prices, which can contribute to       included is car price prediction. For instance, Gegic
+                                                             et al. used artificial neural network, support vector
+a https://orcid.org/0009-0006-6242-0598
+
+92
+
+Chen and H.
+Car Price Prediction Based on Multiple Machine Learning Models.
+DOI: 10.5220/0013509000004619
+In Proceedings of the 2nd International Conference on Data Analysis and Machine Learning (DAML 2024), pages 92-95
+ISBN: 978-989-758-754-2
+Copyright © 2025 by Paper published under CC license (CC BY-NC-ND 4.0)
+                                                         Car Price Prediction Based on Multiple Machine Learning Models
+
+machine and random forest to predict car price               In practice, Linear Regression analyzes paired
+(Gegic, 2019). It is now a fact that AI can bring about  data to determine a direct correlation, making it
+accurate prediction results. Therefore, this paper       especially valuable in scenarios where the
+intends to consider using machine learning models to     relationship between the independent variable (or
+predict the corresponding price according to various     predictor) and the dependent variable (or outcome) is
+features of cars and analyze the importance of the       expected to be linear. This model constructs a linear
+contribution factors.                                    equation based on the input dataset, plotting a line in
+                                                         a two-dimensional coordinate system aimed at best
+    The dataset used in the study is taken from Kaggle   fitting the observed data points. This linear
+(Kaggle, 2021). The study considers using three          representation enables predictions regarding future
+machine learning models to predict car prices,           outcomes by projecting the dependent variable's
+including Linear Regression, Random Forest and           values based on current trends.
+XGBoost. The implementation of code was referred
+to a notebook written on Kaggle (Kaggle, 2019).              However, the real-world application of Linear
+Standards used to compare their performances are         Regression acknowledges that the model cannot
+Root Mean Squared Error (RMSE) and accuracy.             perfectly fit every data point. There will invariably be
+Feature importance function in Random Forest was         deviations between the actual values and the values
+also used to evaluate the importance of the              predicted by the model, which are termed as
+contribution factors.                                    residuals. The presence of these residuals indicates
+                                                         the error inherent in the model predictions, reflecting
+2 METHOD                                                 the nuances and variability in real-world data that
+                                                         cannot be fully captured by a linear model.
+2.1 Dataset Preparation
+                                                             To evaluate the performance of a Linear
+The dataset used in this study is taken from Kaggle      Regression model, a metric known as Root Mean
+(Kaggle, 2019). The original dataset includes            Square Error (RMSE) is used. RMSE measures the
+information of 6, 1500 vehicles and 22 variables.        average magnitude of the residuals, providing insight
+Before inputting the dataset, 11 of them such as 'url',  into how much error is typically involved in the
+'city' was dropped due to the existence of NaN           predictions made by the linear model. A lower RMSE
+columns. In addition, 'Year' and `Odometer' features     value indicates a better fit of the model to the data,
+were transferred into int type.                          suggesting that the linear equation is effective at
+                                                         capturing the primary trends and reducing the
+    Before inputting the dataset, it was split into a    prediction errors.
+train dataset and a test dataset. The train dataset
+included 525, 839 rows and the test dataset included         Despite its simplicity, Linear Regression has
+34, 440 rows.                                            profound implications across various fields, from
+                                                         economics and finance to healthcare and social
+2.2 Machine Learning Models-based                        sciences. It aids in understanding and quantifying the
+       Prediction                                        strength of relationships between variables,
+                                                         facilitating decision-making processes by providing a
+This study used Linear Regression, Random Forest         clear, quantifiable link between different variables.
+and XGBoost for car price prediction. The models         For instance, businesses often use Linear Regression
+were imported from sklearn. The evaluation metrics       to predict sales based on advertising spend, or
+applied in this study included RMSE and accuracy.        healthcare providers might use it to predict patient
+                                                         outcomes based on treatment protocols.
+2.2.1 Linear Regression
+                                                         2.2.2 Random Forest
+Linear Regression is a widely utilized machine
+learning model, commonly employed in statistical         Random Forest is an ensemble learning method that
+analysis to explore and predict relationships between    builds on the simplicity of decision trees by
+variables. It operates on the principle of fitting a     combining multiple such trees to form a more robust
+straight line to a set of data points in a manner that   and accurate model. This technique leverages the
+best captures the underlying relationship between two    strength of numerous decision trees, each serving as
+features, typically used for continuous target           an estimator, to improve predictive accuracy and
+variables.                                               control over-fitting, which is a common problem in
+                                                         single decision tree models. The core idea behind
+
+                                                         93
+DAML 2024 - International Conference on Data Analysis and Machine Learning
+
+Random Forest is to create a 'forest' of trees where       method, hence, offers a balance between accuracy
+each tree is slightly different from the others.           and complexity, providing a reliable predictive tool
+                                                           across various applications in fields ranging from
+    The model begins by using a technique called           finance to healthcare.
+Bootstrap Aggregating, or bagging, to create different
+subsets of the original dataset, with replacement.         2.2.3 XGBoost
+Each subset is used to train a separate decision tree.
+Since the subsets can have overlapping data points,        XGBoost is an abbreviation for eXtreme Gradient
+each tree in the forest is not identically trained, which  Boosting. It is a machine learning model with
+helps in making the ensemble of trees less sensitive       massively parallel boosting trees. The whole process
+to the specifics of the training data, thereby enhancing   is an additive model made up by multiple base
+the generalization capabilities of the model.              models. When generating a processing tree,
+                                                           algorithms including greedy algorithm for best
+    During prediction, Random Forest takes an              solutions and approximation algorithm for massive
+average of the outputs from all the decision trees for     data, can be practical alternatives. Advantages for the
+regression problems, or a majority vote for                XGBoost are high accuracy and flexibility, learning
+classification, to improve predictive accuracy. By         shrinkage, regularization included, column sampling
+aggregating the results, the model not only reduces        and various tools to support parallel. Disadvantages
+the variance but also combines the individual trees'       also exist, during the whole process, all data have to
+predictions to produce a more accurate and stable          be traversed. Furthermore, the prearrangement
+estimation than any single tree could provide.             process requires relatively high space complexity to
+                                                           store the index of the gradient statistics for the
+    Despite its many benefits, such as high accuracy,      corresponding sample.
+the ability to handle a large number of input variables,
+and robustness to overfitting, the Random Forest           3 RESULTS AND DISCUSSION
+model does have some drawbacks. One significant
+limitation is the loss of interpretability that comes      The results of the predictions are shown in Table 1.
+with using a single decision tree. The complex             Illustrated by the Table, it's obvious that for the train
+structure of multiple trees makes it difficult to          dataset, Random Forest reached the highest accuracy
+visualize and understand the specific reasons behind       of 96.75% while XGBoost demonstrated fairly well,
+predictions, thus complicating the explanation of          achieving 87.70%, followed by Linear Regression
+model decisions to stakeholders who are not technical      which appeared to be the worst among the three with
+experts.                                                   an accuracy of 61.64%. The result is almost the same
+                                                           when it comes to train RMSE. Random Forest, the
+    Furthermore, while Random Forest is generally          best among all three, had the lowest RMSE of
+good at handling overfitting, it can still perform         155,706.68, next is XGBoost with the value of
+poorly in the presence of noisy classification or          302,861.88 and Linear Regression with the highest
+regression problems. This occurs because noise can         RMSE of 534,865.15.
+lead to overly complex trees, which, even when
+averaged, result in an overfitted model. Therefore,
+while Random Forest is a powerful tool in the arsenal
+of machine learning techniques, it requires careful
+tuning of parameters like the number of trees in the
+forest and the depth of each tree to optimize its
+performance and prevent overfitting. This ensemble
+
+                   Table 1. The performance of different models
+
+    Model name     Train Accuracy  Train RMSE                               Test Accuracy  Test RMSE
+
+         Linear    61.64%          534,865.15                               58.44%         555,802.12
+      Regression   96.75%          155,706.68                               84.62%         338,065.9
+
+    Random Forest
+
+    XGBoost        87.70%          302,861.88                               84.66%         337,698.16
+
+94
+                                                          Car Price Prediction Based on Multiple Machine Learning Models
+
+    However, while applying them to the test dataset,     that Linear regression is a one-time analyzation and
+the accuracy of Random Forest was almost the same         only one result is concluded, much less than the other
+as XGBoost which were both around 85%, 84.62%             two models.
+and 84.66% representatively, while Linear regression
+kept carrying out the worst performance with an               This article supports the feasibility of machine
+accuracy of 58.44%. The same condition emerged            learning models and analyzed the reasons why the
+when considering RMSE. The RMSE of Random                 performances differed from each other. The reasons
+Forest and XGBoost were about the same, 338,065.9         mentioned above are according to the personal
+and 337,698.16 each, and the largest one remained         perspectives and understanding and requires more
+Linear Regression with a value of 555,802.12, almost      accurate data to support them. However, these can
+the same as the train RMSE.                               still serve as a clue to analyze different machine
+                                                          learning models and select the best to be applied to
+    Above all, Random Forest learnt slightly faster       car price prediction.
+and better than XGBoost as Random Forest
+performed evidently better when greeting the train        REFERENCES
+dataset. However, Random Forest predicted as
+accurately as XGBoost did according to the test           Alipanahi, B., Leung, M. K., Delong, A., & Frey, B. J.
+dataset results. It's obvious to notice that Linear
+Regression performed the worst throughout all             2015. Machine learning in genomic medicine: a review
+datasets.
+                                                          of computational problems and data sets. Proceedings
+    It was a possible reason that Linear regression is a
+one-time analyzation while others went through two        of the IEEE, 104(1), 176-197.
+times or more. What's more, multiple results were
+generated and concluded in both Random Forest and         Chen, X., Zou, D., Xie, H., Cheng, G., & Liu, C. 2022. Two
+XGBoost, while only one was generated from Linear
+Regression.                                               decades of artificial intelligence in education.
+
+    Noticeably, some of the reasons concluded are         Educational Technology & Society, 25(1), 28-47.
+only based on the understanding towards the
+algorithms and are lack of further research data          Diamantaras, K. I., Tziridis, K., Kalampokas, T., &
+support. However, in a study written by Vishal
+Khandare and Manish Pandey in which they used the         Papakostas, G. A. 2017. Airfare prices prediction using
+same three models to predict electric car prices, the
+results come out to be almost the same (Khandare,         machine learning techniques. 2017 25th European
+2022). In the studies mentioned above, Random
+Forest performs the best, reaching an accuracy of         Signal Processing Conference (EUSIPCO), 1036-1039.
+90.38% while XGBoost gets 89% and Linear
+Regression achieves 67%. Therefore, the result is         IEEE.
+quite credible to a certain extent. However, the
+reasons and logic behind it still need further work and   Gegic, E., Isakovic, B., Keco, D., Masetic, Z., & Kevric, J.
+research.
+                                                          2019. Car price prediction using machine learning
+4 CONCLUSIONS
+                                                          techniques. TEM Journal, 8(1), 113.
+This paper compared the performances between three
+machine learning models which are Linear                  Kaggle. 2019. Used cars price prediction by 15 models.
+Regression, Random Forest and XGBoost
+representatively. The standards used to appraise the      Retrieved                                        from
+results are Root Mean Squared Error (RMSE) and
+accuracy. Through the final results, it is evident that   https://www.kaggle.com/code/vbmokin/used-cars-
+Random Forest learnt slightly faster and better than
+XGBoost but performed almost the same in                  price-prediction-by-15-models/notebook
+predicting car prices. Linear regression performed the
+worst throughout all datasets. It was a possible reason   Kaggle. 2021. Craigslist carstrucks data. Retrieved from
+
+                                                          https://www.kaggle.com/datasets/austinreese/craigslist
+
+                                                          -carstrucks-data
+
+                                                          Karthikeyan, P., & Manjula, K. A. 2019. Gold price
+
+                                                          prediction using ensemble based machine learning
+
+                                                          techniques. 2019 3rd International Conference on
+
+                                                          Trends in Electronics and Informatics (ICOEI), 1360-
+
+                                                          1364. IEEE.
+
+                                                          Khandare, V., & Pandey, M. 2022. Electric Car Price
+
+                                                          Prediction using Machine Learning Techniques.
+
+                                                          International Journal of Engineering Research in
+
+                                                          Computer Science and Engineering (IJERCSE), 9(11).
+
+                                                          Patil, R. S., Szolovits, P., & Schwartz, W. B. 1988.
+
+                                                          Artificial intelligence in medical diagnosis. Annals of
+
+                                                          internal medicine, 108(1), 80-87.
+
+                                                          Roll, I., & Wylie, R. 2016. Evolution and revolution in
+
+                                                          artificial intelligence in education. International journal
+
+                                                          of artificial intelligence in education, 26, 582-599.
+
+                                                                                                                 95
+
