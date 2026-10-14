@@ -1,10 +1,60 @@
 # HANDOFF — project_car_used (โมเดลทำนายราคารถมือสอง)
 
-อัปเดต: 11 ต.ค. 2026 · ผู้เขียน: Claude Code (ส่งต่อให้เครื่อง/เซสชันอื่นทำต่อ)
+อัปเดต: 14 ต.ค. 2026 (เพิ่มหัวข้อ A) · ผู้เขียน: Claude Code (ส่งต่อให้เครื่อง/เซสชันอื่นทำต่อ)
 
 > **สิ่งที่ส่งมอบหลักตอนนี้ = โน้ตบุ๊ก Colab เวอร์ชัน 3 ทั้ง 4 ตัว (ดูข้อ 0)** ส่วนข้อ 1–9 เป็นสถานะของโน้ตบุ๊กในเครื่อง (split 70/15/15) ซึ่งเก็บไว้เป็นประวัติ
 > ไฟล์นี้คือสถานะ **ล่าสุด** ของโปรเจกต์ ถ้าขัดกับ `docs/PLAN.md` (แผนเดิม 1 ต.ค. ตอนยังรันบน Colab, split 80/20) ให้ยึดไฟล์นี้
 > `Project_note.md` เป็นโน้ตของเจ้าของโปรเจกต์ — ห้ามแก้
+
+---
+
+## A. อัปเดต 14 ต.ค. 2026 — GridSearchCV, กราฟ overfit, confusion matrix, เอกสารสำหรับอาจารย์
+
+### A.1 ไฟล์ใหม่ (ไม่ทับ v3 เดิม)
+- `colab/DT3_gscv.ipynb`, `colab/RF3_gscv.ipynb`, `colab/XGB3_gscv.ipynb` = DT3/RF3/XGB3 ที่เปลี่ยน **หัวข้อ 8–9** จากจูนบน val เป็น `GridSearchCV` 5-fold บน train (ส่วนอื่นเหมือนเดิม) และเพิ่มหัวข้อ **10b** กราฟเส้น train vs test, **10c** confusion matrix (ราคาแบ่ง 5 ช่วง quintile ขอบช่วงจาก train)
+- `docs/model_explanation_for_advisor.md` = คู่มืออธิบายโมเดลให้อาจารย์ + ถาม-ตอบ 19 ข้อ ทุกประเด็นติดป้าย ✅ มีแหล่ง / 🔶 แหล่งรองรับวิธีแต่ค่าตั้งเอง / ⚠️ ตั้งเอง และหัวข้อ 10 รวมข้อจำกัด
+- `research/references_index.md` (หัวข้อ 6 = แหล่งที่เพิ่มรอบนี้) และไฟล์ที่เพิ่มใน `research/sources/`: Chen 2016 (XGBoost), Probst 2019, Probst & Boulesteix (arXiv ทั้งหมด) + docs ของ sklearn/XGBoost
+- **ไม่ได้ push** PDF แหล่งอ้างอิงเดิมใน `research/sources/` (บางไฟล์เป็นสำเนา JSTOR สำหรับใช้ส่วนตัว ห้ามแจก และ repo นี้เป็น public) ดัชนีจึงชี้ไฟล์ที่ไม่อยู่ใน repo ได้ ต้องหาในเครื่องเจ้าของโปรเจกต์
+
+### A.2 สิ่งที่เปลี่ยนใน `*_gscv` (หัวข้อ 8–9)
+- `GridSearchCV(TransformedTargetRegressor(model, np.log, np.exp), scoring="neg_mean_absolute_error", cv=folds, refit=pick, return_train_score=True)` โดย `folds` คือ KFold(5, shuffle, seed 99) ชุดเดียวกับตอนเลือกตัวแปร; val/test ไม่ถูกแตะตอนจูน
+- กฎ `pick` (ใน `refit`): config ที่ CV MAE ห่างจากตัวดีสุดไม่เกิน 2% แล้วเลือก gap ต่ำสุด (gap = CV MAE / train MAE)
+- grid ขยายไปทางเบรก overfit: DT 60 ชุด (`max_depth` 12/16/20/None × `min_samples_leaf` 1/3/5/10/20 × `ccp_alpha` 0/1e-5/3e-5); RF 24 ชุด (`max_features` 0.3/0.5/0.8 × `min_samples_leaf` 1/3/5/10 × `max_samples` None/0.7, 300 ต้น); XGB 16 ชุด (`max_depth` 4/6 × `min_child_weight` 20/50 × `reg_lambda` 10/30 × `n_estimators` 300/600, learning_rate 0.05, subsample/colsample 0.8)
+- XGB เลิกใช้ early stopping (ต้องใช้ val) เปลี่ยนเป็นใส่ `n_estimators` ใน grid
+- fallback path ข้อมูลในไฟล์ใหม่ชี้ `D:\Claude\project_car_used\data\car_dataset_v5.1.csv` (เครื่องเดิมไม่มี `new_project\data`) บน Colab ใช้ path Drive เดิม
+
+### A.3 ผล (test บนสเกลบาท, 80/10/10, seed 99)
+| โมเดล | พารามิเตอร์ที่เลือก | CV MAE | train MAE | val MAE | test MAE | test RMSE | test MAPE | test R² | train RMSE |
+|---|---|---|---|---|---|---|---|---|---|
+| DT | depth 16, leaf 3, ccp 1e-5 | 104,659 | 75,323 | 92,952 | 85,191 | 236,189 | 0.136 | 0.862 | 212,243 |
+| RF | max_features 0.8, leaf 1, max_samples 0.7 | 85,402 | 42,472 | 73,812 | 70,385 | 194,193 | 0.112 | 0.907 | 185,300 |
+| XGB | depth 6, mcw 20, λ 30, 600 ต้น | 82,369 | 70,214 | 77,630 | 69,855 | 194,607 | 0.112 | 0.906 | 232,568 |
+
+เทียบ v3 เดิม (จูนบน val): test MAE DT 83,953 / RF 69,450 / XGB 69,742 → overfit ลดลง (test MAE ÷ train MAE: DT 1.29→1.13, RF 2.24→1.66, XGB 1.26→1.00) โดย MAE test แย่ลงไม่ถึง 1.5% ตัวเลข val ของ gscv สูงกว่า v3 เพราะ val ไม่เคยถูกใช้เลือก (v3 ดูดีเกินจริง)
+
+confusion matrix (5 ช่วงราคา) test accuracy / within 1 bin: DT 0.737 / 0.988, RF 0.776 / 0.991, XGB 0.774 / 0.994 (train accuracy DT 0.765, RF 0.878, XGB 0.790)
+
+เวลารัน (22 threads): DT ~30 วินาที, RF ~4–7 นาที, XGB ~2–7 นาที
+
+### A.4 ข้อควรรู้ / จุดที่อาจารย์อาจถาม
+- **RF กับ XGB เลือกไม่ขาด:** CV MAE XGB ดีกว่า 3.5% แต่ val MAE RF ดีกว่า 4.9% test ต่างกัน 0.8% ยังไม่ได้ทดสอบทางสถิติ ตัวตัดสินรองที่เอน XGB คือ overfit น้อยสุด
+- **ค่าที่ดีที่สุดอยู่ขอบ grid** หลายตัว (RF `max_features` 0.8 / leaf 1; XGB depth 6, λ 30, 600 ต้น) ค่าจริงอาจอยู่นอกช่วง — ยังไม่ได้ลอง `max_features` 1.0
+- กฎ 2% เป็นเปอร์เซ็นต์คงที่ ไม่ใช่ one-standard-error แท้; 5-fold ไม่ได้เทียบกับ 10-fold; CV รอบเดียว ไม่ได้ทำซ้ำหลาย seed; ไม่ได้ทำ nested CV
+- **RMSE ใช้ดู overfit ไม่ได้ในข้อมูลนี้:** train RMSE ของ XGB (232k) สูงกว่า test (195k) น่าจะเพราะรถแพงไม่กี่คัน (ยังไม่ได้เจาะรายคันยืนยัน) จึงใช้ MAE เป็นตัวตัดสิน (การเลือก MAE เป็นของเราเอง ไม่มีแหล่งระบุ)
+- Box-Cox ใน MLR3: ผ่าน 15/15 test ตั้งแต่ก่อนใส่ (ขั้น 4 ของ ladder) การใส่ทำ val MAE แย่ลง +1.1% — เหตุผลที่คงไว้คือ residual สมมาตรขึ้น; ต้นไม้ใช้ log (λ=0) และไม่ได้ทดลอง λ อื่น
+- CV ทำ 2 ครั้งเรียงกัน (ไม่ซ้อน): (1) เลือกตัวแปรด้วย hyperparameter คงที่ (2) GridSearchCV ด้วยชุดตัวแปรที่ได้; ทั้งคู่บน train เท่านั้น
+
+### A.5 วิธีรันซ้ำ
+- Python ที่มี scikit-learn 1.8.0 / xgboost 3.2.0 / nbconvert บนเครื่องเจ้าของโปรเจกต์คือ Python 3.12 (`C:\Users\putaw\AppData\Local\Programs\Python\Python312\python.exe`) ส่วน Python 3.14 ไม่มี sklearn
+- `python -m jupyter nbconvert --to notebook --execute --inplace colab/XGB3_gscv.ipynb` (ข้อความ `KeyError ... joblib_memmapping_folder` ตอนจบบน Windows เป็น noise ไม่กระทบผล)
+- โน้ตบุ๊กชุดนี้สร้างด้วยสคริปต์ชั่วคราวที่ไม่ได้เก็บใน repo ถ้าจะแก้ ให้แก้ในโน้ตบุ๊กตรง ๆ
+
+### A.6 งานที่ยังไม่ได้ทำ (เรียงตามความคุ้ม)
+1. ขยาย grid ให้ค่าที่ดีสุดไม่ติดขอบ (RF `max_features` 1.0, XGB `n_estimators` 1,000 / `reg_lambda` 100)
+2. รันหลาย seed (เช่น 5) รายงาน MAE เฉลี่ย ± SD และ/หรือ paired test RF vs XGB
+3. เปลี่ยนกฎ 2% เป็น one-SE จริง; เทียบ 5-fold กับ 10-fold
+4. เพิ่มหัวข้อ confusion matrix ลง `docs/model_explanation_for_advisor.md` (ยังไม่ได้เขียน)
+5. ถ้าจะเทียบกับ MLR ให้ครบ ควรทำ CV MAE ของ MLR3 ในรูปแบบเดียวกัน
 
 ---
 
