@@ -1,0 +1,149 @@
+noteforMLR — Multiple Linear Regression ทำนายราคารถมือสอง
+อัปเดต: 2026-10-05
+==========================================================
+
+1. วิธีรันต่อ
+----------------------------------------------------------
+ต้องการ Python 3.12 (ใช้ทดสอบกับเวอร์ชันนี้)
+
+  git clone https://github.com/putawann/project_car_used.git
+  cd project_car_used
+  git checkout add-linear-regression-model     # ถ้ายังไม่ได้ merge เข้า main
+  python -m venv .venv
+  .venv\Scripts\activate                       # Windows  (macOS/Linux: source .venv/bin/activate)
+  pip install -r model/requirements.txt
+  cd model
+  jupyter notebook linear_regression.ipynb     # หรือ eda.ipynb
+
+รันทั้งเล่มโดยไม่เปิด Jupyter:
+  jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.timeout=2400 linear_regression.ipynb
+  (ใช้เวลาหลายนาที เพราะ VIF / Shapiro / โมเดลแยกตามแบรนด์ใช้การคำนวณเยอะ)
+
+ข้อมูล: data/car_dataset_v5.2.csv (30,104 แถว)
+  - config.py หาไฟล์นี้จากตำแหน่งของตัว config เอง จึงรันจากโฟลเดอร์ไหนก็ได้
+  - v5.2 คือไฟล์ที่ใช้ train โมเดลปัจจุบัน ข้อมูลทุกแถวเหมือน v5.1 แค่เปลี่ยนชื่อ
+
+ทุกการตั้งค่าอยู่ใน model/config.py (แก้ที่ไฟล์นี้ ไม่ต้องแก้ notebook)
+  SEED = 99
+  TRAIN/VAL/TEST = 0.70 / 0.15 / 0.15
+  EVERY_MODEL_IN_TRAIN = True     สุ่มรถ 1 คันของทุก (brand, model) ใส่ train ก่อน แล้วค่อย split
+  MAX_CAR_AGE = 25                ตัดรถอายุมากกว่า 25 ปีออก (None = ใช้ทุกแถว)
+  GROUP_BY = "model"              ตัวเลือกอื่น: "brand" / "brand_expensive"
+  RARE_MIN = 30                   ระดับของตัวแปรหมวดหมู่ที่มีน้อยกว่า 30 แถวใน train ถูกรวมกลุ่ม
+  EXPENSIVE_MIN = 2,000,000       รุ่นที่มีน้อยแต่ราคากลางใน train >= 2 ล้าน → กลุ่ม "รถราคาแพง"
+  TRANSFORMS = ["none", "boxcox", "quantile"]
+  PB_DROP = []                    feature ที่จะตัดออกจากโมเดลแยกตามแบรนด์ (ส่วนที่ 12)
+  ALPHA = 0.05, DW_RANGE = (1.5, 2.5), VIF_MAX = 7
+
+ไฟล์ในโฟลเดอร์ model/
+  config.py                          การตั้งค่าทั้งหมด
+  linear_regression.ipynb            โมเดลหลัก + assumption test (ส่วนที่ 1–12)
+  eda.ipynb                          EDA หา hidden feature
+  research/linear_assumption_remedies.md   สรุปวิธีแก้เมื่อ assumption ไม่ผ่าน (paper + Kaggle)
+  requirements.txt                   เวอร์ชันแพ็กเกจที่ใช้
+  noteforMLR.txt                     ไฟล์นี้
+
+
+2. Pipeline ปัจจุบัน (linear_regression.ipynb)
+----------------------------------------------------------
+1) Load
+   - ตัด year ออก (year = 2026 − car_age ทุกแถว) และตัด car_type ออก (model กำหนดค่าได้เกือบทั้งหมด)
+   - ตัดรถอายุมากกว่า 25 ปีออก (287 คัน)
+   - ทำชื่อ model ให้เป็นแบบเดียวกัน ตัดช่องว่างและขีด แล้วรวม alias:
+     ALTIS → COROLLA ALTIS; NAVARA, NP300-NAVARA → NP 300 NAVARA;
+     LANDCRUISER PRADO, RAV 4, STRADA G WAGON → สะกดแบบเดียวกัน
+   - mileage → log_mileage
+2) Split 70/15/15 โดยบังคับให้ทุกรุ่นมีใน train → รุ่นใน val/test ที่ไม่เคยเห็นใน train = 0
+3) Feature (one-hot แบบ drop_first, กลุ่มอ้างอิง = ระดับที่พบบ่อยที่สุด)
+   - ตัวเลข: engine_capacity, log_mileage, car_age
+   - model: 123 กลุ่ม
+       รุ่นที่มี >= 30 แถวใน train → กลุ่มของตัวเอง
+       รุ่นที่น้อยกว่านั้นแต่ราคากลาง >= 2M → "รถราคาแพง"
+       นอกนั้น → OTHER_<BRAND> หรือ OTHER_<ระดับราคา>
+   - fuel_type, gear_type, color (สีที่มี < 30 แถว → Others)
+   - ไม่ใส่ brand เป็น dummy แยก เพราะ model อยู่ใต้ brand เสมอ ใส่ทั้งคู่จะทำให้ matrix ไม่เต็ม rank
+4) Transform y: none / Box-Cox / Quantile (fit บน train เท่านั้น)
+5) Assumption tests (ใช้ชุดจาก regression6.ipynb ตัด Runs test ออก)
+     Independence      : Durbin-Watson (เรียงตามลำดับแถวเดิมในไฟล์)
+     Homoscedasticity  : Breusch-Pagan, White (แบบย่อ e² ~ ŷ + ŷ²)
+     Normality         : Kolmogorov-Smirnov, Shapiro-Wilk, Lilliefors
+     Multicollinearity : VIF ทุกคอลัมน์ (สรุปเป็นค่าสูงสุดต่อ feature)
+   Linearity (RESET) เคยคำนวณแยกให้ดูเท่านั้น ยังไม่ได้ใส่ใน notebook
+6) เลือก transform ตามจำนวน assumption ที่ผ่าน แล้วตาม val RMSE → ประเมิน test แค่ครั้งเดียว
+7) ส่วนวิเคราะห์เพิ่มเติม:
+     8a  F-test ของแต่ละ feature
+     8b  กราฟ actual vs predicted
+     8c  ข้อมูลดิบของแถวที่ residual สูงสุด
+     9–11 error แยกตามรุ่น / feature / กลุ่ม OTHER
+     12  โมเดลแยกตามแบรนด์ (ใช้ model เป็น feature ภายในแต่ละแบรนด์)
+
+
+3. ผลล่าสุด
+----------------------------------------------------------
+โมเดลเดียว
+                 Val R²   Val MAE    Assumption ที่ผ่าน
+  none           0.670    174k       8/13
+  Box-Cox        0.792    109k       8/13   ← ถูกเลือก
+  Quantile       0.754    114k       8/13
+  TEST (Box-Cox): R² 0.823, RMSE 263k, MAE 104k
+
+  ผ่าน     : Durbin-Watson, VIF ทุกตัว (< 7)
+  ไม่ผ่าน   : Breusch-Pagan, White, KS, Shapiro, Lilliefors
+
+โมเดลแยกตามแบรนด์ (24 แบรนด์, รวม val ทุกแบรนด์)
+  Box-Cox  R² 0.831, MAE 96k  (ดีกว่าโมเดลเดียว)
+  Quantile R² 0.823, MAE 98k
+  ผ่านครบ 5 หมวด (Box-Cox, รวม Linearity จาก RESET): VOLKSWAGEN, LAND ROVER
+  ระวัง: แบรนด์ที่ผ่านส่วนใหญ่ n เล็ก (50–90 แถว) เทสจึงผ่านง่าย ไม่ได้แปลว่าโมเดลดีกว่า
+
+
+4. บันทึกการทำงานรอบนี้ (ตามลำดับ)
+----------------------------------------------------------
+ 1. Baseline: OLS + 16 assumption tests ชุดแรก (RESET, ANOVA, Kruskal, DW, Runs, lag-1, BP,
+    variance ratio, Spearman, Shapiro, Lilliefors, skew/kurt, rank, VIF, GVIF)
+    → ผ่าน 10/21 แปลง y ด้วยวิธีไหนก็ไม่ผ่านครบ
+ 2. พบว่า error เกือบครึ่งมาจากกลุ่ม OTHER (รุ่นหายาก) และชื่อรุ่นไม่สม่ำเสมอ
+    → ทำ name cleanup + แยก OTHER_<BRAND> / ระดับราคา + log(mileage)
+ 3. เปลี่ยนชุดเทสเป็นของ regression6.ipynb (DW, Runs, BP, White, KS, Shapiro, Lilliefors, VIF)
+    → ต่อมาตัด Runs test ออก ส่วน BP เก็บไว้
+ 4. VIF ของ model ไม่ผ่าน → เปลี่ยนกลุ่มอ้างอิงเป็นระดับที่พบบ่อยที่สุด → ผ่าน
+ 5. EDA (eda.ipynb) พบ:
+      - ไฟล์น่าจะรวมจาก 2 แหล่ง: ช่วงต้นไฟล์ไมล์เป็นตัวเลขจริง ช่วงหลังปัดเป็นช่วง 5,000 km
+      - ค่า mileage = 2,500 (1,447 แถว) น่าจะหมายถึง "ไม่ทราบ" ในรถเก่า
+      - ราคาเทียบอายุเป็นรูปตัว U: ถูกสุดที่ 25–30 ปี แล้วขึ้นอีก (รถคลาสสิก)
+      - แต่ละแบรนด์เสื่อมราคาต่างกัน: Volvo/Benz/BMW 12–15%/ปี, Toyota 8%, Subaru 5%
+      - มี 129 แถวที่สเปกเหมือนกันทุกคอลัมน์แต่ราคาต่างกัน → noise ที่แก้ไม่ได้
+ 6. ตัดรถอายุมากกว่า 25 ปีออก
+ 7. ลองใช้ brand เป็น feature แบบต่าง ๆ (OTHER_SMALL_BRANDS, OTHER_LUXURY, รถราคาแพง)
+    → การทายแย่กว่าใช้ model ชัดเจน
+ 8. ห้ามจัดกลุ่มรถตามราคาของคันนั้นเอง (target leakage)
+    → กลุ่ม "รถราคาแพง" กำหนดจากราคากลางของรุ่นใน train เท่านั้น
+ 9. กลับมาใช้ model เป็น feature + บังคับให้ทุกรุ่นมีใน train
+    → test R² จาก 0.53 เป็น 0.82, MAE จาก 159k เป็น 104k (ผลดีที่สุด)
+10. โมเดลแยกตามแบรนด์ (ส่วนที่ 12): ลองตัด engine_capacity + fuel_type เพื่อให้ VIF ผ่าน
+    → VIF ผ่านทุกแบรนด์ แต่ MAE แย่ลงจาก 96k เป็น 104k → ใส่กลับเหมือนเดิม (PB_DROP = [])
+11. ลอง QuantileTransformer กับ y
+    → Linearity ผ่านมากขึ้น (7 → 10 แบรนด์) แต่ Normality ผ่าน 0 แบรนด์ และทายแย่กว่า Box-Cox เล็กน้อย
+
+
+5. ข้อค้นพบสำคัญ
+----------------------------------------------------------
+- n ใหญ่ (train ประมาณ 21k) ทำให้ BP / KS / Shapiro ได้ p < 0.05 แทบแน่นอน แม้ความเบี่ยงเบนจะเล็ก
+  ควรรายงาน effect size คู่กัน: skew, kurtosis, KS D, R² ของ BP
+- ตอนนี้ Normality / Homoscedasticity ที่ไม่ผ่าน ส่วนใหญ่มาจาก
+  (a) รถที่สเปกเหมือนกันแต่ราคาต่างกัน เพราะข้อมูลไม่มี trim / สภาพรถ
+  (b) n ใหญ่
+- Box-Cox ที่ λ ติดลบ จะทำให้ค่าทำนายพุ่งไม่มีขีดจำกัดเมื่อเข้าใกล้ 1/|λ|
+  ส่วนที่ 12 จึงบังคับค่าที่ทำนายในสเกลที่แปลงแล้วให้อยู่ในช่วงของ train
+- ใช้ engine_capacity กับ fuel_type ในโมเดลแยกตามแบรนด์แล้ว VIF ไม่ผ่านใน 6 แบรนด์
+  (Toyota, Nissan, Hyundai, Mitsubishi, Mazda, Porsche) แต่ทายแม่นกว่า
+
+
+6. งานค้าง / ข้อเสนอถัดไป
+----------------------------------------------------------
+- ใส่ Linearity (RESET) ลงใน notebook เป็นเทสถาวร
+- ใช้ robust SE (HC3) หรือ WLS สำหรับ heteroscedasticity
+- ตัด engine/fuel เฉพาะใน 6 แบรนด์ที่ VIF ไม่ผ่าน
+- ลองเพิ่ม feature จาก EDA: brand_segment × car_age, flag mileage_bucketed, mileage_unknown
+- ลอง log แทน Box-Cox (ไม่มีปัญหาค่าทำนายพุ่ง)
+- merge PR #1 เข้า main
