@@ -1,0 +1,1804 @@
+                        Structural Estimates of Depreciation
+
+                   from Wholesale Auctions of Used Ford Windstar Vans
+
+                                                      Brian K. Sliker*
+                                           U.S. Bureau of Economic Analysis
+
+                                                 Version of July 17, 2018
+
+                                                              Abstract
+         This paper estimates the depreciation of over twenty varieties of Ford Windstar passenger vans, using
+several hundred thousand observations from a deep collection of wholesale auction transactions. The data
+permit the estimation of individual vehicle ages apart from differences between resale- and model-years, so that
+age-, date-, and vintage- effects are all identifiable. Depreciation is modeled in two parts, estimated separately:
+obsolescence, wherein new model-years depress the resale values of older cohorts uniformly; and ordinary
+wear-and-tear, which reduces the resale values of individual vehicles in a nonuniform manner summarized by
+different individual-level service-lives. Obsolescence (and inflation) are estimated first, in a regression setting of
+third-order functions of age and miles to hold individual effects constant, allowing varietal and quarterly time
+dummies to trace each variety's counterfactual "as-if-new" price through time in a way that upholds the useful
+fiction of a Hicksian aggregate. The estimated as-if-new prices then anchor individual-level resale-price profiles,
+which are embedded in implicit service-life densities that vary over time and age. Quarterly moments of prices
+and miles are then matched by adjusting parameters for wear-and-tear.
+
+         As-if-new prices fall fast (over 10 percent a year, on average) -- faster than the observed reductions of
+actual nearly-new prices, so there is substantial obsolescence. Individual-level service-flows decline in a manner
+similar to one long assumed by the U.S. Bureau of Labor Statistics, though the service-flows of "better" varieties
+persist longer. Estimated service-life densities miss too many low-value vehicles to be treated as survivor
+densities, so the Hulten-Wykoff regression survivor correction is insufficient. Averaging over age and date as
+conditioning variables yields reasonable unconditional life distributions that cluster close to a 13-year mean.
+
+         A tentative National Accounts application is offered, with numerical details of implementation
+consigned to a spreadsheet that is available upon request.
+
+JEL Codes: C49, C65, D24, L62, M41
+
+Keywords: used-car auctions, depreciation, obsolescence, service-lives, cross-entropy
+
+          *Thanks to Barbara Fraumeni, Arnold Katz, Dylan Rassier, Marshall Reinsdorf, Jon Samuels, and Rachel Soloveichik
+for helpful conversations. All remaining errors and the views expressed here are mine, not necessarily those of the Bureau
+of Economic Analysis or the Department of Commerce. Please address correspondence to: Brian Sliker, U.S. Department of
+Commerce, Bureau of Economic Analysis, Washington, DC 20233. Email: brian.sliker@bea.gov Tel: (301) 278-9649
+                                        Structural Estimates of Depreciation
+                                  from Wholesale Auctions of Used Ford Windstar Vans
+
+                                                           Brian K. Sliker
+                                                            July 17, 2018
+
+         This paper reports results of an analysis of Ford Windstar passenger vans sold at U.S. wholesale used-
+vehicle auctions. It models individual-level depreciation and shows how individuals fit into cohorts, it describes
+the sourcing and preparation of the data, and it details a novel adaptation of the underlying statistical
+procedure. Finally, it sketches how its findings may be applied to the National Accounts. Key results are:
+
+         1. For model-years '95-'06 -- i.e., every model-year but one ever built of Ford Windstar and
+         Freestar and Mercury Monterey passenger vans -- "as-if-new" prices (part of the measurement of
+         obsolescence) fell at an average annual trend rate of 10.3 percent. This rate was not constant, but sped
+         up from 4.4 percent per year in the third quarter of 1994, when the available data begin, to 13.4 percent
+         per year in the second quarter of 2007, when the data end. In simple dollar terms, a new '95 Windstar
+         wholesaling for $18,000 in 1994:3 would have sold for $3,116 in 2007:2 had it been stored in pristine
+         condition and never driven.
+
+         2. For model-years '95-'02, the focus of this report, the overall average "Trapped Geometric
+         efficiency parameter" value that performs best, a=1.5, implies an individual-level age-efficiency profile
+         that is mildly concave downward. The profile's shape is strikingly similar to the hyperbolic age-efficiency
+         profile that the U.S. Bureau of Labor Statistics (BLS) has long used to estimate the efficiency of all used
+         equipment. Efficiency parameters restricted to particular model-years or varieties vary from the overall
+         average, with "nicer" varieties tending toward higher values of a (i.e., more concave efficiency profiles,
+         implying a longer fraction of the service life where a van "runs well").
+
+         3. For calendar-year quarters 1997:1-2007:2, the best choice of the "own rate of return," r, varies
+         among the choices .12, .15, and .18 without a clear pattern until 2000:4, after which r = .12 is always
+         preferred. This may implicate too few choices, too widely spaced, in the grid-search for r. On the other
+         hand, nominal interest rates of various maturities trended generally downward after 2000:1, so it's
+         conceivable that declining finance rates and worsening as-if-new prices may have approximately offset
+         each other.
+
+         4. As one might expect, there is a tradeoff between miles driven and service-lives, but the
+         tradeoff's severity diminishes with age. Driving a three-year old van another thousand miles is
+         associated with an eight-week reduction in its expected service-life, but driving an eight-year old van
+         another thousand miles costs only two weeks of expected service. (However, three-year old vans sold
+         at auction, revisited five years later, are not necessarily equivalent to eight-year old vans sold at auction
+         at the time of the revisiting. See the next finding.)
+
+         5. The statistical procedure estimates its own conditional service-life densities for quarter-year -
+         wide age-brackets at each calendar-year quarter. This overcomes a limitation of standard age-price
+         regressions, which must import survival distributions to compensate for the censoring of zero-value
+
+                                                                   1
+         retirees (Hulten and Wykoff, 1981a). Yet the estimated densities do not exhibit the left-truncation
+         expected of survival distributions, for there is next-to-no mass of auctioned vans with service-lives less
+         than five years past their ages, at nearly all available ages. Estimates of overall service-life densities for
+         each Windstar vintage/variety are found by averaging across the conditional densities, using as weights
+         the auction transaction-counts of each narrow age × date bracket. Estimated densities for most of the
+         twenty-three vintages/varieties treated here resemble Extreme Value densities. Every variety's mean is
+         within 1.5 years of a composite all-Windstar mean service-life of 12.8 years, and every variety's standard
+         deviation is within 1.4 years of a composite service-life standard deviation of 2.8 years.
+
+         The paper has six sections. A brief introduction sets out the main questions of this research and why the
+answers matter. It cites the data, which a few other authors have used, and the estimation method, which even
+fewer have used. It emphasizes depreciation as a plural process, not a single number. Then the first content
+section lays out a framework for measuring capital consistently across the individual and cohort levels. Along
+the way it talks through the technical terms, many of them mentioned already in the key findings. The second
+section briefly describes the dataset and how it is used, plus a few other papers that have used it or something
+similar. The third section details the statistical estimation methods, which are two: one a regression approach
+that leads to fitted values that have the interpretation of as-if-new prices, the other a modification of cross-
+entropy estimation to make it comport better with Hicksian aggregation. The fourth section discusses the
+estimation results and shortcomings. The conclusion recounts the main results, which call into question several
+longstanding conventions of capital measurement. To spare readers too many details, the first, second, and
+third sections all have appendixes. A final, long appendix that reads like a user-guide, plus a supplemental Excel
+file available upon request, work out the treatment of Ford Windstars in the National Accounts as if they were a
+separate asset, but readers need not limit their imaginations to beat-up old vans.
+
+0. Introduction: Why Measure Depreciation and What to Measure
+
+         Depreciation is the loss of value experienced by capital assets as they age through time. At the macro
+level, it is the difference between national accounting agencies' headline number, the Gross Domestic Product,
+and the closest measurement we have of aggregate value-added in a given production period, Net Domestic
+Product. At the industrial level, it is the difference between gross investment, which includes a sizeable
+replacement component, and net investment, which is thought to transmit improved technologies. At the micro
+level, it represents funds a business must set aside to enable its continued operations into the future.
+
+         Depreciation may be caused by natural processes of decay, the wearing out of parts by (over)use, or
+maintenance (mal)practice -- all of which affect originally-identical asset-type units differentially -- or by
+changes in the broader environment that make an entire asset class or variety less useful or attractive or more
+costly to operate, regardless of how well individuals have been treated or whether they had even been removed
+from their packaging. The first, individual-focused depreciation is commonly called wear-and-tear or just
+"ordinary" depreciation; the second, broad-based sort is termed obsolescence. A prominent, but not exclusive,
+example of obsolescence is the devaluation of a serviceable, nearly-new generation of assets when a newer,
+better-featured variety of the same class is introduced. Measured wear-and-tear may shed light on the
+
+                                                                   2
+intensive-margin utilization of capital. Measured obsolescence offers a rear-window view of technological
+progress. We lose a lot by reducing these different channels to a single number, despite the savings -- e.g.,
+fewer data demands, simpler accounting, ease of exposition -- obtainable from the standard Geometric model.
+When a flexible, internally-consistent micro-level modeling framework and plentiful, detailed data are both
+available, we should seize the chance to find out all we can about the processes in play.
+
+         This paper makes use of almost a million wholesale used-vehicle auction transactions of a narrow asset
+type -- over twenty varieties of Ford Windstar and Freestar and Mercury Monterey vans -- from nearly all the
+years when the vans were new. It infers the vans' ages (in principle, to the nearest day), and it backs out what
+they would have sold for had they been offered for sale as "new" years after they actually were. This "as-if-new
+price" construct is central to the analysis. The difference between the observed price of a genuinely new
+("frontier") variety and the as-if-new price of an older variety is a clean (if narrow) gauge of obsolescence, while
+the difference between a variety's as-if-new price and the actual used-price of one of the variety's members
+measures the penalties of wear-and-tear. The paper constrains varieties' as-if-new prices, once established, to
+move in strict proportion, the better to treat all Windstar-type vans as a Hicksian aggregate, which has the
+practical benefit that the expected proportionate revaluation term is the same across all individuals' user-costs
+at any given date.
+
+         On a mature subset of the data, the paper then estimates the parameters that summarize individual
+wear-and-tear: an efficiency parameter that indirectly captures what fraction of the service-life delivers a "nice
+ride," an own rate-of-return (a finance rate, less the expected proportional revaluation), and the distribution of
+service-lives for vans of a certain age at a given date. Such narrow-window life-distributions can be combined
+into an unconditional distribution, so that the importation of external distributions to adjust age-price
+regressions for retirements, can be dispensed with. Estimation is by cross-entropy matching of many narrow-
+domain moments, but I have modified the technique to allow two independent processes (obsolescence and
+aging) to inform the same moments yet stay independent.
+
+         The detailed data and two-part estimation enable a range of findings, as summarized above. The
+consistency of the depreciation model at individual and cohort levels, and across the efficiency and price
+domains, enables consistent and meaningful treatment of Windstars as both productive and wealth capital in
+the National Accounts.
+
+                                                                   3
+1. Age-Efficiency and Resale-Price Profiles: Trapped Geometric Individual Forms within Cohorts1
+
+The Trapped Geometric model age-efficiency profile for an individual van drawn from a cohort / vintage
+
+/ model-year (used interchangeably) is:
+
+                                         (, ) = 1-  / -  (s  L, else  = 0).                      (1.1)
+
+ compares the service-flows (equivalently, the constant-price rental income) immediately accessible to an s-
+year-old individual asset destined to remain in service L years from its manufacture or installation, to the flows
+immediately accessible to the same individual when new. As s increases from 0 to L,  decreases from 1 to 0.
+Depending on the value of the "efficiency parameter" a, the decrease might be negligible until the end (i.e., for a
+ ), which is the "one hoss shay" productivity pattern, or (less extreme) slower while new than while old (a >
+0), or equal at every age (a  0) for "straightline efficiency loss," or faster new than old (a < 0), or immediate (a
+ -), signifying "not an asset." This single-parameter versatility makes the form comparable to the individual-
+level hyperbolic age-efficiency profile used by the BLS, the U.S. Agriculture Department's Economic Research
+Service (ERS), the Australian Bureau of Statistics (ABS), and the Bank of Korea (BoK). Unlike the hyperbolic
+profile, the trapped-efficiency form has a dual resale-price profile, (s,L), which is easy to derive under constant-
+rate discounting:
+
+ -(-)  /-            1-(-)-1-(/-1)                       1- ( -) -  1- ( /-1)
+    1-                            (- )(1- - )
+(, ) =  -(-0)  /- =                                     = (1--)-(1--)          (s  L, else  = 0) (1.2)
+                     1---(1--)
+0   1- 
+                                          ( - )(1- - )
+
+where r is the own rate of return -- i.e., an appropriate finance rate, less the expected log growth-rate of the
+price the individual would fetch if it were somehow kept new. 2 Under progressive obsolescence, where new
+features introduced each model year push down such so-called "as-if-new" prices of older model-years, that log
+growth-rate could be quite negative, implying high r, possibly above 10 percent, even if finance rates are near
+zero. Like the age-efficiency profile, the resale-price profile also decreases from 1 to 0 as s increases from 0 to L,
+but the resale-price profile's value never exceeds the efficiency profile's value at the same age. Multiplying
+
+                                                                                                                         0
+
+(s,L) by the as-if-new price for vintage or "variety" v at date t, Pvt , would approximate the actual date-t price of
+an s-year old asset from vintage/variety v. Multiplying instead by Ptt0 , the observed new price of the latest
+vintage (i.e., v=t), would overstate the used price, because obsolescence has caused Pvt0 < Ptt0 for t > v.
+
+         This discussion has separated obsolescence, which compares new and as-if-new prices at the same date,
+from "ordinary" depreciation, which compares an individual at different ages within its own service-life.
+Because individuals age at different rates (owing to different L-values), ordinary depreciation is best approached
+at the level of individuals within a vintage/variety. On the other hand, (0,L) = 1 irrespective of the value of L, so
+rolling individuals' s-values back to 0 would impose the Law of One Price across all as-if-renovated members of
+the same vintage/variety, implying obsolescence is best studied by comparing across new and as-if-new vintages
+
+1 So named by "trapping" an ordinary geometric profile (that is, e(a/L)s, with -a>0 as the declining-balance rate, so that -a/L
+is the continuous-time depreciation/deterioration rate) to zero when its age, s, reaches the service-life L: e-(a/L)s - e-(a/L)L,
+then normalizing by the value of the same difference when new (i.e., s=0): (eas/L - ea)/(1 - ea). The trapping procedure frees
+a to take any real value, though limits are necessaryas a approaches , -, or 0.
+2 Expression(1.2) has limiting forms as a andr approach , -, and 0 singly or in combination, and as L approaches a/r.
+
+                                                                   4
+rather than across individuals. Hall (1968) pointed out that age-effects, date-effects, and vintage-effects were
+not all identified in a log-linear age-price depreciation regression with annual data and went so far as to suggest
+economists not bother to distinguish obsolescence from ordinary depreciation. Having high-frequency data at
+both the individual and cohort levels of aggregation offers a way around Hall's concerns. We return to the
+matter below, following (1.5).
+
+         Transforming the individual resale-price profile to the corresponding rental-price profile, (s,L), is
+straightforward:
+
+  1- (-)  -  1- (/-1)       1- (-)  -  1- (/-1)                    (-) (1--)  / -
+(, ) =  (1--)-(1--) -  (1--)-(1--)  = (1--)-(1--) 1-                                                     (1.3)
+
+Like the other two profiles, the rental-price profile declines to 0 as s increases from 0 to L. As with the
+
+discussion above regarding the resale-price profile, the product Pvt0 × (s,L) should approximate an individual
+
+used-asset's actual rent. However, (0,L) -- that is, the gray block in (1.3), equivalently the reciprocal of the
+
+denominator integral in (1.2) -- is essentially a reciprocal function of L. So the individual-level user-cost -- i.e.,
+Pvt0 × (0,L) -- is larger, owing to a higher value of the new-asset depreciation rate, (1--)-(1--) (-)(1- - r -)  0, for
+
+short-lived individuals than for long-lived ones. This is to be expected, as short-lived assets must earn greater
+
+rents in the little time they have to repay their purchase price.  Note that  -(-)(, ) = (s,L), as per
+
+                                                                                     
+
+(1.2), and that (s,L)/(0,L) = (s,L). At the level of an individual asset, then, each of forms (1.1), (1.2), or (1.3)
+
+implies the other two, so the system is sound. But it remains to estimate Pvt0 , which is not observed.
+
+         The statistician cannot realistically know an individual's L, but for productivity and national accounts
+purposes, the behavior of price and efficiency profiles at the cohort level built from individuals is enough.3,4
+Aggregating individual-level resale-price profiles up to the cohort level is conceptually easy:
+
+                                                                     1- ( -) -  1- ( /-1)
+() = 0()×0 +  () (, ) =  () (1--)-(1--)                                                                  (1.4)
+
+   !
+
+though an algebraic expression for f(L), the service-life density, might not be explicit. The cohort profile differs
+from the observed average resale-price profile for survivors only:
+
+                        ()(,)                                                                            (1.5)
+
+       () =  (| > )(, ) = 
+
+                                                                       ()
+
+3 On the other hand, the case can be made that an individual's L can become better known by comparing the individual's
+performance vis-à-vis its neighbors over time (Sliker, 2015). An implication of improving knowledge of individual L is that
+early knowledge may be poor, so estimates of individual values may overconcentrate near the survivors' mean, reducing
+the informativeness of higher moments until individuals are better distinguished.
+4 In fact, many statistical agencies, BEA among them, do not track cohorts separately, but only the net stock, which sums
+across cohorts. Constant-rate (i.e., geometric) cohort-level depreciation is a sufficient but unnecessary condition for
+geometric stock-level depreciation. Diewert and Wei (2017) show that a stationary cohort-level efficiency profile, constant
+own rate of return, and constant growth-rate of investment are also jointly sufficient for geometric stock-level depreciation.
+
+                                                                   5
+so the Hulten-Wykoff (1981a) correction to age-price regressions, whereby the relative-to-new resale-price
+
+ratios, which constitute the observations to be explained, are multiplied by the survivor function: () =
+
+ ()×      (),  is   justified.  5
+
+      
+
+         The discussion of obsolescence following (1.2) paused to allow development of individual- and cohort-
+level measures of capital that decay at different rates with respect strictly to age. This was permissible because
+the Law of One Price for as-if-new individuals boiled down realized obsolescence to a simple multiplicative
+factor, dependent on vintage/variety and calendar-time but equally applicable to all a cohort's members at any
+given date. But some price variation across apparently identical new individuals (and so, across as-if-new
+individuals) is inevitable, so to allow some play, replace a strict Law of One Price by statistical independence
+between as-if-new prices embedded in one distribution, and individual-level resale-price profiles embedded in
+another. (Recall the expected log-growth rate of as-if-new prices is already built into r.) Thus the expected
+resale price of an s-year old asset from cohort v as of date t may be written:
+
+                                ,       ,                      1- (-)-1-(/-1)
+          ,  =         ,                   ×     (, )          ( -) ( -)                                     (1.6)
+                                     ,
+                       ,                                        1- - 1-
+
+where the first term on the right is the average as-if-new price of a cohort-v asset as of date t, with density
+
+, running     between  reasonable  bounds       and      .  6  Treating , and f(L,m) as independent is
+
+                                             ,        ,
+
+intentional: the ratio of as-if-new to genuinely-new prices remains a clean measure of obsolescence that way,
+
+even as a ratio of averages.7 Moreover, the as-if-new price averages aren't buffeted by variations in L, so one
+
+may treat the cohorts in the net stock (of all Windstar, Freestar, and Monterey passenger vans) as forming a
+
+proper aggregate.8
+
+         Several estimating equations in this paper's statistical-technique section, farther below, have the flavor
+of (1.6). However, they sample only from transacted individuals, so their left-hand side moments might be more
+appropriately written as  ,, akin to (1.5). Likewise, their (marginal) f(L) densities are really about survivors,
+i.e., f(L|L>s), or even just the subpopulations of vans worth hauling to auction at various ages, f(L|s).
+
+5 The distributions of individuals resold at various ages might differ more generally than allowed by differences in the left-
+
+truncation severity of otherwise-identical survival densities. If so, the observed average resale-price profile is () =
+(|)(, ), not (| > )(, ), so Hulten and Wykoff's convenient correction would not go far enough.
+Instead, use conditional probabilities to construct f(L) = 0(|)(), where f(s) is the unconditional density of ages.
+With f(L) in hand, then reconstruct the cohort. The results of section four, below, imply conditional, not survival, densities.
+
+              ,     would alsomultiply (s), the net-of-obsolescence cohort rental-price profile.
+6  ,
+    ,      ,                                                                                        Cf. Appendix A, below.
+   ,
+
+7 By introducing f(L,m), the joi nt densi ty of service-li ves and mil es driven, where mil es range between appropriate bounds
+
+m and m, I have gone beyond the text, though the extension is reasonable. In equation (1.6), the joint density finds no
+
+functionof miles to operate on, so the double integral marginalizes m out of f(L,m), leaving f(L).
+
+8 The "sport" optionof a car, luring risk-loving drivers into more frequent accidents, is a counterexample.
+
+                                                     6
+2. Brief Description of the Data and Their Uses
+
+         The study's 373,496 transactions of used Ford Windstars were drawn from the "Raw Auction Data Set,"
+a joint project of the National Automobile Dealers' Association (NADA) and the National Auto Auction
+Association (NAAA), containing records of 78,906,355 completed wholesale auction trades of automobiles, light,
+medium, and heavy trucks, and some trailers in the United States, Canada, and the Caribbean from January 2,
+1991 through May 31, 2007.9 Each transaction record includes the make (e.g., "Ford Truck"), model-year ("98"),
+submake ("Windstar"), series ("Windstar"), body-type or trim ("WGN 3.0L/LTD/LX/GL"), date of sale, region of
+sale, sale price, odometer reading, sale type, and first 11 digits of the 17-digit Vehicle Identification Number
+(VIN).10 The final 6 digits are masked, which was a steep hurdle to inferring individual vehicle build-dates and
+(subtracting from the sales-dates) precise ages. The "Data Work" appendix details the steps involved to
+estimate individual build-dates and ages, as well as procedures to clean and organize the data.
+
+         A few others have used wholesale vehicle auction transactions, whether from NADA/NAAA or some of
+the major auction houses. Lacetera, Pope, and Sydnor (2012) note resale-price drops of $100-$200 whenever a
+car's odometer crosses a thousand- or ten-thousand -mile mark, indicating an "inattention bias" by retail
+customers that dealers factor into their own bids at wholesale auctions. 11 On the other hand, Sallee, West, and
+Fan (2016) find that comparative changes in the prices of otherwise-identical vehicles with different odometer
+readings (and thus different expected remaining service-years) in response to a change in the price of gasoline
+(which is assumed persistent) offset the capitalized incremental fuel costs one-for-one, implying buyers would
+respond optimally in the face of Pigouvian gas taxes. Larsen (2014) used private auction-house data to study the
+efficiency of subsequent back-and-forth bargaining over used vehicles that had not sold successfully at auctions.
+
+         The present paper only scratches the available wholesale auction data from NADA/NAAA. First, the
+vehicular focus is narrow: Ford Windstars only (renamed Freestars in 2004 and supplemented by the high-end
+Mercury Monterey). This limits the sources of heterogeneity to the distributions of as-if-new prices of Windstar
+model-years and trim levels, which will be constrained to move in lockstep to maintain the useful fiction of an
+aggregate, and to the within-trim distributions of individual service-lives. 12 (It also let me develop estimation
+procedures in a manageable setting.) Second, the price-and-miles moments to be matched to analytical
+expressions are also narrow, covering only what's available in 3-month age brackets × 3-month calendar-time
+brackets called "cells." Estimation takes place as a series of snapshots of nearly 1700 cells. Then depreciation
+follows from reconstructing (1.6), using the best-fit common values of a and r and numerical substitutions for
+cell-specific f(L,m) and for a moving array of mean as-if-new prices. I did not account for heterogeneity that
+
+9 According to NADA's website, the data cover "80 percent of the nation's auction transactions every day from Manheim,
+ADESA, ServNet, ABC and key independent auction houses." The data set continues after May 2007, but BEA's purchase
+only extends that far.
+10 Of the seven auction types, manufacturers' auctions to their captive dealers and fleet auctions are both numerous but
+early in any model year's career; dealer auctions are numerous and represent typical sales where vehicles are well
+individuated; as-is, scrap, repossession, and unknown auction types are rare.
+11 Those discrete pri ce-drops mi ght frustrate the interpretation of a depreciati on rate as fi t by a typical l og-li near age-pri ce
+regression. I am hoping my procedure of matching short-interval sampling moments of prices and miles to analytical
+expressions, as described below, will "average around" the price discontinuities.
+12 Forcing mean as-if-new prices of all varieties of light motor vehicles to move together, and their distributional spreads
+also, is a muchbigger ask, but it follows from treating light motor vehicles as anaggregate.
+
+                                                                   7
+might arise from different auction types, as gasoline makes a vehicle fungible across auctions, nor did I treat
+auction regions differently. However, the model's informational requirements -- i.e., that auction participants
+can form fairly tight estimates of individual service-lives -- rule out the use of transactions of vans that are early
+in their careers (where manufacturer and fleet auctions dominate), which are too young to tell apart. This made
+the lion's share of included transactions dealer-to-dealer trades. See Appendix B for the details in boiling down
+the data to 373,496 useable transactions.
+
+         Data used for a single cell's estimation included: the price, age, transaction date, and miles driven of
+each included vehicle.
+
+                                                                   8
+3. Statistical Estimation
+
+         Holding , independent from f(L,m) has the practical advantage of allowing vintages' and varieties'
+mean as-if-new prices through time to be estimated separately from the more complicated treatment of age,
+miles, and survival that pertains to wear-and-tear. So this section is divided into two parts. The first part
+estimates mean as-if-new prices in a pseudo-poisson regression framework, while the second modifies the
+cross-entropy probability estimation method to handle independent distributions -- i.e., ,  versus f(L,m) --
+that participate in the same moments. Extra details of the both parts are consigned to Appendix C.
+
+3.1 Pseudo-Poisson Regression of Prices
+         There was a time when an "age-price regression" meant the OLS projection of used assets' logged prices
+
+on the assets' ages, transaction dates, and their non-age quality-characteristics (skirting vintage as a date). The
+use of non-age characteristics (as opposed to the vintage year, which is collinear with age and date, in annual
+data) and time were intended to remove confounding variables from a clean (i.e., age-based) measure of
+depreciation, though Hall (1971) used the technique to infer the rate of quality improvement, shorn of age and
+time confounders. Without adjusting for retirements, which are a function of age, the simple loglinear
+regression does not measure fast enough depreciation. But Hall's approach to quality still makes sense, if we
+use functions of age (and miles) as statistical sponges to control for depreciation and retirements semi-
+parametrically, deferring their separation until later. Moreover, quality is embodied in vintages, so it is useful to
+track vintage dummies themselves through time. So consider the crowded but essentially familiar regression:
+
+Pv,t,i = Exp[c + s s + m m + ss s2 + sm s×m + mm m2 + sss s3 + ssm s2×m + smm s×m2 + mmm m3  (3.1.1)
+              +  vvI v +  vvs I v×s + vvmIv×m + ttIt + ttsIt×s + ttmIt×m] + v,t,i
+
+where Pv,t,i the price (in $thousands) of individual i from vintage/variety v during date t (to the nearest calendar-
+year quarter), depends on the individual's age s (presumably to the nearest day) and odometer reading m (in
+thousands of miles). The regression's 44 included varieties and 51 included calendar-year quarters are each
+interacted with age and miles, which also enter separately in a saturated third-order fit.13 The two sets of
+dummy variables probably induce residual clustering, so I clustered standard errors by the unions of both
+dimensions. Variety v's mean as-if-new price at date t is:
+
+E(,)= Exp(c + v + t)                                ...14                                    (3.1.2)
+
+The exponential form implies that all varieties face the same basic inflation rate at date t, though the rate may
+
+vary across dates. Moreover, each variety's place in the quality ranking is fixed by its v. Hence the expected
+
+revaluation rate, which is subtracted from the finance rate to form an estimate of the own rate of return, is the
+
+same across all individuals. The following nine plots of 45 Windstar varieties' as-if-new prices through calendar-
+
+time demonstrate pronounced and persistent declines in as-if-new prices, averaging 10.3 percent per year,
+
+jostled by the quarters of the annual sales cycle:                                           .
+
+13 The '06 Mercury Monterey "Luxury" trim is the excluded variety; the excluded date is 2007:2. The unit of observation is
+transactions. I applied all 856,962 usable transactions, covering model-years '95-'06, including vans aged less than 3 years.
+14 Simple exponentiation, without log-normal or smearing-type transformations of the residuals, works here, for the
+pseudo-Poisson maximum likelihood (PPMLE) specification has Pv,t,i rather than its log as the dependent variable (Santos
+Silva and Tenreyro, 2006).
+
+                                                                   9
+Figure 1
+   10
+      Notes on Fig. 1 (above). Each dot represents the evaluation of (3.1.2) for a given model-year ('95-'06)
+      and variety (e.g., 3.0 Liter, Monterery Luxury, etc.) for the calendar-quarters the variety was present in
+      the data (as early as 1994:III and as late as 2007:II) -- i.e., cohort- and variety-specific as-if-new prices, in
+      $1000s. Horizontal-axis fourth-quarter marks show when new model-year sales typically commence.
+
+The big regression's R2 of 94 percent is adequate, and disposing of the saturated, non-dummied age and mileage
+
+terms leaves ample variation for within-cell variation to estimate aging and retirements. Each fitted E(Pv,t 0 ) will
+
+anchor subsequent estimation of its own cells' averaged age-price profiles. To approximate the trend rate of
+
+revaluation (which I'll take as the expected rate), I regressed the log of the fitted, left-hand side of (3.1.2) -- i.e.,
+
+^  +  ^  +  ^  --  against vintage/variety dummies  and a quadratic       time trend. 15  The    relevant  point  values:
+
+c     v     t
+
+               ^   +  ^  +  ^  =  {vintage/variety  dummy  variables}  -  0.086437  (t-2000)  -  0.00385589  (t-2000)2     (3.1.3)
+
+               c      v     t
+
+imply an expected rate of change:                                                                                          (3.1.4)
+                                      lnE(,)/t = - 0.086437 - 0.00771177 (t-2000)
+
+that annualizes to -4.4 percent in 1994:3, when the data were new and the Windstar's prospects bright, versus
+the catastrophic -13.4 percent by 2007:2, when the data are finished and the whole line had been cancelled.16
+Dropping the quadratic term from the trend regression yields a constant rate that annualizes to 10.31 percent.
+The trend rate of revaluation does not directly figure into the rest of the paper, but by removing it from a trust-
+worthy estimate of the own rate of return r, one may infer the operative finance rate.
+
+         The first part of the Appendix C begins by describing steps to form distributions of as-if-new prices, of
+
+                    ^^ ^
+
+which Exp(c + v + t) are the means.
+
+3.2 Modified Cross-Entropy Fits of Cell-Level Micro-Moments
+         To estimate the depreciation and survival of cohorts built up from individuals, it is necessary to uncover
+
+plausible statistical distributions from which the individuals were drawn. Following the reasoning developed at
+(1.6), above, the sought-after distributions are ,, the density of as-if-new prices of vintage/variety v at
+date t about their mean (3.1.2), and f(L,m|s,t), the joint density of service-lives and miles driven of vehicles of
+vintage/variety v, from the narrow box of vans of ages s  s  s- resold at transaction-dates t  t  t- (both ranges
+
+ranges a quarter-year wide). In principal, f(L,m|s,t) might be a survival density, i.e. f(L,m|L>s,t). In the discrete-
+probability framework developed here, I'll represent , as lower-case pn (n for "as-if-new") and f(L,m|s,t) as
+pl,m.
+
+         Likelihood-based statistical methods fit the parameters that particularize a member of some statistical
+family, such as a Weibull or LogNormal distribution, but they are less accessible when distributions are implicit.
+And while we might possess (and should find some way to use) prior intuitions about the shapes of the as-if-new
+and lives-and-miles densities, the paucity of recent findings on service-life distributions (Marston et al., 1953), as
+
+15 ^ ^
+
+  The vintage/variety dummies correlate highly with v, yet I did not net out vintage/variety dummies and v from both
+sides of the regression, since the varietyand date dummies in (3.1.1) would not have been orthogonal in regression (3.1.1)'s
+unbalanced panel. I have not presented the OLS standard errors or t-ratios, whichare too good to be believed.
+16 For 1994:III, I used 1994.625 which is midwaybetween 1994.5 and 1994.75. Similarly, for 2007:II, I used2007.375.
+
+                                                                  11
+well as the statistical novelty of as-if-new price distributions, urge caution. Could the data structure the
+distributions, instead of the other way around?
+
+         Recent developments in information theory (Golan, Judge, and Miller, 1996) can help. In particular, the
+method of cross-entropy, which favors distributions that are near one's prior intuitions -- provided the data's
+useful features are met -- can generate empirically fruitful distributions and summarize the degree to which the
+data favor various test values of the key system-wide depreciation parameters a and r. In its primal form, the
+method manipulates sets of probabilities to minimize the expected proportional differences (i.e., the "Kullback-
+Leibler discrepancy") between the acted-on sets and corresponding sets of target probabilities (mis)named as
+priors, such that constraints involving the acted-on sets (typically moment equalities) are satisfied. 17 In its dual
+form, wherein the acted-on probabilities have been optimized out and replaced by exponential functions of the
+data domain and Lagrange multipliers, the solution mechanics typically involve globally concave maximizations
+with respect to the multipliers and are amenable to standard applications of the Newton-Raphson method.
+
+         "Priors" needn't be a dirty word. Where decent data are present to form accurate priors (e.g., several
+moments of odometer readings to construct marginal prior densities of miles), I use them. (Then proper
+posterior fits, given the same moments from which the priors were drawn, should confirm the priors exactly.)
+Where useful data are not available, I supply my own hunches or preferences, albeit somewhat flattened. In
+either case, the priors are specified as exponential functions that are algebraically compatible with the
+functional forms of the acted-on probabilities. 18 That way, the probabilities' final values, which include the
+digested priors, are numerically the same irrespective of the priors' contents. So good priors in cross-entropy
+estimation simply start the overall acted-on probabilities closer to where they will finish.
+
+         The first part of Appendix C continues the discussion of priors and describes how I selected them for the
+joint distribution of service-lives and miles.
+
+         A second practical reason for keeping Pv,t 0 independent from L-and-m is to reduce the number of system-
+wide support points in discrete cross-entropy estimation from the product of the cardinalities of Pv,t 0 , L, and m, to
+the lesser sum of the cardinality of Pv,t 0 and the product of the cardinalities of L and m. This reasoning permits
+estimation of the probabilities of each age-quarter × date-quarter cell separately, given the already-fit E(Pv,t 0 ) --
+called vo,t in (3.2.1), below, to save space -- and test values of the efficiency parameter a and own rate-of-return
+r. This allows observing the development of joint L-and-m distributions across ages and dates, but at the stiff
+cost of repetitive estimates of thousands of age×date cells.
+
+         Within every cell, I fit the joint distribution of unobserved service-lives and observed miles, together
+with the independent distribution of as-if-new prices, to match uncentered moments of prices and miles, by
+minimizing one of three cumulative levels of the constrained cross-entropy (per the cell's likely informativeness).
+The formal minimization program follows on the next page.
+
+17 A cottage industry has grown up to drawall the connections between Bayesian and entropy estimation. Cf. Giffon (2009).
+Operationally, Bayesian approaches combine maximum likelihood estimates with priors to form posteriors, which are then
+appropriate priors the next time fresh data are obtained, while minimum cross-entropy "tilts" what would have been
+maximum likelihoodestimates "just enough" toward (nonuniform) priors.
+18 In Bayesianestimation, algebraically compatible priors are called"conjugate," but their use is quite different.
+
+                                                                  12
+                 ,       ,    +          -   o           ,      -   1  -   o        -  1                                                      (3.2.1 )
+
+                                                                          
+, ,{}        
+
+                     -N   - 1 - P1 vo,t     ,  - 1 - M1   , - 1
+
+                                                                                                
+
+-P2 vo,t2  2   , 2  - 2 - P1M1 vo,t     ,  - 11 - M2   ,2 - 2
+
+                                                                                                                  
+
+-P3       o3       3             , 3  -  3  -   P2M1        o2        2              , 2             -  21
+
+     v,t                                               v,t
+
+                                                                                 
+
+                                            -P1M2 vo,t     , 2  - 12 - M3   ,3 - 3
+
+                                                                                                                  
+
+     -P4       o4      4             , 4    -  4    -  P3M1       o3        3               , 3           -  31
+
+          v,t                                                v,t
+
+                                                                                      
+
+- P2M2       o2      2             , 2  2  -   22        - P1M3     vo,t                       ,        3  -  13  - M4                           ,4     -  4
+
+        v,t
+
+                                                                                                                                               
+
+where:
+
+{pl,m} is the joint distribution of service-lives (l) and miles (m) over a suitable bivariate grid, which the
+    minimization attempts to bring "close" to the target/prior distribution {ql}×{qm};
+
+                                                                                                                                          ^o
+
+{pn} is the univariate distribution of as-if-new prices (n) about their mean Pv,t over a coarse grid, which
+    the minimization attempts to bring "close" to the target/prior distribution {qn};
+
+o   and  o    are  Lagrange   multipliers imposing  the  requirement        that  {pl,m}  and  {pn}  are  both  proper;
+
+  
+
+N is the Lagrange multiplier imposing the requirement that the range of a cell's as-if-new prices indeed
+
+                                                                                                                ^o
+
+    average to the already-estimated mean as-if-new price Pv,t;
+
+P1, M1, P2, P1M1, M2, P3, P2M1, P1M2, M3, P4, P3M1, P2M2, P1M3, M4 are Lagrange multipliers imposing
+    the requirements that modeled uncentered mixed moments of resale prices and miles match their
+    corresponding sample averages for the transactions enclosed within the cell, which are:
+
+         P1 = average transaction price
+         M1 = average odometer reading (miles)
+
+         P2 = average of squared transaction prices
+         P1M1 = average of products of transaction prices and miles
+         M2 = average of squared miles
+
+         P3 = average of cubed transaction prices
+         P2MI = average of the products of squared transaction prices by miles
+         P1M2 = average of the products of transaction prices by squared miles
+         M3 = average of cubed miles
+
+         P4 = average of transaction prices each taken to the fourth power
+         P3M1 = average of the products of cubed transaction prices by miles
+         P2M2 = average of the products of squared transaction prices by squared miles
+         P1M3 = average of the products of transaction prices by cubed miles
+         M4 = average of miles each taken to the fourth power, respectively; and
+
+                                                                  13
+vo,t is the estimated mean as-if-new price of vintage/variety v at date t
+l is a grid-value of the service-life random variable, from a cell's top age-boundary -s to 25 years, by quarters
+m is a grid-value of the miles-driven random variable, in 2000-mile increments
+n is a grid-value of the as-if-new price random variable, from .78 vo,t to 1.30vo,t (1.22 vo,t) in 7 (6) increments
+
+      1- (-)-1-( /-1)
+
+l = 1---(1--) is the individual-level resale-price (1.2) as a fraction of vo,t (3.1.2).
+    (I set s* to the average age of transactions in the cell. 19)
+
+         The estimation problem is less complicated than it looks. First, not every cell was forced to fit all 17
+Lagrange multipliers included in the white, gray, and cyan zones of (3.2.1). Some cells matched only the 12
+constraints in the white and gray zones (up to cubic terms); others only the 8 constraints in the white zone (up
+to squared terms).20 Second, holding out a and r in l as temporarily fixed parameters, rather than throwing
+them in with the 's to be estimated all together, was a considered choice, because it allowed estimating each
+cell (out of potentially hundreds) separately, in a small-to-medium -sized problem; a joint procedure holding a
+fixed across all cells of a vintage/variety and r fixed across all cells at the same date is likely insuperable. The
+best values of a and r would minimize the observation-weighted sum of cross-entropies across all admissible
+cells, via a 2-way grid search. One might instead treat a and r as distributions themselves, but that is tricky:
+equal spacings of the support points of a or r translate into distinctly unequal implied prior probabilities of l;
+further, r is multiplicatively bound up with the service life. Third, deciding which cells are admissible requires
+some care: populous early cells should be avoided if their implied lifespan densities have not settled down.
+Fourth, the independence of priors {ql}×{qm} for the joint distribution of lifespans and miles is implausible and
+sure to be rejected, but it is convenient and no worse than the implied bivariate uniform priors of maximum
+likelihood. Fifth, as stated earlier, forcing the distribution of as-if-new prices to stay independent of the joint
+distribution of unobserved service-lives and observed miles has the two advantages of keeping the user-cost's
+revaluation term the same for everyone and of conserving computer memory, as the total number of support
+points is held to the sum of each distribution's support points, not the product. (Things would be worse yet
+were as-if-new prices, lifespans, miles, a, and r all treated as jointly dependent distributions.)
+
+         However, keeping the as-if-new price distribution independent of the lives-and-miles distribution
+complicates cell-by-cell estimation. There is a standard formalism for bringing a primal cross-entropy
+constrained minimization problem such as (3.2.1) into the ambit of well-understood unconstrained optimization
+routines: First-order conditions with respect to individual probabilities have closed-form inverses akin to
+multinomial logit; the inverses express the probabilities in terms of the Lagrange multipliers and distributional
+support-points. Setting the products of the expressed probabilities and support-points equal to the sample
+moments gives a just-identified system of estimating equations with a friendly Hessian, readily solved by
+Newton-type methods, and the Hessian's inverse supplies the asymptotic standard errors. So far, so good.
+
+19 es
+
+  In principle, each cell's s has its own density, which I found couldbe modeled pretty well by () =  es-es_ , where  is
+the density's single parameter ands < s- are the cell's age-boundaries, typicallya quarter-year apart. But the complications
+of calculating triple weights, especially for higher-powered moments, were not worth the slight increases in accuracy over
+the simpler average s*.
+20 Cf. Appendix C.1, below, in which the success of univariate maximum entropyfits of the miles distributions set the mold
+for the estimations carried out here.
+
+                                                                  14
+         The formalism still applies when two or more of the distributions are independent, but if they are
+implicated in some of the same moments (i.e., P1, P2, P1M1, P3, P2M1, P1M2, P4, P3M1, P2M2, and P1M3, but
+not M1, M2, M3, or M4, nor the constraint flagged by N, guaranteeing that vo,t really is the mean of {pn} for
+variety v at date t), then the resulting solved-out probabilities for one set of random variables will carry along
+"side-moments" that contain the unsolved probability-values of the other, independent set of random variables.
+As a consequence, the now-entangled estimating equations get doubled up: twice a moment equals the
+estimating equation in terms of the first distribution (e.g. lives-and-miles), which contains within it the side-
+moments of the second (as-if-new prices); plus the estimating equation in terms of the second distribution,
+seeded with the side-moments of the first. The Hessian is similarly complicated, though its eigenvalues remain
+friendly. Since each step of a Newton-type procedure updates the Lagrange multipliers of the parameterized
+probabilities, one must pause between steps to allow the unparameterized numerical values of the unsolved
+other distribution to "catch up" to the values of their parametrized counterparts, using a fixed-point algorithm.
+
+         The second part of the Appendix C describes in greater detail the steps to minimize (3.2.1) when the
+independent probabilities don't keep to themselves.
+
+         This version of the study did not iteratively optimize over efficiency parameter a and own rate-of-return
+r as with the Lagrange multipliers, not even within each cell. Instead, I selected a two-way grid of five a-values
+(i.e., 0, 1.5, 3, 5, and 8) implying roughly equally-spaced individual efficiency profiles, by three r-values (i.e, .12,
+.15, and .18) that I thought agreed with the finding of 10.31 percent average annual devaluation of as-if-new
+prices, following (3.1.4), above. The efficiency profiles hold for all service-lives:
+
+                                                               Figure 2
+
+                                                                                         8
+                                                                                    5
+                                                                                3
+                                                                        1.5
+                                                                  0
+
+                                                                                                                                              / -
+
+         Notes on Fig. 2. Each schedule traces individual age-efficiency profile 1- (1.1), which
+         models the declining service-flows (and rental income) of an individual asset as it ages through
+         time, relative to an identical version of itself that also moves through time but does not age. The
+         next evenly spaced curve above "a=8" would be nearly one-hoss shay (for which a).
+
+The own rates-of-return (i.e., .12, .15, and .18) would be considered widely spaced in financial discussions, but
+they had the effect of merely nudging individual resale-price profiles that were largely set by a and L. In fifteen
+plots of resale-price profiles just below, gaps between the profiles for r = .12 (red and always the lowest), r = .15
+(black and in the middle), and r = .18 (blue and highest) only become visible for large values of a and L:
+
+                                                                  15
+            Figure 3
+
+:      L=5  L=10      L=15
+
+a=0
+
+a=1.5
+a=3
+
+a=5
+
+a=8.5
+
+                                                                                                                         1- (-)-1-(/-1)
+
+  Notes on Fig. 3. Each schedule traces individual resale-price profile ( -) ( -) (1.2), which
+
+                                                                                                                               1- - 1-
+
+  models the declining price of an individual asset as it ages through time, relative to an identical version of
+  itself that also moves through time but does not age. The value of a is important in shaping the profiles, the
+  value of L less so, the value of r only slightly -- to the point that it is hard to discern the three schedules
+  present in each of the 15 plots. This suggests r will not be well identified in the statistical estimation.
+
+Searching the 5×3 grid over each of the qualifying cells in all 23 vintage/varieties of model-years '95-'02 led to
+23,262 cross-entropy minimizations.21 21,699 of them converged, each with its own Lagrange-multiplier values
+and implied densities of as-if-new prices and of service-lives and miles driven.
+
+21 This is slightlyless than15 times the number of cells listed in Table B.1, as a few cells were droppedin the constructionof
+cell-specific prior-densities for miles (Cf. Appendix C.1), and because I neglected (a,r) = (8.5, .15) for the '95 variety.
+
+                                                                  16
+4. Results
+         The preferred specification is the joint choice of the efficiency parameter (a) and own rate of return (r)
+
+that minimizes the cross entropy between the resultant pl,m and pn distributions and the original ql×qm and qn
+target/priors. It is impossible to report each cell's preferred specification, and inevitable that the randomness of
+the data would obscure any sense of pattern across nearly 22,000 fits. Instead, the large Tables 1 and 2 on the
+next two pages show averaged cross-entropies with respect to a-values across all 23 vintage/varieties, and the
+same with respect to r-values across all 42 calendar-year quarters. The tables highlight the values of a or r that
+allowed the smallest Kullback-Leibler discrepancies (whether weighted by counts of cells or of transactions).
+
+         In Table 1, it is evident that early Windstars were not very good. (Cf. model-years '96-'98, where a=0
+prevails.) But it is also apparent, once varieties are reported separately ('99 and later), that the "nicer" varieties,
+shown toward the right side of the page (the ordering follows the varieties' relative as-if-new prices), favor
+higher values of a. Colloquially, they deliver a "better ride" for a greater fraction of their service lives. Were one
+forced to pick a single a for all successfully converged '95-'02 Windstar cells, one would find:
+
+                                                  Summary Table for a Values
+
+The overall preferred value, a = 1.5, is noteworthy, because the plot of the individual-level Trapped Geometric
+age-efficiency profile lines up almost exactly with the plot of BLS' individual-level Hyperbolic age-efficiency
+profile when the efficiency parameter for the latter, called , is set to 0.5, which is the value BLS assigns to all
+equipment assets (including motor vehicles). However, BLS makes no provision for realized obsolescence, which
+as we have seen is not negligible for Windstars.
+
+         Table 2 is less appealing. The preferred own-rate of return bounces around until 2000:4, after which it is
+stuck at 12 ln-points (12.75 percent), the lower boundary of the grid space. Maybe a finer and wider grid
+would have allowed for smoother transitions and a better chance to fit the own rate well, though Figure 3,
+above, suggests skepticism. Nonetheless, an overall compulsory single rate works out as:
+
+                                                  Summary Table for r Values
+
+On principle, I would resist imposing a constant r = .12. Not only are the estimates suspect, but the interest
+rates and new-vehicle prices one might use to infer flexible own rates of return are more readily available than a
+big once-and-done-purchase of auction data (Copeland, Dunn, and Hall, 2011). Appendix D, which attempts a
+national-accounts application, does accede to the constant r.
+
+                                                                  17
+                                                          Table 1: Preferred a-Specifications for Each Vintage and Variety
+
+Notes on Table 1. Each of the 23 panels reports cross-entropy results for a Ford Windstar model-year ('95-'98) or variety within a model-year ('99-'02). For
+model-years '99-'02, varieties are sorted, left to right, in order of increasing relative as-if-new price (so the nicer varieties are on the right). Test values for a (i.e.,
+0, 1.5, 3, 5, 8.5) are given in each panel's leftmost column. The numbers of cells for which estimation converged, for the test value for a, are shown in the first
+boxed column of each panel, and the numbers of transactions in those cells are shown in the second boxed column. Cell-count weighted averages of converged
+cells' cross-entropies vis-à-vis the priors constitute the third boxed column, and transaction-count weighted averages make up the fourth. The yellow shading
+highlights the values of a with the smallest cross-entropy by the two weighting schemes.
+
+                                                                                               18
+                                   Table 2: Preferred r-Specifications for Each Calendar-Quarter
+
+Notes on Table 2. Each of the 42 panels reports cross-entropy results for a quarter of a calendar-year in 1997-2007. Test
+values for r (i.e., .12, .15, .18) are given in each panel's leftmost column. The numbers of cells for which estimation
+converged, for the test value for r, are shown in the first boxed column of each panel, and the numbers of transactions in
+those cells are shown in the second boxed column. Cell-count weighted averages of converged cells' cross-entropies vis-
+à-vis the priors constitute the third boxed column, and transaction-count weighted averages make up the fourth. The
+yellow shading highlights the values of r with the smallest cross-entropy by the two weighting schemes.
+
+              To say that is a specification is "preferred" does not mean the finished probabilities resemble their
+    priors all that well. (Specifications that aren't preferred fared even worse.) As against the increasingly truncated
+    service-life survival-density priors plotted in Figure C.1.3 of Appendix C.1, the "typical" marginal posterior service
+    -life density for an age-s cell instead resembles Figure 4, below:
+
+                                                                       19
+Figure 4
+
+Notes on Fig. 4. On the horizontal axis, "s" refers to most ages >
+3. Windstars (and maybe other vehicles) would seem to be
+hauled to auction "when they have 8 years left on them." 22
+
+There is essentially no mass within five years of the transacted vehicle's age irrespective of the age. This casts
+doubt on the Hulten-Wykoff survivor correction to used-asset prices for motor vehicle auctions, as many
+survivors simply aren't present at all ages. To approximate a representative service-life density, average across
+the cell-specific densities, using each cell's share -- i.e., f(s,t) -- of the cohort's transactions as weights:
+
+() =   (| , ) (, )                                                  (4.1)
+
+This rolling up of the conditional densities works as long as the conditioning density, f(s,t), is in some sense
+representative.23 I carried out the exercise for each of the 23 varieties at its preferred a-value, using the
+preferred r-value of each calendar-quarter and dropping any cells that did not converge. 24 Table 3, below, gives
+first and second moments for each of the implied marginal service-life distributions. Plots of the implied
+(numerical) densities nearly all had similar shapes: a sharp rise near age 5, a peak in the range of 10 to 13 years,
+and then a tapering right tail. The densities resembled the Extreme Value distribution:
+
+                                             ()   - - -    (4.2)
+
+                                                                                       
+
+so I matched moments against the Extreme Value mean ( +  ) and variance (22/6) to generate the  and 
+columns. 25 I also averaged across varieties' means (using transaction-count weights) and variances (by squared
+transaction-count weights) to generate an overall mean service-life (12.81 years) and variance (7.83 years2). The
+
+22 An examination of over 200 plots of '95 Windstar marginal posterior service-life densities versus their priors confirmed
+this shape is representative of nearlyall cells age 5 and above. Cells nearer 3 years oldoften showed bimodaldensities.
+23 Transactions of vehicles less than 3 years old, dominated by floods of manufacturers' and fleet auctions, are plainly not
+representative. Dropping such transactions amounts to setting f(s<3,t) = 0 and cutting off any retirements below age 3.
+This is severe, but not even R.L. Polk catches manyautomotive retirements before then.
+24 Such gl obal a- and r- val ues are often di fferent from the cell-speci fic preferred val ues. (I banked all the converged cells'
+specifications' resultant as-if-new and miles-and-lives densities for subsequent use.) I did not impute the service-life
+densities of dropped cells (say, as averages of the densities of neighboring cells), though that remains a possibility.
+25 Euler's Gamma constant   0.577216.
+
+                                                                  20
+                                         Table 3: Preferred Service-Life Distributions
+
+overall Extreme Value density ( = 11.548,  = 2.181) is plotted in red in Figure 5, over a background of discrete
+plots of the twenty-three varieties' numeric densities:
+
+                                                               Figure 5
+
+              Notes on Fig. 5. Background dot-plots are at quarterly frequency scaled up by four. The
+              areas of the gray dots are proportional to the number of observations of each variety.
+
+                                                                  21
+         The evidence of age-specific marginal service-life densities (instead of the same density with different
+degrees of left-truncation) may explain something about the behavior of the tradeoff between service-lives and
+miles driven. "Everyone knows" that driving more reduces the service-life (except when I selected independent
+priors for miles and lives), as the following three plots -- for say, the youngest available (age 3), middling (5.75),
+and oldest available (8.5) converged cells of the SE99 variety (for a = 1.5, r = .15) -- confirm:
+
+                                                               Figure 6
+
+Notes on Fig. 6. The red inner, blue middle, and black outer contour plots contain 50, 75, and 95 percent of the
+bivariate miles-and-lives probability mass. The corresponding dotted ovals show contours of the independent
+priors. Each plot's title-code gives the calendar-quarter, minimum quarterly age, and number of observations.
+
+                                                                  22
+Moreover, the service-life penalty is more severe for the youngest cell (roughly 8 weeks for driving another 1000
+miles), than for the middle cell (almost 3 weeks), or the oldest (2 weeks). Yet the approximate range of service-
+lives in the latter two cells is about the same. After nearly three more years of being driven, why aren't the vans
+that appeared in the middle-age auction showing up with substantially degraded service-lives in the old-age
+auction? The answer is: they aren't. The vehicles that were traded at the middle auction aren't worth hauling to
+the old auction, and the vans present at the old-age auction were still good enough in middle age for their
+owners to keep them.
+
+         Remember the theory of the user cost was motivated by the argued-for fluidity of used-capital resale
+markets (Hall and Jorgenson, 1963), and I have adhered to that theory in the development of individual- and
+cohort- level age-efficiency, resale-price, and rental-price profiles. Yet in this very deep and most fluid of used-
+capital markets, only a moveable subset of the available assets are actively traded at any given time. Are they
+enough to equilibrate rental prices vis-à-vis resale prices?
+
+5. Conclusions
+         The trouble with good data and a careful model to assess it is that durable understandings get upset.
+
+This paper and its appendixes have provided evidence for several upsets. First, depreciation can be split into
+wear-and-tear, which operates on individual vans, and obsolescence, which operates across cohorts. Combined
+into the model-year, the rate of depreciation of Windstars as an asset-type is not even approximately constant.
+As the growth rate of investment in light vehicles is not constant either (Diewert and Wei, 2017), the case for
+vintage aggregation of motor vehicle capital is strong. Moreover, there are cross-consistent functional forms on
+the productive and wealth sides to make vintage aggregation of capital tractable. The shape the BLS has long
+used to gauge the impact of individual-level motor vehicle capital on the production side looks about right,
+though that agency's weights across individuals aren't correct and it neglects obsolescence.
+
+         Second, the moments of transaction-level resale-price and miles data can be put to good use estimating
+localized service-life densities alongside the parameters of wear-and-tear depreciation (and prior to that, of
+inflation and obsolescence). Plausible distributions need no longer be imported to correct for survivor-bias in
+age-price regressions. Moreover, Hulten-Wykoff survivorship corrections themselves are likely inadequate.
+
+         Finally, business (i.e., residual) income in the National Accounts could stand to be split into anticipated
+and unanticipated components, intimately connected to the own rate of return.
+
+         It remains to find sponsors to encourage this work's implementation.
+
+                                                                  23
+References
+
+Copeland, Adam, Wendy Dunn, and George Hall (2011). "Inventories and the Automobile Market."
+    RAND Journal of Economics, vol. 42, iss. 1 (Spring): 121-149.
+
+Dennis, J. E., Jr. and Robert B. Schnabel (1996). Numerical Methods for Unconstrained Optimization and
+    Nonlinear Equations (SIAM reprint).
+
+Diewert, Erwin and Hui Wei (2017). "Getting Rental Prices Right for Computers: Reconciling Different
+    Perspectives on Depreciation." Review of Income and Wealth, ser. 63, suppl. 1 (February): S149-S168.
+
+Giffin, Adom (2009). Maximum Entropy: The Universal Method for Inference. PhD Thesis. SUNY-Albany.
+
+Gnanadesikan R. and J.R Kettenring (1972). "Robust Estimates, Residuals, and Outlier Detection with Multi-
+    response Data." Biometrics, vol. 28, no. 1: 81-124.
+
+Golan, Amos, George Judge, and Douglas Miller (1996). Maximum Entropy Econometrics: Robust Estimation
+    with Limited Data. John Wiley & Sons, Inc. New York.
+
+Hall, Robert E. (1968). "Technical Change and Capital from the Point of View of the Dual." Review of Economic
+    Studies, vol. 35: 34-46.
+
+Hall, Robert E. (1971). "The Measurement of Quality Change from Vintage Price Data." In Price Indexes and
+    Quality Change. Zvi Griliches, ed., Harvard University Press: 240-271.
+
+Hulten, Charles R. and Frank C. Wykoff (1981a). "The Estimation of Economic Depreciation Using Vintage Asset
+    Prices." Journal of Econometrics. vol. 15: 367-396.
+
+Hulten, Charles R. and Frank C. Wykoff (1981b). "The Measurement of Economic Depreciation." In Depreciation,
+    Inflation, and the Taxation of Income from Capital. Charles Hulten, ed. The Urban Institute. Washington,
+    DC: 81-125.
+
+Jorgenson, Dale W. (1963). "Capital Theory and Investment Behavior." American Economic Review, vol. 53, no. 2
+    (May): 247-259.
+
+Lacetera, Nicola, Devin Pope, and Justin Sydnor (2012). "Heuristic Thinking and Limited Attention in the Car
+     Market." American Economic Review, vol. 102, no. 5: 2206-2236.
+
+Larsen, Bradley (2014). "The Efficiency of Real-World Bargaining: Evidence from Wholesale Used-Auto
+     Auctions." National Bureau of Economic Research Working Paper 20431. August.
+
+Marston, Anson, Robley Winfrey, and Jean C. Hempstead (1936, 1953). Engineering Valuation and Depreciation.
+     Iowa State University Press, Ames, Iowa.
+
+Rousseeuw, P.J. and C. Croux (1993). "Alternatives to the Median Absolute Deviation." Journal of the American
+     Statistical Association, vol. 88: 1273-1283.
+
+Ruggles, Richard and Henry Brodie (1947). "An Empirical Approach to Economic Intelligence in World War II."
+
+                                                                  24
+    Journal of the American Statistical Association, vol. 42, no. 237 (March): 72-91.
+Sallee, James M., Sarah West, and Wei Fan. (2016) "Do Consumers Recognize the Value of Fuel Economy?
+
+    Evidence from Used Car Prices and Gasoline Price Fluctuations." Journal of Public Economics, vol. 135
+    (March): 61-73.
+Santos Silva, João M.C. and Silvana Tenreyro. (2006) "The Log of Gravity." Review of Economics and Statistics,
+    vol. 88, no. 4 (November): 641-58.
+Sliker, Brian K. (2015). "Using Order Statistics to Describe the Increase in Certainty of Predictions of Individual
+    Service-Lives." (August 4). Draft.
+Winfrey, R. (1935). Statistical Analysis of Industrial Property Retirements. Bulletin 125. Iowa State
+    Engineering Experiment Station, vol. XXXIV, no. 28.
+Winfrey, Robley (1942). Condition-Percent Tables for Depreciation of Unit and Group Properties. Bulletin 156.
+    Iowa State Engineering Experiment Station.
+Zellner, Arnold and Richard Highfield (1988). "Calculation of Maximum Entropy Distributions and Approximation
+    of Marginal Posterior Distributions." Journal of Econometrics. vol. 37, no. 2 (February): 195-209.
+
+                                                                  25
+Appendix A. Age-Efficiency and Resale-Price Profiles: Consistency in Aggregation at the Cohort Level
+
+         Section 1 demonstrated the mutual consistency of the individual-level age-efficiency (1.1), resale-price
+(1.2), and rental-price (1.3) profiles. Then it embedded the individual-level resale-price profile within a service-
+life density (1.4) and contrasted the resulting aggregate to the survivors' aggregate (1.5). Finally, softening the
+Law of One Price to statistical independence between the distributions of as-if-new prices and service-lives, the
+discussion concluded with (1.6), which set the pattern for statistical estimation by moment-matching.
+
+         To use the results of estimation in national accounting and productivity analysis, which are conducted at
+the cohort and net-stock levels of aggregation, one must show that the cohort-level analogs of (1.1), (1.2), and
+(1.3) are mutually consistent also. This appendix carries out the necessary exercises. Most of the work is done
+without reference to movements in as-if-new prices, which are restricted to be independent of the service-life
+distribution(s). Average as-if-new prices are then brought back into the mix once the basic aggregates are set.
+
+         To start, note that the cohort-level rental-price profile  (s) uses the same service-life density, f(L), as the
+cohort-level resale-price profile26:
+
+                  (s)  =       () - ()/                =                 - (, )/}                                          (A.1)
+
+                                                            (){ (, )
+
+                                                          =  () (1--)-(1--) 1- (-)(1- -)   =   / -  () (, )
+
+Evaluating the cohort rental profile at age 0 and multiplying by Pvt0 would give the cohort-level user-cost if the
+
+Law of One Price for (as-if-) new assets held strictly: P0vt× (0).                                                ×  (0).
+                                                                                ,
+                                                                    Otherwise use   ,  ,  ,
+                                                                                ,
+
+         Dividing cohort-level rents at age s by rents at age 0 returns the cohort-level age-efficiency profile
+(before realized obsolescence):
+
+                   (s)  () 1---(1--) 1- (-)1--    /-                            ( - ) 1- -
+                                                                      () 1---(1--)
+         () = (0) =                                                                                      /-
+                                                               =                                                           (A.2)
+                                   0 ()  - ( -)  (-)(1--)                       ( - )(1- - )
+                                                                      0  ()  - ( -)  1-
+                                                1-  - 1-                  1-    - 1-
+
+The numerator integral's domain (L  s) is narrower than that of the denominator integral (i.e., L  0), as zero-
+productivity members no longer contribute to the aggregate's service-flows. 27 Rearranging slightly shows the
+cohort-level age-efficiency profile to be a proper weighted average of the surviving individual profiles. However,
+the weights are a compound of the service-life density f(L) and the individual-level user-costs. As the latter are
+essentially reciprocal functions of L, the compound weights are front-loaded relative to f(L).
+
+26  The  s econd  equal-si gn  is  vali d  if  ()/  =      ()  (, )/  ,  which  requires  f(L)× (s ,  L)  =  0  when  L  evaluates
+
+                                                       
+
+at s. The trapped geometric individual resale-price profile does evaluate to 0 for L  s, so the requirement is satisfied so
+
+long as limLs f(L) < . The third equal-signfollows by substitutionfrom (1.3).
+
+27 Cf. equation (1.4), above.
+
+                                                               26
+By contrast, the cohort aggregation scheme used by BLS, ERS, ABS, and BoK amounts to:28
+
+                                      () =  () 1 -    /-                                  (A.3)
+
+By frontloading, (A.2) is more (downwardly) convex than (A.3). Yet (A.2) is the correct schedule, in that the
+same steps used to derive the individual resale-price profile from the individual age-efficiency profile, can be
+used to derive the cohort resale-price profile (1.4) from the cohort efficiency profile:
+
+                                                       ( - ) 1- -
+                                   -(-)    () 1---(1--)                            /-
+                                                       ( - )(1- - )              1-  
+    -(-) () 
+?                                                  
+                                                 0   () 1---(1--) 
+() =  -(-0) ()  =                                                                         (A.4)
+                                                    ()  / (-)(1--)
+                  0                -(-0)             1---(1--)                    -
+                                                           ( - )(1- - )
+                                  0                                               1-    
+                                                  ()                  - 
+                                                 0    -
+                                                      1- -(1- )
+
+The already-evaluated common integrals cancel from the large numerator and denominator:
+
+                               -(-)  () 1---(1--) (-)1--  1-     /-
+                              =  -(-0)                                                    (A.5)
+                                                 (-)(1- -)  /-
+                              0       ()1---(1--) 1-  
+
+The orders of integration are exchangeable (just be sure s  L):
+
+                               () 1---(1--) (-)1--  - 1- (-)     /- 
+                              =                                                           (A.6)
+                                      (-)(1--)         -(-0) /-                           (A.7)
+                              0 ()1---(1--) 0                    1- 
+
+The u-integrals evaluate as:
+
+                                     (- )1-- 1-(-)-1-(/-1)                        
+                               () 1---(1--)×
+                                                                  ( - )(1- - )
+                              0 = () 1---(1--) (-)(1- -) × (-)(1--) 1---(1--)
+
+After cancellations, the expression reduces to:
+
+                                      () 1-(-)-1-(/-1)
+                                                      1- -  - (1- -)
+                                () = 1                                                    (A.8)
+
+This is indeed (1.4), so the cohort system is sound. By contrast, one cannot arrive at (1.4) from (A.3).
+
+         To use the cohort-level resale-price profile (1.4) or age-efficiency profile (A.2) in the perpetual
+inventories that comprise the real net wealth and productive stocks for an asset-type, respectively, multiply
+(1.4) or (A.2) by the ratio of the (average) as-if-new price for the vintage-v cohort that prevails at date t (that is,
+when the cohort is s = t - v years old), to the (average) genuinely new price of the vintage-t cohort. Adapting
+the notation of (1.6), the price ratio, which tracks realized obsolescence, is:
+
+28 These agencies use hyperbolic not trapped-geometric individual efficiency profiles, and they top-limit their service-lives,
+but such differences are secondaryto the basic question of proper weighting.
+
+                                                                  27
+       ,       
+        ,  , ,
+0, 
+   0=     ,      (A.9)
+
+,              
+         ,
+        ,  , ,
+       ,
+
+                                                                                                                           0,
+So the weight on the count of installed units from vintage v in the date-t real wealth stock is 0 (s), and
+
+                                                                                                                           ,
+                                                        0,
+the weight in the real productive stock is 0 (s). Both weights equal 1 for the frontier vintage (that is,
+                                                        , 
+for v = t and s = 0). Originally installed units that have been retired remain in the aggregates (as zeros), as both
+(s) and (s) account for them. Observe that while (s) and (s) are time-series measures of depreciation and
+deterioration, respectively (albeit expressed in terms of of age), multiplying them by the obsolescence-ratio
+0, 0,  makes them cross-sectionally safe to use in proper net-stock aggregates.
+
+Appendix B. Data Work
+
+         Of the Raw Auction Data Set's 78,906,355 transactions, some 1,005,663 were of Ford Windstars (model-
+years '95-'03) and Freestars ('04-'07) and Mercury Montereys ('04-'07). A total of 2,668,487 Windstars,
+Freestars, and Montereys were built at Ford's Oakville, Ontario, assembly plant (and nowhere else) between
+January 31, 1994 and November 17, 2006 -- the end of the line -- so Windstar/Freestar/Monterey transactions
+in the dataset probably represent a solid third of the units produced, even after adjusting for possible repeat
+sales.29 Earlier model years have had more time to enter the auction data, so they are better represented than
+later model years (i.e., model years '95-'02, the focus of this paper, accounted for 847,520 transactions).
+
+         The missing key to these data is a reliable measure of each van's age. Contrary to folk wisdom, the
+masked digits 12-17 of the Vehicle Identification Number do not encode build-dates. Nonetheless, digits 13-17
+are required by law to be an increasing numeric sequence that corresponds to the build order (as the car-maker
+defines it), so sorting the data sequentially by the masked digits, making exceptions for particular sub-groupings
+of engine and transmission types, trim level, or foreign market (often flagged by digit 12), and then linking the
+sorted vehicles to an external source of cumulative builds by date, is the surest route to estimating individual
+births, short of VIN-specific manufacturers' records or states' initial registration dates.
+
+         At my request, NADA did sort the records by country of origin, assembly plant code (VIN digit 11), digits
+12-17 before masking (with a flag for whether digit 12 was a letter), and auction date. I was able to confirm
+NADA's procedure both by a visit to the Association's Tysons, Virginia headquarters in August 2007, and by
+comparing the masked file to some 100,000 unmasked records of transactions from July 16-20, 2001, which
+NADA had sent me years earlier for free, before the Association became so solicitous of privacy. The sort also
+enabled estimates of probable repeat sales of the same vehicle (i.e., consecutive transactions having the same
+
+29 Source: http://infobank.wardsauto.com for build counts (passwordprotected) andWard's Automotive Yearbook(various
+years) for start-up and build-out dates. Wikipedia's model-year changeover dates differ from Ward's by a couple weeks.
+
+                                                                  28
+visible portion of the VIN -- among which the check-digit -- nondecreasing miles, and an increasing date-of-
+sale). Repeats comprised perhaps one sale in eleven.
+
+         My guiding assumption was that vehicles at auction, sorted as specified and adjusted for probable
+repeat sales of the same vehicle, fairly represented the order and density in which they were built, at least for
+model-years that were present in resale markets long enough to mix well. 30 Then it was easy to match quantiles
+of sorted, unique vehicles at auctions to the quantiles of build-counts presented weekly or monthly by assembly
+plant (even by line) at Ward's http://infobank.wardsauto.com between start-up and build-out dates published in
+Ward's Automotive Yearbook. The chief complication is when vehicles with different trim-levels, engine-
+transmission combinations, or intended markets are built at the same plant or line but have sharply different
+VINs (often indicated by VIN-digit 12). Here the thousands of full VINs listed at http://www.decodethis.com
+enabled mapping VIN-digit 12-17 zones for various vehicle carve-outs, which I then assumed were built in
+parallel.31,32 Fortunately, Ford's Oakville plant had no special VIN carve-outs, so assigning Windstars, Freestars,
+and Montereys build-dates accurate to the nearest few weeks was straightforward. (Different Windstar
+varieties were indistinguishable in the VINs of model-years '95 - '98. Model-years '99 and 2000 each had four
+passenger varieties that could be tracked separately, model-year '01 had six, and '02 had five.)
+
+         To prepare the dated data for use, I removed auction transactions from Canada, the Caribbean, and
+"Unknown" regions as a precaution against unreliable sales-price dollar-values. I pulled out any transactions
+that were probably the first of a pair of repeat-sales of the same vehicle if the dates of sale were within 10
+weeks of each other, out of concern that the first sale had been undervalued. (This is particularly worrisome for
+mass sell-offs by manufacturers at the end of the model year or by fleets at the end of a leasing period, typically
+near age 3.) I organized what remained into quarter-year age × quarter-year date "cells" for each of the 23
+identifiable varieties. The vehicles in each cell are as homogeneous as I can group them, differing substantially
+only in accordance with the unobserved-but-estimable distribution of their as-if-new prices and the joint
+distribution of their observed odometer readings and unobserved-but-estimable service-lives. Then I purged
+outliers, transactions too far from their relevant joint price×miles centers, by two robust techniques: removing
+observations that were more than 8 lengths of Rousseeuw and Croux's Qn (1993) (instead of a standard
+deviation) away from the minimizer of a robust Mahalanobis distance (Gnanadesikan and J.R Kettenring, 1972)
+(instead of a mean or spatial median), or that surpassed 95-99 percent of the observations (depending on the
+number of transactions in a cell) mapped by Mathematica's canned nonparametric kernel density routine.
+"Eyeballing" caught few more outliers. Several very young cells, which contained observations on vehicles less
+than half a year old, had more "outliers" (i.e., vehicles with next-to-no miles at all) than regular observations: I
+reserved these for direct tests of as-if-new prices. I also dropped cargo vans, and vehicles at least three years
+old with fewer than a thousand miles: if a van which is no longer new is not driven, something is wrong. After all
+
+30 I ruled out the '07 model-year out of concern that it hadn't enoughtime to mixed well by BEA's purchase.
+31 This is a roughapproximation, probably off by a few weeks, of what was probably the actual behavior: building batches of
+identical vehicles for a week or two before turning to the next trim for its turn. The alternative, building in series -- e.g.,
+assembling all the sedans, then all the wagons, then all the coupes, over the course of a whole year -- is not believable.
+32 The long, staggered-uniform VIN12-17 sequences from http://www.decodethis.com/ also permitted solving the "German
+tank problem" (Ruggles and Brodie, 1947) to estimate vintage/variety total production in cases where Ward's Yearbook
+neglected build-out / start-up transitions. That wayI could estimate when missing model-year changeovers happened.
+
+                                                                  29
+these procedures, I then dropped any age × date cells left with fewer than 29 observations. 33 All the various
+rounds of cleaning left 856,962 usable transactions, of which 724,992 reside in model years '95-'02. Finally,
+since the statistical model to be applied depends on auction participants being able to estimate individual
+service-lives with some precision, I dropped all cells less than three years old. 34 This was expensive, for it
+knocked out nearly all manufacturers' and many fleet auction transactions. At the end of all the cleaning, I kept
+the following counts of observations for each variety, organized into cells:
+
+                                    Table B.1
+
+Model-Year/Variety      obs  cells             Model-Year/Variety  obs      cells
+'95 (all passenger)  67,753                                                    52
+'96 (all passenger)  50,735  259               '01: 3D LX          4,235       69
+'97 (all passenger)                                                            34
+'98 (all passenger)   8,985  200               '01: 4D LX          16,276      50
+'99: 3.0-liter       79,369                                                    41
+'99: LX                      61                '01: SE Sport       2,661        4
+'99: SE               3,381                                                    38
+'99: SEL             40,444  189               '01: SE             5,713       39
+'00: Base            10,807                                                    41
+'00: LX                      43                '01: SEL            2,942       25
+'00: SE               2,767                                                     5
+'00: SELLtd           3,592  88                '01: Ltd            193
+                     34,028                                                 1673
+                     11,804  89                '02: 3D LX          3,378
+                     10,937
+                             40                '02: 4D LX          6,579
+
+                             56                '02: SE             4,688
+
+                             91                '02: SEL            1,944
+
+                             83                '02: Ltd            285
+
+                             76                Totals:             373,496
+
+Batteries of uncentered moments (with respect to powers of prices and miles) within each cell constitute the
+objects to be matched by the minimum cross-entropy model in the estimation section.
+
+33 In retrospect, a minimum-count threshold of 50 would have been wiser, as 29 observations can barely support a mean,
+let alone the higher moments that the estimation section spells out. Cell sizes differed widely, from 29 up through
+thousands at the end of a new model-year or at the end of the standard3-year lease term.
+34 A prospective buyer assessing a vehicle that isn't well individuated would fall back on the commonly-held overall density
+of service-lives and issue a middling bid. So would all the other bidders. The upshot is a spike of middling bids, revealing
+little about the service-life densitythat all the bidders are referencing.
+
+                                                                  30
+Appendix C. More about Statistical Estimation
+C.1 Forming Prior Distributions
+
+         To estimate prior/target densities about the as-if-new means (3.1.2), I reserved 301 prices from vans no
+more than a quarter-year old and driven no more than 100 miles. These are very few observations from the
+overall usable Windstar/Freestar sample, so I pooled, allowing individual as-if-new prices as low as 78 percent of
+the mean and as high as 122 percent.35 Plots of the distributions, fit by maximum-entropy matching of the first
+four raw moments of prices over a coarse grid, are shown below. 36 Note these distributions are priors/targets
+only; subsequent cross-entropy fits may and did infer different weights on the support points. But I have
+imposed proportionality on the as-if-new priors across varieties and dates, so that as a variety's mean as-if-new
+price declines through time, its distribution's bounds retract proportionately, maintaining the à priori shape.
+This guarantees commonality of the own rate of return across vintages and varieties at any given date, as far as
+the data permit. It also shifts the burden of accounting for variations across individual prices as the cohort ages,
+from as-if-new prices when the cohort is young to the joint lives-and-miles distribution when the cohort is old.
+
+                                                            Figure C.1.1
+
+       Notes on Fig. C.1.1. Prior Distributions of As-If-New Prices about Mean (Which Is Normalized to 1)
+       Each of model-years '95-'98 uses the blue distribution, which has a somewhat longer right tail. The
+      algebra is: qn  Exp[318.7 n + 71.4 n2 - 347 n3 + 143 n4] for n {.78, .867, .953, 1.04, 1.267, 1.213,
+       1.3}. Each variety of model-years '99-'06 uses the red distribution, which is nearly symmetric. The
+      algebra is: qn  Exp[-4868.4 n + 7691.9 n2 - 5282.9 n3 + 1333 n4] for n {.78, .868, .956, 1.044, 1.132,
+       1.22}. Both densities are discrete; the connecting segments are visual aids only.
+
+         I settled for independence priors for the joint distribution of service-lives and miles. The univariate prior
+on observed miles is the (up-to) 4-moment maximum entropy fit (Zellner and Highfield, 1988) on a grid. For
+each cell, I tried a 4-moment fit first and accepted the result if the Lagrange multipliers were statistically
+significant; if not, I next tried a 3-moment fit (allowable within bounded domains), and then a 2-moment fit. A
+
+35 ...for all varieties after model-year 1998, when the auction data permitted distinguishing trim levels, so symmetry is not a
+bad guess. But for model-year '95-'98, where the data subsumed all trims into just "the model year," I allowed individual
+as-if-new prices as highas 130 percent of the mean to account for a possible small share of high-end trims.
+36 Maximum entropyestimationgives the same ex post probabilities as minimum cross-entropyestimation with flat priors.
+
+                                                                  31
+few cells offered no significant results even for 2-moment (i.e., discrete approximations to truncated Normal)
+fits, so I threw them out. The order (i.e., 2nd, 3rd, or 4th) of the univariate fit of miles then determined the order
+of the univariate specification of service-life priors (just below), as well as the order of the cross-entropy
+specification above at (3.2.1), in which the gray-background area represents the third-order terms and the blue-
+background the fourth order. Age- and date-specific miles distributions for a few iconic quarters from the career
+of model-year '95 (other varieties' patterns are similar) are shown in Figure C.1.2, below:
+
+                                                            Figure C.1.2
+
+"end-of-new-model-year sell-off"  "off-lease returns"
+
+"late model"                      "old"
+
+Notes on Fig. C.1.2. Histograms of Miles Driven Overlain by Maximum Entropy Fitted Densities. The top
+two plots show the most populated quarters from two early auction regimes: Ford dumping new vehicles
+near age 1 at the end of the model-year, and fleets dumping lease returns around age 3. The fitted
+second density doesn't do justice to the spike at 30,000 miles. The second two densities, with more
+typical quarterly sales volumes of 200-400 units, show dealer-dominated auction sales regimes --here
+near ages 4 and 11, respectively.37 Each plot's "job code" gives its cell-number, calendar-year quarter,
+lower boundary of its quarterly cell-age, and number of transactions.
+
+37 Very young vehicles are not likely to convey much information about their individual service-lives, as buyers would spread
+their bets and all bid the (same) price of a "typical " vehicl e, which biases the i mpli ed service-life densi ty toward a spike at
+the value of the service-life that is consistent with the typical vehicle's price, so the 4,760 observations in the age range
+[.75, 1) of model-year '95, for instance, are wasted.
+
+                                                                  32
+The univariate prior on unobserved service-lives is the (up-to) 4-moment maximum-entropy distribution that
+comes closest to the discrete quarter-year approximation of a progressively left-truncated Beta(4,5) density,
+extended to a top life of 25 years. I chose the Beta(4,5) subjectively: its untruncated mean is 11.1 years, which
+can't be far wrong, and its right tail runs a bit farther than its left, though actual retirements are probably more
+concentrated. Plots of discrete Beta densities are shown just below in Figure C.1.3 for various age-truncations.
+
+                                                            Figure C.1.3
+
+       Notes on Fig. C.1.3. Prior Marginal Distributions of Service-Lives, Conditional on Survival to Age s.
+       The untruncated gray curve represents my watered-down gut feeling, a compromise between a
+       concentrated density that may better match the retirements of a narrow make of vehicles and a flat
+       prior that amounts to the target density for maximum likelihood estimation.
+C.2 Optimizing Systems That Have Independent-but-Entangled Probabilities
+
+         Here I detail the solution concept's first-order estimating equations, as well as a scheme for "pocketing"
+iteration-by-iteration changes in the equations' Lagrange-multiplier parameters (until further changes are
+minimal and the parametric expressions on one side of the equations match their empirical counterparts on the
+other). It turns out that the pocketing procedure is needed to circumvent what is essentially an infinite-regress
+problem, and so makes nearly-sure convergence feasible.
+
+         For fixed sets of prior/target probabilities {,} and {}, which are stored as a matrix and a vector of
+numbers, respectively, the (unnormalized) discrete joint probability of service-life l and odometer-reading m is:
+
+                                                                  33
+,       , [ P1N1 Po, +                     +  P2N2 Po, 2 +         P1M1        N1   Po       + 2            +             (C.2.1)
+                                                                                                                          4]
+                                                                                     ,
+                 P3 N3 Po, 3 + P2M1 N2 Po, 2 + P1M2 N1 Po, 2 +  3 +
+             P4 N4 Po, 4           P3M1N3 Po, 3 +            P2M2 N2 Po, 2 2
+                               +                                                          +  P1M3       N1  Po     3  +
+
+                                                                                                             ,
+
+and the unnormalized discrete probability of as-if-new price value n is:
+
+                                                                                                                         (C.2.2)
+
+      [ + P11 Po, +                   P22 Po,2 +             P1M1  1M1  Po          + P33 Po,3 +            P2M12M1 Po,2
+
+                                                                         ,          P222M2 Po,2
+                                              4     P3M13M1 Po,3
+        +  P1M21M2    Po       +  P4  4  Po,     +                               +                              +  P1M31M3 Po,
+
+                       ,
+
+(The normalizing denominators sum over all the unnormalized pl,m or pn, respectively.) The Lagrange multipliers
+
+are as in (3.2.1), but only the five that are shaded yellow here are unique to their "own" probabilities. The rest
+
+are shared, so the numerical "side moments":
+
+                                                                                                                         (C.2.3)
+
+N1 =                               N2 =   2                        N3 =   3                                 N4 =   4
+1 =   ,                                                2                                       3                                  4
+                                   2  =                            3    =                                   4   =     
+                                              ,                                       ,                                  ,
+
+1M1 =   ,                                        2M1      =                 2                       1M2 =   , 2
+                                                                                                    1M3 =   , 3
+                                                                   ,
+
+3M1  =                   3                       2M2      =                 2  2
+
+                ,                                                  ,
+
+reside in one set of probabilities but depend on the other.
+
+         There are as many Lagrange parameters to adjust as there are moment equalities to be satisfied. The
+moment equalities are38:
+
+                                                                                                                                (C.2.4)
+
+1 =                                2P1 = Po,1    + N1  ,                                                    M1 =   ,
+
+2P2  =  o 2  2         2    +  N2         ,  2                 2P1M1 = Po,1M1    + N1  ,
+        P,
+
+                                              M2 =   ,2
+
+2P3  =  o 3  3         3    +  N3         ,  3               2P2M1  =  o 2        2M1                2  +  N2          ,  2 
+        P,                                                             P,
+
+2P1M2 = Po,1M2    + N1  ,2                                                                                 M3 =   ,3
+
+2P4  =  o 4  4         4    +  N4         ,  4               2P3M1  =  o 3        3M1                3  +  N3          ,  3 
+        P,                                                             P,
+
+2P2M2   =  o 2  2M2            2   +  N2       ,  2 2          2P1M3 = Po,1M3    + N1   ,3
+           P,
+
+                                                 M4 =   ,4......................................................................
+
+where the left-hand side empirical moments are:                                                                          (C.2.5)
+
+             P1  =                    /,                               M1        =                  /,
+
+                        =1                                                               =1
+
+38 Not every cell has enough information to fit all 15 moments usefully. Some cells only qualify for the second-order
+treatment (i.e., the estimating equations and moments with only white backgrounds), others also for the third order (i.e.,
+add the gray-background equations and moments), stillothers alsofor fourth order (i.e., add the cyan-background pieces).
+
+                                                                  34
+P2  =              2/,           P1M1  =            ×        /,          M2   =            2/,
+
+            =1                                =1                                     =1
+
+       ..........P3  =                 3/,          P2M1  =          2   ×       /,
+
+                             =1                                  =1
+
+       P1M2 = =1 ×  2/,                                M3 = =1 3/, .........
+
+       .............P4 = =1 4/,                        P3M1  =             3  ×    /,
+
+                                                                     =1
+
+       P2M2     =                2  ×     3  /,        P1M3 = =1 ×  3/,
+
+                       =1
+
+                                       M4 = =1 4/.
+
+Solving for the Lagrange multipliers that enact the estimating equations (C.2.4) is the last step in minimizing the
+constrained cross-entropy (3.2.1). I have written the estimating equations in "shorthand": pl,m and pn are
+parameterized probabilities, with numerators (C.2.1) and (C.2.2), while N1,...,1M3 are numerical side moments
+evaluated at the latest cross-consistent values of their own probabilities.
+
+         Estimation by some variant of the Newton-Raphson method makes sense in this medium-sized
+nonlinear problem. I used Dennis and Schnabel's (1996) careful line-search method, but with three tweaks. 39
+First, since every proposed change to the Lagrange parameters knocked the parametric probabilities pn and pl,m
+away from their thus-far matching values in the side moments, I developed a fixed-point procedure to restore
+the numerical probabilities to equality with their parametric counterparts.40 The procedure was called every
+time a change in parameters was proposed, including every cut to the line-search step size. Second, the
+estimating equations and the Hessian matrix become much more difficult when the Lagrange parameters are
+different from zero -- i.e., essentially, any time after the initial iteration -- for then the round-and-round knock-
+on effects of changes in {} must be accounted for. So I made each iteration the "initial" one by resetting the
+numerical priors ql,m and qn to the resultant values of pl,m and pn from the preceding iteration, while resetting all
+ back to zero. This repeated "pocketing" of results-thus-far into the priors implies the ultimate parameter
+values are reconstructed as the sum of all the parametric revisions. 41 Third, I added a safeguard-ridge multiple
+of an identity matrix to the Hessian, to guarantee that the ratio of the largest to smallest eigenvalues of the
+thus-supplemented Hessian would stay within acceptable bounds: forcing the bounds too narrow (equivalently,
+making the ridge parameter too large) made for excruciatingly slow convergence; permitting them too wide (so
+the ridge too small) allowed wild parameter updates leading to irrecoverable probability spikes. As a practical
+matter, I set the initial eigenratio bounds to 10,000, narrowed them by a factor of 10 whenever a parameter
+
+39 Cf. Dennis and Schnabel (1996), section 6.3 especially.
+40 In words: given already "cross-consistent values" of the Lagrange parameters, parametric and numerical probabilities,
+and side moments, a change in the Lagrange values induces a change in the parametric probabilities, which in turn alter the
+side moments, which feed back into the other parametric probabilities, which in turn alter the side moments, etc. Cross-
+consistent values always obtained for starting values: pl,m=ql,m, pn=qn (so the numerical probabilities within the side-
+moments are merely the priors), and =0. Although I did not formally analyze the fixed-point procedure's stability
+conditions, it never exploded, and its many iterations were rapid.
+41 Reconstruction via summation was adequate only. Some of the revisions happened to be subtractions, which allowed for
+the accretion of tiny numerical errors into small-but-annoying final ones. However, once the converged probabilities were
+obtained, and thus available in log form as regression dependent variables, a linear regression of lnpl,m against the de-
+exponentiated right-hand side of the parametric probability (with an extra parameter for the log of the normalizing
+denominator) became feasible. The regression polished the final Lagrange parameters of their accumulated errors well. I
+did not pursue the notionof deriving lnpl,m from the start by successive rounds of regression andrenormalization.
+
+                                                                  35
+revision reduced the cross entropy by more than 1, 42,43 and widened them by a factor of 10 whenever a full-step
+parameter revision reduced the cross entropy by 1/500th or less. The implied ridge parameter was interpolated
+along a schedule of about 200 exact eigenratio-to-ridge solutions calculated by Mathematica for each new
+computation of the Hessian.44 Nearly all the cells that survived the data cleaning converged within 300
+iterations. This paper's results are based on those that converged.
+
+Appendix D. Applications in the National Accounts
+
+         To apply the model developed in this paper, analysts do not have to conduct high-powered
+econometrics, merely put together properly the results already found. BEA does not care about individual vans,
+but only about the net stock of motor vehicles (as well as net stocks of other assets), the net stock's
+depreciation, and its service-flows. So far, this paper has not dealt with the net stock as a unitary object. That is
+usually the province of geometric depreciation, which is BEA's default treatment for most assets, owing in part
+to lack of detailed data that would permit cohort-level treatments. Motor vehicles are the leading exception.
+We will deal with cohorts; the net stock sums over them. The example laid out in this section will be the net
+wealth stock of '95-'03 Ford Windstars and '04-'06 Ford Freestars and Mercury Montereys, taken as an
+aggregate, as well as the net productive stock, which is not ordinarily BEA's business. Limitations of my
+approach will be noted as appropriate.
+
+         Shoehorning research results into an accounting framework always provokes arguable implementation
+choices. The first decision concerns the treatment of (individual-into-) cohort-level resale-, rental-, and
+efficiency profiles. I chose to use the a-parameters separately preferred by each model-year and available
+variety (observation-, not cell-, weighted), rather than an overall average a-value (whether 1.5 as above, or
+1.145 as an observation-weighted average), to demonstrate the flexibility of vintage accounting. Nonetheless,
+for varieties from model-years '03-'06, where I had already computed mean as-if-new prices but not age-price
+profiles embedded in service-life densities, I used a=1.145.45 I also settled for a constant own rate of return, r =
+.12, across the board. 46
+
+         The second decision was to allow each vintage and variety its own, unvarying, numeric marginal service-
+life density. This followed directly from allowing separate a-values. Numeric densities are easily applied as
+direct weights on the individual-level profiles. Moreover, the cross-entropy method's density outputs are
+
+42 Although "1" seems like a magic number, it did work out as the rough threshold beyond which the optimization program
+broke. Note that the pocketing procedure reset the cross entropyto 0 each iteration.
+43 When the eigen-ratio is reduced all the way to 1 (which never occurred), the supplemented Hessian is only an identity
+matrix, sothe Newton-Raphsonmethod reduces to gradient descent.
+44 Recalibrating the ridge factor instead of backtracking the line-search characterizes the "trust region" version of the
+Newton-Raphson method. I dabbled with trust regions without understanding them well enough to apply them to a
+problem that needed to pocket this round's results intonext round's priors, so they too often stalled at gradient descent.
+45 An alternative might have extended the apparentlyincreasing trend-value of a = {0, 1.516, 2.066, 2.227, 2.665} for model-
+years '98-'02 (observation-weighted averages of varieties)to subsequent model years.
+46 I will be happy to allow r to vary across dates when it is a credible interior solution. (However, everything in this paper
+has r constant acrosshorizons flowing from any date, at whatever value happens to prevail at that date.)
+
+                                                                  36
+already smooth, so the step of parameterizing (as, for example, to extreme-value densities) is not needed to
+counter noise. 47 Still, using well-known parametric densities remains an option.
+
+         A third decision was to give the distribution of miles driven -- which was joint with the distribution of
+service-lives, in the research effort -- no play in the accounts. Miles were a useful conditioning variable, but it is
+hard to see how to make them informative once aggregated across cells, varieties, and cohorts. Nonetheless,
+marginal miles driven are the closest approximation we'll ever get to a vehicle's intensive-margin service-flows,
+so some analytically justifiable means ought to be found to use them. That is a task for further research. 48
+
+         The fourth set of decisions concerned the regulation of vintages. Windstars did not enjoy regular
+model-years. The opening '95's were built and sold for 18 months, while the '97's were relabeled '96's, sold for
+barely half a year without even updating the '96 VIN sequences, then dropped in favor of a year-and-a-half run
+of '98s. I opted to declare a model-year begun (and the until-then latest model year concluded) when a
+Windstar, Freestar, or Mercury Monterey with that nomenclature first appeared in my as-if-new price
+regression, whether or not all the varieties from that model-year had appeared yet. (See Table D.1, below.) The
+current model-year is important in the accounting, for the user-cost always refers to the frontier vintage, and
+realized obsolescence is booked relative to the frontier.49 Nonetheless, to estimate future depreciation (i.e.,
+after the close of the '06 model-year), I settled on a standard model-year of cy-1 :IV - to - cy :III, where "cy" is the
+calendar-year, starting at 2006:IV. Having set the frontier vintage in terms of the entire model-year rather than
+its most advanced (if little-bought) variety, I then scaled variety-specific resale-price and age-efficiency profiles
+such that their "installation-weighted average" profiles worked out to 1 at the model-year's earliest observed
+quarter. (This means the cheapest variety of the model-year started out below 1 while the best trim began
+above.) The upshot is that purchase- and rental- price indexes that aggregated across varieties within a model-
+year are merely unit-value indexes, where the unit is 1 van.50 My proxy for installations -- WardsAuto's unit
+build-counts, spread equally over the model-year's quarters -- is not the last word but was easy to implement.
+
+47 For model-years '95-'98, different service-life densities might have prevailed at different dates, according to which values
+of r were preferred at those dates. (Instead, I averaged across the implied preferred service-life densities from different
+(s,t)-cells. This is somewhat at odds with deciding r=.12 must prevail everywhere.) Densities for subsequent model-years
+all arose in the regime where r=.12 was indeed preferred.
+48 For instance, replace the standard production-function optimization set-up -- i.e., Py f(K,...) - U×K - ..., where Py is the
+competitive price of a vehicle-user's output, f is the production function, K the productive stock of vehicles, and U their
+user-cost, all during period t -- by one that depends explicitly on the total miles driven during period t, something such as:
+Py f(m×K,...) - (U/m)(m×K) - ..., where m is miles per vehicle during period t, so that m×K = total miles during t and U/mis the
+user-cost per mile. Cancellations make (U/m)(m×K) equivalent to U×K, so the real change has been the replacement of K in
+the production function by m×K. Now, m×K may fluctuate considerably over the business cycle, even if K does not. If
+(U/U)/(m/m)  1, then a Solow productivity decomposition would see intensive-margin capital flex greatly, even as
+capital's share stays relativelyfixed.
+49 By this rather narrow definition, the current model-year cannot be obsolete. This treats Windstar/Freestar/Montereys as
+an asset category unto itself, unrelated to other motor vehicles. This is not realistic, but it is as far as I can take the data.
+Ascertaining Windstars' position within the broader web of light vehicles would be the next step.
+50 Applying hedonic quality adjustment to the current model-year seems simple enough. But applying the new-van quality
+adjustment to older model-years, now that their as-if-new price estimates are inplace, wouldtake some rethinking.
+
+                                                                  37
+                      Table D.1: First Appearance of Each Variety in My Auction Data
+
+'95 Windstars 1994:3    '96W 1996:1         '97W 1997:2                                 '98W 1997:4
+
+'99W: 3.0L 2000.2       LX 1999.2                          SE 1999.3 SEL 2000.2
+
+'00W: Base 2001.4       LX 2000.1                          SE 2000.3                  SELLtd 2000.3
+
+'01W: 3DLX 2001.4 4DLX 2001.2 SESport 2001.3 SE 2002.1 SEL 2002.1 Ltd 2003.1
+
+'02W: 3DLX 2003.3 4DLX 2002.2               4DSE 2002.1 4DSEL 2002.4 4DLtd2002.4
+
+'03W: 3D4D 2004.1 4DLX 2003.1                              SE 2003.2 SEL 2003.4 Ltd 2003.4
+
+'04Freestars: S 2005.1  SE 2004.3          SES 2004.2      SEL 2004.2                   Ltd 2004.4
+                                     '04Montereys 2004.2
+
+'05F:  S 2005.3         SE 2005.1            SES 2005.2    SEL05 2005.2                 Ltd 2005.2
+'05M:                                       Luxury 2006.1
+                 Convenience 2005.3                                   Premier 2006.1
+
+'06F:                   SE 2006.1                          SEL 2006.1
+'06M:
+                                            Luxury 2007.1
+
+       Notes on Table D.1. Each vintage or variety first appeared in the auction data at the calendar-
+       quarters shown. Varieties from the same vintage did not all appear together, so the earliest
+       varietal arrival of a vintage is in bold-face. "W"=Windstar, "F"=Freestar, "M"=Monterey.
+
+         The fifth group of decisions had to do with prices. The auction data were strictly wholesale, and I have
+attempted no wedges up to retail value in the research or the accounting. This departs from longstanding
+national accounts practice.51 Further, I have used not the auction prices themselves but my unbiased model of
+their mean as-if-new values (3.1.2). This fixes price-ratios across varieties and keeps rates of inflation the same
+among them, satisfying Hicksian aggregation. Point-values for (3.1.2), which are useful for estimating what a
+variety's new price would have been in calendar-periods when the variety was not actually observed, are:
+
+                 Table D.2: Coefficients of PPMLE As-If-New Pricing Regression (3.1.2)
+
+       c                 2.964751377120970  t 94:3                    1.096708395806910
+                                                   94:4               1.076171117624040
+v 95                    -1.159439220566140         95:1               1.081373113379950
+       96               -1.088210621834640         95:2               1.122725937390110
+       97               -1.025697901369100         95:3               1.111487700474110
+       98               -0.943181933845815         95:4               1.013688134533840
+       30L99            -0.974782005337930         96:1               1.000375068164110
+       LX99             -0.829432750632410         96:2               1.017128055812830
+       SE99             -0.712008628791034         96:3               0.973409618846769
+       SEL99            -0.593354220686359         96:4               0.888970874012359
+       Bas e00          -0.992000166265836         97:1               0.917914519998440
+       LX00             -0.773727727535772         97:2               0.930125119388386
+       SE00             -0.656467398496016         97:3               0.939865824513309
+       SELLtd00         -0.549259015143947         97:4               0.806329244153722
+
+51 But maybe the national accounts are catching up. Recently, brokerage fees for residential structures have been
+capitalizedthemselves rather than incorporatedinto the structure values. This leaves the structures closer to wholesale.
+
+                                                                  38
+Table D.2: Coefficients of PPMLE As-If-New Pricing Regression (3.1.2) (continued)
+
+       3DLX01       -0.944744306117723             98:1                         0.822619389709055
+       4DLX01       -0.723952069408558             98:2                         0.825961090345819
+       SESport01    -0.635429732473724             98:3                         0.861099695418847
+       SE01         -0.570695102565578             98:4                         0.831638714853186
+       SEL01        -0.405434967733631             99:1                         0.822393697773766
+       Ltd01        -0.375142320497973             99:2                         0.809688476298551
+       3DLX02       -0.810092401767964             99:3                         0.823320204454980
+       4DLX02       -0.642827633065381             99:4                         0.754491246562543
+       4DSE02       -0.530053532368935             00:1                         0.719273281871659
+       4DSEL02      -0.334299513111451             00:2                         0.705963352162072
+       4DLtd02      -0.300426648795869             00:3                         0.722653457521937
+       3D4D03       -0.731842607055780             00:4                         0.641399698602244
+       4DLX03       -0.583090485340029             01:1                         0.635380513466613
+       SE03         -0.476262953854484             01:2                         0.621354081443877
+       SEL03        -0.272185810096986             01:3                         0.623846723141716
+       Ltd03        -0.228226094005815             01:4                         0.558659477070338
+
+v S04               -0.621148088315499      t 02:1                              0.595169741840899
+       SE04         -0.520051992747847             02:2                         0.555418147537687
+       SES04        -0.465708646806284             02:3                         0.520862254159833
+       SEL04        -0.387658212311193             02:4                         0.398250377254785
+       Ltd04        -0.226603933619934             03:1                         0.343859846518590
+       M04          -0.398205015378774             03:2                         0.364102262530881
+       S05          -0.492821816842997             03:3                         0.407064387399965
+       SE05         -0.429183037140144             03:4                         0.302154800240477
+       SES05        -0.385610468464100             04:1                         0.282385942163401
+       SEL05        -0.294531345783530             04:2                         0.318099508759867
+       Ltd05        -0.096578022794287             04:3                         0.317153913309634
+       M05          -0.280816008366816             04:4                         0.173315299401982
+       MLuxury05    -0.082660196167296             05:1                         0.208210623776514
+       MPremi er05   0.036922717014200             05:2                         0.223176922258330
+       SE06         -0.351346602765633             05:3                         0.186940565061641
+       SEL06        -0.229559639702223             05:4                         0.045494133890147
+       MLuxury06    "0"                            06:1                         0.007911871767545
+                                                   06:2                        -0.001504634937432
+                                                   06:3                        -0.004084377948703
+                                                   06:4                        -0.096635232076967
+                                                   07:1                        -0.098891780673675
+                                                   07:2                        "0"
+
+Moreover, for purposes of out-of-sample forecasts, I fit trend regressions of the point-values for time:
+
+                    t = -14586.557 + 14.673986 t - .0036902 t2                 ^  =  .  045536            (D.1)
+                                                                                                          (D.2)
+                                                                               t
+
+over 1994:III-2007:II and for frontier vintages                                ^  =  .  0352862
+                                                 v = -161.93345 + .08057038 t
+                                                                               v
+
+                                        39
+over 1994:III-2006:III.52 The trends offset each other for much of the period, such that the frontier-vintage
+Windstar price keeps in the range $18,000 ± $2,000, albeit with bumps. The corresponding per-year user-cost
+(discussed below) varies more smoothly about $4,000. Figure D.1, below, plots the Windstar group's wholesale
+new price and user-cost. Finally, efforts to construct meaningful "stock" prices from the as-if-new transaction
+prices were fruitless, so I settled on booking capital stocks in the same prices that the quarter's investment and
+depreciation activities were conducted. Hence every period started with an update of its prices.
+
+                                                             Figure D.1
+
+         An Excel workbook that carries out the accounting computations, "Windstar Capital Accounting.xlsx,"
+accompanies this paper and is available upon request. The remainder of this appendix constitutes a user's guide
+to the workbook, which contains three tabs: "Individuals to Cohorts," "Cohorts to Wealth Stock," and "Cohorts
+to Productive Stock." The cell-references in what follows will only make sense with the workbook nearby.
+
+         The first 60 rows of the "Individuals to Cohorts" tab contain the names of specific Windstar/Freestar/
+Monterey vintages or varieties, together with the preferred value of the efficiency-loss parameter for each, as
+well as how many vehicles were involved in estimating the variety's service-life density, as-if-new prices, and
+installations. The rightmost 100 columns (i.e., F through DA) contain positive numerical service-life densities for
+all the varieties, from age 3 out to topcode age 25. Selecting any variety name for focused consideration (into
+
+52 I used the numeric midpoint of each quarter--e.g., 1994:III = 1994.625, etc. Each vintage's v applied for the periods
+
+when it was the frontier--e.g., 95 applied for 1994:III-1995:IV. For nearly-right fitted values over the same interval, I took
+
+the  wi thin-i nterval  average                        ^  =  -161.93345  +  .08057038×1995.25,   since  1995.25  is      the  average  of      {1994.625,
+
+                                 value--e.g. 95
+
+1994.875, 1995.125, 1995.375, 1995.625, 1995.875}. Unlike the time-trend regression, which ran through 2007:II, the
+
+frontier-vintage regression concluded at 2006:III, after which I declared the '06 model-year had been supplanted by the '07
+
+(despite the unsuitability of the latter for regression purposes). For vintages '99 and later, where separate variety
+
+coefficients are available, I formed the cross-variety vintage-average coefficient vintage as the installation-weighted average
+
+of the variety-specific variety coefficients.             Fi tted  new  prices  are  therefore:  Exp[c     ^     ^       +  ½^ t2  +  ½^ v2],  where  the
+
+                                                                                                        + t   + vintage
+
+additionof half the estimated regression variances from (5.1)and(5.2) debiases the anti-LogNormal transformation.
+
+                                                                            40
+cell A62) activates the worksheet's coding to compute the cohort-specific average resale-price profile (s) (1.4),
+rental-price profile  (s) (A.1), and age-efficiency profile (s) (A.2). All are set up as stationary functions of age,
+independent of calendar-time. And all three are "internal" only, lacking comparisons of their own as-if-new
+prices to that of the frontier vintage prevailing at a given calendar-date. Without such a comparison, we miss
+the half of depreciation that is attributable to obsolescence. Three big panels at the bottom of the tab (i.e., (s)
+at B375:Y477,  (s) at Z375:AW477, and (s) at AX375:BU477 -- all before realized obsolescence) collect 24
+columns each of the three cohort-level profiles -- 23 for every vintage or variety where I fit cell-level individual
+profiles, plus overall averages.
+
+         The big panel of (s) is copied to the rightmost reaches (IN5:PD156) of the "Cohorts to Wealth Stock"
+tab to await transformation to cohort-level resale-price profiles relative to the moving target of frontier-vintage
+prices. To accomplish this requires first assembling each variety's as-if-new prices and selecting the appropriate
+frontier-prices from among them, then multiplying the internal resale-price profiles by ratios of as-if-new- to
+frontier-prices. "Table of As-If-New Prices for Each Vintage/Variety through Every Quarter in the Data Where
+Each Could Have Been Present, with an Estimated Extension" (A2:AV60) collects the as-if-new prices, using the
+coefficient point-values from equation (3.1.2) that were printed in Table D.2 and which bound the table at
+column B and row 8. Frontier prices are collected at AV9:AV60. Trend regressions (D.1) and (D.2) are carried
+out at (AW5:BF60), so that future as-if-new and frontier prices may be estimated through 2031:II (A61:AV156),
+when the last of the '06's should sputter and die.
+
+         Multiplying the sales-price ratios to the internal resale-price profiles is the work of the big green-and-
+orange striped panel at (BU5:IK156). The horizontal orange stripes represent waves of realized obsolescence
+that tear through and substantially erode the remaining value of each established cohort. The resulting columns
+represent the worth of the old vans in terms of the (moveable) price of the frontier vintage.
+
+         The National Accounts punchline is at columns BI:BR. Investment in the form of 2,630,580 new vans
+across 49 quarters is collected at BP9:BP57. The net stock, in terms of units of the frontier vintage, is at
+BR9:BR155. The Windstar group peaks at 1,013,953 as-if-new units in 2001:4 and then inexorably declines.
+Consumption of vans -- I'd call it depreciation, except that this is all phrased as new-equivalent van quantities --
+amounts to 2,630,580 units by the time it is complete at 2031:II. It is recorded at BQ10:BQ156.
+
+         Columns BL, BM, and BN value investment, depreciation, and the net wealth stock in terms of the
+contemporary (frontier) investment price (column AV). The net stock peaks at $19.031 billion in 2002:I, on the
+strength of a 12.5 percent revaluation that quarter with the late arrival of the 2002 model year.
+
+         The third tab, "Cohorts to Productive Stock" is constructed by analogy to the second. Now, however,
+the tab's rightmost reaches (IN5:PD156) have the big (s) panel from the first tab, representing variety-specific
+internal rental-price profiles. These also must be multiplied by ratios of as-if-new- to frontier- purchase prices to
+capture realized obsolescence. (Anticipated obsolescence is presumably built into r.) The construction and
+estimated extension of as-if-new prices is repeated at A2:AV156; only now, frontier prices (column AV) multiply
+
+                                                                  41
+the newest internal rental-price profiles (the ragged upper edge of the big (s) panel) to form the user-cost
+series for the whole Windstar-Freestar-Monterey grouping at column BI. 53
+
+         The third tab's big green-and-orange striped panel at (BU5:IK156) computes age-efficiency profiles for
+each vintage and variety in terms of the moveable overall user-cost, as the product of as-if-new prices and
+internal age-efficiency profiles, divided by the user-cost. Columns in this table tell how much an average asset
+(including retirees) from a vintage or variety would rent for at a given calendar-date, as a fraction of the rental
+price on the date's frontier vintage. This ratio of current rents is taken to equal the ratio of old-to-new marginal
+products in productivity analysis.
+
+         Columns BH:BR contain the summations that are useful to National Production Accounts. Investment is
+again 2,630,580 new vans at BP9:BP57, but the quantities represent the vans' immediately available new-rent
+equivalents, not the present discounted values of the full streams of their present and future rents. (That was
+the subject of the "Cohorts to Wealth Stock" tab.) The net productive stock is at column BR. It is substantially
+larger than the net wealth stock and peaks later, at 1,277,950 new-rent equivalent units in 2002:IV. Rental-
+quantity deterioration sums to 2,630,580 vans in column BQ. Plots of new-equivalent net wealth and net
+productive stocks, and of purchase-value depreciation and rental-value deterioration as fractions of the wealth
+and productive stocks, respectively, follow. The absence of constant decay rates, equal across wealth and
+productive stocks (which would characterize geometric decay), is obvious, and not only because new inputs fail
+after 2006 (forcing rates decay upward). The "crocodile teeth" highlight new model years' obsolescing power.
+
+                                                             Figure D.2
+
+What would be the impact on multifactor productivity measurement if all capital were captured as precisely as
+Windstars, and this even before quasifixity is considered?
+
+53 Except model-year '07.
+                                                                  42
+                                                             Figure D.3
+
+         Movements in productive assets are priced by the user cost. Nominal values of investment,
+deterioration, and the productive stock are at columns BL:BN. Revaluations happen at the start of every
+quarter, in column BK.
+
+         Note the net productive stocks depend on the own rate of return, which itself depends on the expected,
+as opposed to realized, rate of change of a vintage/variety's own as-if-new price. So it is unlikely that the
+discounted sum of the entries of any column of BU5:IK156 (first multiplied through by Windstar-group user-cost,
+and then quartered to account for annual-level rental series at quarterly frequency) would agree with the
+frontier-price corresponding to the column. That offers a way to check on the accuracy of calculations. But it
+also forces National Accounts to split residual income into expected capital income and surprise profits or losses.
+
+                                                                  43
+

@@ -1,0 +1,1520 @@
+350  [No.2,
+
+               Tests for Specification Errors in Classical Linear                            Downloaded from academic.oup.com/jrsssb/article/31/2/350/7027014 by guest on 13 October 2026
+                        Least-squares Regression Analysis
+
+                                            By J. B. RAMSEY
+
+                                                 Michigan State University
+
+                      [Received December 1967. Final revision February 1969]
+
+                                                                SUMMARY
+
+        The effects on the distribution of least-squares residuals of a series of model
+        mis-specifications are considered. It isshown that for a varietyof specification
+        errors the distributions of the least-squares residuals are normal, but with
+        non-zero means. An alternative predictor of the disturbance vector is used
+        in developing four procedures for testing for the presence of specification
+        error. The specification errors considered are omitted variables, incorrect
+        functional form, simultaneous equation problems and heteroskedasticity.
+
+                                              I. INTRODUCTION
+
+THE objectives of this paper are two. The first is to derive the distributions of the
+classical linear least-squares residuals under a variety of specification errors. The
+errors considered are omitted variables, incorrect functional form, simultaneous
+equation problems and heteroskedasticity. It is assumed that the disturbance terms
+are independently and normally distributed. It will be shown that the effect of the
+specification errors considered above is, with the exception of the error of hetero-
+skedasticity, to yield residuals which though normally distributed do not have zero
+means, so that the distribution of the squared residuals is non-central X2· The second
+objective is to derive procedures to test for the presence of the specification errors
+considered in the first part of the paper. The tests are developed by comparing the
+distribution of residuals under the hypothesis that the specification of the model is
+correct to the distribution of the residuals yielded under the alternative hypothesis
+that there is a specification error of one of the types considered in the first part of the
+paper.
+
+    As a preliminary step to deriving the test procedures the classical least-squares
+residual vector is transformed to a sub-vector which has more desirable properties for
+testing the null hypothesis that the specification of the model is correct. Also, under
+certain assumptions, with respect to the alternative hypothesis, it is shown that the
+mean vector of the residuals can be approximated by a linear sum of vectors qj'
+
+j = 1,2, .... The vectors qj' j = 1,2, ... are obtained from the least-squares estimates
+
+of the dependent variable. Four tests are developed, RESET, RASET, KOMSET
+and BAMSET. RESET tests the significance of a regression of the residuals on a
+
+linear function of vectors qj' j = 1,2, .... RASET is a rank correlation test between
+
+ql and a ranking of the squared residuals. KOMSET is the application of the
+Kolmogorov test statistic to discriminate between the central and non-central F
+distributions. BAMSET is a modification of Bartlett's M test for the heterogeneity
+of variance.
+1969]  RAMSEY - Tests for Errors in Least-squares Regression Analysis  351
+
+    Considering the extent to which least squares has been used as a tool of analysis       Downloaded from academic.oup.com/jrsssb/article/31/2/350/7027014 by guest on 13 October 2026
+for linear regression models one is surprised to note the lack of attention which has
+been given to the distribution of least-squares residuals. Recently, efforts have been
+made to redress this omission, chiefly by Anscombe, Tukey, Box, Cox, Tidwell and
+Theil in a short series of papers published since 1960.
+
+    As this paper is not concerned with problems of serial correlation, the excellent
+work ofWald, Anderson, Durbin, Watson and others on the analysis of residuals with
+respect to serial correlation problems is not included in this paper. The omission is
+not to be construed as a denigration of the importance of this work, but merely as the
+wish to omit any discussion not directly relevant to the topic of an already lengthy
+paper.
+
+    The papers by Anscombe (1961) and Anscombe and Tukey (1963) contain
+summaries of the work which had been done before the 1960's and a discussion of the
+recent contributions of Anscombe and Tukey. The topics examined by the authors
+were the assumptions of normality, heteroskedasticity, non-additivity and the problem
+of outliers. To test for normality Anscombe derived two estimators, gl and g2' for the
+scale-invariant measures of skewness and kurtosis. The test for heteroskedasticity is to
+consider that the variance of the dependent variable about its conditional mean is
+proportional to exp [yx~ (3], where y is some small constant, x~ is a vector of regressors
+and (3 is the regression coefficient vector. Anscombe derived an estimator for y.
+
+    Box and Cox (1964), and in an earlier paper Box and Tidwell (1962), also consider
+the problems of non-normality, heteroskedasticity and removable non-additivity, but
+take a different approach. They wish to find that transformation of the variables such
+that the regression between the transformed variables satisfies the full ideal conditions.
+
+    Kuh and Meyer (1955), in comparing regressions between deflated and undeflated
+variables, showed that if the true model is in terms of deflated variables the use of
+undeflated variables leads to heteroskedastic residuals. Later, Goldfeld and Quandt
+(1965) devised two tests of the relationship between the residuals from a least-squares
+regression and the deflation index.
+
+    The work of this paper will be seen to be complementary to those briefly reviewed
+above. First, one of the main points of interest in the literature to date is the problem
+of non-normality. In this paper normality of the disturbance terms is assumed to hold
+even for the mis-specified models to be examined in the next section. Both Tukey
+(1959) and Box and Cox (1964) have looked at non-additivity which arises from the
+use of incorrect scale of measurement for the dependent variable and which can be
+removed by an appropriate power transformation. This problem is not discussed in
+this paper. On the other hand, attention is paid to a wide range of specification errors
+which are particularly relevant to econometric analysis. To some extent the approach
+taken in this paper generalizes the work of Anscombe and Tukey on heteroskedasticity
+and that of Goldfeld and Quandt on the effect of deflation indices.
+
+   2. THE ANALYSIS OF THE EFFECT OF CERTAIN SPECIFICATION ERRORS ON THE
+
+                    DISTRIBUTION OF THE CLASSICAL LEAST-SQUARES RESIDUALS
+
+             2.1. The Distribution of Residuals under the Full Ideal Conditions
+    In order to understand clearly what is implied by each of the mis-specifications
+discussed below one must define precisely what is meant by the correctly specified
+model. In this section and the next it is assumed that the correctly specified model
+satisfies the "full ideal conditions" as defined by Anscombe (1961, pp. 1,2). Thus, it
+
+    13
+352  RAMSEY - Tests for Errors in Least-squares Regression Analysis  [No.2,
+
+is assumed that one has N observations on K + 1 variables, one of which is the depen-
+
+dent variable denoted by Yi' and the other variables are regressor variables denoted
+
+by Xij' j = 1, ... , K, i = 1,2, ... , N. The relationship between the dependent variable
+
+and the regressors is given by (1a) or (1b):
+
+     Yi = 2.xtj {1j + Ui (i = 1,2, ... , N),                         (la)
+
+     j
+
+or
+
+        y = X~+u,                                                    (lb)
+
+where y is an N x 1 vector, X an N x K matrix of rank K, ~ is a K x 1 vector of              Downloaded from academic.oup.com/jrsssb/article/31/2/350/7027014 by guest on 13 October 2026
+coefficients and u is an Nx 1 vector of disturbance terms. Equation (lb) may be
+rewritten as (2):
+
+        y-X~ = u,                                                    (2)
+
+which stresses the fact that the distribution of the vector u is the distribution of the
+vector y about the mean X~ conditional on the observed matrix X. It is assumed that
+the distribution of u is normal with null mean vector and covariance matrix given by
+a 2 1, i.e. conditional on the matrix X one has a set of N independent observations on
+the variable Y which has constant variance about its conditional mean.
+
+    The least-squares residual vector is defined by (3):
+
+     o = [I- X(X/X)-l X'] Y= My, or                                  (3)
+
+where m~ is the ith row of M. An estimator of a2 is
+
+     (N-K)-lO/O = (N-K)-ly/My.                                       (4)
+
+Under the full ideal conditions as specified in the previous paragraph the distribution
+of 0 is singular normal with null mean vector and covariance matrix given by a2 M .
+The matrix M is positive semi-definite, non-diagonal and idempotent of rank N - K
+
+so that, although the ui (i = I, ... , N) are independent and identically distributed as
+
+N(O,a2) , the least-squares residuals Ui are not independently and identically distributed.
+The distribution of (o/o)fa2 is central X2 with N - K degrees of freedom.
+
+    The basic approach followed in the first part of this paper is to consider only those
+mis-specifications which yield distributions of 0 which, conditional on the observed
+matrix X, are normal. The cases where mis-specification leads to a non-normal
+distribution ofo are to be discussed in a later paper. One should emphasize that in the
+analysis to follow the distributions of 0 and of u/o are derived conditional on the
+observed matrix of regressors.
+
+2.2. Some Examples of Specification Errors and Their Effect upon the Distribution of
+                                        Least-squares Residuals
+
+2.2.1. The omitted variable case
+    Consider the following model which satisfies the full ideal conditions:
+
+     y = X~+yz+u, u""N(O,a~I),                                       (5)
+
+where y is the N x I regressand vector, X is the N x K regressor matrix of rank K, Z is
+the Nx I vector for the K+ 1st regressor, ~ is the Kx 1 vector of coefficients, y is the
+
+coefficient for the K + 1st regressor and u is the N x 1 vector of disturbances.
+1969]  RAMSEY - Tests for Errors in Least-squares Regression Analysis  353
+
+The model considered for regression is given in (Sa):
+
+       y=XS+v,                                                         (Sa)
+
+where y and X are as before, S is the K x 1 vector of coefficients and v is the N x 1
+vector of disturbances. If (5) is the correctly specified model, then (Sa) does not fulfil
+the full ideal conditions and v = yz + u. Assume that the N dimensional vector z is
+non-stochastic. As (5) meets the full ideal conditions the distribution of u is inde-
+pendent of z.
+
+    The least-squares residuals for the model (Sa) are
+
+       v = My = Mzy+Mu,                                                                     Downloaded from academic.oup.com/jrsssb/article/31/2/350/7027014 by guest on 13 October 2026
+
+where M = I-X(X'X)-l X'. Under the assumptions made above one sees that the
+
+mean vector of v and the covariance matrix of v are
+
+       E(vIX) = Mzy, E(VV'IX) = a;M.                                   (6)
+
+Further, one notes that the distribution of v is singular normal under the assumptions
+
+given above. Also, as the characteristic roots of Mare 1 of multiplicity N - K and 0 of
+multiplicity K, (v'v)/a~ is distributed as non-central X2 with N - K degrees of freedom
+and non-central parameter given by A = y2(z'Mz)/a~. The distribution of each
+fjUa~, i = 1,2, ... , N, is also non-central X2 with one degree of freedom and non-
+central parameter given by Ai = y2(z'mim~z)/a~.
+
+2.2.2. The case of mis-specification of the functional form
+
+In this paper attention will be restricted to mis-specification of the regressors only.
+
+Specifically, consider the model given in (7) which satisfies the full ideal conditions:
+
+       y = Zy +u, u '" N(O, a; I),                                     (7)
+
+where y is the N x 1 regressand vector, Z is an N x K regressor matrix of rank K, y is
+a K x 1 vector of coefficients and u is the N x 1 vector of disturbance terms. The model
+considered for regression analysis is that given in (8):
+
+       y = X~+v,                                                       (8)
+
+where y is as in (7), X is an N x K regressor matrix of rank K, ~ is a K x 1 vector of
+coefficients and v is the N x 1 vector of disturbance terms.
+
+    Assume that the relationship between each element in Z and each element in X
+is that shown in (9):
+
+       Zij = gj(xij) (j = 1,2, ... , K, i = 1,2, ... , N),             (9)
+
+where gj is some non-linear function with constant parameters, e.g. gj might represent
+some power function, logarithmic function, et cetera. One could also consider for
+
+each i, i = 1,2, ... , N, Zij, as a function of several Xij' j = 1,2, ... , K. As we have
+assumed in the correctly specified model, (7), that the distribution of u is independent
+
+of Z, it follows that the distribution of u is independent of X, whose elements are
+functions of the elements of Z alone.
+
+The least-squares residuals for the model given in (8) are
+
+       v= My = MZy+Mu,                                                 (10)
+
+where M = 1- X(X'X)-l X'. Conditional on the observed X matrix one sees that
+
+       E(v!X) = MZy, E(VV'IX) = a~M,                                   (11)
+354  RAMSEY - Tests for Errors in Least-squares Regression Analysis  [No.2,
+
+where Z is defined by substituting the elements of X into equation (9). On the basis of
+
+the specification of the model given in (7), one sees that the distribution of v condi-
+
+tional on X is singular normal with mean vector and covariance matrix given by (11).
+
+Further, as M is idempotent of rank N - K, the distribution of (v'v)/a~ is non-central X2
+
+with N - K degrees offreedom and non-central parameter given by A. = (y'Z'MZy)/a~.
+The distribution of each vila~, i = 1,2, ... , N, is also non-central X2 with one degree of
+freedom and non-central parameter .\ = (y'Z'rni rn~ Zy)/a~.
+
+2.2.3. The simultaneous equation case                                                                                  Downloaded from academic.oup.com/jrsssb/article/31/2/350/7027014 by guest on 13 October 2026
+
+    The "simultaneous equation problem" can be easily formulated under the frame-
+work used so far. Thus, consider equation (12) which summarizes the simultaneous
+equation system at some point in time, t:
+
+                      y;r+z;a+u; = 0,                                (12)
+
+where Y, is an M x 1 vector of endogenous variables, Zt is a K x 1 vector of non-
+stochastic exogenous variables, U, is an M x 1 vector of stochastic error terms, r is
+an M x M matrix of the coefficients relating the M endogenous variables in each of the
+
+M relationships, and a is a K x M matrix of coefficients relating the exogenous
+
+variables in each of the M relationships. In the following discussion it is convenient
+
+to drop the subscript t.
+    The mth structural equation of the system given in (12) may be written as
+
+                                                                                                       (13)
+
+where Urn is the mth element of u, and where, without loss of generality, one assumes
+that the transpose of the mth column of r is ( - 1, Ym' 0) where ymcontains only non-
+
+zero elements and that the transpose of the mth column of a is (~m' 0) where ~m
+
+contains only non-zero elements. y is that variable which corresponds to the first
+element in the mth column of rand Ym, zm are the appropriately dimensioned sub-
+
+vectors of Y, and z, respectively which contain those elements of Y" Z! which correspond
+
+to the coefficients in Yrn and ~m' Let Mm and K m denote the number of endogenous
+and exogenous variables respectively in the mth equation which have non-zero
+
+coefficients and define the (Mm - 1)+K m dimensional vector x;" by
+
+                                                                                                                 (14)
+
+and the transpose of the corresponding coefficient vector ~m by
+
+                                                                     (14')
+
+so that (13) becomes
+
+                      y = x'~+u,                                     (13')
+
+where one drops the subscript m for convenience. Suppose that the joint distribution
+for the Mm variables y, Ym is denoted by J, then
+
+                               T
+
+     fey, Ymlzm)~f(u,Ymlzm)= g(uIYm,zm>h(Ymlzm)
+
+                                     = g(ulx)h(Ymlzm)'               (15)
+
+where T denotes the transformation:
+
+                      T:u=y-x'~, x=x,                                (16)
+1969]  RAMSEY - Tests for Errors in Least-squares Regression Analysis  355
+
+the Jacobian of which is 1. The function g denotes the distribution of u conditional on
+x and h is the distribution of Ym given Zrw The "simultaneous equation problem" is
+now easily stated. By Kendall (1951, p. 12), one can obtain unbiased estimators of all
+the regression parameters of the model given in (13) from knowledge of the marginal
+distribution of u if, and only if, the joint distribution of u and Ymfactors into the product
+of the marginal distribution of u and the conditional distribution of Y", given Zm' i.e.
+if and only if
+
+                                                                       (17)
+
+where g(u) is the marginal distribution of u. But, under the simultaneous equation                                  Downloaded from academic.oup.com/jrsssb/article/31/2/350/7027014 by guest on 13 October 2026
+framework assumed in equation (12), g(ul x) will not in general be equal to g(u). In
+short, the condition given in (17) will not be met.
+
+    To proceed further and more explicitly, assume that g(ulx) = g(uIYm,zm) is a
+normal density function with mean TJulvm and variance a~IVm' If I: denotes the co-
+variance matrix for the joint distribution of u and Yr>l' also assumed to be normal, then
+
+ TJu!v·· = TJu + I:uv I:;t(Ym-l}v)' a~IVm = a~ + I:UI/ I:;t I:I/U' for all vectors Ym' (18)
+
+where
+
+       I: = (I: u u I:uv )
+
+              I:y U I:y V
+
+denotes the appropriate partitions of the joint covariance matrix for u and Ym.
+
+TJu = 0 is the unconditional mean of u and l}vm is the (Mm - 1) dimensional mean vector
+for the vector Ym-
+
+    Assume now that one has N independent observations on the Mmjoint conditional
+
+distribution of y and Ym , namely f(Y,YmlzrJ, which has been assumed to be multi-
+variate normal. Under these assumptions the conditional mean vector of the least-
+squares residuals is given by
+
+       E{fi IX} = E{My IX} = Ml}ulvm'                                  (19)
+
+where X is the N x {(Mm -1) + Km} matrix of observations on the "regressors" for the
+
+mth structural relation, Y is the Nx 1 vector of observations on the "dependent"
+
+variable, M = 1- X(X/X)-l X', and l}ulv", is the Nx 1 dimensional mean vector of the
+
+error vector U conditional on X. It is assumed that l}ulvm is not orthogonal to the
+
+matrix M. Note that the matrix X is defined by
+
+                                                                                                              (20)
+
+where Ym is an N x (Mm - 1) matrix of observations on the endogenous variables
+and Zm is an N x K rn matrix of observations on the non-stochastic exogenous variables.
+
+    The conditional covariance matrix for the least-squares estimator of the regression
+coefficient vector is given by
+
+                         E{M(u-l}uIYm)(U-l}ulvJ'M/} = a~lv",M, (21)
+
+where M is as defined above and a~lv", is the variance of the error term conditional on
+X. Note that the above result assumes that the conditional variance is constant over
+i(i= 1,2, ... ,N).
+
+   Further, remembering that M is idempotent of rank (N - Mm+ 1- KIIJ and that the
+
+distribution of fi is singular normal with conditional mean vector Ml}u!Vm' then the
+356  RAMSEY - Tests for Errors in Least-squares Regression Analysis                                        [No.2,
+
+distribution of the quadratic form ii'ii/u~Ym is under these assumptions non-central X2
+
+with (N - M m + 1- Kr,,) degrees of freedom and non-central parameter
+
+                               A = YJ:,IYmMYJuly)u~IYm'
+as M is idempotent of rank (N - M m + 1- K"J and providing YJulYm is not orthogonal
+
+toM.
+
+2.2.4. The case of simple heteroskedasticity
+
+Assume that the model to be estimated is that specified in (22):
+
+     y = X~+u, u",N(O,~),                                                                                  (22)
+
+where y is the Nx 1 regressand vector, X is the Nx K regressor matrix of rank K,                                   Downloaded from academic.oup.com/jrsssb/article/31/2/350/7027014 by guest on 13 October 2026
+
+~ is the K x 1 vector of regression coefficients, u is the N x 1 vector of disturbance
+
+terms and ~ is the N x N diagonal covariance matrix of u with u7, i = 1,2, ... , N, as
+
+diagonal elements. The least-squares residuals are
+
+     ii = My = Mu ui = m~u (i = 1,2, ... ,N),                                                              (22')
+
+where M = 1- X(X'X)-1 X' and m~ is the ith row of M. The mean vector and
+
+covariance matrix of ii, which is distributed as singular normal, are given in (23):
+
+     E(iiIX) = 0, E(iiii'l X = M~M.                                                                        (23)
+
+   Denoting the non-zero characteristic roots of M~M by Yj' j = 1,2, .. 0'N - K, one
+
+notes that the conditional distribution of ii'ii is a weighted sum of N - K central X2
+
+variables with one degree of freedom each, where the weights are proportional to the
+
+roots Yj' j = 1,2, ... , N - K. The distribution of Ui' i = 1,2, ... , N, conditional on X
+
+is normal with zero mean and variance
+
+                                                                                 N  distribution  of each  ui/ai,
+
+                               a7 = ~ mijuy,
+
+                                                    ;=1
+
+where mii is the (i,j)th element of M. Thus, the
+
+i = 1,2, ... , N, is central X2 with one degree of freedom.
+
+    2.3. Summary of the Analysis of Residuals for Mis-specified Regression Models
+
+    The above few pages have demonstrated that under a variety of specification
+errors the distribution of the least-squares residual vector is singular normal with
+non-null mean vector of the form M;, where M = I-X(X'X)-IX', X being the
+observed N x K regressor matrix and where ; is a vector which summarizes the
+effect of the specification error on the mean of the disturbance vector in the mis-
+specified model. The precise formulation of the vector ; depends upon the exact
+specification of the error. The exception to the above result is the case of simple
+heteroskedasticity where the mean of the least-squares residual vector in the mis-
+specified model was found to be null.
+
+    Looking at the distributions of the squared residuals it was found that for all but
+
+one of the specification errors considered the distribution of each ui/u~, i = 1,2, ... , N,
+
+is non-central X2 with one degree of freedom and non-central parameter ~, where
+
+Ai OC ;'m,m~;, m~ is the ith row of M and M; is the vector discussed in the previous
+
+paragraph. The exceptional instance is that of simple heteroskedasticity in which
+
+case the distribution of each ui, i = 1,2, .0., N, is scaled central X2 with one degree
+of freedom and scaling factor ai = ~}':1 mi; ul' where uy are the diagonal elements of
+
+the covariance matrix of the disturbance vector.
+1969]  RAMSEY - Tests for Errors in Least-squares Regression Analysis       357
+
+                                3. AN OPTIMAL RESIDUAL VECTOR                             Downloaded from academic.oup.com/jrsssb/article/31/2/350/7027014 by guest on 13 October 2026
+
+    One of the difficulties facing anyone trying to devise tests on the distribution of
+the least-squares residuals is that though the vector of residuals is normally dis-
+tributed with zero mean vector under the full ideal conditions, the covariance matrix
+
+of the least-squares residual vector is given by a2 M , where M = I-X(X'X)-IX'. As
+
+is well known M is non-diagonal, singular and in general does not have equal diagonal
+elements, i.e. the residuals are heteroskedastic and are not distributed independently.
+Anscombe and Tukey (1963) and Goldfeld and Quandt (1965) recognized this
+problem and overcame it with varying degrees of success by suitable definition of the
+functions of the least-squares residuals which were chosen as test statistics. Theil
+(1965) approached the problem from a different point of view by developing a set of
+residuals which have more desirable properties under the full ideal conditions. For
+X, an N x K regressor matrix of rank K, M is N x N of rank N - K, so that the
+maximum number of independent residuals which can be obtained is N - K. One
+wishes, therefore, to obtain an (N - K) x 1 residual vector whose distribution under
+the full ideal conditions is non-singular normal with null mean vector and covariance
+matrix given by a 2 I N _ K · (Throughout the remainder of the paper, identity matrices
+will carry a suffix indicating their dimension.) Theil's residual vector, which is
+discussed below, fulfils the above requirements.
+
+                             3.1. The Optimal Residual Vector
+Theil (1965) considers an N - K dimensional residual vector defined by
+
+          ii = A'y,                                                         (24)
+
+where A is an N x (N - K) matrix which satisfies the following conditions:
+
+(i)       A'X= O' }
+(ii) A'A =I"~_K; (25)
+
+(iii) Subject to the constraints (i) and (ii), A minimizes the expected
+      value of the sum of squares of the "errors of prediction", i.e. A is
+      a solution to (26):
+
+       minE{u'(A-J)(A-J)'u} = min a 2 tr (A - J )(A - J )'                  (26)
+
+       A  A
+
+          = 2a2 mi n (N - K - tr A'J),
+
+                        A
+
+where (A - J)'u denotes the "error in predicting" u, J is an N x (N - K) matrix which
+
+is obtained by deleting K columns from IN- Theil calls his vector, ii = A'y, the best
+
+linear unbiased scalar covariance matrix residual vector. (Note that in Theil (1965)
+the vector ii is called an "estimator" of u, which is an unfortunate usage of the term.
+This terminology has since been corrected in Theil (1968).)
+
+    To obtain an explicit solution suppose that one has decided not to predict the first
+K error terms, i.e. J is obtained by deleting the first K columns of IN (Theil, 1965,
+
+pp. 1070-1071). Partition the X matrix into its first K rows, Xo, and its last N-K
+rows, Xl' The only restriction required at this point is that the Kx K sub-matrix Xo
+358  RAMSEY - Tests for Errors in Least-squares Regression Analysis  [No.2,
+
+be non-singular. Consider conformable partitions of the M matrix and of the A
+matrix:
+
+                                                                     (27)
+
+Let P be the (N - K) x (N - K) matrix such that
+
+     P'MnP = D,                                                      (28)
+
+where D is the diagonal matrix of eigenvalues of M n. From these matrices Theil                                     Downloaded from academic.oup.com/jrsssb/article/31/2/350/7027014 by guest on 13 October 2026
+(1965, pp. 1071-1072) defines the A matrix by
+
+     Al = PDtp', Ao = -(Xl XoI)'AI·                                  (29)
+
+It is easy to verify that A'X = 0, A'A = I N - K , that A satisfies the three conditions
+given in equations (25) and (26), and that AA' = M. The distribution of u under the
+
+full ideal conditions is non-singular normal with null mean vector and covariance
+matrix a2 I N _ K ·
+
+                       3.2. The Distribution ofu in Mis-specified Models
+
+    In the previous section it was shown that for some of the specification errors
+considered there the mean vector of the least-squares estimator was of the form M;,
+
+where M = 1- X(X'X)-l X', X being the N x K matrix of observations on the included
+
+regressors and; being a non-stochastic vector (conditional on X), whose precise
+definition depends upon the nature of the mis-specification. For Theil's residuals
+
+u = A'y, the mean vector is A';, i.e, A' replaces M in all the results obtained in
+
+Section 2. The sum of squared residuals is exactly the same:
+
+     u'u = y'AA'y = y'My = ii'ii.                                    (30)
+
+    Further, the non-central parameter ,\ is invariant to choice of the Kx K matrix Xo
+as is shown in (31):
+
+                                                                                                              (31)
+
+for any choice of Xo subject to Xo being non-singular and where iF represents the
+
+appropriate scaling factor. The exact definitions of both ij2 and; depend upon the
+nature of the mis-specification being considered.
+
+    In order to see what difference the choice of Xo makes consider the following
+restatement of the problem addressed by Theil. For a given matrix X of order Nx K
+one wishes to find a matrix B of order (N - K) x N such that
+
+      (i) BX = 0, i.e. the rows of B are contained in the row kernel of X;
+     (ii) The rows of B are orthogonal and normalized;
+    (iii) Subject to conditions (i) and (ii) the rows of B maximize the sum of the
+
+          cosines of the angles between the rows of B and an (N - K) dimensional
+          subset of a Euclidean basis, EN'
+These three conditions correspond to the three conditions considered by Theil. The
+correspondence for the first two is obvious. For the third, note that the matrix
+representation of EN is the N-dimensional identity matrix so that the matrix J corre-
+sponds to an (N - K)-dimensional subset of EN' Thus Theil's third condition is seen
+to be mathematically equivalent to condition (iii) above. Partitioning B into its first
+1969]  RAMSEY - Tests for Errors in Least-squares Regression Analysis  359
+
+K columns and remaining N - K columns conformably to the row partition of X one
+obtains from condition (i):
+
+                                                                       (32)
+
+Written in this way one notes that for any choice of Bo such that BoXo is non-null one
+can obtain a matrix B satisfying conditions (i) and (ii) above. Further, one sees that
+
+a permutation of the rows of X makes no difference to the solution of the system (32).
+
+Thus, for a given (N - K)-dimensional subset of EN' i.e. for a given choice of J,
+
+condition (iii) ensures a unique solution for the elements of B.
+
+(Z) The problem of trying to obtain a unique solution stems from the arbitrariness of          Downloaded from academic.oup.com/jrsssb/article/31/2/350/7027014 by guest on 13 October 2026
+the choice for J, which choice can be made in  different ways. Theil does not
+
+provide a criterion for choosing the appropriate J, or, in his formulation of the
+
+problem, the appropriate Xo. (There are, however, a few brief comments on this
+problem in which Theil indicates that the choice of Xo may affect the power of tests
+
+based on the residual vector ii, (1965, pp. 1076-1077).) The notational correspondence
+between the two formulations is
+
+       Bl = A~, B, = -A~XlXOl =~,                                      (33)
+
+   As for any choice of Xo, or, rather, for any choice of J, B is an orthonormal basis
+
+for the space orthogonal to the space spanned by the columns of X, one notes that
+
+distance and angles between vectors in the space orthogonal to X are invariant to the
+
+choice of J. Indeed, the choice of J merely rotates the basis for the space spanned by
+
+B. Thus, the choice as to which rows of X are to be included in the sub-matrix Xo
+
+can be easily settled. From the above discussion, one notes that one chooses B so
+
+as to maximize trBJ subject to the constraints BX = 0 and BB' = I N - K for given J.
+But, trBJ = tr Dt, where one takes the positive square roots. However, trD = trMn,
+
+so that the choice of J which maximizes tr BJ is determined simply from the (N - K)
+
+largest elements on the diagonal of M, or equivalently the K smallest elements on the
+
+diagonal of M indicate the rows of X to be put into the sub-matrix Xo.
+
+Briefly stated, the procedure is as follows. Choose the K smallest elements on the
+
+diagonal of M. The subscripts of the K smallest elements correspond to the rows of
+
+X to be included in Xo. Having chosen the sub-matrices Xo and Xl' one can calculate
+
+the matrix A by means of the equations given in (27), (28) and (29) after having
+
+permuted the rows of X so that Xo occupies the first K rows.
+
+3.3. Derivation of a Function to Approximate the Mean of ui under the Alternative
+
+                                                 Hypotheses
+
+    The first two tests to be discussed in the next sub-section attempt to discriminate
+between the null hypothesis of no mis-specification and the alternative that the means
+
+of the Ui' i = 1,2, ... ,N-K, can be approximated by some function of the included
+
+regressors. It is the purpose of this sub-section to derive the appropriate function.
+    The basic criteria for such a function are that, first the statistics defined by the
+
+function should be distributed independently of the residuals under the null hypothesis,
+second the function should be useful under a wide range of alternatives with respect to
+the specific types of mis-specification one can make, and last it should be easily
+evaluated. An appropriate function which meets these criteria is that defined by
+
+ql1. = a~y(2), i - 1,2, ... , N -K, where a~ is the ith row of A; and y(2) is the Nx 1 vector
+360  RAMSEY - Tests for Errors in Least-squares Regression Analysis  [No.2,
+
+formed from the squares of the elements of the vector of least-squares estimates of the            Downloaded from academic.oup.com/jrsssb/article/31/2/350/7027014 by guest on 13 October 2026
+
+dependent variable.
+    With respect to the first criterion one can easily show that iii is distributed
+
+independently of Y1, i = 1,2, ... , N, under the null hypothesis, so that each of iii' ii1 is
+
+distributed independently of the (N - K) vector ql = A'y(2).
+
+    If one restricts attention to the specification errors considered in Sections 2.2.1 to
+2.2.3, that is the errors of omitted variables, incorrect functional form and simultaneous
+
+equation problems, then it would seem reasonable to assume that ti> the mean of the
+
+ith residual, can be expressed as a linear function of the moments about the origin
+
+of Yi' the least-squares estimator of the conditional mean of Yi' Thus, one assumes
+that
+
+                                                                     (34)
+
+where J-LOki' k = 1,2, ... , are the moments about the origin of Yi given X. For example,
+consider the problem of an omitted variable where the X matrix reduces to a vector.
+Under the same conditions as were listed in 2.2.1, the conditional expectation of Yi is
+
+Xi{,8+y(~xZ)/(~X2)}, i = 1,2, ... ,N, where Xi is the ith observation on the regressor,
+
+Zi is the ith value of the omitted variable and ,8 and yare the corresponding regression
+
+coefficients. Thus, the second moment about the origin of Yi is
+
+                            xN,8+ y(~xz)/(~X2)}2 + a2,
+
+where a2 is the variance of the error terms, so that if Zi = x1 say, then the quantities
+
+{i defined by {i = Ziyare equal to
+
+                - ya2 {,8 + Y ~::r2 + y {,8 + Y ~::r2 ECYi Ix).
+
+The main point is that, provided r; is not orthogonal to the regressor matrix, one will
+
+in general be able to approximate the variable {i in terms of a polynomial expansion
+of the conditional moments about the origin of Yi as illustrated.
+
+    It has been shown above that the conditional mean of iii under the specification
+errors discussed in Sections 2.2.1 to 2.2.3 is
+
+                                                                     (35)
+
+Using equation (34), letting i' = (1, 1, ... , 1), and defining lJo~k = (J-Lokl' ''',J-LokN), one
+
+obtains the result that
+
+     r; = A' [aoi + allJool + a2IJoo2+' .. ]
+
+     = a2A'lJoo2+aaA'lJooa+ ... ,                                    (35')
+
+since A' is orthogonal to the matrix X. If the regression is not in deviation terms and
+a constant term is not included in X, then equation (35') becomes
+
+     r; = aoA'i+ a2 A'1Joo2 + aa A'lJooa+ ....                       (36)
+
+Thus, using (35'), one has the result that
+
+     r; = E{a2A'y(2) +aaA'y(a) +a4 A'9(4) + ... },                   (37)
+
+where the Nx 1 dimensional vectors y(j) are defined by y(j)' = (yf,y~, ...,Yk).
+
+   Defining % by % = aiy(j+l), i = 1,2, ... ,N-K, j = 1,2, ... , one notes that the
+
+vector r; can be approximated by an equation in the expectations of the (N - K)
+1969]  RAMSEY - Tests for Errors in Least-squares Regression Analysis  361
+
+dimensional vectors qj' This result provides the basis for the regression test to be
+discussed in the next section. One notes that the regression model:
+
+       o= IXo i + (Xl ql + (X2 q2+ ." + e,                             (38)
+
+is an errors in the variables type of regression model. Indeed, it is the stochastic
+
+independence of 0 and y which enables one to interpret equation (38) as an errors in
+
+the variables model, for to interpret it otherwise the regression model relative to (38)
+would suffer from the specification error that e would not be statistically independent
+of the regressors. Thus, although the least-squares estimators of the regression
+coefficients (Xo, lXI' (X2' ··· will be biased downwards, the estimator
+
+           'i eXo i + eXl ql + eX2 q2+ ...                                                Downloaded from academic.oup.com/jrsssb/article/31/2/350/7027014 by guest on 13 October 2026
+
+will be an unbiased estimator of the conditional mean of 0, provided can be
+approximated by a polynomial in the conditional moments about the origin of Yi:
+
+'isee, for example, Lindley's comments on errors in the variables models (Lindley, 1947,
+
+p. 232). However, one should note that cases can arise for which one cannot express
+
+   in terms of a polynomial in the conditional moments.
+
+  If one were to assume further that the relationship between E(u; IX) and ai (l.02'
+
+i = 1,2, ... , N - K, is monotonic, then one has the basis for a rank test between the
+
+ranking of the squared residuals and that of the qil' i = 1,2, ... , N - K.
+
+                            4. DISCUSSION OF THE TEST PROCEDURES
+
+    The previous section discussed how to obtain a suitable residual vector. The
+important requirement which is met by those residuals is that the joint distribution
+under the null hypothesis is normal, with null mean vector and covariance matrix
+given by a2 I N _ K · This section discusses how to use the residuals developed in the
+previous section in testing for specification errors.
+
+       4.1. The Regression Specification Error Test (RESET)
+
+    Under the null hypothesis that the full ideal conditions hold, 0 is distributed as
+normal with null mean vector and covariance matrix a2 I N _ K · Under the alternative
+hypothesis, 0 is distributed as normal, but with mean vector given by A'; and the
+covariance matrix by o:2IN _ K. (It should be noted that attention is being restricted
+here to the cases where ui is distributed normally with non-zero mean, i.e. the cases
+corresponding to the errors discussed in Sections 2.2.1 to 2.2.3.) In the omitted
+variables case the vector A'; can be regarded as the net contribution of the omitted
+variable to the conditional mean of the dependent variable, where "net" means that
+one is considering the effect of the omitted variable given the other regressors. Thus,
+under the alternative hypothesis, one may write 0 as
+
+       o= A';+e,                                                       (39)
+
+where the (N - K) x 1 vector e is normally distributed with null mean vector.
+
+    The model formulated in equation (39) suggests the possibility of testing for
+
+specification error under these assumptions by regressing 0 on ~ = A'; and performing
+
+an F test on the estimated regression. However,; is unknown. Instead, as shown in
+
+the last section, one may, under the assumptions discussed, approximate the regressor
+
+vector ~ by a linear sum of the vectors qj, j = 1, 2, .... Thus, one considers the
+
+regression:
+
+                                                                       (40)
+362  RAMSEY - Tests for Errors in Least-squares Regression Analysis  [No.2,
+
+where ei is assumed to be normal with zero mean, and one applies an F test on the            Downloaded from academic.oup.com/jrsssb/article/31/2/350/7027014 by guest on 13 October 2026
+joint significance of the ex's. How many vectors qj are needed will depend upon the
+particular circumstances so that no general rule can be specified. The author has
+
+found, however, that using ql' q2 and qa has been sufficient.
+    Under the null hypothesis the regression coefficient estimators have zero expected
+
+values and the covariance matrix of e is a2 I N _ K · Under the alternative hypothesis
+
+that the mean vector of ii is A'I;, one or more of the coefficient estimates will have non-
+
+zero means, i.e, the multiple correlation coefficient is non-zero. The covariance
+matrix of e under the alternative hypotheses considered in Sections 2.2.1 to 2.2.3 will
+
+be given by ij2IN_K, where ij2 is the variance of ui about its conditional mean.
+
+    If the alternative hypothesis is that 0 is distributed as N(O,n), wheren is a diagonal
+matrix with unequal elements, then one cannot use the regression test to discriminate
+against such an alternative. Further, if the alternative hypothesis is that the dis-
+tribution of 0 is not normal then the regression test is no longer well defined.
+
+     4.2. The Rank Specification Error Test (RASET)
+
+    The following tests all use the squared residuals as independent estimates of the
+
+error variance. Under the null hypothesis, u~, i = 1,2, ... , N - K, are distributed as
+
+a2 X~, whereas under the first three alternative hypotheses, which were discussed in
+
+Sections2.2.1 to 2.2.3, uVjj2, i= 1,2, ... ,N-K, are distributed as x2(1, ;\), where
+
+ij2 is the variance of ui about its conditional mean a~ 1;, ;\ = I;'aia~ l;/ij2. One notes
+
+that the larger Ai' i = 1,2,. 00' N - K, the greater the power of tests discriminating
+between central and non-central X2 distributions. Thus, it is the size of 1;'a, a~ I;
+
+relative to ij2 which is important. It can be shown that for the case of an omitted
+
+variable, ~i':lK;\ = E{~RSS}/jj2-1, where ~RSS is the extra regression sum of
+
+squares due to the omitted variable and ij2 is the variance of the error terms.
+
+   The previous test considered regressing ui on the vectors {qj}, j = 1,2, .... If,
+however, one can assume that the second moment of ui' i.e. 1;'a, a~ I;+ij2 varies mono-
+
+tonically with qil' i = 1, 2, ... , N - K, where qil = a~ y(2l, then one can consider the
+
+relationship between monotonic transformations of u~ and qil' Consequently, one is
+
+led to consider the relationship between the rankings of the ui and of the qil' One
+
+should note that u~ is an estimate of 1;'a, a~ I;+ jj2 so that the ranking of ~,
+
+i = 1, 2, ... , N - K is an estimate of the ranking of 1;'~ a~ 1;.
+
+    First, one rearranges the qil into ascending order permuting the elements of the
+
+vector 0 conformably and one transforms qil ~j, j = 1,2, 00" N - K, where j denotes
+
+the index of the jth largest qil' One now assigns to each u~ an integer ri such that the
+value of ri indicates that u~ is the rth largest variance estimate. In short, the set of
+
+N - K numbers {ri} is a permutation of the integers 1,2,3, ... , N - K. The test statistic
+
+to be used is Spearman's rank correlation coefficient, Rs' which is defined by
+
+           6       N-K
+     n, = 1-(N-K)[(N-K)2-1] i~l (ri-i)2.
+                                                                     (41)
+
+For values of (N - K) ~ 10, tables are readily available. For larger values one uses the
+asymptotic result that the statistic tR defined by
+
+     _ (N-K-2)R~)i                                                   (42)
+     tR -  (1-R~)
+1969]  RAMSEY - Tests for Errors in Least-squares Regression Analysis  363
+
+is distributed as "Student's" t with (N - K - 2) degrees of freedom under the null               Downloaded from academic.oup.com/jrsssb/article/31/2/350/7027014 by guest on 13 October 2026
+hypothesis. Kendall and Stuart (1961, Vol. 2, p. 477) point out that even for (N-K)
+as small as 10 the approximation is quite good.
+
+  Under the null hypothesis ur is distributed independently of Qil' so that the
+
+expected value of R; is zero and its variance is (N - K - 2)-1. Under the alternative
+
+hypothesis that ur is distributed as 52X2(1,\), i = 1,2, ... , N - K, the power of the test
+
+depends upon the assumption of a monotonic relationship between the second
+
+moment of ui and qil'
+
+    Spearman's rank correlation coefficient was chosen in preference to other possible
+
+rank tests of independence on two grounds. First, the test is simple. Second, as
+
+Stuart (1956, p.287) has shown, Spearman's coefficient has maximum asymptotic
+
+relative efficiency when compared with a number of other randomness tests against
+normal alternatives. Stuart (1954) also considered the alternative of calculating the
+
+linear regression between the rankings which test had an asymptotic relative efficiency
+
+of 1 compared to the 0·98 for Spearman's coefficient. However, the rank test would
+seem to be more robust to non-normality.
+
+    One notes that Spearman's coefficient does not depend upon the assumption of
+
+ar normality. If the alternative hypothesis is that of simple heteroskedasticity, the
+
+second moment of Ui is ar, i = 1,2, ... , N - K, and is distributed as a7x~,
+
+i = 1, 2, ... , N - K. If ar varies monotonically with qil over i = 1, 2, ... , N - K, then the
+
+rank test is applicable.
+
+                 4.3. The Kolmogorov Specification Error Test (KOMSET)
+
+  One of the disadvantages of testing on the squared residuals ur is that their
+
+distribution depends upon the unknown scale factor 52. The rank test is not affected
+by lack of knowledge of 52 as the test is invariant to scale changes. An alternative
+approach is to consider ratios of the squared residuals so as to eliminate the effect of
+
+the common scale factor. One therefore considers the distribution of Wi = u~/il~, j# k,
+
+where the j, k are chosen so that the Wi are independent.
+
+4.3.1. The distribution of ratios of ar under the null and alternatice hypotheses
+
+    Under the null hypothesis that the full ideal conditions hold,
+
+                                        il~/52, j=1,2, ... ,N-K,
+
+is distributed as central X2 with one degree of freedom. For the moment assume
+N - K is even, so that one has 1= (N - K)/2 statistics wi' Thus, the Wi' i = 1,2, ... , I,
+form a set of I independent variates from the central F distribution with (1, 1) degrees
+of freedom. Under the first three alternative hypotheses considered in Sections 2.2.1
+to 2.2.3, il~/52 is distributed as non-central X2 with one degree of freedom, so that wi'
+
+i = 1,2, ... , I, form a set of I independent variates from double non-central F dis-
+
+tributions with (1,1) degrees of freedom and non-central parameters "-t, A2, where
+
+Al = (;'A1A1;)/52 and A2 = (;'A2A;;)/52. For the purposes of the analysis to
+
+follow it is convenient to approximate the non-central distributions with central
+distributions.
+
+4.3.2. Approximation of the non-central F by central F through reparametrization
+    The relationship between the non-central and central X2 distributions is
+
+easily achieved by equating the first two moments of both distributions. The
+364 RAMSEY - Tests for Errors in Least-squares Regression Analysis  [No.2,
+
+approximation is, in fact, quite good (Kendall and Stuart, 1961, Vol. 2, p. 229). The
+correspondence is
+
+         XZ(v, A)~axg,                                              (43)
+
+where a = (v+2A)/(v+ A), b = (v+ A)Z/(v+2A), v is the degrees of freedom and A is the                                Downloaded from academic.oup.com/jrsssb/article/31/2/350/7027014 by guest on 13 October 2026
+non-central parameter. Thus, letting gI = iii/liZ, g2 = ii~/liz, one sees that gI is dis-
+
+tributed as al X~l and gz as azXg" or that glial is distributed as Xg, and gzlaz as Xg.. If
+one defines z by azgl/aIgz, then under the alternative hypothesis that ii7 is distributed
+
+as liz xZ(l, \), i = 1,2, ... , N - K, one sees that z is distributed as F with bI and bz
+
+degrees of freedom. However, the ai are unknown and in general not equal so one
+
+must consider instead the distribution of w = s.ls« The distribution of w is obtained
+
+from that of z by transformation of variables with a Jacobian of aZlaI. Thus, one has
+
+                                                                                                               (44)
+
+a scaled central F with (bI , bz) degrees offreedom. Compare this with the distribution
+of w under the null hypothesis which is central F with (1,1) degrees of freedom:
+
+         w-t(l +W)-I
+         fo(w) = B(.! .!) = FI,I'
+                                                                    (45)
+
+         2'2
+
+Some consideration must be given to the effect of the scaling factor aZlaI. As shown in
+(46), the scaling factor is a function of the degrees of freedom and of the non-central
+parameters of the component XZ variables:
+
+         a2 (vz+ 2A2) (vI + AI) (46)
+
+         al = (vz+ A2)(vI + 2\)'
+
+Obviously, if Al = A2 and VI = V2 = 1, the factor reduces to 1. The effect of the ratio
+appears, therefore, only when Al =1= Az· Thus, one notes that
+
+lim (aZlaI) = 2 and lim (aZlaI) = t,
+'\.-+00       '\1-+00
+
+'\1-+0        ,\.-+0
+
+which are the maximum and nummum values respectively for the scale factor.
+
+Finally, note that bi = (1 + \)Zl(l +2\) ~ 1, the equality holding only if Aiis zero.
+
+    Looking at the transformed distributions, one notes that under the null hypothesis
+there is no change, w is distributed as central F with (1, 1) degrees offreedom. Under
+the alternative hypothesis one has w distributed as scaled central F with (bI , bJ
+degrees of freedom. To illustrate the analysis above consider Fig. la which shows
+the density functions of F under the null and alternative hypotheses. The diagrams
+and the above analysis suggest that a suitable test would be a non-parametric test on the
+cumulative distribution function.
+
+4.3.3. The Kolmogorov statistic
+
+    Let A represent the scaling factor, so that under the alternative hypothesis w is
+distributed as AFb"b.' One considers the cumulative distribution functions, Go, GI ,
+under the null and alternative hypotheses respectively, defined by
+
+Go(W) = f~FI.1(W)dw, GI(W) = foWAFbbb.(Aw)dw.                       (47)
+1969]          RAMSEY - Tests for Errors in Least-squares Regression Analysis                 365
+
+    The Kolmogorov test is based on the sample cumulative distribution function
+Sn(x) defined by
+
+                              O' x<x(l),
+
+                     Sn(X) = rjn, X(r)'::; X < X(r+l)'                                        (48)
+
+                           {  1, X(n) ,::;X,
+
+where the xCi) are the order statistics. Sn(x) is simply the proportion of observations
+
+                     2           3             4                                        w           Downloaded from academic.oup.com/jrsssb/article/31/2/350/7027014 by guest on 13 October 2026
+
+               FIG. lao The density functions, FI,1 and Fb.,b" of the statistic wunder
+                             the null and alternative hypotheses respectively.
+
+                                 C.D.F·1
+
+        <:
+
+       .S:
+       ::;
+       s:
+
+       "5 =
+
+       .~ 0
+       "0 .-
+
+       "u
+
+        "" <:
+       '~2
+
+       's
+       E
+
+        ::l
+
+       U
+
+               o  I     2           3             4                                        w
+
+       FIG. 1b. The cumulative distribution functions, Go and Gb of the statistic w
+
+                  under the null and alternative hypotheses respectively.
+
+not exceeding x. If Go(x) is the true cumulative distribution function, then by the
+Strong Law of Large Numbers,
+
+                     lim Pr{Sn(x) = Go(x)} = 1.                                               (49)
+                     n_",
+
+The Kolmogorov statistic, D n , is defined by
+
+                     Dn = suPISn(x)-Go(x)l·                                                   (50)
+
+                              x
+366  RAMSEY - Tests for Errors in Least-squares Regression Analysis  [No.2,
+
+The distribution of D n has been calculated exactly and listed in tables for n up to 100
+(Birnbaum, 1952). For large n the asymptotic distribution has been obtained and
+
+tabulated (Smirnov, 1948). In the simple hypothesis testing case the distribution of
+
+D n is completely distribution free under the null hypothesis, the distribution depend-
+ing only on n. Further, whatever the true cumulative distribution function G(x), one
+
+has for a size 0: test and critical value drx :
+
+     P{Dn = sup] Sn(x)-G(x) I>drx} = 0:.                             (51)
+
+     X
+
+Birnbaum (1952) has listed values of drx for various 0: levels and n from 1 to 100. The                         Downloaded from academic.oup.com/jrsssb/article/31/2/350/7027014 by guest on 13 October 2026
+probability statement in (51) can be inverted to yield a confidence interval for the
+
+whole distribution, thus:
+
+                                                                     (52)
+
+Indeed, (52) states one of the most useful properties of the Kolmogorov statistic.
+
+    For any nand 0: size of test, lower and upper bounds can be calculated at each i,
+
+i = 1,2, ... , n, where i refers to the order of the order statistics. Define:
+
+     L(i) = max (0, iln - drx) , U(i) = min (l, iln +drx).           (53)
+
+A very useful way of carrying out the test is a graphical method. This procedure is
+particularly useful if the calculations and graphing are all performed by a computer.
+One plots L(O, U(O and Go(x) for XE[Xli)' X(itll] against xli). If Go, the null hypo-
+thesis, is to be accepted, the entire graph of Go must be contained within the contours
+plotted by L(i) and U(O. Tables are available for evaluating Go(xw) for the case under
+consideration in this paper. Alternatively, one may use the tables of the incomplete
+beta distribution and transform to the F.
+
+4.3.4. Discussion of the appropriate way of choosing the ratios of il7
+
+    Two points need to be settled before the Kolmogorov statistic can be applied in
+
+practice. First, it has been assumed that the optimal choice of null hypothesis was F1,l '
+This point must be demonstrated. Second, one must settle the question of optimal
+
+choice of how to take the ratios of the il7 to obtain the variables w distributed as F.
+
+    Obviously one wants as many estimates Wi as is possible in order to maximize the
+power of the Kolmogorov test. This requirement would indicate the use of F1,1 as the
+
+null hypothesis. Further, the distinction between the distributions under the two
+
+hypotheses depends upon the difference between Vi' the degrees of freedom under the
+
+null hypothesis, and hi = (vi + Ai)2/(vi+2\), i.e. the greater (hi - Vi) the more powerful
+is the test. As (hi - Vi) = A7!(Vi +2Ai), one sees immediately that the optimal degrees
+
+of freedom under the alternative hypothesis are (1,1). One, therefore, restricts
+
+attention to Wi = il;/il~, i = 1,2, ... , Z.
+
+    The choice ofj and k can now be settled. The only requirement is that the Wi be
+
+independent under the null hypothesis so that no two Wi' i = 1,2, ... ,Z, should have a
+common il;, j = 1,2, ... , N - K. Thus, a workable solution to the problem of how to
+calculate the Wi' i = 1,2, ... , Z, is given by taking ratios in pairs to give the sequence:
+
+                                                                                                          (54)
+
+where il; is the jth observed residual. As the residuals are distributed independently of
+
+the order of observation, then the variables Wi' i = 1,2, ... ,1, are distributed inde-
+pendently of the observed order.
+1969]  RAMSEY - Tests for Errors in Least-squares Regression Analysis  367
+
+4.3.5. Comparison of the Kolmogorov test to some alternative non-parametric tests             Downloaded from academic.oup.com/jrsssb/article/31/2/350/7027014 by guest on 13 October 2026
+
+    The advantages of the Kolmogorov test over other non-parametric tests, e.g.
+Pearson's X2 test, the Neyman-Barton "smooth" test and the Smirnov-von Mises
+test, are that D n uses ungrouped data, its distribution is known for finite sample sizes
+and it provides a confidence interval for the true cumulative distribution. With
+respect to the use of Pearson's X2 test the work of Williams (1950) and of Massey
+(1951) show that the Kolmogorov test can detect differences between true and
+hypothesized cumulative distributions about one-half the size detectable by Pearson's
+X2 test. Further, as sample size increases Dn becomes even more efficient relative to
+the X2 test.
+
+    Another advantage is that the Kolmogorov test as applied above is robust to
+non-normality. If the original error terms are not normal then the distribution of w
+is no longer F. A final point is to look at the behaviour of the statistic D n if the alter-
+native hypothesis is simple heteroskedasticity. The distribution of w under the
+alternative hypothesis is now a scaled central F with (1, 1)degrees offreedom, where the
+effect of the scaling factor can be inferred from equation (44) by substituting aVa~ for
+a1/a2' It would appear that this test is not very sensitive to such a mis-specification.
+
+                    4.4. Bartlett's M Specification Error Test (BAMSET)
+
+    It has been seen that all of the tests proposed so far do not seem to be very sensitive
+
+to simple heteroskedasticity. Such a situation is at least potentially an advantage, for
+
+one would like to be able to discriminate between specification errors.
+
+   However, if the alternative hypothesis is that £17, i = 1,2, ... , N - K, are distributed
+
+as a7 xi, one can consider as a possible test of heterogeneity, a modification of
+
+Bartlett's M test for the non-equality of variances (Kendall and Stuart, 1961, Vol. 2,
+
+pp.234--236). The residuals £17, i = 1,2, .. " N-K, provide one with N -Kindependent
+
+estimates of the variances a7, i = 1,2, .. " N - K. Bartlett's M test is a modification of
+
+Pearson's likelihood-ratio test for heterogeneity. Under the null hypothesis, Ho' the
+
+a7 are all equal and under the alternative hypothesis H1, the a7 are all different.
+
+Pearson, using the likelihood-ratio method, derived the statistic I defined by
+
+                k                                                      (55)
+
+       1= n (s7Js2) n ;/2,
+
+                  i~l
+
+where s7 = nil :2:~1(Xii-Xi)2, S2 = n-1 :2:T=l nis7, n = :2:T=l ni' Pearson assumed that
+
+the observations xii were drawings from k independent samples of size ni each and
+
+that each sample was drawn from a normal population with mean ILi and variance a7.
+
+Bartlett's modification was to replace the ni by the corresponding degrees of freedom
+
+Vi = (ni-I) and where v = :2:T=l Vi replaces n. Thus, one has 1* defined
+
+                   k                                                   (56)
+
+       1* = n (S7JS2)VI/2.
+
+                      i~l
+
+The advantage of 1* over I is that for any ni one has an unbiased test (Kendall and
+Stuart, 1961, Vol. 2, pp. 244--245). By transforming 1* to
+
+       k
+
+       -210g/* = vlogs2 - ~ vilogs7,                                   (57)
+
+       i~l
+368  RAMSEY - Tests for Errors in Least-squares Regression Analysis                [No.2,
+
+one has a statistic which is asymptotically distributed as central X2 with k - 1 degrees
+offreedom. The approximation is improved if one divides (57) by the scaling constant:
+
+                                      1+i(k-l)-1 i~1 (~-~).                                (58)
+
+    The analogue to the regression case would appear to obvious; ili corresponds to si,          Downloaded from academic.oup.com/jrsssb/article/31/2/350/7027014 by guest on 13 October 2026
+
+(N - K)-1 ~f-K ili corresponds to S2, Vi = 1, and ~~ Vi = V = N - K, where k = N - K.
+
+However, defining 1*in this way, while formally correct, is not very useful as - 2log 1*
+will not be asymptotically distributed as X2 with (k - 1) degrees of freedom under the
+null hypothesis. This is because the smallest value of Vi for which the asymptotic
+
+result will hold is 2 as may be easily verified. However, the following modification
+enables one to obtain a statistic which is asymptotically distributed as X2· Let
+
+                             Vi  i= 1,2,3;
+
+     si=Vil ~ilJ'
+
+                      j=1
+
+                                 k                         N-K    k
+     S2 = v-I ~ visi = (N-K)-1 ~ ilJ;
+                                                                ~ Vi = V = N - K;  k = 3.
+
+                                 i=1                       j=1  i~l
+
+In short, one divides the set of (N - K) residuals into three non-intersecting sub-sets in
+
+order to form the statistics si, i = 1,2,3.
+
+    The distribution of - 2logl* defined in (57) with respect to si, S2, Vi' V and k is,
+under the null hypothesis, asymptotically distributed as central X2 with two degrees
+
+of freedom. The null hypothesis, one recalls, is that ili is distributed as
+
+                                      a2x~, i = 1,2, ... ,N-K.
+
+Under the alternative hypothesis that il~ is distributed as a~ X~, the (N- K) a~ not
+being all equal, the distributions of s~ and S2 are weighted sums of central X2 distribu-
+
+tions. In the original statement of the problem by Pearson and Bartlett only S2 is
+distributed as a weighted sum of X2 distributions under the alternative hypothesis.
+
+    The value of k was chosen to be 3 for the following reason. The larger the values
+
+of Vi> i = 1,2, ... , k, the closer is the approximation between the actual distribution of
+
+- 2log 1* and X~ under the null hypothesis. On the other hand, in order to test for
+
+heterogeneity of variance, one needs several variance estimators. k = 3 was chosen
+
+as a useful compromise. In place of additional information about the distributions
+
+of il~, i = 1,2, ... , N - K, the sub-sets are most easily chosen by setting
+
+                                                     Tl  r1 = [(N- K)/3],
+
+                                 s~ = 0/r1) ~ il~,
+
+                                                    i=1
+
+                                            T.
+                                 s~ = (l/r1) ~ il~, r2 = 2r1,
+                                            i=Tl+l                                         (59)
+
+                                                N-K        ra = N - K - 2r1,
+
+                                 s~ = (l/ra) ~ il~,
+
+                                                   i=T.+l
+
+where r1 is the integer obtained from the integer division of (N - K) by 3.
+    Bartlett's M test is obviously not defined for the cases considered in Sections 2.2.1
+
+to 2.2.3, i.e. when the il~ are distributed as non-central X2. However, the test is
+
+sensitive to the alternative hypothesis of simple heteroskedasticity. The chief dis-
+advantage of the test is that it is not robust to non-normality.
+1969]  RAMSEY - Tests for Errors in Least-squares Regression Analysis  369
+
+4.5. The Relative Merits of the Four Test Procedures                                            Downloaded from academic.oup.com/jrsssb/article/31/2/350/7027014 by guest on 13 October 2026
+
+    The above few pages have considered the use of four tests, the regression
+specification error test (RESET), the rank specification error test (RASET), the
+Ko1mogorov specification error test (KOMSET) and a modification of Bartlett's
+M specification error test (BAMSET). The first three were considered as tests for
+the first three specification errors considered in Section 2 and the last is a test for
+simple heteroskedasticity.
+
+    The four tests are to a considerable extent complementary rather than substitutes
+for each other. RESET is able to detect cases where RASET's power is reduced,
+i.e. where the regression of ~ on qil is non-monotonic. The power of RESET,
+
+however, depends upon the full ideal conditions holding for the regression of ui
+
+on a linear sum of the vectors qj' j = 1,2, .... KOMSET'S power, on the other hand,
+
+is not reduced by non-monotonicity of the relationship between ~ and qil' nor does
+it need the assumptions required by RESET. BAMSET, of course, is not designed
+to detect specification errors which yield residuals distributed as non-central X2·
+
+    If the alternative hypothesis is that of non-normality of the error terms, then
+RESET and BAMSET are no longer well defined. RASET would seem to be
+insensitive to such a mis-specification. However, KOMSET is still well defined
+under these circumstances and with sufficient degrees of freedom should be able to
+detect the presence of such a mis-specification.
+
+    Moving to the third alternative, that is, the problem of heteroskedasticity, it has
+been shown that RESET is completely insensitive to such a departure from the full
+ideal conditions. RASET and KOMSET can discriminate against such alternatives
+in certain circumstances, but are presumably not as efficient as BAMSET which is a
+parametric test designed to detect this very problem.
+
+    If not one, but several, mis-specifications are made, the situation is not so clear.
+On the one hand, if the mis-specifications reinforce each other the tests become
+even more powerful. However, if they offset each other the tests will tend to accept
+the null hypothesis. If the net effect on the distribution of the residuals is to leave
+them normal with zero mean, then the tests discussed above, RASET, RESET and
+KOMSET, will not detect any specification error. However, BAMSET may indicate
+the presence of heteroskedasticity.
+
+                                     5. RESEARCH IN PROGRESS
+
+    With respect to the further research which needs to be done and which is in fact
+under way, the most important problem to be handled is the application of Monte
+
+Carlo techniques to examine the small sample properties of the four tests. t In addi-
+
+tion, the power functions of the tests are to be examined and some attention is to be
+paid to the asymptotic relative efficiency of the tests in certain cases.
+
+    On the theoretical side two major areas of examination are: first, the cases where
+mis-specification leads to non-normality of the error terms in the mis-specified model,
+and, second, the problems raised by auto-correlation of the error terms. If the tests
+are robust to auto-correlation the usefulness of the procedures described in this paper
+will be greatly enhanced as much econometric work is concerned with time-series data.
+
+    t A computer program has been designed to carry out the entire set of test procedures.
+
+This program has been run successfully on a Control Data Corporation 3600 computer.
+The results obtained from some thirty runs with small sample problems drawn from the economic
+literature have been encouraging. Readers interested in obtaining a copy of the Fortran source
+deck with accompanying write-up should send their request to the author.
+370  RAMSEY - Tests for Errors in Least-squares Regression Analysis  [No.2,
+
+                                                        ACKNOWLEDGEMENT
+
+    The author would like to thank Arnold Zellner, Jan Kmenta and Harold Watts
+for their cogent criticisms of earlier drafts of this paper. Further, the author is most
+grateful to the referee for many comments which improved the paper considerably.
+
+                                REFERENCES AND OTHER RELATED PUBLICATIONS                              Downloaded from academic.oup.com/jrsssb/article/31/2/350/7027014 by guest on 13 October 2026
+
+ANSCOMBE, F. J. (1961). Examination of residuals. Proc. Fourth Berkeley Symp, Math. Statist.
+    and Prob., 1, 1-36.
+
+ANSCOMBE, F. J. and TUKEY, J. W. (1963). The examination and analysis of residuals. Techno-
+    metrics,S, 141-160.
+
+BANCROFT, T. A. (1944). On biases in estimation due to the use of preliminary tests of significance.
+    Ann. Math. Statist., 15, 190-204.
+
+BARTLETT, M. S. (1949). Fitting a straight line when both variables are subject to error. Biometrics.
+    5,207-212.
+
+BIRNBAUM, Z. W. (1952). Numerical tabulation of the distribution of Kolrnogorov's statistic for
+    finite sample size. J. Amer. Statist. Ass., 47, 425-441.
+
+Box, G. E. P. and Cox. D. R. (1964). An analysis of transformations. J. R. Statist. Soc. B,
+    26,211-243.
+
+Box, G. E. P. and TIAO, G. C. (1964). A note on criterion robustness and inference robustness.
+    Biometrika, 51, 169-173.
+
+Box. G. E. P. and TroWELL, P. W. (1962). Transformation of the independent variables. Techno-
+    metrics, 4, 531-550.
+
+CHRIST, C. F. (1960). Simultaneous equation estimation: any verdict yet? Econometrica, 28.
+    835-845.
+
+DURBIN, J. (1954). Errors in variables. Rev. Int. Statist. Inst., 22, 23-32.
+DURBIN, J. and WATSON, G. S. (1950). Testing for serial correlation in least squares regression, I.
+
+    Biometrika, 37, 409-428.
+- - (1951). Testing for serial correlation in least squares regression, II. Biometrika, 38, 159-178.
+FISHER, F. M. (1961). On the cost of approximate specification in simultaneous equation esti-
+
+    mation. Econometrica, 29, 139-170.
+GOLDBERGER, A. S. (1964). Econometric Theory. New York: Wiley.
+GOLDFELD, S. M. and QUANDT, R. E. (1965). Some tests for homoscedasticity. J. Amer. Statist.
+
+    Ass., 60, 539-547.
+GRILICHES, Z. (1957). Specification bias in estimates of production functions. Farm Economics,
+
+    39,8-20.
+HAAVELMO, T. (1943). The statistical implications of a system of simultaneous equations. ECYJno-
+
+    metrica, 11, 1-12.
+HILDRETH, C. (1960). Simultaneous equations: any verdict yet? Econometrica, 28, 846-854.
+KAc, M., KIEFER, J. and WOLFOWITZ, J. (1955). On tests of normality and other tests of goodness
+
+    of fit based on distance methods. Ann. Math. Statist., 26, 189-211.
+KENDALL, M. G. (1951). Regression, structure and functional relationships, Part I. Biometrika,
+
+    38, 11-25.
+- - (1952). Regression, structure and functional relationships, Part II. Biometrika, 39, 96-108.
+KENDALL, M. G. and STUART, A. (1961). The Advanced Theory of Statistics, Vols. 1,2. London:
+
+    Griffin.
+KuH, E. and MEYER, J. R. (1955). Correlation and regression estimates when the data are ratios.
+
+    Econometrica, 23, 400-416.
+LARSON, J. J. and BANCROFT, T. A. (1963). Biases in prediction by regression for certain incom-
+
+    pletely specified models. Biometrika, 50, 391-402.
+- - (1963). Sequential model building for prediction in regression analysis, I. Ann. Math.
+
+     Statist., 34, 462-479.
+LEHMANN, E. L. (1959). Testing Statistical Hypotheses. New York: Wiley.
+LINDLEY, D. V. (1947). Regression lines and the linear functional relationship. J. R. Statist. Soc.
+
+     Suppl. 9, 218-244.
+Lru, T. C. (1960). Underidentification, structural estimation, and forecasting. Econometrica, 28,
+
+    855-865.
+MADANSKY, A. (1959). The fitting of straight lines when both variables are subject to error.
+
+    J. Amer. Statist. Ass., 54, 173-205.
+1969]  RAMSEY - Tests for Errors in Least-squares Regression Analysis  371
+
+MASSEY, F. J., Jr (1951). The Kolmogorov-Smirnov test of goodness of fit. J. Amer. Statist. Ass.,     Downloaded from academic.oup.com/jrsssb/article/31/2/350/7027014 by guest on 13 October 2026
+    46,68-78.
+
+NAIR, K. R. and SHRIVASTAVA, M. P. (1942). On a simple method of curve fitting. Sankhyd,
+    6, 121-132.
+
+PRAIS, S. J. and HOUTHAKKER, H. S. (1955). The Analysis of Family Budgets. Cambridge:
+     University Press.
+
+PEARSON, E. S. and HARTLEY, H. O. (1962). Biometrika Tablesfor Statisticians, Vol. 1. Cambridge:
+    University Press.
+
+RAFF, M. S. (1956). On approximating the point binomial. J. A mer. Statist. Ass., 51, 293-303.
+RAMSEY, J. B. (1965). An expository note on errors in digital computers: their effect on the results
+
+    of econometric analysis. Systems Formulation, Methodology, and Policy Workshop, Paper No.
+    6515. University of Wisconsin, Madison.
+RAO, C. R. (1952). Advanced Statistical Methods in Biometric Research. New York: Wiley.
+SMIRNOV, N. V. (1948). Table for estimating the goodness of fit of empirical distributions. Ann.
+    Math. Statist., 19, 279-281.
+STUART, A. (1954). Asymptotic relative efficiencies of distribution-free tests of randomness
+    against normal alternatives. J. Amer. Statist. Ass., 49, 147-157.
+- - (1956). The efficiencies of tests of randomness against normal alternatives. J. Amer. Statist.
+    Ass., 51, 285-287.
+THEIL, H. (1961). Economic Forecasts and Policy, 2nd ed. Amsterdam: North Holland.
+- - (1965). The analysis of disturbances in regression analysis. J. A mer. Statist. Ass., 60,
+    1067-1079.
+- - (1968). A simplification of the BLUS procedure for analysing regression disturbances.
+    J. Amer, Statist. Ass., 63, 242-251.
+THEIL, H. and GOLDBERGER, A. S. (1961). On pure and mixed statistical estimation in economics.
+    Int. Econ. Rev., 2, 65-78.
+TUKEY, J. W. (1959). One degree of freedom for non-additivity. Biometrics,S, 232-242.
+WALD, A. (1940). The fitting of straight lines if both variables are subject to error. Ann. Math.
+    Statist., 11, 284-300.
+WILLIAMS, C. A., Jr (1950). On the choice of the number and width of classes for the chi-square
+    goodness of fit. J. Amer. Statist. Ass., 45, 77-86.
+ZELLNER, A. (1962). An efficient method of estimating seemingly unrelated regressions and tests
+    for aggregation bias. J. Amer. Statist. Ass., 57, 348-368.
+ZELLNER, A. and THEIL, H. (1962). Three-stage least squares: simultaneous estimation of simul-
+    taneous equations. Econometrica, 30, 54-78.
+
+14
+

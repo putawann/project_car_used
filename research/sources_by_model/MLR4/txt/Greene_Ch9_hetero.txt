@@ -1,0 +1,1778 @@
+                                    9
+
+  The Generalized Regression
+Model and Heteroscedasticity
+
+          §
+
+9.1 INTRODUCTION
+
+In this and the next several chapters, we will extend the multiple regression model
+to disturbances that violate Assumption A.4 of the classical regression model. The
+generalized linear regression model is
+
+                                    y = XB + E,
+
+                                 E[E X] = 0,     (9-1)
+
+                                 E[EE  X] = s2 = ,
+
+where is a positive definite matrix. The covariance matrix is written in the form
+s2 at several points so that we can obtain the classical model, s2I as a convenient
+special case.
+
+     The two leading cases are heteroscedasticity and autocorrelation. Disturbances
+are heteroscedastic when they have different variances. Heteroscedasticity arises
+in numerous applications, in both cross-section and time-series data. Volatile high-
+frequency time-series data, such as daily observations in financial markets, are
+heteroscedastic. Heteroscedasticity appears in cross-section data where the scale of
+the dependent variable and the explanatory power of the model tend to vary across
+observations. Microeconomic data, such as expenditure surveys, are typical. Even after
+accounting for firm size, we expect to observe greater variation in the profits of large
+firms than in those of small ones. The variance of profits might also depend on product
+diversification, research and development expenditure, and industry characteristics and
+therefore might also vary across firms of similar sizes. When analyzing family spending
+patterns, we find that there is greater variation in expenditure on certain commodity
+groups among high-income families than low ones due to the greater discretion allowed
+by higher incomes.
+
+     The disturbances are still assumed to be uncorrelated across observations, so s2
+would be
+
+                                 v1 0 g 0     s12 0 g 0
+                                 s2 = s2 D 0 v2 g 0 T = D 0 s22 g 0 T .
+                                 f                  f
+
+                                 0 0 g vn     0 0 g sn2
+
+Autocorrelation is usually found in time-series data. Economic time series often display a
+memory in that variation around the regression function is not independent from one period
+
+                                                                         297
+
+M09_GREE1366_08_SE_C09.indd 297                                                             2/24/17 10:44 AM
+298 Part II  Generalized Regression Model and Equation Systems
+
+to the next. The seasonally adjusted price and quantity series published by government
+agencies are examples. Time-series data are usually homoscedastic, so s2 might be
+
+                                                    1      r1 g rn - 1
+                                 s2 = s2 D r1              1 g rn - 2 T .
+
+                                                                    f
+
+                                          rn - 1 rn - 2 g 1
+
+The values that appear off the diagonal depend on the model used for the disturbance.
+In most cases, consistent with the notion of a fading memory, the values decline as we
+move away from the diagonal.
+
+     A number of other cases considered later will fit in this framework. Panel data,
+consisting of cross sections observed at several points in time, may exhibit both
+heteroscedasticity and autocorrelation. In the random effects model, yit = xi=tB + ui + eit,
+with E[eit  xit] = E[ui  xit] = 0, the implication is that
+
+                                 0 g0                      se2 + su2   su2       g       su2
+                                                                                         su2 T .
+s2 = D 0                         g 0 T where = D su2                   se2 + su2 g
+
+                                 f                                               f
+
+                                 00 g                      su2         su2       g    2  +  su2
+
+                                                                                    se
+
+The specification exhibits autocorrelation. We shall consider it in Chapter 11. Models
+of spatial autocorrelation, examined in Chapter 11, and multiple equation regression
+models, considered in Chapter 10, are also forms of the generalized regression model.
+
+     This chapter presents some general results for this extended model. We will focus
+on the model of heteroscedasticity in this chapter and in Chapter 14. A general model
+of autocorrelation appears in Chapter 20. Chapters 10 and 11 examine in detail other
+specific types of generalized regression models. We first consider the consequences for
+the least squares estimator of the more general form of the regression model. This will
+include devising an appropriate estimation strategy, still based on least squares. We
+will then examine alternative estimation approaches that can make better use of the
+characteristics of the model.
+
+9.2 ROBUST LEAST SQUARES ESTIMATION AND INFERENCE
+
+The generalized regression model in (9-1) drops assumption A.4. If  I, then the
+disturbances may be heteroscedastic or autocorrelated or both. The least squares
+estimator is
+
+                                       b = B + (XX)-1 a i = 1 n xiei.                       (9-2)
+
+The covariance matrix of the estimator based on (9-1) and (9-2) would be
+
+                                                           2n n               =
+                                       1  XX           -1  s i = 1j = 1vijxixj   XX -1
+
+                                 Var[b  X] = n ¢ n  ¢ n  ¢ n 
+
+                                       = 1 ¢ XX -1  ¢ X(s2 )X  ¢ XX -1  .                   (9-3)
+                                       n n                 n           n
+
+M09_GREE1366_08_SE_C09.indd 298                                                                    2/24/17 10:44 AM
+                                 CHAPTER 9  The Generalized Regression Model and Heteroscedasticity 299
+
+Based on (9-3), we see that s2(XX)-1 would not be the appropriate estimator for the
+
+asymptotic covariance matrix for the least squares estimator, b. In Section 4.5, we
+
+considered a strategy for estimation of the appropriate covariance matrix, without
+
+making explicit assumptions about the form of , for two cases, heteroscedasticity and
+
+clustering (which resembles the random effects model suggested in the Introduction).
+
+We will add some detail to that discussion for the heteroscedasticity case. Clustering is
+
+revisited in Chapter 11.
+
+     The matrix (XX/n) is readily computable using the sample data. The complication
+is the center matrix that involves the unknown s2 . For estimation purposes, s2 is not
+
+a separate unknown parameter. We can arbitrarily scale the unknown , say, by k, and
+
+s2 by 1/k and obtain the same product. We will remove the indeterminacy by assuming
+
+that trace ( ) = n, as it is when = I. Let = s2 . It might seem that to estimate
+
+(1/n)X X, an estimator of , which contains n(n + 1)/2 unknown parameters, is
+
+required. But fortunately (because with only n observations, this would be hopeless),
+
+this observation is not quite right. What is required is an estimator of the K(K + 1)/2
+                                                       X(s2 )X                            1n n
+unknown elements in the center matrix Q* = plim                 = plim a a sijxixj=.
+                                                             n                            ni=1j=1
+
+The point is that Q* is a matrix of sums of squares and cross products that involves sij
+
+and the rows of X. The least squares estimator b is a consistent estimator of B, which
+
+implies that the least squares residuals ei are "pointwise" consistent estimators of their
+
+population counterparts ei. The general approach, then, will be to use X and e to devise
+
+an estimator of Q* for the heteroscedasticity case, sij = 0 when i  j.
+
+                                                                                      n
+
+     We seek an estimator of Q* = plim(1/n) a si2xixi=. White (1980, 2001) shows that,
+
+                                                                                    i=1
+
+under very general conditions, the estimator
+
+                                 S0 = a 1 ei2xixi n =                                              (9-4)
+                                        ni=1
+
+has plim S0 = Q*.1 The end result is that the White heteroscedasticity consistent
+
+estimator
+
+                                 est.asy.Var[b] = 1 ¢ 1 XX  ¢ a ei - 2xixi 1 1 n =  ¢ 1 XX -1
+                                 n n                   ni=1     n
+
+                                 = n(XX)-1S0(XX)-1                                                 (9-5)
+
+can be used to estimate the asymptotic covariance matrix of b. This result implies that
+without actually specifying the type of heteroscedasticity, we can still make appropriate
+inferences based on the least squares estimator. This implication is especially useful if
+we are unsure of the precise nature of the heteroscedasticity (which is probably most
+of the time).
+
+     A number of studies have sought to improve on the White estimator for least
+squares.2 The asymptotic properties of the estimator are unambiguous, but its usefulness
+in small samples is open to question. The possible problems stem from the general result
+that the squared residuals tend to underestimate the squares of the true disturbances.
+
+1 See also Eicker (1967), Horn, Horn, and Duncan (1975), and MacKinnon and White (1985).
+2 See, for example, MacKinnon and White (1985) and Messer and White (1984).
+
+M09_GREE1366_08_SE_C09.indd 299                                                                           2/24/17 10:44 AM
+300 Part II  Generalized Regression Model and Equation Systems
+
+      [That is why we use 1/(n - K) rather than 1/n in computing s2.] The end result is that in
+      small samples, at least as suggested by some Monte Carlo studies,3 the White estimator is
+      a bit too optimistic; the matrix is a bit too small, so asymptotic t ratios are a little too large.
+      Davidson and MacKinnon (1993) suggest a number of fixes, which include: (1) scaling up
+      the end result by a factor n/(n - K) and (2) using the squared residual scaled by its true
+      variance, ei2/mii, instead of ei2, where mii = 1 - xi=(XX)-1xi.4 (See Exercise 9.6.b.) On the
+      basis of their study, Davidson and MacKinnon strongly advocate one or the other
+      correction. Their admonition "One should never use [the White estimator] because
+      [(2)] always performs better" seems a bit strong, but the point is well taken. The use of
+      sharp asymptotic results in small samples can be problematic. The last two rows of
+      Table 9.1 show the recomputed standard errors with these two modifications.
+
+     Example 9.1 Heteroscedastic Regression and the White Estimator
+
+         The data in Appendix Table F7.3 give monthly credit card expenditure, for 13,444 individuals.
+         A subsample of 100 observations used here is given in Appendix Table F9.1. The estimates
+         are based on the 72 of these 100 observations for which expenditure is positive. Linear
+         regression of monthly expenditure on a constant, age, income and its square, and a dummy
+         variable for home ownership produces the residuals plotted in Figure 9.1. The pattern of the
+         residuals is characteristic of a regression with heteroscedasticity.
+
+             Using White's estimator for the regression produces the results in the row labeled "White S. E."
+         in Table 9.1. The adjustment of the least squares results is fairly large, but the Davidson and
+         MacKinnon corrections to White are, even in this sample of only 72 observations, quite modest.
+         The two income coefficients are individually and jointly statistically significant based on the
+
+Figure 9.1 Plot of Residuals against Income.
+
+        U
+     1500
+
+Least Squares Residual           1000
+
+                                 500
+
+                                 0
+
+                                 -500
+
+                                       1  2  3  4  5       6  7  8  9  10
+
+                                                   Income
+
+3 For example, MacKinnon and White (1985).
+
+4 This is the standardized residual in (4-69). The authors also suggest a third correction, ei2/mi2i, as an approximation
+to an estimator based on the "jackknife" technique, but their advocacy of this estimator is much weaker than that
+of the other two. Note that both n/(n - K) and mii converge to 1 (quickly). The Davidson and MacKinnon results
+are strictly small sample considerations.
+
+M09_GREE1366_08_SE_C09.indd 300                                                                                            2/24/17 10:44 AM
+                                 CHAPTER 9  The Generalized Regression Model and Heteroscedasticity 301
+
+TABLE 9.1 Least Squares Regression Results
+
+                                 Constant  Age       OwnRent  Income    Income2
+
+Sample mean                                31.28     0.36     3.369     - 14.997
+                                                                            7.4693
+Coefficient                      - 237.15  - 3.0818  27.941   234.35
+                                                                         - 2.0080
+Standard error                   199.35    5.5147    82.922   80.366       6.9446
+                                                                            7.1991
+t ratio                          - 1.19    - 0.5590  0.337    2.916         7.1995
+
+White S.E.                       212.99    3.3017    92.188   88.866
+
+D. and M. (1)                    220.79    3.4227    95.566   92.122
+
+D. and M. (2)                    221.09    3.4477    95.672   92.084
+
+R2 = 0.243578, s = 284.7508, R2 without Income and income2 = 0.06393.
+
+Mean expenditure = $262.53, Income is * $10,000
+Tests for heteroscedasticity: White = 14.239, Breusch9Pagan = 49.061, Koenker9Bassett = 7.241.
+
+         individual t ratios and F(2, 67) = [(0.244 - 0.064)/2]/[0.756/(72 - 5)] = 7.976. The 1% critical
+         value is 4.94. (Using the internal digits, the value is 7.956.)
+
+             The differences in the estimated standard errors seem fairly minor given the extreme
+         heteroscedasticity. One surprise is the decline in the standard error of the age coefficient. The
+         F test is no longer available for testing the joint significance of the two income coefficients
+         because it relies on homoscedasticity. A Wald test, however, may be used in any event. The
+         chi-squared test is based on
+
+                      W = (rb)[r(Est.Asy.Var[b])r]-1(rb) where r = J0 0 0 1 0 R ,
+                                                                                             00001
+
+         and the estimated asymptotic covariance matrix is the White estimator. The F statistic based
+         on least squares is 7.976. The Wald statistic based on the White estimator is 20.604; the
+         95% critical value for the chi-squared distribution with two degrees of freedom is 5.99, so
+         the conclusion is unchanged.
+
+9.3 PROPERTIES OF LEAST SQUARES AND INSTRUMENTAL VARIABLES
+
+The essential results for the classical model with E[E  X] = 0 and E[EE  X] = s2I are
+developed in Chapters 2 through 6. The least squares estimator
+
+                                           b = (XX)-1Xy = B + (XX)-1XE           (9-6)
+
+is best linear unbiased (BLU), consistent and asymptotically normally distributed, and
+if the disturbances are normally distributed, asymptotically efficient. We now consider
+which of these properties continue to hold in the model of (9-1). To summarize, the least
+squares estimator retains only some of its desirable properties in this model. It remains
+unbiased, consistent, and asymptotically normally distributed. It will, however, no longer
+be efficient and the usual inference procedures based on the t and F distributions are
+no longer appropriate.
+
+9.3.1 FINITE-SAMPLE PROPERTIES OF LEAST SQUARES                                  (9-7)
+
+By taking expectations on both sides of (9-6), we find that if E[E X] = 0, then
+                                     E[b] = EX[E[b  X]] = B
+
+M09_GREE1366_08_SE_C09.indd 301                                                                             2/24/17 10:44 AM
+302 Part II  Generalized Regression Model and Equation Systems
+      and
+
+                                 Var[b  X] = E[(b - B)(b - B)  X]
+
+                                 = E[(XX)-1XEEX(XX)-1  X]
+
+                                 = (XX)-1X(s2 )X(XX)-1                                                 (9-8)
+
+                                 = s2 ¢ XX -1  ¢ X X  ¢ XX -1  .
+                                         n n     n                 n
+
+Because the variance of the least squares estimator is not s2(XX)-1, statistical inference
+based on s2(XX)-1 may be misleading. There is usually no way to know whether
+s2(XX)-1 is larger or smaller than the true variance of b in (9-8). Without Assumption
+
+A.4, the familiar inference procedures based on the F and t distributions will no longer
+
+be appropriate even if A.6 (normality of E) is maintained.
+
+THEOREM 9.1Finite-Sample Properties of b in the Generalized Regression
+                        Model
+
+If the regressors and disturbances are uncorrelated, then the least squares ­estimator
+is unbiased in the generalized regression model. With nonstochastic regressors, or
+conditional on X, the sampling variance of the least squares estimator is given by
+(9-8). If the regressors are stochastic, then the unconditional variance is
+EX [Var[b  X]]. From (9-6), b is a linear function of E. Therefore, if E is normally
+distributed, then b  X  N[B, s2(XX)-1(X X)(XX)-1].
+
+9.3.2 ASYMPTOTIC PROPERTIES OF LEAST SQUARES
+
+If Var[b  X] converges to zero, then b is mean square consistent.5 With well-behaved
+regressors, (XX/n)-1 will converge to a constant matrix, and s2/n will converge to zero.
+But (s2/n)(X X/n) need not converge to zero. By writing this product as
+
+                                              n     n                 =
+                                 s2 X X  s2 a i = 1 a j = 1vijxixj
+                                 n ¢ n  = ¢ n ¢ n                                                      (9-9)
+
+we see that the matrix is a sum of n2 terms, divided by n. Thus, the product is a scalar
+that is O(1/n) times a matrix that is O(n) (at least at this juncture) which is O(1). So,
+it does appear that if the product in (9-9) does converge, it might converge to a matrix
+of nonzero constants. In this case, the covariance matrix of the least squares estimator
+would not converge to zero, and consistency would be difficult to establish. We will
+examine in some detail the conditions under which the matrix in (9-9) converges to a
+constant matrix. If it does, then because s2/n does vanish, least squares is consistent as
+well as unbiased.
+
+5 The argument based on the linear projection in Section 4.4.5 cannot be applied here because, unless  = I, (X, y)
+cannot be treated as a random sample from a joint distribution.
+
+M09_GREE1366_08_SE_C09.indd 302                                                                                     2/24/17 10:44 AM
+                                 CHAPTER 9  The Generalized Regression Model and Heteroscedasticity 303
+
+     Consistency will depend on both X and  . A formula that separates the two
+components is as follows:6
+
+1. The smallest characteristic root of XX increases without bound as n S , which
+     implies that plim(XX)-1 = 0. If the regressors satisfy the Grenander conditions
+     in Table 4.2, then they will meet this requirement.
+
+2. The largest characteristic root of is finite for all n. For the heteroscedastic
+     model, the variances are the characteristic roots, which requires them to be finite.
+     For models with autocorrelation, the requirements are that the elements of be
+     finite and that the off-diagonal elements not be too large relative to the diagonal
+     elements. We will examine this condition in Chapter 20.
+
+The least squares estimator is asymptotically normally distributed if the limiting
+distribution of
+
+                                 2n(b - B) = ¢ XX -1  1 XE              (9-10)
+                                                         n 2n
+
+is normal. If plim(XX/n) = Q, then the limiting distribution of the right-hand side is
+the same as that of
+
+                                 vn,LS = Q-1 1 XE = Q-1 1 n a xiei,     (9-11)
+                                 2n         2n i = 1
+
+where xi= is a row of X. The question now is whether a central limit theorem can be
+applied directly to v. If the disturbances are merely heteroscedastic and still uncorrelated,
+then the answer is generally yes. In fact, we already showed this result in Section 4.4.2
+when we invoked the Lindeberg-Feller central limit theorem (D.19) or the Lyapounov
+theorem (D.20). The theorems allow unequal variances in the sum. The proof of
+asymptotic normality in Section 4.4.2 is general enough to include this model without
+modification. As long as X is well behaved and the diagonal elements of are finite and
+well behaved, the least squares estimator is asymptotically normally distributed, with
+the covariance matrix given in (9-8). In the heteroscedastic case, if the variances of ei are
+finite and are not dominated by any single term, so that the conditions of the Lindeberg-
+Feller central limit theorem apply to vn,LS in (9-11), then the least squares estimator is
+asymptotically normally distributed with covariance matrix
+
+                                 asy.Var[b] = s2 Q-1 plim ¢ 1 X X Q-1.  (9-12)
+                                 n   n
+
+     For the most general case, asymptotic normality is much more difficult to establish
+because the sums in (9-11) are not necessarily sums of independent or even uncorrelated
+random variables. Nonetheless, Amemiya (1985) and Anderson (1971) have established
+the asymptotic normality of b in a model of autocorrelated disturbances general enough
+to include most of the settings we are likely to meet in practice. We will revisit this issue
+in Chapter 20 when we examine time-series modeling. We can conclude that, except in
+particularly unfavorable cases, we have the following theorem.
+
+6 Amemiya (1985, p. 184).
+
+M09_GREE1366_08_SE_C09.indd 303                                                                          2/24/17 10:44 AM
+304 Part II  Generalized Regression Model and Equation Systems
+
+          THEOREM 9.2Asymptotic Properties of b in the Generalized Regression
+                                  Model
+
+          If Q = plim(XX/n) and plim(X X/n) are both finite positive definite m­ atrices,
+          then b is consistent for B. Under the assumed conditions, plim b = B. If the
+          regressors are sufficiently well behaved and the off-diagonal terms in diminish
+          sufficiently rapidly, then the least squares estimator is asymptotically normally dis-
+          tributed with mean B and asymptotic covariance matrix given in (9-12).
+
+9.3.3 HETEROSCEDASTICITY AND Var[b X]
+
+In the presence of heteroscedasticity, the least squares estimator b is still unbiased,
+consistent, and asymptotically normally distributed. The asymptotic covariance matrix
+is given in (9-12). For this case, with well-behaved regressors,
+
+                                             asy.Var[b  X] = s Q-1 ¢ plim a vixixi 2 1 n = Q-1.n
+                                                                                               ni=1
+
+The mean square consistency of b depends on the limiting behavior of the matrix
+
+                                                                   Qn* = a 1 vixixi n =.
+                                                                           ni=1
+
+If Qn* converges to a positive definite matrix, then as n S , b will converge to B in
+
+mean square. Under most circumstances, if vi is finite for all i, then we would expect
+this result to be true. Note that Qn* is a weighted sum of the squares and cross products
+
+of x with weights vi/n, which sum to 1. We have already assumed that another weighted
+
+sum, XX/n, in which the weights are 1/n, converges to a positive definite matrix Q, so it
+                                                    *
+would  be                        surprising  if  Q     did  not  converge      as       well.  In  general,   then,  we  would  expect  that
+                                                    n
+
+                                                 a s -1 2 * -1                                     *                 *
+                                           b  N J B, Q Q Q R , with Q = plim Qn.
+                                                            n
+
+      The conventionally estimated covariance matrix for the least squares estimator
+
+s2(XX)-1 is inappropriate; the appropriate matrix is s2(XX)-1(X X)(XX)-1. It is
+
+unlikely that these two would coincide, so the usual estimators of the standard errors
+
+are likely to be erroneous. In this section, we consider how erroneous the conventional
+
+estimator is likely to be. It is easy to show that if b is consistent for B, then plim
+
+s2 = plim ee/(n - K) = s2, assuming tr( ) = n. The normalization tr( ) = n implies
+      s2                            s2     (1/n)isi2                     2        2                                                     s2,
+that                             =      =              and     vi  =  s  i  /  s     .  Therefore,    the  least  squares  estimator,
+
+converges to plim s2, that is, the probability limit of the average variance of the disturbances.
+
+      The difference between the conventional estimator and the appropriate (true)
+
+covariance matrix for b is
+
+      est.Var[b  X] - Var[b  X] = s2(XX)-1 - s2(XX)-1(X X)(XX)-1. (9-13)
+
+In a large sample (so that s2  s2), this difference is approximately equal to
+
+                                             D = s2 ¢ XX -1  c XX - X X d ¢ XX -1  .                                            (9-14)
+                                                       n n                     n               n           n
+
+M09_GREE1366_08_SE_C09.indd 304                                                                                                               2/24/17 10:44 AM
+                                 CHAPTER 9  The Generalized Regression Model and Heteroscedasticity 305
+
+The difference between the two matrices hinges on the bracketed matrix,
+
+                                 = in= 1(1/n)xixi= - in= 1(vi/n)xixi= = (1/n)in= 1(1 - vi)xixi=,      (9-15)
+
+where xi= is the ith row of X. These are two weighted averages of the matrices xixi= using
+weights 1 for the first term and vi for the second. The scaling tr( ) = n implies that
+i(vi/n) = 1. Whether the weighted average based on vi/n differs much from the one
+using 1/n depends on the weights. If the weights are related to the values in xi, then the
+difference can be considerable. If the weights are uncorrelated with xixi=, however, then
+the weighted average will tend to equal the unweighted average.
+
+Therefore, the comparison rests on whether the heteroscedasticity is related to
+
+any of xk or xj * xk. The conclusion is that, in general: If the heteroscedasticity is not
+correlated with the variables in the model, then at least in large samples, the ordinary least
+
+squares computations, although not the optimal way to use the data, will not be misleading.
+
+9.3.4 INSTRUMENTAL VARIABLE ESTIMATION
+
+Chapter 8 considered cases in which the regressors, X, are correlated with the
+disturbances, E. The instrumental variables (IV) estimator developed there enjoys a
+kind of robustness that least squares lacks in that it achieves consistency whether or not
+X and E are correlated, while b is neither unbiased nor consistent. However, efficiency
+was not a consideration in constructing the IV estimator. We will reconsider the IV
+estimator here, but because it is inefficient to begin with, there is little to say about the
+implications of (9-1) for the efficiency of the estimator. As such, the relevant question for
+us to consider here would be, essentially, does IV still work in the generalized regression
+model. Consistency and asymptotic normality will be the useful properties.
+
+     The IV/2SLS estimator is
+
+                                 biV = [XZ(ZZ)-1ZX]-1XZ(ZZ)-1Zy
+
+                                 = [Xn X]-1Xn y
+
+                                 = B + [Xn X]-1Xn E,                      (9-16)
+
+where X is the set of K regressors and Z is a set of L Ú K instrumental variables.
+We now consider the extension of Theorem 9.2 to the IV estimator when
+E[EE  X] = s2 . Suppose that X and Z are well behaved as assumed in Section 8.2.
+That is, (1/n)ZZ, (1/n)XX, and (1/n)ZX all converge to finite nonzero matrices. For
+
+convenience let
+
+                                 1  1            -1 1           -1 1      1                       -1
+
+                                 QXX.Z = plim J ¢ XZ  ¢ ZZ  ¢ ZX  R ¢ XZ  ¢ ZZ 
+                                 n  n                        n  n         n
+
+                                 = [QXZQZ-1ZQZX]-1QXZQZ-1Z.
+
+If Z is a valid set of instrumental variables, that is, if the second term in (9-16) vanishes
+asymptotically, then
+
+                                 plim biV = B + QXX.Z plim ¢ 1 ZE  = B.
+                                                                       n
+
+The large sample behavior of biV depends on the behavior of
+
+M09_GREE1366_08_SE_C09.indd 305                                                                               2/24/17 10:44 AM
+306 Part II  Generalized Regression Model and Equation Systems
+
+                                                         1n
+                                               vn, iV =     a ziei.
+                                                         2n i = 1
+
+This result is exactly the one we analyzed in Section 4.4.2. If the sampling distribution of
+
+vn converges to a normal distribution, then we will be able to construct the asymptotic
+distribution for biV. This set of conditions is the same that was necessary for X when we
+considered b above, with Z in place of X. We will rely on the results of Anderson (1971)
+
+or Amemiya (1985) that, under very general conditions,
+
+                                 1n d                    2           1  Z R.
+                                 a ziei ¡ N J 0, s plim ¢ Z
+                                 2n i = 1                            n
+
+With the other results already in hand, we now have the following.
+
+THEOREM 9.3Asymptotic Properties of the IV Estimator in the
+                        ­Generalized Regression Model
+
+If the regressors and the instrumental variables are well behaved in the fashions
+discussed above, then biV is consistent and asymptotically normally distributed with
+
+                                                                        a
+
+                                         biV  N[B, ViV],
+
+where
+
+                                           s2               1        Z (QX= X.Z).
+                                 ViV = (QXX.Z) plim ¢ Z
+                                           n                n
+
+9.4 EFFICIENT ESTIMATION BY GENERALIZED LEAST SQUARES
+
+     Efficient estimation of B in the generalized regression model requires knowledge of .
+     To begin, it is useful to consider cases in which is a known, symmetric, positive
+     definite matrix. This assumption will occasionally be true, though in most models
+     will contain unknown parameters that must also be estimated. We shall examine this
+     case in Section 9.4.2.
+
+      9.4.1 GENERALIZED LEAST SQUARES (GLS)
+
+     Because is a positive definite symmetric matrix, it can be factored into
+
+                                                         = C C,
+     where the columns of C are the characteristic vectors of and the characteristic roots
+     of are arrayed in the diagonal matrix, . Let 1/2 be the diagonal matrix with ith
+     diagonal element, 2li, and let T = C 1/2. Then, = TT. Also, let P = C -1/2, so
+
+        -1 = PP. Premultiply the model in (9-1) by P to obtain
+                                                  Py = PXB + PE
+
+     or
+
+M09_GREE1366_08_SE_C09.indd 306                                                               2/24/17 10:44 AM
+                                 CHAPTER 9  The Generalized Regression Model and Heteroscedasticity 307
+
+                                                   y* = X*B + E*.            (9-17)
+
+The conditional variance of E* is
+
+                                 E  [E  *  E  =    X*  ]  =  Ps2  P = s2I,
+                                              *
+
+so the classical regression model applies to this transformed model. Because is
+
+assumed to be known, y* and X* are observed data. In the classical model, ordinary
+least squares is efficient; hence,
+
+                                    Bn = (X*= X*)-1X*= y*
+                                       = (XPPX)-1XPPy
+                                       = (X -1X)-1X -1y
+
+is the efficient estimator of B. This estimator is the generalized least squares (GLS) or
+Aitken (1935) estimator of B. This estimator is in contrast to the ordinary least squares
+(OLS) estimator, which uses a weighting matrix, I, instead of -1. By appealing to the
+classical regression model in (9-17), we have the following theorem, which includes the
+generalized regression model analogs to our results of Chapter 4:
+
+THEOREM 9.4 Properties of the Generalized Least Squares Estimator
+      If E[E*  X*] = 0, then
+
+           E[Bn  X*] = E[(X*= X*)-1X*= y*  X*] = B + E[(X*= X*)-1X*= E*  X*] = B.
+
+      The GLS estimator Bn is unbiased. This result is equivalent to E[PE  PX] = 0,
+      but because P is a matrix of known constants, we return to the familiar
+      requirement E[E  X] = 0. The requirement that the regressors and disturbances
+      be uncorrelated is unchanged.
+
+           The GLS estimator is consistent if plim(1/n)X*= X* = Q*, where Q* is a
+      finite positive definite matrix. Making the substitution, we see that this implies
+
+                                     plim[(1/n)X -1X]-1 = Q*-1.(9-18)
+
+      We require the transformed data X* = PX, not the original data X, to be well
+      behaved.7 Under the assumption in (9-1), the following hold:
+
+           The GLS estimator is asymptotically normally distributed, with mean B
+      and sampling variance
+
+                           Var[Bn  X*] = s2(X*= X*)-1 = s2(X -1X)-1.(9-19)
+
+      The GLS estimator Bn is the minimum variance linear unbiased estimator
+      in the generalized regression model. This statement follows by applying the
+      Gauss-Markov theorem to the model in (9-17). The result in Theorem 9.5
+      is Aitken's theorem (1935), and Bn is sometimes called the Aitken estimator.
+      This broad result includes the Gauss-Markov theorem as a special case when
+
+          = I.
+
+7 Once again, to allow a time trend, we could weaken this assumption a bit.
+
+M09_GREE1366_08_SE_C09.indd 307                                                                          2/24/17 10:44 AM
+308 Part II  Generalized Regression Model and Equation Systems
+
+     For testing hypotheses, we can apply the full set of results in Chapter 5 to the
+transformed model in (9-17). For testing the J linear restrictions, RB = q, the appropriate
+statistic is
+
+                            (RBn - q)[Rsn 2(X*= X*)-1R]-1(RBn - q) (Enc=Enc - En En)/J
+        F[J, n - K] = J = sn 2 ,
+
+where the residual vector is
+
+                                      En = y* - X*Bn
+
+and
+
+                                 sn 2 = En En = (y - XBn) -1(y - XBn).                                 (9-20)
+                                 n-K          n-K
+
+The constrained GLS residuals, Enc = y* - X*Bnc, are based on
+
+                                 Bnc = Bn - [X -1X]-1R[R(X -1X)-1R]-1(RBn - q).8
+
+To summarize, all the results for the classical model, including the usual inference
+
+procedures, apply to the transformed model in (9-17).
+     There is no precise counterpart to R2 in the generalized regression model.
+
+Alternatives have been proposed, but care must be taken when using them. For example,
+one choice is the R2 in the transformed regression, (9-17). But this regression need
+not have a constant term, so the R2 is not bounded by zero and one. Even if there is
+
+a constant term, the transformed regression is a computational device, not the model
+
+of interest. That a good (or bad) fit is obtained in the model in (9-17) may be of no
+
+interest; the dependent variable in that model, y*, is different from the one in the model
+as originally specified. The usual R2 often suggests that the fit of the model is improved
+
+by a correction for heteroscedasticity and degraded by a correction for autocorrelation,
+
+but both changes can often be attributed to the computation of y*. A more appealing
+fit measure might be based on the residuals from the original model once the GLS
+
+estimator is in hand, such as
+
+                                 2RG = 1 - (y - XBn)(y - XBn)
+                                                            2.
+                                           n
+                                           a i = 1(yi - y)
+
+Like the earlier contender, however, this measure is not bounded in the unit interval. In
+addition, this measure cannot be reliably used to compare models. The generalized least
+squares estimator minimizes the generalized sum of squares
+
+                                 E*= E* = (y - XB) -1(y - XB),
+
+not EE. As such, there is no assurance, for example, that dropping a variable from the
+model will result in a decrease in RG2 , as it will in R2. Other goodness-of-fit measures,
+
+designed primarily to be a function of the sum of squared residuals (raw or weighted by
+   -1) and to be bounded by zero and one, have been proposed.9 Unfortunately, they all
+
+suffer from at least one of the previously noted shortcomings. The R2@like measures in
+
+8 Note that this estimator is the constrained OLS estimator using the transformed data. [See (5-23).]
+9 See Judge et al. (1985, p. 32) and Buse (1973).
+
+M09_GREE1366_08_SE_C09.indd 308                                                                                2/24/17 10:44 AM
+                                 CHAPTER 9  The Generalized Regression Model and Heteroscedasticity 309
+
+this setting are purely descriptive. That being the case, the squared sample correlation
+                                                                                = corr2(y, yn) = corr2(y, xbn), would
+between                          the  actual  and  predicted  values,    2
+
+                                                                       r y, ny
+
+likely be a useful descriptor. Note, though, that this is not a proportion of variation
+
+explained, as is R2; it is a measure of the agreement of the model predictions with the
+
+actual data.
+
+9.4.2 FEASIBLE GENERALIZED LEAST SQUARES (FGLS)
+
+To use the results of Section 9.4.1, must be known. If contains unknown parameters
+
+that must be estimated, then generalized least squares is not feasible. But with an
+unrestricted , there are n(n + 1)/2 additional parameters in s2 . This number is far
+too many to estimate with n observations. Obviously, some structure must be imposed
+
+on the model if we are to proceed.
+
+     The typical problem involves a small set of parameters A such that = (A). For
+example, a commonly used formula in time-series settings is
+
+                                                           1  r r2 r3 g rn - 1
+                                              (r) = D r       1 r r2 g rn - 2 T ,
+
+                                                                                      f
+
+                                                   rn - 1 rn - 2 g              1
+
+which involves only one additional unknown parameter. A model of heteroscedasticity
+that also has only one new parameter is
+
+                                                              si2 = s2ziu                (9-21)
+
+for some exogenous variable z. Suppose, then, that An is a consistent estimator of A.
+
+(We consider later how such an estimator might be obtained.) To make GLS estimation
+feasible, we shall use n = (An ) instead of the true . The issue we consider here is
+whether using (An ) requires us to change any of the results of Section 9.4.1.
+
+     It would seem that if plim An = A, then using n is asymptotically equivalent to using
+the true .10 Let the feasible generalized least squares estimator be denoted
+
+                                                   Bnn = (X n -1X)-1X n -1y.
+
+Conditions that imply that Bnn is asymptotically equivalent to Bn are
+
+                                              plim J ¢ 1 X n -1X  - ¢ 1 X -1X  R = 0     (9-22)
+                                                   n                   n
+
+and
+
+                                      plim J ¢ 1 X n -1E  - ¢ 1 X -1E  R = 0.            (9-23)
+                                                   2n                  2n
+
+The first of these equations states that if the weighted sum of squares matrix based on
+the true converges to a positive definite matrix, then the one based on n converges
+to the same matrix. We are assuming that this is true. In the second condition, if the
+
+10 This equation is sometimes denoted plim n - . Because               is n * n, it cannot have a probability limit. We
+use this term to indicate convergence element by element.
+
+M09_GREE1366_08_SE_C09.indd 309                                                                                          2/24/17 10:44 AM
+310 Part II  Generalized Regression Model and Equation Systems
+
+      transformed regressors are well behaved, then the right-hand-side sum will have a
+      limiting normal distribution. This condition is exactly the one we used in Chapter 4 to
+      obtain the asymptotic distribution of the least squares estimator; here we are using the
+      same results for X* and E*. Therefore, (9-23) requires the same condition to hold when
+
+          is replaced with n .11
+           These conditions, in principle, must be verified on a case-by-case basis. Fortunately,
+
+      in most familiar settings, they are met. If we assume that they are, then the FGLS
+      estimator based on An has the same asymptotic properties as the GLS estimator. This
+      result is extremely useful. Note, especially, the following theorem.
+
+          THEOREM 9.5 Efficiency of the FGLS Estimator
+          An asymptotically efficient FGLS estimator does not require that we have an
+          ­efficient estimator of A; only a consistent one is required to achieve full efficiency
+          for the FGLS estimator.
+
+           Except for the simplest cases, the finite-sample properties and exact distributions of
+      FGLS estimators are unknown. The asymptotic efficiency of FGLS estimators may not
+      carry over to small samples because of the variability introduced by the estimated .
+      Some analyses for the case of heteroscedasticity are given by Taylor (1977). A model
+      of autocorrelation is analyzed by Griliches and Rao (1969). In both studies, the authors
+      find that, over a broad range of parameters, FGLS is more efficient than least squares.
+      But if the departure from the classical assumptions is not too severe, then least squares
+      may be more efficient than FGLS in a small sample.
+
+9.5 HETEROSCEDASTICITY AND WEIGHTED LEAST SQUARES
+
+      In the heteroscedastic regression model,
+                                    Var[ei  X] = si2 = s2vi, i = 1, c, n.
+
+      This form is an arbitrary scaling which allows us to use a normalization,
+      trace( ) = ivi = n. This makes the classical regression with homoscedastic
+      disturbances a simple special case with vi = 1, i = 1, c, n. Intuitively, one might then
+      think of the vs as weights that are scaled in such a way as to reflect only the variety in
+      the disturbance variances. The scale factor s2 then provides the overall scaling of the
+      disturbance process.
+
+           We will examine the heteroscedastic regression model, first in general terms, then
+      with some specific forms of the disturbance covariance matrix. Specification tests for
+      heteroscedasticity are considered in Section 9.6. Section 9.6 considers generalized
+      (weighted) least squares, which requires knowledge at least of the form of . Finally,
+      two common applications are examined in Section 9.7.
+
+11 The condition actually requires only that if the right-hand-side sum has any limiting distribution, then the left-
+hand one has the same one. Conceivably, this distribution might not be the normal distribution, but that seems
+unlikely except in a specially constructed, theoretical case.
+
+M09_GREE1366_08_SE_C09.indd 310                                                                                        2/24/17 10:44 AM
+                                 CHAPTER 9  The Generalized Regression Model and Heteroscedasticity 311
+
+9.5.1 WEIGHTED LEAST SQUARES
+
+The GLS estimator is
+
+                                 Bn = (X -1X)-1X -1y.                                           (9-24)
+
+In the most general case, Var[ei  X] = si2 = s2vi, -1 is a diagonal matrix whose ith
+diagonal element is 1/vi. The GLS estimator is obtained by regressing
+
+                                 y1/ 2v1        x1= / 2v1
+
+                                 Py = D y2/ 2v2 T on PX = D x2= / 2v2 T .
+                                 f                     f
+
+                                 yn/ 2vn        xn= / 2vn
+
+Applying ordinary least squares to the transformed model, we obtain the weighted least
+squares estimator.
+
+                                    n     -1 n
+                                 Bn = J a wixixi= R J a wixiyi R ,
+                                                                                                (9-25)
+
+                                    i=1   i=1
+
+where wi = 1/vi.12 The logic of the computation is that observations with smaller
+variances receive a larger weight in the computations of the sums and therefore have
+
+greater influence in the estimates obtained.
+
+9.5.2 WEIGHTED LEAST SQUARES WITH KNOWN
+
+A common specification is that the variance is proportional to one of the regressors or its
+square. Our earlier example of family expenditures is one in which the relevant variable
+is usually income. Similarly, in studies of firm profits, the dominant variable is typically
+assumed to be firm size. If
+
+                                                si2 = s2xi2k,
+
+then the transformed regression model for GLS is
+
+                                 yxk = bk + b1 ¢ x1 x  k + b2 ¢ x2 x  k + g + ex .k             (9-26)
+
+If the variance is proportional to xk instead of xk2, then the weight applied to each
+
+observation is 1/2xk instead of 1/xk.
+     In (9-26), the coefficient on xk becomes the constant term. But if the variance is
+
+proportional to any power of xk other than two, then the transformed model will no longer
+contain a constant, and we encounter the problem of interpreting R2 mentioned earlier. For
+example, no conclusion should be drawn if the R2 in the regression of y/z on 1/z and x/z is
+higher than in the regression of y on a constant and x for any z, including x. The good fit of
+the weighted regression might be due to the presence of 1/z on both sides of the equality.
+
+     It is rarely possible to be certain about the nature of the heteroscedasticity in a
+regression model. In one respect, this problem is only minor. The weighted least squares
+estimator
+
+12 The weights are often denoted wi = 1/si2. This expression is consistent with the equivalent
+Bn = [X=(s2 )-1X]-1X(s2 )-1y. The s2s cancel, leaving the expression given previously.
+
+M09_GREE1366_08_SE_C09.indd 311                                                                          2/24/17 10:44 AM
+312 Part II  Generalized Regression Model and Equation Systems
+
+                                           n  -1 n
+                                 Bn = J a wixixi= R J a wixiyi R
+                                 i=1          i=1
+
+is consistent regardless of the weights used, as long as the weights are uncorrelated with
+the disturbances. But using the wrong set of weights has two other consequences that
+may be less benign. First, the improperly weighted least squares estimator is inefficient.
+This point might be moot if the correct weights are unknown, but the GLS standard
+errors will also be incorrect. The asymptotic covariance matrix of the estimator
+
+                                 Bn = [XV-1X]-1XV-1y                                                        (9-27)
+
+is
+
+                                 asy.Var[Bn] = s2[XV-1X]-1XV-1 V-1X[XV-1X]-1.                               (9-28)
+
+This result may or may not resemble the usual estimator, which would be the matrix in
+
+brackets, and underscores the usefulness of the White estimator in (9-5).
+
+    The standard approach in the literature is to use OLS with the White estimator or
+
+some variant for the asymptotic covariance matrix. One could argue both flaws and
+
+virtues in this approach. In its favor, robustness to unknown heteroscedasticity is a
+
+compelling virtue. In the clear presence of heteroscedasticity, however, least squares
+
+can be inefficient. The question becomes whether using the wrong weights is better than
+
+using no weights at all. There are several layers to the question. If we use one of the
+
+models mentioned earlier--Harvey's, for example, is a versatile and flexible candidate--
+
+then we may use the wrong set of weights and, in addition, estimation of the variance
+
+parameters introduces a new source of variation into the slope estimators for the model.
+
+However, the weights we use might well be better than none. A heteroscedasticity robust
+
+estimator for weighted least squares can be formed by combining (9-27) with the White
+
+estimator. The weighted least squares estimator in (9-27) is consistent with any set of
+
+weights V = diag[v1, v2, c, vn]. Its asymptotic covariance matrix can be estimated with
+
+                                                                             n e2                           (9-29)
+
+                                                                                                         i
+
+                                 est.asy.Var[Bn] = (XV-1X)-1 J a ¢ 2 xixi= R (XV-1X)-1.
+                                                                           i = 1 vi
+
+Any consistent estimator can be used to form the residuals. The weighted least squares
+estimator is a natural candidate.
+
+9.5.3 ESTIMATION WHEN CONTAINS UNKNOWN PARAMETERS
+
+The general form of the heteroscedastic regression model has too many parameters to
+estimate by ordinary methods. Typically, the model is restricted by formulating s2 as
+a function of a few parameters, as in si2 = s2xia or si2 = s2(xi=A)2. Write this as (A).
+FGLS based on a consistent estimator of (A) (meaning a consistent estimator of A) is
+asymptotically equivalent to full GLS.The new problem is that we must first find consistent
+estimators of the unknown parameters in (A). Two methods are typically used, two-step
+GLS and maximum likelihood. We consider the two-step estimator here and the maximum
+likelihood estimator in Chapter 14.
+
+     For the heteroscedastic model, the GLS estimator is
+
+                                 Bn = J a ¢ 2 xixi n 1 = R J a ¢ 2 xiyi R . -1 n 1                          (9-30)
+                                 i = 1 si     i = 1 si
+
+M09_GREE1366_08_SE_C09.indd 312                                                                                     2/24/17 10:44 AM
+                                 CHAPTER 9  The Generalized Regression Model and Heteroscedasticity 313
+
+The two-step estimators are computed by first obtaining estimates sn i2, usually using some
+
+function of the ordinary least squares residuals. Then, Bnn uses (9-30) and sn i2. The ordinary
+
+least squares estimator of B, although inefficient, is still consistent. As such, statistics
+computed using the ordinary least squares residuals, ei = (yi - xi=b), will have the same
+asymptotic properties as those computed using the true disturbances, ei = (yi - xi=B). This
+
+result suggests a regression approach for the true disturbances and variables zi that may
+                                                                             2            si2,      ei2     si2
+or   may                         not  coincide        with  xi.  Now  E  [e  i    zi]  =        so       =       +  vi,  where   vi  is  just  the
+
+difference between ei2 and its conditional expectation. Because ei is unobservable, we
+would use the least squares residual, for which ei = ei - xi=(b - B) = ei + ui. Then,
+                                                                                                       p
+ei2  =  ei2                      +  ui2  +   2eiui.   But,  in   large   samples,         as    b           B,   terms   in  ui  will    become
+                                                                                                    ¡
+
+negligible, so that at least approximately,13
+
+                                                                         ei2 = si2 + vi*.                                                (9-31)
+
+The procedure suggested is to treat the variance function as a regression and use the
+
+squares or some other functions of the least squares residuals as the dependent variable.14
+                                                      zi=A, then a consistent estimator of A will be the least squares slopes,
+For  example,                            if  s  2  =
+                                                i
+
+a, in the "model,"
+
+                                              ei2 = zi=A + vi*.
+
+In this model, vi* is both heteroscedastic and autocorrelated, so a is consistent but
+inefficient. But consistency is all that is required for asymptotically efficient estimation
+of B using (An ). It remains to be settled whether improving the estimator of A in this
+and the other models we will consider would improve the small sample properties of the
+two-step estimator of B.15
+
+     The two-step estimator may be iterated by recomputing the residuals after computing
+the FGLS estimates and then reentering the computation. The asymptotic properties
+of the iterated estimator are the same as those of the two-step estimator, however. In
+some cases, this sort of iteration will produce the maximum likelihood estimator at
+convergence. Yet none of the estimators based on regression of squared residuals on
+other variables satisfy the requirement. Thus, iteration in this context provides little
+additional benefit, if any.
+
+9.6 TESTING FOR HETEROSCEDASTICITY
+
+     Tests for heteroscedasticity are based on the following strategy. Ordinary least squares
+     is a consistent estimator of B even in the presence of heteroscedasticity. As such, the
+     ordinary least squares residuals will mimic, albeit imperfectly because of sampling
+     variability, the heteroscedasticity of the true disturbances. Therefore, tests designed
+     to detect heteroscedasticity will, in general, be applied to the ordinary least squares
+     residuals.
+
+13 See Amemiya (1985) and Harvey (1976) for formal analyses.
+14 See, for example, Jobson and Fuller (1980).
+15 Fomby, Hill, and Johnson (1984, pp. 177-186) and Amemiya (1985, pp. 203-207; 1977) examine this model.
+
+M09_GREE1366_08_SE_C09.indd 313                                                                                                                     2/24/17 10:44 AM
+314 Part II  Generalized Regression Model and Equation Systems
+
+9.6.1 WHITE'S GENERAL TEST
+
+To formulate the available tests, it is necessary to specify, at least in rough terms, the
+nature of the heteroscedasticity. White's (1980) test proposes a general hypothesis of
+the form
+
+                                    H0 : si2  =  E  [  e  2    xi]  =  s2 for all i,
+                                                          i
+
+                                    H1 : Not H0.
+
+A simple operational version of his test is carried out by obtaining nR2 in the regression
+of the squared OLS residuals, ei2, on a constant and all unique variables contained in x
+and x  x. The statistic has a limiting chi-squared distribution with P - 1 degrees of
+freedom, where P is the number of regressors in the equation, including the constant.
+
+An equivalent approach is to use an F test to test the hypothesis that G1 = 0 and G2 = 0
+in the regression
+
+                                    ei2 = g0 + xi=G1 + (xi  xi)G2 + vi*.
+
+[As before, (xi  xi) contains only the unique components.] The White test is extremely
+general. To carry it out, we need not make any specific assumptions about the nature of
+
+the heteroscedasticity.
+
+9.6.2 THE LAGRANGE MULTIPLIER TEST
+
+Breusch and Pagan (1979) and Godfrey (1988) present a Lagrange multiplier test of
+the hypothesis that si2 = s2f(a0 + Azi), where zi is a vector of independent variables.
+The disturbance is homoscedastic if A = 0. The test can be carried out with a simple
+
+regression:
+
+lM  =  1                         *  explained sum of squared residuals in the regression of ei2/(ee/n) on (1, zi).
+       2
+
+(9-32)
+
+For computational purposes, let Z be the n * P matrix of observations on (1, zi), and let g
+be the vector of observations of gi = ei2/(ee/n) - 1. Then lM = (1/2)[gZ(ZZ)-1Zg].
+Under the null hypothesis of homoscedasticity, LM has a limiting chi-squared distribution
+
+with P - 1 degrees of freedom.
+     It has been argued that the Breusch-Pagan Lagrange multiplier test is sensitive to
+
+the assumption of normality. Koenker (1981) and Koenker and Bassett (1982) suggest
+that the computation of LM be based on a more robust estimator of the variance of ei2,
+
+                                           1 n 2 ee 2
+                                    V = a Jei - R .
+                                                 ni=1                  n
+
+Let u equal (e12, e22, c, en2) and i be an n * 1 column of 1s. Then u = ee/n. With
+this change, the computation becomes lM = (1/V)(u - u i)Z(ZZ)-1Z(u - u i).
+Under normality, this modified statistic will have the same limiting distribution as the
+
+Breusch-Pagan statistic, but absent normality, there is some evidence that it provides a
+
+more powerful test. Waldman (1983) has shown that if the variables in zi are the same
+as those used for the White test described earlier, then the two tests are algebraically
+
+the same.
+
+M09_GREE1366_08_SE_C09.indd 314                                                                                     2/24/17 10:44 AM
+                                 CHAPTER 9  The Generalized Regression Model and Heteroscedasticity 315
+
+Example 9.2 Testing for Heteroscedasticity
+
+  We use the suggested diagnostics to test for heteroscedasticity in the credit card expenditure
+  data in Example 9.2.
+
+1. White's Test: There are 15 variables in (x, x  x), including the constant term. But
+   because OwnRent2 = OwnRent and Income * Income = Income2, which is also in the
+
+   equation, only 13 of the 15 are unique. Regression of the squared least squares residuals
+
+   on these 13 variables produces R2 = 0.199013. The chi-squared statistic is therefore
+
+   72(0.199013) = 14.329. The 95% critical value of chi-squared with 12 degrees of freedom
+
+   is 21.03, so despite what might seem to be obvious in Figure 9.1, the hypothesis of
+
+   homoscedasticity is not rejected by this test.
+
+2. Breusch-Pagan Test: This test requires a specific alternative hypothesis. For this purpose,
+
+   we specify the test based on z = [1, Income, Income2]. Using the least squares residuals,
+                                          ei2/(ee/72)                     1              -  1Z
+   we compute gi                       =               -   1; then LM  =  2  g  Z(Z  Z)         g.  The  computation  produces
+
+   LM = 41.920. The critical value for the chi-squared distribution with two degrees of
+
+   freedom is 5.99, so the hypothesis of homoscedasticity is rejected. The Koenker and
+
+   Bassett variant of this statistic is only 6.187, which is still significant but much smaller
+
+   than the LM statistic. The wide difference between these two statistics suggests that the
+
+   assumption of normality is erroneous. If the Breusch and Pagan test is based on (1, x), the
+
+   chi squared statistic is 49.061 with 4 degrees of freedom, while the Koenker and Bassett
+
+   version is 7.241. The same conclusions are reached.
+
+9.7 TWO APPLICATIONS
+
+This section will present two common applications of the heteroscedastic regression
+model, Harvey's model of multiplicative heteroscedasticity and a model of groupwise
+heteroscedasticity that extends to the disturbance variance some concepts that are
+usually associated with variation in the regression function.
+
+9.7.1 MULTIPLICATIVE HETEROSCEDASTICITY
+
+Harvey's (1976) model of multiplicative heteroscedasticity is a very flexible, general
+model that includes most of the useful formulations as special cases. The general
+formulation is
+
+                                            si2 = s2 exp(zi=A).
+
+                                                                                     M
+
+A  model                         with  heteroscedasticity  of  the  form  si2   =  s2 zam           results  if  the  logs  of  the
+                                                                                      q im
+                                                                                     m=1
+
+variables are placed in zi. The groupwise heteroscedasticity model described in Example 9.4
+
+is produced by making zi a set of group dummy variables (one must be omitted). In this
+case, s2 is the disturbance variance for the base group whereas for the other groups,
+
+sg2 = s2 exp(ag).
+
+Example 9.3 Multiplicative Heteroscedasticity
+
+  In Example 6.6, we fit a cost function for the U.S. airline industry of the form
+
+               In Cit = b1 + b2 In Qit + b3(ln Qit)2 + b4 ln Pfuel,i,t + b5 Loadfactori,t + ei,t
+
+  where Ci,t is total cost, Qi,t is output, and Pfuel,i,t is the price of fuel, and the 90 observations in
+  the data set are for six firms observed for 15 years. (The model also included dummy variables
+
+M09_GREE1366_08_SE_C09.indd 315                                                                                                      2/24/17 10:44 AM
+316 Part II  Generalized Regression Model and Equation Systems
+
+for firm and year, which we will omit for simplicity.) We now consider a revised model in which
+the load factor appears in the variance of ei,t rather than in the regression function. The model is
+
+                                                2   =  s2 exp(g  Loadfactori,t)
+
+                                              si,t
+
+                                                    = exp(g1 + g2 Loadfactori,t).
+
+The constant in the implied regression is g1 = ln s2. Figure 9.2 shows a plot of the least
+squares residuals against Loadfactor for the 90 observations. The figure does suggest the
+
+presence of heteroscedasticity. (The dashed lines are placed to highlight the effect.) We
+
+computed the LM statistic using (9-32). The chi-squared statistic is 2.959. This is smaller than
+
+the critical value of 3.84 for one degree of freedom, so on this basis, the null hypothesis of
+
+homoscedasticity with respect to the load factor is not rejected.
+
+    To begin, we use OLS to estimate the parameters of the cost function and the set of
+residuals, ei,t. Regression of log(ei2t) on a constant and the load factor provides estimates of
+g1 and g2, denoted c1 and c2. The results are shown in Table 9.2. As Harvey notes, exp(c1)
+does not necessarily estimate s2 consistently--for normally distributed disturbances, it is low
+by a factor of 1.2704. However, as seen in (9-24), the estimate of s2 (biased or otherwise) is
+
+not needed to compute the FGLS estimator. Weights wi,t = exp( - c1 - c2 Loadfactori,t) are
+computed using these estimates, then weighted least squares using (9-25) is used to obtain
+
+the FGLS estimates of B. The results of the computations are shown in Table 9.2.
+
+    We might consider iterating the procedure. Using the results of FGLS at step 2, we can
+
+recompute the residuals, then recompute c1 and c2 and the weights, and then reenter the
+iteration. The process converges when the estimate of c2 stabilizes. This requires seven iterations.
+The results are shown in Table 9.2. As noted earlier, iteration does not produce any gains here.
+
+The second step estimator is already fully efficient. Moreover, this does not produce the MLE,
+either. That would be obtained by regressing [ei2,t/exp(c1 + c2 Loadfactori,t) - 1] on the constant
+and load factor at each iteration to obtain the new estimates. We will revisit this in Chapter 14.
+
+Figure 9.2 Plot of Residuals against Load Factor.
+
+          E
+       0.40
+
+                                 0.24
+
+Residual                         0.08
+
+          0.08
+
+          0.24                         0.450        0.500       0.550   0.600      0.650      LF
+                                                           Load Factor                    0.700
+          0.40
+                 0.400
+
+M09_GREE1366_08_SE_C09.indd 316                                                                       2/24/17 10:44 AM
+                                 CHAPTER 9  The Generalized Regression Model and Heteroscedasticity 317
+
+TABLE 9.2 Multiplicative Heteroscedasticity Model
+
+                                 Constant  ln Q      ln2 Q     ln Pf           R2                 Sum of Squares
+
+OLS                              9.1382    0.92615   0.029145  0.41006   0.9861674b                     1.577479c
+                                 0.24507a  0.032306  0.012304  0.018807  0.986119                       1.612938
+Two step                         0.22595d  0.030128  0.011346  0.017524  0.986071                       1.645693
+Iteratede                        9.2463    0.92136   0.024450  0.40352
+                                 0.21896   0.033028  0.011412  0.016974
+                                 9.2774    0.91609   0.021643  0.40174
+                                 0.20977   0.032993  0.011017  0.016332
+
+aConventional OLS standard errors
+bSquared correlation between actual and fitted values
+cSum of squared residuals
+dWhite robust standard errors
+eValues of c2 by iteration: 8.254344, 11.622473, 11.705029, 11.710618, 11.711012, 11.711040, 11.711042
+
+9.7.2 GROUPWISE HETEROSCEDASTICITY
+
+A groupwise heteroscedastic regression has the structural equations
+
+                                                  yi = xi B + ei, i = 1, c, n
+                                           E[ei  xi] = 0.
+
+The n observations are grouped into G groups, each with ng observations. The slope
+vector is the same in all groups, but within group g,
+
+                                 Var[eig  xig] = sg2, i = 1, c, ng.
+If the variances are known, then the GLS estimator is
+
+                                           Bn = J a ¢ 2 Xg G 1 = Xg R J a ¢ 2 Xg -1 G 1 = yg R .             (9-33)
+                                                     g = 1 sg  g = 1 sg
+
+Because Xg= yg = Xg= Xgbg, where bg is the OLS estimator in the gth subset of observations,
+
+Bn = J a ¢ 2 Xg G 1 = Xg R J a ¢ 2 Xg -1 G 1 = Xgbg R = J a Vg R J a Vgbg R = a Wgbg. G -1 G G
+                                 g = 1 sg        g = 1 sg      g=1             g=1                      g=1
+
+This result is a matrix weighted average of the G least squares estimators. The weighting
+
+                                                                                   -1
+
+matrices are Wg = J a g = 1 G (Var[bg  Xg])-1 R (Var[bg  Xg])-1. The estimator with the
+
+smaller covariance matrix therefore receives the larger weight. [If Xg is the same in every
+
+group, then the matrix Wg reduces to the simple, wgI = ¢ hg/ a ghg I where hg = 1/sg2.]
+
+     The preceding is a useful construction of the estimator, but it relies on an algebraic
+result that might be unusable. If the number of observations in any group is smaller than
+the number of regressors, then the group-specific OLS estimator cannot be computed.
+
+M09_GREE1366_08_SE_C09.indd 317                                                                                      2/24/17 10:44 AM
+318 Part II  Generalized Regression Model and Equation Systems
+
+But, as can be seen in (9-33), that is not what is needed to proceed; what is needed are
+
+the weights. As always, pooled least squares is a consistent estimator, which means that
+
+using the group-specific subvectors of the OLS residuals,
+
+                                        sn g2 =  eg= eg  ,                (9-34)
+
+                                                 ng
+
+provides the needed estimator for the group-specific disturbance variance. Thereafter,
+(9-33) is the estimator and the inverse matrix in that expression gives the estimator of
+the asymptotic covariance matrix.
+
+     Continuing this line of reasoning, one might consider iterating the estimator by
+returning to (9-34) with the two-step FGLS estimator, recomputing the weights, then
+returning to (9-33) to recompute the slope vector. This can be continued until
+convergence. It can be shown that so long as (9-34) is used without a degrees of freedom
+correction, then if this does converge, it will do so at the maximum likelihood estimator
+(with normally distributed disturbances).16
+
+     For testing the homoscedasticity assumption, both White's test and the LM test are
+straightforward. The variables thought to enter the conditional variance are simply a
+set of G - 1 group dummy variables, not including one of them (to avoid the dummy
+variable trap), which we'll denote Z*. Because the columns of Z* are binary and
+orthogonal, to carry out White's test, we need only regress the squared least squares
+residuals on a constant and Z* and compute NR2 where N = a gng. The LM test is also
+straightforward. For purposes of this application of the LM test, it will prove convenient
+
+to replace the overall constant in Z in (9-32) with the remaining group dummy variable.
+Because the column space of the full set of dummy variables is the same as that of a
+constant and G - 1 of them, all results that follow will be identical. In (9-32), the vector
+g will now be G subvectors where each subvector is the ng elements of [(ei2g/sn 2) - 1],
+and sn 2 = ee/N. By multiplying it out, we find that gZ is the G vector with elements
+ng[(sn g2/sn 2) - 1], while (ZZ)-1 is the G * G matrix with diagonal elements 1/ng. It
+follows that
+
+                                     1                      1 G sn g2  2
+
+                                 LM = gZ(ZZ)-1Zg = a ng ¢ 2 - 1  .2       (9-35)
+                                                            2g = 1 sn
+
+Both statistics have limiting chi-squared distributions with G - 1 degrees of freedom
+under the null hypothesis of homoscedasticity. (There are only G - 1 degrees of freedom
+because the hypothesis imposes G - 1 restrictions, that the G variances are all equal to
+each other. Implicitly, one of the variances is free and the other G - 1 equal that one.)
+
+Example 9.4 Groupwise Heteroscedasticity
+
+  Baltagi and Griffin (1983) is a study of gasoline usage in 18 of the 30 OECD countries. The
+  model analyzed in the paper is
+
+               ln (Gasoline usage/car)i,t = b1 + b2 ln(Per capita income)i,t + b3 ln Pricei,t
+                                                   + b4 ln(Cars per capita)i,t + ei,t,
+
+16 See Oberhofer and Kmenta (1974).
+
+M09_GREE1366_08_SE_C09.indd 318                                                                2/24/17 10:44 AM
+                                                         CHAPTER 9  The Generalized Regression Model and Heteroscedasticity 319
+
+where i = country and t = 1960, c, 1978. This is a balanced panel (see Section 11.2) with
+19(18) = 342 observations in total. The data are given in Appendix Table F9.2.
+
+    Figure 9.3 displays the OLS residuals using the least squares estimates of the model
+
+above with the addition of 18 country dummy variables (1 to 18) (and without the overall
+
+constant). (The country dummy variables are used so that the country-specific residuals
+
+will have mean zero.) The F statistic for testing the null hypothesis that all the constants are
+
+equal is
+
+                                                                   G     (e0= e0 - e1= e1)/(G - 1 )
+                                                         F[(G - 1),(g = 1ng - K - G)] = =
+                                                                                           G
+                                                                         e1e1/(g = 1ng - K - G)
+
+                                                                         = (14.90436 - 2.73649)/17 = 83.960798,
+                                                                            2.73649/(342 - 3 - 18)
+
+where e0 is the vector of residuals in the regression with a single constant term and e1 is the
+regression with country-specific constan t terms. The critical value from the F table with 17
+
+and 321 degrees of freedom is 1.655. The regression results are given in Table 9.3. Figure 9.3
+
+does convincingly suggest the presence of groupwise heteroscedasticity. The White and LM
+
+statistics are 342(0.38365) = 131.21 and 279.588, respectively. The critical value from the
+chi-squared distribution with 17 degrees of freedom is 27.587. So, we reject the hypothesis
+
+of homoscedasticity and proceed to fit the model by feasible GLS. The two-step estimates
+
+are shown in Table 9.3. The FGLS estimator is computed by using weighted least squares,
+where the weights are 1/sn g2 for each observation in country g. Comparing the White standard
+errors to the two-step estimators, we see that in this instance, there is a substantial gain to
+
+using feasible generalized least squares.
+
+                                 Figure 9.3 Plot of OLS Residuals by Country.
+
+                                       EIT
+                                       0.40
+
+                                                         0.24
+
+                                 Least Squares Residual  0.08
+
+                                                         -0.08
+                                                         -0.24
+
+                                                         -0.40
+
+                                                                0     4  8                          12  16       20
+
+                                                                                           Country
+
+M09_GREE1366_08_SE_C09.indd 319                                                                                                  2/24/17 10:44 AM
+320 Part II  Generalized Regression Model and Equation Systems
+
+TABLE 9.3 Estimated Gasoline Consumption Equations
+
+                                            OLS                                     FGLS
+
+                                 Coefficient Std. Error White Std. Err.  Coefficient Std. Error
+
+ln Income                          0.66225  0.07339  0.07277               0.57507        0.02927
+ln Price                         - 0.32170  0.04410  0.05381             - 0.27967        0.03519
+ln Cars/Cap.                     - 0.64048  0.02968  0.03876             - 0.56540        0.01613
+Country 1                                   0.22832  0.22608                              0.11308
+Country 2                          2.28586  0.21290  0.20983               2.43707        0.10225
+Country 3                          2.16555  0.21864  0.22479               2.31699        0.11663
+Country 4                          3.04184  0.20809  0.20783               3.20652        0.10250
+                                   2.38946                                 2.54707
+Country 5                                   0.21647  0.21087                              0.10101
+Country 6                          2.20477  0.21788  0.21846               2.33862        0.10893
+Country 7                          2.14987  0.21488  0.21801               2.30066        0.11206
+Country 8                          2.33711  0.24369  0.23470               2.57209        0.11384
+Country 9                          2.59233  0.23954  0.22973               2.72376        0.10795
+Country 10                         2.23255  0.21184  0.22643               2.34805        0.11821
+Country 11                         2.37593  0.21417  0.21311               2.58988        0.10478
+Country 12                         2.23479  0.20304  0.20300               2.39619        0.09950
+Country 13                         2.21670  0.16246  0.17133               2.38486        0.08146
+Country 14                         1.68178  0.39451  0.39180               1.90306        0.20407
+Country 15                         3.02634  0.22909  0.23280               3.07825        0.11895
+Country 16                         2.40250  0.23566  0.26168               2.56490        0.13326
+Country 17                         2.50999  0.22728  0.22322               2.82345        0.10955
+Country 18                         2.34545  0.21960  0.22705               2.48214        0.11917
+                                   3.05525                                 3.21519
+
+9.8 SUMMARY AND CONCLUSIONS
+
+     This chapter has introduced a major extension of the classical linear model. By allowing for
+     heteroscedasticity and autocorrelation in the disturbances, we expand the range of models
+     to a large array of frameworks. We will explore these in the next several chapters. The formal
+     concepts introduced in this chapter include how this extension affects the properties of the
+     least squares estimator, how an appropriate estimator of the asymptotic covariance matrix
+     of the least squares estimator can be computed in this extended modeling framework, and,
+     finally, how to use the information about the variances and covariances of the disturbances
+     to obtain an estimator that is more efficient than ordinary least squares.
+
+          We have analyzed in detail one form of the generalized regression model, the model
+     of heteroscedasticity. We first considered least squares estimation. The primary result
+     for least squares estimation is that it retains its consistency and asymptotic normality,
+     but some correction to the estimated asymptotic covariance matrix may be needed
+     for appropriate inference. The White estimator is the standard approach for this
+     computation. After examining two general tests for heteroscedasticity, we then narrowed
+     the model to some specific parametric forms, and considered weighted (generalized) least
+     squares for efficient estimation and maximum likelihood estimation. If the form of the
+     heteroscedasticity is known but involves unknown parameters, then it remains uncertain
+
+M09_GREE1366_08_SE_C09.indd 320                                                                      2/24/17 10:44 AM
+            CHAPTER 9  The Generalized Regression Model and Heteroscedasticity 321
+
+whether FGLS corrections are better than OLS. Asymptotically, the comparison is clear,
+but in small or moderately sized samples, the additional variation incorporated by the
+estimated variance parameters may offset the gains to GLS.
+
+Key Terms and Concepts                · Generalized sum of squares  · Robust estimator
+                                      · Groupwise                   · Robustness to unknown
+        · Asymptotic properties
+        · Autocorrelation               heteroscedasticity            heteroscedasticity
+        · Breusch-Pagan Lagrange      · Heteroscedasticity          · Two-step estimator
+                                      · Lagrange multiplier test    · Weighted least squares
+          multiplier test             · Multiplicative
+        · Efficient estimator                                         (WLS)
+        · Feasible generalized least    heteroscedasticity          · White heteroscedasticity
+                                      · Ordinary least squares
+          squares (FGLS)                                              robust estimator
+        · Finite-sample properties      (OLS)                       · White test
+        · Generalized least squares   · Panel data                  · Aitken's theorem
+
+          (GLS)
+        · Generalized linear
+
+          regression model
+
+Exercises
+
+1. What is the covariance matrix, cov[Bn, Bn - b], of the GLS estimator
+    Bn = (X -1X)-1X -1y and the difference between it and the OLS estimator,
+    b = (XX)-1Xy? The result plays a pivotal role in the development of specification
+    tests in Hausman (1978).
+
+2. This and the next two exercises are based on the test statistic usually used to test a
+    set of J linear restrictions in the generalized regression model,
+
+                                 F[J, n - K] =  (RBn - q)[R(X -1X)-1R]-1(RBn - q)/J
+                                                (y - XBn) -1(y - XBn)/(n - K) ,
+
+    where Bn is the GLS estimator. Show that if is known, if the disturbances
+    are normally distributed and if the null hypothesis, RB = q, is true, then this
+    statistic is exactly distributed as F with J and n - K degrees of freedom. What
+    assumptions about the regressors are needed to reach this conclusion? Need they
+
+    be nonstochastic?
+
+3. Now suppose that the disturbances are not normally distributed, although is still
+
+    known. Show that the limiting distribution of the previous statistic is (1/J) times a
+
+    chi-squared variable with J degrees of freedom. (Hint: The denominator converges
+    to s2.) Conclude that, in the generalized regression model, the limiting distribution
+
+    of the Wald statistic,
+
+                                 W = (RBn - q){R(est. Var[Bn])R}-1(RBn - q),
+
+is chi-squared with J degrees of freedom, regardless of the distribution of the
+disturbances, as long as the data are otherwise well behaved. Note that in a finite
+sample, the true distribution may be approximated with an F[J, n - K] distribution.
+It is a bit ambiguous, however, to interpret this fact as implying that the statistic
+
+M09_GREE1366_08_SE_C09.indd 321                                                                 2/24/17 10:44 AM
+322 Part II  Generalized Regression Model and Equation Systems
+
+            is asymptotically distributed as F with J and n - K degrees of freedom, because
+            the limiting distribution used to obtain our result is the chi-squared, not the F. In
+            this instance, the F[J, n - K] is a random variable that tends asymptotically to the
+            chi-squared variate.
+        4. Finally, suppose that must be estimated, but that assumptions (9-22) and (9-23)
+            are met by the estimator. What changes are required in the development of the
+            previous problem?
+        5. In the generalized regression model, if the K columns of X are characteristic vectors
+            of , then ordinary least squares and generalized least squares are identical. (The
+            result is actually a bit broader; X may be any linear combination of exactly K
+            characteristic vectors. This result is Kruskal's theorem.)
+            a. Prove the result directly using matrix algebra.
+            b. Prove that if X contains a constant term and if the remaining columns are in
+
+                deviation form (so that the column sum is zero), then the model of Exercise 8
+                is one of these cases. (The seemingly unrelated regressions model with identical
+                regressor matrices, discussed in Chapter 10, is another.)
+        6. In the generalized regression model, suppose that is known.
+            a. What is the covariance matrix of the OLS and GLS estimators of B?
+            b. What is the covariance matrix of the OLS residual vector e = y - Xb?
+            c. What is the covariance matrix of the GLS residual vector En = y - XBn?
+            d. What is the covariance matrix of the OLS and GLS residual vectors?
+         7. Suppose that y has the pdf f(y  x) = (1/xB)e-y/(xB), y 7 0. Then E[y  x] = xB
+            and Var[y x] = (xB)2. For this model, prove that GLS and MLE are the same,
+            even though this distribution involves the same parameters in the conditional mean
+            function and the disturbance variance.
+        8. Suppose that the regression model is y = m + e, where e has a zero mean, constant
+            variance, and equal correlation, r, across observations. Then cov[ei, ej] = s2r
+            if i  j. Prove that the least squares estimator of m is inconsistent. Find the
+            characteristic roots of and show that Condition 2 before (9-10) is violated.
+        9. Suppose that the regression model is yi = m + ei, where
+
+                  E[ei  xi] = 0, cov[ei, ej  xi, xj] = 0 for i = j, but Var[ei  xi] = s2xi2, xi 7 0.
+
+            a. Given a sample of observations on yi and xi, what is the most efficient estimator
+                of m? What is its variance?
+
+            b. What is the OLS estimator of m, and what is the variance of the OLS estimator?
+            c. Prove that the estimator in part a is at least as efficient as the estimator in part b.
+      10. For the model in Exercise 9, what is the probability limit of s2 = n a i = 1 1 n (yi - y)2?
+            Note that s2 is the least squares estimator of the residual variance. It is also n times
+            the conventional estimator of the variance of the OLS estimator,
+
+                                             est.Var [y] = s2(XX)-1 = s2.
+                                                                                   n
+
+            How does this equation compare with the true value you found in part b of Exercise 9?
+            Does the conventional estimator produce the correct estimator of the true asymptotic
+            variance of the least squares estimator?
+
+M09_GREE1366_08_SE_C09.indd 322                                                                         2/24/17 10:44 AM
+            CHAPTER 9  The Generalized Regression Model and Heteroscedasticity 323
+
+11. For the model in Exercise 9, suppose that e is normally distributed, with mean zero
+     and variance s2[1 + (gx)2]. Show that s2 and g2 can be consistently estimated by a
+     regression of the least squares residuals on a constant and x2. Is this estimator efficient?
+
+12. Two samples of 50 observations each produce the following moment matrices. (In
+     each case, X is a constant and one variable.)
+
+                                     sample 1    sample 2
+
+                                 XX c 50 300 d c 50 300 d
+                                            300 2100 300 2100
+
+                                 yX [300 2000] [300 2200]
+
+                                 yy      [2100]  [2800]
+
+     a. Compute the least squares regression coefficients and the residual variances s2
+         for each data set. Compute the R2 s for each regression.
+
+     b. Compute the OLS estimate of the coefficient vector assuming that the coefficients
+         and disturbance variance are the same in the two regressions. Also compute the
+         estimate of the asymptotic covariance matrix of the estimate.
+
+     c. Test the hypothesis that the variances in the two regressions are the same without
+         assuming that the coefficients are the same in the two regressions.
+
+     d. Compute the two-step FGLS estimator of the coefficients in the regressions,
+         assuming that the constant and slope are the same in both regressions. Compute
+         the estimate of the covariance matrix and compare it with the result of part b.
+
+13. Suppose that in the groupwise heteroscedasticity model of Section 9.7.2, Xi is the
+     same for all i. What is the generalized least squares estimator of B? How would you
+     compute the estimator if it were necessary to estimate si2?
+
+14. The model
+
+                                     J y1 R = J x1 R b + J E1 R
+                                     y2  x2      E2
+
+satisfies the groupwise heteroscedastic regression model of Section 9.7.2 All
+variables have zero means. The following sample second-moment matrix is obtained
+from a sample of 20 observations:
+
+                                          y1 y2 x1 x2
+                                     y1 20 6 4 3
+                                     y2 D 6 10 3 6 T .
+                                     x1 4 3 5 2
+                                     x2 3 6 2 10
+
+a. Compute the two separate OLS estimates of b, their sampling variances, the
+   estimates of s12 and s22, and the R2 s in the two regressions.
+
+b. Carry out the Lagrange multiplier test of the hypothesis that s12 = s22.
+c. Compute the two-step FGLS estimate of b and an estimate of its sampling
+
+   variance. Test the hypothesis that b equals 1.
+d. Compute the maximum likelihood estimates of b, s12, and s22 by iterating the
+
+   FGLS estimates to convergence.
+
+M09_GREE1366_08_SE_C09.indd 323                                                                    2/24/17 10:44 AM
+324 Part II  Generalized Regression Model and Equation Systems
+
+15. The following table presents a hypothetical panel of data:
+
+                                           i=1                        i=2                   i=3
+
+t                                y              x              y            x          y           x
+
+   1                             30.27          24.31          38.71        28.35   37.03        21.16
+                                                                                    43.82        26.76
+   2                             35.59          28.47          29.74        27.38   37.12        22.21
+                                                                                    24.34        19.02
+   3                             17.90          23.74          11.29        12.74   26.15        18.64
+                                                                                    26.01        18.97
+   4                             44.90          25.44          26.17        21.08   29.64        21.35
+                                                                                    30.25        21.34
+   5                             37.58          20.80          5.85         14.02   25.41        15.86
+                                                                                    26.04        13.28
+   6                             23.15          10.55          29.01        20.43
+
+   7                             30.53          18.40          30.38        28.13
+
+   8                             39.90          25.40          36.03        21.78
+
+   9                             20.44          13.57          37.90        25.65
+
+10                               36.85          25.60          33.90        11.66
+
+a. Estimate the groupwise heteroscedastic model of Section 9.7.2. Include an
+   estimate of the asymptotic variance of the slope estimator. Use a two-step
+   procedure, basing the FGLS estimator at the second step on residuals from the
+   pooled least squares regression.
+
+b. Carry out the Lagrange multiplier tests of the hypothesis that the variances are
+   all equal.
+
+Applications
+
+1. This application is based on the following data set.
+
+                                                       50 Observations on y:
+
+   - 1.42                           2.75     2.10      - 5.08         1.49  1.00      0.16   - 1.11    1.66
+   - 0.26                                    5.94                                     1.61     2.11  - 3.82
+   - 0.62                         - 4.87   26.14       2.21 -6.87           0.90      1.97           - 2.52
+   - 1.26                            7.01    3.41                                     2.04  - 23.17
+    5. 51                                  - 1.47      7.39           0.79  1.93      2.62     3.00    6.31
+                                  - 0.15     1.24                                                    - 4.71
+   - 0.35                        - 15.22               - 5.45         1.31  1.52    - 0.40   - 5.16
+                                  - 0.48                                              0.28
+                                                       - 1.48         6.66  1.78      1.06
+                                                                                      0.86
+                                                       0.69           1.91            0.48
+
+                                                       50 Observations on x1:       - 2.72
+                                                                                      0.26
+   - 1.65                          1.48      0.77      0.67           0.68  0.23            - 1.13     0.15
+   - 0.63                          0.34      0.35                                   - 0.17    0.58
+   - 1.78                          1.25      0.22      0.79           0.77 -1.04      0.19           - 0.41
+   - 0.80                        - 1.32      0.16                                     1.77  - 0.66   - 1.18
+    0. 02                          0.33    - 1.99      1.25 -0.12           0.66              2.04   - 0.51
+                                 - 1.62      0.39                                                    - 0.18
+   - 0.18                                              1.06 -0.60           0.79              1.90
+
+                                                       0.70 -0.17           0.33
+
+                                                       0.17           1.02
+
+                                                       50 Observations on x2:
+
+   - 0.67                          0.70      0.32        2.88     - 0.19    - 1.28          - 0.70   - 1.55
+   - 0.74                        - 1.87      1.56        0.37     - 2.07      1.20          - 1.34   - 2.10
+    0. 61                                    4.38        2.16                 0.30                   - 1.15
+                                   2.32    - 1.94        2.09       1.51                      7.82
+    1. 77                          2.92    - 0.88      - 1.53       1.50    - 0.46                     1.54
+    1. 87                        - 3.45    - 2.02        1.91       1.42    - 2.70          - 0.39
+    2. 01                          1.26                           - 2.23                    - 1.89   - 1.85
+
+M09_GREE1366_08_SE_C09.indd 324                                                                              2/24/17 10:44 AM
+          CHAPTER 9  The Generalized Regression Model and Heteroscedasticity 325
+
+    a. Compute the OLS regression of y on a constant, x1, and x2. Be sure to compute
+       the conventional estimator of the asymptotic covariance matrix of the OLS
+       estimator as well.
+
+    b. Compute the White estimator of the appropriate asymptotic covariance matrix
+       for the OLS estimates.
+
+    c. Test for the presence of heteroscedasticity using White's general test. Do your
+       results suggest the nature of the heteroscedasticity?
+
+    d. Use the Breusch-Pagan (1980) and Godfrey (1988) Lagrange multiplier test to
+       test for heteroscedasticity.
+
+    e. Reestimate the parameters using a two-step FGLS estimator. Use Harvey's
+       formulation, Var[ei  xi1, xi2] = s2 exp(g1xi1 + g2xi2).
+
+2. (We look ahead to our use of maximum likelihood to estimate the
+    models discussed in this chapter in Chapter 14.) In Example 9.3, we
+    computed an iterated FGLS estimator using the airline data and the model
+    Var[eit  Loadfactori,t] = exp(g1 + g2 Loadfactori,t). The weights computed at each
+    iteration were computed by estimating (g1, g2) by least squares regression of ln eni2,t
+    on a constant and Loadfactor. The maximum likelihood estimator would proceed
+    along similar lines, however the weights would be computed by regression of
+    [eni2,t/sn i2,t - 1] on a constant and Loadfactori,t instead. Use this alternative procedure
+    to estimate the model. Do you get different results?
+
+M09_GREE1366_08_SE_C09.indd 325                                                                   2/24/17 10:44 AM
+

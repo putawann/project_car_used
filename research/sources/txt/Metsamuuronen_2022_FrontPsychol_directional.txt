@@ -1,0 +1,1375 @@
+                                             TYPE Original Research
+                                             PUBLISHED 17 October 2022
+                                             DOI 10.3389/fpsyg.2022.988660
+
+OPEN ACCESS                              Directional nature of the
+                                         product-moment correlation
+EDITED BY                                coefficient and some
+                                         consequences
+Charles Onyutha,
+Kyambogo University, Uganda              Jari Metsämuuronen1,2*
+
+REVIEWED BY                              1Finnish Education Evaluation Centre (FINEEC), Helsinki, Finland, 2Turku Research Institute for
+                                         Learning Analytics, University of Turku, Turku, Finland
+Rajesh Kumar Tripathy,
+Birla Institute of Technology            Product-moment correlation coefficient (PMC) is usually taken as a
+and Science, India                       symmetric measure of the association because it produces an equal estimate
+Pranjali Gajbhiye,                       irrespective of how two variables in the analysis are declared. However, in
+Nirvesh Enterprises Private Limited,     case the other variable has or both have non-continuous scales and when
+India                                    the scales of the variables differ from each other, PMC is unambiguously a
+                                         directional measure directed so that the variable with a wider scale (X) explains
+*CORRESPONDENCE                          the order or response pattern in the variable with a narrower scale (g) and
+                                         not in the opposite direction or symmetrically. If the scales of the variables
+Jari Metsämuuronen                       differ from each other, PMC is also prone to give a radical underestimation
+jari.metsamuuronen@gmail.com             of the association, that is, the estimates are deflated. Both phenomena have
+                                         obvious consequences when it comes to interpreting and speaking of the
+SPECIALTY SECTION                        results. Empirical evidence shows that the effect of directionality increases
+                                         by the discrepancy of the number of categories of the variables of interest.
+This article was submitted to            In the measurement modelling setting, if the scale of the score variable is
+Quantitative Psychology                  four times wider than the scale of the item, the directionality is notable: score
+and Measurement,                         explains the order in the item and no other way around nor symmetrically. This
+a section of the journal                 is regarded as a positive and logical direction from the test theory viewpoint.
+Frontiers in Psychology                  However, the estimate of association may be radically deflated, specifically, if
+                                         the item has an extremely difficult level. Whenever the statistic r2 or R2 is used,
+RECEIVED 15 August 2022                  as is usual in general scatterplots or when willing to express the explaining
+ACCEPTED 27 September 2022               power of the variables, this statistic is always a directional measure, and the
+PUBLISHED 17 October 2022                estimate is an underestimate if the scales differ from each other; this should be
+                                         kept in mind when interpreting r-squared statistics as well as with the related
+CITATION                                 statistic eta squared within general linear modelling.
+
+Metsämuuronen J (2022) Directional       KEYWORDS
+nature of the product-moment
+correlation coefficient and              product-moment correlation coefficient, coefficient eta, directional coefficient, eta
+some consequences.                       squared, Goodman-Kruskal G, Somers D
+Front. Psychol. 13:988660.
+doi: 10.3389/fpsyg.2022.988660
+
+COPYRIGHT
+
+© 2022 Metsämuuronen. This is an
+open-access article distributed under
+the terms of the Creative Commons
+Attribution License (CC BY). The use,
+distribution or reproduction in other
+forums is permitted, provided the
+original author(s) and the copyright
+owner(s) are credited and that the
+original publication in this journal is
+cited, in accordance with accepted
+academic practice. No use, distribution
+or reproduction is permitted which
+does not comply with these terms.
+
+Frontiers in Psychology                  01  frontiersin.org
+Metsämuuronen                                                                    10.3389/fpsyg.2022.988660
+
+Introduction                                                                         The wide applicability of PMC has led to its wide use in
+                                                                                 numerous applications. PMC is used in procedures related to
+    The coefficients of the association are divided into                         factor analysis, structural equation modelling, and regression
+symmetric and directional ones. Although the directionality                      analysis; in item analysis as one of the classical estimators
+itself is often defined loosely, the directional measures                        of the item-score association; and in estimating reliability.
+give (generally) two options for the association: one of                         Metsämuuronen (2022b) pointed out that PMC has been,
+the variables is dependent and the other is independent,                         and it still is, one of the main engines of many practical
+whereas the symmetric measures handle both variables                             applications in modern scientific inquiries and analysis settings.
+as independent ones. Then, traditionally, the symmetric                          The wide use of PMC alone motivates us to study the
+measures produce only one estimate of the association.                           hidden characteristics of PMC: the directional nature may
+Some traditional directional measures of association are                         necessitate to reconsider our interpretations related to the
+Goodman-Kruskal lambda and tau (Goodman and Kruskal,                             estimates. Pearson himself, however, valued the polychoric
+1954), Somers delta (D; Somers, 1962), and coefficient eta                       correlation coefficient (Pearson, 1900, 1913) generalised from
+(; Pearson, 1903, 1905), and some with a symmetric                               tetrachoric correlation (Pearson, 1900) as his most important
+nature are phi (Pearson, 1904) and Kendall tau-a and tau-b                       contribution to the research community [based on a note by
+(Kendall, 1938, 1948).                                                           Pearson's colleague Burton H. Camp (1933); see discussion in
+                                                                                 Ekström (2011)].
+    Some coefficients, such as Goodman-Kruskal gamma
+gamma (G; Goodman and Kruskal, 1954) and product-moment                              Because of more than a century of research with and on
+correlation coefficient (PMC; Bravais, 18441; Galton, 1889;                      PMC, some of its weaknesses or challenges are well known, and
+Pearson, 1896; onward), are traditionally taken as symmetric                     those are discussed in general textbooks (e.g., Salkind, 2010;
+measures (see e.g., IBM, 2017a) because they produce only one                    Tabachnick and Fidell, 2013; Metsämuuronen, 2017). Three
+estimate for the association regardless of how two variables, e.g.,              relevant matters from the viewpoint of the topic of this article
+X and Y, are declared; the outcome takes on the same value                       are discussed in this study. First, PMC is not powerful when
+declared either way (e.g., Walk and Rupp, 2010). However, both                   the phenomenon is curvilinear; the factual association may be
+G and PMC have, factually, a hidden directional nature (see,                     perfect, but PMC cannot detect this. In such settings,  is more
+e.g., Metsämuuronen, 2021b, 2022a), and this character related                   powerful in reflecting curvilinear association (e.g., Ayres, 1920;
+to PMC is the main interest in this article; this is discussed                   Sechrest and Yeaton, 2011; Howell, 2012). For the non-linear
+later. Although the phenomenon is general, the focus is on the                   settings, the distance correlation (Székely et al., 2007) based on
+educational settings and the datasets in the numerical examples                  Euclidean distances instead of strict covariation may be the best
+come from datasets related to student assessment.                                option though [see a simple introduction in Gleeson (2018); see
+                                                                                 literature and fast algorithm in Chaudhuri and Hu (2019); see R
+    Metsämuuronen (2022b) noted that of the coefficients of                      codes in Gleeson, 2018; Rizzo and Székely, 2022].
+association between two variables, PMC has the longest history
+and the widest applicability. This may be the reason why it is                       Second, Meade (2010) and Walk and Rupp, (2010; see
+referred to in academic works more than the other coefficients                   also Sackett and Yang, 2000; Sackett et al., 2007) remind us
+taken together; at the time of finalising this article (October                  of the phenomenon of restriction of range, which is that
+2022), according to Google Scholar, PMC is referred to in                        when only a portion of the range of values of a variable is
+more than 1.4 million publications (523,000 times as "product-                   actualised in the sample, it leads to inaccurate estimates of
+moment", 883,000 times as "Pearson correlation", and 47,000                      correlation by PMC. This may happen, for example, when
+times as "point biserial"). For instance, the second most frequent               only the highest-achieving students from the population apply
+family of coefficients, Kendall tau, including tau-a, tau-b, and                 to a study programme, causing the variance in the entrance
+tau-c, is referred to around 92,000 times ("Kendall tau" and                     test to be reduced remarkably (see illustrations of different
+"Kendall's tau"); "biserial correlation" is referred to 32,000 times             patterns of restriction of range in Sackett and Yang, 2000). This
+(including rank biserial and point biserial correlations); "Somers               phenomenon is called attenuation, which, in general, refers to
+delta" is referred to 30,000 times; "polychoric correlation" is                  underestimating the correlation between two different measures
+referred to 12,000 times; and coefficients by Goodman and                        because of measurement error (Silver, 2008). Pearson offered
+Kruskal, including gamma, tau, and lambda, are referred to                       the first solution to correct the attenuation in 1903, and many
+around 5,600 times ("Goodman-Kruskal").                                          solutions have been offered since (see the typology in Mendoza
+                                                                                 and Mumford, 1987; Sackett et al., 2007). This characteristic
+1 Although usually referred to as the "Pearson correlation," it was,             of PMC has been studied and corrected, specifically, in the
+factually, French physicist Auguste Bravais (1844) who derived the               validity and meta-analytic studies (see literature and practices
+coefficient first. Hence, sometimes the coefficient is called the "Bravais-      in Schmidt and Hunter, 2003, 2015; Schmidt et al., 2008).
+Pearson correlation" (e.g., Cleff, 2019). See also Stigler (1989) of the
+relevance of Sir Francis Galton in the development of the coefficient.               Third, even though we would not face the traditional
+                                                                                 condition of restriction of range, PMC is severely affected by
+
+Frontiers in Psychology                                                      02  frontiersin.org
+Metsämuuronen                                                     10.3389/fpsyg.2022.988660
+
+several sources of systematic and mechanical underestimation      Research questions and the course
+in the estimates of correlation (see Metsämuuronen,               of study
+2021a,b); the estimates may be radically deflated caused
+by artificial systematic errors during the estimation (see            Although we know the algebraic connection between
+the discussion of the terms of attenuation and deflation          PMC and , two relevant questions are largely unanswered:
+in, e.g., Chan, 2008; Silver, 2008; Gadermann et al., 2012;       How remarkable is the effect of directionality in PMC in
+Metsämuuronen, 2022a). For example, it is known that the          real-life settings? and What are the consequences of the
+number of categories and the division of the observations         directionality?
+in the variable with the narrower scale ("item difficulty"
+in the testing settings) influence strictly the magnitude of          The course of the study starts with a discussion of the
+the estimates of PMC (e.g., Martin, 1973, 1978; Olsson,           different forms of PMC and its connection to coefficient eta
+1980; Metsämuuronen, 2022d). It is known that when the            in the dichotomous case in Section "Some characteristics of
+categories of the variables are not equal, PMC cannot reach       PMC and the connection with coefficient eta." In this section,
+the perfect 1 due to mechanical reasons (see Metsämuuronen,       some further algebraic treatments of the directionality of
+2017; see algebraic proof in Supplementary Appendix 1).           PMC in the polytomous case are given and also a possible
+In real-life settings, the deflation may be 0.60-0.70 units       benchmarking estimator for the deflation in PMC, attenuation-
+of correlation (see Metsämuuronen, 2022a). This is                corrected PMC, is discussed. Section "Numerical examples
+discussed later in Section "Practical notes on the deflation      of the directional nature of product-moment correlation
+in product-moment correlation coefficient and R2" with a          coefficient" offers numerical examples and small studies of
+numerical example.                                                the effect of directionality. The methodological decisions are
+                                                                  discussed in Section "Datasets, methods, and the course
+    Based on simulations (Metsämuuronen, 2021b,                   of study."
+2022d), at least six general factors that affect strictly
+and cumulatively the deflation in the estimates by                Some characteristics of
+PMC can be highlighted: (1) discrepancy in scales in              product-moment correlation
+general, (2) "difficulty level" and variance in g, (3)            coefficient and the connection
+the number of categories in g, (4) the number of                  with coefficient eta
+categories in the X, (5) the number of tied cases in X,
+and (6) the distribution of the latent variable. In the           Different forms of product-moment
+measurement modelling settings, specifically, when the            correlation coefficient
+scale in an item is radically narrower than the scale in
+the score, the estimates by the PMC between the item                  Basically, PMC is a measure of observed association for
+and the score--including factor loadings because, after           two continuous variables (see a typology in Metsämuuronen,
+all, factor loadings are PMCs between items and score             2022c). In general, PMC is the standardised covariation between
+(see Yang, 2010)--are always attenuated or deflated.              variables X and Y:
+This is specifically seen in the items with an extremely
+difficult level.                                                                                XY = XY (1)
+                                                                                                         X Y
+    One specific characteristic of the PMC is that it is
+strictly connected to a genuinely directional estimator,          where XY is the covariance and X and Y are standard
+coefficient eta. If the other variable is dichotomous             deviations of X and Y, respectively. However, its computational
+and the other metric is ordinal, interval, continuous,            mechanics is also used in such measures as point biserial
+or pseudo-continuous, PMC equals a specific direction             correlation (RPB) between a binary variable and a metric
+of coefficient eta (see, e.g., Metsämuuronen, 2022a,b).           variable (with an ordinal, interval, or continuous scale) and
+Hence, PMC is a truly directional measure, but this               point polyserial correlation coefficient (RPP) between an
+character and its possible effects are not widely known           ordinal variable with a narrower scale and a metric variable
+or studied in real-life datasets. This article studies the        with a wider scale. The mechanics is also used in the
+magnitude and effects of this hidden characteristic of            rank correlation coefficient, famously simplified by Spearman
+PMC. It is to be seen that this characteristic has a              (1904). Additionally, PMC is embedded in the standard
+notable effect on our interpretation of the generally             procedures of estimating biserial, polyserial, and polychoric
+known and widely used statistic and its derivative,               correlation coefficients for the inferred association between
+explaining power estimated by the squared correlation             an observed binary or ordinal variable and a latent non-
+r2 or squared multiple correlation R2. There are                  observable metric variable or between two non-observable latent
+many abbreviations in the article. These are collected
+in Supplementary Appendix 4.
+
+Frontiers in Psychology                                       03  frontiersin.org
+Metsämuuronen                                                                                        10.3389/fpsyg.2022.988660
+
+variables (of the procedures, see Olsson et al., 1982; Drasgow,                   the settings related to conditions)3 can be expressed as
+1986).                                                                            follows:
+
+    If the other variable is a binary or dichotomous one, a                       g|X =  g2|X =      SSbetween g |X
+simplified form for the point biserial correlation is found                                           SStotal g |X
+in the textbooks (e.g., Lord et al., 1968; Lane et al., 2016;
+Metsämuuronen, 2017):                                                                    g=1 R ng X¯ g - GMX 2
+                                                                                  =                    2,            (3)
+              PMC = PB = gX = (X¯ 1 - X¯ 0) × g (2)
+                                                          X                                       N
+                                                                                         i=1 yi - GMX
+originally provided by Swineford (1936) and Kuder
+(1937),2 where X¯ 0 and X¯ 1 refer to the means of                                where X¯ g refers to the means of X in the subpopulations
+the variable X in the subpopulations 0 and 1 of g                                 in g, and GMX is the grand mean of X. The opposite
+and g = (n0 × n1) (n0 + n1)2 = p 1 - p and                                        direction "g dependent" or "X given g" can be expressed as
+X are standard deviations of g and X, respectively.                               follows:
+Eq. 2 appears to be important in understanding the
+directional nature of PMC. Namely, Wherry and Taylor                              X|g =  X2 |g =     SSbetween X g
+(1946) and Eikeland (1971) showed that a certain                                                      SStotal X g
+direction of a truly directional coefficient eta equals
+Eq. 2. A simplified proof is given in Supplementary                                      X=1 C nX g¯X - GMg 2
+Appendix 2.                                                                       =                    2,            (4)
+
+Directionality in the dichotomous case                                                            N
+                                                                                         i=1 xi - GMg
+    Of the directional estimators of association, coefficient
+eta, sometimes called the correlation ratio, specifically, in                         where g¯X refers to the mean of g in each category X, and
+the early days (chronologically, e.g., Pearson, 1911; Ayres,                      GMg is the grand mean of g. Except in the special case where
+1920; Fisher, 1925; Kelley, 1935), appears to be an interesting                   the variables have equal scales with no crossing categories,
+coefficient from the viewpoint of focus in this article because                   g|X =X|g . If we obtain, in a specific dataset, values g|X =
+it has a strict connection to PMC. Coefficient  can be                            0.7595 and X|g = 1, in the framework of GLM, we would
+expressed in multiple ways. Here, the form familiar from                          infer that g explains 59% (= 0.762) of the variability in X
+the settings related to general linear modeling (GLM) is
+used.                                                                             while X explains the variability in g perfectly (100%). Within
+
+    Assume two variables g and X with observed values x                           measurement modelling settings, the interpretation is opposite:
+and y, respectively, with x = 1, . . ., R and y = 1, . . .,
+C categories and R < < C. Although  is often used in                              X explains 59% of the response pattern in g and the latter
+estimating the association between a nominal-scaled variable
+and a metric variable, its computational mechanism can be                         direction is not meaningful (see footnote 3). However, in
+used, obviously, with ordinal or even interval-scaled variables.                  general, both directions g|X and X|g may make sense in some
+In many cases related to , the widths of the scales are far                       practical settings; for example, we may be interested in whether
+from each other (R < < C) although this is not a necessity in
+calculating Euclidian. The condition of R < < C is specifically                   the attitude explains more the achievement or is it the opposite.
+true when we consider a binary or dichotomous g by a
+metric X.                                                                         3 This confusing naming of the directions is discussed in detail by
+                                                                                  Metsämuuronen (2020a, 2022a). In the literature related to directional
+    In general, the traditional direction of  directed so                         coefficients (e.g., Siegel and Castellan, 1988; Newson, 2002, 2006; IBM,
+that "X dependent" (usually  X g in the settings related                          2017a; Metsämuuronen, 2017) and, consequently, in the outputs of some
+to GLM) or "g given X" (usually  g |X or, here, g|X in                            generally known software packages, such as IBM SPSS and SAS, as well
+                                                                                  as R libraries, this direction of  is labelled "X dependent" and it is notated
+2 Metsämuuronen (2022a) reminds us that Kuder (1937) seems to be                  as  (X |g ). This label makes sense in GLM settings where a test results
+the first to use the term "point biserial correlation." He also provided the      (X) cannot explain the sex (g), as an example and, hence, X must be
+computational forms. However, Swineford (1936) seems to be the first              "dependent." An opposite name for the same direction is relevant within
+who studied the binary case of Pearson correlation in relation to biserial        the measurement modelling settings and non-parametric settings (see
+correlation (see Moses, 2017).                                                    discussion related to Table 1 and Metsämuuronen, 2020a). Within the
+                                                                                  measurement modelling settings, this direction means that the latent
+                                                                                  trait () manifested as a score variable (X) explains the response pattern
+                                                                                  in the item (g), and the opposite direction does not make sense (e.g.,
+                                                                                  Byrne, 2016; Metsämuuronen, 2017). In manual calculations of Mann-
+                                                                                  Whitney U test (Mann and Whitney, 1947) and Jonckheere-Terpstra JT
+                                                                                  test (chronologically, Terpstra, 1952; Jonckheere, 1954), as examples, X
+                                                                                  is first used to order g after which the order in g is analysed. In these
+                                                                                  settings, it is natural to think that "g depends on X," that is, from the
+                                                                                  condition's viewpoint, "g given X," usually notated as (g| X). This latter
+                                                                                  notation  ( g| X) = g|X = "eta directed so that `g given X' " is used in
+                                                                                  the text. The notation g|X is preferred over  ( g| X)because it is easy to
+                                                                                  modify to the form eta squared, 2g|X.
+
+Frontiers in Psychology                                                       04                                     frontiersin.org
+Metsämuuronen                                                                                  10.3389/fpsyg.2022.988660
+
+In the binary case, Eq. 3 is reduced to                                  Only in the specific case the association between two
+
+g|X =          n0 X¯ 0 - GMX 2 + n1 X¯ 1 - GMX 2           , (5)         variables is perfectly linear, the predicted value by the regression
+                                                                         model (X^ ij) equals the means of the subpopulations in g
+                         N                    2                          (X¯ j). In this specific case, which is always true in the binary
+                         i=1 yi - GMX
+
+where X¯ 0 and X¯ 1 are the means of X in the subpopulations of          and dichotomous cases and may occur, although rarely, in
+g = 0 and 1. This form appears to be important when showing
+the directional nature of PMC. Independently, Wherry and                 the polytomous case,                 2      Xij - X¯ j 2and,
+Taylor (1946) and Eikeland (1971) showed that, in the binary
+case, Eq. 5 can be expressed in the following form:                                            Xij - X^ ij =
+
+                    g|X = (X¯ 1 - X¯ 0) g = X|g (6)                      consequently, |PMC| = g|X . In any other condition,
+                                           X
+                                                                                        2      Xij - X¯ j 2 because                 2
+
+                                                                         Xij - X^ ij <                               Xij - X^ ij is
+
+                                                                         constructed so that the residuals related to the data in hand
+                                                                         would be the minimum and, hence, Xij - X¯ j 2 would always
+
+                                                                         be greater than the minimum, causing:
+
+which, obviously, equals the simplified form of point biserial                                 |PMC|  g|X .          (12)
+correlation in Eq. 2. Then, with binary items or, for example,
+with dummy variables in GLM settings (see Cohen, 1969), PMC                  Hence, except for the case of linearity in (ordinal) g,
+equals  directed so that "g given X" (in the measurement                 which is a rare case in general but always the condition in
+modelling settings) or "X dependent" (in GLM settings) but not           binary and dichotomous settings, the absolute magnitude of the
+with the opposite direction of eta:                                      estimates by PMC is always lower than that by g|X . Obviously,
+                                                                         the comparison makes sense only with categorical ordinal g;
+PMC = RPB = gX = g|X = X|g .                               (7)           PMC does not get meaningful interpretations with categorical
+                                                                         nominal g.
+    This means that PMC is, factually, a directional measure in
+the binary case. In what follows, some algebraic evidence of the         Some related consequences of the
+phenomenon in the polytomous cases is discussed.                         relationship of product-moment
+                                                                         correlation coefficient and eta
+Directionality in the polytomous case
+                                                                             The algebraic connection between PMC and  has some
+    In the polytomous case, PMC and g|X differ from each                 consequences not only in PMC (the directionality) but also in
+other by a small but important thing. We remember (see, e.g.,            interpreting  and 2 discussed by Metsämuuronen (2022a).
+Howell, 2012) that by using the concepts of sums of squares, the         First, the traditional way of calculating  (by taking the second
+absolute value of PMC can be expressed as follows:                       powers of all elements in the formula) will lead to an apparent
+                                                                         positive association. However, in fact, g|X can also reach
+                    |PMC| = SStotal - SSresidual (8)                     negative values: if in Eq. (6), X¯ 1 < X¯ 0, the factual correlation
+                                          SStotal                        is negative. Hence,  calculated by using the traditional
+                                                                         formulae gives us only the magnitude of the association and not
+and the absolute value of  as follows:                                   necessarily the true association.
+
+g|X = SSbetween = SStotal - SSerror . (9)                                    Second, the connection of PMC and g|X makes it clear
+                         SStotal         SStotal                         why the estimates g|X underestimate the true association in
+                                                                         an obvious manner. The underestimation in g|X is mechanical
+Unconventionally,  is expressed with absolute signs in this              in nature in the same manner as in PMC discussed above.
+study. The value of  as we usually see it is, in fact, the absolute      The magnitude of this obvious underestimation in PMC, and,
+value of the association between two variables--this is discussed        consequently, in g|X depends on several factors; six of those
+later in Section "Some related consequences of the relationship          were given above, and Metsämuuronen (2022d) discusses 11
+of product-moment correlation coefficient and eta." Hence,               such sources. In the extreme binary case, when the proportion of
+after simplifying, we can express the difference between PMC             1s (p) or 0s (1-p) approximates p = 1 or p = 0, g|X approximate
+and  as follows:                                                         zero regardless of the true association between the variables.
+                                                                         This is seen when comparing the magnitude of the estimates
+                         Xij - X¯ 2 -                   2  , (10)        by PMC and  with ones obtained by such estimators that can
+                                                                         detect the perfect association in extreme datasets (e.g., RPC, G
+                                         Xij - X^ ij                     or D, see Metsämuuronen (2021b, 2022e,f). The phenomenon
+                                                                         also generalises to polytomous cases. Some examples of the
+          |PMC| =                 Xij - X¯ 2                             magnitude of the mechanical underestimation are illustrated
+and
+                         Xij - X¯ 2 - Xij - X¯ j 2         . (11)
+    g|X = g2|X =
+                                  Xij - X¯ 2
+
+Frontiers in Psychology                                              05                                              frontiersin.org
+Metsämuuronen                                                                                                   10.3389/fpsyg.2022.988660
+
+with numerical examples in Section "Numerical examples of the                 hypothetical test-takers gave the incorrect answer. This could
+
+directional nature of product-moment correlation coefficient."                be a latent reflection of a very difficult item in a subtest (e.g.,
+
+    Third, because the estimates by g|X are deflated in                       "sets") amidst a longer test ("achievement in mathematical").
+an obvious manner, also g2|X must underestimate the true
+explaining power in an obvious manner. Inherited from g|X ,                   The difference between the observed item-score correlation
+
+the magnitude of the obvious underestimation in g2|X depends                  (Rit = iX) and the latent correlation ( = 1) indicates strictly
+on several factors, such as the number of categories in g and
+                                                                              the magnitude of deflation in the estimate; in Figure 1, relevant
+
+                                                                              benchmarking estimators of the association are compared in this
+
+X, the proportion of 0 s and 1 s (or the variance) in g, and                  regards.
+
+the distribution of the latent variable (see more factors in                  From the deflation viewpoint, it is notably that such
+
+Metsämuuronen, 2022d). In an extreme dichotomous case, g2|X                   estimators of item-score association based on the mechanics
+
+approximates zero irrespective of the true association between                of PMC as Henrysson's item-rest correlation Rir (Henrysson,
+
+the  variables  if  2    approximates  0.  Then,  factually,  latent  to      1963), Spearman rank-order correlation RRank (Spearman,
+                                                                              1904), Rit, and , cannot detect the true perfect latent
+                      g
+
+a set of an extremely unbalanced dichotomous variable (e.g.,
+
+consisting only of a few cases of males or females or with items              correlation, and the magnitude of deflation is notable (>0.45
+
+of extremely difficult level) and a metric variable (e.g., score),            units of correlation). Also, Kendall tau-b (Kendall, 1948) gives
+
+there could be a perfect correlation, which should be detected                a notably deflated estimate--the magnitude of its estimates is
+as perfect explaining power. However, g2|X cannot detect this
+because it cannot reach the limits of correlation due to deflation,           always lower than those by PMC (see, e.g., Metsämuuronen,
+
+                                                                              2021b)--as well as the correlation based on distance instead
+
+and the deflation may be remarkable, 50-70% or even more (see                 of covariance and distance correlation (dRit; Székely et al.,
+
+examples in Metsämuuronen, 2022a).                                            2007).4 In contrast, such estimators as polychoric correlation
+
+    Metsämuuronen (2022a) notes that the obvious                              (RPC; Pearson, 1900, 1913), Goodman-Kruskal gamma (G;
+
+underestimation by g2|X evokes justified questions related                    Goodman and Kruskal, 1954), dimension-corrected G (G2;
+to the traditional corrections connected with g2|X . The
+biased-corrected measures such as omega squared (2; Hays,                     Metsämuuronen, 2021a), and attenuation-corrected Rit and
+
+1963), epsilon squared (2, Kelley, 1935), and adjusted eta                    eta (RAC and EAC; Metsämuuronen, 2022a,e) can detect the
+
+squared (2adj; Mordkoff, 2019) are developed to correct                       latent perfect correlation. Such estimators as r-bireg correlation
+the positive bias in 2, specifically, with values near zero
+                                                                              (RREG; Livingston and Dorans, 2004; Moses, 2017), Somers
+
+                                                                              delta directed so that "score dependent" (D; Somers, 1962) and
+
+(see Okada, 2013, 2017; Mordkoff, 2019). These measures                       dimension-corrected D (D2; Metsämuuronen, 2020b, 2021a)
+tend to make the value of 2 even more deflated. For this,
+                                                                              come close the deflation-free outcome. Obviously, when PMC
+Metsämuuronen (2022a,e) suggests an attenuation correction                    (= r) is deflated, also r2 is deflated and, hence, the explaining
+
+for point biserial and point polyserial correlation coefficients as           power may be radically deflated. In the case related to Figure 1,
+well as for g|X and g2|X . These are briefly discussed as follows.
+                                                                              Rit = 0.545 leads to Rit2 = 0.297, that is, even if the true latent
+
+                                                                              explaining   power  between  the  variables  is  perfectly  2   =  1,
+
+                                                                                                                                            
+
+                                                                              only 29,7% of this can be reached when used PMC in the
+
+                                                                              estimation.
+
+Practical notes on the deflation in                                               When it comes to the multiple correlation coefficient
+product-moment correlation                                                    (R) and squared multiple correlation (R2) used widely with
+coefficient and R2
+                                                                              the regression models for the explaining power of multiple
+    Above, it was noted that one of the deficiencies of PMC is
+its tendency to produce deflated estimates caused by technical                independent variables [see other options in Kvålseth (1985) and
+or mechanical error in the estimation. This can be illustrated
+by taking a pair of identical variables with an obvious perfect               expanded in Onyutha (2022)], the deflation in PMC is also
+correlation ( = 1). This setting corresponds with the latent
+image of the measurement model with one latent variable                       inherited to these statistics. Let us assume the same hypothetical
+(such as "achievement in mathematics") which is manifested as
+the score in an item with a narrower scale and in a score variable            settings as above with perfect correlations between variables,
+with a wider scale.
+                                                                              but now we have one dependent variable (score X) with
+    Let us take a vector of n = 1,000 normally distributed cases
+and double it. Of these (identical) variables, one (score X) is               p = 0.50 and latent normality and two «independent» different
+divided into 7 categories (df (X) = 6) with the difficulty level of
+p(X) = 0.50, and the other (item g) is divided into a binary form             manifestations of the same original variable (items g1 and g2)
+(df (g) = 1) by using a cut-off of p(g) = 0.10, that is, 90% of the
+                                                                              explaining the score. Let the items be binary with the difficulty
+
+                                                                              levels p(g1) = 0.2 and p(g2) = 0.80. Keeping in mind that the
+
+                                                                              4 Sincere thanks to Counsellor or Evaluation, Jukka Marjanen from
+                                                                              Finnish Education Evaluation Center (FINEEC) for computing the
+                                                                              estimate of distance correlation. R package «Energy» by Rizzo and
+                                                                              Székely (2022) was used in computing.
+
+Frontiers in Psychology                                                   06                                                   frontiersin.org
+Metsämuuronen                                                                                                                10.3389/fpsyg.2022.988660
+
+                                                  N = 1000; df(X) = 6, df(g) = 1, p(X)= 0.50, p(g) = 0.10; latent normality
+                                      1.00 0.009 0 0.092
+
+                         correlation  0.80 0.545 0.505 0.472 0.455
+
+                                      0.60 0.846                                          0.908 0.991 1
+                                      0.40
+
+                                      0.20 0.455 0.495 0.528 0.545
+
+                                                0.154
+                                      0.00
+
+                                      Rir                  TauB RRank dRit Rit = eta D = D2 RReg RPC = G =
+
+                                                                                          G2 = RAC
+
+                                                           Correlation Deflation          = EAC
+
+   FIGURE 1
+
+   Magnitude of deflation in the estimates by selected estimators of association. Rir = Henrysson item-rest correlation (= PMC);Tau-b = Kendall
+   tau-b; RRank = Spearman rank-order correlation (= PMC); dRit = distance correlation; Rit = item-score correlation (= PMC); eta = coefficient
+   eta (X dependent) (= PMC in the binary case); D = Somers delta (X dependent); D2 = dimension-corrected D; RReg = r-bireg correlation;
+   RPC = polychoric correlation; G = Goodman-Kruskal gamma; G2 = dimension-corrected G, RAC = attenuation-corrected Rit;
+   EAC = attenuation-corrected eta.
+
+latent images of these three variables are identical, the observed            variables--the same logic can be used also with the attenuation-
+correlations as follows:
+                                                                              corrected eta (Metsämuuronen, 2022a). Namely, when the
+               X                      g1 (p = 0.20)        g2 (p = 0.80)      observed values in two variables are given, the variances (X2
+                                                                              and g2) are fixed. Recalling the basic formula of PMC (gX =
+X              1                      0.66055              0.66055            gX gX), the only element affecting the magnitude of the
+                                         1                 0.25313            correlation is the covariance between the variables (gX). The
+g1 (p = 0.20)                                                                 maximum value of gX ( Max gX ) is obtained when g and X are
+                                                              1               in the same order. Hence, the maximal possible correlation
+g2 (p = 0.80)                                                                 (Max gX ) in the given set of variables is given as follows (see
+                                                                              Metsämuuronen, 2022e):
+
+   In the case of two independent variables, R is computed                                 Max  Max gX
+                                                                                          gX = g X . (13)
+by the formula Ry.xz =                y2x+y2z -2yxyz xz    , where y
+
+                                               1-2     xz                     Based on this, the attenuation-corrected PMC (AC, RAC) is
+
+refers to the dependent variable, and x and z are the                         the proportion of the observed correlation (Obs gX ) of the maximal
+                                                                              possible correlation (Max gX ) given the observed values in the
+independent variables. Here, y = X, x = g1, and z = g2.
+
+The estimate for the multiple correlation coefficient is R =
+
+   2 × 0.6612 - 2 × 0.661 × 0.661 × 0.253 1 - 0.2532                          variables:   Obs gX
+
+= 0.834 and, consequently, R2 = 0.696, that is, less than 70% of                          AC = Max .                                             (14)
+                                                                                          gX
+the phenomenon was explained.
+
+Attenuation-corrected                                                             In the same manner, the attenuation-corrected g|X (AC,
+product-moment correlation
+coefficient and attenuation-corrected                                         EAC) is the proportion of observed eta (Obs g|X ) to the maximal eta
+eta                                                                           in the given dataset (Max g|X ), which, in the binary case, equals the
+
+    Because of the attenuation and deflation in the estimates by              maximum value of PMC:
+PMC, Metsämuuronen (2022e) proposed a simple correction
+of attenuation for PMC. The correction is based on the fact                               Obs g|X
+that, given the dataset, the correlation between two variables                            AC = Max .                                             (15)
+cannot exceed the limit specified by the observed values in these                         g|X
+
+                                                                                  In the case of g|X , as with PMC, the maximal g|X is
+                                                                              found when the variables are ordered independently and g|X
+                                                                              is calculated between these variables (see Metsämuuronen,
+
+                                                                              2022a). Consequently, the attenuation-corrected eta squared is
+                                                                              the square of EAC, that is, E2AC.
+
+Frontiers in Psychology                                                   07                                                 frontiersin.org
+Metsämuuronen                                                             10.3389/fpsyg.2022.988660
+
+    The characteristics of RAC and EAC are studied by                     in product-moment correlation coefficient?," the relation of the
+Metsämuuronen (2022d). It was noticed that they were free of              estimates by PMC and  is studied by using two larger real-world
+deflation in 9 out of 11 sources of deflation and, hence, they            datasets, training dataset and cross-validating dataset, related to
+were ranked high in the set of estimators of correlation when             item analysis of the test scores of mathematics achievement (see
+it comes to deflation-free characteristics of different estimators.       Supplementary Appendix 3 of forming of the datasets). In the
+Therefore, Metsämuuronen (2022f) suggests these to be used in             original dataset of 4,023 test takers of a mathematics test with
+deflation-corrected estimators of reliability.                            30 binary items (FINEEC, 2018), the item-score correlation
+                                                                          varied 0.332 < gX < 0.627 with the average gX = 0.481, the
+Numerical examples of the                                                 difficulty levels of the items varied 0.24 < p < 0.95 with the
+directional nature of                                                     average p¯ = 0.63, and the lower bound of reliability was  = 0.885.
+product-moment correlation                                                For the training dataset, a set of 1,080 real-world tests were
+coefficient                                                               produced with a different number of test-takers (n = 50, 100,
+                                                                          and 200), number of items (k = 2-30, k¯ = 10.22), difficulty
+Datasets, methods, and the course of                                      levels (p¯ = 0.55-0.76, p¯¯ = 0.661), reliabilities ( = 0.739-0.935,
+study                                                                     ¯ = 0.862), and degrees of freedom in the item (df (g) = R-
+                                                                          1 = 1-15, df (g) = 5.06) and in the score (df (X) = C-1 = 12-27,
+    The empirical section studies different aspects of                    df (X) = 19.2). These tests produced 11,160 test items with
+directionality in PMC. First, Section "Directionality in the              varying difficulty levels, item variances, number of categories,
+binary and polytomous datasets--a simple comparison"                      as well as estimates by PMC and . The dataset is available
+illustrates the directionality in binary and polytomous ordinal           at http://dx.doi.org/10.13140/RG.2.2.24238.02889. Notably, in
+cases by using a simple comparison of different patterns in the           Section "Relation of product-moment correlation coefficient
+variable with a narrower scale. The characteristics of a simple,          and RAC," a somewhat larger dataset is used; this dataset includes
+hypothetical dataset with purposeful patterns are discussed               also a sample size of n = 25.5 The smaller dataset is used in this
+in detail in that section. In this section, no specific statistical       study mainly because of the possibility to compare the results
+methods are used.                                                         with a larger cross-validating dataset, which was produced by
+                                                                          using only sample sizes of n  50. For the cross-validating
+    Second, the magnitude of the directionality in real-life              dataset, the original 30 items were doubled with small changes
+settings is studied in Sections "Directionality of product-               in the order and response patterns of the real test-takers, and
+moment correlation coefficient in the binary and polytomous               29,887 items were produced. This had a small effect on the item
+cases in real-life datasets" and "How remarkable is the effect            difficulties and item-total correlations. The original items and
+of directionality in product-moment correlation coefficient?"             the modified ones were combined as a dataset with 60 binary
+from two perspectives. Section "Directionality of product-                items with a nature of odd-even parallel tests. The latter dataset
+moment correlation coefficient in the binary and polytomous               is referred to if the results between the datasets differ radically
+cases in real-life datasets" studies the magnitude of the                 from each other.
+directionality in general, and Section "How remarkable is
+the effect of directionality in product-moment correlation                    Section "Directionality of product-moment correlation
+coefficient?" studies how remarkable the effect of directionality         coefficient in the binary and polytomous cases in real-life
+in PMC is. The derivation and basic results mentioned                     datasets" does not use a specific statistical method; visual tools
+above are general and applicable without connection to any                are used to illustrate the magnitude of the directionality. Section
+specific framework. However, the numerical examples and the               "How remarkable is the effect of directionality in product-
+applications in Sections "Directionality of product-moment                moment correlation coefficient?" studies the magnitude of the
+correlation coefficient in the binary and polytomous cases in             directionality primarily by using the standard general linear
+real-life datasets," "How remarkable is the effect of directionality      modeling (GLM). Standard statistics such as eta squared (2)
+in product-moment correlation coefficient?," "Relation of                 and Cohen's f and d (Cohen, 1988) are used to indicate the
+product-moment correlation coefficient and RAC" are discussed             explaining power and effect sizes. The latter are used in assessing
+within the measurement modelling settings and, specifically,              the practical effect of the directionality; for these, we have
+in the item analysis settings where the point biserial and                commonly accepted, rough boundaries for the low effect size
+point polyserial correlation coefficients (gX), that is, item-score       (d < 0.20, f < 0.10) indicating only small effect, medium
+correlation (Rit = PMC) is of interest.
+                                                                          5 This somewhat wider training dataset with an additional sample
+    In Sections "Directionality of product-moment correlation             size of n = 25, is also published. A dataset of individual items
+coefficient in the binary and polytomous cases in real-life               (n = 14,880) including relevant indicators of item-score association
+datasets" and "How remarkable is the effect of directionality             although without the cross-valiadating dataset is available in CSV format
+                                                                          at http://dx.doi.org/10.13140/RG.2.2.10530.76482 and in SPSS format at
+                                                                          http://dx.doi.org/10.13140/RG.2.2.17594.72641.
+
+Frontiers in Psychology                                               08  frontiersin.org
+Metsämuuronen                                                                                  10.3389/fpsyg.2022.988660
+
+TABLE 1 Hypothetic example of the estimates by PMC and eta under different conditions.                Column
+
+                                                                            Rows (gi)                 X (score)
+
+Test taker               A1     A2     A3                                  B1           B2     B3           1
+                                                                                                            2
+1                          0      0      0                                   0            0      0          3
+2                          0      0      0                                   0            0      0          4
+3                          0      0      0                                   0            0      0          5
+4                          0      0      0                                   0            0      0          6
+5                          0      0      0                                   0            1      0          6
+6                          0      0      1                                   0            0      1          6
+7                          0      0      0                                   0            0      0          6
+8                          0      0      0                                   0            0      0         10
+9                          0      0      1                                   0            0      0         11
+10                         0      0      0                                   0            0      0         12
+11                         0      0      0                                   0            0      0         13
+12                         0      0      1                                   0            1      1         14
+13                         0      0      0                                   0            0      0         15
+14                         0      1      0                                   0            0      0         16
+15                         0      0      1                                   1            2      2         17
+16                         1      0      0                                   1            0      0         18
+17                         1      1      0                                   1            0      0         19
+18                         1      1      1                                   2            1      1         20
+19                         1      1      0                                   3            3      3
+20                         1      1      0                                   4            4      4
+PMC = Rit                0.759  0.721  0.117                               0.747        0.603  0.610
+1 "g given X"            0.759  0.721  0.117                               0.820        0.606  0.614
+2 "X given g"              1      1    0.856                                 1            1    0.985
+D "g given X"              1    0.947  0.200                                 1          0.646  0.292
+D "symmetric"            0.579  0.548  0.116                               0.686        0.443  0.479
+D "X given g"            0.408  0.386  0.082                               0.522        0.337  0.152
+G "g given X"              1    0.947  0.211                                 1          0.646  0.304
+
+effect size (d  0.40, f = 0.20-0.30) indicating remarkable                     DTA may be a less known methodological tool for the
+effect, and high effect size (d > 0.80, f > 0.40) indicating               average reader and, hence, it is further described in what follows.
+very remarkable effect. The post hoc tests are done by using               More information is found in the manual (IBM, 2017b) or in,
+Sidák's routine (Sidák, 1967). Another statistical method, a               e.g., Metsämuuronen (2017). DTA is a set of algorithms that
+data mining tool decision tree analysis (DTA; IBM, 2017b)                  detect cut-offs for categorising the explaining variables in groups
+with the algorithm CHAID (Chi-square Automatic Interaction                 where the discrimination is the most statistically significant.
+Detector; Kass, 1980) is used in exploring the threshold cut-offs          It goes through all possible combinations of categories and
+of interesting variables. This is used, for example, when willing          provides us with the one with the highest statistical significance.
+to find cut-offs for the difference in the scales of two variables to      The decision is done by using Chi-Squared test (categorical
+indicate remarkable directionality. DTA is discussed later with            dependent variable) or F-test (continuous dependent variable).
+more details.
+                                                                               DTA is strong in finding such cut-offs for continuous
+    Third, Section "Relation of product-moment correlation                 (or categorical) explanatory variables that are practically
+coefficient and RAC" studies the relation between PMC                      unreachable by traditional analytical- or graphical methods
+and attenuation-corrected PMC (RAC) suggested by                           (Metsämuuronen, 2017). In exploring two continues variables
+Metsämuuronen (2022e). In this section, an enlarged dataset of             and their possible cut-offs as is the case in this article,
+14,880 with a sample size of n = 25 is used (see text footnote             it is difficult to find a more effective tool than these
+5). Paired-samples t-test and Cohen's d are used to study                  algorithms. Data mining is done by using different algorithms
+the difference between PMC and RAC on the one hand, and                    such as CHAID (Kass, 1980), Exhaustive CHAID (Biggs
+coefficient eta and RAC on the other hand.                                 et al., 1991), CRT or CART, (Classification and Regression
+
+Frontiers in Psychology                                                09                             frontiersin.org
+Metsämuuronen                                                          10.3389/fpsyg.2022.988660
+
+Trees; Breiman et al., 1984), and QUEST (Quick, Unbiased,              that can detect the deterministic patterns, G and D, are
+Efficient Statistical Tree; Loh and Shih, 1997). The technical         shown in the table.
+challenge in the algorithms--or factually in our processes
+of statistical inference--is that the algorithms tend to find              From Table 1, four outcomes are highlighted. First, as
+the best solution when the unit sizes in the groups are                expected from Eq. (7), in the binary case with A1-A3, PMC
+high; it tends to combine the groups with small sample                 equals 1 but not 2. Second, with polytomous variables
+sizes. In the analysis to come in Section "How remarkable              B1-B3, PMC is closer to 1 than 2, however, such that
+is the effect of directionality in product-moment correlation          PMC < 1, as expected by Eq. (12). Third, of the measures of
+coefficient?", the procedure is enhanced by doing further              association in comparison, only G and D directed so that "g
+analysis in the extreme groups with smaller unit sizes without         given X" detect the deterministic pattern in variables A1 and
+the middle part in most of the cases (see closer Table 5 and           B1 of the measures of association in comparison. Although 2
+related discussion).                                                   seemingly detects the deterministic pattern, the value 2 = 1
+                                                                       is obtained only because there are no crossing categories in
+Directionality in the binary and                                       variables A1, A2, B1, and B2 in relation to X. Variables A3
+polytomous datasets--a simple                                          and B3 are constructed so that the category yi = 6 in X
+comparison                                                             is connected with two different categories in g (xi = 0,1)
+                                                                       and, hence, 2 = 1. Fourth, unlike G and D, PMC and
+    The estimates by PMC and  are compared first by using a            1 cannot indicate the deterministic pattern of association.
+simple dataset comprising 6 variables with a narrower scale (g)        This is caused by the mismatch in the number of categories
+and a common metric variable (X) with a wider scale (Table 1).         of the variables; perfect PMC implies identical scales of the
+This could be a partial dataset from an achievement testing            variables, and perfect  implies a dataset without crossing
+with six selected items gi and the score X. From now on, to            categories. Then, the values 1 = 0.759 and 1 = 0.820
+shorten the expression, 1 refers to  g |X or "g given X"               leading to g2|X = 0.576 and g2|X = 0.672 reflecting strictly the
+or "X dependent" in the outputs of software packages, which            magnitude of the underestimation of the true association and
+are the relevant direction from both GLM and measurement               explaining power.
+modelling viewpoint, and 2 refers to  X g or "X given g"
+or "g dependent" in the outputs of software packages, which                The direction of PMC can be verified easily by rotating the
+may be a relevant direction in the general case. Because ,             cross-table data such that X is the row factor and g is the column
+G, and D are usually calculated from a form of cross-table,            factor. The result would be the same as above: PMC is not related
+variable g is labelled to be in "Row" and X in "Column." The           to the rows or columns of the cross-table but to the width of the
+estimates in Table 1 are standard outputs from a data analysis of      scales of the variables.
+cross-tables.
+                                                                       Directionality of product-moment
+    The dataset contains three binary variables (A1, A2, and           correlation coefficient in the binary
+A3) and three polytomous ones (B1, B2, and B3). In the                 and polytomous cases in real-life
+set of A1, A2, and A3, we expect to see PMC = 1 = 2                    datasets
+because of (7), and in the set of B1, B2, and B3, we expect
+to see PMC < 1 because of Eq. (12). Variables A1 and B1                    Basic statistics related to the empirical dataset discussed
+follow a deterministic pattern without tied pairs and without          in Section "Datasets, methods, and the course of study" are
+stochastic error and no crossing pairs between g and X--here,          collected in Table 2 and visualised in Figure 2. Notably, the
+we expect to obtain a perfect association because X explains           number of items in the dataset decreases by the width of the
+the pattern in g in a deterministic manner, although it includes       scale; most of the items are binary (n = 5,943), and items with
+a small number of tied cases to illustrate their effect on the         more than 10 categories are sparse.
+estimates. Variables A2 and B2 include the stochastic error to
+a minor extent in the response pattern but no crossing pairs               The empirical dataset supports the idea that PMC is a
+between g and X--here, we expect to see a less than perfect            directional measure not only in the binary case but also when
+association because of the error in the response pattern, so           a variable with a narrower scale is polytomous (see Table 2 and
+that PMC = 1 < 1 in A2, PMC < 1 < 1 in B2, and                         Figure 1). This is demonstrated by the fact that when df (g) > 1,
+2 = 1 in both A2 and B2. Variables A3 and B3 include tied              PMC follows closer to 1 than 2. In Figure 1, this is strictly
+pairs, more stochastic errors, and crossing pairs between g            seen in the fact that the curve related to PMC (red line with
+and X--here, we expect to see a less than perfect association          squares) closely follows the curve related to 1 (blue line with
+and a pattern PMC < 1 < 1 for B3 and 2 < 1 in both                     triangles) and not the curve related to 2 (blue line with circles).
+A3 and B3. As benchmarks for PMC and , two measures                    The difference between PMC and 1 is strictly dependent on
+                                                                       how far X^ ij is from X¯ j, that is, how far the observed dataset is
+                                                                       from the linear situation as discussed above.
+
+Frontiers in Psychology                                            10  frontiersin.org
+Metsämuuronen                                                                                                                 10.3389/fpsyg.2022.988660
+
+TABLE 2 Selected characteristics of 11,160 items in comparison.
+
+Range in the             df(g)                         Number of     Average rit              Average 11   Average 22     Average        Average
+item scale                                                items                                                             item           item
+                                                                                                    0.486        0.646
+0-1                        1                           5,943         0.486                          0.632        0.730  difficulty (p¯)  variance
+0-2                        2                           2,265         0.625                          0.719        0.788
+0-3                        3                           1,029         0.708                          0.782        0.828        0.661         0.210
+0-4                        4                            546          0.771                          0.823        0.861        0.664         0.503
+0-5                        5                            354          0.812                          0.857        0.885        0.668         0.883
+0-6                        6                            278          0.846                          0.882        0.899        0.666         1.373
+0-7                        7                            190          0.873                          0.903        0.918        0.647         2.027
+0-8                        8                                         0.892                          0.921        0.933        0.675         2.738
+0-9                        9                             98          0.911                          0.934        0.941        0.661         3.635
+0-10                       10                           127          0.926                          0.948        0.954        0.686         4.688
+0-11                       11                           118          0.940                          0.951        0.956        0.655         5.913
+0-12                       12                            85          0.943                          0.950        0.956        0.643         7.153
+0-15                     13-14                           61          0.944                          0.600        0.716        0.673         8.784
+Total                                                    66          0.596                                                    0.682        10.232
+                                                       11,160                                                                 0.667        11.649
+                                                                                                                              0.663         0.932
+
+1g|X = eta directed so that "g given X" (as conditions) or "X dependent" (as in GLM).
+2X|g = eta directed so that "X given g" (as conditions) or "g dependent" (as in GLM).
+
+                                               1.0                                                  0.88 0.90           0.93
+                                               0.9
+                                               0.8                          0.83              0.86
+                                               0.7
+                                               0.6                   0.79 0.85 0.87                                     0.91
+                                               0.5
+                         units of correlation  0.4             0.73                           0.81
+
+                                                    0                       0.77
+
+                                                       0.64 0.71
+
+                                                               0.62         Eta2 "X given g" or "g dependent" (GLM)
+                                                       0.49                 Eta1 "g given X" or "X dependent" (GLM)
+                                                                            PMC Pearson product-moment correlation
+
+                                                       1          2  3                 4      5         6  7   8        - 14
+
+                                                                                          df(g) = R -1
+
+FIGURE 2
+
+Connection of PMC and eta in real-life datasets (k = 11,160 estimates).
+
+How remarkable is the effect of                                                               difference between 1 and PMC is the difference between 1 and
+directionality in product-moment                                                              2; this reflects strictly how far the estimates by PMC are from
+correlation coefficient?                                                                      the symmetric condition.
+
+    In the training dataset, the average difference between PMC                                   The empirical datasets suggest that the closer are the number
+and 1 varies between 0.000 and 0.013 units of correlation                                     of categories of the variables the less difference there tends to
+following an exponential distribution--possibly referring to a                                be between 1 and 2 (see also Figure 1). Then, the closer are
+cut-normal distribution. The range is somewhat smaller in                                     the number of categories of the variables the more symmetrical
+the cross-validating dataset varying 0.000-0.009. From the                                    interpretation we can make by PMC as well as by the squared
+viewpoint of interpreting PMC, more important than the                                        PMC, that is, by the explaining power between the variables. On
+                                                                                              the other hand, the further the scales of two variables are, the less
+                                                                                              symmetric interpretation we can make from the squared PMC.
+
+Frontiers in Psychology                                                                   11                                             frontiersin.org
+Metsämuuronen                                                                                     10.3389/fpsyg.2022.988660
+
+TABLE 3 Difference between eta1 and eta2 by df(g).                                                Cross-validating dataset
+
+                                         Training dataset
+
+df(g)              Mean2 - 1                 Std. deviation                     N      Mean2 - 1  Std. deviation             N
+
+1                     0.15988                          0.096480                5,943   0.14528    0.053269                  20,426
+2                     0.09789                          0.062310                2,265   0.10998    0.038545                  3,898
+3                     0.06939                          0.045693                1,029   0.08786    0.030073                  1,253
+4                     0.04596                          0.032817                 546    0.05772    0.020795                  1,131
+5                     0.03753                          0.027430                 354    0.05658    0.021637                  1,830
+6                     0.02751                          0.018152                 278    0.06041    0.016985                   133
+7                     0.01732                          0.014543                 190    0.02308    0.012072
+8                     0.01489                          0.012894                        0.02566    0.011268                    13
+9                     0.01204                          0.011770                  98    0.02586    0.012140                   229
+10                    0.00731                          0.007255                 127    0.02615    0.011412                   488
+11                    0.00599                          0.005562                 118    0.01887    0.012374                   230
+12                    0.00536                          0.004957                  85    0.0141     0.007802                    47
+13-14                 0.00527                          0.006326                  61    0.01431    0.008364                   101
+Total                 0.11628                          0.093203                  66    0.12419    0.059041                   108
+                                                                               11,160                                       29,887
+
+Standard GLM is used to study the effect size of the number                            C/R indicates strictly how much longer the scale of X is in
+                                                                                       comparison with the scale of g. This ratio appears to explain well
+of categories in g, divided into 13 categories (2-13 and 14-15                         the difference between 1 and 2. The connection is somewhat
+                                                                                       different in the training dataset with a relatively narrow range
+combined) in explaining the variation in the difference between                        of df (X), causing smaller values in C/R (14.00) in comparison
+                                                                                       with the cross-validating dataset with a wider range in df (X),
+1 and 2. In the training dataset, the effect is high [F(12,                            causing wider values (<21.50).
+11,147) = 409.525; 2 = g2|X = 0.306, Cohen's f = 0.664] and
+even higher in the cross-validating dataset with wider scales                              A data mining algorithm CHAID (Kass, 1980; IBM, 2017b)
+in X [F(12, 29,887) = 1415,501; 2 = g2|X = 0.362, Cohen's                              was used in finding the threshold points in the ratio of the
+f = 0.753]. The post hoc tests with Sidák's routine (Sidák, 1967)                      number of categories in g and X that would maximise the
+                                                                                       significance between the means of 1 and 2. Because of the
+indicate that when the number of categories exceeds seven                              radically different ranges in the ratio, the datasets were analysed
+                                                                                       together (n = 11,160 + 28,890 estimates) in determining the
+(df (g) > 6), the difference between 1 and 2 is no more                                thresholds. In the combined dataset, CHAID divides the ratio
+                                                                                       into nine categories from C/R < 5.0 to C/R > 17.5 [F(8,
+significant. In the cross-validating dataset, this threshold comes                     41,038) = 2364,57, p < 0.001]. The range was extended by
+                                                                                       reanalysing the extreme groups without the rest dataset. At the
+with eight categories (df (g) > 7). Because of the large number of                     extreme of C/R < 5, DTA found six detailed groups and, at the
+                                                                                       extreme of C/R > 17.5 four detailed groups more, altogether
+estimates, the significance is obvious even with minor practical                       17 groups. Of these, 11 actualised in the training dataset and
+                                                                                       16 in the cross-validating dataset (Table 4 and Figure 3). It is
+differences. This is re-evaluated from the effect size viewpoint.                      evident that the higher comes C/R, that is, the wider is the scale
+                                                                                       of the score in comparison with the scale of items, the higher gets
+Basic statistics related to the difference between 1 and 2                             the discrepancy between 1 and 2 and, consequently, the more
+                                                                                       directional will be the PMC; the effect sizes are high (Cohen's
+are collected in Table 3 by the number of categories in the                            f training = 0.55; f cross-validating = 0.97).
+
+items. Notably, in both the training and cross-validating dataset,                         The association between the ratio of the scales of X and g and
+                                                                                       the difference between 1 and 2 is curvilinear in the training
+the difference gets smaller the more categories the items have.                        dataset at the range of 5 < C/R < 15 (quadratic R2 = 0.240 and
+                                                                                       linear R2 = 0.182), indicating a magnitude of the correlation that
+The average standard deviation of the difference in the training                       ranges 0.43-0.49. In the cross-validating dataset, the association
+                                                                                       is clearly more linear (linear R2 = 0.492), indicating the
+dataset is 0.093, whereas, in the cross-validating dataset, it is
+
+0.059. Hence, by using Cohen's d, we can roughly estimate that
+
+the mean difference between 1 and 2 of the magnitude of
+
+0.03-0.04  is  remarkable:     dtraining  =  0.04   =  0.430     and  Cohen's
+                                             0.093
+                      0.025
+dcross-validating  =  0.059  = 0.424  showing       a  medium    effect  size
+
+(Cohen, 1988). Hence, we conclude that from the effect size
+
+perspective, the directionality in PMC seems to be remarkable
+
+when g has less than six or seven categories assuming a notably
+
+wider scale in X.
+
+An obvious confounding factor in the interpretation of the
+
+number of categories in g is that the number of categories in
+
+X is also related to the matter. Hence, the ratio of the number
+
+of categories of g and X (C/R) is studied further. The statistic
+
+Frontiers in Psychology                                                        12                                           frontiersin.org
+Metsämuuronen                                                                                                 10.3389/fpsyg.2022.988660
+
+TABLE 4 Difference between eta1 and eta2 by C/R.
+
+                                                Training dataset                                       Cross-validating dataset
+
+C R1           Mean2 - 1                        Std. deviation        N                     Mean2 - 1         Std. deviation     N
+
+1.929          0.00662                          0.00714               363                   -                 -                  -
+(1.929-2.500]  0.01715                          0.01538               273                   0.01117           0.005443           130
+(2.500-3.111]  0.02683                          0.022606              348                   0.01907           0.009835           402
+(3.111-3.909]  0.04267                          0.033194              524                   0.02754           0.011277           562
+(3.909-4.333]  0.05552                          0.043617              341                   0.03413           0.011424           106
+(4.333-5.000]  0.06759                          0.05038               563                   0.04332           0.017637           493
+(5.000-6.833]  0.09558                          0.066038              1,587                 0.05914           0.020941           2,375
+(6.833-9.333]  0.15063                          0.104120              2,541                 0.07974           0.027926           1,293
+(9.333-10.50]  0.15586                          0.099859              2,369                 0.10105           0.036171           2,510
+(10.50-12.50]  0.13654                          0.077862              1,923                 0.1152            0.040712           5,897
+(12.50-14.00]  0.10871                          0.050848              328                   0.13006           0.043605           4,388
+(14.00-15.50]  -                                -                     -                     0.14309           0.04652            3,650
+(15.50-16.50]  -                                -                     -                     0.15407           0.048539           1,895
+(16.50-18.00]  -                                -                     -                     0.17029           0.049647           2,540
+(18.00-19.00]  -                                -                     -                     0.17869           0.053302           1,922
+(19.00-20.00]  -                                -                     -                     0.18588           0.054029           964
+>20.00         -                                -                     -                     0.19155           0.055442           760
+Total          0.11628                          0.093203              11,160                0.12419           0.059041           29,887
+
+Statistics related to the solutions
+
+F; (Sig.)                                                             356.03; (p < 0.001)                                    1,927.03; (p < 0.001)
+Eta squared                                                                   0.242                                                   0.492
+Cohen's f                                                                     0.565                                                   0.984
+
+1C = number of categories in X, R = number of categories in g.
+
+                                                Difference between eta1 and eta2 by the difference in scales
+
+               units of correlation  0.22 Training dataset (k = 11,160) (narrower scales in X)                    0.18
+                                     0.20 Cross-validating dataset (k = 29,880) (wider scales in X)      0.16
+                                     0.18
+                                     0.16 0.15 0.14 0.16                                                 15,5- 17,5 <
+                                     0.14                                                                17,5
+
+                                     0.12 0.10 0.13 0.14
+                                     0.10
+                                                                                           0.12 0.11
+                                     0.08                       0.06 0.10
+
+                                     0.06                             0.08
+                                     0.04 0.03 0.02 0.06
+                                     0.02 0.01
+                                                0.01 0.02       0.04
+
+                                     0.00
+
+                                           <=1,818 1,82- 2,62- 3,25- 5,0- 6,83- 9,33- 10,5- 12,5- 14,0-
+
+                                                2,62 3,25 5,0 6,83 9,33 10,5 12,5 14,0 15,5
+
+                                                                C/R divided based on CHAID
+
+FIGURE 3
+
+Discrepancy between the scales of the variables explaining the difference in eta1 and eta2 (k = 11,160 + 29,887 estimates).
+
+Frontiers in Psychology                                               13                                                         frontiersin.org
+Metsämuuronen                                                                                                        10.3389/fpsyg.2022.988660
+
+TABLE 5 Relation of PMC and RAC.                                     Number of cases                       Standard deviations
+
+                                 Correlations                                 n
+
+df(g)  RgX               RAC                  Eta1         Eta2                 7,948               RgX    RAC       Eta1       Eta2
+                                                                                3,056
+1      0.473             0.586                0.473        0.682                1,390               0.136  0.166     0.118      0.136
+2      0.612             0.675                0.625        0.755                 729                0.110  0.117     0.092      0.104
+3      0.701             0.746                0.717        0.807                 474                0.085  0.088     0.072      0.081
+4      0.766             0.801                0.784        0.843                 366                0.071  0.071     0.058      0.065
+5      0.809             0.838                0.828        0.873                 255                0.058  0.058     0.049      0.054
+6      0.848             0.871                0.865        0.897                 140                0.037  0.038     0.039      0.038
+7      0.878             0.897                0.893        0.912                 160                0.032  0.034     0.035      0.035
+8      0.901             0.918                0.916        0.933                 136                0.028  0.029     0.031      0.030
+9      0.916             0.931                0.929        0.940                                    0.026  0.027     0.026      0.028
+10     0.929             0.942                0.939        0.947                  93                0.020  0.022     0.023      0.023
+11     0.941             0.951                0.950        0.956                  67                0.013  0.014     0.017      0.017
+12     0.945             0.955                0.954        0.959                  42                0.011  0.013     0.014      0.014
+13     0.944             0.952                0.950        0.957                  24                0.008  0.008     0.011      0.009
+14     0.945             0.953                0.951        0.955               14,880               0.008  0.008     0.009      0.008
+Total  0.584             0.666                0.591        0.744                                    0.182  0.172     0.128      0.186
+
+TABLE 6 Paired-samples t-test of the difference between PMC and RAC and Eta1.                        Eta1 - RAC
+
+RgX - RAC                                                                                           p (2-sided)
+
+df(g)            t                         p (2-sided)     Cohen d               T                      <0.001       Cohen d     df
+                                                                                                        <0.001
+1              -172.3                          <0.001        -1.933            -172.3                   <0.001         -1.933   7,947
+2              -179.6                          <0.001         -3.25            -81.4                    <0.001         -1.473   3,055
+3              -130.6                          <0.001        -3.502            -41.0                    <0.001         -1.101   1,389
+4              -80.5                           <0.001        -2.982            -19.5                    <0.001         -0.721    728
+5              -56.6                           <0.001        -2.601             -9.2                    <0.001         -0.423    473
+6              -48.9                           <0.001        -2.554             -7.0                     0.027         -0.364    365
+7              -38.7                           <0.001        -2.421             -5.0                     0.028         -0.314    254
+8              -32.1                           <0.001        -2.712             -2.2                    <0.001         -0.189    139
+9              -25.8                           <0.001        -2,036             -2.2                                   -0,175    159
+10-14          -31.3                           <0.001        -1,645             -3.8                                   -0,249    361
+
+                                      1
+
+                                      0.9
+
+                                      0.8
+
+                         correlation  0.7
+
+                                      0.6                         RgX item-total correlation
+
+                                                                  RAC attenuation-corrected RgX
+
+                                      0.5                         Eta1 score dependent; signRitxEta1; corrected eta
+
+                                                                  Eta2 item dependent
+
+                                      0.4
+
+                                           1  2         3  4         5      6          7      8     9 10 11
+
+                                                           number of categories in g (df(g) = R-1)
+
+FIGURE 4
+
+PMC, RAC and coefficient eta.
+
+Frontiers in Psychology                                                 14                                                     frontiersin.org
+Metsämuuronen                                                                                                      10.3389/fpsyg.2022.988660
+
+magnitude of correlation at 0.702. The curvilinearity in the              extreme difficulty levels, the deflation is more notable; in the
+training dataset in comparison with the cross-validating dataset          dataset, the highest deflation rate was 67.7%, and in 50 cases,
+is caused by variety in sample sizes and heteroscedasticity in            it exceeded 50%. That is, the observed correlation may be 0.36,
+the phenomenon: the difference between 1 and 2 tends to                   and this may be the highest possible estimate it can reach. This
+get wider when the sample size gets lower and the residuals               pattern is typical with items with extreme difficulty levels.
+tend to get higher the wider is the difference between the scales
+of X and g. In each subsample of n = 50, 100, and 200, the                Discussion and limitations
+linear connection is around the same magnitude as in the cross-
+validating dataset (linear R2 = 0.481-0.495). Notably, the higher         Conclusion and discussion
+the sample size gets, the less difference between 1 and 2.
+                                                                          This article reminds, reveals, and studies the hidden
+    All in all, from the effect size viewpoint, the directionality
+in PMC tends to be remarkable when C/R  4, that is, when                  characteristics of product-moment coefficient of correlation of
+the scale of X is four times wider than the scale of g in
+measurement modelling settings. In measurement modelling                  being a directional statistic rather than a symmetric one as it is
+settings with binary items, this means that if the test has more
+than four (binary) items, PMC is expected to be significantly             often taken in the textbook materials. The starting point of this
+and remarkably a non-symmetrical measure. Because the
+datasets are limited to dependent variables g and X relevant              article was that PMC is not a symmetric measure of association
+in measurement modelling settings, the thresholds should be
+studied further with independent variables before a general               if the number of categories of variables differs from each other.
+conclusion can be drawn about the thresholds in general.
+                                                                          The research interest in the study was in the effects of the
+Relation of product-moment
+correlation coefficient and RAC                                           hidden directionality in PMC. This was studied by comparing
+
+    Finally, a brief empirical note on the relation between PMC           PMC with coefficient eta. In different types of settings related
+and RAC is given. The estimates by RAC are always higher or the
+same as those by PMC. This is inherited from the definition of            to the use of correlation coefficients, the interpretations of
+RAC; when the maximal correlation is reached, then PMC = RAC.
+Otherwise, PMC < RAC. The relation of these estimators has                the results vary.
+not been studied, and, hence, it may be generally interesting to
+know what the effect of the correction is on the PMC. The larger          Within the general settings of correlational studies, the
+dataset pointed out in text footnote 5 is used in this. Instead of
+11,160 estimates as above, an enlarged dataset of 14,880 with a           explaining power by PMC between a variable with a narrower
+sample size of n = 25 is used in this study. Table 5 shows the
+estimates of correlation by the number of categories in g, and            scale  (g)  and  a  wider    scale  (X)  (2      )  indicates  the  extent
+Table 6 shows the test statistics for the paired-samples t-tests for
+comparing PMC and RAC on the one hand, and 1 and RAC on                                                               g|X
+the other hand. Figure 4 illustrates the differences.
+                                                                          to which X explains g which, in the language of conditions,
+    The first lift of the relation between PMC and RAC in the
+dataset is that the attenuation or deflation in PMC tends to get          can be expressed by using the phrase "association when g
+smaller by the number of categories in g. With binary items, the
+deflation is 19.3% (= (0.586 - 0.473)/0.586 = 0.193), whereas             given X." The deflation related to the pattern that the scale
+with five categories, the deflation is 4.4%. In both extremes,
+the difference is statistically significant when the paired-samples       in one variable is notably (more than four times) wider than
+t-test is used, and the difference is remarkable when evaluated
+by using Cohen's d (d > 1.6; see Table 6). Second, RAC tends              that in the other variables causes notable deflation also in the
+to follow 1 when six categories are reached. This is indicated            explaining power (r2). Similarly, the explaining power related
+also by Cohen's d; with df (g)  5, d < 0.43; see Table 6).                to the squared multiple correlation (R2) in the settings related
+Notably, the dataset does not include extremely difficult or easy
+items; and, hence, the deflation appears to be moderate (12.3%            to regression analysis is deflated although its magnitude in the
+on average) instead of being a radical one. With radically more
+                                                                          practical settings was not studied in this article. In both cases, the
+
+                                                                          amount of deflation could be assessed by using maximal possible
+
+                                                                          correlation given the dataset or the attenuation-corrected PMC
+
+                                                                          (RAC) or distance correlation as a benchmarking statistics.
+
+                                                                          Systematic studies in this regards would be beneficial.
+
+                                                                          Within the settings related to measurement modelling
+
+                                                                          related to items (g) and scores or measurement scales (X),
+
+                                                                          PMC    and  the     related  explaining  power      (2      )  are  always
+
+                                                                                                                                 g|X
+
+                                                                          directed so that the score or measurement scale explains the
+
+                                                                          response pattern in an item--not the other way around or
+
+                                                                          symmetrically. Here, also, the expression related to conditions
+
+                                                                          ("g given X") is relevant. This means that the traditional
+
+                                                                          item-total correlation is a directional measure that indicates
+
+                                                                          how well the score explains the response pattern in the item.
+
+                                                                          This makes sense in the measurement modelling settings
+
+                                                                          (e.g., Byrne, 2016; Metsämuuronen, 2017), and, hence, the
+
+                                                                          directional nature of point biserial and point polyserial
+
+                                                                          correlation or item-score correlation can be taken as a
+
+                                                                          positive matter. In these settings, the deflation in the estimates
+
+                                                                          has a notable effect on the negative bias in the estimates
+
+Frontiers in Psychology                                               15                                                              frontiersin.org
+Metsämuuronen                                                                   10.3389/fpsyg.2022.988660
+
+of reliability. Metsämuuronen (2022d,e,f) suggested using                       observed correlation is from the maximal possible correlation
+                                                                                in the given dataset. This reflects the magnitude of deflation.
+deflation-corrected estimators of reliability where the deflation-              Another relevant benchmark could be the efficiency measure E
+                                                                                suggested recently by Onyutha (2022); this is based on distance
+prone estimator or correlation PMC would be replaced by                         correlation instead of PMC. However, based on Figure 1 and
+                                                                                related procedure, it seems that the distance correlation is
+some other better-behaving estimators. Some of these are                        not specifically strong in the measurement modelling settings
+                                                                                at least with binary items. From this perspective, Onyutha's
+RAC and EAC, as well as D and G, discussed in this article                      E based on distance correlation may not fully solve the
+                                                                                challenge of deflation caused by the discrepancy between the
+(see Metsämuuronen, 2022f).                                                     scales of variables. Obviously, systematic studies would be
+                                                                                beneficial to understand the boundaries and strengths of these
+    Within the settings related to GLM with dichotomous                         estimators.
+
+independent variables, the direction of PMC equals the                              It may also be good to rethink the possible consequences
+traditional direction related to 2, and in the polytomous                       of directionality and related deflation in widely used routines
+                                                                                for, say, factor analysis, structural equation modelling analysis,
+ordinal case, it corresponds closely to the traditional direction               and regression analysis, to conclude whether there is something
+of 2 directed the way we usually use 2 in the GLM settings.                     to amend in our practices or the interpretation of the
+                                                                                estimates. For the estimation of reliability, several new
+In these settings, the opposite naming ("X dependent") is                       solutions have been suggested based on changing the PMC
+traditionally used (X2|g ). However, in these settings too, in the              in the traditional estimators of reliability by better-behaving
+case of binary or ordinal settings, X explains the order of the                 estimators; one of these is RAC (see Metsämuuronen, 2022e,f).
+                                                                                At least, it would be good to rethink and rephrase our
+responses in g, and hence with a dichotomous and ordinal g,                     textbooks and teaching, if needed, of the "symmetricity"
+                                                                                related to PMC.
+we  could  call  this  also  "g  given  X"  or  "g  dependent"  (2      ).
+                                                                                Limitations and suggestions for further
+                                                                   g|X          studies
+
+While eta and eta squared are strictly related to PMC, they                         An obvious restriction in the article is that the relation
+                                                                                of PMC and g|X is derived algebraically only for a binary
+are also prone to give notable understimation of association                    and dichotomous case. The connection in the polytomous
+                                                                                ordinal cases is not as obvious to show as in the binary case
+as well as explaining power. Then, the attenuation-corrected                    (see, however, relevant formulae in Wherry and Taylor, 1946);
+eta and attenuation-corrected eta squared (EA2 C) could be used                 overall, with the polytomous variables, the case of PMC = g|X
+as a benchmark for the magnitude of the probable deflation                      is a very rare specific case which may not need to be shown in the
+                                                                                first place. Nevertheless, the connection is obvious in empirical
+(see Metsämuuronen, 2022a).                                                     datasets. Deriving the polytomous ordinal case algebraically may
+                                                                                increase our understanding of the matter; polytomous nominal
+    So far, the results are clear. The question is what the                     case does not make sense.
+
+consequences of the directionality in PMC are in real-life                          Another relevant obvious limitation is related to the datasets
+                                                                                used in the empirical part of this article. Although the basic
+settings. For many practical settings, the directionality has no                results and derivations in this article are general, practical
+                                                                                illustrations of the connection between PMC and  were made
+effect. For example, if the variables are (essentially) continuous              by using datasets relevant to measurement modelling settings
+                                                                                and specifically item analysis settings. In these settings, two
+or when the variables have an identical scale, directionality is                variables, item g and score X, are mechanically dependent,
+                                                                                and they both are reflections of a common latent variable ().
+not a relevant issue. Also, if the scales are near each other                   In these settings, the higher the number of categories gets
+                                                                                in the items and the less there are items comprising the test
+and the sample size is high, the directionality seems not                       score, the closer the correlation between g and X approximates
+                                                                                the value 1. This phenomenon does not make sense outside
+to have practical relevance--the issue is merely in principle
+
+rather than practical.
+
+    However, when there is a radical asymmetry in the scales
+
+of two variables, PMC is always a directional measure, and
+
+this may have notable practical consequences. This should
+
+be kept in mind when estimating the association between a
+
+variable with a narrow scale and a variable with a wider metric
+
+(ordinal, interval, or continuous) scale, which is more than
+four times wider than the scale of the other variable. Also, R2
+
+seen in the standard scatterplots of the bivariate correlation
+
+related to PMC or in the ordinary least square regression
+
+is not a symmetric but a directional statistic, so that the
+
+variable with a wider scale explains the order in the variable
+with a narrower scale. Deflation in R2 (or in eta squared)
+
+leads us to conclude that the explaining power, traditionally
+
+nuanced as "the proportion of remaining variance," means,
+
+factually, "the proportion of remaining variance of which the
+
+coefficient can reach" (Metsämuuronen, 2022a). Hays (1963,
+
+p. 505; see also Richardson, 1996) pointed out the same thing:
+
+The proportion of the total variation in the dependent variable
+
+is what can be predicted or explained based on its regression
+
+on the independent variable within the sample being studied.
+
+A possible solution is to calculate the maximal PMC, if not RAC,
+
+for the given dataset as a benchmark: These indicate how far the
+
+Frontiers in Psychology                                                     16  frontiersin.org
+Metsämuuronen                                                                                  10.3389/fpsyg.2022.988660
+
+the measurement modelling settings. Some relevant threshold                                    Author contributions
+values based on the empirical datasets were discussed within
+the text: how many categories g needs to have and how much                                         The author confirms being the sole contributor of this work
+longer the scale of X needs to be in comparison with the                                       and has approved it for publication.
+scale of g to obtain the remarkable effect of directionality in
+PMC. These thresholds (seven or eight categories and four                                      Conflict of interest
+times longer) may be applicable in measurement modelling
+settings, although replications of the design and independent                                      The author declares that the research was conducted in the
+studies of the thresholds would confirm or specify the                                         absence of any commercial or financial relationships that could
+thresholds. This needs to be studied with simulations of truly                                 be construed as a potential conflict of interest.
+independent variables.
+
+Data availability statement                                                                    Publisher's note
+
+    The original contributions presented in this study are                                         All claims expressed in this article are solely those of the
+included in the article/Supplementary material, further                                        authors and do not necessarily represent those of their affiliated
+inquiries can be directed to the corresponding author.                                         organizations, or those of the publisher, the editors and the
+                                                                                               reviewers. Any product that may be evaluated in this article, or
+Ethics statement                                                                               claim that may be made by its manufacturer, is not guaranteed
+                                                                                               or endorsed by the publisher.
+    Ethical review and approval was not required for the study
+on human participants in accordance with the local legislation                                 Supplementary material
+and institutional requirements. Written informed consent from
+the participants' legal guardian/next of kin was not required                                      The Supplementary Material for this article can be
+to participate in this study in accordance with the national                                   found online at: https://www.frontiersin.org/articles/10.3389/
+legislation and the institutional requirements.                                                fpsyg.2022.988660/full#supplementary-material
+
+References                                                                                       Cohen, J. (1988). Statistical Power Analysis for the Behavioral Sciences, 2nd Edn.
+                                                                                               Mahwah, NJ: Erlbaum.
+   Ayres, L. P. (1920). The Correlation Ratio. J. Educ. Res. 2, 452-456. doi: 10.1080/
+00220671.1920.10879073                                                                           Drasgow, F. (1986). "Polychoric and polyserial correlations," in Encyclopedia of
+                                                                                               Statistical Sciences, Vol. 7, eds S. Kotz and N. L. Johnson (New York, NY: John
+   Biggs, D., de Ville, B., and Suen, E. (1991). A method of choosing multiway                 Wiley), 68-74.
+partitions for classification and decision trees. J. Appl. Stat. 18, 49-62. doi: 10.1080/
+02664769100000005                                                                                Eikeland, H. M. (1971). On the Generality of Univariate Eta. Scand. J. Educ. Res.
+                                                                                               15, 149-167. doi: 10.1080/0031383710150109
+   Bravais, A. (1844). Analyse Mathematique. Sur les probabilités des erreurs de
+situation d'un point. (Mathematical analysis. Of the probabilities of the point                  Ekström, J. (2011). The Generalized Definition of the Polychoric Correlation
+errors). Mémoires présentés par divers savants à l'Académie Royale des Siences de              Coefficient. UCLA, Department of Statistic Papers. Available online at:
+l'Institut de France (Mem. Present. Various scholars R. Acad. Sci. Institute France)           https://escholarship.org/uc/item/583610fv (accessed October 7, 2022).
+9, 255-332.
+                                                                                                 FINEEC (2018). National Assessment of Learning Outcomes in Mathematics
+   Breiman, L., Friedman, J. H., Olshen, R. A., and Stone, C. J. (1984). Classification        at Grade 9 in 2002 (Unpublished Dataset Opened for the re-Analysis 18.2.2018).
+and Regression Trees. Belmont, CA: Wadsworth.                                                  Helsinki: Finnish Education Evaluation Centre.
+
+   Byrne, B. M. (2016). Structural Equation Modeling with AMOS. Basic Concepts,                  Fisher, R. (1925). Statistical Methods for Research Workers. Edinburgh: Oliver
+Applications, and Programming, 3rd Edn. London: Routledge.                                     and Boyd.
+
+   Camp, B. H. (1933). Karl Pearson and Mathematical Statistics. J. Am. Stat. Assoc.             Gadermann, A. M., Guhn, M., and Zumbo, B. D. (2012). Estimating ordinal
+28, 395-401. doi: 10.1080/01621459.1933.10503239                                               reliability for Likert-type and ordinal item response data: A conceptual, empirical,
+                                                                                               and practical guide. Pract. Assess. Res.Eval. 17, 1-13. doi: 10.7275/n560-j
+   Chan, D. (2008). "So why ask me? Are self-report data really that bad?," in                 767
+Statistical and Methodological Myths and Urban Legends, eds C. E. Lance and R. J.
+Vanderberg (London: Routledge), 309-326. doi: 10.4324/9780203867266                              Galton, F. (1889). Kinship and correlation. Stat. Sci. 4, 80-86. doi: 10.1214/ss/
+                                                                                               1177012581
+   Chaudhuri, A., and Hu, W. (2019). A fast algorithm for computing distance
+correlation. Comput. Stat. Data Anal. 135, 15-24. doi: 10.1016/j.csda.2019.01.016                Gleeson, P. (2018). Finding Correlations in Non-Linear Data. #Machine
+                                                                                               Learning. FreeCodeCamp. Available online at: https://www.freecodecamp.org/
+   Cleff, T. (2019). Applied Statistics and Multivariate Data Analysis for Business            news/how- machines- make- predictions- finding- correlations- in- complex- data-
+and Economics. A Modern Approach Using SPSS, Stata, and Excel. Berlin: Springer.               dfd9f0d87889/ (accessed October 7, 2022).
+
+   Cohen, J. (1969). Statistical Power Analysis for the Behavioral Sciences.
+Cambridge, MA: Academic press.
+
+Frontiers in Psychology                                                                    17  frontiersin.org
+Metsämuuronen                                                                                10.3389/fpsyg.2022.988660
+
+  Goodman, L. A., and Kruskal, W. H. (1954). Measures of association for                     values of eta, and their relation to Pearson correlation. Behaviormetrika. doi:
+cross classifications. J. Am. Stat. Assoc. 49, 732-764. doi: 10.1080/01621459.1954.          10.1007/s41237-022-00162-2 [Epub ahead of print].
+10501231
+                                                                                               Metsämuuronen, J. (2022b). Reminder of the directional nature of the product-
+  Hays W. L. (1963). Statistics for psychologists. New York, NY: Holt, Rinehart &            moment correlation coefficient. Academia Lett. 5313. doi: 10.20935/AL5313
+Winston.
+                                                                                               Metsämuuronen, J. (2022d). Effect of various simultaneous sources of
+  Henrysson, S. (1963). Correction of item-total correlations in item analysis.              mechanical error in the estimators of correlation causing deflation in reliability.
+Psychometrika 28, 211-218. doi: 10.1007/BF02289618                                           Seeking the best options of correlation for deflation-corrected reliability.
+                                                                                             Behaviormetrika 49, 91-130. doi: 10.1007/s41237-022-00158-y
+  Howell, D. G. (2012). Statistical Methods for Psychology, 8th Edn. Wadsworth:
+Duxbury Press.                                                                                 Metsämuuronen, J. (2022c). Rank-polyserial correlation: Quest for a "missing"
+                                                                                             coefficient of correlation. Front. Appl. Math. Stat. 8:914932. doi: 10.3389/fams.
+  IBM (2017a). IBM SPSS Statistics 25 Algorithms. IBM. Available online                      2022.914932
+at: https://www.ibm.com/docs/en/SSLVMB_25.0.0/pdf/en/IBM_SPSS_Statistics_
+Algorithms.pdf (accessed October 7, 2022).                                                     Metsämuuronen, J. (2022e). Attenuation-corrected reliability and some other
+                                                                                             MEC-corrected estimators of reliability. Appl. Psychol. Measur. doi: 10.1177/
+  IBM (2017b). IBM SPSS Decision Trees 25. IBM. Available online at: https://                01466216221108131 [Epub ahead of print].
+www.ibm.com/docs/en/SSLVMB_25.0.0/pdf/en/IBM_SPSS_Decision_Trees.pdf
+(accessed October 7, 2022).                                                                    Metsämuuronen, J. (2022f). Typology of deflation-corrected estimators of
+                                                                                             reliability. Front. Psychol. 13:891959. doi: 10.3389/fpsyg.2022.891959
+  Jonckheere, A. R. (1954). A distribution-free k-sample test against ordered
+alternatives. Biometrika 41, 133-145. doi: 10.1093/biomet/41.1-2.133                           Mordkoff, J. T. (2019). A simple method for removing bias from a popular
+                                                                                             measure of standardized effect size: Adjusted partial eta squared. Adv. Methods
+  Kass, G. (1980). An exploratory technique for investigating large quantities of            Practices Psychol. Sci. 2, 228-232. doi: 10.1177/2515245919855053
+categorical data. Appl. Stat. 29, 119-127. doi: 10.2307/2986296
+                                                                                               Moses, T. (2017). "A review of developments and applications in item analysis,"
+  Kelley, T. L. (1935). An unbiased correlation ratio measure. Proc. Natl. Acad. Sci.        in Advancing Human Assessment. The Methodological, Psychological and Policy
+U.S.A. 21, 554-559.                                                                          Contributions of ETS, eds R. Bennett and M. von Davier (London: Springer Open),
+                                                                                             19-46. doi: 10.1007/978-3-319-58689-2_2
+  Kendall, M. (1938). A new measure of rank correlation. Biometrika 30, 81-93.
+doi: 10.2307/2332226                                                                           Newson, R. (2002). Parameters behind "nonparametric" statistics: Kendall's tau,
+                                                                                             Somers' D and median differences. Stata J. 2, 45-64.
+  Kendall, M. G. (1948). Rank Correlation Methods, 1st Edn. Glasgow, GB: Charles
+Griffin and Co Ltd.                                                                            Newson, R. (2006). Confidence intervals for rank statistics: Somers' D and
+                                                                                             extensions. Stata J. 6, 309-334.
+  Kuder, G. F. (1937). Nomograph for point biserialr, biserialr, and fourfold
+correlations. Psychometrika 2, 135-138. doi: 10.1007/BF02288067                                Okada, K. (2013). Is omega squared less biased? A comparison of three major
+                                                                                             effect size indices in one-way ANOVA. Behaviormetrika 40, 129-147. doi: 10.2333/
+  Kvålseth, T. O. (1985). Cautionary note about R2. Am. Stat. 39, 279-285. doi:              bhmk.40.129
+10.1080/00031305.1985.10479448
+                                                                                               Okada, K. (2017). Negative estimate of variance-accounted-for effect size: How
+  Lane, S., Raymond, M. R., and Haladyna, T. M. (2016). Handbook of Test                     often it is obtained, and what happens if it is treated as zero. Behav. Res. Methods
+Development, 2nd Edn. London: Routledge.                                                     49, 979-987. doi: 10.3758/s13428-016-0760-y
+
+  Livingston, S. A., and Dorans, N. J. (2004). A Graphical Approach to Item                    Olsson, U. (1980). Measuring Correlation in Ordered Two-Way Contingency
+Analysis. (Research Report No. RR-04-10). Princeton, NJ: Educational Testing                 Tables. J. Market. Res. 17, 391-394. doi: 10.1177/002224378001700315
+Service, doi: 10.1002/j.2333-8504.2004.tb01937.x
+                                                                                               Olsson, U., Drasgow, F., and Dorans, N. J. (1982). The polyserial correlation
+  Loh, W. Y., and Shih, Y. S. (1997). Split selection methods for classification trees.      coefficient. Psychometrika 47, 337-347. doi: 10.1007/BF02294164
+Stat. Sinica 7, 815-840.
+                                                                                               Onyutha, C. (2022). A hydrological model skill score and revised R-squared.
+  Lord, F. M., Novick, M. R., and Birnbaum, A. (1968). Statistical Theories of               Hydrol. Res. 53, 51-64. doi: 10.2166/nh.2021.071
+Mental Test Scores. Boston: Addison -Wesley Publishing Company.
+                                                                                               Pearson, K. (1896). VII. Mathematical contributions to the theory of evolution.
+  Mann, H. B., and Whitney, D. R. (1947). On a test of whether one of two                    III. Regression, heredity and panmixia. Philosophical. Trans. R. Soc. London 187,
+random variables is stochastically larger than the other. Ann. Math. Stat. 18, 50-60.        253-318. doi: 10.1098/rsta.1896.0007
+doi: 10.1214/aoms/1177730491
+                                                                                               Pearson, K. (1900). I. Mathematical contributions to the theory of evolution.
+  Martin, W. S. (1973). The effects of scaling on the correlation coefficient: A test        VII. On the correlation of characters not quantitatively measurable. Philosophical
+of validity. J. Market. Res. 10, 316-318. doi: 10.2307/3149702                               Transactions of the Royal Society A. Math. Physical. Eng. Sci. 195, 1-47. doi:
+                                                                                             10.1098/rsta.1900.0022
+  Martin, W. S. (1978). Effects of scaling on the correlation coefficient: Additional
+considerations. J. Market. Res. 15, 304-308. doi: 10.1177/002224377801500219                   Pearson, K. (1903). I. Mathematical contributions to the theory of evolution. XI.
+                                                                                             On the influence of natural selection on the variability and correlation of organs.
+  Meade, A. W. (2010). "Restriction of range," in Encyclopedia of Research Design,           Philosophical Transactions of the Royal Society A. Math. Physical. Eng. Sci. 200,
+ed. N. J. Salkind (Thousand Oaks, CA: SAGE Publications, Inc), 1278-1280. doi:               1-66. doi: 10.1098/rsta.1903.0001
+10.4135/9781412961288.n309
+                                                                                               Pearson, K. (1904). On the Theory of Contingency and its Relation to
+  Mendoza, J. L., and Mumford, M. (1987). Corrections for attenuation and                    Association and Normal Correlation. Drapers' Company Research Memoirs.
+range restriction on the predictor. J. Educ. Stat. 12, 282-293. doi: 10.3102/                Biometric Series I, XIII. Dulau and Co. Available online at: http://archive.org/
+10769986012003282                                                                            details/cu31924003064833 (Accessed October 7, 2022).
+
+  Metsämuuronen, J. (2017). Essentials of Research Methods in Human Sciences,                  Pearson, K. (1905). On the General Theory of Skew Correlation and Non-
+Vol. 1-3. Thousand Oaks, CA: SAGE Publications, Inc.                                         Linear Regression. Dulau and Co. Available online at: https://archive.org/details/
+                                                                                             ongeneraltheory00peargoog/page/n3 (Accessed October 7, 2022).
+  Metsämuuronen, J. (2020a). Somers' D as an alternative for the item-test and
+item-rest correlation coefficients in the educational measurement settings. Int. J.            Pearson, K. (1911). On a correction to be made to the correlation ratio .
+Educ. Methodol. 6, 207-221. doi: 10.12973/ijem.6.1.207                                       Biometrika 8, 254-256. doi: 10.2307/2331454
+
+  Metsämuuronen, J. (2020b). Dimension-corrected Somers' D for the item                        Pearson, K. (1913). On the Measurement of the Influence of "Broad Categories"
+analysis settings. Int. J. Educ. Methodol. 6, 297-317. doi: 10.12973/ijem.6.2.297            on Correlation. Biometrika 9, 116-139. doi: 10.1093/biomet/9.1-2.116
+
+  Metsämuuronen, J. (2021b). Directional nature of Goodman-Kruskal gamma                       Richardson, J. T. E. (1996). Measures of effect size. Behav. Res. Methods Instrum.
+and some consequences. Identity of Goodman-Kruskal gamma and Somers delta,                   Comput. 28, 12-22. doi: 10.3758/BF03203631
+and their connection to Jonckheere-Terpstra test statistic. Behaviormetrika 48,
+283-307. doi: 10.1007/s41237-021-00138-8                                                       Rizzo, M., and Székely, G. (2022). E-Statistics: Multivariate Inference via
+                                                                                             the Energy of Data. Available online at: https://cran.r-project.org/web/packages/
+  Metsämuuronen, J. (2021a). Goodman-Kruskal gamma and dimension-                            energy/index.html (Accessed October 7, 2022).
+corrected gamma in educational measurement settings. Int. J. Educ.Methodol. 7,
+95-118. doi: 10.12973/ijem.7.1.95                                                              Sackett, P. R., Lievens, F., Berry, C. M., and Landers, R. N. (2007). A cautionary
+                                                                                             note on the effect of range restriction on predictor intercorrelations. J. Appl.
+  Metsämuuronen, J. (2022a). Artificial systematic attenuation in eta squared and            Psychol. 92, 538-544. doi: 10.1037/0021-9010.92.2.538
+some related consequences. Attenuation-corrected eta and eta squared, negative
+
+Frontiers in Psychology                                                                  18  frontiersin.org
+Metsämuuronen                                                                             10.3389/fpsyg.2022.988660
+
+  Sackett, P. R., and Yang, H. (2000). Correction for range restriction: An                 Somers, R. H. (1962). A new asymmetric measure of association for ordinal
+expanded typology. J. Appl. Psychol. 85, 112-118. doi: 10.1037/0021-9010.85.1.112         variables. Am. Soc. Rev. 27, 799-811. doi: 10.2307/2090408
+
+  Salkind, N. J. (ed.) (2010). Encyclopedia of Research Design. London: SAGE                Spearman, C. (1904). The proof and measurement of association between two
+Publications, Inc.                                                                        things. Am. J. Psychol. 15, 72-101. doi: 10.2307/1422689
+
+  Schmidt, F. L., and Hunter, J. E. (2003). "History, development, evolution,               Stigler, S. M. (1989). Francis Galton's account of the invention of correlation.
+and impact of validity generalization and meta-analysis methods, 1975-2001,"              Stat. Sci. 4, 73-79. doi: 10.1214/ss/1177012580
+in Validity Generalization: A Critical Review, ed. K. R. Murphy (Mahwah, NJ:
+Erlbaum), 31-66.                                                                            Swineford, F. (1936). Biserial r versus Pearson r as measures of test-item validity.
+                                                                                          J. Educ. Psychol. 27, 471-472. doi: 10.1037/h0052118
+  Schmidt, F. L., and Hunter, J. E. (2015). Methods of Meta-Analysis: Correcting
+Error and Bias in Research Findings, 3rd Edn. London: SAGE Publications, Inc,               Székely, G. J., Rizzo, M. L., and Bakirov, N. K. (2007). Measuring and testing
+doi: 10.4135/9781483398105                                                                dependence by correlation of distances. Ann. Stat. 35, 2769-2794. doi: 10.1214/
+                                                                                          009053607000000505
+  Schmidt, F. L., Shaffer, J. A., and Oh, I.-S. (2008). Increased accuracy for
+range restriction corrections: Implications for the role of personality and general         Tabachnick, B. G., and Fidell, L. S. (2013). Using Multivariate Statistics, 6th Edn.
+mental ability in job and training performance. Personnel Psychol. 61, 827-868.           London: Pearson Education.
+doi: 10.1111/j.1744-6570.2008.00132.x
+                                                                                            Terpstra, T. J. (1952). The asymptotic normality and consistency of Kendall's
+  Sechrest, L., and Yeaton, W. H. (2011). "Magnitudes of experimental effects in          test against trend, when ties are present in one ranking. Indagationes Math. 14,
+social science research," in SAGE Directions of Educational Psychology, Vol. IV, ed.      327-333. doi: 10.1016/S1385-7258(52)50043-X
+N. J. Salkind (London: SAGE Publications Inc), 3-22.
+                                                                                            Walk, M. J., and Rupp, A. A. (2010). "Pearson product-moment correlation
+  Sidák, Z. (1967). Rectangular confidence region for the means of multivariate           coefficient," in Encyclopedia of Research Design, ed. N. J. Salkind (London: SAGE
+normal distributions. J. Am. Stat. Assoc.62, 626-633. doi: 10.1080/01621459.1967.         Publications, Inc), 1022-1026.
+10482935
+                                                                                            Wherry, R. J., and Taylor, E. K. (1946). The relation of multiserial eta to
+  Siegel, S., and Castellan, N. J. Jr. (1988). Nonparametric Statistics for the           other measures of correlation. Psychometrika 11, 155-161. doi: 10.1007/BF02289
+Behavioural Sciences, 2nd Edn. New York, NY: McGraw-Hill.                                 296
+
+  Silver, N. C. (2008). "Attenuation," in Encyclopedia of Survey Methods, ed. P. J.         Yang, H. (2010). "Factor loadings," in Encyclopedia of Research Design, ed. N. J.
+Lavrakas (London: Sage Publications, Inc), 37-37.                                         Salkind (London: SAGE Publications, Inc), 480-483.
+
+Frontiers in Psychology                                                               19  frontiersin.org
+

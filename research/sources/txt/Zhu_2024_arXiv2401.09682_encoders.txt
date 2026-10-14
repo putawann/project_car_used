@@ -1,0 +1,1503 @@
+                                                                                                                                                                                                                                                                   1
+
+                                             Comparative Study on the Performance of
+                                        Categorical Variable Encoders in Classification and
+
+                                                             Regression Tasks
+
+                                                                            Wenbin Zhu, Member, IEEE, Runwen Qiu, Ying Fu
+
+arXiv:2401.09682v1 [cs.LG] 18 Jan 2024     Abstract--Categorical variables often appear in datasets for                    A categorical variable such as "season" typically includes
+                                        classification and regression tasks, and they need to be encoded                four distinct levels: "spring", "summer", "autumn", and "win-
+                                        into numerical values before training. Since many encoders                      ter". The number of levels is called cardinality. Categorical
+                                        have been developed and can significantly impact performance,                   variables may convey up to four types of information. Firstly,
+                                        choosing the appropriate encoder for a task becomes a time-                     they inherently partition samples into groups, where all sam-
+                                        consuming yet important practical issue. This study broadly                     ples within the same level form a group. Secondly, some
+                                        classifies machine learning models into three categories: 1) ATI                categorical variables exhibit a natural order among their levels
+                                        models that implicitly perform affine transformations on inputs,                -for example, the progression from "spring" to "summer" -
+                                        such as multi-layer perceptron neural network; 2) Tree-based                    which is helpful when the response variables demonstrate a
+                                        models that are based on decision trees, such as random forest;                 degree of monotonicity with respect to this order. Thirdly, the
+                                        and 3) the rest, such as kNN. Theoretically, we prove that the one-             labels assigned to levels can carry semantic information. For
+                                        hot encoder is the best choice for ATI models in the sense that it              instance, in the variable "occupation", "mechanic technician"
+                                        can mimic any other encoders by learning suitable weights from                  shares greater similarity with "senior engineer technician" than
+                                        the data. We also explain why the target encoder and its variants               with "police aide" [1]. Lastly, each level defines a conditional
+                                        are the most suitable encoders for tree-based models. This study                distribution of a target variable y. Comparing the similarity
+                                        conducted comprehensive computational experiments to evaluate                   of conditional distribution allows for measuring the proximity
+                                        14 encoders, including one-hot and target encoders, along with                  between levels; we refer to this kind of information as target
+                                        eight common machine-learning models on 28 datasets. The                        information.
+                                        computational results agree with our theoretical analysis. The
+                                        findings in this study shed light on how to select the suitable                    To capture the aforementioned information, various en-
+                                        encoder for data scientists in fields such as fraud detection,                  coding methods are available. For extracting grouping in-
+                                        disease diagnosis, etc.                                                         formation, encoders establish a one-to-one correspondence
+                                                                                                                        between levels and encoded values. Examples include the
+                                           Index Terms--categorical variable, category encoder, data                    one-hot encoder, contrast encoders [2], and binary encoder
+                                        preprocessing                                                                   [3]. For encoding ordinal information, methods like ordinal
+                                                                                                                        encoder and count/frequency encoder [4] reflect the inherent
+                                                                  I. INTRODUCTION                                       order among levels. Regarding semantic information, existing
+                                                                                                                        methods mainly compute the string similarity. For instance,
+                                        C LASSIFICATION and regression finds wide applications                          Cerda et al. [5] computes the string overlap between each pair
+                                              across various domains, such as disease diagnosis, prod-                  of levels to derive similarity, while Weinberger et al. [6] as well
+                                        uct recommendation, demand forecasting, etc. In such tasks,                     as Cerda and Varoquaux [1] indirectly assess string similarity
+                                        categorical variables like gender, education, city, and occu-                   through hash function collision. Regarding target information,
+                                        pation are common. Many machine learning models cannot                          the most commonly used technique is the Empirical-Bayes-
+                                        process categorical variables directly, necessitating the use                   based target encoder. It utilizes the conditional expectation or
+                                        of encoders to convert them into numerical representations.                     conditional probability of the corresponding target at a given
+                                        Numerous encoders have been developed in the past, posing                       level as the encoding.[7-12].
+                                        a new challenge for model builders: determining the most
+                                        appropriate category encoder for their specific model or appli-                    Given the focus of this article on encoder performance
+                                        cation. To address this challenge, this study aims to provide                   comparison, it is essential to offer a brief overview of pre-
+                                        reliable guidelines via comprehensive numeric experiments                       vious efforts in the field of encoder analysis. Early research
+                                        and attempt to explain the reasons behind the suitability of                    primarily involved evaluating encoder performance within
+                                        specific classes of encoders for certain types of models.                       specific scenarios characterized by limited models, datasets,
+                                                                                                                        and encoders. Alkharusi [13] studied two contrast encoders in
+                                           W. Zhu and R. Qiu are with the School of Business Administration, South      a regression task using a linear regression model. The study
+                                        China University of Technology, Guangzhou, Guangdong, 510000, China.            found that while their performance was similar, differences
+                                        E-mail: i@zhuwb.com, qiurunwen@gmail.com.                                       in the interpretation of intercepts and coefficients were ob-
+                                                                                                                        served. Similarly, Moeyersoms and Martens [14] compared
+                                           Y. Fu is with the School of Business Administration, South China University  five encoders using a linear support vector machine model
+                                        of Technology, Guangzhou, Guangdong, China, and the Department of Indus-
+                                        trial and Systems Engineering, University of Wisconsin-Madison, Madison,
+                                        WI, 53706, USA.
+                                        E-mail: ying.fu@wisc.edu
+                                                                                                            2
+
+for church prediction in the energy supplier domain. The          presented in Section IV. Section V offers a comprehensive
+result showed that the best encoder varies under different        summary and guide for encoder selection and Section VI
+performance measures. Potdar et al. [15] applied a neural         concludes this work.
+network to a car evaluation dataset to assess seven different
+encoders. The finding indicated that the contrast encoder         II. ONE-HOT AS UNIVERSAL ENCODER FOR ATI
+yielded the highest accuracy among the evaluated encoders.
+Seger [3] focused on three encoding methods: one-hot, binary,     A. Reproducing other encoders
+and feature hashing. Logistic regression and neural networks
+were employed to conduct experiments on two datasets. The            For a categorical variable x has c levels, i.e., distinct
+research findings revealed that the one-hot encoding method       values, denoted as V = {v1, v2, . . . , vc}, an encoder is a
+demonstrated the best performance. Wright and Ko¨nig [16]         function  : V  Rl that maps each level v  V into
+studied how to handle categorical variables in random forests.    a l-dimensional vector (v). Taking the categorical variable
+The results on nine datasets showed that target encoder was       "season" as an example: the one-hot encoder maps "spring",
+the most effective method. In the survey paper, Hancock           "summer", "autumn", and "winter" into four-dimensional vec-
+and Khoshgoftaar [17] discussed five general encoders and         tors [1, 0, 0, 0]T , [0, 1, 0, 0]T , [0, 0, 1, 0]T , and [0, 0, 0, 1]T , re-
+introduced various embedding techniques tailored to specific      spectively. Alternatively, the ordinal encoder maps each season
+scenarios. Furthermore, several studies compared encoder per-     into 1-dimensional number: 1, 2, 3, and 4, respectively.
+formance while proposing new models and encoders, offering
+valuable insights for encoder selection [1, 5, 10, 18, 19].          We call several well-known classification and regression
+                                                                  models ATI models due to the affine transformation they
+   Recent comparative studies obtained empirical rules through    applied to input variables. Among these, neural networks
+extensive comparative experiments involving multiple datasets,    stand as typical examples. Consider the multi-layer perceptron
+models, and encoders. Valdez-Valenzuela et al. [20] conducted     neural network (MLPNN), where the input (before applying
+experiments on five different models across ten datasets, com-    the activation function) of the first hidden layer, denoted as z,
+prising seven natural datasets and three synthetic datasets. The  is an affine transformation of input vector x. More precisely,
+primary finding of this research suggested that the CatBoost      z is the product of a weight matrix W and the input vector x
+encoder demonstrated the most favorable overall performance,      plus a bias term b. Other ATI models include linear regression
+while one-hot encoder showed notable efficacy in logistic         (LNR), logistic regression (LGR), and support vector machine
+regression. Seca and Mendes-Moreira [21] tested 16 encoding       (SVM) with linear kernel.
+methods across 15 regression datasets using seven distinct pre-
+dictive models. The research indicated that the top-performing       Figure 1(a) illustrates a neural network model applied
+methods were the target encoder and its variants. In the          to inputs containing categorical variables. Without loss of
+comparative research conducted by Pargent et al. [22], nine       generality, we arrange input variables so that all categorical
+encoders and five machine learning models were employed           variables precede other variables, as their order does not
+across 24 datasets that include high-cardinality variables. The   influence the training process. While we illustrate our idea
+result indicated that the regularized version of target encoder   with a single categorical variable, it can be easily extended
+performs well on high-cardinality features. Additionally, the     to multiple categorical variables. Upon applying the encoder
+target encoder combining the Generalized Linear Mixed Model       (·), the input vector becomes [(x1) xo]T , where xo cor-
+(GLMM) performed the best.                                        responds to all other non-categorical variables. The weight
+                                                                  matrix W = [W  W o] of the first layer are partitioned
+   In conclusion, early research provided valuable insights       accordingly where W  corresponds to encoded values (x1).
+within specific contexts, but the scale of these studies made it  The input (before applying the activation function) to the first
+challenging to establish a general rule for encoder selection.    layer, denoted as z, is decomposed into z--representing
+Recent comparative studies, while including the latest models     the contribution due to the categorical variable x1--and zo,
+and encoders, primarily focused on the average performance        denoting the contribution from other variables and the bias
+of encoders. However, there is a gap in theoretical analysis      term.
+regarding the connections between models and encoders, as
+well as between datasets and encoders. Therefore, this work       z = W [(x1) xo]T + b
+aims to address this gap by theoretically analyzing the appli-
+cable conditions of encoders and providing general guidance       = W (x1) + (W oxo + b)
+based on numerous comparative experiments.
+                                                                  = z + zo.                                 (1)
+   The rest of the paper is structured as follows: Section II
+provides proof demonstrating that, given sufficient data, the     Figure 1(b) illustrate the same NN where encoder  is replaced
+one-hot encoder can reproduce any other encoders for models       by one-hot encoder OH. Let W OH be the weight sub-matrix
+executing affine transformation on input, such as logistic re-    corresponding to OH(x1). The contribution to input of first
+gression and multi-layer perceptron neural network. Section III   layer, z, due to categorical variable x1 can be reproduced by
+delves into the analysis of the reasons and applicable condi-     OH(x1) if the following holds,
+tions leading to the good performance of target encoder on
+tree-based models like Random Forest and Gradient Boosting        z = W OHOH(x1) x1.                        (2)
+Decision Trees). Our extensive experiments and analyses are
+                                                                  When equation (2) holds, the neural network trained with
+                                                                  one-hot encoder OH will produce exactly the same output
+                                                                  as neural network trained with any generic encoder  for any
+                                                                                                                                                                                                                                      3
+
+Input Layer Hidden Layer Input Layer Hidden Layer                                                Suppose target y is generated by a categorical variable x
+                                                                                              and a Gaussian noise  as
+
+                                                                                                            y = (x) + ,                                                           (4)
+
+                                                                                       
+
+                                                                                              where x  {"spring", "summer", "autumn", "winter"} fol-
+                                                                                              lows a uniform distribution, and  maps these seasons into
+                                                                                              0, 1, 2, and 3, respectively. The exact mapping  is unknown
+                                                                                              to the modeler but is considered the best encoder. To assess the
+                                                                                              performance, a random test set with 1000 samples is generated.
+                                                                                              We vary the ASPL values within {5, 10, 15, · · · 100} with an
+                                                                                              interval of 5. For each ASPL value, we randomly generate 30
+                                                                                              training sets with different random seeds. For each training set,
+       (a) Generic Encoder                          (b) One-hot Encoder                       the categorical variable is encoded by one-hot. Subsequently,
+                                                                                              a single hidden layer neural network with 100 neurons and
+Fig. 1. (a) A multi-layer neural network. A categorical variable, denoted                     ReLU as the activation function is trained and its prediction
+                                                                                              accuracy is measured by Mean Square Error (MSE) on the test
+as x1 with a cardinality of c, is encoded by a generic encoder (x1) =                         set. The average MSE across the test datasets is computed to
+[1, · · · , l]T and the contribution of x1 to input of first hidden layer is                  evaluate the performance of one-hot encoding at that particular
+                                                                                              ASPL.
+given by blue sub-network z = W (x1) (b) Encoder is replaced by one-
+                                                                                                 The orange line in Figure 2(a) illustrates the performance
+hot  OH (x1 )  =  [1,  ·  ·  ·  ,   ]T  and  the  contribution  of  x1  to  input  of  first  of the Single-Layer Neural Network (NN) utilizing the one-
+                                                                                              hot encoder. The blue line shows the performance of the best
+                                     c                                                        encoder used to generate the training/test datasets. The trend
+                                                                                              indicates that as ASPL increases, the average performance of
+hidden layer is given by the orange sub-network.                                              the one-hot encoder converges towards the best encoder. The
+                                                                                              performance difference between them also converges to zero,
+input. The generic encoder  can be any hand-crafted encoders                                  as indicated in the right y-axis. This observation aligns with
+such as ordinal encoder, target encoder.                                                      our theoretical finding that the one-hot encoder can effectively
+                                                                                              reproduce any encoder given sufficient data. A similar trend
+   For any given weight W  and training data, we can solve                                    is observed in the Linear Regression model, as shown in
+the following system of linear equations to obtain W OH that                                  Figure 2(b).
+satisfies equation (2)
+
+               W OHOH(x1) = W (x1) x1.                                                 (3)
+
+It is not hard to show by linear algebra that the above equation
+always has a solution
+
+     W OH = [W (v1) W (v2) · · · W (vc)] .
+
+We summarize our main result as the following theorem,
+
+Theorem 1. For a categorical variable V = {v1, v2, . . . , vc}                                                                                  1.4
+and any encoder  : V  Rl that encodes any level x  V into
+l dimension vector (x), an arbitrary linear transformation                                         Encoder              0.125                        Encoder                0.15
+                                                                                              Mean Squared Error
+of (x), f (x) = W (x), there exists an equivalent linear                                                                                            Performance differenceBest
+transformation h(x) = W OHOH(x) on values encoded by                                                                                                 OneHot
+one-hot OH(x), i.e.                                                                                                                                      Mean Squared Error
+                                                                                                                                                                                                              Performance difference0.10
+                                                                                              1.3 Best 0.100 1.3
+                                                                                                                            OneHot
+
+                                                                                              1.2                       0.075                   1.2
+
+                                                                                              1.1 0.050                                         1.1                         0.05
+
+                             h(x) = f (x) x  V.                                                                                          0.025  1.0
+                                                                                              1.0                                                   0 25 50 75 100 0.00
+
+                                                                                                  0 25 50 75 100 0.000                                             ASPL
+                                                                                                                 ASPL
+
+                                                                                                   (a) Single-Layer NN                               (b) Linear Regression
+
+B. Convergence behavior                                                                       Fig. 2. Model performance using the best encoder and one-hot encoder on
+                                                                                              datasets generated from Equation (4). The x-axis represents the ASPL value.
+   Although the one-hot encoder, when equipped with suit-                                     The left y-axis displays the performance (i.e. Mean Squared Error) using
+able weights W OH, can reproduce the outcomes produced                                        line plots with markers. The right y-axis exhibits the performance difference
+by any other encoder, these weights are practically learned                                   between two encoders using a bar plot. The shaded region corresponds to the
+from training data. Therefore, sufficient data is essential to                                95% confidence interval. (a). Single-Layer NN; (b). Linear Regression.
+learn such weights. Our investigation reveals that the average
+number of samples per level (ASPL) serves as an excellent                                        In addition, we try to examine the contribution difference
+indicator for data sufficiency. This makes sense since we                                     to the first layer of categorical variables using both the
+need sufficient data to estimate the distribution of the target                               best encoder and the one-hot encoder. More precisely, we
+variable for each level. In this section, we illustrate how ASPL                              look at the vector corresponding to the categorical variables
+influences the performance gap between the one-hot encoder                                    after encoding and linear transformation. The contribution
+and the best encoder for ATI models using synthetic datasets.                                 corresponding to the best encoder and the one-hot encoding
+Additionally, in Section IV-B, we delve into this influence on                                are denoted as z and zOH, respectively. We employ the
+natural datasets.                                                                             Euclidean distance between the two vectors to quantify their
+                                                                                                                                        4
+
+difference. In other words, the average contribution difference                                         respect to the cardinality c, enumerating all splits become
+is computed in the test set Xtest as,                                                                   intractable. In contrast, when splitting a numerical variable, the
+                                                                                                        tree-based models will evaluate every the midpoint between
+        1              z - zOH22                                                                        consecutive unique values as a possible cutoff point between
+      |Xtest|                                                                                           the left and right child. Therefore, a numerical variable with
+               xXtest                                                                                   c unique values only offers c - 1 possible splits. Hence,
+                                                                                                        encoding categorical levels into numerical representations can
+            1            W (x) - W OHOH(x)22 .                                                          significantly mitigates computational burden.
+      = |Xtest|
+                 xXtest                                                                                    The efficiency of computational improvement due to encod-
+                                                                                                        ing does come with a cost - encoding a categorical variable
+   Figure 3(b) illustrates the average contribution difference                                          usually results in worse splits, since some of the splits are
+between the one-hot and the best encoder in the context                                                 lost. For example, if we encode "spring", "summer", "autumn"
+of Linear Regression model. We can observe that as the                                                  and "winter" into 1, 2, 3, and 4, respectively, there will be
+ASPL increases, the average contribution difference drops                                               only three possible splits after the encoding. These splits
+quickly. Additionally, it can gradually approaches zero. Similar                                        correspond to the left child containing either {"spring"} (i.e.,
+contribution difference decrease trend can be observed in Fig-                                          1.5 as cutoff), {"spring", "summer"} (i.e., 2.5 as cutoff), or
+ure 3(a), which is in the context of Single-Layer NN. A similar                                         {"spring", "summer", "autumn"} (i.e., 3.5 as cutoff). It is
+contribution difference decreasing trend can be observed as the                                         impossible to put "spring" and "autumn" in left child. If the
+ASPL increases. However, the contribution difference remains                                            optimal split with minimal impurity involves placing both
+constant, hovering around 0.12-0.13, regardless of the increase                                         "spring" and "autumn" in the left child, this best split may
+in ASPL. A likely cause is that a complex neural network                                                become unattainable after encoding, potentially leading to a
+may have multiple local optima with comparable total loss but                                           strictly inferior split.
+different parameter configurations. Consequently, the optimal
+parameters selected for one-hot may be different from that of                                              However, it is interesting that Mean Encoder and its variants
+the best encoder at the end of the training procedure, leading                                          may achieve near-optimal splits under certain conditions[23].
+to differing contributions between one-hot encoding and the                                             Consequently, these encoders, grouped together as Target
+best encoder. In general, this behavior is consistent with the                                          Encoders, often demonstrate exceptional performance, partic-
+prediction of our theory.                                                                               ularly for tree-based models among all encoders.
+
+0.16                                                                        0.3                         Definition 1. Mean Encoder M maps a level v  V =
+                                                                                                        {v1, v2, . . . , vc} of a categorical variable x to the average
+Contribution difference                                                                                 of target variable y over all training data where x = v, which
+                                                   Contribution difference                              is the simplest estimator of the conditional mean E[y | x = v].
+0.15
+                                                   0.2                                                  1
+
+0.14
+
+0.13                                                                        0.1                            For example, consider a dataset consisting of quarterly sales
+                                                                                                        reports from some stores. In this dataset, the target variable
+0.12                                                                                                    y represents the sales volume, while a categorical variable x
+                                                                                                        represents the season. The Mean Encoder maps "spring" to the
+                                                                            0.0                         average value of y across all sales records when x = "spring".
+
+      25 50 75 100                                                               25 50 75 100              The finding of Fisher [23] indicated that Mean Encoder
+                                                                                                        will preserve the optimal split at root node when impurity is
+      ASPL                                                                       ASPL                   measured by mean squared error (MSE), a metric suitable for
+                                                                                                        regression tasks. According to Fisher, we may re-index levels
+      (a) Single-Layer NN                                                        (b) Linear Regression  in ascending order of their value by the Mean Encoder M ,
+
+Fig. 3. The average contribution difference between the one-hot encoding
+and the best encoder. The shaded region corresponds to a 95% confidence
+interval.(a). Single-Layer NN; (b). Linear Regression.
+
+     III. TARGET ENCODERS FOR TREE-BASED MODELS                                                         M (v1)  M (v2)  · · ·  M (vc),  (5)
+
+A. Optimal split and target encoders                                                                    and there exists an optimal split where left child containing the
+                                                                                                        first several levels and the right child containing the remaining
+   Encoding high cardinality categorical variables into nu-                                             levels. This type of split is called contiguous partition by
+merical values can greatly reduces computational burden in                                              Fisher [23]. Breiman et al. [24] proved a similar result:
+tree-based models. The central step in building a binary                                                Mean Encoder will preserve the optimal split at root node
+decision tree is repeatedly splitting a node by choosing the                                            when impurity is measured by entropy, a suitable metric for
+optimal variable that minimize the impurity of the best split.                                          classification tasks. To properly apply the results by Fisher and
+The best split by a given variable is found by exhaustively                                             Breiman et. al. to split an internal node, the Mean Encoder
+enumerating all possible splits. For a categorical variable with                                        M must be recomputed using the data in that internal node.
+c levels, there are (2c - 2)/2 possible splits - each level
+can appear in either left or right child, resulting in total 2c                                            1In binary classification tasks, the encoding corresponds to the conditional
+possible splits, subtracting two useless splits where either                                            probability. Therefore, when the target variable is preprocessed to only have
+child is empty and considering only half due to symmetry.                                               0s and 1s, the encoding formula used in binary classification tasks aligns with
+Since the number of possible splits grow exponentially with                                             that in regression tasks.
+                                                                                                                                                                               5
+
+For example, when a root node is split into left and right           for the test set using the Equation (6) (see Figure 4(a)).
+child, the average of y where x = "spring" in left child may         Simultaneously, a training set consisting of 40 samples is
+be different from that in the root node. The difference can          also generated, corresponding to an ASPL value of 10 (see
+vary significantly. In extreme cases, all data associated with       Figure 4(b)). As we can see, the conditional distribution of y
+"spring" may go into the right child, leading to a substantial       for each level in the training set deviates significantly from
+difference. Conversely, the difference could be very small if        the ground truth: 0.2857 for "spring", 0.2727 for "summer",
+the root node is split by an variable that is independent of         0.5556 for "autumn", and 0.3077 for "winter", as opposed to
+season and the conditional distribution of y on each level is        the ground truth values of 0.6 for "spring", 0.4 for "summer",
+nearly identical in left and right child.                            0.6 for "autumn", and 0.4 for "winter". Consequently, a
+                                                                     Random Forest model trained on the training set with the
+   What if we do not recompute Mean Encoder M for each               Mean Encoder exhibits poor performance on the test set,
+internal node, and use only the Mean Encoder M computed              achieving an overall accuracy of approximately 0.730. The
+for root node? We argue that in some cases, we may still             corresponding predictions are illustrated in Figure 4(c).
+achieve good results as follows. Since shallow nodes with
+smaller depth usually contains more data than deeper nodes           x23                   y       winter                                  3                   y       0.3077
+at larger depth, the split of shallow nodes usually has greater                                      x22-1                                 2                       -1  winter
+impact than deeper nodes. When there are many numerical                1                       1                                           1                       1
+variables independent of a categorical variable x, it is very                                                                        x20   0
+likely that the split of shallow nodes are due to those numerical    -1         summer autumn                                            -1         0.2727 0.5556
+variables, as a result, the conditional distribution of y on levels  -2                   x1                                             -2         summer autumn
+of x in shallow nodes may be very similar to the root node. In          spring                                                              0.2857
+this case, even if we do not recompute Mean Encoder M , we                          (a)                                                     spring            x1
+may still obtain good splits. According to the experiments by
+Wright and Ko¨nig [16], applying Mean Encoder at root node                                                                                              (b)
+of Random Forest may achieve similar performance as trying
+exhaustive partitioning at each internal node for both binary                   3
+classification and regression tasks.
+
+                                                                                2
+
+B. Performance and data sufficiency                                             1
+
+   Target encoders essentially estimates the target variable y                    0                           y                                     winter
+conditioned on each level of the categorical variable x. Such                   -1                                -1
+estimation is accurate only if there are sufficient number of                   -2                                1
+samples per level in the training set. When the number of
+samples per level is small, the estimated conditional mean may                     spring          summer autumn
+deviates greatly from the ground truth and mislead the parti-                                                x1
+tioning process discussed in the previous section. When there
+are many levels with small number of samples, the chance                                               (c)
+of producing wrong partitioning increases and performance of
+target encoder are expected to be poor.                              Fig. 4. (a) Test set with 1000 samples generated using Equation (6); (b)
+                                                                     Training set consisting of 40 samples with an ASPL value of 10. The
+   We employ a synthetic example in this section to demon-           numerical values above each level are obtained by the Mean Encoder; (c)
+strate the decline in the performance of target encoder as           Prediction on the test dataset by a Random Forest model trained with the
+data adequacy diminishes. We measure data sufficiency using          aforementioned training set and Mean Encoder, yielding an overall accuracy
+the average number of samples per level (ASPL) within the            of 0.730.
+training set. Moreover, a similar trend can be observed in
+natural datasets, as shown in Section IV-C.                             Next, we investigate the impact of different ASPL values
+                                                                     on the performance of the Mean Encoder. For each ASPL
+   In the synthetic example, target variable y is generated by       in {5, 10, 15, · · · , 100} (with an interval of 5), 30 training
+the following equation:                                              sets are randomly generated by the Equation (6) with different
+                                                                     seeds. A Random Forest model is then trained on each of these
+y = (x1) · sgn (sin (x2)) ,  (6)                                     training sets using the Mean Encoder, and its performance on
+                                                                     the test dataset is measured in terms of accuracy. The average
+where x1 is a uniformly distributed categorical variable "sea-       performance of the Mean Encoder for the specified ASPL
+son" with four levels "spring", "summer", "autumn" and               is computed by averaging the results obtained from the 30
+"winter". The encoder  maps these four seasons into 1, -1, 1,        models.
+and -1 respectively. This encoding scheme is considered the
+optimal possible encoder but unknown to the machine learning            In Figure 5, the orange line represents the average per-
+modeler. The sign function sgn(·) converts positive numbers          formance of the Mean Encoder across various ASPL values,
+to 1 and non-positive numbers to -1. The numerical variable          while the shaded region surrounding the line indicates the 95%
+x2 is uniformly distributed within the range [-2, 3] and is          confidence interval. Additionally, we provide the performance
+independent of x1. A total of 1000 samples are generated             of the best encoder responsible for generating the data, serving
+                                                                     as a reference for the optimal achievable performance by any
+                                                                     encoder. As observed, the performance of the Mean Encoder
+                                                                     drops as ASPL decreases. In fact, the performance deteriorates
+                                                                     rapidly as ASPL falls below 25. Conversely, when ASPL is
+                                                                                         6
+
+sufficiently large, for instance, 60 or more, the Mean encoder                           Datasets are sorted by minASPL, representing the minimum
+performs very well. Moreover, the performance difference                                 ASPL across all categorical variables in that dataset. This
+between the Mean Encoder and the best encoder gets smaller                               makes sense because when the variable with the minASPL
+and smaller, approaching zero as ASPL increases.                                         is data-sufficient, it implies that all categorical variables are
+                                                                                         data-sufficient. Each dataset is partitioned into training and test
+                        1.0                                                              sets, comprising 80% and 20% of the samples, respectively.
+                                                                                0.15     Subsequently, we estimated the parameters required for each
+Accuracy                                                                                 preprocessing step using the training set and applied them to
+                                                                 Performance difference0.9the test set to avoid information leakage. Standard preprocess-
+                                                                                         ing procedures include: filling missing values, encoding all
+                                  Encoder      0.10                                      categorical variables with a given encoder and normalization.
+                                                                                         Further details can be found in the Appendix B.
+                        0.8       Best
+                                                                                            Table II shows the commonly used encoders categorized
+                        0.7       Mean         0.05                                      by the information they provide. The column "dimension"
+                                                                                         denotes the dimensions resulting from the mapping process
+                        0.6                                                              performed by an encoder. More detailed descriptions of these
+                            0 25 50 75 100 0.00                                          encoders can be found in the Appendix C.
+                                                  ASPL
+                                                                                            We conducted our experiments with a variety of ATI
+Fig. 5. Performance of Random Forest using the best encoder and Mean                     and Tree-based models implemented by scikit-learn[25],
+Encoder on datasets generated from Equation (6). The x-axis represents the               XGBoost[26], and LightGBM[27] packages. The ATI models
+ASPL value. The left y-axis displays the performance (i.e., Accuracy) using              include:
+line plots with markers. The right y-axis exhibits the performance difference
+between two encoders using a bar plot. The shaded region corresponds to the                 · LNR: Linear Regression with L2 pernalty.
+95% confidence interval.                                                                    · LGR: Logistic Regression with L2 penalty.
+                                                                                            · NN: A fully connected neural network with one hidden
+   The experiment is replicated for the SShrink Encoder, a
+variant of the Mean Encoder, specifically designed for robust                                  layer of 100 units and ReLU as the activation function.
+estimation of the conditional mean in scenarios where data is                               · SVM: Support Vector Machine with linear kernel.
+insufficient [8]. As shown in Figure 6, SShrink outperforms
+the Mean Encoder when ASPL is less than 25, although with                                The Tree-based models include:
+a marginal advantage of approximately 0.005 accuracy.
+                                                                                            · DT: A decision tree with a maximum height of 10
+Performance difference  0.02                                                                   requires at least 10 samples to split an internal node.
+
+                        0.01                                                                · RF: A random forest with 100 decision trees.
+                                                                                            · XGBoost: A gradient boosting tree model consists of 100
+                        0.00
+                                                                                               weaker tree estimators.
+                              25  50       75  100                                          · LightGBM: A fast gradient boosting tree model consists
+
+                                  ASPL                                                         of 100 weaker tree estimators.
+
+Fig. 6. The performance difference, i.e., the accuracy of the SShrink                       For all models, we utilize the default parameters provided by
+encoder minus the accuracy of the Mean Encoder, on datasets generated from               the packages [25-27] due to their broad applicability across
+Equation (6) with varying ASPL. The shaded region corresponds to a 95%                   various scenarios, offering a good starting point. Extensive
+confidence interval.                                                                     parameter tuning can be computationally demanding and may
+                                                                                         not necessarily improve performance significantly. However,
+                IV. QUANTITATIVE EXPERIMENT                                              in cases where default settings are inappropriate, we rely on
+                                                                                         prior experience with similar problems to guide our parameter
+A. Experiment setting                                                                    choices. Further details about the specific settings can be found
+                                                                                         in the Appendix D.
+   To validate our findings, we conducted comprehensive ex-
+periments on 28 datasets employing various encoders and                                     The experiments are performed for each dataset-encoder-
+assessing their performance across common machine learning                               model combination and are repeated 10 times using different
+algorithms.                                                                              random seeds. Performance measures on the test set are
+                                                                                         recorded. Specifically, for classification tasks, the F1 score is
+   The datasets are downloaded from various machine learning                             recorded, defined as 2  precision  recall/(precision + recall),
+repositories and previous studies [1, 3, 5, 15, 18, 20, 22].                             where precision denotes the proportion of samples predicted
+These datasets representing various classification and regres-                           as positive that are actually positive, and recall represents
+sion scenarios. Table I provides the summary of all datasets.                            the proportion of actual positive samples correctly identified
+                                                                                         as positive. Although accuracy is a straightforward metric
+                                                                                         for classification, real-world datasets often exhibit class im-
+                                                                                         balances (as shown in the columm "PRatio" in Table I).
+                                                                                         Therefore, F1 score is a more reliable performance indicator.
+                                                                                         In regression tasks, Root Mean Squared Error (RMSE) is used,
+                                                                                         which indicates the square root of average squared differences
+                                                                                                                          7
+
+                                                                    TABLE I
+          DATASET SUMMARY AFTER SIMPLE CLEANUP FOR BOTH CLASSIFICATION AND REGRESSION TASKS.
+
+          Task type           Dataset      #Samples #N.Var.1 #C.Var.2 Max Card.3 PRatio4 minASPL5
+
+                       Obesity             2,111                   3   8   810     0.46            3
+                                                                                                   4
+                       EmployeeAccess      32,769                  0   9   7,518   0.94          11
+                                                                                                 11
+                       TripAdvisor                        504      4   11  48      0.45          69
+                                                                                                 98
+                       Autism                             704      1   16  67      0.27         100
+                                                                                                120
+                       Kick                72,983                  14  14  1,063   0.12         147
+                                                                                                309
+                       Churn               5,000                   15  3   51      0.14         330
+                                                                                                432
+                       GermanCredit        1,000                   7   11  10      0.70         677
+                                                                                              1,163
+          Classification Mammographic                     961      1   4   8       0.46       2,592
+                               Wholesale
+                                                          440      6   1   3       0.32
+
+                       RoadSafety          117,536                 9   15  380     0.21
+
+                       HIV                 6,590                   0   8   20      0.21
+
+                       CarEvaluation       1,728                   0   6   4       0.30
+
+                       Mushroom            8,124                   0   18  12      0.52
+
+                       Adult               48,842                  6   8   42      0.24
+
+                       Nursery             12,960                  0   8   5       0.67
+
+                       Colleges            5935                    18  9   2,217                   3
+                                                                             527                   4
+                       CPMP2015            2,108                   22  3     694                 13
+                                                                              39                 32
+                       EmployeeSalaries    9,228                   3   4      17                 68
+                                                                                4                76
+                       Moneyball           1,232                   6   4        5               209
+                                                                              54                338
+                       Socmob              1,156                   1   4      24                724
+                                                                                5             4,128
+                       Cholesterol                        303      6   7        8             6,743
+                                                                                4             7,039
+          Regression   StudentPerformance  1,044                   15  17     53              7,440
+
+                       Avocado             18,249                  11  2
+
+                       BikeSharing         17,379                  5   6
+
+                       HousingPrice        20,640                  8   1
+
+                       Diamonds            53,940                  6   3
+
+                       CPS1988             28,155                  2   2
+
+                       UkAir               394,299                 2   5
+
+          1 The count of total numerical variables.
+          2 The count of total categorical variables.
+          3 The maximum cardinality among all categorical variables.
+          4 The ratio of positive samples to the total population in classification tasks.
+          5 The minimum ASPL across all categorical variables in a dataset. It can be obtained by dividing the number of
+
+            samples by the maximum cardinality.
+
+                                   TABLE II                        particular model-dataset combination. To address the incom-
+ENCODERS CATEGORIZED BY THE INFORMATION THEY PROVIDE.              parability of performance measures across diverse datasets and
+                                                                   tasks, we introduce a relative performance difference metric.
+Information Encoder                       Dimension                This metric quantifies the difference between an encoder's
+                                                                   performance and that of the best encoder, divided by the
+Grouping  OneHot                                       c           performance of the best encoder. For example, in a regression
+          BackDiff [2]                           c-1               task using the LNR model, the relative performance of the
+          Helmert [2]                            c-1               one-hot encoder is calculated as |MSEOH -MSEBest|/MSEBest.
+          Sum [2]                                c-1
+          BaseN [3]                    logb(c + 1)                    The implementation of encoders and models is sourced
+                                                                   from original authors or third-party libraries such as category-
+Ordering Ordinal 1                                                 encoders[13], dirty-cat[1, 5], scikit-learn[25], XGBoost[26],
+          Count [4]                        1                       and LightGBM[27]. All experiments were conducted on lap-
+                                                                   tops equipped with an Intel(R) Core(TM) i7-7920HQ CPU
+Semantic  Similarity [5]                          c                @3.10GHz and 32GB RAM. No GPU acceleration was used.
+          MinHash [1]                      custom1                 The source code and experimental results are available at
+                                                                   https://github.com/QiuRunwen/CategoryEncoderComparison.
+          Mean                             1
+                                                                   B. Performance of encoders on ATI models
+          SShrink [8]                      1
+                                                                      In Section II, we demonstrated that given sufficient data,
+Target    MEstimate [8]                    1                       the one-hot encoder can reproduce any other encoders for ATI
+                                                                   models. This was confirmed through an experiment with a
+          JamesStein [9, 11, 12]           1                       synthetic dataset. In this section, we extend this validation to
+                                                                   natural datasets.
+          GLMM [22]                        1
+                                                                      As mentioned, the average number of samples per level
+1 The default dimension is 30 but can be customized by             (ASPL) indicates data sufficiency. A larger ASPL suggests
+  users.
+
+between the predicted and actual values. Additionally, for both
+tasks, the total time (in seconds) used for categorical variables
+encoding and the model training time is also recorded.
+
+   When evaluating encoders within a dataset and a specific
+machine learning model, we rank them based on their perfor-
+mance, considering the top-ranked encoder as the best for that
+                                                                                                                                                                   8
+
+more sufficient data. Therefore, for a dataset with multiple                                  Comparing the relative performance difference with other
+categorical variables, if the ASPL is sufficient for each cat-                             encoders, we observe that the gap between one-hot encoding
+egorical variable, we consider the dataset as a whole to be                                and the best performer in LNR, LGR, and SVM is 5.41%,
+sufficient, as indicated by the minASPL of that dataset.                                   1.59%, and 3.96%, respectively. However, the gap widens sig-
+                                                                                           nificantly in NN, reaching 19.01%. This substantial difference
+   Figure 7 illustrates the average relative performance dif-                              may be attributed to the complexity of neural network models,
+ference between the one-hot encoder and the best encoder                                   and it heavily relies on the sufficiency of the dataset.
+across all datasets (sorted by minASPL) on four ATI models:
+LGR, LNR, NN, and SVM. It can be seen that as minASPL                                         Additionally, the top-performing encoders vary under each
+increases, the performance difference gradually diminishes.                                model. For instance, BackDiff and MinHash performed well
+Specifically, when minASPL is below 100, the one-hot encoder                               in LNR and LGR, but in NN and SVM, they are ranked lower
+significantly lags behind the best encoder across all ATI                                  with a substantial relative performance difference. Overall, for
+models. However, when minASPL is greater or equal 100,                                     ATI models, GLMM ranks in the top when data is insufficient
+the one-hot encoder closely approaches the performance of                                  and exhibits relatively stable performance.
+the best encoder, except for a few scenarios involving NN.
+Consequently, using a cutoff of 100, we categorize datasets                                                                        TABLE III
+into two groups: sufficient-data (16 datasets) and insufficient-                           AVERAGE AND STANDARD DEVIATION OF THE RELATIVE PERFORMANCE
+data datasets (12 datasets).                                                               DIFFERENCE (%) BETWEEN EACH ENCODER AND THE BEST ENCODER ON
+                                                                                           FOUR ATI MODELS (). BOLD INDICATES THAT AN ENCODER ACHIEVES
+Relative performance difference  60%                                                       THE BEST RESULTS FOR AN ATI MODEL. THE UNDERLINE INDICATES THE
+                                                                               Model
+                                                                                                                             ONE-HOT ENCODER.
+                                                         LGR
+
+                                 40%                     LNR                                                (a) Over all sufficient-data datasets
+
+                                                         NN                                Encoder     LNR          LGR          NN             SVM          Avg.
+
+                                                         SVM                               Helmert      0.12± 0.32   0.32± 0.44   1.06± 1.62     0.32± 0.42   0.54± 1.04
+                                                                                           Sum          0.12± 0.32   0.31± 0.41   0.84± 1.51     0.72± 1.32   0.60± 1.18
+                                 20%                                                       OneHot       0.12± 0.30   0.27± 0.38   1.42± 2.29     0.45± 0.72   0.69± 1.47
+                                                                                           Similarity   0.12± 0.30   0.32± 0.40   1.77± 2.83     0.52± 0.87   0.84± 1.81
+                                 0%                                                        BackDiff     0.12± 0.32   1.12± 2.34   1.84± 2.85     1.82± 5.97   1.45± 3.91
+                                                                                           MinHash      1.38± 3.29   3.47± 9.52   3.64± 5.05     5.38±14.22   3.86± 9.55
+                                      101  102      103                               104  MEstimate    2.30± 5.08   3.08± 5.59   9.51±15.17     6.92±21.60   6.39±15.46
+                                                                                           SShrink      2.30± 5.08   3.09± 5.63   9.54±15.03     6.94±21.62   6.41±15.43
+                                           minASPL                                         Mean         2.29± 5.08   3.10± 5.64   9.65±15.33     6.93±21.55   6.44±15.50
+                                                                                           GLMM         2.29± 5.10   4.82±11.16   9.63±15.35     7.09±22.90   6.81±16.54
+                                                                                           JamesStein   3.20± 5.45   3.79± 8.12  10.03±16.39     7.44±22.25   7.00±16.31
+                                                                                           BaseN       10.79±13.43  10.34±19.26   4.32± 6.01    12.92±24.75   9.26±17.51
+                                                                                           Count       13.48±15.91  21.35±24.80  21.42±39.72    19.90±27.20  19.74±29.73
+                                                                                           Ordinal     14.40±17.78  25.30±31.33  22.72±42.50    22.58±31.46  21.94±33.33
+
+Fig. 7. The relative performance difference between the one-hot encoder and                Note: Because LNR only runs on regression datasets and LGR only runs on classification
+the best encoder across all datasets (sorted by minASPL) on four ATI models:               datasets, they are weighted when calculating Avg.
+LGR, LNR, NN, and SVM.
+                                                                                                       (b) Over all insufficient-data datasets
+   Next, we investigate the average relative performance dif-
+ference between the one-hot encoder and the best encoder on                                Encoder     LNR          LGR          NN             SVM          Avg.
+all sufficient-data datasets. Table III(a) displays the average
+and standard deviation of the relative performance difference                              GLMM         4.68± 5.20   2.82± 3.53     2.82± 7.34   1.09± 1.43   2.55± 4.98
+(%) between the one-hot encoder and the best encoder across                                MEstimate    5.86± 6.44   3.05± 4.04     3.18± 7.24   1.66± 1.75   3.10± 5.27
+all sufficient-data datasets on four ATI models. Across all                                SShrink      5.93± 7.23   3.13± 4.24     3.69± 7.13   2.19± 3.02   3.47± 5.52
+four ATI models, the relative performance difference of one-                               Mean         6.75± 7.25   3.07± 4.07     4.28± 7.21   1.79± 2.11   3.66± 5.54
+hot encoder is only 0.69%, indicating a close proximity to the                             JamesStein   7.53± 7.94   3.38± 3.82     6.09±10.80   2.16± 2.53   4.57± 7.37
+best encoder. More specifically, in the LNR, LGR, and SVM                                  MinHash      3.87± 8.01   0.21± 0.31     9.87± 8.77   4.53± 6.43   5.48± 7.65
+models, the average relative performance difference of the one-                            Similarity   1.80± 3.82   1.77± 1.84   11.87±10.48    4.63± 6.61   6.10± 8.33
+hot encoder is less than 0.5%, while it is 1.06% in the NN                                 BackDiff     1.49± 1.45   1.62± 2.38   13.84±14.75    4.76± 6.15   6.72±10.45
+model. An intriguing result is that in LNR and LGR, the one-                               BaseN        7.93±12.16   4.32± 8.11     9.53±10.02   5.82± 9.91   7.16± 9.85
+hot encoder achieves the best average relative performance                                 Count       10.37±13.63   7.91± 9.17     7.40±12.77   8.46±11.98   8.33±11.66
+compared with other encoders. However, in SVM, it lags                                     OneHot       5.41± 5.53   1.59± 1.50   19.01±20.54    3.96± 4.07   8.82±14.04
+behind the average best one, the Helmert encoder, by merely                                Helmert      5.10± 5.15   1.63± 1.44   19.82±21.11    4.34± 4.13   9.18±14.46
+0.13% and 0.58% compared with the Sum encoder in NN.                                       Sum          5.41± 5.56   1.59± 1.55  48.52±110.73    3.96± 4.41  18.66±65.76
+                                                                                           Ordinal     26.26±37.82  17.87±26.50     8.02±13.57  27.40±43.77  19.16±32.24
+   Table III(b) shows the average and standard deviation of
+the relative performance difference (%) across all insufficient-                           Note: Because LNR only runs on regression datasets and LGR only runs on classification
+data datasets. We can see that the average relative performance                            datasets, they are weighted when calculating Avg.
+difference of one-hot encoder is 8.82% on all ATI models. It
+does not perform well and indicates a considerable deviation                                  The observed performance of one-hot encoder on both
+from the best encoder.                                                                     natural sufficient-data and insufficient-data datasets aligns with
+                                                                                           Theorem 1 and the results on synthetic datasets in Section II.
+                                                                                           For sufficient-data datasets, one-hot encoder emerges as the top
+                                                                                           performer, while for insufficient-data datasets, its performance
+                                                                                           is constrained by data sufficiency, leading to suboptimal re-
+                                                                                           sults. Consequently, in scenarios with insufficient data, GLMM
+                                                                                           is recommended for achieving more robust performance.
+                                                                                                                                             9
+
+C. Performance of encoders on Tree-based models                              target encoders exhibit poor performance, while MinHash,
+                                                                             Similarity, Sum, and OneHot consistently rank on the top. It is
+   In Section III, we argued that target encoders, when pro-                 an intriguing observation because these significantly increases
+vided with sufficient data, can accurately estimate the con-                 the dimensionality on insufficient-data datasets, many of which
+ditional mean, resulting in excellent performance on Tree-                   have high-cardinality variables.
+based models. While we initially illustrated this concept using
+synthetic datasets, our argumentation finds further support in                  In summary, our observations indicate that the performance
+the analysis of natural datasets presented in this section.                  of target encoders on tree-based models is consistent across
+                                                                             both natural and synthetic datasets. When there is sufficient
+   In Tree-based models, the criterion for data sufficiency                  data, all target encoders demonstrate strong performance.
+is also the average number of samples per level, consistent                  However, the effectiveness of these encoders is constrained
+with ATI models. Figure 8 illustrates the average relative                   by the adequacy of the available data. On average, MinHash,
+performance difference between the Mean Encoder and the                      Similarity, Sum and OneHot encoders serve as viable alterna-
+best encoder across all datasets (sorted by minASPL) for                     tives in scenarios where the dataset is insufficient.
+four Tree-based models: DT, RF, XGBoost, and LightGBM.
+The trend indicates that as minASPL increases, the relative                                                          TABLE IV
+performance difference tends to decrease. The Mean Encoder                    AVERAGE AND STANDARD DEVIATION OF THE RELATIVE PERFORMANCE
+performs well when minASPL is greater than 100, but its                      DIFFERENCE (%) BETWEEN EACH ENCODER AND THE BEST ENCODER ON
+performance falls significantly short of the best encoder in                   FOUR TREE-BASED MODELS (). BOLD INDICATES THAT AN ENCODER
+certain scenarios when minASPL is lower. Similarly, we
+categorize datasets into two groups: sufficient-data datasets                     ACHIEVES THE BEST RESULTS FOR AN TREE-BASED MODEL. THE
+(16 datasets) and insufficient-data datasets (12 datasets) using                             UNDERLINE INDICATES THE TARGET ENCODERS.
+a cutoff of minASPL equal to 100.
+                                                                                         (a) Over all sufficient-data datasets
+
+Relative performance difference  100%                Model                     Encoder       DT           RF       XGBoost      LightGBM       Avg.
+                                  80%                 DT
+                                  60%                 RF                     GLMM        0.66± 0.95   1.16± 2.49   0.89± 1.48   1.06± 1.75   0.94± 1.73
+                                  40%                 XGBoost                JamesStein  0.59± 0.86   1.11± 2.21   0.98± 1.52   1.10± 1.62   0.94± 1.60
+                                  20%                 LightGBM               MinHash     1.67± 2.78   1.04± 1.51   0.30± 0.37   0.79± 2.12   0.95± 1.93
+                                   0%                                        Mean        0.52± 0.88   1.18± 2.43   0.96± 1.57   1.14± 1.68   0.95± 1.71
+                                                                             SShrink     0.72± 1.11   1.08± 2.04   0.95± 1.54   1.06± 1.76   0.95± 1.61
+                                                                             MEstimate   0.63± 0.91   1.17± 2.36   0.94± 1.48   1.16± 1.65   0.98± 1.66
+                                                                             Similarity  2.53± 3.41   2.17± 4.28   1.24± 2.88   1.94± 5.16   1.97± 3.96
+                                                                             Helmert     6.74±13.51   4.11± 8.14   2.48± 4.56   2.92± 5.59   4.06± 8.63
+                                                                             Sum         8.22±16.89   4.35± 8.50   2.79± 5.11   2.92± 5.97   4.57±10.23
+                                                                             OneHot      8.25±16.88   4.37± 8.90   2.79± 5.11   2.92± 5.74   4.58±10.28
+                                                                             Ordinal     7.45±14.08   5.16± 8.50   2.56± 4.24   4.25± 7.31   4.86± 9.20
+                                                                             BackDiff    7.48±14.09   6.42±10.49   2.46± 4.15   4.29± 7.04   5.16± 9.65
+                                                                             BaseN       7.60±14.04   6.81±11.79   4.04± 8.07   5.91±10.16   6.09±11.04
+                                                                             Count       7.35±14.27   7.78±16.55   6.34±15.34   7.08±15.85   7.14±15.16
+
+                                                                                         (b) Over all insufficient-data datasets
+
+                                       101  102      103        104            Encoder        DT           RF       XGBoost     LightGBM        Avg.
+
+                                            minASPL                          MinHash      2.24± 2.26   3.25± 6.18   2.33± 2.90   1.05± 1.47   2.22± 3.64
+                                                                             Similarity   2.59± 4.32   3.97± 3.85   2.10± 2.91   1.39± 2.08   2.51± 3.43
+Fig. 8. The relative performance difference between the Mean Encoder and     Sum          4.37± 6.78   2.57± 3.31   1.37± 1.82   2.60± 3.95   2.73± 4.35
+the best encoder across all datasets (sorted by minASPL) on four Tree-based  OneHot       4.36± 6.83   2.81± 3.37   1.35± 1.80   2.55± 3.91   2.77± 4.37
+models: DT, RF, XGBoost, and LightGBM.                                       Helmert      2.58± 3.23   5.47± 6.25   2.48± 3.22   2.35± 2.87   3.22± 4.21
+                                                                             Ordinal      3.67± 4.31   3.98± 5.03   3.31± 5.36   3.02± 3.78   3.50± 4.52
+   Next, we explore the average relative performance differ-                 Count        3.07± 3.87   5.07± 9.67   5.43±12.69   3.88± 7.27   4.36± 8.74
+ence (%) among five target encoders - GLMM, JamesStein,                      BaseN        3.82± 4.26   4.90± 7.56   5.24± 9.24   4.15± 5.95   4.53± 6.80
+Mean, SShrink, and MEstimate - compared to the best encoder                  BackDiff     3.49± 4.18   9.60±12.59   3.43± 5.34   3.01± 3.82   4.88± 7.67
+in both sufficient-data and insufficient-data datasets across four           SShrink      8.66±17.43   9.84±19.83   9.64±18.31   8.78±20.84   9.23±18.53
+tree-based models.                                                           GLMM         9.26±13.36  12.61±19.58   9.57±14.58   9.75±16.81  10.30±15.79
+                                                                             MEstimate   11.00±17.35  13.92±23.10  11.25±17.58  11.48±19.07  11.91±18.82
+   Table IV(a) presents the average and standard deviation of                Mean        13.07±22.29  18.09±32.64  14.78±27.01  13.69±25.28  14.90±26.26
+the relative performance difference (%) between each encoder                 JamesStein  14.29±23.64  19.08±34.65  14.79±27.02  13.09±25.02  15.31±27.10
+and the best encoder across all sufficient-data datasets for four
+tree-based models. Overall, target encoders, including GLMM,                 D. Impact of encoding on time cost
+JamesStein, Mean, SShrink, and MEstimate, consistently rank
+on top. Their average differences with the best encoder are                     In practical scenarios, it becomes critical to take into ac-
+similar, hovering around 1%. Specifically, in Decision Trees                 count the time cost, particularly in large datasets where models
+(DT), the Mean Encoder performs the best. In Random Forest                   exhibit high time complexity, such as Neural Networks (NN),
+(RF), XGBoost, and LightGBM, while MinHash ranks first,                      Support Vector Machines (SVM), Random Forests (RF), and
+target encoders closely follow with comparable performance,                  XGBoost. In this section, we explore the time costs associated
+demonstrating a marginal difference.                                         with various encoders when applied to typical large datasets.
+
+   Table IV(b) illustrates the relative performance difference                  Considering that the number of samples and dimensional-
+of each encoder on all insufficient-data datasets. In general,               ity significantly influence time costs, we have selected two
+                                                                             datasets for analysis. The first dataset, UkAir, represents a
+                                                                             scenario with the largest number of samples. The second
+                                                                                                                                      10
+
+dataset, EmployeeAccess, has been chosen due to its high                   103  Models
+dimensionality after encoding. This selection enables us to ex-
+amine the time costs associated with each encoder in scenarios                  NN
+where dimensionality plays a crucial role.
+                                                                  Time(s)       SVM
+   Figure 9(a) shows the time costs associated with the UkAir
+dataset, which consists of a total of 394,299 samples. Addi-                    RF
+tionally, this dataset includes 5 categorical variables with a
+maximum cardinality of 53. On the other hand, Figure 9(b)                  102  XGBoost
+shows the time cost required for the EmployeeAccess dataset,
+comprising a total of 32,769 samples. In this dataset, there are           101
+9 categorical variables and the maximum cardinality reaches
+7,518. The trend observed here indicates that the time cost                     Count(1)
+associated with various encoders is primarily influenced by                           GLMM(1)
+the dimensions resulting from the mapping process performed                                 JamesStein(1)
+by an encoder. In other words, it is the dimensions intro-                                         MEstimate(1)
+duced during the encoding of categorical variables that play
+a crucial role in determining the overall time cost. As the                                               Mean(1)
+dimensions added increase, the total time required also tends                                                   Ordinal(1)
+to escalate, with the exception of GLMM. The reason is that                                                            SShrink(1)
+GLMM involves fitting multiple generalized linear regression                                                                 BaseN(log c)
+models with various variants. This process becomes more                                                                             BackDiff(c-1)
+time-consuming, especially when dealing with high-cardinality                                                                             Helmert(c-1)
+datasets.
+                                                                                                                                                 Sum(c-1)
+   While we recommend the one-hot encoder for ATI models                                                                                                OneHot(c)
+to achieve good performance when data is sufficient, it does                                                                                                  Similarity(c)
+come with a time cost burden due to the introduction of                                                                                                              MinHash(30)
+additional c dimensions for each categorical variable. There-
+fore, in practical scenarios where the time cost is a crucial     Time(s)                                                Encoders
+consideration, the MEstimate encoder offers a good balance                      (a) UkAir(#Samples=394,299, #C.Var.=5, Max Card.=53)
+between performance and time cost for both sufficient and
+insufficient datasets in the context of ATI models.                        105
+                                                                                                                          Models
+   For tree-based models, we argue that Target Encoders                                                                      NN
+should be the top priority, especially when the data is suffi-
+cient. This recommendation still holds even when considering               103 SVM
+the time cost (except GLMM encoder), as these encoders map                                                                   RF
+each categorical variable into a single dimension, making them                                                               XGBoost
+efficient choices for tree-based models. However, in the case
+of an insufficient-data dataset, despite MinHash demonstrating             101
+the best empirical performance, it encodes each categorical
+variable into 30 dimensions, introducing additional dimensions                  Count(1)
+to the dataset. Therefore, when time cost becomes a significant                       GLMM(1)
+factor, Ordinal achieves a favorable trade-off between perfor-                              JamesStein(1)
+mance and time cost.                                                                               MEstimate(1)
+
+      V. PRACTICAL GUIDE FOR ENCODER SELECTION                                                            Mean(1)
+                                                                                                                Ordinal(1)
+   Based on the theoretical analysis in Section II and Sec-                                                            SShrink(1)
+tion III as well as observations in Section IV, we present                                                                   BaseN(log c)
+a comprehensive guide for machine learning modelers when                                                                            MinHash(30)
+encountering datasets with categorical variables. The guide is                                                                            BackDiff(c-1)
+shown in Figure 10.                                                                                                                              Helmert(c-1)
+
+   Firstly, the choice of model type plays a crucial role. For                                                                                          Sum(c-1)
+ATI models such as linear regression, logistic regression,                                                                                                    OneHot(c)
+neural networks, and support vector machines with a linear                                                                                                           Similarity(c)
+kernel, choosing the one-hot encoder is recommended, espe-
+cially when the average number of samples per level (ASPL)                                                            Encoders
+is large. This recommendation is supported both theoretically
+and empirically. However, when dealing with large datasets,         (b) EmployeeAccess(#Samples=32,769, #C.Var.=9, Max Card.=7518)
+
+                                                                  Fig. 9. Time required for different encoders across various datasets and
+                                                                  models. Each subfigure corresponds to a dataset, with each line representing
+                                                                  a distinct model. The shaded region corresponds to the 95% confidence
+                                                                  interval. Encoders are sorted based on the dimensionality of the dataset after
+                                                                  encoding. The values in parentheses, following each encoder, denote the
+                                                                  additional dimensions introduced when dealing with a categorical variable
+                                                                  with a cardinality of c, as specified in the table II. The time cost is the sum
+                                                                  of both encoding and model training time.
+
+                                                                  and time cost is a critical factor, trying the MEstimate encoder
+                                                                  is a worthwhile empirical choice. In scenarios where ASPL is
+                                                                  small, GLMM serves as an initial encoder worth exploring
+                                                                  with average high performance, empirically. It's important
+                                                                  to note, however, that GLMM can be time-consuming when
+                                                                  encoding high cardinality datasets. If time cost is a significant
+                                                                  factor, the MEstimate encoder becomes a worthwhile alterna-
+                                                                  tive to consider.
+
+                                                                     For tree-based models such as random forest, XGBoost,
+                                                                  and LightGBM, target encoders exhibit superior performance,
+                                                                  supported by both theoretical understanding and empirical
+                                                                  experiments. This makes them the preferred choice, especially
+                                                                  when the average number of samples per level (ASPL) is sub-
+                                                                  stantial. In cases where ASPL is small, considering MinHash
+                                                                  as an initial choice is recommended. In situations where ASPL
+                                                                  is small, considering MinHash as an initial choice is recom-
+                                                                  mended. If the dataset is extensive, and the time complexity of
+                                                                  the model is high, Ordinal becomes a preferable choice when
+                                                                  ASPL is small. However, Target Encoders (excluding GLMM)
+                                                                  remain a superior choice when ASPL is large.
+                                                                                                                          11
+
+· Theoretically + Empirically     Model type                       [2] Anonym, "R Library Contrast Coding Systems for cat-
+· Empirically
+                                                                   egorical variables," https://stats.oarc.ucla.edu/r/library/r-
+                             ATI
+                                              Tree-based           library-contrast-coding-systems-for-categorical-
+
+         ASPL is large?                       ASPL is large?       variables/, Jan. 2011.
+
+                                                                   [3] C. Seger, "An investigation of categorical variable encod-
+
+    Yes            No                         Yes         No       ing techniques in machine learning: Binary versus one-
+
+                                                                   hot and feature hashing," 2018.
+
+Considering   Considering                          Considering     [4] V. Prokopev, "Mean (likelihood) en-
+    time?         time?                                time?
+                                                                   codings:      A         comprehensive               study,"
+No       Yes  Yes                 No               Yes        No
+                                                                   https://kaggle.com/code/vprokopev/mean-likelihood-
+
+                                                                   encodings-a-comprehensive-study, 2018.
+
+   OneHot MEstimate GLMM Target Ordinal MinHash                    [5] P. Cerda, G. Varoquaux, and B. Ke´gl, "Similarity en-
+
+Fig. 10. Complete guidance.                                        coding for learning with dirty categorical variables,"
+
+                          VI. CONCLUSION                           Machine Learning, vol. 107, no. 8, pp. 1477-1494, Sep.
+
+   Categorical variables often appear in datasets for classifica-  2018.
+tion and regression tasks, and they need to be encoded into
+numerical values prior to training. The choice of encoders         [6] K. Weinberger, A. Dasgupta, J. Langford, A. Smola, and
+to achieve high performance depends on the models while
+training. In this study, we categorized encoders based on the      J. Attenberg, "Feature hashing for large scale multitask
+information they provided during training, and we broadly
+classify machine learning models into three categories: 1)         learning," in Proceedings of the 26th Annual Inter-
+ATI models that implicitly perform affine transformations on
+inputs; 2) Tree-based models that are based on decision trees      national Conference on Machine Learning, ser. ICML
+and 3) others. Theoretically, we prove that the one-hot encoder
+is the best choice for ATI models in the sense that it can mimic   '09. New York, NY, USA: Association for Computing
+any other encoders by learning suitable weights from the data.
+We also explain why the target encoder and its variants are        Machinery, Jun. 2009, pp. 1113-1120.
+the most suitable encoders for tree-based models. Empirically,
+we conducted numerous comparative experiments, utilizing           [7] W. James and C. Stein, "Estimation with Quadratic
+28 datasets (including 15 binary classification tasks and 13
+regression tasks), 8 commonly used machine learning models,        Loss," in Breakthroughs in Statistics: Foundations and
+and 14 encoders to evaluate the performance of encoders,
+and the result aligns with the theoretical analysis. With all      Basic Theory, ser. Springer Series in Statistics, S. Kotz
+the findings, we provided practical guidelines for modelers to
+select appropriate encoders when encountering datasets with        and N. L. Johnson, Eds. New York, NY: Springer, 1992,
+categorical variables.
+                                                                   pp. 443-460.
+   In this study, we employ the same encoder for encoding
+all categorical variables. In future work, we plan to explore      [8] D. Micci-Barreca, "A preprocessing scheme for high-
+the correlation between categorical variables and experiment
+with combinatorial encoding for all categorical variables.         cardinality categorical attributes in classification and pre-
+Additionally, while our experiment includes a diverse range
+of datasets, encoders, and models, certain machine learning        diction problems," ACM SIGKDD Explorations Newslet-
+models, such as K-Nearest Neighbors and Naive Bayes, have
+not been included. We plan to address it in our future research.   ter, vol. 3, no. 1, pp. 27-32, Jul. 2001.
+
+                        ACKNOWLEDGMENT                             [9] C. N. Morris, "Parametric Empirical Bayes Inference:
+
+   This work was supported by the National Natural Science         Theory and Applications," Journal of the American Sta-
+Foundation of China (Grant No. U1901222).
+                                                                   tistical Association, vol. 78, no. 381, pp. 47-55, Mar.
+                             REFERENCES
+                                                                   1983.
+ [1] P. Cerda and G. Varoquaux, "Encoding High-Cardinality
+      String Categorical Variables," IEEE Transactions on          [10] C. Mougan, D. Masip, J. Nin, and O. Pujol, "Quantile
+      Knowledge and Data Engineering, vol. 34, no. 3, pp.
+      1164-1176, Mar. 2022.                                        Encoder: Tackling High Cardinality Categorical Features
+
+                                                                   in Regression Problems," in Modeling Decisions for
+
+                                                                   Artificial Intelligence, ser. Lecture Notes in Computer
+
+                                                                   Science, V. Torra and Y. Narukawa, Eds. Cham:
+
+                                                                   Springer International Publishing, 2021, pp. 168-180.
+
+                                                                   [11] J.-W. Romeijn, "Stein's paradox and group rationality,"
+
+                                                                   Faculty of Philosophy University of Groningen, Co-
+
+                                                                   laForm Workshop Paris 2017, Tech. Rep., 2017.
+
+                                                                   [12] X. Zhou, "Shrinkage Estimation of Log-odds Ratios for
+
+                                                                   Comparing Mobility Tables," Sociological Methodology,
+
+                                                                   vol. 45, no. 1, pp. 320-356, Aug. 2015.
+
+                                                                   [13] H. Alkharusi, "Categorical Variables in Regression Anal-
+
+                                                                   ysis: A Comparison of Dummy and Effect Coding,"
+
+                                                                   International Journal of Education, vol. 4, no. 2, p. 202,
+
+                                                                   Jun. 2012.
+
+                                                                   [14] J. Moeyersoms and D. Martens, "Including high-
+
+                                                                   cardinality attributes in predictive models: A case study
+
+                                                                   in churn prediction in the energy sector," Decision Sup-
+
+                                                                   port Systems, vol. 72, pp. 72-81, Apr. 2015.
+
+                                                                   [15] K. Potdar, T. S., and C. D., "A Comparative Study of
+
+                                                                   Categorical Variable Encoding Techniques for Neural
+
+                                                                   Network Classifiers," International Journal of Computer
+
+                                                                   Applications, vol. 175, no. 4, pp. 7-9, Oct. 2017.
+                                                                 12
+
+[16] M. N. Wright and I. R. Ko¨nig, "Splitting on categorical    [29] Deepanshu Bhalla, "Weight of Evidence (WOE) and
+      predictors in random forests," PeerJ, vol. 7, p. e6339,          Information Value (IV) Explained," Mar. 2015.
+      Feb. 2019.
+
+[17] J. T. Hancock and T. M. Khoshgoftaar, "Survey on
+      categorical data for neural networks," Journal of Big
+      Data, vol. 7, no. 1, p. 28, Apr. 2020.
+
+[18] L. Prokhorenkova, G. Gusev, A. Vorobev, A. V. Doro-
+      gush, and A. Gulin, "CatBoost: Unbiased boosting with
+      categorical features," in Advances in Neural Information
+      Processing Systems, vol. 31. Curran Associates, Inc.,
+      2018.
+
+[19] J. M. Johnson and T. M. Khoshgoftaar, "Encoding
+      Techniques for High-Cardinality Features and Ensemble
+      Learners," in 2021 IEEE 22nd International Conference
+      on Information Reuse and Integration for Data Science
+      (IRI), 2021, pp. 355-361.
+
+[20] E. Valdez-Valenzuela, A. Kuri-Morales, and H. Gomez-
+      Adorno, "Measuring the Effect of Categorical Encoders
+      in Machine Learning Tasks Using Synthetic Data," in
+      Advances in Computational Intelligence, ser. Lecture
+      Notes in Computer Science, I. Batyrshin, A. Gelbukh,
+      and G. Sidorov, Eds. Cham: Springer International
+      Publishing, 2021, pp. 92-107.
+
+[21] D. Seca and J. Mendes-Moreira, "Benchmark of En-
+      coders of Nominal Features for Regression," in Trends
+      and Applications in Information Systems and Technolo-
+      gies, ser. Advances in Intelligent Systems and Com-
+      puting, A´ . Rocha, H. Adeli, G. Dzemyda, F. Moreira,
+      and A. M. Ramalho Correia, Eds. Cham: Springer
+      International Publishing, 2021, pp. 146-155.
+
+[22] F. Pargent, F. Pfisterer, J. Thomas, and B. Bischl, "Reg-
+      ularized target encoding outperforms traditional methods
+      in supervised machine learning with high cardinality
+      features," Computational Statistics, Mar. 2022.
+
+[23] W. D. Fisher, "On Grouping for Maximum Homogene-
+      ity," Journal of the American Statistical Association,
+      vol. 53, no. 284, pp. 789-798, Dec. 1958.
+
+[24] L. Breiman, J. H. Friedman, R. A. Olshen, and C. J.
+      Stone, Classification And Regression Trees, 1st ed. Rout-
+      ledge, 1984.
+
+[25] F. Pedregosa, G. Varoquaux, A. Gramfort, V. Michel,
+      B. Thirion, O. Grisel, M. Blondel, P. Prettenhofer,
+      R. Weiss, and V. Dubourg, "Scikit-learn: Machine learn-
+      ing in Python," the Journal of machine Learning re-
+      search, vol. 12, pp. 2825-2830, 2011.
+
+[26] T. Chen and C. Guestrin, "XGBoost: A Scalable Tree
+      Boosting System," in Proceedings of the 22nd ACM
+      SIGKDD International Conference on Knowledge Dis-
+      covery and Data Mining, ser. KDD '16. New York,
+      NY, USA: Association for Computing Machinery, Aug.
+      2016, pp. 785-794.
+
+[27] G. Ke, Q. Meng, T. Finley, T. Wang, W. Chen, W. Ma,
+      Q. Ye, and T.-Y. Liu, "LightGBM: A Highly Efficient
+      Gradient Boosting Decision Tree," in Advances in Neu-
+      ral Information Processing Systems, vol. 30. Curran
+      Associates, Inc., 2017.
+
+[28] O. Zhang, "Tips for data science competitions," Jul.
+      2015.
+                                                                  13
+
+                             APPENDIX A                           weather, which may have an important impact on traffic
+                       DETAILS OF DATASETS                        accidents. We also extracted hours from "Time", as traffic
+                                                                  conditions vary greatly at different hours of the day. We
+A. Datasets for Classification                                    dropped "1st Road Number" and "2nd Road Number" as
+                                                                  there are too many distinct values.
+   Obesity. This dataset include data for the estimation
+of obesity levels in individuals from the countries of               HIV. The data contains lists of octamers (8 amino acids)
+Mexico, Peru and Colombia, based on their eating                  and a flag (-1 or 1) depending on whether HIV-1 protease will
+habits and physical condition. Downloaded from                    cleave in the central position (between amino acids 4 and 5).
+https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+    Downloaded from https://archive.ics.uci.edu/dataset/330/hiv+
+levels+based+on+eating+habits+and+physical+condition.             1+protease+cleavage.
+
+   EmployeeAccess. The data consists of real historical data         CarEvaluation. It was derived from a simple hierarchical
+collected from 2010 & 2011. Employees are manually allowed        decision model originally developed for the demonstration
+or denied access to resources over time. The data is used to      of a Expert system for decision making. The model pro-
+create an algorithm capable of learning from this historical      posed should be able to evaluates cars according to concept
+data to predict approval/denial for an unseen set of employ-      structure, i.e. multiple categorical features. Downloaded from
+ees. Downloaded from https://www.kaggle.com/competitions/         http://archive.ics.uci.edu/ml/datasets/Car+Evaluation.
+amazon-employee-access-challenge.
+                                                                     Mushroom. From Audobon Society Field Guide; mush-
+   TripAdvisor. This dataset includes quantitative and cat-       rooms described in terms of physical characteristics; classifi-
+egorical features from online reviews from 21 hotels lo-          cation: poisonous or edible. Downloaded from https://archive.
+cated in Las Vegas Strip, extracted from TripAdvisor              ics.uci.edu/dataset/73/mushroom.
+(http://www.tripadvisor.com). The target is to predict the
+scores of the hotels. Downloaded from https://archive.ics.uci.       Adult. It is extracted by Barry Becker from the 1994
+edu/dataset/397/las+vegas+strip.                                  Census database. The target is to predict whether income
+                                                                  exceeds $50K/yr based on census data. Also known as "Census
+   Autism. Autistic Spectrum Disorder Screening Data for          Income" dataset. https://archive.ics.uci.edu/dataset/2/adult.
+Adult. The target is to predict whether a person has Autistic
+Spectrum Disorder. Downloaded from https://archive.ics.uci.          Nursery. It was derived from a hierarchical decision model
+edu/dataset/426/autism+screening+adult.                           originally developed to rank applications for nursery schools.
+                                                                  It was used during several years in 1980's when there was
+   Kick. One of the biggest challenges of an auto dealership      excessive enrollment to these schools in Ljubljana, Slovenia,
+purchasing a used car at an auto auction is the risk of that the  and the rejected applications frequently needed an objective
+vehicle might have serious issues that prevent it from being      explanation. The final decision depended on three subprob-
+sold to customers. The auto community calls these unfortunate     lems: occupation of parents and child's nursery, family struc-
+purchases "kicks". The challenge of this competition is to        ture and financial standing, and social and health picture of the
+predict if the car purchased at the Auction is a Kick (bad        family. The model proposed should be able to predict whether
+buy). Downloaded from https://www.openml.org/d/41162.             the nursery is recommended for the child or not. Downloaded
+                                                                  from https://archive.ics.uci.edu/dataset/76/nursery.
+   Churn. A dataset relating characteristics of telephony ac-
+count features and usage and whether or not the customer          B. Datasets for Regression
+churned. Downloaded from https://www.openml.org/d/41283.
+                                                                     Colleges. It contains information about U.S. colleges
+   GermanCredit. This dataset classifies people described by      and schools downloaded from https://beachpartyserver.
+a set of attributes as good or bad credit risks. 700 good and     azurewebsites.net/VueBigData/DataFiles/Colleges.txt.
+300 bad credits with 20 predictor variables. Data from 1973       Predicting "Mean Earning 6 Years". Columns "Median
+to 1975. Stratified sample from actual credits with bad credits   Earning 6 Years", "Mean Earning 10 Years" and "Median
+heavily oversampled. Downloaded from https://archive.ics.uci.     Earning 10 Years" are removed as they correlate highly to
+edu/dataset/522/south+german+credit.                              the prediction target.
+
+   Mammographic. Discrimination of benign and malignant              CPMP2015. It is a benchmark result of the Container Pre-
+mammographic masses based on BI-RADS attributes and               Marshalling Problem (CPMP). The task is to predict the run-
+the patient's age. Downloaded from https://archive.ics.uci.edu/   time of a CPMP algorithm on a given instance. Downloaded
+dataset/161/mammographic+mass.                                    from https://www.openml.org/d/41700.
+
+   Wholesale. The data set refers to clients of a wholesale          EmployeeSalaries. It includes annual salary informa-
+distributor. It includes the annual spending in monetary units    tion for 2016 for Montgomery County, Maryland em-
+(m.u.) on diverse product categories. The target is to predict    ployees, downloaded from https://catalog.data.gov/dataset/
+whether the sale channel is Horeca (Hotel/Restaurant/CafA~ ©)     employee-salaries-2016. The target it to predict the "Current
+or Retail channel (Nominal). Downloaded from https://archive.     Annual Salary". The "Date First Hired" is converted to the
+ics.uci.edu/dataset/292/wholesale+customers.                      number of days to the latest date as a proxy to measure how
+                                                                  long the employee has worked. The "Department" column is
+   RoadSafety. It is the traffic accidents data from United       dropped as it contains abbreviations of "Department Name".
+Kingdom, downloaded from https://data.gov.uk/dataset/
+cb7ae6f0-4be6-4935-9277-47e5ce24a11f/road-safety-data.               Moneyball. It is gathered from baseball-reference.com. The
+Predicting whether "Accident Severity" is fatal or serious.       original author wants to know which important factors affect
+Extracted month from "Date" as we expect it is related to
+                                                                   14
+
+the performance of the baseball team . In our experiment,          wage (in dollars per week). Downloaded from https://www.
+the target is to predict Runs Scored (RS). Downloaded from         openml.org/d/43963.
+https://www.openml.org/d/41021.
+                                                                      UkAir. Hourly particulate matter air polution data of Great
+   Socmob. This dataset described social mobility, i.e. how        Britain for the year 2017, provided by Ricardo Energy and En-
+the sons' occupations are related to their fathers' jobs. An       vironment on behalf of the UK Department for Environment,
+instance represent the number of sons that have a certain job      Food and Rural Affairs (DEFRA) and the Devolved Adminis-
+A given the father has the job B (additionally conditioned on      trations. The target is to predict the PM2.5 hourly measured.
+race and family structure). The dataset was originally collected   Downloaded from https://www.openml.org/d/42207.
+for the survey of "Occupational Change in a Generation II".
+The version we use here is the one from OpenML, which is                                        APPENDIX B
+a preprocessed version of the original dataset. The target is to                    DATA PREPROCESS PROCEDURE
+predict the number of people when given the information of
+these occupation information. Downloaded from https://www.            For original datasets, the following cleanup steps are per-
+openml.org/d/44987.                                                formed:
+
+   Cholesterol. It contains 4 databases concerning heart dis-         · Simple Conversion: Convert special values such as "N.A"
+ease diagnosis. The earliest one is from UCI https://archive.            to missing; convert the string representation of a date and
+ics.uci.edu/dataset/45/heart+disease. In OpenML, the dataset             time value to its DateTime equivalent.
+is called cholesterol. The target variable is "chol" (serum
+cholestoral in mg/dl), which is a regression task. Downloaded         · Simple Feature Extraction: Convert date to the number
+from https://www.openml.org/d/204.                                       of days since a reference date; convert datetime to time
+                                                                         passed since a reference time; extract year, month, day,
+   StudentPerformance. This data approach student achieve-               day-of-week, week-of-year.
+ment in secondary education of two Portuguese schools. The
+data attributes include student grades, demographic, social and       · Drop Useless Columns: Columns with no obvious mean-
+school related features) and it was collected by using school re-        ing; textual columns; columns with unique values such
+ports and questionnaires. Two datasets are provided regarding            as ID; columns with more than 50% missing values;
+the performance in two distinct subjects: Mathematics (mat)              columns with a single value; columns with fewer than
+and Portuguese language (por). The target is to predict the              two samples per value.
+final grade "G3". Downloaded from https://archive.ics.uci.edu/
+dataset/320/student+performance.                                      After the cleanup steps, we partitioned the dataset into
+                                                                   training and test sets, comprising 80% and 20% of the sam-
+   Avocado. It is a historical dataset on avocado prices and       ples, respectively. Subsequently, we estimated the parameters
+sales volume in multiple US markets. It is originally from the     required for each preprocessing step using the training set and
+Hass Avocado Board website in May of 2018. We downloaded           applied them to the test set to avoid information leakage.
+the dataset from Kaggle https://www.kaggle.com/neuromusic/
+avocado-prices. The target is to predict the "AveragePrice" of        Firstly, we filled in the missing values in the datasets.
+the avocado.                                                       Specifically, missing values in numerical variables were re-
+                                                                   placed with the average value of that variable within the
+   HousingPrice. It is about the median house prices               training set. Categorical variables with missing values were
+for California districts derived from the 1990 census.             replaced with the most frequent category observed within the
+It is a famous regression dataset used in many text-               training set.
+books, such as "Hands-On Machine learning with Scikit-
+Learn and TensorFlow". The target is to predict the "me-              Subsequently, all categorical variables were transformed
+dian house value". Downloaded from https://www.kaggle.             into numerical ones using the same encoding method.
+com/datasets/camnugent/california-housing-prices.
+                                                                      Finally, normalization was applied to each variable within
+   BikeSharing. This dataset contains the hourly and daily         the training set. This involved standardizing each feature by
+count of rental bikes between years 2011 and 2012 in Capital       removing the mean and scaling to unit variance.
+bikeshare system with the corresponding weather and seasonal
+information. The target is to predict the count of total rental                                 APPENDIX C
+bikes including both casual and registered. Downloaded from                               DETAILS OF ENCODERS
+https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset.
+                                                                   A. Grouping Encoders
+   Diamonds. This classic dataset contains the prices and
+other attributes of almost 54,000 diamonds. The target is             Grouping Encoders focuses on grouping information. Its
+to predict the prices of diamonds. Downloaded from https:          characteristic is that encoding is a bijection. We can deduce the
+//www.openml.org/d/44979.                                          original value from the encoded value. Another characteristic
+                                                                   is that the encoded dimension is often larger than 1.
+   CPS1988. Cross-section data originating from the March
+1988 Current Population Survey by the US Census Bureau.               One-hot Encoder. It is the most widely used encoding
+The data is a sample of men aged 18 to 70 with positive            method. Feature with the cardinality of c will be encoded into
+annual income greater than USD 50 in 1992, who are not self-       c variables. Only variables at the corresponding level are 1,
+employed nor working without pay. The target is to predict the     and other variables are 0 (i.e. 0 . . . 0 0 1 T indicates
+                                                                   the first level, 0 . . . 0 1 0 T indicates the second level,
+                                                                   indicates the third level of 0 . . . 1 0 0 T , and so on.).
+                                                                                             15
+
+   BaseN Encoders 2. It uses the system of numeration to           C. Semantic Encoders
+encode the categorical features. For example, when the base is
+2, it becomes binary encoding ( 0 . . . 0 0 1 T indicates             Semantic encoding focuses on semantic information. It
+the first level, 0 . . . 0 1 0 T indicates the second level,       mainly encodes some long texts, such as shopping reviews,
+indicates the third level of 0 . . . 0 1 1 T , and so on.).        case descriptions, etc. This kind of categorical feature usually
+[3] indicates that the performance of binary encoding will be      has a very high cardinality, and the average sample in each cell
+slightly worse than that of one-hot, but the storage will be       is small. In addition, long texts usually contain emotional in-
+much less, especially when using neural networks. Note that        formation, semantic similarity, context information, etc. which
+sometimes the performance of binary encoding will be far           we uniformly call semantic information.
+worse than one-hot encoding. We set `base=2', which means
+binary encoder is applied in the experiment.                          Similarity Encoder[5] and min-hash Encoder[1] do not
+                                                                   need to train a model for embedding. Their basic idea is
+   Contrast Encoders[2]. It is usually used in statistics. Most    that the char or string is the basic unit of information. The
+of them are used in scenarios that need explanation. For           higher the overlap of char or sub-string at different levels,
+example, in linear regression, a feature with the cardinality of   the closer their values should be after encoding. For example,
+c will be encoded into c - 1 variables, so that the parameters     in the position title, the overlap between "police officer" and
+multiplied by variables can represent the contrast relationship    "police aide" is higher and more relevant, while the correlation
+between some levels. For example, suppose we are using             with "mechanical technician" is weak. Specifically, e.g., 3-
+the season to predict temperature. SP, SU, FA, and WI are          grams(Paris) = {Par, ari, ris} and 3-grams(Parisian) = {Par,
+encoded into 3 variables respectively by dummy coding. Then        ari, ris, isi, sia, ian} have three 3-grams in common, and their
+each parameter represents the temperature that how the much        similarity is sim3-gram(Paris, Parisian) = 3. The advantage of
+higher current season is than the default season, which shows      this method is that it can capture the semantic information
+in Equation 7.                                                     of categorical features without additional corpus and models.
+                                                                   But string similarity is not always equivalent to semantic
+y = b + w1 x1 + w2 x2 + w3 x3 (7)                                  similarity, and its encoded value may bring noise. Therefore,
+                                                                   this encoding method is more suitable for the automatic
+SP vs. WI  SU vs. WI  FA vs. WI                                    processing of non-curated strings, e.g. the subjective answers
+                                                                   to the questionnaire.
+Other contrast encoding methods are similar. Backward Dif-
+ference Encoder makes the coefficient indicate the contrast           In Similarity Encoder, we set the main parameters as
+between the current level and the next level. Helmert Encoder      ngram range=(2,4), which means it will extract multiple
+makes the coefficient indicate the contrast between the current    character strings with lengths of 2, 3, and 4 in order from
+level and the levels all behind. Sum Encoder makes the             the string. They are all default paramerters provided by the
+coefficient indicate the contrast between the current level and    authors.
+the average of all levels. It is worth noting that they are less
+frequently used in machine learning than one-hot encoder.             In MinHash Encoder, And we set the main parameters
+                                                                   as n components=30, ngram range=(2,4), which means the
+                                                                   output dimension of a categorical variable is 30. They are all
+                                                                   default paramerters provided by the authors.
+
+B. Ordering Encoders                                               D. Target Encoders (conditional mean)
+
+   Ordering encoding focuses on ordering information, which           Target encoding focuses on target information. Its charac-
+believes that there is an order between levels in the categorical  teristic is that it utilizes the information in the target variable
+feature.                                                           y. In other words, it is supervised. In most cases, they take
+                                                                   the conditional expectation (or conditional probability) as the
+   Ordinal Encoder. It is a very common encoding that              encoded value. binary classification has the same encoding
+encodes each level in order. The ordinal encoding can reach        formula as regression, when the target variable is preprocessed
+good results when the nature of the categorical feature is         to only have 0 and 1. Another characteristic is that 1 categor-
+ordinal and the order is known[20]. However, because it is         ical feature is usually encoded as 1 dimension variable, which
+cumbersome and difficult to assign the order manually, we          makes it popular when the dataset is large.
+usually use the order in which they appear for encoding. For
+example, the first level appearing in the training set is encoded     Bayesian encoding[8] is an Empirical Bayes method. It
+as 1, the second level is encoded as 2, and the cth level is       mainly combines prior distribution and posterior distribution
+encoded as c.                                                      to estimate the expected value of the dependent variable. The
+                                                                   level vk is encoded as E(y|x = vk) .The general formula used
+   Count Encoder. It encodes the categorical features by           in Empirical Bayes estimation is Equation (8).
+counting. For example, if "Male" appears 100 times in the
+training set, the "Male" is encoded as 100. In a comparative       (vk) = Bkµ^k + (1 - Bk)µ  (8)
+experiment in Kaggle[4], the count encoding works well on
+many datasets when using the gradient boosting tree classi-        where
+fier/regressor.
+                                                                      · µ is the prior value of y, which is the estimated value
+   2https://contrib.scikit-learn.org/category encoders/basen.html        of E(y). It is the average value of y in the training set
+                                                                                                                                        16
+
+   because the number of instances in the training set is                    or more parameters are estimated at the same time (in our
+                                                                             case it can be expressed as c  3), James-Stein Estimator
+   usually large enough.                                                     always achieves lower mean squared error (MSE) than the
+                                                                             maximum likelihood estimator. That is to say, it is not optimal
+· µ^k is posterior value of y,which is the estimated value of                to estimate the actual mean value with the sample mean
+   E(y|x = vk). It is usually the average value of y|x = vk.                 value of each level. Different formulas can be derived from
+   Note that it is unreliable when the number of instances                   different distribution assumptions[9, 11, 12]. The version we
+                                                                             used supposes the target is a normal distribution. It is also can
+   mk for x = vk is small.                                                   be expressed by Equation (8). The details are as follows.
+· Bk is shrinkage factor, which measures the weight of
+                                                                                 1m 1                         y c - 3 ^ i, 1 - Bk = k2
+   prior value and posterior value (0  Bk  1). If it is                      µ=         yi, µ^k =
+   more confident to estimate the posterior value accurately,                                                             c - 1 ^2 +  2
+
+   Bk should be more closed to 1, otherwise, it tends to be                                                                           k
+   0.
+
+Different µ, Bk, and µ^k bring about different Bayesian encod-                   m i=1                mk iDk
+ing methods.
+                                                                                                                          (12)
+   Mean Encoder. The naive idea: use the mean to estimate
+                                                                             The equation is also used in binary classification, although
+the conditional expectation. If expressed by Equation (8), mean
+encoding only considers the posterior value, that is Bk = 1.                 the target variable is definitely not normally distributed as
+The posterior value is calculated as the target mean at the
+corresponding level. Supposed the dataset satisfied x(i) = vk                probabilities are bound to lie on interval [0,1]. But according to
+is Dk, and mk is the size of it. Then mean encoding of the
+level vk can be expressed as:                                                the documentation3 and our practice, this version is better than
+
+                                                                             the version that assumes the target is a binomial distribution.
+
+                                                                             Quantile Encoder[10]. It replaces the posterior mean with
+
+                                                                             the value of the posterior quantile in M-estimate. µ and
+
+                            1                                                µ^kis replaced by quantile. The median is usually used as a
+
+              (vk) =        mk iDk  yi  (9)                                  quantile. The method may work when there are many outliers
+
+                                                                             in the target value. Note that this method applies to the case
+
+   S-shrink Encoder[8]. According to the idea of Equa-                       where the target is continuous. If the target is binary as 0-1,
+
+tion (8), the mean of y in the training set is used as the prior             the encoded value can only be 0,1 or a few corresponding
+value, and the mean of y|x = vk is used as the posterior
+value. When the number of instances mk is small, the mean                    quantile values. It is not suitable for binary classification. Its
+of y|x = vk is unreliable. So Bk is set as a monotonic
+increasing function of mk, which is also an s-shaped function.               performance is similar to other target encoders and is not
+The corresponding value is shown in Equation (10)
+                                                                             displayed in the paper.
+
+                                                                             In addition, Leave-One-Out Encoder[28] and CatBoost
+
+                                                                             Encoder[18] are not encoders according to our definition of
+
+       1m 1 1                                                                a general encoder which maps each level x  V into l-
+µ = m i=1 yi, µ^k = mk iDk yi, Bk = 1 + exp(- S2 mk-S1 )
+                                                                             dimensional vector (x). Because the encodings of these two
+                                                                       (10)
+                                                                             encoders are based on each sample in the training set, instead
+Where there are two hyperparameters:
+                                                                             of using level as the encoding unit. Even if they have the same
+
+                                                                             level, their encoding values are different.
+
+· S1 is the threshold related to the number of the instance                  E. Target Encoders (other)
+   under the level. When mk < S1, then Bk < 0.5, which
+   means the prior value is more reliable than posterior                        Weight Of Evidence Encoder (WOE)[29]. Its common ver-
+                                                                             sion is only applicable to binary classification. Its performance
+   value. The value of parameter uses the default value of                   is similar to other target encoders and is not displayed in the
+                                                                             paper.
+   the library, which is 20.
+· S2 is the steepness related to the function between Bk                        Generalized Linear Mixed Model Encoding (GLMM) 4.
+                                                                             Although it does not take the estimation form of Equation (8),
+   and mk. The function is steeper if S2 is smaller. When                    it's a regularized target encoding[22]. For the regression, it
+   S2  0, then S1 will be the hard threshold, which means                    encodes the categorical variables by one-hot encoder first.
+   Bk = 0 when mk < S1. The value of parameter uses the                      Then for each categorical variable, its encoded value is used
+   default value of the library, which is 10.                                to train a linear regression with a intercept.
+
+   M-estimate Encoder[8]. It is also can be expressed by                                            y = b + wT OH(x) + 
+Equation (8). The corresponding value is shown in Equa-
+tion (11). Where M is a hyper-parameter about the threshold.                 where w = [w1, w2, ..., wc]T . After fitting, the corresponding
+When mk < M , then Bk < 0.5, which means the prior                           coefficient of a level is seen as its encoded value, which is
+value is more reliable than the posterior value. The value of                also called random effect since the encoding is seen as a
+parameter M uses the default value of the library, which is 1.               random variable wk  N (0,  2). But it is worth mentioning
+
+1 m 1 mk                                                                        3https://github.com/scikit-learn-contrib/category encoders/blob/
+µ=            yi, µ^k = mk       yi, Bk = mk + M (11)                        06e46db07ff15c362d7de5ad225bb0bffc245369/category encoders/james
+      m  i=1                iDk                                              stein.py#L290C13-L290C13
+
+   James-Stein Encoder. This encoding method mainly uses                        4https://contrib.scikit-learn.org/category encoders/glmm.html
+the idea of James-Stein estimation. James and Stein [7] proved
+that when the target value is the normal distribution and three
+                                                                               17
+
+that the fitting method is not the commonly used least squares                    Logistic Regression (LGR). Logistic Regression Classifier
+method, because the basic assumption is that not every sample                  8 is implemented by scikit-learn [25]. All parameters use the
+is independent of each other. The encoding can be seen as:                     following default values:
+
+GLMM(vk) = wk = E[y] - E[y | x = vk] k = 1, 2, · · · , c                          · penalty=`l2'. Add a L2 penalty term.
+                                                                                  · C=1.0. Inverse of regularization strength; must be a
+For the binary classification, it is almost the same as the
+regression. The regression equation uses logistic regression,                        positive float. Like in support vector machines, smaller
+which is also called a generalized linear model. The details                         values specify stronger regularization.
+can be seen in the reference5. Because multiple generalized                       · fit intercept=True. Specifies if a constant (a.k.a. bias or
+linear mixed models need to be trained when there are several                        intercept) should be added to the decision function.
+categorical variables, the encoding time is relatively long[21].                  · solver=`lbfgs'. Algorithm to use in the optimization prob-
+                                                                                     lem.
+                             APPENDIX D                                           · max iter=100. Maximum number of iterations taken for
+                        DETAILS OF MODELS                                            the solvers to converge.
+                                                                                  Linear Regression (LNR)9. Linear least squares with l2
+   All hyper-parameters of the models are set to their default                 regularization implemented by scikit-learn [25]. All parame-
+values as provided by the libraries cited in the references [25-               ters use the following default values:
+27], except for Decision Tree where pruning will be required
+to avoid overfitting if the default parameters are applied.                       · fit intercept=True. Whether to calculate the intercept for
+                                                                                     this model. If set to false, no intercept will be used in
+   Neural Network (NN). Multi-layer Perceptron classifier6                           calculations (i.e. data is expected to be centered).
+and Multi-layer Perceptron regressor7 are multiple-hidden-
+layer networks implemented by scikit-learn [25]. The log-loss                     · alphas=(0.1, 1.0, 10.0). Array of alpha values to try.
+function is used in classification, while squared error function                     Regularization strength; must be a positive float. Reg-
+is used in regression. All parameters use the following default                      ularization improves the conditioning of the problem
+values:                                                                              and reduces the variance of the estimates. Larger values
+                                                                                     specify stronger regularization.
+   · hidden layer sizes=(100,). One hidden layer of 100 neu-
+      rons.                                                                       · cv=None. Use the efficient Leave-One-Out cross-
+                                                                                     validation.
+   · activation=`relu'. Use ReLU as activation function for
+      the hidden layer.                                                           · gcv mode=`auto'. Flag indicating which strategy to use
+                                                                                     when performing Leave-One-Out Cross-Validation. `auto'
+   · solver=`adam'. The solver for weight optimization. We                           : use `svd' if n samples > n features, otherwise use
+      use Adam, which is a popular optimizer.                                        `eigen' `svd' : force use of singular value decomposition
+                                                                                     of X when X is dense, eigenvalue decomposition of
+   · alpha=0.0001. Strength of the L2 regularization term.                           XT X when X is sparse. 'eigen' : force computation via
+      The L2 regularization term is divided by the sample size                       eigenvalue decomposition of XXT .
+      when added to the loss.
+                                                                                  Support Vector Machine (SVM). Linear Support Vector
+   · batch size=`auto'. Size of minibatches for stochastic                     Classifier10 and Linear Support Vector Regressor11 are imple-
+      optimizers. When set to "auto", batch size=min(200,                      mented by scikit-learn [25]. All parameters use the following
+      n samples).                                                              default values:
+
+   · learning rate init=0.001. The initial learning rate used.                    · penalty=`l2'. Specifies the norm used in the penalization.
+      It controls the step-size in updating the weights.                             It is only used on the classifier and not on the regressor.
+
+   · max iter=200. Maximum number of iterations. The                              · loss=`squared hinge' is for classifier. Specifies the
+      solver iterates until convergence (determined by "tol")                        loss function. `squared hinge' is the square of
+      or this number of iterations. It is the actually the number                    the hinge loss. loss=`epsilon insensitive' is for
+      of iterations because we do not use early stop.                                the regressor. The squared epsilon-insensitive loss
+                                                                                     (`squared epsilon insensitive') is the L2 loss.
+   · shuffle=True. Whether to shuffle samples in each itera-
+      tion.                                                                       · epsilon=0.0 is for the regressor, while there is no this
+                                                                                     parameter for the classifier. Epsilon parameter in the
+   · beta 1=0.9. Exponential decay rate for estimates of first                       epsilon-insensitive loss function.
+      moment vector in adam.
+                                                                                  · dual=True. Select the algorithm to either solve the dual
+   · beta 2=0.999. Exponential decay rate for estimates of                           or primal optimization problem.
+      second moment vector in adam.
+                                                                                  · tol=1e-4. Tolerance for stopping criteria.
+   · epsilon=1e-8. Value for numerical stability in adam.
+                                                                                  8https://scikit-learn.org/stable/modules/generated/sklearn.linear model.
+   5https://www.statsmodels.org/stable/generated/statsmodels.regression.       LogisticRegression.html
+mixed linear model.MixedLM.html, https://www.statsmodels.org/stable/
+generated/statsmodels.genmod.bayes mixed glm.BinomialBayesMixedGLM.               9https://scikit-learn.org/stable/modules/generated/sklearn.linear model.
+html                                                                           RidgeCV.html
+
+   6https://scikit-learn.org/stable/modules/generated/sklearn.neural network.     10https://scikit-learn.org/stable/modules/generated/sklearn.svm.LinearSVC.
+MLPClassifier.html                                                             html
+
+   7https://scikit-learn.org/stable/modules/generated/sklearn.neural network.     11https://scikit-learn.org/stable/modules/generated/sklearn.svm.LinearSVR.
+MLPRegressor.html                                                              html
+                                                                                                                                     18
+
+   · C=1.0. Regularization parameter. The strength of the                 · min samples leaf=1. The minimum number of samples
+      regularization is inversely proportional to C.                         required to be at a leaf node.
+
+   · fit intercept=True. Fit an intercept. The feature vector             · max features="sqrt". The number of features
+      is extended to include an intercept term: [x1, ..., xn, 1],            to consider when looking for the best split, i.e.
+      where 1 corresponds to the intercept.                                  max features=sqrt(n features).
+
+   · intercept scaling=1.0. The instance vector x becomes                 · bootstrap=True. Bootstrap samples are used when build-
+      [x1, ..., xn, intercept scaling], i.e. a "synthetic" feature           ing tree.
+      with a constant value equal to intercept scaling is ap-
+      pended to the instance vector.                                      · max leaf nodes=None. No limit on the number of leaves.
+                                                                          · ccp alpha= 0.0. No pruning is performed.
+   · class weight=None is for the classifier, while there is no
+      this parameter for the regressor. No class weight.                     XGBoost. XGBClassifier and XGBRegressor are popular
+                                                                          models proposed by Chen and Guestrin [26] which can be seen
+   · max iter=1000. The maximum number of iterations to                   in https://xgboost.readthedocs.io/en/stable/python/python api.
+      be run.                                                             html. All parameters use the following default values16:
+
+   Decision Tree (DT). The decision tree classifier12 and                 · objective=`binary:logistic'  represents                  logistic
+decision tree regressor13 are all implemented by scikit-learn
+[25]. The max depth of a tree is 10, and an internal node will            regression for binary classification, while
+be split only if it contains at least min samples leaf=10. All
+other parameters use the following default values:                        objective=`reg:squarederror' represents regression
+
+   · criterion="gini" is for the classifier while crite-                  with squared loss.
+      rion="squared error" is for the regressor. The function
+      to measure the quality of a split. "gini" is the Gini               · eta=0.3. Alias of learning rate.Step size shrinkage used
+      impurity. "squared error" is the mean squared error,
+      which is equal to variance reduction as feature selection           in update to prevents overfitting. After each boosting step,
+      criterion and minimizes the L2 loss using the mean of
+      each terminal node. splitter="best". Always choose the              we can directly get the weights of new features, and eta
+      best variable and best threshold to split a node.
+                                                                          shrinks the feature weights to make the boosting process
+   · min samples leaf=1. The minimum number of samples
+      required to be at a leaf node.                                      more conservative.
+
+   · max leaf nodes=None. No limit on the number of leaves.               · gamma=0. Alias of min split loss. Minimum loss reduc-
+   · ccp alpha= 0.0. No pruning is performed.
+                                                                          tion required to make a further partition on a leaf node
+   Random Forest (RF). The random forest classifier14 and
+random forest regressor15 are implemented by scikit-learn [25].           of the tree.
+All parameters use the following default values:
+                                                                          · max depth=6. Maximum depth of a tree.
+   · n estimators=100. The number of trees in the forest.
+   · criterion="gini" is for the classifier while crite-                  · min child weight=1 Minimum sum of instance weight
+
+      rion="squared error" is for the regressor. The function             (hessian) needed in a child. If the tree partition step
+      to measure the quality of a split. "gini" is the Gini
+      impurity. "squared error" is the mean squared error,                results in a leaf node with the sum of instance weight
+      which is equal to variance reduction as feature selection
+      criterion and minimizes the L2 loss using the mean of               less than min child weight, then the building process
+      each terminal node.
+   · max depth=None. The maximum depth of the tree. If                    will give up further partitioning. In linear regression task,
+      None, then nodes are expanded until all leaves are pure
+      or until all leaves contain less than                               this simply corresponds to minimum number of instances
+   · min samples split samples.
+   · min samples split=2. The minimum number of samples                   needed to be in each node. The larger min child weight
+      required to split an internal node.
+   · splitter="best". Always choose the best variable and best            is, the more conservative the algorithm will be.
+      threshold to split a node.
+                                                                          · max delta step=2. Maximum delta step we allow each
+   12https://scikit-learn.org/stable/modules/generated/sklearn.tree.
+DecisionTreeClassifier.html                                               leaf output to be. If the value is set to 0, it means there
+
+   13https://scikit-learn.org/stable/modules/generated/sklearn.tree.      is no constraint. If it is set to a positive value, it can help
+DecisionTreeRegressor.html
+                                                                          making the update step more conservative.
+   14https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.
+RandomForestClassifier.html                                               · subsample=1 Subsample ratio of the training instances.
+
+   15https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.  We use the full training set instead of subsample set.
+RandomForestRegressor.html
+                                                                          · colsample by*=1. * can be `node', `tree' or `level' This
+
+                                                                          is a family of parameters for subsampling of columns.
+
+                                                                          Specify the fraction of columns to be subsampled. We
+
+                                                                          do not sample the columns.
+
+                                                                          · lambda=1. Alias of reg lambda. L2 regularization term
+
+                                                                          on weights.
+
+                                                                          · alpha=0. Alias of reg alpha. L1 regularization term on
+
+                                                                          weights. We use L2 instead of L1.
+
+                                                                          · tree method=`auto' The tree construction algorithm used
+
+                                                                          in XGBoost. See description in the reference paper and
+
+                                                                          Tree Methods. Faster histogram optimized approximate
+
+                                                                          greedy algorithm.
+
+                                                                          · scale pos weight=1 Control the balance of positive and
+
+                                                                          negative weights.
+
+                                                                          · max bin=256. Maximum number of discrete bins to
+
+                                                                          bucket continuous features.
+
+                                                                          16https://xgboost.readthedocs.io/en/stable/parameter.html
+                                                                                                                                                                                                                            19
+
+   LightGBM. LGBMClassifier17 and LGBMRegressor18 are
+popular models proposed by Ke et al. [27]. All parameters use
+the following default values:
+
+   · num leaves=31. Maximum tree leaves for base learners.
+   · max depth=-1 Maximum tree depth for base learners, ¡=0
+
+      means no limit.
+   · learning rate=0.1. Boosting learning rate.
+   · n estimators=100. Number of boosted trees to fit.
+   · subsample for bin=200000. Number of samples for con-
+
+      structing bins.
+   · objective `regression' for LGBMRegressor, `binary' for
+
+      LGBMClassifier.
+   · class weight=None. All classes are supposed to have
+
+      weight one.
+   · min split gain=0.. Minimum loss reduction required to
+
+      make a further partition on a leaf node of the tree.
+   · min child weight=1e-3. Minimum sum of instance
+
+      weight (Hessian) needed in a child (leaf).
+   · min child samples=20. Minimum number of data needed
+
+      in a child (leaf).
+   · subsample=1. Subsample ratio of the training instance.
+
+      We do not subsample.
+   · subsample freq=0. Frequency of subsample, <= 0
+
+      means no enable. We do not subsample.
+   · colsample bytree=1. Subsample ratio of columns when
+
+      constructing each tree. We do not subsample.
+   · reg alpha=0. L1 regularization term on weights.
+   · reg lambda=0. L2 regularization term on weights.
+
+   17https://lightgbm.readthedocs.io/en/latest/pythonapi/lightgbm.
+LGBMClassifier.html
+
+   18https://lightgbm.readthedocs.io/en/latest/pythonapi/lightgbm.
+LGBMRegressor.html
+

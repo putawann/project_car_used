@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Principles of Econometrics with R</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="This is a beginner’s guide to applied econometrics using the free statistics software R.">
+  <meta name="generator" content="bookdown 0.1 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Principles of Econometrics with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://bookdown.org/ccolonescu/RPoE4/" />
+  
+  <meta property="og:description" content="This is a beginner’s guide to applied econometrics using the free statistics software R." />
+  <meta name="github-repo" content="ccolonescu/RPoE" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Principles of Econometrics with R" />
+  
+  <meta name="twitter:description" content="This is a beginner’s guide to applied econometrics using the free statistics software R." />
+  
+
+<meta name="author" content="Constantin Colonescu">
+
+<meta name="date" content="2016-09-01">
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="indvars.html">
+<link rel="next" href="time-series-stationary-variables.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">PoE with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>.</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#the-rstudio-screen"><i class="fa fa-check"></i><b>1.1</b> The RStudio Screen</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="intro.html"><a href="intro.html#the-script-or-data-view-window"><i class="fa fa-check"></i><b>1.1.1</b> The <code>Script</code>, or <code>data view</code> window</a></li>
+<li class="chapter" data-level="1.1.2" data-path="intro.html"><a href="intro.html#the-console-or-output-window"><i class="fa fa-check"></i><b>1.1.2</b> The <code>console</code>, or <code>output</code> window</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#intro_s1"><i class="fa fa-check"></i><b>1.2</b> How to Open a Data File</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#creating-graphs"><i class="fa fa-check"></i><b>1.3</b> Creating Graphs</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#an-r-cheat-sheet"><i class="fa fa-check"></i><b>1.4</b> An R Cheat Sheet</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="simplelm.html"><a href="simplelm.html"><i class="fa fa-check"></i><b>2</b> The Simple Linear Regression Model</a><ul>
+<li class="chapter" data-level="2.1" data-path="simplelm.html"><a href="simplelm.html#the-general-model"><i class="fa fa-check"></i><b>2.1</b> The General Model</a></li>
+<li class="chapter" data-level="2.2" data-path="simplelm.html"><a href="simplelm.html#food_exmpl"><i class="fa fa-check"></i><b>2.2</b> Example: Food Expenditure versus Income</a></li>
+<li class="chapter" data-level="2.3" data-path="simplelm.html"><a href="simplelm.html#estimating-a-linear-regression"><i class="fa fa-check"></i><b>2.3</b> Estimating a Linear Regression</a></li>
+<li class="chapter" data-level="2.4" data-path="simplelm.html"><a href="simplelm.html#prediction-with-the-linear-regression-model"><i class="fa fa-check"></i><b>2.4</b> Prediction with the Linear Regression Model</a></li>
+<li class="chapter" data-level="2.5" data-path="simplelm.html"><a href="simplelm.html#repeated-samples-to-assess-regression-coefficients"><i class="fa fa-check"></i><b>2.5</b> Repeated Samples to Assess Regression Coefficients</a></li>
+<li class="chapter" data-level="2.6" data-path="simplelm.html"><a href="simplelm.html#estimated-variances-and-covariance-of-regression-coefficients"><i class="fa fa-check"></i><b>2.6</b> Estimated Variances and Covariance of Regression Coefficients</a></li>
+<li class="chapter" data-level="2.7" data-path="simplelm.html"><a href="simplelm.html#non-linear-relationships"><i class="fa fa-check"></i><b>2.7</b> Non-Linear Relationships</a></li>
+<li class="chapter" data-level="2.8" data-path="simplelm.html"><a href="simplelm.html#using-indicator-variables-in-a-regression"><i class="fa fa-check"></i><b>2.8</b> Using Indicator Variables in a Regression</a></li>
+<li class="chapter" data-level="2.9" data-path="simplelm.html"><a href="simplelm.html#monte-carlo-simulation"><i class="fa fa-check"></i><b>2.9</b> Monte Carlo Simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="intervalest.html"><a href="intervalest.html"><i class="fa fa-check"></i><b>3</b> Interval Estimation and Hypothesis Testing</a><ul>
+<li class="chapter" data-level="3.1" data-path="intervalest.html"><a href="intervalest.html#edrc"><i class="fa fa-check"></i><b>3.1</b> The Estimated Distribution of Regression Coefficients</a></li>
+<li class="chapter" data-level="3.2" data-path="intervalest.html"><a href="intervalest.html#cig"><i class="fa fa-check"></i><b>3.2</b> Confidence Interval in General</a></li>
+<li class="chapter" data-level="3.3" data-path="intervalest.html"><a href="intervalest.html#ecifm"><i class="fa fa-check"></i><b>3.3</b> Example: Confidence Intervals in the <em>food</em> Model</a></li>
+<li class="chapter" data-level="3.4" data-path="intervalest.html"><a href="intervalest.html#cirs"><i class="fa fa-check"></i><b>3.4</b> Confidence Intervals in Repeated Samples</a></li>
+<li class="chapter" data-level="3.5" data-path="intervalest.html"><a href="intervalest.html#hypotests"><i class="fa fa-check"></i><b>3.5</b> Hypothesis Tests</a></li>
+<li class="chapter" data-level="3.6" data-path="intervalest.html"><a href="intervalest.html#the-p-value"><i class="fa fa-check"></i><b>3.6</b> The <em>p</em>-Value</a></li>
+<li class="chapter" data-level="3.7" data-path="intervalest.html"><a href="intervalest.html#testing-linear-combinations-of-parameters"><i class="fa fa-check"></i><b>3.7</b> Testing Linear Combinations of Parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html"><i class="fa fa-check"></i><b>4</b> Prediction, R-squared, and Modeling</a><ul>
+<li class="chapter" data-level="4.1" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#forecasting-predicting-a-particular-value"><i class="fa fa-check"></i><b>4.1</b> Forecasting (Predicting a Particular Value)</a></li>
+<li class="chapter" data-level="4.2" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#goodness-of-fit"><i class="fa fa-check"></i><b>4.2</b> Goodness-of-Fit</a></li>
+<li class="chapter" data-level="4.3" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#linear-log-models"><i class="fa fa-check"></i><b>4.3</b> Linear-Log Models</a></li>
+<li class="chapter" data-level="4.4" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#residuals-and-diagnostics"><i class="fa fa-check"></i><b>4.4</b> Residuals and Diagnostics</a></li>
+<li class="chapter" data-level="4.5" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#polynomial-models"><i class="fa fa-check"></i><b>4.5</b> Polynomial Models</a></li>
+<li class="chapter" data-level="4.6" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#log-linear-models"><i class="fa fa-check"></i><b>4.6</b> Log-Linear Models</a></li>
+<li class="chapter" data-level="4.7" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#the-log-log-model"><i class="fa fa-check"></i><b>4.7</b> The Log-Log Model</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="multiplereg.html"><a href="multiplereg.html"><i class="fa fa-check"></i><b>5</b> The Multiple Regression Model</a><ul>
+<li class="chapter" data-level="5.1" data-path="multiplereg.html"><a href="multiplereg.html#the-general-model-1"><i class="fa fa-check"></i><b>5.1</b> The General Model</a></li>
+<li class="chapter" data-level="5.2" data-path="multiplereg.html"><a href="multiplereg.html#example-big-andys-hamburger-sales"><i class="fa fa-check"></i><b>5.2</b> Example: Big Andy’s Hamburger Sales</a></li>
+<li class="chapter" data-level="5.3" data-path="multiplereg.html"><a href="multiplereg.html#interval-estimation-in-multiple-regression"><i class="fa fa-check"></i><b>5.3</b> Interval Estimation in Multiple Regression</a></li>
+<li class="chapter" data-level="5.4" data-path="multiplereg.html"><a href="multiplereg.html#hypothesis-testing-in-multiple-regression"><i class="fa fa-check"></i><b>5.4</b> Hypothesis Testing in Multiple Regression</a></li>
+<li class="chapter" data-level="5.5" data-path="multiplereg.html"><a href="multiplereg.html#polynomial-regression-models"><i class="fa fa-check"></i><b>5.5</b> Polynomial Regression Models</a></li>
+<li class="chapter" data-level="5.6" data-path="multiplereg.html"><a href="multiplereg.html#interaction-terms-in-linear-regression"><i class="fa fa-check"></i><b>5.6</b> Interaction Terms in Linear Regression</a></li>
+<li class="chapter" data-level="5.7" data-path="multiplereg.html"><a href="multiplereg.html#goodness-of-fit-in-multiple-regression"><i class="fa fa-check"></i><b>5.7</b> Goodness-of-Fit in Multiple Regression</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html"><i class="fa fa-check"></i><b>6</b> Further Inference in Multiple Regression</a><ul>
+<li class="chapter" data-level="6.1" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#joint-hypotheses-and-the-f-statistic"><i class="fa fa-check"></i><b>6.1</b> Joint Hypotheses and the F-statistic</a></li>
+<li class="chapter" data-level="6.2" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#testing-simultaneous-hypotheses"><i class="fa fa-check"></i><b>6.2</b> Testing Simultaneous Hypotheses</a></li>
+<li class="chapter" data-level="6.3" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#omitted-variable-bias"><i class="fa fa-check"></i><b>6.3</b> Omitted Variable Bias</a></li>
+<li class="chapter" data-level="6.4" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#irrelevant-variables"><i class="fa fa-check"></i><b>6.4</b> Irrelevant Variables</a></li>
+<li class="chapter" data-level="6.5" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#model-selection-criteria"><i class="fa fa-check"></i><b>6.5</b> Model Selection Criteria</a></li>
+<li class="chapter" data-level="6.6" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#collinearity"><i class="fa fa-check"></i><b>6.6</b> Collinearity</a></li>
+<li class="chapter" data-level="6.7" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#prediction-and-forecasting"><i class="fa fa-check"></i><b>6.7</b> Prediction and Forecasting</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="indvars.html"><a href="indvars.html"><i class="fa fa-check"></i><b>7</b> Using Indicator Variables</a><ul>
+<li class="chapter" data-level="7.1" data-path="indvars.html"><a href="indvars.html#factor-variables"><i class="fa fa-check"></i><b>7.1</b> Factor Variables</a></li>
+<li class="chapter" data-level="7.2" data-path="indvars.html"><a href="indvars.html#examples"><i class="fa fa-check"></i><b>7.2</b> Examples</a></li>
+<li class="chapter" data-level="7.3" data-path="indvars.html"><a href="indvars.html#comparing-two-regressions-the-chow-test"><i class="fa fa-check"></i><b>7.3</b> Comparing Two Regressions: the Chow Test</a></li>
+<li class="chapter" data-level="7.4" data-path="indvars.html"><a href="indvars.html#indicator-variables-in-log-linear-models"><i class="fa fa-check"></i><b>7.4</b> Indicator Variables in Log-Linear Models</a></li>
+<li class="chapter" data-level="7.5" data-path="indvars.html"><a href="indvars.html#the-linear-probability-model"><i class="fa fa-check"></i><b>7.5</b> The Linear Probability Model</a></li>
+<li class="chapter" data-level="7.6" data-path="indvars.html"><a href="indvars.html#treatment-effects"><i class="fa fa-check"></i><b>7.6</b> Treatment Effects</a></li>
+<li class="chapter" data-level="7.7" data-path="indvars.html"><a href="indvars.html#the-difference-in-differences-estimator"><i class="fa fa-check"></i><b>7.7</b> The Difference-in-Differences Estimator</a></li>
+<li class="chapter" data-level="7.8" data-path="indvars.html"><a href="indvars.html#using-panel-data"><i class="fa fa-check"></i><b>7.8</b> Using Panel Data</a></li>
+<li class="chapter" data-level="7.9" data-path="indvars.html"><a href="indvars.html#r-practicum"><i class="fa fa-check"></i><b>7.9</b> R Practicum</a><ul>
+<li class="chapter" data-level="7.9.1" data-path="indvars.html"><a href="indvars.html#extracting-various-information"><i class="fa fa-check"></i><b>7.9.1</b> Extracting Various Information</a></li>
+<li class="chapter" data-level="7.9.2" data-path="indvars.html"><a href="indvars.html#ggplot2-an-excellent-data-visualising-tool"><i class="fa fa-check"></i><b>7.9.2</b> <code>ggplot2</code>, An Excellent Data Visualising Tool</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html"><i class="fa fa-check"></i><b>8</b> Heteroskedasticity</a><ul>
+<li class="chapter" data-level="8.1" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#spotting-heteroskedasticity-in-scatter-plots"><i class="fa fa-check"></i><b>8.1</b> Spotting Heteroskedasticity in Scatter Plots</a></li>
+<li class="chapter" data-level="8.2" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#heteroskedasticity-tests"><i class="fa fa-check"></i><b>8.2</b> Heteroskedasticity Tests</a></li>
+<li class="chapter" data-level="8.3" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#heteroskedasticity-consistent-standard-errors"><i class="fa fa-check"></i><b>8.3</b> Heteroskedasticity-Consistent Standard Errors</a></li>
+<li class="chapter" data-level="8.4" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#gls-known-form-of-variance"><i class="fa fa-check"></i><b>8.4</b> GLS: Known Form of Variance</a></li>
+<li class="chapter" data-level="8.5" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#grouped-data"><i class="fa fa-check"></i><b>8.5</b> Grouped Data</a></li>
+<li class="chapter" data-level="8.6" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#gls-unknown-form-of-variance"><i class="fa fa-check"></i><b>8.6</b> GLS: Unknown Form of Variance</a></li>
+<li class="chapter" data-level="8.7" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#heteroskedasticity-in-the-linear-probability-model"><i class="fa fa-check"></i><b>8.7</b> Heteroskedasticity in the Linear Probability Model</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html"><i class="fa fa-check"></i><b>9</b> Time-Series: Stationary Variables</a><ul>
+<li class="chapter" data-level="9.1" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#an-overview-of-time-series-tools-in-r"><i class="fa fa-check"></i><b>9.1</b> An Overview of Time Series Tools in <em>R</em></a></li>
+<li class="chapter" data-level="9.2" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#finite-distributed-lags"><i class="fa fa-check"></i><b>9.2</b> Finite Distributed Lags</a></li>
+<li class="chapter" data-level="9.3" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#serial-correlation"><i class="fa fa-check"></i><b>9.3</b> Serial Correlation</a></li>
+<li class="chapter" data-level="9.4" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#estimation-with-serially-correlated-errors"><i class="fa fa-check"></i><b>9.4</b> Estimation with Serially Correlated Errors</a></li>
+<li class="chapter" data-level="9.5" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#nonlinear-least-squares-estimation"><i class="fa fa-check"></i><b>9.5</b> Nonlinear Least Squares Estimation</a></li>
+<li class="chapter" data-level="9.6" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#a-more-general-model"><i class="fa fa-check"></i><b>9.6</b> A More General Model</a></li>
+<li class="chapter" data-level="9.7" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#autoregressive-models"><i class="fa fa-check"></i><b>9.7</b> Autoregressive Models</a></li>
+<li class="chapter" data-level="9.8" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#forecasting"><i class="fa fa-check"></i><b>9.8</b> Forecasting</a></li>
+<li class="chapter" data-level="9.9" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#multiplier-analysis"><i class="fa fa-check"></i><b>9.9</b> Multiplier Analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="random-regressors.html"><a href="random-regressors.html"><i class="fa fa-check"></i><b>10</b> Random Regressors</a><ul>
+<li class="chapter" data-level="10.1" data-path="random-regressors.html"><a href="random-regressors.html#the-instrumental-variables-iv-method"><i class="fa fa-check"></i><b>10.1</b> The Instrumental Variables (IV) Method</a></li>
+<li class="chapter" data-level="10.2" data-path="random-regressors.html"><a href="random-regressors.html#specification-tests"><i class="fa fa-check"></i><b>10.2</b> Specification Tests</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="simultaneous-equations-models.html"><a href="simultaneous-equations-models.html"><i class="fa fa-check"></i><b>11</b> Simultaneous Equations Models</a></li>
+<li class="chapter" data-level="12" data-path="time-series-nonstationarity.html"><a href="time-series-nonstationarity.html"><i class="fa fa-check"></i><b>12</b> Time Series: Nonstationarity</a><ul>
+<li class="chapter" data-level="12.1" data-path="time-series-nonstationarity.html"><a href="time-series-nonstationarity.html#ar1-the-first-order-autoregressive-model"><i class="fa fa-check"></i><b>12.1</b> AR(1), the First-Order Autoregressive Model</a></li>
+<li class="chapter" data-level="12.2" data-path="time-series-nonstationarity.html"><a href="time-series-nonstationarity.html#spurious-regression"><i class="fa fa-check"></i><b>12.2</b> Spurious Regression</a></li>
+<li class="chapter" data-level="12.3" data-path="time-series-nonstationarity.html"><a href="time-series-nonstationarity.html#unit-root-tests-for-stationarity"><i class="fa fa-check"></i><b>12.3</b> Unit Root Tests for Stationarity</a></li>
+<li class="chapter" data-level="12.4" data-path="time-series-nonstationarity.html"><a href="time-series-nonstationarity.html#cointegration"><i class="fa fa-check"></i><b>12.4</b> Cointegration</a></li>
+<li class="chapter" data-level="12.5" data-path="time-series-nonstationarity.html"><a href="time-series-nonstationarity.html#the-error-correction-model"><i class="fa fa-check"></i><b>12.5</b> The Error Correction Model</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="vec-and-var-models.html"><a href="vec-and-var-models.html"><i class="fa fa-check"></i><b>13</b> VEC and VAR Models</a><ul>
+<li class="chapter" data-level="13.1" data-path="vec-and-var-models.html"><a href="vec-and-var-models.html#var-and-vec-models"><i class="fa fa-check"></i><b>13.1</b> VAR and VEC Models</a></li>
+<li class="chapter" data-level="13.2" data-path="vec-and-var-models.html"><a href="vec-and-var-models.html#estimating-a-vec-model"><i class="fa fa-check"></i><b>13.2</b> Estimating a VEC Model</a></li>
+<li class="chapter" data-level="13.3" data-path="vec-and-var-models.html"><a href="vec-and-var-models.html#estimating-a-var-model"><i class="fa fa-check"></i><b>13.3</b> Estimating a VAR Model</a></li>
+<li class="chapter" data-level="13.4" data-path="vec-and-var-models.html"><a href="vec-and-var-models.html#impulse-responses-and-variance-decompositions"><i class="fa fa-check"></i><b>13.4</b> Impulse Responses and Variance Decompositions</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="time-varying-volatility-and-arch-models.html"><a href="time-varying-volatility-and-arch-models.html"><i class="fa fa-check"></i><b>14</b> Time-Varying Volatility and ARCH Models</a><ul>
+<li class="chapter" data-level="14.1" data-path="time-varying-volatility-and-arch-models.html"><a href="time-varying-volatility-and-arch-models.html#the-arch-model"><i class="fa fa-check"></i><b>14.1</b> The ARCH Model</a></li>
+<li class="chapter" data-level="14.2" data-path="time-varying-volatility-and-arch-models.html"><a href="time-varying-volatility-and-arch-models.html#the-garch-model"><i class="fa fa-check"></i><b>14.2</b> The GARCH Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="panel-data-models.html"><a href="panel-data-models.html"><i class="fa fa-check"></i><b>15</b> Panel Data Models</a><ul>
+<li class="chapter" data-level="15.1" data-path="panel-data-models.html"><a href="panel-data-models.html#organizing-the-data-as-a-panel"><i class="fa fa-check"></i><b>15.1</b> Organizing the Data as a Panel</a></li>
+<li class="chapter" data-level="15.2" data-path="panel-data-models.html"><a href="panel-data-models.html#the-pooled-model"><i class="fa fa-check"></i><b>15.2</b> The Pooled Model</a></li>
+<li class="chapter" data-level="15.3" data-path="panel-data-models.html"><a href="panel-data-models.html#the-fixed-effects-model"><i class="fa fa-check"></i><b>15.3</b> The Fixed Effects Model</a></li>
+<li class="chapter" data-level="15.4" data-path="panel-data-models.html"><a href="panel-data-models.html#the-random-effects-model"><i class="fa fa-check"></i><b>15.4</b> The Random Effects Model</a></li>
+<li class="chapter" data-level="15.5" data-path="panel-data-models.html"><a href="panel-data-models.html#grunfelds-investment-example"><i class="fa fa-check"></i><b>15.5</b> Grunfeld’s Investment Example</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html"><i class="fa fa-check"></i><b>16</b> Qualitative and LDV Models</a><ul>
+<li class="chapter" data-level="16.1" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-linear-probability-model-1"><i class="fa fa-check"></i><b>16.1</b> The Linear Probability Model</a></li>
+<li class="chapter" data-level="16.2" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-probit-model"><i class="fa fa-check"></i><b>16.2</b> The Probit Model</a></li>
+<li class="chapter" data-level="16.3" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-transportation-example"><i class="fa fa-check"></i><b>16.3</b> The Transportation Example</a></li>
+<li class="chapter" data-level="16.4" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-logit-model-for-binary-choice"><i class="fa fa-check"></i><b>16.4</b> The Logit Model for Binary Choice</a></li>
+<li class="chapter" data-level="16.5" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#multinomial-logit"><i class="fa fa-check"></i><b>16.5</b> Multinomial Logit</a></li>
+<li class="chapter" data-level="16.6" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-conditional-logit-model"><i class="fa fa-check"></i><b>16.6</b> The Conditional Logit Model</a></li>
+<li class="chapter" data-level="16.7" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#ordered-choice-models"><i class="fa fa-check"></i><b>16.7</b> Ordered Choice Models</a></li>
+<li class="chapter" data-level="16.8" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#models-for-count-data"><i class="fa fa-check"></i><b>16.8</b> Models for Count Data</a></li>
+<li class="chapter" data-level="16.9" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-tobit-or-censored-data-model"><i class="fa fa-check"></i><b>16.9</b> The Tobit, or Censored Data Model</a></li>
+<li class="chapter" data-level="16.10" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-heckit-or-sample-selection-model"><i class="fa fa-check"></i><b>16.10</b> The Heckit, or Sample Selection Model</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Principles of Econometrics with <span class="math inline">\(R\)</span></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="heteroskedasticity" class="section level1">
+<h1><span class="header-section-number">Chapter 8</span> Heteroskedasticity</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(<span class="dt">list=</span><span class="kw">ls</span>()) <span class="co">#Removes all items in Environment!</span>
+<span class="kw">library</span>(lmtest) <span class="co">#for coeftest() and bptest().</span>
+<span class="kw">library</span>(broom) <span class="co">#for glance() and tidy()</span>
+<span class="kw">library</span>(PoEdata) <span class="co">#for PoE4 datasets</span>
+<span class="kw">library</span>(car) <span class="co">#for hccm() robust standard errors</span>
+<span class="kw">library</span>(sandwich)
+<span class="kw">library</span>(knitr)
+<span class="kw">library</span>(stargazer)</code></pre></div>
+<p>Reference for the package <code>sandwich</code> <span class="citation">(Lumley and Zeileis <a href="#ref-R-sandwich">2015</a>)</span>.</p>
+<p>One of the assumptions of the Gauss-Markov theorem is <strong>homoskedasticity</strong>, which requires that all observations of the response (dependent) variable come from distributions with the same variance <span class="math inline">\(\sigma^2\)</span>. In many economic applications, however, the spread of <span class="math inline">\(y\)</span> tends to depend on one or more of the regressors <span class="math inline">\(x\)</span>. For example, in the <em>food</em> simple regression model (Equation \ref{eq:foodagain8}) expenditure on food stays closer to its mean (regression line) at lower incomes and to be more spread about its mean at higher incomes. Think just that people have more choices at higher income whether to spend their extra income on food or something else.</p>
+<span class="math display">\[\begin{equation}
+food\_exp_{i}=\beta_{1}+\beta_{2}income_{i}+e_{i}
+\label{eq:foodagain8}
+\end{equation}\]</span>
+<p>In the presence of heteroskedasticity, the coefficient estimators are still unbiased, but their variance is incorrectly calculated by the usual OLS method, which makes confidence intervals and hypothesis testing incorrect as well. Thus, new methods need to be applied to correct the variances.</p>
+<div id="spotting-heteroskedasticity-in-scatter-plots" class="section level2">
+<h2><span class="header-section-number">8.1</span> Spotting Heteroskedasticity in Scatter Plots</h2>
+<p>When the variance of <span class="math inline">\(y\)</span>, or of <span class="math inline">\(e\)</span>, which is the same thing, is not constant, we say that the response or the residuals are <strong>heteroskedastic</strong>. Figure <a href="heteroskedasticity.html#fig:foodplot8">8.1</a> shows, again, a scatter diagram of the <em>food</em> dataset with the regression line to show how the observations tend to be more spread at higher income.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;food&quot;</span>,<span class="dt">package=</span><span class="st">&quot;PoEdata&quot;</span>)
+mod1 &lt;-<span class="st"> </span><span class="kw">lm</span>(food_exp~income, <span class="dt">data=</span>food)
+<span class="kw">plot</span>(food$income,food$food_exp, <span class="dt">type=</span><span class="st">&quot;p&quot;</span>,
+     <span class="dt">xlab=</span><span class="st">&quot;income&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;food expenditure&quot;</span>)
+<span class="kw">abline</span>(mod1)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:foodplot8"></span>
+<img src="Figs/foodplot8-1.png" alt="Heteroskedasticity in the 'food' data" width="80%" />
+<p class="caption">
+Figure 8.1: Heteroskedasticity in the ‘food’ data
+</p>
+</div>
+<p>Another useful method to visualize possible heteroskedasticity is to plot the residuals against the regressors suspected of creating heteroskedasticity, or, more generally, against the fitted values of the regression. Figure <a href="heteroskedasticity.html#fig:resplotfood8">8.2</a> shows both these options for the simple <em>food_exp</em> model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">residuals</span>(mod1)
+yhat &lt;-<span class="st"> </span><span class="kw">fitted</span>(mod1)
+<span class="kw">plot</span>(food$income,res, <span class="dt">xlab=</span><span class="st">&quot;income&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;residuals&quot;</span>)
+<span class="kw">plot</span>(yhat,res, <span class="dt">xlab=</span><span class="st">&quot;fitted values&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;residuals&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:resplotfood8"></span>
+<img src="Figs/resplotfood8-1.png" alt="Residual plots in the 'food' model" width="45%" /><img src="Figs/resplotfood8-2.png" alt="Residual plots in the 'food' model" width="45%" />
+<p class="caption">
+Figure 8.2: Residual plots in the ‘food’ model
+</p>
+</div>
+</div>
+<div id="heteroskedasticity-tests" class="section level2">
+<h2><span class="header-section-number">8.2</span> Heteroskedasticity Tests</h2>
+Suppose the regression model we want to test for heteroskedasticity is the one in Equation \ref{eq:multireggen8}.
+<span class="math display">\[\begin{equation}
+y_{i}=\beta_{1}+\beta_{2}x_{i2}+...+\beta_{K}x_{iK}+ e_{i}
+\label{eq:multireggen8}
+\end{equation}\]</span>
+<p>The test we are construction assumes that the variance of the errors is a function <span class="math inline">\(h\)</span> of a number of regressors <span class="math inline">\(z_{s}\)</span>, which may or may not be present in the initial regression model that we want to test. Equation \ref{eq:hetfctn8} shows the general form of the variance function.</p>
+<span class="math display">\[\begin{equation}
+var(y_{i})=E(e_{i}^2)=h(\alpha_{1}+\alpha_{2}z_{i2}+...+\alpha_{S}z_{iS})
+\label{eq:hetfctn8}
+\end{equation}\]</span>
+The variance <span class="math inline">\(var(y_{i})\)</span> is constant only if all the coefficients of the regressors <span class="math inline">\(z\)</span> in Equation \ref{eq:hetfctn8} are zero, which provides the null hypothesis of our heteroskedasticity test shown in Equation \ref{eq:hetHo8}.
+<span class="math display">\[\begin{equation}
+H_{0}: \alpha_{2}=\alpha_{3}=\,...\,\alpha_{S}=0
+\label{eq:hetHo8}
+\end{equation}\]</span>
+Since we do not know the true variances of the response variable <span class="math inline">\(y_{i}\)</span>, all we can do is to estimate the residuals from the initial model in Equation \ref{eq:multireggen8} and replace <span class="math inline">\(e_{i}^2\)</span> in Equation \ref{eq:hetfctn8} with the estimated residuals. For a linear function <span class="math inline">\(h()\)</span>, the test equation is, finally, Equation \ref{eq:hetres8}.
+<span class="math display">\[\begin{equation}
+\hat{e}_{i}^2=\alpha_{1}+\alpha_{2}z_{i2}+...+\alpha_{S}z_{iS}+\nu_{i}
+\label{eq:hetres8}
+\end{equation}\]</span>
+<p>Te relevant test statistic is <span class="math inline">\(\chi ^2\)</span>, given by Equation \ref{eq:chisq8}, where <span class="math inline">\(R^2\)</span> is the one resulted from Equation \ref{eq:hetres8}.</p>
+<span class="math display">\[\begin{equation}
+\chi ^2=N\times R^2 \sim \chi ^{2}_{(S-1)}
+\label{eq:chisq8}
+\end{equation}\]</span>
+<p>The <strong>Breusch-Pagan</strong> heteroskedasticiy test uses the method we have just described, where the regressors <span class="math inline">\(z_{s}\)</span> are the variables <span class="math inline">\(x_{k}\)</span> in the initial model. Let us apply this test to the <em>food</em> model. The function to determine a critical value of the <span class="math inline">\(\chi ^2\)</span> distribution for a significance level <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(S-1\)</span> degrees of freedom is <code>qchisq(1-alpha, S-1</code>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">alpha &lt;-<span class="st"> </span><span class="fl">0.05</span>
+mod1 &lt;-<span class="st"> </span><span class="kw">lm</span>(food_exp~income, <span class="dt">data=</span>food)
+ressq &lt;-<span class="st"> </span><span class="kw">resid</span>(mod1)^<span class="dv">2</span>
+<span class="co">#The test equation:</span>
+modres &lt;-<span class="st"> </span><span class="kw">lm</span>(ressq~income, <span class="dt">data=</span>food)
+N &lt;-<span class="st"> </span><span class="kw">nobs</span>(modres)
+gmodres &lt;-<span class="st"> </span><span class="kw">glance</span>(modres)
+S &lt;-<span class="st"> </span>gmodres$df <span class="co">#Number of Betas in model</span>
+<span class="co">#Chi-square is always a right-tail test</span>
+chisqcr &lt;-<span class="st"> </span><span class="kw">qchisq</span>(<span class="dv">1</span>-alpha, S<span class="dv">-1</span>)
+Rsqres &lt;-<span class="st"> </span>gmodres$r.squared
+chisq &lt;-<span class="st"> </span>N*Rsqres
+pval &lt;-<span class="st"> </span><span class="dv">1</span>-<span class="kw">pchisq</span>(chisq,S<span class="dv">-1</span>)</code></pre></div>
+<p>Our test yields a value of the test statistic <span class="math inline">\(\chi ^2\)</span> of <span class="math inline">\(7.38\)</span>, which is to be compared to the critical <span class="math inline">\(\chi^{2}_{cr}\)</span> having <span class="math inline">\(S-1=1\)</span> degrees of freedom and <span class="math inline">\(\alpha = 0.05\)</span>. This critical value is <span class="math inline">\(\chi ^{2}_{cr}=3.84\)</span>. Since the calculated <span class="math inline">\(\chi ^2\)</span> exceeds the critical value, we reject the null hypothesis of homoskedasticity, which means there is heteroskedasticity in our data and model. Alternatively, we can find the <span class="math inline">\(p\)</span>-value corresponding to the calculated <span class="math inline">\(\chi^{2}\)</span>, <span class="math inline">\(p=0.007\)</span>.</p>
+<p>Let us now do the same test, but using a <strong>White</strong> version of the residuals equation, in its quadratic form.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">modres &lt;-<span class="st"> </span><span class="kw">lm</span>(ressq~income+<span class="kw">I</span>(income^<span class="dv">2</span>), <span class="dt">data=</span>food)
+gmodres &lt;-<span class="st"> </span><span class="kw">glance</span>(modres)
+Rsq &lt;-<span class="st"> </span>gmodres$r.squared
+S &lt;-<span class="st"> </span>gmodres$df <span class="co">#Number of Betas in model</span>
+chisq &lt;-<span class="st"> </span>N*Rsq
+pval &lt;-<span class="st"> </span><span class="dv">1</span>-<span class="kw">pchisq</span>(chisq, S<span class="dv">-1</span>)</code></pre></div>
+<p>The calculated <span class="math inline">\(p\)</span>-value in this version is <span class="math inline">\(p=0.023\)</span>, which also implies rejection of the null hypothesis of homoskedasticity.</p>
+<p>The function <code>bptest()</code> in package <code>lmtest</code> does (the robust version of) the Breusch-Pagan test in <span class="math inline">\(R\)</span>. The following code applies this function to the basic <em>food</em> equation, showing the results in Table <a href="heteroskedasticity.html#tab:bptestfood8">8.1</a>, where ‘statistic’ is the calculated <span class="math inline">\(\chi^2\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod1 &lt;-<span class="st"> </span><span class="kw">lm</span>(food_exp~income, <span class="dt">data=</span>food)
+<span class="kw">kable</span>(<span class="kw">tidy</span>(<span class="kw">bptest</span>(mod1)), 
+<span class="dt">caption=</span><span class="st">&quot;Breusch-Pagan heteroskedasticity test&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:bptestfood8">Table 8.1: </span>Breusch-Pagan heteroskedasticity test</caption>
+<thead>
+<tr class="header">
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+<th align="right">parameter</th>
+<th align="left">method</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">7.38442</td>
+<td align="right">0.006579</td>
+<td align="right">1</td>
+<td align="left">studentized Breusch-Pagan test</td>
+</tr>
+</tbody>
+</table>
+The <strong>Goldfeld-Quandt</strong> heteroskedasticity test is useful when the regression model to be tested includes an indicator variable among its regressors. The test compares the variance of one group of the indicator variable (say group 1) to the variance of the benchmark group (say group <span class="math inline">\(0\)</span>), as the null hypothesis in Equation\ref{eq:gqnull8} shows.
+<span class="math display">\[\begin{equation}
+H_{0}:\hat{\sigma}^{2}_{1}=\hat{\sigma}^{2}_{0},\;\;\;\; H_{A}:\hat{\sigma}^{2}_{1}\neq \hat{\sigma}^{2}_{0}
+\label{eq:gqnull8}
+\end{equation}\]</span>
+<p>The test statistic when the null hyppthesis is true, given in Equation \ref{eq:gqf8}, has an <span class="math inline">\(F\)</span> distribution with its two degrees of freedom equal to the degrees of freedom of the two subsamples, respectively <span class="math inline">\(N_{1}-K\)</span> and <span class="math inline">\(N_{0}-K\)</span>.</p>
+<span class="math display">\[\begin{equation}
+F=\frac{\hat{\sigma}^{2}_{1}}{\hat{\sigma}^{2}_{0}}
+\label{eq:gqf8}
+\end{equation}\]</span>
+<p>Let us apply this test to a <span class="math inline">\(wage\)</span> equation based on the dataset <span class="math inline">\(cps2\)</span>, where <span class="math inline">\(metro\)</span> is an indicator variable equal to <span class="math inline">\(1\)</span> if the individual lives in a metropolitan area and <span class="math inline">\(0\)</span> for rural area. I will split the dataset in two based on the indicator variable <span class="math inline">\(metro\)</span> and apply the regression model (Equation \ref{eq:hetwage8}) separately to each group.</p>
+<span class="math display">\[\begin{equation}
+wage=\beta_{1}+\beta_{2}educ+\beta_{3}exper+\beta_{4}metro+e
+\label{eq:hetwage8}
+\end{equation}\]</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">alpha &lt;-<span class="st"> </span><span class="fl">0.05</span> <span class="co">#two tail, will take alpha/2</span>
+<span class="kw">data</span>(<span class="st">&quot;cps2&quot;</span>, <span class="dt">package=</span><span class="st">&quot;PoEdata&quot;</span>)
+<span class="co">#Create the two groups, m (metro) and r (rural)</span>
+m &lt;-<span class="st"> </span>cps2[<span class="kw">which</span>(cps2$metro==<span class="dv">1</span>),]
+r &lt;-<span class="st"> </span>cps2[<span class="kw">which</span>(cps2$metro==<span class="dv">0</span>),]
+wg1 &lt;-<span class="st"> </span><span class="kw">lm</span>(wage~educ+exper, <span class="dt">data=</span>m)
+wg0 &lt;-<span class="st"> </span><span class="kw">lm</span>(wage~educ+exper, <span class="dt">data=</span>r)
+df1 &lt;-<span class="st"> </span>wg1$df.residual <span class="co">#Numerator degrees of freedom</span>
+df0 &lt;-<span class="st"> </span>wg0$df.residual <span class="co">#Denominatot df</span>
+sig1squared &lt;-<span class="st"> </span><span class="kw">glance</span>(wg1)$sigma^<span class="dv">2</span>
+sig0squared &lt;-<span class="st"> </span><span class="kw">glance</span>(wg0)$sigma^<span class="dv">2</span>
+fstat &lt;-<span class="st"> </span>sig1squared/sig0squared
+Flc &lt;-<span class="st"> </span><span class="kw">qf</span>(alpha/<span class="dv">2</span>, df1, df0)<span class="co">#Left (lower) critical F</span>
+Fuc &lt;-<span class="st"> </span><span class="kw">qf</span>(<span class="dv">1</span>-alpha/<span class="dv">2</span>, df1, df0) <span class="co">#Right (upper) critical F</span></code></pre></div>
+<p>The results of these calculations are as follows: calculated <span class="math inline">\(F\)</span> statistic <span class="math inline">\(F=2.09\)</span>, the lower tail critical value <span class="math inline">\(F_{lc}=0.81\)</span>, and the upper tail critical value <span class="math inline">\(F_{uc}=1.26\)</span>. Since the calculated amount is greater than the upper critical value, we reject the hypothesis that the two variances are equal, facing, thus, a heteroskedasticity problem. If one expects the variance in the metropolitan area to be higher and wants to test the (alternative) hypothesis <span class="math inline">\(H_{0}:\sigma^{2}_{1}\leq \sigma^{2}_{0},\;\;\;\; H_{A}:\sigma^{2}_{1}&gt;\sigma^{2}_{0}\)</span>, one needs to re-calcuate the critical value for <span class="math inline">\(\alpha=0.05\)</span> as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Fc &lt;-<span class="st"> </span><span class="kw">qf</span>(<span class="dv">1</span>-alpha, df1, df0) <span class="co">#Right-tail test</span></code></pre></div>
+<p>The critical value for the right tail test is <span class="math inline">\(F_{c}=1.22\)</span>, which still implies rejecting the null hypothesis.</p>
+<p>The Goldfeld-Quant test can be used even when there is no indicator variable in the model or in the dataset. One can split the dataset in two using an arbitrary rule. Let us apply the method to the basic <span class="math inline">\(food\)</span> equation, with the data split in low-income (<span class="math inline">\(li\)</span>) and high-income (<span class="math inline">\(hi\)</span>) halves. The cutoff point is, in this case, the median income, and the hypothesis to be tested <span class="math display">\[H_{0}: \sigma^{2}_{hi}\le \sigma^{2}_{li},\;\;\;\;H_{A}:\sigma^{2}_{hi} &gt; \sigma^{2}_{li}\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">alpha &lt;-<span class="st"> </span><span class="fl">0.05</span>
+<span class="kw">data</span>(<span class="st">&quot;food&quot;</span>, <span class="dt">package=</span><span class="st">&quot;PoEdata&quot;</span>)
+medianincome &lt;-<span class="st"> </span><span class="kw">median</span>(food$income)
+li &lt;-<span class="st"> </span>food[<span class="kw">which</span>(food$income&lt;=medianincome),]
+hi &lt;-<span class="st"> </span>food[<span class="kw">which</span>(food$income&gt;=medianincome),]
+eqli &lt;-<span class="st"> </span><span class="kw">lm</span>(food_exp~income, <span class="dt">data=</span>li)
+eqhi &lt;-<span class="st"> </span><span class="kw">lm</span>(food_exp~income, <span class="dt">data=</span>hi)
+dfli &lt;-<span class="st"> </span>eqli$df.residual
+dfhi &lt;-<span class="st"> </span>eqhi$df.residual
+sigsqli &lt;-<span class="st"> </span><span class="kw">glance</span>(eqli)$sigma^<span class="dv">2</span>
+sigsqhi &lt;-<span class="st"> </span><span class="kw">glance</span>(eqhi)$sigma^<span class="dv">2</span>
+fstat &lt;-<span class="st"> </span>sigsqhi/sigsqli <span class="co">#The larger var in numerator</span>
+Fc &lt;-<span class="st"> </span><span class="kw">qf</span>(<span class="dv">1</span>-alpha, dfhi, dfli)
+pval &lt;-<span class="st"> </span><span class="dv">1</span>-<span class="kw">pf</span>(fstat, dfhi, dfli)</code></pre></div>
+<p>The resulting <span class="math inline">\(F\)</span> statistic in the <span class="math inline">\(food\)</span> example is <span class="math inline">\(F=3.61\)</span>, which is greater than the critical value <span class="math inline">\(F_{cr}=2.22\)</span>, rejecting the null hypothesis in favour of the alternative hypothesis that variance is higher at higher incomes. The <span class="math inline">\(p\)</span>-value of the test is <span class="math inline">\(p=0.0046\)</span>.</p>
+<p>In the package <code>lmtest</code>, <span class="math inline">\(R\)</span> has a specialized function to perform Goldfeld-Quandt tests, the function <code>gqtest</code> which takes, among other arguments, the <code>formula</code> describing the model to be tested, a break <code>point</code> specifying how the data should be split (percentage of the number of observations), what is the <code>alternative</code> hypothesis (“greater”, “two.sided”, or “less”), how the data should be ordered (<code>order.by=</code>), and <code>data=</code>. Let us apply <code>gqtest()</code> to the <span class="math inline">\(food\)</span> example with the same partition as we have just did before.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">foodeq &lt;-<span class="st"> </span><span class="kw">lm</span>(food_exp~income, <span class="dt">data=</span>food)
+tst &lt;-<span class="st"> </span><span class="kw">gqtest</span>(foodeq, <span class="dt">point=</span><span class="fl">0.5</span>, <span class="dt">alternative=</span><span class="st">&quot;greater&quot;</span>,
+       <span class="dt">order.by=</span>food$income)
+<span class="kw">kable</span>(<span class="kw">tidy</span>(tst), 
+  <span class="dt">caption=</span><span class="st">&quot;R function `gqtest()` with the &#39;food&#39; equation&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:gqtestR8">Table 8.2: </span>R function <code>gqtest()</code> with the ‘food’ equation</caption>
+<thead>
+<tr class="header">
+<th align="right">df1</th>
+<th align="right">df2</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+<th align="left">method</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">18</td>
+<td align="right">18</td>
+<td align="right">3.61476</td>
+<td align="right">0.004596</td>
+<td align="left">Goldfeld-Quandt test</td>
+</tr>
+</tbody>
+</table>
+<p>Please note that the results from applying <code>gqtest()</code> (Table <a href="heteroskedasticity.html#tab:gqtestR8">8.2</a> are the same as those we have already calculated.</p>
+</div>
+<div id="heteroskedasticity-consistent-standard-errors" class="section level2">
+<h2><span class="header-section-number">8.3</span> Heteroskedasticity-Consistent Standard Errors</h2>
+<p>Since the presence of heteroskedasticity makes the lest-squares standard errors incorrect, there is a need for another method to calculate them. White robust standard errors is such a method.</p>
+<p>The <span class="math inline">\(R\)</span> function that does this job is <code>hccm()</code>, which is part of the <code>car</code> package and yields a heteroskedasticity-robust coefficient covariance matrix. This matrix can then be used with other functions, such as <code>coeftest()</code> (instead of <code>summary</code>), <code>waldtest()</code> (instead of <code>anova</code>), or <code>linearHypothesis()</code> to perform hypothesis testing. The function <code>hccm()</code> takes several arguments, among which is the <code>model</code> for which we want the robust standard errors and the <code>type</code> of standard errors we wish to calculate. <code>type</code> can be “constant” (the regular homoskedastic errors), “hc0”, “hc1”, “hc2”, “hc3”, or “hc4”; “hc1” is the default type in some statistical software packages. Let us compute robust standard errors for the basic <span class="math inline">\(food\)</span> equation and compare them with the regular (incorrect) ones.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">foodeq &lt;-<span class="st"> </span><span class="kw">lm</span>(food_exp~income,<span class="dt">data=</span>food)
+<span class="kw">kable</span>(<span class="kw">tidy</span>(foodeq),<span class="dt">caption=</span>
+ <span class="st">&quot;Regular standard errors in the &#39;food&#39; equation&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:hccm8">Table 8.3: </span>Regular standard errors in the ‘food’ equation</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">83.4160</td>
+<td align="right">43.41016</td>
+<td align="right">1.92158</td>
+<td align="right">0.062182</td>
+</tr>
+<tr class="even">
+<td align="left">income</td>
+<td align="right">10.2096</td>
+<td align="right">2.09326</td>
+<td align="right">4.87738</td>
+<td align="right">0.000019</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cov1 &lt;-<span class="st"> </span><span class="kw">hccm</span>(foodeq, <span class="dt">type=</span><span class="st">&quot;hc1&quot;</span>) <span class="co">#needs package &#39;car&#39;</span>
+food.HC1 &lt;-<span class="st"> </span><span class="kw">coeftest</span>(foodeq, <span class="dt">vcov.=</span>cov1)
+<span class="kw">kable</span>(<span class="kw">tidy</span>(food.HC1),<span class="dt">caption=</span>
+  <span class="st">&quot;Robust (HC1) standard errors in the &#39;food&#39; equation&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:hc1food8">Table 8.4: </span>Robust (HC1) standard errors in the ‘food’ equation</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">83.4160</td>
+<td align="right">27.46375</td>
+<td align="right">3.03731</td>
+<td align="right">0.004299</td>
+</tr>
+<tr class="even">
+<td align="left">income</td>
+<td align="right">10.2096</td>
+<td align="right">1.80908</td>
+<td align="right">5.64356</td>
+<td align="right">0.000002</td>
+</tr>
+</tbody>
+</table>
+<p>When comparing Tables <a href="heteroskedasticity.html#tab:hccm8">8.3</a> and <a href="heteroskedasticity.html#tab:hc1food8">8.4</a>, it can be observed that the robust standard errors are smaller and, since the coefficients are the same, the <span class="math inline">\(t\)</span>-statistics are higher and the <span class="math inline">\(p\)</span>-values are smaller. Lower <span class="math inline">\(p\)</span>-values with robust standard errors is, however, the exception rather than the rule.</p>
+<p>Next is an example of using robust standard errors when performing a fictitious linear hypothesis test on the basic ‘andy’ model, to test the hypothesis <span class="math inline">\(H_{0}: \beta_{2}+\beta_{3}=0\)</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;andy&quot;</span>, <span class="dt">package=</span><span class="st">&quot;PoEdata&quot;</span>)
+andy.eq &lt;-<span class="st"> </span><span class="kw">lm</span>(sales~price+advert, <span class="dt">data=</span>andy)
+bp &lt;-<span class="st"> </span><span class="kw">bptest</span>(andy.eq) <span class="co">#Heteroskedsticity test</span>
+b2 &lt;-<span class="st"> </span><span class="kw">coef</span>(andy.eq)[[<span class="st">&quot;price&quot;</span>]]
+b3 &lt;-<span class="st"> </span><span class="kw">coef</span>(andy.eq)[[<span class="st">&quot;advert&quot;</span>]]
+H0 &lt;-<span class="st"> &quot;price+advert=0&quot;</span>
+<span class="kw">kable</span>(<span class="kw">tidy</span>(<span class="kw">linearHypothesis</span>(andy.eq, H0,
+  <span class="dt">vcov=</span><span class="kw">hccm</span>(andy.eq, <span class="dt">type=</span><span class="st">&quot;hc1&quot;</span>))),
+  <span class="dt">caption=</span><span class="st">&quot;Linear hypothesis with robust standard errors&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:hclinH8">Table 8.5: </span>Linear hypothesis with robust standard errors</caption>
+<thead>
+<tr class="header">
+<th align="right">res.df</th>
+<th align="right">df</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">73</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">72</td>
+<td align="right">1</td>
+<td align="right">23.387</td>
+<td align="right">7e-06</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kable</span>(<span class="kw">tidy</span>(<span class="kw">linearHypothesis</span>(andy.eq, H0)), 
+  <span class="dt">caption=</span><span class="st">&quot;Linear hypothesis with regular standard errors&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:hclinH8">Table 8.6: </span>Linear hypothesis with regular standard errors</caption>
+<thead>
+<tr class="header">
+<th align="right">res.df</th>
+<th align="right">rss</th>
+<th align="right">df</th>
+<th align="right">sumsq</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">73</td>
+<td align="right">2254.71</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">72</td>
+<td align="right">1718.94</td>
+<td align="right">1</td>
+<td align="right">535.772</td>
+<td align="right">22.4415</td>
+<td align="right">0.000011</td>
+</tr>
+</tbody>
+</table>
+<p>This example demonstrates how to introduce robust standards errors in a <code>linearHypothesis</code> function. It also shows that, when heteroskedasticity is not significant (<code>bptst</code> does not reject the homoskedasticity hypothesis) the robust and regular standard errors (and therefore the <span class="math inline">\(F\)</span> statistics of the tests) are very similar.</p>
+<p>Just for completeness, I should mention that a similar function, with similar uses is the function <code>vcov</code>, which can be found in the package <code>sandwich</code>.</p>
+</div>
+<div id="gls-known-form-of-variance" class="section level2">
+<h2><span class="header-section-number">8.4</span> GLS: Known Form of Variance</h2>
+<p>Let us consider the regression equation given in Equation \ref{eq:genheteq8}), where the errors are assumed heteroskedastic.</p>
+<span class="math display">\[\begin{equation}
+y_{i}=\beta_{1}+\beta_{2}x_{i}+e_{i},\;\;\;var(e_{i})=\sigma_{i}
+\label{eq:genheteq8}
+\end{equation}\]</span>
+<p>Heteroskedasticity implies different variances of the error term for each observation. Ideally, one should be able to estimate the <span class="math inline">\(N\)</span> variances in order to obtain reliable standard errors, but this is not possible. The second best in the absence of such estimates is an assumption of how variance depends on one or several of the regressors. The estimator obtained when using such an assumption is called a <strong>generalized least squares</strong> estimator, <strong>gls</strong>, which may involve a structure of the errors as proposed in Equation \ref{eq:glsvardef8}, which assumes a linear relationship between variance and the regressor <span class="math inline">\(x_{i}\)</span> with the unknown parameter <span class="math inline">\(\sigma^2\)</span> as a proportionality factor.</p>
+<span class="math display">\[\begin{equation}
+var(e_{i})=\sigma_{i}^2=\sigma ^2 x_{i}
+\label{eq:glsvardef8}
+\end{equation}\]</span>
+<p>One way to circumvent guessing a proportionality factor in Equation \ref{eq:glsvardef8} is to transform the initial model in Equation \ref{eq:genheteq8} such that the error variance in the new model has the structure proposed in Equation \ref{eq:glsvardef8}. This can be achieved if the initial model is divided through by <span class="math inline">\(\sqrt x_{i}\)</span> and estimate the new model shown in Equation \ref{eq:glsstar8}. If Equation \ref{eq:glsstar8} is correct, then the resulting estimator is BLUE.</p>
+<span class="math display">\[\begin{equation}
+y_{i}^{*}=\beta_{1}x_{i1}^{*}+\beta_{2}x_{i2}^{*}+e_{i}^{*}
+\label{eq:glsstar8}
+\end{equation}\]</span>
+<p>In general, if the initial variables are multiplied by quantities that are specific to each observation, the resulting estimator is called a <strong>weighted least squares</strong> estimator, <strong>wls</strong>. Unlike the robust standard errors method for heteroskedasticity correction, <strong>gls</strong> or <strong>wls</strong> methods change the estimates of regression coefficients.</p>
+<p>The function <code>lm()</code> can do <strong>wls</strong> estimation if the argument <code>weights</code> is provided under the form of a vector of the same size as the other variables in the model. <span class="math inline">\(R\)</span> takes the square roots of the weights provided to multiply the variables in the regression. Thus, if you wish to multiply the model by <span class="math inline">\(\frac{1}{\sqrt {x_{i}}}\)</span>, the weights should be <span class="math inline">\(w_{i}=\frac{1}{x_{i}}\)</span>.</p>
+<p>Let us apply these ideas to re-estimate the <span class="math inline">\(food\)</span> equation, which we have determined to be affected by heteroskedasticity.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">w &lt;-<span class="st"> </span><span class="dv">1</span>/food$income
+food.wls &lt;-<span class="st"> </span><span class="kw">lm</span>(food_exp~income, <span class="dt">weights=</span>w, <span class="dt">data=</span>food)
+vcvfoodeq &lt;-<span class="st"> </span><span class="kw">coeftest</span>(foodeq, <span class="dt">vcov.=</span>cov1)
+<span class="kw">kable</span>(<span class="kw">tidy</span>(foodeq), 
+  <span class="dt">caption=</span><span class="st">&quot;OLS estimates for the &#39;food&#39; equation&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:wlsfoodcomp8">Table 8.7: </span>OLS estimates for the ‘food’ equation</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">83.4160</td>
+<td align="right">43.41016</td>
+<td align="right">1.92158</td>
+<td align="right">0.062182</td>
+</tr>
+<tr class="even">
+<td align="left">income</td>
+<td align="right">10.2096</td>
+<td align="right">2.09326</td>
+<td align="right">4.87738</td>
+<td align="right">0.000019</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kable</span>(<span class="kw">tidy</span>(food.wls),
+  <span class="dt">caption=</span><span class="st">&quot;WLS estimates for the &#39;food&#39; equation&quot;</span> )</code></pre></div>
+<table>
+<caption><span id="tab:tableFoodWLS">Table 8.8: </span>WLS estimates for the ‘food’ equation</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">78.6841</td>
+<td align="right">23.78872</td>
+<td align="right">3.30762</td>
+<td align="right">0.002064</td>
+</tr>
+<tr class="even">
+<td align="left">income</td>
+<td align="right">10.4510</td>
+<td align="right">1.38589</td>
+<td align="right">7.54100</td>
+<td align="right">0.000000</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kable</span>(<span class="kw">tidy</span>(vcvfoodeq),<span class="dt">caption=</span>
+<span class="st">&quot;OLS estimates for the &#39;food&#39; equation with robust standard errors&quot;</span> )</code></pre></div>
+<table>
+<caption><span id="tab:foodeqVcov">Table 8.9: </span>OLS estimates for the ‘food’ equation with robust standard errors</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">83.4160</td>
+<td align="right">27.46375</td>
+<td align="right">3.03731</td>
+<td align="right">0.004299</td>
+</tr>
+<tr class="even">
+<td align="left">income</td>
+<td align="right">10.2096</td>
+<td align="right">1.80908</td>
+<td align="right">5.64356</td>
+<td align="right">0.000002</td>
+</tr>
+</tbody>
+</table>
+<p>Tables <a href="heteroskedasticity.html#tab:wlsfoodcomp8">8.7</a>, <a href="heteroskedasticity.html#tab:tableFoodWLS">8.8</a>, and <a href="heteroskedasticity.html#tab:foodeqVcov">8.9</a> compare ordinary least square model to a weighted least squares model and to OLS with robust standard errors. The WLS model multiplies the variables by <span class="math inline">\(1 \, / \, \sqrt{income}\)</span>, where the weights provided have to be <span class="math inline">\(w=1\,/\, income\)</span>. The effect of introducing the weights is a slightly lower intercept and, more importantly, different standard errors. Please note that the WLS standard errors are closer to the robust (HC1) standard errors than to the OLS ones.</p>
+</div>
+<div id="grouped-data" class="section level2">
+<h2><span class="header-section-number">8.5</span> Grouped Data</h2>
+<p>We have seen already (Equation \ref{eq:gqnull8}) how a dichotomous indicator variable splits the data in two groups that may have different variances. The generalized least squares method can account for group heteroskedasticity, by choosing appropriate weights for each group; if the variables are transformed by multiplying them by <span class="math inline">\(1/\sigma_{j}\)</span>, for group <span class="math inline">\(j\)</span>, the resulting model is homoskedastic. Since <span class="math inline">\(\sigma_{j}\)</span> is unknown, we replace it with its estimate <span class="math inline">\(\hat \sigma_{j}\)</span>. This method is named <strong>feasible generalized least squares</strong>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;cps2&quot;</span>, <span class="dt">package=</span><span class="st">&quot;PoEdata&quot;</span>)
+rural.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(wage~educ+exper, <span class="dt">data=</span>cps2, <span class="dt">subset=</span>(metro==<span class="dv">0</span>))
+sigR &lt;-<span class="st"> </span><span class="kw">summary</span>(rural.lm)$sigma
+metro.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(wage~educ+exper, <span class="dt">data=</span>cps2, <span class="dt">subset=</span>(metro==<span class="dv">1</span>))
+sigM &lt;-<span class="st"> </span><span class="kw">summary</span>(metro.lm)$sigma
+cps2$wght &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, <span class="kw">nrow</span>(cps2))
+<span class="co"># Create a vector of weights</span>
+for (i in <span class="dv">1</span>:<span class="dv">1000</span>) 
+{
+  if (cps2$metro[i]==<span class="dv">0</span>){cps2$wght[i] &lt;-<span class="st"> </span><span class="dv">1</span>/sigR^<span class="dv">2</span>}
+  else{cps2$wght[i] &lt;-<span class="st"> </span><span class="dv">1</span>/sigM^<span class="dv">2</span>}
+}
+wge.fgls &lt;-<span class="st"> </span><span class="kw">lm</span>(wage~educ+exper+metro, <span class="dt">weights=</span>wght, <span class="dt">data=</span>cps2)
+wge.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(wage~educ+exper+metro, <span class="dt">data=</span>cps2)
+wge.hce &lt;-<span class="st"> </span><span class="kw">coeftest</span>(wge.lm, <span class="dt">vcov.=</span><span class="kw">hccm</span>(wge.lm, <span class="dt">data=</span>cps2))
+<span class="kw">stargazer</span>(rural.lm, metro.lm, wge.fgls,wge.hce,
+  <span class="dt">header=</span><span class="ot">FALSE</span>, 
+  <span class="dt">title=</span><span class="st">&quot;OLS vs. FGLS estimates for the &#39;cps2&#39; data&quot;</span>,
+  <span class="dt">type=</span>.stargazertype, <span class="co"># &quot;html&quot; or &quot;latex&quot; (in index.Rmd) </span>
+  <span class="dt">keep.stat=</span><span class="st">&quot;n&quot;</span>,  <span class="co"># what statistics to print</span>
+  <span class="dt">omit.table.layout=</span><span class="st">&quot;n&quot;</span>,
+  <span class="dt">star.cutoffs=</span><span class="ot">NA</span>,
+  <span class="dt">digits=</span><span class="dv">3</span>, 
+<span class="co">#  single.row=TRUE,</span>
+  <span class="dt">intercept.bottom=</span><span class="ot">FALSE</span>, <span class="co">#moves the intercept coef to top</span>
+  <span class="dt">column.labels=</span><span class="kw">c</span>(<span class="st">&quot;Rural&quot;</span>,<span class="st">&quot;Metro&quot;</span>,<span class="st">&quot;FGLS&quot;</span>, <span class="st">&quot;HC1&quot;</span>),
+  <span class="dt">dep.var.labels.include =</span> <span class="ot">FALSE</span>,
+  <span class="dt">model.numbers =</span> <span class="ot">FALSE</span>,
+  <span class="dt">dep.var.caption=</span><span class="st">&quot;Dependent variable: wage&quot;</span>,
+  <span class="dt">model.names=</span><span class="ot">FALSE</span>,
+  <span class="dt">star.char=</span><span class="ot">NULL</span>) <span class="co">#supresses the stars</span></code></pre></div>
+<table style="text-align:center">
+<caption>
+<strong>OLS vs. FGLS estimates for the ‘cps2’ data</strong>
+</caption>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="4">
+Dependent variable: wage
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+Rural
+</td>
+<td>
+Metro
+</td>
+<td>
+FGLS
+</td>
+<td>
+HC1
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+-6.166
+</td>
+<td>
+-9.052
+</td>
+<td>
+-9.398
+</td>
+<td>
+-9.914
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1.899)
+</td>
+<td>
+(1.189)
+</td>
+<td>
+(1.020)
+</td>
+<td>
+(1.218)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+educ
+</td>
+<td>
+0.956
+</td>
+<td>
+1.282
+</td>
+<td>
+1.196
+</td>
+<td>
+1.234
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.133)
+</td>
+<td>
+(0.080)
+</td>
+<td>
+(0.069)
+</td>
+<td>
+(0.084)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+exper
+</td>
+<td>
+0.126
+</td>
+<td>
+0.135
+</td>
+<td>
+0.132
+</td>
+<td>
+0.133
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.025)
+</td>
+<td>
+(0.018)
+</td>
+<td>
+(0.015)
+</td>
+<td>
+(0.016)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+metro
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+1.539
+</td>
+<td>
+1.524
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+(0.346)
+</td>
+<td>
+(0.346)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+192
+</td>
+<td>
+808
+</td>
+<td>
+1,000
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+</table>
+<p>The table titled “OLS, vs. FGLS estimates for the ‘cps2’ data” helps comparing the coefficients and standard errors of four models: OLS for rural area, OLS for metro area, feasible GLS with the whole dataset but with two types of weights, one for each area, and, finally, OLS with heteroskedasticity-consistent (HC1) standard errors. Please be reminded that the regular OLS standard errors are not to be trusted in the presence of heteroskedasticity.</p>
+<p>The previous code sequence needs some explanation. It runs two regression models, <code>rural.lm</code> and <code>metro.lm</code> just to estimate <span class="math inline">\(\hat \sigma_{R}\)</span> and <span class="math inline">\(\hat \sigma_{M}\)</span> needed to calculate the weights for each group. The subsets, this time, were selected directly in the <code>lm()</code> function through the argument <code>subset=</code>, which takes as argument some logical expression that may involve one or more variables in the dataset. Then, I create a new vector of a size equal to the number of observations in the dataset, a vector that will be populated over the next few code lines with weights. I choose to create this vector as a new column of the dataset <code>cps2</code>, a column named <code>wght</code>. With this the hard part is done; I just need to run an <code>lm()</code> model with the option <code>weights=wght</code> and that gives my FGLS coefficients and standard errors.</p>
+<p>The next lines make a <code>for</code> loop runing through each observation. If observation <span class="math inline">\(i\)</span> is a rural area observation, it receives a weight equal to <span class="math inline">\(1/\sigma_{R}^2\)</span>; otherwise, it receives the weight <span class="math inline">\(1/\sigma_{M}^2\)</span>. Why did I square those <span class="math inline">\(sigmas\)</span>? Because, remember, the argument <code>weights</code> in the <code>lm()</code> function requires the square of the factor multiplying the regression model in the WLS method.</p>
+<p>The remaining part of the code repeats models we ran before and places them in one table for making comparison easier.</p>
+</div>
+<div id="gls-unknown-form-of-variance" class="section level2">
+<h2><span class="header-section-number">8.6</span> GLS: Unknown Form of Variance</h2>
+Suppose we wish to estimate the model in Equation \ref{eq:genericeq8}, where the errors are known to be heteroskedastic but their variance is an unknown function of <span class="math inline">\(S\)</span> some variables <span class="math inline">\(z_{s}\)</span> that could be among the regressors in our model or other variables.
+<span class="math display">\[\begin{equation}
+y_{i}=\beta_{1}+\beta_{2}x_{i2}+...\beta_{k}x_{iK}+e_{i}
+\label{eq:genericeq8}
+\end{equation}\]</span>
+<p>Equation \ref{eq:varfuneq8} uses the residuals from Equation \ref{eq:genericeq8} as estimates of the variances of the error terms and serves at estimating the functional form of the variance. If the assumed functional form of the variance is the exponential function <span class="math inline">\(var(e_{i})=\sigma_{i}^{2}=\sigma ^2 x_{i}^{\gamma}\)</span>, then the regressors <span class="math inline">\(z_{is}\)</span> in Equation \ref{eq:varfuneq8} are the logs of the initial regressors <span class="math inline">\(x_{is}\)</span>, <span class="math inline">\(z_{is}=log(x_{is})\)</span>.</p>
+<span class="math display">\[\begin{equation}
+ln(\hat{e}_{i}^{2})=\alpha_{1}+\alpha_{2}z_{i2}+...+\alpha_{S}z_{iS}+\nu_{i}
+\label{eq:varfuneq8}
+\end{equation}\]</span>
+<p>The variance estimates for each error term in Equation \ref{eq:genericeq8} are the fitted values, <span class="math inline">\(\hat \sigma_{i}^2\)</span> of Equation \ref{eq:varfuneq8}, which can then be used to construct a vector of weights for the regression model in Equation \ref{eq:genericeq8}. Let us follow these steps on the <span class="math inline">\(food\)</span> basic equation where we assume that the variance of error term <span class="math inline">\(i\)</span> is an unknown exponential function of income. So, the purpose of the following code fragment is to determine the weights and to supply them to the <code>lm()</code> function. Remember, <code>lm()</code> <strong>multiplies</strong> each observation by the <strong>square root</strong> of the weight you supply. For instance, if you want to multiply the observations by <span class="math inline">\(1/\sigma_{i}\)</span>, you should supply the weight <span class="math inline">\(w_{i}=1/\sigma_{i}^2\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;food&quot;</span>, <span class="dt">package=</span><span class="st">&quot;PoEdata&quot;</span>)
+food.ols &lt;-<span class="st"> </span><span class="kw">lm</span>(food_exp~income, <span class="dt">data=</span>food)
+ehatsq &lt;-<span class="st"> </span><span class="kw">resid</span>(food.ols)^<span class="dv">2</span>
+sighatsq.ols  &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="kw">log</span>(ehatsq)~<span class="kw">log</span>(income), <span class="dt">data=</span>food)
+vari &lt;-<span class="st"> </span><span class="kw">exp</span>(<span class="kw">fitted</span>(sighatsq.ols))
+food.fgls &lt;-<span class="st"> </span><span class="kw">lm</span>(food_exp~income, <span class="dt">weights=</span><span class="dv">1</span>/vari, <span class="dt">data=</span>food)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">stargazer</span>(food.ols, food.HC1, food.wls, food.fgls,
+  <span class="dt">header=</span><span class="ot">FALSE</span>, 
+  <span class="dt">title=</span><span class="st">&quot;Comparing various &#39;food&#39; models&quot;</span>,
+  <span class="dt">type=</span>.stargazertype, <span class="co"># &quot;html&quot; or &quot;latex&quot; (in index.Rmd) </span>
+  <span class="dt">keep.stat=</span><span class="st">&quot;n&quot;</span>,  <span class="co"># what statistics to print</span>
+  <span class="dt">omit.table.layout=</span><span class="st">&quot;n&quot;</span>,
+  <span class="dt">star.cutoffs=</span><span class="ot">NA</span>,
+  <span class="dt">digits=</span><span class="dv">3</span>, 
+<span class="co">#  single.row=TRUE,</span>
+  <span class="dt">intercept.bottom=</span><span class="ot">FALSE</span>, <span class="co">#moves the intercept coef to top</span>
+  <span class="dt">column.labels=</span><span class="kw">c</span>(<span class="st">&quot;OLS&quot;</span>,<span class="st">&quot;HC1&quot;</span>,<span class="st">&quot;WLS&quot;</span>,<span class="st">&quot;FGLS&quot;</span>),
+  <span class="dt">dep.var.labels.include =</span> <span class="ot">FALSE</span>,
+  <span class="dt">model.numbers =</span> <span class="ot">FALSE</span>,
+  <span class="dt">dep.var.caption=</span><span class="st">&quot;Dependent variable: &#39;food expenditure&#39;&quot;</span>,
+  <span class="dt">model.names=</span><span class="ot">FALSE</span>,
+  <span class="dt">star.char=</span><span class="ot">NULL</span>) <span class="co">#supresses the stars</span></code></pre></div>
+<table style="text-align:center">
+<caption>
+<strong>Comparing various ‘food’ models</strong>
+</caption>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="4">
+Dependent variable: ‘food expenditure’
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+OLS
+</td>
+<td>
+HC1
+</td>
+<td>
+WLS
+</td>
+<td>
+FGLS
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+83.416
+</td>
+<td>
+83.416
+</td>
+<td>
+78.684
+</td>
+<td>
+76.054
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(43.410)
+</td>
+<td>
+(27.464)
+</td>
+<td>
+(23.789)
+</td>
+<td>
+(9.713)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+income
+</td>
+<td>
+10.210
+</td>
+<td>
+10.210
+</td>
+<td>
+10.451
+</td>
+<td>
+10.633
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(2.093)
+</td>
+<td>
+(1.809)
+</td>
+<td>
+(1.386)
+</td>
+<td>
+(0.972)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+40
+</td>
+<td>
+</td>
+<td>
+40
+</td>
+<td>
+40
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+</table>
+<p>The table titled “Comparing various ‘food’ models” shows that the FGLS with unknown variances model substantially lowers the standard errors of the coefficients, which in turn increases the <span class="math inline">\(t\)</span>-ratios (since the point estimates of the coefficients remain about the same), making an important difference for hypothesis testing.</p>
+<p>For a few classes of variance functions, the weights in a GLS model can be calculated in <span class="math inline">\(R\)</span> using the <code>varFunc()</code> and <code>varWeights()</code> functions in the package <code>nlme</code>.</p>
+</div>
+<div id="heteroskedasticity-in-the-linear-probability-model" class="section level2">
+<h2><span class="header-section-number">8.7</span> Heteroskedasticity in the Linear Probability Model</h2>
+<p>As we have already seen, the linear probability model is, by definition, heteroskedastic, with the variance of the error term given by its binomial distribution parameter <span class="math inline">\(p\)</span>, the probability that <span class="math inline">\(y\)</span> is equal to 1, <span class="math inline">\(var(y)=p(1-p)\)</span>, where <span class="math inline">\(p\)</span> is defined in Equation \ref{eq:binomialp8}.</p>
+<span class="math display">\[\begin{equation}
+p=\beta_{1}+\beta_{2}x_{2}+...+\beta_{K}x_{K}+e
+\label{eq:binomialp8}
+\end{equation}\]</span>
+<p>Thus, the linear probability model provides a known variance to be used with GLS, taking care that none of the estimated variances is negative. One way to avoid negative or greater than one probabilities is to artificially limit them to the interval <span class="math inline">\((0,1)\)</span>.</p>
+<p>Let us revise the <span class="math inline">\(coke\)</span> model in dataset <code>coke</code> using this structure of the variance.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;coke&quot;</span>, <span class="dt">package=</span><span class="st">&quot;PoEdata&quot;</span>)
+coke.ols &lt;-<span class="st"> </span><span class="kw">lm</span>(coke~pratio+disp_coke+disp_pepsi, <span class="dt">data=</span>coke)
+coke.hc1 &lt;-<span class="st"> </span><span class="kw">coeftest</span>(coke.ols, <span class="dt">vcov.=</span><span class="kw">hccm</span>(coke.ols, <span class="dt">type=</span><span class="st">&quot;hc1&quot;</span>))
+p &lt;-<span class="st"> </span><span class="kw">fitted</span>(coke.ols)
+<span class="co"># Truncate negative or &gt;1 values of p</span>
+pt&lt;-p
+pt[pt&lt;<span class="fl">0.01</span>] &lt;-<span class="st"> </span><span class="fl">0.01</span>
+pt[pt&gt;<span class="fl">0.99</span>] &lt;-<span class="st"> </span><span class="fl">0.99</span>
+sigsq &lt;-<span class="st"> </span>pt*(<span class="dv">1</span>-pt)
+wght &lt;-<span class="st"> </span><span class="dv">1</span>/sigsq
+coke.gls.trunc &lt;-<span class="st"> </span><span class="kw">lm</span>(coke~pratio+disp_coke+disp_pepsi, 
+                  <span class="dt">data=</span>coke, <span class="dt">weights=</span>wght)
+<span class="co"># Eliminate negative or &gt;1 values of p</span>
+p1 &lt;-<span class="st"> </span>p
+p1[p1&lt;<span class="fl">0.01</span> |<span class="st"> </span>p1&gt;<span class="fl">0.99</span>] &lt;-<span class="st"> </span><span class="ot">NA</span>
+sigsq &lt;-<span class="st"> </span>p1*(<span class="dv">1</span>-p1)
+wght &lt;-<span class="st"> </span><span class="dv">1</span>/sigsq
+coke.gls.omit &lt;-<span class="st"> </span><span class="kw">lm</span>(coke~pratio+disp_coke+disp_pepsi, 
+                  <span class="dt">data=</span>coke, <span class="dt">weights=</span>wght)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">stargazer</span>(coke.ols, coke.hc1, coke.gls.trunc, coke.gls.omit,
+  <span class="dt">header=</span><span class="ot">FALSE</span>, 
+  <span class="dt">title=</span><span class="st">&quot;Comparing various &#39;coke&#39; models&quot;</span>,
+  <span class="dt">type=</span>.stargazertype, <span class="co"># &quot;html&quot; or &quot;latex&quot; (in index.Rmd) </span>
+  <span class="dt">keep.stat=</span><span class="st">&quot;n&quot;</span>,  <span class="co"># what statistics to print</span>
+  <span class="dt">omit.table.layout=</span><span class="st">&quot;n&quot;</span>,
+  <span class="dt">star.cutoffs=</span><span class="ot">NA</span>,
+  <span class="dt">digits=</span><span class="dv">4</span>, 
+<span class="co">#  single.row=TRUE,</span>
+  <span class="dt">intercept.bottom=</span><span class="ot">FALSE</span>, <span class="co">#moves the intercept coef to top</span>
+  <span class="dt">column.labels=</span><span class="kw">c</span>(<span class="st">&quot;OLS&quot;</span>,<span class="st">&quot;HC1&quot;</span>,<span class="st">&quot;GLS-trunc&quot;</span>,<span class="st">&quot;GLS-omit&quot;</span>),
+  <span class="dt">dep.var.labels.include =</span> <span class="ot">FALSE</span>,
+  <span class="dt">model.numbers =</span> <span class="ot">FALSE</span>,
+  <span class="dt">dep.var.caption=</span><span class="st">&quot;Dependent variable: &#39;choice of coke&#39;&quot;</span>,
+  <span class="dt">model.names=</span><span class="ot">FALSE</span>,
+  <span class="dt">star.char=</span><span class="ot">NULL</span>) <span class="co">#supresses the stars</span></code></pre></div>
+<table style="text-align:center">
+<caption>
+<strong>Comparing various ‘coke’ models</strong>
+</caption>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="4">
+Dependent variable: ‘choice of coke’
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+OLS
+</td>
+<td>
+HC1
+</td>
+<td>
+GLS-trunc
+</td>
+<td>
+GLS-omit
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+0.8902
+</td>
+<td>
+0.8902
+</td>
+<td>
+0.6505
+</td>
+<td>
+0.8795
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.0655)
+</td>
+<td>
+(0.0653)
+</td>
+<td>
+(0.0568)
+</td>
+<td>
+(0.0594)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+pratio
+</td>
+<td>
+-0.4009
+</td>
+<td>
+-0.4009
+</td>
+<td>
+-0.1652
+</td>
+<td>
+-0.3859
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.0613)
+</td>
+<td>
+(0.0604)
+</td>
+<td>
+(0.0444)
+</td>
+<td>
+(0.0527)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+disp_coke
+</td>
+<td>
+0.0772
+</td>
+<td>
+0.0772
+</td>
+<td>
+0.0940
+</td>
+<td>
+0.0760
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.0344)
+</td>
+<td>
+(0.0339)
+</td>
+<td>
+(0.0399)
+</td>
+<td>
+(0.0353)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+disp_pepsi
+</td>
+<td>
+-0.1657
+</td>
+<td>
+-0.1657
+</td>
+<td>
+-0.1314
+</td>
+<td>
+-0.1587
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.0356)
+</td>
+<td>
+(0.0344)
+</td>
+<td>
+(0.0354)
+</td>
+<td>
+(0.0360)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+1,140
+</td>
+<td>
+</td>
+<td>
+1,140
+</td>
+<td>
+1,124
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+</table>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-R-sandwich">
+<p>Lumley, Thomas, and Achim Zeileis. 2015. <em>Sandwich: Robust Covariance Matrix Estimators</em>. <a href="https://CRAN.R-project.org/package=sandwich" class="uri">https://CRAN.R-project.org/package=sandwich</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="indvars.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="time-series-stationary-variables.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/08-heteroskedasticity.Rmd",
+"text": null
+},
+"download": ["RPoE.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

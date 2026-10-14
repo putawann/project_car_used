@@ -1,0 +1,1057 @@
+ 
+ 5  Encoding Categorical Predictors – Feature Engineering and Selection: A Practical Approach for Predictive Models 
+ 5   Encoding Categorical Predictors 
+ Feature Engineering and Selection: A Practical Approach for Predictive Models 
+ Twitter
+ Facebook
+ LinkedIn
+ Preface 
+ 1   Introduction 
+ 2   Illustrative Example: Predicting Risk of Ischemic Stroke 
+ 3   A Review of the Predictive Modeling Process 
+ 4   Exploratory Visualizations 
+ 5   Encoding Categorical Predictors 
+ 6   Engineering Numeric Predictors 
+ 7   Detecting Interaction Effects 
+ 8   Handling Missing Data 
+ 9   Working with Profile Data 
+ 10   Feature Selection Overview 
+ 11   Greedy Search Methods 
+ 12   Global Search Methods 
+ Table of contents 
+ 5.1 Creating Dummy Variables for Unordered Categories 
+ 5.2 Encoding Predictors with Many Categories 
+ 5.3 Approaches for Novel Categories 
+ 5.4 Supervised Encoding Methods 
+ 5.5 Encodings for Ordered Data 
+ 5.6 Creating Features from Text Data 
+ 5.7 Factors Versus Dummy Variables in Tree-Based Models 
+ 5.8 Summary 
+ 5.9 Computing 
+ Chapter References 
+ 5   Encoding Categorical Predictors 
+ Categorical or nominal predictors are those that contain qualitative data. For the OkCupid data, examples include education (e.g., high school, two-year college, college, etc.) and diet (e.g., anything, vegan, vegetarian, etc.). In the Ames data, the type of house and neighborhood are predictors that have no numeric scale. However, while numeric, the ZIP code also qualifies as a qualitative predictor because the numeric values have no continuous meaning. Simply put, there is no reason that a ZIP Code of 21212 is 14,827 “more” than a ZIP Code of 06385. 
+ Categorical predictors also can be derived from unstructured or open text. The OkCupid data contains sets of optional essays that describe individuals’ interests and other personal information. Predictive models that depend on numeric inputs cannot directly handle open text fields. Instead, these information-rich data need to be processed prior to presenting the information to a model. Text information can be processed in different ways. For example, if keywords are extracted from text to use as predictors, then should these include single words or strings of words? Should words be stemmed so that a root word is used (e.g., “comput” being short for “computer”, “computers”, “computing”, “computed” etc.) or should a regular expression pattern-matching approach be used (e.g., ^comput )? 
+ Simple categorical variables can also be classified as ordered or unordered . A variable with values “Bad”, “Good”, and “Better” shows a clear progression of values. While the difference between these categories may not be precisely numerically quantifiable, there is a meaningful ordering. To contrast, consider another variable that takes values of “French”, “Indian”, or “Peruvian”. These categories have no meaningful ordering. Ordered and unordered factors might require different approaches for including the embedded information in a model. 
+ As with other preprocessing steps, the approach to including the predictors depends on the type of model. A large majority of models require that all predictors be numeric. There are, however, some exceptions. Algorithms for tree-based models can naturally handle splitting numeric or categorical predictors. These algorithms employ a series if/then statements that sequentially split the data into groups. For example, in the Chicago data, the day of the week is a strong predictor and a tree-based model would likely include a model component such as 
+ if day in {Sun, Sat} then ridership = 4.4K
+ else ridership = 17.3K 
+ As another example, a naive Bayes model ( Section 12.1 ) can create a cross-tabulation between a categorical predictor and the outcome class and this frequency distribution is factored into the model’s probability calculations. In this situation, the categories can be processed in their natural format. The final section of this chapter investigates how categorical predictors interact with tree-based models. 
+ Tree-based and naive Bayes models are exceptions; most models require that the predictors take numeric form. This chapter focuses primarily on methods that encode categorical data to numeric values. 
+ Many of the analyses in this chapter use the OkCupid data that were introduced in Section 3.1 and discussed in the previous chapter. In this chapter, we will explore specific variables in more detail. One issue in doing this is related to overfitting. Compared to other data sets discussed in this book, the OkCupid data set contains a large number of potential categorical predictors, many of which have a low prevalence. It would be problematic to take the entire training set, examine specific trends and variables, then add features to the model based on these analyses. Even though we cross-validate the models on these data, we may overfit and find predictive relationships that are not generalizable to other data. The data set is not small; the training set consists of 38,809 data points. However, for the analyses here, a subsample of 5,000 STEM profiles and 5,000 non-STEM profiles were selected from the training set for the purpose of discovering new predictors for the models (consistent with Section 3.8 ). 
+ 5.1 Creating Dummy Variables for Unordered Categories 
+ The most basic approach to representing categorical values as numeric data is to create dummy or indicator variables . These are artificial numeric variables that capture some aspect of one (or more) of the categorical values. There are many methods for doing this and, to illustrate, consider a simple example for the day of the week. If we take the seven possible values and convert them into binary dummy variables, the mathematical function required to make the translation is often referred to as a contrast or parameterization function. An example of a contrast function is called the “reference cell” or “treatment” contrast, where one of the values of the predictor is left unaccounted for in the resulting dummy variables. Using Sunday as the reference cell, the contrast function would create six dummy variables: 
+ Original Value 
+Dummy Variables
+ Mon 
+ Tues 
+ Wed 
+ Thurs 
+ Fri 
+ Sat 
+ Sun 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ Mon 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ Tues 
+ 0 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ Wed 
+ 0 
+ 0 
+ 1 
+ 0 
+ 0 
+ 0 
+ Thurs 
+ 0 
+ 0 
+ 0 
+ 1 
+ 0 
+ 0 
+ Fri 
+ 0 
+ 0 
+ 0 
+ 0 
+ 1 
+ 0 
+ Sat 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 1 
+ These six numeric predictors would take the place of the original categorical variable. 
+ Why only six? There are two related reasons. First, if the values of the six dummy variables are known, then the seventh can be directly inferred. The second reason is more technical. When fitting linear models, the design matrix \(X\) is created. When the model has an intercept, an additional initial column of ones for all rows is included. Estimating the parameters for a linear model (as well as other similar models) involve inverting the matrix \((X'X)\) . If the model includes an intercept and contains dummy variables for all seven days, then the seven day columns would add up (row-wise) to the intercept and this linear combination would prevent the matrix inverse from being computed (as it is singular). When this occurs, the design matrix said to be less than full rank or overdetermined . When there are \(C\) possible values of the predictor and only \(C-1\) dummy variables are used, the matrix inverse can be computed and the contrast method is said to be a full rank parameterization ( Timm and Carlson 1975 ; Haase 2011 ) . Less than full rank encodings are sometimes called “one-hot” encodings. Generating the full set of indicator variables may be advantageous for some models that are insensitive to linear dependencies (such as the glmnet model described in Section 7.3.2 ). 
+ What is the interpretation of the dummy variables? That depends on what type of model is being used. Consider a linear model for the Chicago transit data that only uses the day of the week in the model with the reference cell parameterization above. Using the training set to fit the model, the intercept value estimates the mean of the reference cell, which is the average number of Sunday riders in the training set, and was estimated to be 3.84K people. The second model parameter, for Monday, is estimated to be 12.61K. In the reference cell model, the dummy variables represent the mean value above and beyond the reference cell mean. In this case, estimate indicates that there were 12.61K more riders on Monday than Sunday. The overall estimate of Monday ridership adds the estimates from the intercept and dummy variable (16.45K rides). 
+ When there is more than one categorical predictor, the reference cell becomes multidimensional. Suppose there was a predictor for the weather that has only a few values: “clear”, “cloudy”, “rain”, and “snow”. Let’s consider “clear” to be the reference cell. If this variable was included in the model, the intercept would correspond to the mean of the Sundays with a clear sky. But, the interpretation of each set of dummy variables does not change. The average ridership for a cloudy Monday would augment the average clear Sunday ridership with the average incremental effect of cloudy and the average incremental effect of Monday. 
+ There are other contrast functions for dummy variables. The “cell means” parameterization ( Timm and Carlson 1975 ) would create a dummy variable for each day of the week and would not include an intercept to avoid the problem of singularity of the design matrix. In this case, the estimates for each dummy variable would correspond to the average value for that category. For the Chicago data, the parameter estimate for the Monday dummy variable would simply be 16.45K. 
+ There are several other contrast methods for constructing dummy variables. Another, based on polynomial functions, is discussed below for ordinal data. 
+ 5.2 Encoding Predictors with Many Categories 
+ If there are \(C\) categories, what happens when \(C\) becomes very large? For example, ZIP code in the United States may be an important predictor for outcomes that are affected by a geographic component. There are more than 40K possible ZIP codes and, depending on how the data are collected, this might produce an overabundance of dummy variables (relative to the number of data points). As mentioned in the previous section, this can cause the data matrix to be overdetermined and restrict the use of certain models. Also, ZIP codes in highly populated areas may have a higher rate of occurrence in the data, leading to a “long tail” of locations that are infrequently observed. 
+ One potential issue is that resampling might exclude some of the rarer categories from the analysis set. This would lead to dummy variable columns in the data that contain all zeros and, for many models, this would become a numerical issue that will cause an error. Moreover the model will not be able to provide a relevant prediction for new samples that contain this predictor. When a predictor contains a single value, we call this a zero-variance predictor because there truly is no variation displayed by the predictor. 
+ The first way to handle this issue is to create the full set of dummy variables and simply remove the zero-variance predictors. This is a simple and effective approach but it may be difficult to know a priori what terms will be in the model. In other words, during resampling, there may be a different number of model parameters across resamples. This can be a good side-effect since it captures the variance caused by omitting rarely occurring values and propagates this noise into the resampling estimates of performance. 
+ Prior to producing dummy variables, one might consider determining which (if any) of these variables are near-zero variance predictors or have the potential to have near zero variance during the resampling process. These are predictors that have few unique values (such as two values for binary dummy variables) and occur infrequently in the data ( Kuhn and Johnson 2013 ) . For the training set, we would consider the ratio of the frequencies of the most commonly occurring value to the second-most commonly occurring. For dummy variables, this is simply the ratio of the numbers of ones and zeros. Suppose that a dummy variable has 990 values of zero and 10 ones. The ratio of these frequencies, 99, indicates that it could easily be converted into all zeros during resampling. We suggest a rough cutoff of 19 to declare such a variable “too rare” although the context may raise or lower this bar for different problems. 
+ Although near-zero variance predictors likely contain little valuable predictive information, we may not desire to filter these out. One way to avoid filtering these predictors is to redefine the predictor’s categories prior to creating dummy variables. Instead an “other” category can be created that pools the rarely occurring categories, assuming that such a pooling is sensible. A cutoff based on the training set frequency can be specified that indicates which categories should be combined. Again, this should occur during resampling so that the final estimates reflect the variability in which predictor values are included in the “other” group. 
+ Another way to combine categories is to use a hashing function (or hashes ). Hashes are used to map one set of values to another set of values and are typically used in databases and cryptography ( Preneel 2010 ) . The original values are called the keys and are typically mapped to a smaller set of artificial hash values . In our context, a potentially large number of predictor categories are the keys and we would like to represent them using a smaller number of categories (i.e., the hashes). The number of possible hashes is set by the user and, for numerical purposes, is a power of 2. Some computationally interesting aspects to hash functions are 
+ The only data required is the value being hashed and the resulting number of hashes. This is different from the previously described contrast function using a reference cell. 
+ The translation process is completely deterministic. 
+ In traditional applications, it is important that the number of keys that are mapped to hashes is relatively uniform . This would be important if the hashes are used in cryptography since it increases the difficulty of guessing the result. As discussed below, this might not be a good characteristic for data analysis. 
+ Hash functions are unidirectional; once the hash values are created, there is no way of knowing the original values. If there are a known and finite set of original values, a table can be created to do the translation but, otherwise, the keys are indeterminable when only the hash value is known. 
+ There is no free lunch when using this procedure; some of the original categories will be mapped to the same hash value (called a “collision”). The number of collisions will be largely determined by the number of features that are produced. 
+ When using hashes to create dummy variables, the procedure is called “feature hashing” or the “hash trick” ( Weinberger et al. 2009 ) . Since there are many different hashing functions, there are different methods for producing the table that maps the original set to the reduced set of hashes. 
+ As a simple example, the locations from the OkCupid data were hashed 1 . Table  5.1 shows 7 of these cities to illustrate the details. 
+ Hash Integer Value 
+Hash Feature Number
+ 16 cols 
+ 256 cols 
+ belvedere tiburon 
+ 582753783 
+ 8 
+ 248 
+ berkeley 
+ 1166288024 
+ 9 
+ 153 
+ martinez 
+ −157684639 
+ 2 
+ 98 
+ mountain view 
+ −1267876914 
+ 15 
+ 207 
+ san leandro 
+ 1219729949 
+ 14 
+ 30 
+ san mateo 
+ 986716290 
+ 3 
+ 131 
+ south san francisco 
+ −373608504 
+ 9 
+ 201 
+Table 5.1: A demonstration of feature hashing for five of the locations in the OkC data.
+ The hash value is an integer value derived solely from each city’s text value. In order to convert this to a new feature in the data set, modular arithmetic is used. Suppose that 16 features are desired. To create a mapping from the integer to one of the 16 feature columns, integer division is used on the hash value using the formula \(column = (integer\mod 16) + 1\) . For example, for the string “mountain view”, we have \((-1267876914 \mod 16) + 1 = 15\) , so this city is mapped to the fifteenth dummy variable feature. The last column above shows the assignments for the cities when 256 feature are requested; \(\mod 256\) has more possible remainders than \(\mod 16\) so more features are possible. With 16 features, the dummy variable assignments for a selection of locations in the data are: 
+ Original Value 
+Hash Variables
+ 1 
+ 2 
+ 3 
+ 4 
+ 5 
+ 6 
+ 9 
+ 12 
+ 13 
+ 14 
+ 15 
+ 16 
+ alameda 
+ 1 
+ 0 
+ 0 
+ 0 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ belmont 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 1 
+ 0 
+ benicia 
+ 1 
+ 0 
+ 0 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ berkeley 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ castro valley 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ daly city 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 1 
+ 0 
+ emeryville 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 1 
+ 0 
+ 0 
+ 0 
+ fairfax 
+ 1 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ martinez 
+ 1 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ menlo park 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 1 
+ 0 
+ 0 
+ mountain view 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 1 
+ 0 
+ oakland 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ other 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ palo alto 
+ 1 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ san francisco 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ san leandro 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 1 
+ 0 
+ 0 
+ san mateo 
+ 1 
+ 0 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ san rafael 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 1 
+ south san francisco 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ walnut creek 
+ 1 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ There are several characteristics of this table to notice. First there are 4 hashes (columns) that are not shown in this table since they contain all zeros. This occurs because none of the hash integer values had those specific mod 16 remainders. This could be a problem for predictors that have the chance to take different string values than the training data and would be placed in one of these columns. In this case, it would be wise to create an ‘other’ category to ensure that new strings have a hashed representation. Next notice that there were 6 hashes with no collisions (i.e., have a single 1 in their column). But several columns exhibit collisions. An example of a collision is hash number 14 which encodes for both Menlo Park and San Leandro. In statistical terms, these two categories are said to be aliased or confounded , meaning that a parameter estimated from this hash cannot isolate the effect of either city. Alias structures have long been studied in the field of statistical experimental design although usually in the context of aliasing between variables rather than within variables ( Box, Hunter, and Hunter 2005 ) . Regardless, from a statistical perspective, minimizing the amount and degree of aliasing is an important aspect of a contrast scheme. 
+ Some hash functions can also be signed , meaning that instead of producing a binary indicator for the new feature, possible values could be -1, 0, or +1. A zero would indicate that the category is not associated with that specific feature and the \(\pm 1\) values can indicate different values of the original data. Suppose that two categories map to the same hash value. A binary hash would result in a collision but a signed hash could avoid this by encoding one category as +1 and the other as -1. Here are the same data as above with a signed hash of the same size: 
+ Original Value 
+Hash Variables
+ 1 
+ 2 
+ 3 
+ 4 
+ 5 
+ 6 
+ 9 
+ 12 
+ 13 
+ 14 
+ 15 
+ 16 
+ alameda 
+ 1 
+ 0 
+ 0 
+ 0 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ belmont 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 1 
+ 0 
+ benicia 
+ 1 
+ 0 
+ 0 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ berkeley 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ -1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ castro valley 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ -1 
+ 0 
+ 0 
+ 0 
+ 0 
+ daly city 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 1 
+ 0 
+ emeryville 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 1 
+ 0 
+ 0 
+ 0 
+ fairfax 
+ 1 
+ -1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ martinez 
+ 1 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ menlo park 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 1 
+ 0 
+ 0 
+ mountain view 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ -1 
+ 0 
+ oakland 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ other 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ palo alto 
+ 1 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ san francisco 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ -1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ san leandro 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ -1 
+ 0 
+ 0 
+ san mateo 
+ 1 
+ 0 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ san rafael 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ -1 
+ south san francisco 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ -1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ walnut creek 
+ 1 
+ 1 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ 0 
+ Notice that the collision in hash 14 is now gone since a value of 1 corresponds to Menlo Park and San Leandro is encoded as -1. For a linear regression model, the coefficient for the 14th hash now represents the positive or negative shift in the response due to Menlo Park or San Leandro, respectively. 
+ What level of aliasing should we expect? To investigate, data were simulated so that there were \(10^4\) predictor categories and each category consisted of 20 unique, randomly generated character values. Binary and signed hashes of various sizes were generated and the collision rate was determined. This simulation was done 10 different times and the average percent collision was calculated. Figure Figure  5.1 shows the results where the y -axis is the rate of any level of collision in the features. As expected, the signed values are associated with less collisions than the binary encoding. The green line corresponds to the full set of dummy variables (without using hashes). For these data, using signed features would give the best aliasing results but the percentage of collisions is fairly high. 
+Figure 5.1: The average rate of collisions in a simulation study on a predictor with 10K categories.
+ Because of how the new features are created, feature hashing is oblivious to the concept of predictor aliasing. Uniformity of the hash function is an important characteristic when hashes are used in their typical applications. However, it may be a liability in data analysis. The reduction of aliasing is an important concept in statistics; we would like to have the most specific representations of categories as often as possible for a few different reasons: 
+ Less aliasing allows for better interpretation of the results. If a predictor has a significant impact on the model, it is probably a good idea understand why. When multiple categories are aliased due to a collision, untangling the true effect may be very difficult. Although this may help narrow down which categories are affecting the response. 
+ Categories involved in collisions are not related in any meaningful way. For example, San Leandro and Menlo Park were not aliased because they share a particular similarity or geographic closeness. Because of the arbitrary nature of the collisions, it is possible to have different categories whose true underlying effect are counter to one another. This might have the effect of negating the impact of the hashed feature. 
+ Hashing functions have no notion of the probability that each key will occur. As such, it is conceivable that a category that occurs with great frequency is aliased with one that is rare. In this case, the more abundant value will have a much larger influence on the effect of that hashing feature. 
+ Although we are not aware of any statistically conscious competitor to feature hashing, there are some characteristics that a contrast function should have when used with a predictor containing a large number of categories 2 . For example, if there is the capacity to have some categories unaliased with any others, the most frequently occurring values should be chosen for these roles. The reason for this suggestion is that it would generate a high degree of specificity for the categories that are most likely to be exposed to the contrast function. One side effect of this strategy would be to alias less frequently occurring values to one another. This might be beneficial since it reduces the sparsity of those dummy variables. For example, if two categories that each account for 5% of the training set values are combined, the dummy variable has a two-fold increase in the number of ones. This would reduce the chances of being filtered out during resampling and might also lessen the potential effect that such a near-zero variance predictor might have on the analysis. 
+ 5.3 Approaches for Novel Categories 
+ Suppose that a model is built to predict the probability that an individual works in a STEM profession and that this model depends on geographic location (e.g., city). The model will be able to predict the probability of STEM profession if a new individual lives in one of the 20 cities. But what happens to the model prediction when a new individual lives in a city that is not represented in the original data? If the models are solely based on dummy variables, then the models will not have seen this information and will not be able to generate a prediction. 
+ If there is a possibility of encountering a new category in the future, one strategy would be to use the previously mentioned “other” category to capture new values. While this approach may not be the most effective at extracting predictive information relative to the response for this specific category, it does enable the original model to be applied to new data without completely refitting it. This approach can also be used with feature hashing since the new categories are converted into a unique “other” category that is hashed in the same manner as the rest of the predictor values; however, we do need to ensure that the “other” category is present in the training/testing data. Alternatively we could ensure that the “other” category collides with another hashed category so that the model can be used to predict a new sample. More approaches to novel categories are given in the next section. 
+ Note that the concept of a predictor with novel categories is not an issue in the training/testing phase of a model. In this phase the categories for all predictors in the existing data are known at the time of modeling. If a specific predictor category is present in only the training set (or vice versa), a dummy variable can still be created for both data sets although it will be an zero-variance predictor in one of them. 
+ 5.4 Supervised Encoding Methods 
+ There are several methods of encoding categorical predictors to numeric columns using the outcome data as a guide (so that they are supervised methods). These techniques are well suited to cases where the predictor has many possible values or when new levels appear after model training. 
+ The first method is a simple translation that is sometimes called effect or likelihood encoding ( Micci-Barreca 2001 ; Zumel and Mount 2016 ) . In essence, the effect of the factor level on the outcome is measured and this effect is used as the numeric encoding. For example, for the Ames housing data, we might calculate the mean or median sale price of a house for each neighborhood from the training data and use this statistic to represent the factor level in the model. There are a variety of ways to estimate the effects and these will be discussed below. 
+ For classification problems, a simple logistic regression model can be used to measure the effect between the categorical outcome and the categorical predictor. If the outcome event occurs with rate \(p\) , the odds of that event is defined as \(p/(1-p)\) . As an example, with the OkC data, the rate of STEM profiles in Mountain View California is 0.53 so that the odds would be 1.125. Logistic regression models the log-odds of the outcome as a function of the predictors. If a single categorical predictor is included in the model, then the log-odds can be calculated for each predictor value and can be used this as the encoding. Using the same location previously shown in Table  5.1 , the simple effect encodings for the OkC data are shown in Table  5.2 under the heading of “Raw”. 
+ Location 
+Data
+Log-Odds
+Word Embeddings
+ Rate 
+ n 
+ Raw 
+ Shrunk 
+ Feat 1 
+ Feat 2 
+ Feat 3 
+ belvedere tiburon 
+ 0.086 
+ 35 
+ −2.367 
+ −2.047 
+ 0.038 
+ 0.024 
+ −0.026 
+ berkeley 
+ 0.163 
+ 2676 
+ −1.637 
+ −1.639 
+ 0.107 
+ 0.083 
+ 0.067 
+ martinez 
+ 0.091 
+ 197 
+ −2.297 
+ −2.202 
+ 0.046 
+ 0.001 
+ 0.025 
+ mountain view 
+ 0.529 
+ 255 
+ 0.118 
+ 0.015 
+ −0.160 
+ −0.230 
+ −0.167 
+ san leandro 
+ 0.128 
+ 431 
+ −1.922 
+ −1.908 
+ 0.027 
+ 0.068 
+ 0.037 
+ san mateo 
+ 0.277 
+ 880 
+ −0.958 
+ −0.974 
+ −0.163 
+ −0.195 
+ −0.122 
+ south san francisco 
+ 0.178 
+ 258 
+ −1.528 
+ −1.545 
+ −0.030 
+ 0.014 
+ −0.006 
+ <new location> 
+ −1.785 
+ 0.008 
+ 0.005 
+ 0.026 
+Table 5.2: Supervised encoding examples for several towns in the OkC Data.
+ As previously mentioned, there are different methods for estimating the effects. A single generalized linear model (e.g., linear or logistic regression) can be used. While very fast, it has drawbacks. For example, what happens when a factor level has a single value? Theoretically, the log-odds should be infinite in the appropriate direction but, numerically, it is usually capped at a large (and inaccurate) value. 
+ One way around this issue is to use some type of shrinkage method. For example, the overall log-odds can be determined and, if the quality of the data within a factor level is poor, then this level’s effect estimate can be biased towards an overall estimate that disregards the levels of the predictor. “Poor quality” could be due to a small sample size or, for numeric outcomes, a large variance within the data for that level. Shrinkage methods can also move extreme estimates towards the middle of the distribution. For example, a well-replicated factor level might have an extreme mean or log-odds (as will be seen for Mountain View data below). 
+ A common method for shrinking parameter estimates is Bayesian analysis ( McElreath 2015 ) . In this case, expert judgement can be used prior to seeing the data to specify a prior distribution for the estimates (e.g., the means or log-odds). The prior would be a theoretical distribution that represents the overall distribution of effects. Almost any distribution can be used. If there is not a strong belief as to what this distribution should be, then it may be enough to focus on the shape of the distribution. If a bell-shaped distribution is reasonable, then a very diffuse or wide prior can be used so that it is not overly opinionated. Bayesian methods take the observed data and blend it with the prior distribution to come up with a posterior distribution that is a combination of the two. For categorical predictor values with poor data, the posterior estimate is shrunken closer to the center of the prior distribution. This can also occur when their raw estimates are relatively extreme 3 . 
+ For the OkC data, a normal prior distribution was used for the log-odds that has a large standard deviation ( \(\sigma = 10\) ). Table  5.2 shows the results. For most locations, the raw and shrunken estimates were very similar. For Belvedere/Tiburon, there was a relatively small sample size (and a relatively small STEM rate) and the estimate was shrunken towards the center of the prior. Note that there is a row for “ <new location> ”. When a new location is given to the Bayesian model, the procedure used here estimates its effect as the most likely value using the mean of the posterior distribution (a value of -1.79 for these data). A plot of the raw and shrunken effect estimates is also shown in Figure  5.2 (a). Panel (b) shows the magnitude of the estimates (x-axis) versus the difference between the two. As the raw effect estimates dip lower than -2, the shrinkage pulled the values towards the center of the estimates. For example, the location with the largest log-odds value (Mountain View) was reduced from 0.1178 to 0.015. 
+Figure 5.2: Left: Raw and shrunken estimates of the effects for the OkC data. Right: The same data shown as a function of the magnitude of the log-odds (on the x axis).
+ Empirical Bayes methods can also be used, in the form of linear (and generalized linear) mixed models ( West and Galecki 2014 ) . These are non-Bayesian estimation methods that also incorporate shrinkage in their estimation procedures. While they tend to be faster than the types of Bayesian models used here, they offer less flexibility than a fully Bayesian approach. 
+ One issue with effect encoding, independent of the estimation method, is that it increases the possibility of overfitting. This is because the estimated effects are taken from one model and put into another model (as variables). If these two models are based on the same data, it is somewhat of a self-fulfilling prophecy. If these encodings are not consistent with future data, this will result in overfitting that the model cannot detect since it is not exposed to any other data that might contradict the findings. Also, the use of summary statistics as predictors can drastically underestimate the variation in the data and might give a falsely optimistic opinion of the utility of the new encoding column 4 . As such, it is strongly recommended that either a different data sets be used to estimate the encodings and the predictive model or that their derivation is conducted inside resampling so that the assessment set can measure the overfitting (if it exists). 
+ Another supervised approach comes from the deep learning literature on the analysis of textual data. In this case, large amounts of text can be cut up into individual words. Rather than making each of these words into its own indicator variable, word embedding or entity embedding approaches have been developed. Similar to the dimension reduction methods described in the next chapter, the idea is to estimate a smaller set of numeric features that can be used to adequately represent the categorical predictors. Guo and Berkhahn ( 2016 ) and Chollet and Allaire ( 2018 ) describe this technique in more detail. In addition to the dimension reduction, there is the possibility that these methods can estimate semantic relationships between words so that words with similar themes (e.g., “dog”, “pet”, etc.) have similar values in the new encodings. This technique is not limited to text data and can be used to encode any type of qualitative variable. 
+ Once the number of new features are specified, the model takes the traditional indicators variables and randomly assigns them to one of the new features. The model then tries to optimize both the allocation of the indicators to features as well as the parameter coefficients for the features themselves. The outcome in the model can be the same as the predictive model (e.g., sale price or the probability of a STEM profile). Any type of loss function can be optimized but it is common to use the root mean squared error for numeric outcomes and cross-entropy for categorical outcomes (which are the loss functions for linear and logistic regression, respectively). Once the model is fit, the values of the embedding features are saved for each observed value of the quantitative factor. These values serve as a look-up table that is used for prediction. Additionally, an extra level can be allocated to the original predictor to serve as a place-holder for any new values for the predictor that are encountered after model training. 
+ A more typical neural network structure can be used that places one or more set of nonlinear variables positioned between the predictors and outcomes (i.e., the hidden layers ). This allows the model to make more complex representations of the underlying patterns. While a complete description of neural network models is beyond the scope of this book, Chollet and Allaire ( 2018 ) provide a very accessible guide to fitting these models and specialized software exists to create the encodings. 
+ For the OkCupid data, there are 52 locations in the training set. We can try to represent these locations, plus a slot for potential new locations, using a set embedding features . A schematic for the model is: 
+ Here, each green node represents the part of the network that is dedicated to reducing the dimensionality of the location data to a smaller set. In this diagram, three embedding features are used. The model can also include a set of other predictors unrelated to the embedding components. In this diagram an additional set of indicator variables, derived later in Section 5.6 , is shown in orange. This allows the embeddings to be estimated in the presence of other potentially important predictors so that they can be adjusted accordingly. Each line represents a slope coefficient for the model. The connections between the indicator variable layer on the left and the embedding layer, represented by the green circular nodes, are the values that will be used to represent the original locations. The activation function connecting the embeddings and other predictors to the hidden layer used rectified linear unit (ReLU) connections (introduced in Section 6.2.1 ). This allows the model additional complexity using nonlinear relationships. Here, ten hidden nodes were used during model estimation. In total, the network model estimated 678 parameters in the course of deriving the embedding features. Cross-entropy was used to fit the model and it was trained for 30 iterations, where it was found to converge. These data are not especially complex since there are few unique values that tend to have very little textual information since each data point only belongs to a single location (unlike the case where text is cut into individual words). 
+ Table  5.2 shows the results for several locations and ?fig-categorical-word-embed contains the relationship between each of the resulting encodings (i.e., features) and the raw log-odds. Each of the features has a relationship with the raw log-odds, with rank correlations of -0.5, -0.61, and -0.46. Some of the new features are correlated with the others; absolute correlation values range between 0.46 and 0.62. This raises the possibility that, for these data, fewer features might be be required. Finally, as a reminder, while an entire supervised neural network was used here, the embedding features can be used in other models for the purpose of preprocessing the location values. 
+ 5.5 Encodings for Ordered Data 
+ In the previous sections, an unordered predictor with \(C\) categories was represented by \(C-1\) binary dummy variables or a hashed version of binary dummy variables. These methods effectively present the categorical information to the models. But now suppose that the \(C\) categories have a relative ordering. For example, consider a predictor that has the categories of “low”, “medium”, and “high.” This information could be converted to 2 binary predictors: \(X_{low} = 1\) for samples categorized as “low” and = 0 otherwise, and \(X_{medium} = 1\) for samples categorized as “medium” and = 0 otherwise. These new predictors would accurately identify low, medium, and high samples, but the two new predictors would miss the information contained in the relative ordering, which could be very important relative to the response. 
+ Ordered categorical predictors would need a different way to be presented to a model to uncover the relationship of the order to the response. Ordered categories may have a linear relationship with the response. For instance, we may see an increase of approximately 5 units in the response as we move from low to medium and an increase of approximately 5 units in the response as we move from medium to high. To allow a model to uncover this relationship, the model must be presented with a numeric encoding of the ordered categories that represents a linear ordering. In the field of Statistics, this type of encoding is referred to as a polynomial contrast . A contrast has the characteristic that it is a single comparison (i.e., one degree of freedom) and its coefficients sum to zero. For the “low”, “medium”, “high” example above, the contrast to uncover a linear trend would be -0.71, 0, 0.71, where low samples encode to -0.71, medium samples to 0, and high samples to 0.71. Polynomial contrasts can extend to nonlinear shapes, too. If the relationship between the predictor and the response was best described by a quadratic trend, then the contrast would be 0.41, -0.82, and 0.41 ( Table  5.3 ). Conveniently, these types of contrasts can be generated for predictors with any number of ordered factors, but the complexity of the contrast is constrained to one less than the number of categories in the original predictor. For instance, we could not explore a cubic relationship between a predictor and the response with a predictor that has only 3 categories. 
+ By employing polynomial contrasts, we can investigate multiple relationships (linear, quadratic, etc.) simultaneously by including these in the same model. When we do this, the form of the numeric representation is important. Specifically the new predictors would contain unique information. To do this the numeric representations are required to be orthogonal. This means that the dot product of the contrast vectors is 0. 
+ Original Value 
+Dummy Variables
+ Linear 
+ Quadratic 
+ low 
+ −0.71 
+ 0.41 
+ medium 
+ 0.00 
+ −0.82 
+ high 
+ 0.71 
+ 0.41 
+Table 5.3: An example of linear and quadratic polynomial contrasts for an ordered categorical predictor with three levels.
+ It is important to recognize that patterns described by polynomial contrasts may not effectively relate a predictor to the response. For example, in some cases, one might expect a trend where “low” and “middle” samples have a roughly equivalent response but “high” samples have a much different response. In this case, polynomial contrasts are unlikely to be effective at modeling this trend. Another downside to polynomial contrasts for ordered categories occurs when there are a moderate to high number of categories. If an ordered predictor has \(C\) levels, the encoding into dummy variables uses polynomials up to degree \(C-1\) . It is very unlikely that these higher-level polynomials are modeling important trends (e.g., octic patterns) and it might make sense to place a limit on the polynomial degree. In practice, we rarely explore the effectiveness of anything more than a quadratic polynomial. 
+ As an alternative to polynomial contrasts, one could: 
+ Treat the predictors as unordered factors. This would allow for patterns that are not covered by the polynomial feature set. Of course, if the true underlying pattern is linear or quadratic, unordered dummy variables may not effectively uncover this trend. 
+ Translate the ordered categories into a single set of numeric scores based on context-specific information. For example, when discussing failure modes of a piece of computer hardware, experts would be able to rank the severity of a type of failure on an integer scale. A minor failure might be scored as a “1” while a catastrophic failure mode could be given a score of “10” and so on. 
+ Simple visualizations and context-specific expertise can be used to understand whether either of these approaches are good ideas. 
+ 5.6 Creating Features from Text Data 
+ Often, data contain textual fields that are gathered from questionnaires, articles, reviews, tweets, and other sources. For example, the OkCupid data contains the responses to nine open text questions, such as “my self-summary” and “six things I could never do without”. The open responses are likely to contain important information relative to the outcome. Individuals in a STEM field are likely to have a different vocabulary than, say, someone in the humanities. Therefore the words or phrases used in these open text fields could be very important to predicting the outcome. This kind of data is qualitative and requires more effort to put in a form that models can consume. How then can these data be explored and represented for a model? 
+ For example, some profile text answers contained links to external websites. A reasonable hypothesis is that the presence of a hyperlink could be related to the person’s profession. Table  5.4 shows the results for the random subset of profiles. The rate of hyperlinks in the STEM profiles was 21% , while this rate was 12.4% in the non-STEM profiles. One way to evaluate a difference in two proportions is called the odds-ratio ( Agresti 2012 ) . First, the odds of an event that occurs with rate \(p\) is defined as \(p/(1-p)\) . For the STEM profiles, the odds of containing a hyperlink are relatively small with a value of \(0.21/0.79 = 0.27\) . For the non-STEM profiles, it is even smaller (0.142). However, the ratio of these two quantities can be used to understand the effect of having a hyperlink would be between the two professions. In this case, this indicates that the odds of a STEM profile is is nearly 1.9-times higher when the profile to contains a link. Basic statistics can be used to assign a lower 95% confidence interval on this quantity. For these data the lower bound is 1.7, which indicates that this increase in the odds is unlikely to be due to random noise since it does not include a value of 1.0. Given these results, the indicator of a hyperlink will likely benefit a model and should be included. 
+ stem 
+ other 
+ Link 
+ 1063 
+ 620 
+ No Link 
+ 3937 
+ 4380 
+Table 5.4: A cross-tabulation between the existence of at least one hyperlink in the OkCupid essay text and the profession.
+ Are there words or phrases that would make good predictors of the outcome? To determine this, the text data must first be processed and cleaned. At this point, there were 63,440 distinct words in the subsample of 10,000 profiles. A variety of features were computed on the data such as the number of commas, hashtags, mentions, exclamation points, and so on. This resulted in a set of 13 new “text-related” features. In these data, there are an abundance of HTML markup tags in the text, such as <br /> and <a href= \"link\"> . These were removed from the data, as well as punctuation, line breaks, and other symbols. Additionally, there were some words that were nonsensical repeated characters, such as *** or aaaaaaaaaa , that were removed. Additional types of preprocessing of text are described below and, for more information, Christopher, Prabhakar, and Hinrich ( 2008 ) is a good introduction to the analysis of text data while Silge and Robinson ( 2017 ) is an excellent reference on the computational aspects of analyzing such data. 
+ Given this set of 63,440 words and their associated outcome classes, odds-ratios can be computed. First, the words were again filtered so that terms with at least 50 occurrences in the 10,000 profiles would be analyzed. This cutoff was determined so that there was a sufficient frequency for modeling. With this constraint the potential number of keywords was reduced to 4,918 terms. For each of these, the odds-ratio and associated p-value were computed. The p-value tests the hypothesis that the odds of the keyword occurring in either professional group are equal (i.e., 1.0). However, the p-values can easily provide misleading results for two reasons: 
+ In isolation, the p-value only relates the the question “Is there a difference in the odds between the two groups?” The more appropriate question is “How much of a difference is there between the groups?” The p-value does not measure the magnitude of the differences. 
+ When testing a single (predefined) hypothesis, the false positive rate for a hypothesis test using \(\alpha = 0.05\) is 5%. However, there are 4,918 tests on the same data set which raises the false positive rate exponentially. The false-discovery rate (FDR) p-value correction ( Efron and Hastie 2016 ) was developed for just this type of scenario. This procedure uses the entire distribution of p-values and attenuates the false positive rate. If a particular keyword has an FDR value of 0.30, this implies that the collection of keywords with FDR values less than 0.30 have collective 30% false discovery rate. For this reason, the focus here will be on the FDR values generated using the Benjamini-Hochberg correction ( Benjamini and Hochberg 1995 ) . 
+ To characterize these results, a volcano plot is shown in Figure  5.3 where the estimated odds-ratio is shown on the x -axis and the minus log of the FDR values are shown on the y -axis (where larger values indicate higher statistical significance). The size of the points is associated with the number of events found in the sampled data set. Keywords falling in the upper left- and right-rand side would indicate a strong difference between the classes and that is unlikely to be random result. The plot shows far more keywords that have a higher likelihood to be found in the STEM profiles than in the non-STEM professions as more points fall on the upper right-hand side of one on the x -axis. Several of these have extremely high levels of statistical significance with FDR values that are vanishingly small. 
+Figure 5.3: A volcano plot of the keyword analysis. Each dot represents a word from the OkCupid essays, and the size of the dot represents the frequency of the occurrence. Words in the upper right are strongly associated with STEM profiles.
+ As a rough criteria for “importance”, keywords with odds-ratios of at least 2 (in either direction) and an FDR value less than \(10^{-5}\) will be considered for modeling. This results in 52 keywords: 
+ alot 
+ apps 
+ biotech 
+ code 
+ coding 
+ computer 
+ computers 
+ data 
+ developer 
+ electronic 
+ electronics 
+ engineer 
+ engineering 
+ firefly 
+ fixing 
+ futurama 
+ geek 
+ geeky 
+ im 
+ internet 
+ lab 
+ law 
+ lawyer 
+ lol 
+ math 
+ matrix 
+ mechanical 
+ mobile 
+ neal 
+ nerd 
+ pratchett 
+ problems 
+ programmer 
+ programming 
+ science 
+ scientist 
+ silicon 
+ software 
+ solve 
+ solving 
+ startup 
+ stephenson 
+ student 
+ systems 
+ teacher 
+ tech 
+ technical 
+ technology 
+ valley 
+ web 
+ websites 
+ wikipedia 
+ Of these keywords, only 7 were enriched in the non-STEM profiles: im , lol , teacher , student , law , alot , lawyer . Of the STEM-enriched keywords, many of these make sense (and play to stereotypes). The majority are related to occupation (e.g., engin , startup , and scienc ), while others are clearly related to popular geek culture, such as firefli 5 , neal , and stephenson 6 , and scifi . 
+ One final set of 9 features were computed related to the sentiment and language of the essays. There are curated collections of words with assigned sentiment values. For example, “horrible” has a fairly negative connotation while “wonderful” is associated with positivity. Words can be assigned qualitative assessments (e.g., “positive”, “neutral”, etc.) or numeric scores where neutrality is given a value of zero. In some problems, sentiment might be a good predictor of the outcome. This feature set included sentiment-related measures, as well as measures of the point-of-view (i.e., first-, second-, or third-person text) and other language elements. 
+ Do these features have an impact on a model? A series of logistic regression models were computed using different feature sets: 
+ A basic set of profile characteristics unrelated to the essays (e.g., age, religion, etc.) consisting of 160 predictors (after generating dummy variables). This resulted in a baseline area under the ROC curve of 0.77. The individual resamples for this model are shown in Figure  5.4 . 
+ The addition of the simple text features increased the number of predictors to 173. Performance was not appreciably affected as the AUC value was 0.776. These features were discarded from further use. 
+ The keywords were added to the basic profile features. In this case, performance jumped to 0.839. Recall that these were derived form a smaller portion of these data and that this estimate may be slightly optimistic. However, the entire training set was cross-validated and, if overfitting was severe, the resampled performance estimates would not be very good. 
+ The sentiment and language features were added to this model, producing an AUC of 0.841. This indicates that these aspects of the essays did not provide any predictive value above and beyond what was already captured by the previous features. 
+ Overall, the keyword and basic feature model would be the best version found here 7 . 
+Figure 5.4: Resampling results for a series of logistic regression models computed with different feature sets.
+ The strategy shown here for computing and evaluating features from text is fairly simplistic and is not the only approach that could be taken. Other methods for preprocessing text data include: 
+ removing commonly used stop words , such as “is”, “the”, “and”, etc. 
+ stemming the words so that similar words, such as the singular and plural versions, are represented as a single entity. 
+ The SMART lexicon of stop words ( Lewis et al. 2004 ) was filtered out of the current set of words, leaving 62,928 unique results. The words were then “stemmed” using the Porter algorithm ( Willett 2006 ) to convert similar words to a common root. For example, these 7 words are fairly similar: "teach" , "teacher" , "teachers" , "teaches" , "teachable" , "teaching" , "teachings" . Stemming would reduce these to 3 unique values: "teach" , "teacher" , "teachabl" Once these values were stemmed, there were 45,486 unique words remaining. While this does reduce the potential number of terms to analyze, there are potential drawbacks related to a reduced specificity of the text. Schofield and Mimno ( 2016 ) and Schofield, Magnusson, and Mimno ( 2017 ) demonstrate that there can be harm done using these preprocessors. 
+ One other method for determining relevant features uses the term frequency-inverse document frequency ( tf-idf ) statistic ( Amati and Van R 2002 ) . Here the goal is to find words or terms that are important to individual documents in the collection of documents at hand. For example, if the words in this book were processed, there are some that would have high frequency (e.g., predictor , encode , or resample ) but are unusual in most other contexts. 
+ For a word W in document D , the term frequency, tf , is the number of times that W is contained in D (usually adjusted for the length of D ). The inverse document frequency, idf , is a weight that will normalize by how often the word occurs in the current collection of documents. As an example, suppose the term frequency of the word feynman in a specific profile was 2. In the sample of profiles used to derive the features, this word occurs 55 times out of 10,000. The inverse document frequency is usually represented as the log of the ratio, or \(log_2(10000/55)\) or 7.5. The tf-idf value for feynman in this profile would be \(2\times\log_2(10000/55)\) or 15. However, suppose that in the same profile, the word internet also occurs twice. This word is more prevalent across profiles and is contained at least once 1529 times. The tf-idf value here is 5.4; in this way the same raw count is down-weighted according to its abundance in the overall data set. The word feynman occurs the same number of times as internet in this hypothetical profile, but feynman is more distinctive or important (as measured by tf-idf ) because it is rarer overall, and thus possibly more effective as a feature for prediction. 
+ One potential issue with td-idf in predictive models is the notion of the “current collection of documents”. This can be computed for the training set but what should be done when a single new sample is being predicted (i.e., there is no collection)? One approach is to use the overall idf values from the training set to weight the term frequency found in new samples. 
+ Additionally, all of the previous approaches have considered a single word at a time. Sequences of consecutive words can also be considered and might provide additional information. n -grams are terms that are sequences of n consecutive words. One might imagine that the sequence “I hate computers” would be scored differently than the simple term “computer” when predicting whether a profile corresponds to a STEM profession. 
+ 5.7 Factors Versus Dummy Variables in Tree-Based Models 
+ As previously mentioned, certain types of models have the ability to use categorical data in its natural form (i.e., without conversions to dummy variables). A simple regression tree ( L. Breiman et al. 1984 ) using the day of the week predictor for the Chicago data resulted in this simple split for prediction: 
+ if day in {Sun, Sat} then ridership = 4.4K
+ else ridership = 17.3K 
+ Suppose the day of the week had been converted to dummy variables. What would have occurred? In this case, the model is slightly more complex since it can only create rules as a function of a single dummy variable at a time: 
+ if day = Sun then ridership = 3.84K
+ else if day = Sat then ridership = 4.96K
+ else ridership = 17.30K 
+ The non-dummy variable model could have resulted in the same structure if it had found that the results for Saturday and Sunday were sufficiently different to merit an extra set of splits. This leads to the question related to using categorical predictors in tree-based models: does it matter how the predictions are encoded? 
+ To answer this question, a series of experiments was conducted 8 . Several public classification data sets were used to make the comparison between the different encodings. These are summarized in Table Table  5.5 . Two data sets contained both ordered and unordered factors. As described below, the ordered factors were treated in different ways. 
+ Attrition 
+ Cars 
+ Churn 
+ German Credit 
+ HPC 
+ n 
+ 1470 
+ 1728 
+ 5000 
+ 1000 
+ 4331 
+ p 
+ 30 
+ 6 
+ 19 
+ 61 
+ 7 
+ Classes 
+ 2 
+ 4 
+ 2 
+ 0 
+ 4 
+ Numeric Predictors 
+ 16 
+ 0 
+ 15 
+ 61 
+ 5 
+ Factor Predictors 
+ 14 
+ 6 
+ 4 
+ 0 
+ 2 
+ Ordered Factors 
+ 7 
+ 0 
+ 0 
+ 0 
+ 0 
+ Factor with 3+ Levels 
+ 12 
+ 7 
+ 2 
+ 0 
+ 3 
+ Factor with 5+ Levels 
+ 3 
+ 0 
+ 1 
+ 0 
+ 2 
+Table 5.5: A summary of the data sets used to evaluate encodings of categorical predictors in tree- and rule-based models.
+ For each iteration of the simulation, 75% of the data was used for the training set and 10-fold cross-validation was used to tune the models. When the outcome variable had two levels, the area under the ROC curve was maximized. For the other datasets, the multinomial log-likelihood was optimized. The same number of tuning parameter values were evaluated although, in some cases, the values of these parameters were different due to the number of predictors in the data before and after dummy variable generation. The same resamples and random numbers were used for the models with and without dummy variables. When the data contained a significant class imbalance, the data were downsampled to compensate. 
+ For each data set, models were fit with the data in its original form as well as (unordered) dummy variables. For the two data sets with ordinal data, an additional model was created using ordinal dummy variables (i.e., polynomial contrasts). 
+ Several models were fit to the data sets. Unless otherwise stated, the default software parameters were used for each model. 
+ Single CART trees ( L. Breiman et al. 1984 ) The complexity parameter was chosen using the “one-standard error rule” that is internal to the recursive partitioning algorithm. 
+ Bagged CART trees ( L. Breiman 1996 ) . Each model contained 50 constituent trees. 
+ Single C5.0 trees and single C5.0 rulesets ( Quinlan 1993 ; Kuhn and Johnson 2013 ) 
+ Single conditional inference trees ( Hothorn, Hornik, and Zeileis 2006 ) . A grid of 10 values for the p-value threshold for splitting were evaluated. 
+ Boosted CART trees (a.k.a. stochastic gradient boosting, Friedman ( 2002 ) ). The models were optimized over the number of trees, the learning rate, the tree depth, and the number of samples required to make additional splits. Twenty-five parameter combinations were evaluate using random search. 
+ Boosted C5.0 trees. These were tuned for the number of iterations. 
+ Boosted C5.0 rules. These were also tuned for the number of iterations. 
+ Random forests using CART trees ( L. Breiman 2001 ) . Each forest contained 1,500 trees and the number of variables selected for a split was tuned over a grid of 10 values. 
+ Random forests using conditional (unbiased) inference trees ( Strobl et al. 2007 ) . Each forest contained 100 trees and the number of variables selected for a split was tuned over a grid of 10 values. 
+ For each model a variety of different performance metrics were estimated using resampling as well as the total time to train and tune the model. 9 . 
+ For the three data sets with two classes, Figure  5.5 shows a summary of the results for the area under the ROC curve. In the plot, the percent difference in performance is calculated using 
+ \[ \%Difference = \frac{Factor - Dummy}{Factor}\times 100 \] 
+ In this way, positive values indicate that the factor encodings have better performance. The image shows the median in addition to the lower and upper 5% percentiles of the distribution. The gray dotted line indicates no difference between the encodings. 
+Figure 5.5: A comparison of encodings for the area under the ROC curve.
+ The results of these simulations shows that, for these data sets, there is no real difference in the area under the ROC curve between the encoding methods. This also appears to be true when simple factor encodings are compared to dummy variables generated from polynomial contrasts for ordered predictors 10 . Of the ten models, there are only two cases out of 40 scenarios where the mainstream of the distributions did not cover zero. Stochastic gradient boosting and bagged CART trees are both ensemble methods and these showed a 2%-4% drop in the ROC curve when using factors instead of dummy variables for a single data set. 
+ Another metric, overall accuracy, can also be assessed. These results are shown in Figure  5.6 where all of the models can be taken into account. In this case, the results are mixed. When comparing factors to unordered dummy variables, two of the models show differences in encodings. The churn data shows similar results to the ROC curve metrics. The car evaluation data demonstrates a nearly uniform effect where factor encodings do better than dummy variables. Recall that in the car data, which has four classes, all of the predictors are categorical. For this reason, it is likely to show the most effect of all of the data sets. 
+ In the case of dummy variables generated using polynomial contrasts, neither of the data sets show a difference between the two encodings. However, the car evaluation data shows a pattern where the factor encodings had no difference compared to polynomial contrasts but when compared to unordered dummy variables, the factor encoding is superior. This indicates that the underlying trend in the data follows a polynomial pattern. 
+ In terms of performance, it appears that differences between the two encodings are rare (but can occur). One might infer that, since the car data contains all categorical variables, that this situation would be a good indicator for when to use factors instead of dummy variables. However, two of the data sets (Attrition and German Credit), have a high proportion of categorical predictors and show no difference. In some data sets, the effect of the encoding would depend on whether the categorical predictor(s) are important to the outcome and in what way. 
+Figure 5.6: A comparison of encodings for the accuracy.
+ In summary, while few differences were seen, it is very difficult to predict when a difference will occur. 
+ However, one other statistic was computed for each of the simulations: the time to train the models. Figure  5.7 shows the speed-up of using factors above and beyond dummy variables (i.e., a value of 2.5 indicates that dummy variable models are two and a half times slower than factor encoding models). Here, there is very strong trend that factor-based models are more efficiently trained than their dummy variable counterparts. The reason for this is likely to be that the expanded number of predictors (caused by generating dummy variables) requires more computational time than the method for determining the optimal split of factor levels. The exceptions to this trend are the models using conditional inference trees. 
+Figure 5.7: A comparison of encodings for time to train the model. Large values indicate that the factor encoding took less time to train than the model with dummy variables.
+ One other effect of how qualitative predictors are encoded is related to summary measures. Many of these techniques, especially tree-based models, calculate variable importance scores that are relative measures for how much a predictor affected the outcome. For example, trees measure the effect of a specific split on the improvement in model performance (e.g., impurity, residual error, etc.). As predictors are used in splits, these improvements are aggregated; these can be used as the importance scores. If a split involves all of the predictor’s values (e.g., Saturday versus the other six days), the importance score for the entire variable is likely to be much larger than a similar importance score for an individual level (e.g., Saturday or not-Saturday). In the latter case, these fragmented scores for each level may not be ranked as highly as the analogous score that reflects all of the levels. A similar issue comes up during feature selection ( Chapter 10 through Chapter 7 ) and interaction detection ( Chapter 12 ). The choice of predictor encoding methods is discussed further there. 
+ For a guideline, we suggest using the predictors without converting to dummy variables and, if the model appears promising, to also try refitting using dummy variables. 
+ 5.8 Summary 
+ Categorical predictors can take a variety of forms in the data that is to be modeled. With the exception of tree-based models, categorical predictors must first be converted to numeric representations to enable other models to use the information . The most simplistic feature engineering technique for a categorical predictor is to convert each category to a separate binary dummy predictor. But even this basic conversion comes with a primary caution that some models require one fewer dummy predictors than the number of categories. Creating dummy predictors may not be the most effective way of extracting predictive information from a categorical predictor. If, for instance, the predictor has ordered categories, then other techniques such as linear or polynomial contrasts may be better related to the outcome. 
+ Text fields, too, can be viewed as an agglomeration of categorical predictors and must be converted to numeric values. There have been a recent host of approaches for converting text to numeric. Often these approaches must include a filtering step to remove highly frequent, non-descriptive words. 
+ Done well, feature engineering for categorical predictors can unlock important predictive information related to the outcome. The next chapter will focus on using feature engineering techniques to uncover additional predictive information within continuous predictors. 
+ 5.9 Computing 
+ The website http://bit.ly/fes-cat contains R programs for reproducing these analyses. 
+ Chapter References 
+Agresti, A. 2012. Categorical Data Analysis . Wiley-Interscience.
+Amati, G, and Cornelis J Van R. 2002. “Probabilistic Models of Information Retrieval Based on Measuring the Divergence from Randomness.” ACM Transactions on Information Systems 20 (4): 357–89.
+Benjamini, Y, and Y Hochberg. 1995. “Controlling the False Discovery Rate: A Practical and Powerful Approach to Multiple Testing.” Journal of the Royal Statistical Society. Series B (Methodological) , 289–300.
+Box, GEP, W Hunter, and J Hunter. 2005. Statistics for Experimenters: An Introduction to Design, Data Analysis, and Model Building . Wiley.
+Breiman, L. 1996. “Bagging Predictors.” Machine Learning 24 (2): 123–40.
+Breiman, L. 2001. “Random Forests.” Machine Learning 45 (1): 5–32.
+Breiman, L., J. Friedman, R. Olshen, and C. Stone. 1984. Classification and Regression Trees . New York: Chapman; Hall.
+Chollet, F, and JJ Allaire. 2018. Deep Learning with r . Manning.
+Christopher, D, R Prabhakar, and S Hinrich. 2008. Introduction to Information Retrieval . Cambridge University Press.
+Efron, B, and T Hastie. 2016. Computer Age Statistical Inference . Cambridge University Press.
+Friedman, J. 2002. “Stochastic Gradient Boosting.” Computational Statistics & Data Analysis 38 (4): 367–78.
+Guo, C, and F Berkhahn. 2016. “ Entity embeddings of categorical variables .” arXiv.org .
+Haase, R. 2011. Multivariate General Linear Models . Sage.
+Hothorn, T, K Hornik, and A Zeileis. 2006. “Unbiased Recursive Partitioning: A Conditional Inference Framework.” Journal of Computational and Graphical Statistics 15 (3): 651–74.
+Kuhn, M, and K Johnson. 2013. Applied Predictive Modeling . Springer.
+Lewis, D, Y Yang, T Rose, and F Li. 2004. “ Rcv1 : A New Benchmark Collection for Text Categorization Research.” Journal of Machine Learning Research 5: 361–97.
+McElreath, R. 2015. Statistical Rethinking: A Bayesian Course with Examples in r and Stan . Chapman; Hall/CRC.
+Micci-Barreca, D. 2001. “A Preprocessing Scheme for High-Cardinality Categorical Attributes in Classification and Prediction Problems.” ACM SIGKDD Explorations Newsletter 3 (1): 27–32.
+Preneel, B. 2010. “Cryptographic Hash Functions: Theory and Practice.” In ICICS , 1–3.
+Quinlan, R. 1993. C4.5 : Programs for Machine Learning . Morgan Kaufmann Publishers.
+Schofield, A, M Magnusson, and D Mimno. 2017. “Understanding Text Pre-Processing for Latent Dirichlet Allocation.” In Proceedings of the 15th Conference of the European chapter of the Association for Computational Linguistics , 2:432–36.
+Schofield, A, and D Mimno. 2016. “Comparing Apples to Apple: The Effects of Stemmers on Topic Models.” Transactions of the Association for Computational Linguistics 4: 287–300.
+Silge, J, and D Robinson. 2017. Text Mining with r : A Tidy Approach . O’Reilly.
+Strobl, C, AL Boulesteix, A Zeileis, and T Hothorn. 2007. “Bias in Random Forest Variable Importance Measures: Illustrations, Sources and a Solution.” BMC Bioinformatics 8 (1): 25.
+Timm, N, and J Carlson. 1975. “Analysis of Variance Through Full Rank Models.” Multivariate Behavioral Research Monographs .
+Weinberger, K, A Dasgupta, J Langford, A Smola, and J Attenberg. 2009. “Feature Hashing for Large Scale Multitask Learning.” In Proceedings of the 26th Annual International Conference on Machine Learning , 1113–20. ACM.
+West, K, Band Welch, and A Galecki. 2014. Linear Mixed Models: A Practical Guide Using Statistical Software . CRC Press.
+Willett, P. 2006. “The Porter Stemming Algorithm: Then and Now.” Program 40 (3): 219–23.
+Zumel, N., and J. Mount. 2016. “ vtreat : A data.frame processor for predictive modeling .” arXiv.org .
+ These computations use the “MurmurHash3” hash found at https://github.com/aappleby/smhasher and implemented in the FeatureHashing R package. ↩︎ 
+ Traditional analysis of alias structures could be applied to this problem. However, more research would be needed since those methods are usually applied to balanced designs where the values of the predictors have the same prevalence. Also, as previously mentioned, they tend to focus on aliasing between multiple variables. In any case, there is much room for improvement on this front. ↩︎ 
+ In this situation, the shrinkage of the values towards the mean is called partial pooling of the estimates. ↩︎ 
+ This is discussed more, with an example, in Section 6.2.2 . ↩︎ 
+ https://en.wikipedia.org/wiki/Firefly_(TV_series) ↩︎ 
+ https://en.wikipedia.org/wiki/Neal_Stephenson ↩︎ 
+ This was the feature set that was used in Chapter 3 when resampling and model comparisons were discussed in Table Table  3.4 . ↩︎ 
+ In Chapter 12 , a similar but smaller-scale analysis is conducted with the naive Bayes model. ↩︎ 
+ The programs used in the simulation are contained in the GitHub repository https://github.com/topepo/dummies-vs-factors . ↩︎ 
+ Note that many of the non-ensemble methods, such as C5.0 trees/rules, CART, and conditional inference trees, show a significant amount of variation. This is due to the fact that they are unstable models with high variance. ↩︎ 
+ 4   Exploratory Visualizations 
+ 6   Engineering Numeric Predictors 
+ 

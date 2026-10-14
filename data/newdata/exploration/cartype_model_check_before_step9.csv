@@ -1,0 +1,143 @@
+﻿brand,model,rows,wrong_rows,file_type,should_be,n,source_url
+AUDI,AUDI A4,3,1,Hatchback,Sedan/Wagon,1,https://en.wikipedia.org/wiki/Audi_A4
+AUDI,AUDI A5,2,1,Sedan,Convertible/Coupe/Hatchback,1,https://en.wikipedia.org/wiki/Audi_A5
+AUDI,AUDI A7,1,1,Sedan,Hatchback,1,https://en.wikipedia.org/wiki/Audi_A7
+AUDI,AUDI RS5,1,1,wagon,Coupe/Hatchback,1,https://en.wikipedia.org/wiki/Audi_A5
+AUSTIN,MINI,2,1,Hatchback,Pickup/Sedan/Van/Wagon,1,https://en.wikipedia.org/wiki/Mini
+BENTLEY,CONTINENTAL,12,4,Sedan,Convertible/Coupe,4,https://en.wikipedia.org/wiki/Bentley_Continental_GT
+BMW,218I,25,17,Hatchback,Convertible/Coupe/MPV,17,https://en.wikipedia.org/wiki/BMW_2_Series
+BMW,220,6,6,Coupe,MPV/Sedan,6,https://en.wikipedia.org/wiki/BMW_2_Series
+BMW,316I,11,1,Coupe,Convertible/Sedan/Wagon,1,https://en.wikipedia.org/wiki/BMW_3_Series
+BMW,318I,37,4,Coupe,Convertible/Sedan/Wagon,4,https://en.wikipedia.org/wiki/BMW_3_Series
+BMW,320I,60,1,Coupe,Convertible/Sedan,1,https://en.wikipedia.org/wiki/BMW_3_Series
+BMW,520D,263,8,Wagon,Sedan,8,https://en.wikipedia.org/wiki/BMW_5_Series
+BMW,525D,51,1,Wagon,Sedan,1,https://en.wikipedia.org/wiki/BMW_5_Series
+BMW,630D,14,14,Sedan,Hatchback,14,https://en.wikipedia.org/wiki/BMW_6_Series
+BMW,SERIES 6,1,1,Sedan,Hatchback,1,https://en.wikipedia.org/wiki/BMW_6_Series_(G32)
+BMW,X6,49,1,Wagon,SUV,1,https://en.wikipedia.org/wiki/BMW_X6
+CHEVROLET,ALLROADER,1,1,Wagon,PPV,1,https://www.checkraka.com/car/thairung/allroader/1396498/
+CHEVROLET,CAPTIVA,119,1,Wagon,SUV,1,https://en.wikipedia.org/wiki/Chevrolet_Captiva
+CHEVROLET,SPIN,2,2,Wagon,MPV,2,https://en.wikipedia.org/wiki/Chevrolet_Spin
+CHEVROLET,TRAILBLAZER,60,60,SUV,PPV,60,https://www.carguide.ph/2012/03/production-chevrolet-trailblazer-debuts.html
+CHEVROLET,ZAFIRA,2,2,Wagon,MPV,2,https://en.wikipedia.org/wiki/Opel_Zafira
+DAIHATSU,MOVE CANBUS,4,4,Van,MPV,4,https://en.wikipedia.org/wiki/Daihatsu_Move_Canbus
+DAIHATSU,TAFT,2,2,Van,SUV,2,https://en.wikipedia.org/wiki/Daihatsu_Taft
+FERRARI,FF,1,1,Coupe,Wagon,1,https://en.wikipedia.org/wiki/Ferrari_FF
+FERRARI,PUROSANGUE,2,2,Wagon,SUV,2,https://en.wikipedia.org/wiki/Ferrari_Purosangue
+FORD,CAPRI,1,1,Coupe,Convertible,1,https://en.wikipedia.org/wiki/Ford_Capri
+FORD,EVEREST,1176,1176,SUV,PPV,1176,https://en.wikipedia.org/wiki/Ford_Everest
+FOTON,AUMARK,10,10,Pickup,Truck,10,https://en.wikipedia.org/wiki/Foton_Motor
+HONDA,BRIO,97,49,Sedan,Hatchback,49,https://en.wikipedia.org/wiki/Honda_Brio
+HONDA,CITY,1972,2,Hatchback,Sedan,2,https://en.wikipedia.org/wiki/Honda_City
+HONDA,CR-X DEL SOL,1,1,Coupe,Convertible,1,https://en.wikipedia.org/wiki/Honda_CR-X_del_Sol
+HONDA,CROSSROAD,2,2,Wagon,SUV,2,https://en.wikipedia.org/wiki/Honda_Crossroad
+HONDA,EDIX,1,1,Wagon,MPV,1,https://en.wikipedia.org/wiki/Honda_Edix
+HONDA,FREED,125,109,Wagon,MPV,109,https://en.wikipedia.org/wiki/Honda_Freed
+HONDA,MOBILIO,107,107,Wagon,MPV,107,https://en.wikipedia.org/wiki/Honda_Mobilio
+HONDA,ODYSSEY,26,5,Wagon,MPV,5,https://en.wikipedia.org/wiki/Honda_Odyssey_(international)
+HONDA,STEPWGN,40,40,Wagon,MPV,40,https://en.wikipedia.org/wiki/Honda_Stepwgn
+HYUNDAI,GRAND STAREX,106,106,Wagon,MPV/Van,106,https://en.wikipedia.org/wiki/Hyundai_Starex
+HYUNDAI,STARGAZER,36,30,Wagon,MPV,30,https://en.wikipedia.org/wiki/Hyundai_Stargazer
+ISUZU,MU-7,96,96,SUV,PPV,96,https://en.wikipedia.org/wiki/Isuzu_MU-7
+ISUZU,MU-X,900,900,SUV,PPV,900,https://en.wikipedia.org/wiki/Isuzu_MU-X
+JAGUAR,XF-SERIES,5,1,Wagon,Sedan,1,https://en.wikipedia.org/wiki/Jaguar_XF_(X250)
+KIA,CARNIVAL,101,88,Wagon,MPV,88,https://en.wikipedia.org/wiki/Kia_Carnival
+KIA,GRAND CARNIVAL,192,156,Wagon,MPV,156,https://en.wikipedia.org/wiki/Kia_Carnival
+LEXUS,LM300H,39,39,Van,MPV,39,https://en.wikipedia.org/wiki/Lexus_LM
+LEXUS,LM350H,10,10,Van,MPV,10,https://en.wikipedia.org/wiki/Lexus_LM
+LEXUS,LM500H,1,1,Van,MPV,1,https://en.wikipedia.org/wiki/Lexus_LM
+LEXUS,UX250H,3,3,Hatchback,SUV,3,https://en.wikipedia.org/wiki/Lexus_UX
+MAZDA,CX-7,1,1,Wagon,SUV,1,https://en.wikipedia.org/wiki/Mazda_CX-7
+MAZDA,FAMILIA,3,3,Pickup,Hatchback/Sedan,3,https://en.wikipedia.org/wiki/Mazda_Familia
+MERCEDES-BENZ,A200,128,4,Sedan,Hatchback,4,https://en.wikipedia.org/wiki/Mercedes-Benz_A-Class
+MERCEDES-BENZ,C200,183,29,Coupe,Sedan/Wagon,29,https://en.wikipedia.org/wiki/Mercedes-Benz_C-Class
+MERCEDES-BENZ,C230 KOMPRESSOR,7,3,Coupe,Sedan/Wagon,3,https://en.wikipedia.org/wiki/Mercedes-Benz_C-Class_(W203)
+MERCEDES-BENZ,C43,30,10,Coupe,Sedan/Wagon,10,https://en.wikipedia.org/wiki/Mercedes-Benz_C-Class
+MERCEDES-BENZ,CLA-CLASS,31,4,Hatchback,Sedan/Wagon,2,https://en.wikipedia.org/wiki/Mercedes-Benz_CLA-Class
+MERCEDES-BENZ,CLA-CLASS,31,4,SUV,Sedan/Wagon,1,https://en.wikipedia.org/wiki/Mercedes-Benz_CLA-Class
+MERCEDES-BENZ,CLA-CLASS,31,4,Coupe,Sedan/Wagon,1,https://en.wikipedia.org/wiki/Mercedes-Benz_CLA-Class
+MERCEDES-BENZ,CLA180,12,12,Coupe,Sedan,12,https://en.wikipedia.org/wiki/Mercedes-Benz_CLA-Class
+MERCEDES-BENZ,CLA200,36,5,Coupe,Sedan/Wagon,5,https://en.wikipedia.org/wiki/Mercedes-Benz_CLA-Class
+MERCEDES-BENZ,CLA250,132,104,Coupe,Sedan/Wagon,93,https://en.wikipedia.org/wiki/Mercedes-Benz_CLA-Class
+MERCEDES-BENZ,CLA250,132,104,Coupe,Sedan,11,https://en.wikipedia.org/wiki/Mercedes-Benz_CLA-Class
+MERCEDES-BENZ,CLA45,4,4,Coupe,Sedan/Wagon,4,https://en.wikipedia.org/wiki/Mercedes-Benz_CLA-Class
+MERCEDES-BENZ,CLS 350,3,3,Sedan,Coupe,3,https://en.wikipedia.org/wiki/Mercedes-Benz_CLS-Class
+MERCEDES-BENZ,CLS-CLASS,7,7,Sedan,Coupe,5,https://en.wikipedia.org/wiki/Mercedes-Benz_CLS-Class
+MERCEDES-BENZ,CLS-CLASS,7,7,Sedan,Coupe/Wagon,1,https://en.wikipedia.org/wiki/Mercedes-Benz_CLS-Class
+MERCEDES-BENZ,CLS-CLASS,7,7,Hatchback,Coupe/Wagon,1,https://en.wikipedia.org/wiki/Mercedes-Benz_CLS-Class
+MERCEDES-BENZ,CLS350,10,10,Sedan,Coupe,6,https://en.wikipedia.org/wiki/Mercedes-Benz_CLS-Class
+MERCEDES-BENZ,CLS350,10,10,Sedan,Coupe/Wagon,4,https://en.wikipedia.org/wiki/Mercedes-Benz_CLS-Class
+MERCEDES-BENZ,GLC220,140,35,Coupe,SUV,35,https://en.wikipedia.org/wiki/Mercedes-Benz_GLC-Class
+MERCEDES-BENZ,GLC250,199,79,Coupe,SUV,79,https://en.wikipedia.org/wiki/Mercedes-Benz_GLC-Class
+MERCEDES-BENZ,GLC300,90,21,Coupe,SUV,21,https://en.wikipedia.org/wiki/Mercedes-Benz_GLC-Class
+MERCEDES-BENZ,GLC350,63,27,Coupe,SUV,27,https://en.wikipedia.org/wiki/Mercedes-Benz_GLC-Class
+MERCEDES-BENZ,GLC43,59,56,Coupe,SUV,56,https://en.wikipedia.org/wiki/Mercedes-Benz_GLC-Class
+MERCEDES-BENZ,GLE350,26,10,Coupe,SUV,10,https://en.wikipedia.org/wiki/Mercedes-Benz_GLE-Class
+MERCEDES-BENZ,GLE450,4,4,Coupe,SUV,4,https://en.wikipedia.org/wiki/Mercedes-Benz_GLE-Class
+MERCEDES-BENZ,R280,1,1,Wagon,MPV,1,https://en.wikipedia.org/wiki/Mercedes-Benz_R-Class
+MERCEDES-BENZ,R300,3,3,SUV,MPV/Wagon,3,https://en.wikipedia.org/wiki/Mercedes-Benz_R-Class
+MERCEDES-BENZ,R350,1,1,SUV,MPV,1,https://en.wikipedia.org/wiki/Mercedes-Benz_R-Class
+MG,MG5,328,1,Hatchback,Sedan,1,https://en.wikipedia.org/wiki/MG_5
+MINI,CLUBMAN,23,23,Hatchback,Wagon,23,https://en.wikipedia.org/wiki/Mini_Clubman_(2007)
+MINI,COUNTRYMAN,286,285,Hatchback,SUV,285,https://en.wikipedia.org/wiki/Mini_Countryman
+MINI,ROADSTER,1,1,Coupe,Convertible,1,https://en.wikipedia.org/wiki/Mini_Coupé_and_Roadster
+MITSUBISHI,AIRTREK,3,3,Wagon,SUV,3,https://en.wikipedia.org/wiki/Mitsubishi_Outlander
+MITSUBISHI,DELICA SPACE WAGON,5,5,Wagon,MPV,5,https://en.wikipedia.org/wiki/Mitsubishi_Delica
+MITSUBISHI,PAJERO SPORT,1151,1151,SUV,PPV,1149,https://en.wikipedia.org/wiki/Mitsubishi_Pajero_Sport
+MITSUBISHI,PAJERO SPORT,1151,1151,Wagon,PPV,2,https://en.wikipedia.org/wiki/Mitsubishi_Pajero_Sport
+MITSUBISHI,RVR,2,1,Wagon,MPV/SUV,1,https://en.wikipedia.org/wiki/Mitsubishi_RVR
+MITSUBISHI,SPACE WAGON,37,34,Wagon,MPV,34,https://en.wikipedia.org/wiki/Mitsubishi_Space_Wagon
+MITSUBISHI,STRADA G WAGON,2,2,SUV,PPV,2,https://en.wikipedia.org/wiki/Mitsubishi_Pajero_Sport
+MITSUBISHI,STRADA G-WAGON,11,11,Wagon,PPV,11,https://en.wikipedia.org/wiki/Mitsubishi_Pajero_Sport
+MITSUBISHI,XPANDER,355,281,Wagon,MPV,281,https://en.wikipedia.org/wiki/Mitsubishi_Xpander
+MITSUBISHI,XPANDER CROSS,247,227,Wagon,MPV,227,https://en.wikipedia.org/wiki/Mitsubishi_Xpander
+NISSAN,ELGRAND,5,5,Van,MPV,5,https://en.wikipedia.org/wiki/Nissan_Elgrand
+NISSAN,JUKE,106,4,Wagon,SUV,4,https://en.wikipedia.org/wiki/Nissan_Juke
+NISSAN,LIVINA,7,7,SUV,Hatchback/Wagon,7,https://en.wikipedia.org/wiki/Nissan_Livina
+NISSAN,PATROL,1,1,Wagon,Pickup/SUV,1,https://en.wikipedia.org/wiki/Nissan_Patrol
+NISSAN,SERENA,7,7,Van,MPV,7,https://en.wikipedia.org/wiki/Nissan_Serena
+NISSAN,TERRA,179,179,SUV,PPV,179,https://en.wikipedia.org/wiki/Nissan_Terra
+PEUGEOT,807,2,2,Wagon,MPV,2,https://en.wikipedia.org/wiki/Peugeot_807
+PEUGEOT,EXPERT,2,1,MPV,Van,1,https://en.wikipedia.org/wiki/Peugeot_Expert
+PORSCHE,CAYENNE,291,18,Coupe,SUV,18,https://en.wikipedia.org/wiki/Porsche_Cayenne
+PORSCHE,PANAMERA,91,1,S,Sedan/Wagon,1,https://en.wikipedia.org/wiki/Porsche_Panamera
+ROVER,MINI,1,1,Hatchback,Sedan,1,https://en.wikipedia.org/wiki/Rover_Mini
+SMART,CITY,1,1,Coupe,Convertible/Hatchback,1,https://en.wikipedia.org/wiki/Smart_Fortwo
+SSANGYONG,STAVIC,9,9,Wagon,MPV,9,https://en.wikipedia.org/wiki/SsangYong_Stavic
+SUZUKI,APV,3,3,Wagon,Pickup/Van,3,https://en.wikipedia.org/wiki/Suzuki_APV
+SUZUKI,ERTIGA,87,75,Wagon,MPV,75,https://en.wikipedia.org/wiki/Suzuki_Ertiga
+SUZUKI,EVERY,1,1,Wagon,Van,1,https://en.wikipedia.org/wiki/Suzuki_Every
+SUZUKI,HUSTLER,1,1,Hatchback,SUV,1,https://en.wikipedia.org/wiki/Suzuki_Hustler
+SUZUKI,SPACIA,2,2,Van,MPV,2,https://en.wikipedia.org/wiki/Suzuki_Spacia
+SUZUKI,XL7,76,65,Wagon,MPV,65,https://en.wikipedia.org/wiki/Suzuki_XL7
+TATA,SUPER ACE,1,1,Truck,Pickup,1,https://en.wikipedia.org/wiki/Tata_Ace
+TATA,SUPER ACE MINT,1,1,Truck,Pickup,1,https://en.wikipedia.org/wiki/Tata_Ace
+TOYOTA,ALPHARD,817,817,Van,MPV,817,https://en.wikipedia.org/wiki/Toyota_Alphard
+TOYOTA,AVANZA,130,113,Wagon,MPV,113,https://en.wikipedia.org/wiki/Toyota_Avanza
+TOYOTA,CROWN,21,5,Hatchback,SUV/Sedan/Wagon,5,https://en.wikipedia.org/wiki/Toyota_Crown
+TOYOTA,ESQUIRE,8,8,Van,MPV,8,https://en.wikipedia.org/wiki/Toyota_Noah
+TOYOTA,ESTIMA,71,59,Wagon,MPV,59,https://en.wikipedia.org/wiki/Toyota_Estima
+TOYOTA,FORTUNER,2368,2011,SUV,PPV,2011,https://en.wikipedia.org/wiki/Toyota_Fortuner
+TOYOTA,HARRIER,87,10,Wagon,SUV,10,https://en.wikipedia.org/wiki/Toyota_Harrier
+TOYOTA,HILUX MIGHTY-X,15,2,Wagon,Pickup,2,https://en.wikipedia.org/wiki/Toyota_Hilux
+TOYOTA,HILUX VIGO,342,1,Wagon,Pickup,1,https://en.wikipedia.org/wiki/Toyota_Hilux
+TOYOTA,INNOVA,351,301,Wagon,MPV,301,https://en.wikipedia.org/wiki/Toyota_Kijang_Innova
+TOYOTA,IPSUM,1,1,Wagon,MPV,1,https://en.wikipedia.org/wiki/Toyota_Ipsum
+TOYOTA,KLUGER,1,1,Wagon,SUV,1,https://en.wikipedia.org/wiki/Toyota_Kluger
+TOYOTA,LAND CRUISER,33,1,Pickup,SUV,1,https://en.wikipedia.org/wiki/Toyota_Land_Cruiser
+TOYOTA,LAND CRUISER PRADO,6,6,PPV,SUV,6,https://en.wikipedia.org/wiki/Toyota_Land_Cruiser_Prado
+TOYOTA,NOAH,3,3,Wagon,MPV,3,https://en.wikipedia.org/wiki/Toyota_Noah
+TOYOTA,SIENTA,398,337,Wagon,MPV,337,https://en.wikipedia.org/wiki/Toyota_Sienta
+TOYOTA,SPORT RIDER,18,18,SUV,Pickup,12,https://en.wikipedia.org/wiki/Toyota_Hilux
+TOYOTA,SPORT RIDER,18,18,PPV,Pickup,6,https://en.wikipedia.org/wiki/Toyota_Hilux
+TOYOTA,VELLFIRE,418,418,Van,MPV,418,https://en.wikipedia.org/wiki/Toyota_Vellfire
+TOYOTA,VELOZ,255,210,Wagon,MPV,210,https://en.wikipedia.org/wiki/Toyota_Veloz
+TOYOTA,VOXY,30,30,Van,MPV,30,https://en.wikipedia.org/wiki/Toyota_Voxy
+TOYOTA,WISH,53,46,Wagon,MPV,46,https://en.wikipedia.org/wiki/Toyota_Wish
+TOYOTA,YARIS,1494,6,SUV,Hatchback,6,https://en.wikipedia.org/wiki/Toyota_Yaris
+VOLKSWAGEN,BEETLE,38,29,Coupe,Convertible/Hatchback,29,https://en.wikipedia.org/wiki/Volkswagen_Beetle
+VOLKSWAGEN,NEW BEETLE,20,9,Coupe,Convertible/Hatchback,9,https://en.wikipedia.org/wiki/Volkswagen_New_Beetle
+VOLKSWAGEN,SHARAN,1,1,Wagon,MPV,1,https://en.wikipedia.org/wiki/Volkswagen_Sharan
+VOLVO,1800,1,1,Coupe,Wagon,1,https://en.wikipedia.org/wiki/Volvo_P1800
+VOLVO,V40,31,28,Wagon,Hatchback,28,https://en.wikipedia.org/wiki/Volvo_V40
+WEY,G9,1,1,Van,MPV,1,https://paultan.org/research/great-wall/wey-g9/

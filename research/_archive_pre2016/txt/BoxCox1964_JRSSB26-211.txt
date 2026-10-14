@@ -1,0 +1,2039 @@
+An Analysis of Transformations
+         G. E. P. Box; D. R. Cox
+         Journal of the Royal Statistical Society. Series B (Methodological), Vol. 26, No. 2. (1964), pp.
+         211-252.
+
+Stable URL:
+http://links.jstor.org/sici?sici=0035-9246%281964%2926%3A2%3C211%3AAAOT%3E2.0.CO%3B2-6
+Journal of the Royal Statistical Society. Series B (Methodological) is currently published by Royal Statistical Society.
+
+Your use of the JSTOR archive indicates your acceptance of JSTOR's Terms and Conditions of Use, available at
+http://www.jstor.org/about/terms.html. JSTOR's Terms and Conditions of Use provides, in part, that unless you have obtained
+prior permission, you may not download an entire issue of a journal or multiple copies of articles, and you may use content in
+the JSTOR archive only for your personal, non-commercial use.
+Please contact the publisher regarding any further use of this work. Publisher contact information may be obtained at
+http://www.jstor.org/journals/rss.html.
+Each copy of any part of a JSTOR transmission must contain the same copyright notice that appears on the screen or printed
+page of such transmission.
+
+The JSTOR Archive is a trusted digital repository providing for long-term preservation and access to leading academic
+journals and scholarly literature from around the world. The Archive is supported by libraries, scholarly societies, publishers,
+and foundations. It is an initiative of JSTOR, a not-for-profit organization with a mission to help the scholarly community take
+advantage of advances in technology. For more information regarding JSTOR, please contact support@jstor.org.
+
+                                                                                                                                http://www.jstor.org
+                                                                                                                          Sat Sep 29 20:01:42 2007
+An Analysis of Transformations
+
+By G. E. P. Box          and  D. R. Cox
+
+University of Wisconsin  Birkbeck College, University of London
+
+[Read at a RESEARCMHETHODSMEETINoGf the SOCIETYA,pril 8th, 1964,
+                  Professor D. V. LINDLEYin the Chair]
+
+      In the analysis of data it is often assumed that observations y,, y,, ...,y,
+
+        are independently normally distributed with constant variance and with
+       expectations specified by a model linear in a set of parameters 0. In this
+       paper we make the less restrictive assumption that such a normal, homo-
+        scedastic, linear model is appropriate after some suitable transformation
+       has been applied to the y's. Inferences about the transformation and about
+       the parameters of the linear model are made by computing the likelihood
+       function and the relevant posterior distribution. The contributions of
+       normality, homoscedasticity and additivity to the transformation are
+        separated. The relation of the present methods to earlier procedures for
+       finding transformations is discussed. The methods are illustrated with
+       examples.
+
+                                        1. INTRODUCTION
+
+THEusual techniques for the analysis of linear models as exemplified by the analysis of
+variance and by multiple regression analysis are usually justified by assuming
+
+     (i) simplicity of structure for 'E(y);
+     (ii) constancy of error variance;
+    (iii) normality of distributions;
+    (iv) independence of observations.
+
+In analysis of variance applications a very important example of (i) is the assumption
+of additivity, i.e. absence of interaction. For example, in a two-way table it may be
+possible to regresent E(y) by additive constants associated with rows and columns.
+
+    If the assumptions (i)-(iii) are not satisfied in terms of the original observations,
+y, a non-linear transformation of y may improve matters. With this in mind, numerous
+special transformations for use in the analysis of variance have been examined in the
+literature; see, in particular, Bartlett (1947). The main emphasis in these studies has
+tended to be on obtaining a constant error variance, especially when the variance
+of y is a known function of the mean, as with binomial and Poisson variates.
+
+    In multiple regression problems, and in particular in the analysis of response
+surfaces, assumption (i) might be that E(y) is adequately represented by a rather
+
+simple empirical function of the independent variables x,, x,, ...,xt and we would
+
+want to transform so that this assumption, together with assumptions (ii) and (iii),
+is approximately satisfied. In some cases transformation of independent as well as
+of dependent variables might be desirable to produce the simplest possible regression
+model in the transformed variables. In all cases we are concerned not merely to find
+a transformation which will justify assumptions but rather to find, where possible,
+a metric in terms of which the findings may be succinctly expressed.
+212  Box AND COX- An Analysis of Transformations  [No. 2,
+
+    Each of the considerations (i)-(iii) can, and has been, used separately to select a
+suitable candidate from a parametric family of transformations. For example, to
+achieve additivity in the analysis of variance, selection might be based on
+
+    (a) minimization of the F value for the degree of freedom for non-additivity
+       (Tukey, 1949); or
+
+    (b) minimization of the F ratio for interaction versus error; or
+    (c) maximization of the F ratio for treatments versus error (Tukey, 1950).
+    Tukey and Moore (1954) used method (a) in a numerical example, plotting
+
+contours of F against (A,, A,) for transformations in the family (y + A,)". They found
+
+that in their particular examplethe minimizing values were very imprecisely determined.
+    In both (a) and (b) the general object is to look for a scale on which effects are
+
+additive, i.e. to see whether an apparent interaction is removable by a transformation.
+Of course, only a particular type of interaction is so removable. Whereas (a) can be
+applied, for example, to a two-way classification without replication, method (b)
+requires the availability of an error term separated from the interaction term. Thus,
+if applied to a two-way classification, method (b) could only be used when there was
+some replication within cells. Finally, method (c) can be used even in a one-way
+analysis to find the scale on which treatment effects are in some sense most sensitively
+expressed. In particular, Tukey (1950) suggested multivariate canonical analysis of
+(y,y2) to find the linear combination y + Ay2 most sensitive to treatment effects.
+Incidentally, care is necessary in using y + Ay2 over the wide ranges commonly
+encountered with data being considered for transformation, for such a transformation
+is sensible only so long as the value of A and the values of y are such that the
+transformation is monotonic.
+
+    For transformation to stabilize variance, the usual method (Bartlett, 1947) is to
+determine empirically or theoretically the relation between variance and mean. An
+adequate empirical relation may often be found by plotting log of the within-cell
+variance against log of the cell mean. Another method would be to choose a trans-
+formation, within a restricted family, to minimize some measure of the heterogeneity
+of variance, such as Bartlett's criterion. We are grateful to a referee for pointing
+out also the paper of Kleczkowski (1949) in which, in particular, approximate fiducial
+limits for the parameter A in the transformation of y to log(y+ A) are obtained. The
+method is to compute fiducial limits for the parameters in the linear relation observed
+to hold when the within-cell standard deviation is regressed on'the cell mean.
+
+    Finally, while there is much work on transforming a single distribution to
+normality, constructive methods of finding transformations to produce normality in
+analysis of variance problems do not seem to have been considered.
+
+    While Anscombe (1961) and Anscombe and Tukey (1963) have employed the
+analysis of residuals as a means of detecting departures from the standard assumptions,
+they have also indicated how transformations might be constructed from certain
+functions of the residuals.
+
+    In regression problems, where both dependent and independent variables can be
+transformed, there are more possibilities to be considered. Transformation of the
+independent variables (Box and Tidwell, 1962) can be applied without affecting the
+constancy of variance and normality of error distributions. An important application
+is to convert a monotonic non-linear regression relation into a linear one. Obviously
+it is useless to try to linearize a relation which is not monotonic, but a transformation
+is sometimes useful in such cases, for example, to make a regression relation more
+nearly quadratic around its maximum.
+19641  Box AND COX- An Analysis of Transformations  213
+
+                        2. GENERARLEMARKOSN TRANSFORMATIONS
+
+    The main emphasis in this paper is on transformations of the dependent variable.
+The general idea is to restrict attention to transformations indexed by unknown
+parameters A, and then to estimate X and the other parameters of the model by
+standard methods of inference. Usually X will be a one-, or at most two-, dimensional
+parameter, although there is no restriction in principle. Our procedure then leads
+to an interesting synthesis of the procedures reviewed in Section .I. It is convenient
+to make first a few general points about transformations.
+
+    First, we can distinguish between analyses in which either (E) the particular
+transformation, A, is of direct interest, the detailed study of the factor effects, etc.,
+being of secondary concern; or (b) the main interest is in the factor effects, the choice
+of X being only a,preliminary step. Type (b) is likely to be much the more common.
+Nevertheless, (a) can arise, for example, in the analysis of a preliminary set of data.
+Or, again, we may have two factors, A and B, whose main effects are broadly under-
+stood, it being required to study the A, if any, for which there is no interaction between
+the factors. Here the primary interest is in A. In case (b), however, we shall need to
+fix one, or possibly a small number, of X's and go ahead with the detailed estimation
+and interpretation of the factor effects on this particular transformed scale. We
+shall choose X partly in the light of the information provided by the data and partly
+from general considerations of simplicity, ease of interpretation, etc. For instance,
+it would be quite possible for the formal analysis to show that say ,/y is the best
+scale for normality and constancy of variance, but for us to decide that there are
+compelling arguments of ease of interpretation for working say with logy. The
+formal analysis will warn us, however, that changes of variance and non-normality
+may need attention in a refined and efficient analysis of logy. That is, the method
+developed below for finding a transformation is useful as a guide, but is, of course,
+not to be followed blindly. In Section 7' we discuss briefly some of the consequences
+of interpreting factor effects on a scale chosen in the light of the data.
+
+    In regression studies, it is sometimes necessary to take an entirely empirical
+approach to the choice of a relation. In other cases, physical laws, dimensional
+analysis, etc., may suggest a particular functional form. Thus, in a study of a chemical
+system one would expect reaction rate to be proportional to some power of the
+concentration and to the antilog of the reciprocal of absolute temperature. Again,
+in many fields of technology relationships of the form
+
+                                       y K x<?. .x$
+
+are very common, suggesting a log transformation of all variables. In such cases
+the reasonable thing will often be first to apply the transformations suggested by the
+prior reasoning, and after that consider what further modifications, if any, are needed.
+Finally, we may know the behaviour of y when the independent variables xi tend
+to zero or infinity, and certainly, if we are hopeful that the model might apply over a
+wide range, we should consider models that are consistent with such limiting properties
+of the system.
+
+    We can distinguish broadly two types of dependent variable, extensive and non-
+extensive. The former have a relevant property of physical additivity, the latter not.
+Thus yield of product per batch is extensive. The failure time of a component would
+be considered extensive if components are replaced on failure, the main thing of
+interest being the number of components used in a long time. Properties like
+temperature, viscosity, quality of product, etc., are not extensive. In the absence of
+214  Box AND COX- An Analysis of Transformations                               [No. 2,
+
+the sort of prior consideration mentioned in the previous paragraph there is no
+reason to prefer the initial form of a non-extensive variable to any monotonic function
+of it. Hence, transformations can be applied freely to non-extensive variables. For
+extensive variables, however, the population mean of y is the parameter determining
+the long-run behaviour of the system. Thus in the two examples mentioned above,
+the total yield of product in a long period and the total number of components used
+in a very long time are determined respectively by the population mean of yield per
+batch and the mean failure time per component, irrespective of distributional form.
+
+    In a narrowly technological sense, therefore, we are interested in the population
+mean of y, not of some function of y. Hence we either analyse linearly the untrans-
+formed data or; if we do apply a transformation in order to make a more efficient and
+valid analysis, we convert the conclusions back to the original scale. Even in circum-
+stances where, for immediate application, the original scale y is required, it may be
+better to think in terms of transformed values in which, say, interactions have been
+removed.
+
+    In general, we can regard the usual formal linear models as doing two things:
+    (a) specifying the questions to be asked, by defining explicitly the parameters
+
+       which it is the main object of the analysis to estimate;
+    (b) specifying assumptions under which the above parameters can be simply and
+
+       effectively estimated.
+If there should be conflict between the requirements for (a) and for (b), it is best to
+pay most attention to (a), since approximate inference about the most meaningful
+parameters is clearly preferable to formally "exact" inference about parameters
+whose definition is in some way artificial. Therefore in selecting a transformation we
+might often give first attention to simplicity of the model structure, for example to
+additivity in the analysis of variance. This allows simplicity of description and also
+the main effect of a factor A, measured on a scale for which there appears to be
+no interaction with a factor B, often has a reasonable possibility of being valid for
+levels of B outside those of the initial experiment.
+
+                     3. TRANSFORMATOIOF NTHE DEPENDENVTARIABLE
+
+    We work with a parametric family of transformations from y to y(*), the
+parameter A, possibly a vector, defining a particular transformation. Two important
+examples considered here are
+
+and
+
+The transformations (1) hold for y >0 and (2) for y > -A,. Note that since an analysis
+
+/I:* of variance is unchanged by a linear transformation (1) is equivalent to
+     y'" '-  (Af O),
+
+             logy (A=O);
+19641      Box AND COX- An Analysis of Transformations                         215
+
+the form (1) is slightly preferable for theoretical analysis because it is continuous at
+A = 0. In general, it is assumed that for each A, ycA)is a monotonic function of y
+over the admissible range. Suppose that we observe an n x 1 vector of observations
+
+y = {yl, ...,yn}, and that the appropriate linear model for the problem is specified by
+
+where y(" is the column vector of transformed observations, a is a known matrix
+and 0 a vector of unknown parameters associated with the transformed observations.
+
+    We now assume that for some unknown A, the transformed observations
+
+yiA)(i = 1, ...,n) satisfy the full normal theory assumptions, i.e. are independently
+
+normally distributed with constant variance u2, and with expectations (4). The
+probability density for the untransformed observations, and hence the likelihood
+in relation to these original observations, is obtained by multiplying the normal
+density by the Jacobian of the transformation.
+
+    The likelihood in relation to the original observations y is thus
+
+where
+
+    We shall examine two ways in which inferences about the parameters in (5) can
+be made. In the first, we apply "orthodox" large-sample maximum-likelihood
+theory to (5). This approach leads directly to point estimates of the parameters and
+to approximate tests and confidence intervals based on the chi-squared distribution.
+
+    In the second approach, via Bayes's theorem, we assume that the prior distributions
+of the 0's and logu can be taken as essentially uniform over the region in which the
+likelihood is appreciable and we integrate over the parameters to obtain a posterior
+distribution for A; for general discussion of this approach, see, in particular, Jeffreys
+(1961).
+
+    We find the maximum-likelihood estimates in two steps. First, for given A, (5) is,
+except for a constant factor, the likelihood for a standard least-squares problem.
+Hence the maximum-likelihood estimates of the 0's are the least-squares estimates
+for the dependent variable y(" and the estimate of u2, denoted for fixed A by e2(A),is
+
+where, when a is of full rank,
+
+                                a, = I -a(afa)-I a',
+
+and S(A) is the residual sum of squares in the analysis of variance of ycA).
+    Thus for fixed A, the maximized log likelihood is, except for a constant,
+
+           L,,(A) = -+nlog G2(A)+log J(A; y).                                  (8)
+
+In the important special case (1) of the simple power transformation, the second term
+
+in (8) is                       (A- 1)xlogy,.
+
+                                                                               (9)
+
+In (2), when an unknown origin A, is included, the term becomes
+216    Box AND COX- An Analysis of Transformations       [No. 2,
+
+    It will now be informative to plot the maximized log likelihood Lmax(h)against h
+
+for a trial series of values. From this plot the maximizing value 3 may be read off
+
+and we can obtain an approximate 100(1- ol) per cent confidence region from
+
+where vh is the number of independent components in A. The main arithmetic
+consists in doing the analysis of variance of ych) for each chosen h.
+
+   If it were ever desired to determine 3more precisely this could be done by determin-
+ing numerically the value 3 for which the derivatives with respect to X are all zero.
+
+In the special case of the one parameter power transformation ych)= ( Y ~ l-)/X,
+
+where u(" is the vector of components (h-ly,"logy,). The numerator in (12) is the
+residual sum of products in the analysis of covariance of y(h)and u(".
+
+    The above results can be expressed very simply if we work with the normalized
+transformation
+
+                         Z(h)= ( A ) lln
+
+                               Y lJ 3
+
+where J = J(X; y). Then
+
+                         Lmax(X)= -&nlog a2(h;z),
+
+where
+
+                         a2(x;Z ) =  Z(h)'arZ(h) S(X;z)
+                                        ---
+                                     n       n'
+
+where S(X; z) is the residual sum of squares of ~ ( ~ T1 h. e maximized likelihood is thus
+proportional to (S(X;z ) ) - ~and the maximum-likelihood estimate is obtained by
+minimizing S(X;z) with respect to A.
+
+    For the simple power transformation
+
+where 3 is the geometric mean of the observations.
+
+    For the power transformation with shifted location
+
+where gm ( y+A,) is the sample geometric mean of the ( y+ h2)'s.
+
+    Consider now the corresponding Bayesian analysis. Let the degrees of freedom
+for residual be v, = n -rank (a), and let
+
+be the residual mean square in the analysis of variance of ycA);note the distinction
+
+between a2(X),the maximum-likelihood estimate with divisor n, and s2(X)the "usual"
+19641  Box AND COX- An Analysis of Transformations       217
+
+estimate, with divisor the degrees of freedom v,. We first rewrite the likelihood (5),
+
+( i.e. the conditional probability density function of the y's given 8, 02, A, in the form
+       P ( Y0~, 02,A) = I exp -.,s~(A)+(8 -B,)'a'a(8 -6
+                       ( 2 7 ~(3)" ~ ~  202
+
+where 6, is the least-squares estimate of 8 for given A.
+
+    Now consider the choice of the joint prior distribution for the unknown para-
+meters. We first parametrize so that the 8's are linearly independent and hence
+n- v, in number. Let p,(A) denote the marginal prior density of A. We assume that it
+is reasonable, when making inferences about A, to take the conditional prior distri-
+bution of the 8's and logo, given A, to be effectively uniform over the range for which
+the likelihood is appreciable. That is, the conditional prior element given A is
+
+where, for definiteness, we for the moment denote the effects and variance measured
+in terms of y(" by a suffix A. The factor g(A) is included because the general size
+and range of the transformed observations y(" may depend strongly on A. If the
+conditional prior distribution (15) were assumed independent of A, nonsensical
+results would be obtained.
+
+    To determine g(A) we argue as follows. Fix a standard reference value of A, say A,.
+Suppose provisionally that, for fixed A, the relation between y(" and y(") over the
+
+range of the observations is effectively linear, say
+
+We can then choose g(A) so that when (16) holds, the conditional prior distributions
+
+(15) are consistent with one another for different values of A. In fact, we shall need
+
+to apply the answer when the transformations are appreciably non-linear, so that
+
+(16) does not hold. There may be a better approach to the choice of a prior distribution
+
+than the present one.
+
+It follows from (16) that  log a: = const +log o:*
+
+                                                         (17)
+
+and hence, to this order, the prior density of 02, is independent of A. However, the
+
+8,'s are linear combinations of the expected values of the y(n)'s,so that
+
+Since there are n -v, independent components to 8, it follows that g(A) is proportional
+to l/lY-vr.
+
+    Finally we need to choose I,. In passing from A, to A, a small element of volume
+of the n dimensional sample space is multiplied by J(A; y)/J(A,; y). An average scale
+change for a single y component is the nth root of this and, since A, is only a standard
+reference value, we have approximately
+
+    Thus, approximately, the conditional prior density (15) is
+218  Box AND COX- An Analysis of Transformations                         [No. 2,
+
+The combined prior element of probability is thus
+
+where we now suppress the suffix X on 8 and a.
+    This is only an approximate result. In particular, the choice of (18) is somewhat
+
+arbitrary. However, when a useful amount of information is actually available from
+the data about the transformation, the likelihood will dominate and the exact choice
+of (19) is not critical. The prior distribution (19) is interesting in that the observations
+enter the approximate standardizing coefficient J(X; y).
+
+    We now have the likelihood (14) and the prior density (19) and can apply Bayes's
+theorem to obtain the marginal posterior distribution of X in the form
+
+where Kh is a normalizing constant independent of A, chosen so that (20) integrates
+to one with respect to A, and
+
+The integral (21) can be evaluated to give
+
+Substituting into (20); we have that the posterior distribution of X is
+
+where K, is a normalizing constant independent of X.
+
+   Thus the contribution of the observations to the posterior distribution of X is
+
+represented by the factor
+
+                                      {J(X; y)}vr~?b/{sz(X)}~v~
+
+or, on a log scale, by the addition of a term                                         (22)
+                                                                         = y("/J1In, the
+                Lb(X)= -+vTlogsz(X)+(vr/n)logJ(h ;y)
+
+to logpo(4.
+    Once again if we work with the normalized transformation
+
+result is expressed with great simplicity, for
+
+and the posterior density is
+19641  Box AND COX- An Analysis of Transformations  219
+
+    In practice we can plot (S(h; z))-*". against A, combining it with any prior
+information about A. When the prior density of h can be taken as locally uniform,
+the posterior distribution is obtained directly by plotting
+
+       p,(h) = k(S(h; z)}-tv~,                      (24)
+
+where k is chosen to make the total area under the curve unity.
+    We normally end by selecting a value of h in the light both of this plot and of
+
+other relevant considerations discussed in Section 2. We then proceed to a standard
+analysis using the indicated transformation.
+
+    The maximized log likelihood and the log of the contribution to the posterior
+distribution of h may be written respectively as
+
+              L,,,(h) = -&nlog (S(h ; z)/n}, Lb(X)= -&vrlog {S(X; z)/v,}.
+
+They differ only by substitution of v, for n. They are both monotonic functions of
+S(X; z) and their maxima both occur when the sum of squares S(h; z) is minimized.
+For general description, L,,,(h) and Lb(X) are substantially equivalent. However,
+it can easily happen that v,/n is appreciably less than one, even when n is quite large.
+Therefore, in applications, the difference cannot always be ignored, especially when
+a number of models are simultaneously considered.
+
+    There are some reasons for thinking Lb(h) preferable to L,,,(h) from a non-
+Bayesian as well as from a Bayesian point of view; see, for example, the introduction
+by Bartlett (1937) of degrees of freedom into his test for the homogeneity of variance.
+The general large-sample theorems about the sampling distributions of maximum-
+likelihood estimates, and the maximum-likelihood ratio chi-squared test, apply just
+as much to Lb(h) as to L,,,(h).
+
+                                        4. Two EXAMPLES
+
+    We have supposed that after suitable transformation from y to y(", (a) the
+expected values of the transformed observations are described by a model of simple
+structure; (b) the error variance is constant; (c) the observations are normally
+distributed. Then we have shown that the maximized likelihood for h, and also the
+approximate contribution to the posterior distribution of A, are each proportional
+to a negative power of the residual sum of squares for the variate dh)= Y ( ~ ) / J ~ / " .
+
+    The "overall" procedure seeks a set of transformation parameters h for which
+(a), (b) and (c) are simultaneously satisfied, and sample information on all three
+aspects goes into the choice. In this Section we now apply this overall procedure to
+two examples. In Section 5 we shall show how further analysis can show the separate
+contributions of (a), (b) and (c) in the choice of the transformation. We shall then
+illustrate this separation using the same two examples.
+
+    The above procedure depends on specific assumptions, but it would be quite
+wrong for fruitful application to regard the assumptions as final. The proper attitude
+of sceptical optimism is accurately expressed by saying that we tentatively entertain
+the basis for analysis, rather than that we assume it. The checking of the plausibility
+of the present procedure will be discussed in Section 5.
+
+        A Biological Experiment using a 3 x 4 Factorial Design with Replication
+
+    Table 1 gives the survival times of animals in a 3 x 4 factorial experiment, the
+factors being (a) three poisons and (b) four. treatments. Each combination of the
+two factors is used for four animals, the allocation to animals being completely
+randomized.
+220  Box AND COX- An ArzulysB oj" Transformations                            [No. 2,
+
+    We consider the application of a simple power transformation y(" = (y" 1))h.
+
+Equivalently we shall actually analyse the standardized variate zch)= (yh- l)/(hjh-I).
+
+                                       TABLE1
+     Survival times (unit, 10hr) of animals in a 3 x 4 factorial experiment
+
+                - --                      - -
+
+                         Treatment
+
+     Poison
+
+             A        B             C  D
+
+We are tentatively entertaining the model that after such transformation
+
+    (a) the expected value of the transformed variate in any cell can be represented
+        by additive row and column constants, i.e. that no interaction terms are needed,
+
+    (b) the error variance is constant,
+    (c) the observations are normally distributed.
+
+The maximized likelihood and the posterior distribution are functions of the residual
+sum of squares for zch)after eliminating row and column effects. This sum of squares
+is denoted S(h; z). It has 42 degrees of freedom and is the result of pooling the
+"within groups" and the "interaction" sums of squares.
+
+    Table 2 gives S(A; z) together with Lm,,(h) and pu(h) over the interesting ranges.
+The constant k in keLb(h)=pu(h) is the reciprocal of the area under the curve
+Y = eLb(h)determined by numerical integration. Graphs of Lm,,(A) and of pu(A)
+are shown in Fig. 1. This analysis points to an optimal value of about = -0.75.
+Using (11) the curve of maximized likelihood gives an approximate 95 per cent
+confidence interval for A extending from about - 1.13 to -0.37.
+
+    The posterior distribution pu(A) is approximately normal with mean -0.75 and
+standard deviation 0.22. About 95 per cent of this posterior distribution is included
+within the limits - 1.18 and -0.32.
+
+    The reciprocal transformation has a natural appeal for the analysis of survival
+times since it is open to the simple interpretation that it is the rate of dying which is
+to be considered. Our analysis shows that it would, in fact, embody most of the
+advantages obtainable. The complete analysis of variance for the untransformed
+data and for the reciprocal transformation (taken in the z form) is shown in Table 3.
+
+    Whereas no great change occurs on transformation in the mean squares associated
+with poisons and treatments, the within groups mean square has shrunk to a third of
+19641             BOXAND COX- An Analysis of Transformations
+
+                                        TABL2E
+       Biological data. Calculations based on an additive, homoscedastic,
+
+                   normal model in the transformed observations
+
+Lmax(h) = -24 log B2(h;Z ) = log { S ( h ;z ) ) - ~-k ~92.91 ;P,(h) = k eLa(A)= 0.866 x 10-10{S(h;=)}-21.
+
+                                                                                                 'I
+
+     FIG. 1. Biological data. Functions Lma,(h) and p,(h). Arrows show approximate
+                                  95 per cent. confidence interval for h.
+
+9
+222  Box AND COX- An Analysis of Transformations                [No. 2,
+
+its value and the interaction mean square is now much closer in size to that within
+groups. Thus, in the transformed metric, not only is greater simplicity of interpre-
+tation possible but also the sensitivity of the experiment, as measured by the ratios
+
+                    TABLE3
+
+     Analyses of variance of biological data
+
+                                 - --  -
+
+                                 Mean squares x 1000
+
+     Poisons .          Degrees  Untransformed    Reciprocal
+     Treatments .           of                  transformation
+                                      516.5
+     PxT.               freedom       307.1         (2form)
+     Within groups                     41.7
+                             2         22.2          568.7
+                             3                       221.9
+                             6
+                                                        8.5
+                    . 36                                7.8
+
+of the poisons and the treatments mean squares to the residual square, has been
+increased almost threefold. We shall not here consider the detailed interpretation of
+the factor effects.
+
+              A Textile Experiment using a Single Replicate of a 3, Design
+
+    In an unpublished report to the Technical Committee, International Wool Textile
+Organization, Drs A. Barella and A. Sust described some experiments on the behaviour
+of worsted yarn under cycles of repeated loading. Table 4 gives the numbers of
+cycles to failure, y, obtained in a single replicate of a 3, experiment in which the
+factors are
+
+    x1 : length of test specimen (250, 300, 350 mm.),
+    x, : amplitude of loading cycle (8, 9, 10 mm.),
+    x, : load (40, 45, 50 gm.).
+In Table 4 the levels of the x's are denoted conventionally by - 1, 0, 1.
+    It is useful to describe first the results of a rather informal analysis of Table 4.
+Barella and Sust fitted a full equation of second degree in x,, x, and x,, but the
+conclusions were very complicated and messy. In view of the wide relative range of
+variation of y, it is natural to try analysing instead log y, and there results a great
+simplification. All linear regression terms are very highly significant and all second-
+degree terms are small. Further, it is natural to take logs also for the independent
+variables, i.e. to think in terms of relationships like
+
+    The estimates of the P's, from the linear regression coefficients of log y on the
+log x's, are, with their estimated standard errors,
+
+  Since p11:-p,, the combination log x, -log x, = log (x,/x,) is suggested by the
+
+data as of possible importance. In fact, x,/xl is just the fractional amplitude of the
+loading cycle; indeed, naPve dimensional considerations suggest this as a possible
+factor, although there are in fact other relevant lengths, so that dependence on x1
+19641  Box AND COX- An Analysis of Transformations               223
+
+and x, separately is not inconsistent with dimensional considerations. If, however,
+we write x,/x, = x, and round the regression coefficients, we have the simple formula
+
+                                            y Cc xy5x33
+
+which fits the data remarkably well.
+
+                                    TABLE4
+       Cycles tofailure of worsted yarn: 33factorial experiment
+
+           Factor levels
+
+                              Cycles to failure, y
+
+       x1  x2             x3
+
+    In this case, there seem strong general arguments for starting with a log trans-
+formation of all variables. Power laws are frequently effective in the physical sciences;
+also, provided that the signs of the p's are right, (25) has sensible limiting behaviour
+for x2,x3+0,co; finally, the obvious normal theory model based on transforming
+(25) gives distributions over positive values of y only.
+224  Box AND COX- An Analysis of Transformations                     [No. 2,
+
+    Nevertheless, it is interesting to see whether the method of the present paper
+applied directly to the data of Table 4 produces the log transformation. In this
+paper, transformations of the dependent variable alone are considered; in fact, since
+the relative range of the x's is not very great, transformation of the x's does not have
+a big effect on the linearity of the regression.
+
+    We first consider the application of a simple power transformation in terms, as
+before, of the standardized variate z ( ~=) (yh- ~)/(XJP-~)W. e tentatively suppose
+that after such transformation
+
+    (a) the expected value of the transformed response can be represented merely by
+
+     a model linear in the x's, .
+
+    (b) the error variance is constant,
+    (c) the observations are normally distributed.
+The maximized likelihood and the posterior distribution are functions of the residual
+sum of squares for z(" after fitting only a linear model to the x's. Since there are
+four constants in the linear regression model this residual sum of squares has
+27-4 = 23 degrees of freedom; we denote it by S(h; 2).
+    Table 5 shows S(X; z) together with L,,,(h) and p,(X) over the interesting ranges
+and the results are plotted in Fig. 2. The optimal value for the transformation para-
+
+meter is ^h = -0.06. The transformation is determined remarkably closely in this
+
+                                      TABLE5
+
+     Textile data. Calculations based on normal linear model in the
+                           transformed observations
+
+             L,,,(h) = -13.5 log B2(h;z) = { S ( h ;~ ) } - ~ ~ ' ~ + 4 4 . 4 9 .
+           pu(h) = k eLacn=) 0.540 x { S ( h ;~ ) } - l l ' ~ .
+
+example, the approximate 95 per cent confidence range extending only from -0.18
+to +0.06. The posterior distribution p,(X) has its mean at -0.06. About 95 per cent
+of the distribution is included between -0.20 and +0.08. As we have mentioned,
+
+the advantages of a log transformation corresponding to the choice X = 0 are very
+
+great and such a choice is now seen to be strongly supported by the data.
+19641  BOXAND COX- An Analysis of Transformations                                 225
+
+    The complete analysis of variance for the untransformed and the log trans-
+formation, taken in the z form, is shown in Table 6.
+
+                    -I               0              I
+
+                                                 X
+
+       FIG. 2. Textile data. Functions L,,(h) and p,(h). Arrows show approximate
+                                   95 per cent confidence interval for h.
+
+                                        TABLE6
+                        Analyses of variance of textile data
+
+                                     Mean squares x 1000
+
+                            Degrees  Untransformed   Logarithmic
+                                of                  transformation
+
+                            freedom                    (Z form)
+
+       Linear .                  3      4,916.2               2,374.4
+       Quadratic .               6        704.1                    8.1
+                                           73.9                   11.9
+       Residual .       . 17
+
+    The transformation eliminates the need for second-order terms in the regression
+equation while at the same time increasing the sensitivity of the analysis by about
+three, as judged by the ratio of linear and residual mean squares.
+
+    For this example we have also tried out the procedures we have discussed using
+the two parameter transformation ych) = { ( y + h,)hl- 1)/X, or in the z form actually
+226  Box AND COX- An Analysis of Transformations  [No. 2,
+
+used here zch)= {(y+ - l)/{Al gm (y +AZ))hl-l. Incidentally the calculation and
+
+print out of 77 analysis of variance tables, involving in each case the fitting of a
+general equation of second degree, and calculation of residuals and fitted values
+took 2 min. 6 sec. on the C.D.C. 1604 electronic computer. The full numerical
+results can be obtained from the authors, but are not given here. Instead approximate
+
+contours of - 11.5log S(A; z), and hence of S(A; z) itself, of the maximized likelihood
+
+and of p,(Al, A,), are shown in Fig. 3. If the joint posterior distribution p,(Al, A,)
+were normal then a region which excluded 100a per cent of the total posterior
+probability could be given by
+
+The shape of the contours indicates that the normal assumption is not very exact.
+Nevertheless, the quantity 100a obtained from (26) has been used to label the contours
+in Fig. 3 which thus roughly indicates the posterior probability distribution. For this
+example no appreciable improvement results from the addition of the further
+transformation parameter A,.
+
+                                       300
+
+       .200
+
+     is
+
+        100
+
+     0
+
+             0.2  0  -0.2  -0.4  -0.6  -0.8
+
+                                 A,
+
+     FIG.3. Textile data. Transformation to ( y S As)". Contours of p,(h,, h,) labelled
+
+                 with approximate percentage of posterior distribution excluded.
+
+                      5. FURTHEARNALYSIOSF THE TRANSFORMATION
+
+                         5.1. General Procedure for Further Analysis
+
+    The general procedure discussed above seeks to achieve simultaneously a model
+with (a) simple structure for the expectations, (b) constant variance and (c) normal
+distributions. Further analysis is sometimes profitable to see the separate contri-
+butions of these three elements to the transformation. Such analysis may indicate
+
+     (i) how simple a model we are justified in using;
+    (ii) what weight is given to the considerations (a) - (c) in choosing A;
+    (iii) whether different transformations are really needed to achieve the different
+
+         objectives and hence whether or not the value of A chosen using the overall
+         procedure is a compatible compromise.
+
+Of course, quite often careful inspection of the data will answer (i)-(iii) adequately
+for practical purposes. Nevertheless, a further analysis is of interest.
+19641  Box AND COX- An Analysis of Transformations  227
+
+    We aim at simplicity both to achieve ease of understanding and' to allow an
+efficient analysis. Validity of the formal tests associated with analysis of variance may,
+in virtue of the robustness of these tests, often hold to a good enough approximation
+even with the untransformed data. We stress, however, that such approximate validity
+is not by itself enough to justify an analysis; sensitivity must be considered as well as
+robustness. Thus in the biological example we have about one-third the sensitivity on
+the original scale as on the transformed scale. The approximate validity of significance
+tests on the original scale would be very poor consolation for the substantial loss of
+information involved in using the untransformed analysis. In any case even such
+validity is usually only preserved under the null hypothesis that all treatment effects
+are zero.
+
+    For the further analysis we again explore two approaches, one via maximum
+likelihood and the other via Bayes's theorem. Consider a general model to which a
+constraint C can be applied or relaxed, so that the relative merits of the simple and
+of the more complex model can be assessed. For example, the general model may
+include interaction terms, the constraint C being that the interaction terms are zero.
+
+    If Lmax(A)and Lmax(AIC ) denote maximized log likelihoods for the general model
+and for the constrained model, then
+
+Here the second term on the right-hand side is a statistic for testing for the presence
+of the constraint.
+
+    More generally, with a succession of constraints, we have
+
+and the three terms on the right of (28) can be examined separately. The detailed
+procedure should be clear from the examples to follow.
+
+    To apply the Bayesian approach, we write the posterior density of A
+
+where p(C) = E,{p(CI A)) is a constant independent of A. That is, the posterior
+density of A under the constrained model is the posterior density under the general
+model multiplied by a factor proportional to the conditional probability of the
+constraint given A. Successive factorization can be applied when there is a series of
+successively applied constraints, giving, for example,
+
+where p(C, I C,) = E,{p(C2 I A, C,)) is a further constant independent of A. Note that
+
+we are concerned here not with the probabilities that the constraints are true, but with
+the contributions of the constraints to the final function p(AI C,, C,).
+
+                                5.2. Structure of the Expectation
+    Now very often the most important question is: how simple a form can we use
+for E { Y ( ~ ) )T?hus in the analysis of the biological example in Section 4, we assumed,
+among other things, that additivity can be achieved by transformation. In fact,
+228      Box AND COX- An Analysis of Transformations             [No. 2,
+
+interaction terms may or may not be needed. Similarly, in our analysis of the textile
+example we took a linear model with four parameters; the full second-degree model
+with ten parameters may or may not be necessary.
+
+    Now let A, H a n d N denote respectively the constraints to the simpler linear model
+(without interaction or second-degree terms), to a heteroscedastic model and to a
+model with normal distributions. Then,
+
+     Lmax(h)A, H, N) = Lmax(hlH, N) +{Lrnax(XIA, H, N)-Lmax(hI H, N)). (31)
+
+    Let the parameter 8 in the expectation under the general linear model be partitioned
+(O,, 8,) where 8, = 0 is the constraint A. Denote the degrees of freedom associated
+with 8, and 8, by V, and v,. If v, is the number of degrees of freedom for residual
+in the complex model, the number in the simpler model is thus v,+ v,.
+
+    As before, we work with the standardized variable z ( ~=) Y ( ~ ) / J ~ / * . If we identify
+residual sums of squares by their degrees of freedom, we have
+
+         Lmax(X1 8, = 0, H, N) = -Snlog {S,p+,2(;hz)ln),         (32)
+
+whereas  Lma,(X I H, N) = -Sn log {Svv(Xz;)ln).
+
+                                                                 (33)
+
+Thus, in the textile example, Svrefers to the residual sum of squares from a second-
+degree model and S,~+r,eafers to the residual sum of squares from a first-degree model.
+Quite generally
+
+         s , ~ + , z (z~);= Sur(X;z)+S,~,~(X;4 ,
+
+where S,2,,1(X;z) denotes the extra sum of squares of ztA)for fitting 8,, adjusting for
+el, and has v, degrees of freedom.
+
+    Thus with (32) and (33) the decomposition (31) becomes
+
+where
+
+is the standard F ratio, in the analysis of variance of z ( ~ )fo, r testing the restriction to
+the simpler model.
+
+    Equation (34) thus provides an analysis of the overall criterion into a part taking
+account only of homoscedasticity (H) and normality (N) plus a part representing
+the additional requirement of a simple linear model, given that H and N have been
+achieved.
+
+    In the corresponding Bayesian analysis (30) gives
+
+         p(hl 8, = O, H, N) =p(hl H, N) x k,p(e2 = 01 A, H, N),  (36)
+
+where
+
+         Ilk, = EA 1 ,,,{P(~z = 01 A, H, N)),
+
+the expectation being taken over the distribution p(XI H, N).
+    Note that since the condition 8, = 0 is given, there is no component for these
+
+parameters in the prior distribution, so that the left-hand side of (36) is the posterior
+density obtained previously assuming A. Thus, in terms of the standardized variable
+d A ) ,the left-hand side is
+19641  Box AND COX- An Analysis of Transformations
+
+where the normalizing constant is given by
+
+Similarly, in the general model with 8, and 82 both free to vary, we obtain the first
+factor on the right-hand side of (36) as
+
+with   P(A IH, N) = PO(^ Cvr{Svv(A; Z))-*~T,        (38)
+
+       C;' = /po(h) {S,~(A; z)}-ivr dA.
+
+Thus, from (37) and (38), the second factor on the right-hand side of (36) must be
+
+    Now the general equation (36) shows that this last expression must be proportional
+to p(02 = 01 A, H, N). It is worth proving this directly. To do this, consider a trans-
+
+formed scale on which constant variance and normality have been attained and the
+
+standard estimates 8, and s2 calculated. For the moment, we need not indicate
+
+explicitly the dependence on A and z. We denote the matrix of the reduced least-
+squares equations for 8,, eliminating el, by b, so that the covariance matrix of 8, is
+02b-I. The elements of b and bL1 are denoted bij and bij. Also we write
+pij = bij/d(bii bjj) and {pij) for the matrix inverse to {pij). Then the joint distribution of
+
+is (Cornish, 1954; Dunnett and Sobel, 1954)
+
+where here and later the constant involves neither the parameters nor the observations.
+
+With uniform prior distributions for-the 0's and for log a, this is also the posterior
+
+distribution of the quantities (dZi- dZi)/(s/Jbii), where now the dZi are the random
+variables. Transforming from the ti's to the d2,'s we have that
+
+whence
+
+   If now we restore in our notation the dependence on A, comparison of (40) with
+
+(39) proves the required result; the appropriateness of the constant is easily checked.
+    Thus (36) provides an analysis of the overall density into a part p(AI H, N) taking
+
+account only of homoscedasticity and normality, and a second part, (39), in which
+the influence of the simplifying constraint is measured.
+230  Box AND COX- An Analysis of Transformations  [No. 2,
+
+     Equation (39) can be rewritten
+
+Now, by (34), the corresponding expression in the maximum-likelihood approach is
+given, in a logarithmic version, by
+
+    The essential difference between (41) and (42) is the occurrence of the term in
+SJX; z) in (41). In conventional large sample theory, vr is supposed large compared
+with v, and then in the limit the variation with h of the additional term is negligible,
+and the effect of both terms can be represented by plotting the standard F ratio as a
+function of A. In applications, however, v,/v, may well be appreciable; thus in the
+textile example v,/v,= 6/17.
+
+    Hence (41) and (42) could lead to appreciably different conclusions, for example,
+
+if we found a particular value of X giving a low value of F(h; z) but a relatively
+
+high value of SJh; z).
+    The distinction between (41) and (42) from a Bayesian point of view can be
+
+expressed as follows. In (41) there occurs the ordinate of the posterior distribution
+of 8, at 8, = 0. On the other hand, the Fratio, which determines (42), is a monotonic
+function of the probability mass outside the contour of the posterior distribution
+passing through 8, = O: Alternatively, a calculation of the posterior probability of a
+small region near 8, = 0 having a length proportional to o, in each of the v,
+component directions gives an expression equivalent to (42). The difference between
+(41) and (42) will be most pronounced if there exists an extreme transformation
+producing a low value of F(h; z ) but a large value of S,,(X; z), corresponding to a
+large spread of the posterior distribution of 8,. Expression (42) would give an
+answer tending to favour this transformation, whereas (41) would not.
+
+                              5.3. Application to Textile Example
+    We now illustrate the above analysis using the textile data. The calculations are
+set out in Table 7 and displayed in Figs. 4 and 5. We discuss the conclusions in some
+detail here. In practice, however, the most useful aspect of this approach is the
+opportunity for graphical assessment.
+    Fig. 4 shows that the curvature of L,,,(hl H, N) is much jess than that of
+L,,(XI A, H, N) previously given in Fig. 2, the constraint A here being that the
+second-degree terms are supposed zero. The inequality
+
+thus gives the much wider approximate 95 per cent confidence interval (-0.48, 0.13)
+for h indicated by H N in Fig. 4 and compared with the previous interval, marked
+AHN. Since the constraint has 6 degrees of freedom the sampling distribution of
+
+for fixed normalizing h is asymptotically xi. Alternatively, (44, being a monotonic
+
+function of F, can be tested exactly. Thus we can decide for which X's, if any, the
+inclusion of the constraint is compatible with the data. In Fig. 5, F(h; z) is close to
+19641     Box AND COX- An Analysis of Transformations                        231
+
+unity over the interesting range of h close to zero, so that we can use the simpler model
+in this neighbourhood. The range indicated by C in Fig. 4 is that for which F is less
+than 2-70, the 5 per cent significance point.
+
+                                          TABLE7
+          Textile data. Calculations for the analysis of the transformation
+
+          Lmax(h IA, H, N ) Lmax(h I H, N )  Diference = - 13.5 x
+
+       h
+
+                                             log (1 s & F ( ~ ;z))  F(X; 2)
+
+    The Bayesian analysis follows parallel lines. In Fig. 4, pu(hI H, N ) has a much
+greater spread than ~ , ( h lA, H, N). Fig. 5 shows pu(XI H, N ) with the component
+
+k A p ( AI A, H, N ) from the constraint. When multiplied together they give the overall
+
+density pu(hIA, H, N ) . A value of h near zero maximizes the posterior density
+assuming the constraint and is consistent with the information in pu(hj H, N ) .
+
+    There is, however, nothing in our Bayesian analysis itself to tell us whether the
+simplified model with the constraint is compatible with the data, even for the best
+possible A. There is an important general point here. All probability calculations in
+statistical inference are conditional in one way or another. In particular, Bayesian
+posterior distributions such as p,(hIA, H, N ) are conditional on the model, in
+particular here on assumption A. It could easily happen that there is no value of h
+for which A is at all reasonable, but to check on this we need to supplement the
+232  Box AND COX- An Analysis of Transformations  [No. 2,
+
+Bayesian argument (Anscombe, 1961). Here we can do this by a significance test
+based on the sampling distribution of a suitable function of the observations, namely
+P(h; z). For h around zero the value of P(h; z ) is, in fact, well within the significance
+limits, so that we can reasonably use the posterior distribution of h in question.
+
+                                                                                                           X
+
+        FIG.4. Textile data. Functions Z,,,(h) andp,(h) under different models. A : additivity.
+    H: homogeneity of variance. N : normality. Arrows HN, AHN show approximate 95 per
+    cent confidence intervals for h. Arrows C show range for which F for second-degree
+    terms is not significant at 5 per cent level.
+
+                                  5.4. Homogeneity of Variance
+    Suppose that we have k groups of data, the expectation and variance being
+constant within each group. In the Zth group, let the variance be a? and let S(l)
+denote the sum of squares of deviations, having vl = nl- 1 degrees of freedom.
+
+Write Xnl = n, Cvl = n -k. Thus in our biological example, k = 12, v, = ... =v,, = 3,
+
+n,= ...=n I , = 4 a n d v = 3 6 , n = 4 8 .
+
+    Now suppose that a transformation to y(" exists which induces normality simul-
+taneously in all groups. Then in terms of the standardized variable z(", the maximized
+log likelihood is
+
+                 L,,(X I N) = -&Cnlog {S(l)(A; z)/n,},
+19641      Box AND COX- An Analysis of Transformations                                   233
+
+where S(l)(X;z ) is the sum of squares S'l), considered as a function of X and
+
+calculated from the standardized variable z(".
+
+             ?,,(A.IH,Nf
+                 and
+
+             k~
+           p(AlM,N)
+
+                                                                                      X
+
+           Textile data. -Components of posterior distribution. - - - - - Variance
+
+                  ratio, F ( X ; 2). Arrow gives 5 per cent significance level.
+
+   We now consider the constraint H, a! = ... = a;, i.e. look at the possibility that
+
+a transformation exists simultaneously achieving normality and constant variance.
+Then if S , = XS'l) is the pooled sum of squares within groups
+
+Therefore  Lmax(XI H, N ) = -i!n log {S,(X ; z)ln).
+
+                          = Lm,, ( AI N )+log L,(X; z),                                  (47)
+
+say. Here the second factor is the log of the Neyman-Pearson L, criterion for testing
+
+the hypothesis a: = ... = a;.
+
+    In the corresponding Bayesian analysis, (29) gives
+
+           p(hIH,N) =p(XIN)xkHp(u,2= ... = h,N),                                         (48)
+
+where                     kg1 = EAIN{p(a=: ... = U; 1 A, N)).
+
+For the general model in which a!, ..., o; may be different, the prior distribution is
+
+                      po(X)( ndo,)( nd log o,)J -"in
+234  Box AND COX- An Analysis of Transformations                            [No. 2,
+
+and
+
+                                                                                                  (49)
+with
+
+For the restricted model in which the variances are all equal to a2,the appropriate
+
+prior distribution is
+
+                       P o ( ~(r)I'd0,)(dlog a)J-vln
+
+and
+
+                       P(X I H, N) = {P,(X) c,(X ; z))-tv.                  (50)
+
+Hence, on dividing (50) by (49), we have that the second factor in (48) is
+
+(9' ") where (Bartlett, 1937)
+               M(X;.z) = v log (- S z)) -Zvllog (s"';;
+
+is the modification of the L, statistic for testing homogeneity of variance, replacing
+sample sizes by degrees of freedom.
+
+   From our general argument, (51) must be proportional to p(u! = ... = oil X, N).
+
+This can be verified directly by finding the joint posterior distribution of a!, ...,a;,
+
+transforming to new variables u,2,oi/a!, ...,ui]u,2, integrating out u,2, and then taking
+
+unit values of the remaining arguments.
+
+                            5.5. Application to ~ i o l o ~ i cEaxlample
+    In the biological example, we can now factorize the overall criterion into three
+parts. These correspond to the possibilities that in a$dition to normality within
+each group, we may be able to get constant variance and that it may be unnecessary to
+include interaction terms in the model, i.e. that additivity is achievable.
+    In terms of maximized likelihoods,
+
+where L,(A; z) is the criterion for testing constancy of variance given normality and
+F(X; z) is the criterion for absence of interaction given normality and constancy of
+variance.
+
+    The correspondiilg Bayesian analysis is
+
+    The results are set out in Table 8 and in Figs. 6-8. The graphs of Lrna,(XI N) and
+
+p,(XI N) in Fig. 6 show that the information about X comihg from within group
+normality is very slight, values of X as far apart as - 1 and 2 being acceptable on this
+19641  Box AND COX- An Analysis of Transformations  235
+
+basis. The requirement of constant variance, however, has a major effect on the
+choice of A; further, some information is contributed by the requirement of additivity.
+
+                                           TABLE8
+             Biological data. Calculationsfor analysis of the transformation
+
+From Fig. 7, which shows the detailed separation of the maximum-likelihood and
+Bayesian components; any transformation in the region y-I to y-* gives a compatible
+compromise.
+   FIG. 6. Biological data. Functions ~,,,(h) and P,(X) under different models.
+
+A : additivity. H: homogeneity of variance. N : normality.. Arrows N, HN, AHN show
+
+approximate 95 per cent confidence intervals for A.
+
+                                                                           h
+
+                 FIG. 7. Biological data. Components of posterior distribution.
+19641  Box AND COX- An Analysis of Transformations
+
+Since the groups all contain four observations
+
+and the graph of M(X; z) in Fig. 8 is equivalent to one of &(A; z). Since on the null
+
+hypothesis the distribution of M(h; z) is approximately x:,, we can use Fig. 8 to
+
+        FIG. 8. Biological data. Variance ratio, F ( h ; z), for interaction against error as a
+    function of h. Bajtlett's criterion, M ( h ; z), for equality of cell variances as a function of h.
+    Dotted lines give 5 per cent significance limits.
+
+find the range in which the data are consistent with homoscedasticity. Similarly
+the graph of F(h; z) indicates the range within which the data are consistent with
+additivity. The dotted lines indicate the 5 per cent significance levels of M and of F.
+
+   The minimum of M(h; z) is very near h = - 1. It is of interest that the regression
+coefficient of log(samp1e variance) on log(samp1e mean) is nearly 4, so that the
+reciprocal transformation is suggested also by the usual approximate argument for
+stabilizing variance.
+
+                                 6 . ANALYSOISF RESIDUALST
+    We now examine briefly a connection between the methods of the present paper
+and those based on the analysis of residuals. The analysis of residuals is intended
+
+    t We are greatly indebted to Professor F. J. Anscombe for pointing out an error in the
+
+approximation for a as we originally gave it. In the present modified version terms originally
+neglected in this Section have been included to correct the discrepancy.
+238  Box AND COX- An Analysis of Transformations  [No. 2,
+
+primarily to examine what happens on one particular scale, although its use to
+indicate a transformation has been suggested (Anscombe and Tukey, 1963). Corre-
+sponding to an observation y, let Y be the deviation j-j of the fitted value j from
+the sample mean and let r = y - j be the residual. If the ideal assumptions are satisfied
+r and Y will be distributed independently. Different sorts of departures from ideal
+assumptions can be measured, therefore, by studying the deviations of the statistics
+
+    = Cri Yj from nE(ri)E(Yj). In addition to graphical analysis, a number of such
+functions have indeed been proposed for particular study (Anscombe, 1961;
+Anscombe and Tukey, 1963).
+
+    Specifically, the statistics
+
+were put forward as measures respectively of skewness, kurtosis, heterogeneity of
+variance and non-additivity. Tukey's degree of freedom for non-additivity (Tukey,
+1949) involves the sum of squares corresponding to TI, considered as a contrast of
+residuals with "fixed" coefficients Y2.
+
+    Suppose now that we consider the family of power transformations and, writing
+z = y/j, and w = z- 1, make the expansion
+
+where w, = w2, w3 = w3 and a! = 1-A.
+    Now, L,,(X) and L,(X) are determined by the residual sum of squares of z ( ~ ) ,
+
+which is approximately
+
+If we take terms up to the fourth degree in w and then differentiate with respect to a!,
+we have that the maximum-likelihood estimate of a! is approximately
+
+                                      A 3w1a,w, -w'a, w3
+
+                        a!= 3wk a, w, +4w!a, w3'
+
+If we write y, = y -);, y, = (y -j),, y3 = (Y-);)~and denote by 9,,9,,j3 the values
+obtained by fitting y,, y, and y3 to the model, the above approximation may be
+expressed in terms of the original observations as
+
+   To see the relation between this expression and the T statistics, write d = j-3.
+
+Then y, = y-); = r + Y+d. Bearing in mind that a,Y = O,a,r = r, Y'r = O,a,1 = 0,
+l'r = 0, where 1denotes a vector of ones, terms such as y; a, y, can easily be expressed
+in terms of sums of powers and products of r, Y and d. In particular, on writing S
+for Cr2, we find the numerator of (58) to be
+
+    To this order of approximation the maximum-likelihood estimate of a! thus
+involves all the T statistics of orders 3 and 4.
+19641  Box AND COX- An Analysis of Transformations                       239
+
+As a very special case, for data assumed to form a single random sample
+
+Here questions such as non-additivity and non-constancy of variance do not arise and
+
+the transformation is attempting only to produce normality. Correspondingly in (59),
+
+T,, = TI, = T3, = T,, = TI, = 0, since Y = 9-J = 0. In fact if we write m, = J,
+
+m, = n-l C(y -J)p (p = 2,3, ...) and make the approximation d = *m,/m,, we have
+
+that
+
+For distributions in which m,, m,, m, and m,- 3mi are of the same order of magnitude,
+the terms in curly brackets are of one order higher in l/m,,than are the other terms of
+the numerator and denominator. If we ignore the higher-order terms, we,have
+
+A useful check suggested by Anscombe is to consider the X2 distribution for moderate
+degrees of freedom and the Poisson distribution for not too small a mean. For
+
+x2 we find a-4, whence A- 4,corresponding to the well-known Wilson-Hilferty
+transformation. For the Poisson distribution, a- 4,whence A- 3.
+
+    In Section 2 we suggested that, having chosen a suitable X, we should make the
+usual detailed estimation and interpretation of effects on this transformed scale. Thus
+in our two examples we recommended that the detailed interpretation should be in
+terms of a standard analysis of respectively l/y and log y. Since the value of A used
+is selected at least partly in the light of the data, the question arises of a possible
+need to allow for this selection when interpreting the factor effects.
+
+    To investigate an appropriate allowance, we regard X as an unknown parameter
+with "true" value A, say, and suppose the true factor effects to be measured in terms
+of the scale A,. If we were, for instance, to analye the factor effects on the scale
+corresponding to the maximum-likelihood estimate A, we might expect some additional
+
+error arising from the difference between 2 and A,. We now investigate this matter,
+
+although the present formulation of the problem is not always completely realistic.
+For example, in our biological example, having decided to work with lly, we shall
+probably be interested in factor effects measured on this scale and not those measured
+in some unknown scale corresponding to an unknown "true" A,. On the other hand,
+if we are interested in whether there is interaction between two fa%tors,it iz possibly
+dangerous to answer this by testing for interaction Qn the scale A, since X may be
+selected at least in part to minimize the sample interaction. A more reasonable
+formulation here may often be: on some unknown "true" scale A, are interaction
+terms necessary in the model?
+240  Box AND COX- An Analysis of Transformations  [No. 2,
+
+    From the maximum-likelihood:approach, the most useful result is that significance
+tests for null hypotheses, such as that just mentioned about the absence of interaction,
+can be obtained in a straightforward way in terms of the usual large-sample chi-
+squared test. Thus, in the textile example, we could test the null hypothesis that
+second-degree terms are absent for some unknown "true" A, by testing twice the
+
+difference of the maxima of the two curves of L,,(X) in Fig. 4 as x,2. Note that the
+
+maxima occur at different values of A. In this particular example, such a test is hardly
+necessary.
+
+    It would be possible to obtain more detailed results by evaluating the usual large-
+sample information matrix for the joint estimation of A, u2 and 8. Since, however,
+more specific results can be obtained from the Bayesian analysis, we shall present
+only those. The general conclusion will be that to allow for the effect of analysing in
+
+terms of 2 rather than A, the residual degrees of freedom need only be reduced by
+
+v,, the number of component parameters in A. This result applies provided that the
+population and sample effects are measured in terms of the normalized variables z(,).
+
+   Consider locally uniform prior densities for 8, log u and A. Then the posterior
+density for 8 is
+
+    Approximate evaluation of the integral in (61) is done by expansion around the
+maxima of the integrands. The ~ a x i m u mof the integrand in the denominator is at
+the maximum-likelihood estimate A, and that of the numerator is near 2, so long as 8
+is near its maximum-likelihood value. The answer is that (61) is approximately
+
+This is exactly the posterior density of 8 for some known fixed X with the degrees of
+freedom reduced by v,.
+
+    To derive (62) from (61), we need to evaluate integrals of the form
+
+w h e ~v is large, and q(A) is assumed positive and to have a unique minimum at
+A = A, with a finite Hessian determinant A, at the minimum. We can then make a
+Laplace expansion, writing
+
+     -N {q(>)}-*v-*v~  x const;
+            A:
+
+for this we expand the second logarithmic term as far as the quadratic terms and then
+integrate over the whole v,-dimensional space of A. In our application the terms
+
+A: in numerator and denominator are equal to the first order.
+19641  Box AND COX- An Analysis of Transformations               241
+
+    Finally, we can obtain an approximation to the posterior distribution p,(A) of A
+that is better than the usual type of asymptotic normal approximation. For an
+expansion about A gives that
+
+       const
+
+Here
+
+with d(A) being the n x v, matrix with elements
+
+                    - a z p ( i = 1,...,n; j = 1,...,v,).
+                    ax,
+
+The matrix b determines the quadratic terms in the expansion of s2(A;Z) around ?,.
+    Thus the quantities (Aj-&)/{s@; z)dbii) have approximately a posterior multi-
+
+variate t distribution and
+
+                                          (A- X)'b(A-X)
+
+a posterior F distribution. In fact, however, it will usually be better to examine the
+posterior distribution of A directly, as we have done in the numerical examples.
+
+       8. FURTHERDEVELOPMENTS
+
+    We now consider in much less detail a number of possible developments of the
+methods proposed in this paper. Of these, the most important is probably the simul-
+taneous transformation of independent and dependent variables in a regression
+problem. Some general remarks on this have been made in Section 1.
+
+   Denote the dependent variable by y and the independent variables by x,, ...,x,.
+
+Consider a family of transformations from y into y(,) and x,, ...,x, into x p ) , ...,xjKz),
+
+the whole transformation being thus indexed by the parameters (A; K,, ...,K,). It is
+
+not necessary that the family of transformations of say x, into x p ) and x, into
+x$J should be the same, although this would often be the case.
+
+   We now assume that for some unknown (A; K,, ...,K,)the usual normal theory
+
+assumptions of linear regression theory hold. We can then compute say the maximized
+
+log likelihood for given (A; K,, ...,K,),obtaining exactly as in (8)
+
+       L,,,(A; Kl, ...,KJ = -8log G2(A; Kl, ...,K1)+10gJ(A; y),  (67)
+
+where G2(A; K,, ...,K,) is the maximum-likelihood estimate of residual variance in
+
+the standard multiple regression analysis of the transformed variable. The corre-
+
+sponding expression from the Bayesian approach is
+242  Box AND COX- An Analysis of Transformations                   [No. 2,
+
+    The straightforward extension of the procedure of Section 3 is to compute (67) or
+
+(68) for a suitable set of (A; K,, ...,K,)and to examine the resulting surface especially
+
+near its maximum. This is, however, a tedious procedure, except perhaps for 1= 1.
+Further, graphical presentation of the conclusions will not be easy if 1> 1; for 1= 1
+we can plot contours of the functions (67) and (68).
+
+   When X is fixed, i.e. transformations of the independent variables only are involved,
+
+Box and Tidwell (1962) developed an iterative procedure for the corresponding non-
+linear least-squares problem. In this the independent variables are, if necessary, first
+transformed to near the optimum form. Then two terms of the Taylor expansion
+
+of x?), ...,~ ~ ( a~ r1e )taken. For example if x?) = xKl and the best value for K, is
+
+thought to be near 1, we write
+
+     x? = x,+(K,- 1)xllogx1.                                       (69)
+
+A linear regression term p, xyl can then be written approximately
+
+                 PI XI+P1(~1- 1)xl logx, = Plx1+ YIx11% x1,
+
+say. If the linear model involves linear regression on x,, ...,x, and if all the transfor-
+
+mations of the independent variable are to powers, we can therefore take the linear
+
+regression on x,, ...,x,, x,logx,, ...,x,logx, in order to estimate the p's and y's and
+
+hence also the K'S. The procedure can then be iterated. Transformation of the
+dependent variable will usually be the more critical. Therefore, a reasonable practical
+procedure will often be to combine straightforward investigation of transformation
+of the dependent variable with Box and Tidwell's method applied to the independent
+variables.
+
+    It is possible also to consider simplifications of the procedure for determining a
+transformation of the dependent variable. The main labour in straightforward
+application of the method of Section 3 is in applying the transformation for various
+values of h and then computing the standard analysis of variance for each set of
+transformed data. Such a sequence of similar calculations is straightforward on an
+electronic computer. It is perfectly practicable also for occasional desk calculation,
+although probably not for routine use. There are a number of possible simplifications
+based, for example, on expansions like (69) or even (55), but they have to be used
+very cautiously.
+
+    In the present paper we have concentrated largely on transformations for those
+standard "fixed-effects" analysis of variance situations where the response can be
+treated as a continuous variable. The same general approach could be adopted in
+dealing with "random-effects" models, and with various problems in multivariate
+analysis and in the analysis of time series. We shall not go into these applications
+here.
+
+    An important omission from our discussion concerns transformations specifically
+for data suspected of following the Poisson or binomial distributions. There are two
+difficulties here. One is purely computational. Suppose we assume that our obser-
+vations, y, follow, for example, Poisson distributions with means that obey an
+additive law on an unknown transformed scale. Thus, in a row-column arrangement,
+it might be assumed that the Poisson mean in row i and column j has the form
+
+     (P+ai+pj>llh (XfO),
+
+     Pj  (A = O),
+19641  Box AND COX- An Analysis of Transformations  243
+
+where h is unknown. Then h and the other parameters of the model can be estimated
+by maximum likelihood (Cochran, 1940). It would probably be possible to develop
+reasonable approximations to this procedure although we have not investigated
+this matter.
+
+    An essential distinction between this situation and the one considered in Section 3
+is that here the untransformed observations y have known distributional properties.
+The analogous normal theory situation would involve observations y normally
+distributed with constant variance on the untransformed scale, but for which the
+population means are.additive on a transformed scale. The maximum-likelihood
+solution in this case would involve, at least in principle, a straightforward non-linear
+least-squares problem. However, this situation does not seem likely to arise often;
+certainly, it is inappropriate in our examples.
+
+    An important possible complication of the analysis of data connected with
+Poisson and binomial distributions has been particularly stressed by Bartlett (1947).
+This is the presence of an additional component of variance of unknown form on
+top of the Poisson or binomial variation. If inspection of the data shows that such
+additional variation is 'substantial, it may be adequate to apply the methods of
+
+Section 3. For integer data with range (0, 1, ...) it will often be reasonable to consider
+
+power transformations. For data in the form of proportions of "successes" in which
+"SUCC~SS~S" and "failures" are to be treated symmetrically, Professor J. W. Tukey
+has, in an unpublished paper, suggested the family of transformations from y to
+
+                                           yh-(1 -y)h.
+
+For suitable X's this approximates closely to the standard transforms of proportions,
+the probit, logistic and angular transformations. The methods of the present paper
+could be applied with this family of transformations.
+
+                                       ACKNOWLEDGEMENT
+
+    We thank many friends for remarks leading to the writing of this paper.
+
+                                            REFERENCES
+
+ANSCOMBEF,. J. (1961), "Examination of residuals", Proc. Fourth Berkeley Symp. Math.
+
+    Statist. and Prob., 1, 1-36.
+
+-and TUKEYJ,. W. (1963), "The examination and analysis of residuals", Technometrics, 5,
+
+    141-160.
+BARTLETTM, . S. (1937), "Properties of sufficiency and statistical tests", Proc. Roy. Soc. A, 160,
+
+    268-282.
+
+-(1947), "The use of transformations", Biometries, 3, 39-52.
+
+Box, G. E. P. and' TIDWELLP, . W. (1962), "Transformation of the independent variables",
+    Technometrics, 4, 531-550.
+
+COCHRANW, . G. (1940), "The analysis of variance when experimental errors follow the Poisson
+    or, binomial laws", Ann. math. Statist., 11, 335-347.
+
+CORNISHE, . A. (1954), "The multivariate t distribution associated with a set of normal sample
+    deviates", Austral. J. Physics, 7 , 531-542.
+
+DUNNETTC, . W. and SOBELM, . (1954), "A bivariate generalization of Student's t distribution",
+    Biometrika, 41, 153-169.
+
+JEFFREYHS,. (1961), Theory of Probability, 3rd ed. Oxford University Press.
+KLECZKOWSKAI., (1949), "The transformation of local lesion counts for statistical analysis",
+
+    Ann. appl. Biol., 36, 139-152.
+TUKEYJ,. W. (1949), "One degree of freedom for non-additivity", Biornetrics, 5, 232-242.
+
+-(1950), "Dyadic anova, an analysis of variance for vectors", Human Biology, 21, 65-110.
+
+-and MOOREP, . G. (1954), "Answer to query 112", Biometrics, 10, 562-568.
+244  Discussion on Paper by Professor Box and Professor Cox  [No. 2 ,
+
+    Mr J. A. NELDERM: ay I begin with a definition (from the Concise Oxford Dictionary) :
+"Box and Cox-two persons who take turns in sustaining a part." I must admit to having
+spent some time in trying to deduce which person was sustaining which part of this most
+interesting paper. I do not think the exercise was very successful, and this testifies to some
+sound collaboration on the part of the authors.
+
+    It seems to me that there are two basic problems besetting all conscientious data
+analysts (to borrow Professor Tukey's term). One is how to check that the data are not
+contaminated with rogue observations and what action to take if they are. The other is
+how to check that the model being used to analyse the data is substantially the right one.
+Looking through the corpus of statistical writings one must be struck, I think, by how
+relatively little effort has been devoted to these problems. The overwhelming preponder-
+ance of the literature consists of deductive exercises from a priori starting points. Now,
+of course, there must always be some assumptions made a priori; in data analysis the
+important thing is that they should not be much stronger than previous evidence justifies.
+The first of the two problems, that of gross errors or rogue observations, we are not
+directly concerned with now, but the question of scale for analysis, which is discussed
+here, is fundamental to the second. One sees not infrequently remarks to the effect that
+the design of an experiment determines the analysis. Life would be easier if this were
+true. To the information from the design we must add the analyst's prior judgements,
+preconceptions or prejudices (call them what you will) about questions of additivity,
+homoscedasticity and the like. Frequently these prior assumptions are unjustifiably strong,
+and amount to an assertion that the scale adopted will give the required additivity, etc.
+The great virtue of this paper lies in its showing us how to weaken these prior assumptions
+and allow the data to speak for themselves in these matters. The data analyst's two
+problems are closely intertwined, however; for if rogue observations are present their
+residuals tend to dominate the residual sum of squares, and may thus seriously affect the
+estimation of h.
+
+    The two approaches, via likelihood and via Bayes theorem, run side by side, and give
+results which will often be very similar. I am not entirely happy about the derivation of
+equation (19) and wonder whether the appearance of the observations in the prior proba-
+bility is not only "interesting", as the authors state,'but also illegal. They remark (on
+p. 219) that, "There are some reasons for thinking L,(h) preferable to L,,,(h) from anon-
+Bayesian as well as from a Bayesian point of view." I agree and, furthermore, I believe
+that a suitable modification of the likelihood approach may be found to produce just this
+result. The starting point is that fixed effects are unrealistic in a model. If we measure a
+treatment effect in an experiment, it is common experience that a further experiment will
+give us a further estimate of the effect which often differs from the original estimate by
+more than the internal standard errors of the experiments would lead us to expect. If we
+construct a model with this in mind, then for a single normal sample of n we might obtain
+
+where m = N(p, ut2) and ei = N(0, u2). If we now do an orthogonal transformation of
+the data z = Hy where H is an orthogonal matrix of known coefficients having its first row
+with elements n-4, then the log likelihood is given by
+
+           L = const - :In V - (z, -,uJn)2/2V - $(n - 1) log u2- 2z,2/2u2, n
+
+where V = u2+nu'2. Clearly we cannot estimate V unless ,u is known, which in general
+
+it is not. However, for any fixed but unknown V, we have L maximized by taking
+
+                        P = 8, and B2 = C(y-jj)2/(n- 1).
+                  Discussion on Paper by Professor Box and Professor Cox
+
+'Thus L,,,(h) following equation (24) is replaced (apart from an unknown constant) by
+L,(h). By extensions of this argument we obtain Bartlett's criterion for testing the homo-
+geneity of variances instead of the L, criterion, and the likelihood criterion for a restricted
+hypothesis on the means (equation (35)) becomes the same (apart from an unknown
+constant factor) as the Bayesian one. Thus some of the apparent differences between the
+two approaches may result from the restrictions implied by fixed effects in a model, these
+being equivalent to assertions of zero variance in repetitions of the experiment.
+
+    Taken with the work of Tukey, Daniel and others, on the detection of rogue obser-
+vations, the results of this paper should lead before long to substantial improvements in
+computer programmes for the analysis of experiments. "First generation" programmes,
+which largely behave as though the design did wholly define the analysis, will be replaced
+by new second-generation programmes capable of checking the additional assumptions
+and taking appropriate action. It is hardly necessary to stress what an advance this
+would be.
+
+    I suppose that the converse of "two persons who take turns in sustaining a part"
+would be "one person who takes turns in sustaining two parts". Such a person is often
+the proposer of the vote of thanks, the parts being those of congratulator and critic;
+the latter has been known to overwhelm the former, but not, I hope, today. We must
+all be grateful for the clear exposition of an important problem, for the practical value
+of the results obtained and for the possibilities opened up for future investigations.. It is
+a real pleasure, therefore, for me to propose the vote of thanks today.
+
+    Dr J. HARTIGAINw: ould like to suggest a non-parametric approach to Box and Cox's
+problem. Suppose in the ith experiment we observe yi under conditions xi and that it is
+desired to find the probability distribution of y given x for various x. The only general
+principle that seems to apply is a similarity principle-"What will happen under present
+circumstances will probably be similar to what happened under similar circumstances in
+the past" or more simply "like equals likely". The Meteorological Office does seem to be
+acting according to this principle in its long-range forecasts, where the procedure is to
+look at this month's weather, look in the records for a similar month, see what happened
+the following month then, and predict the same thing will happen next month, now-
+they would say, to predict what yo will be under conditions x,, look among the (y,, xi)
+for an xi close to x,, then predict yo = y,.
+
+    It does seem possible to offer a non-parametric method for predicting a new y at x,;
+in least squares theory this would be the fitted value Yo. The general procedure is to
+smooth from the various readings (y, x) in the neighbourhood of x,, values of y being
+given greater or less weight according to x's "similarity" to x,; just how the weights are
+to be chosen, or how the y's are to be combined is an open question; the least squares
+answer is Yo = Xa, y,, where the weights a, (possibly negative, but not very, and nearly
+always adding to one) are calculated from the linear model.
+
+    Box and Cox are assuming that for some transformed set of observations f(yi), the
+model is valid, and their smoothed value would be given by
+
+A "non-parametric" approach would be to order the observations y,,,, ...,y,;) and
+
+select Yo such that
+
+Essentially, Yo is the median of the distribution consisting of points y(i,with probability a,
+(possible negative values confuse this interpretation). The justification of this procedure
+is that Yo should not be too far from the value obtained by Box and Cox's procedure,
+since the median of the f(yi)'s will be approximately equal to the mean of the f(yi)'s;
+but this procedure is invariant under any monotonic transformation of the observations.
+246  Discussion on Paper by Professor Box a n d Professor Cox       [No. 2,
+
+    I have tried this with Box and Cox's 33 experiment, when x, is at the centre of the
+cube (O,O, 0). The weights a, will depend on the linear model; for a complete factorial
+model a, = 1 at (0, 0, 0) and 0 elsewhere so that no smoothing takes place; for the second-
+degree polynomial model a, = 7 at the centre, 4 at the midpoint of a face, 1 at the midpoint
+of an edge and - 2 at a vertex; for the first- and zero-degree polynomials, a, = 1 every-
+where and the smoothing is excessive.
+
+    The smoothed values with various similarity coefficients (we may regard ai as the
+relevance of the ith observation to Yo) and various methods of combination are
+
+     Degree of   Mean  Mean log  Median
+     Polynomial   861     564      566
+                  724     610      604
+         0,1      620     620      620
+           2,
+         C F
+
+    Negative weights are a,nuisance, and, also, we would like the similarity coefficients to
+decrease with distance. However, least squares is the only general way of generating the
+coefficients at present.
+
+    I wonder if the interquartile range of the distribution over the y, with weights a, would
+be a reasonable (transformation invariant) measure of dispersion of a new observation y
+about Yo. In general this would tend to be large if yi's which were observed under highly
+similar conditions were a long way from the predicted Yoat xo.
+
+    A preliminary analysis of the above type based on the order statistics would be invariant
+under monotonic transformation, and so would seem an appropriate method of finding
+a transformation in which an ordinary "metric" analysis might be performed.
+
+    I have found this paper extremely informative and stimulating and it gives me great
+pleasure to second the vote of thanks to Professors Box and Cox.
+
+The vote of thanks was put to the meeting and carried unanimously.
+
+    The following written contribution was read by Professor D. G. Kendall.
+
+    Professor J. W. TUKEY:The results reported by Professors Box and Cox clearly
+represent a substantial step forward; all those concerned with the actual analysis of data
+should be pleased to know that they do exist, both because of the new and modified
+techniques which they urge us to try, and because these results were obtained by using
+almost "all the allowed principles of witchcraft" as of the year 1964:normality assumptions,
+maximum-likelihood estimation, Bayesian inference and a priori distributions invariant
+under natural, transitive groups. This last fact makes it inevitable that intelligent choice
+of modes of expression for the observed responses will become both socially acceptable
+and widely taught and that the long-run consequences for the analysis of data will be
+very desirable.
+
+    While this is a useful step forward, it is, I think, important not to overestimate its
+conclusiveness. From the point of view of the man who does indeed have data to analyse,
+these results are merely further guidance about a situation only reasonably close to the
+one he actually faces. This is, of course, no novelty in statistics, but some aspects of the
+present discussion make it important to re-emphasize some things that should be familiar
+to all of us. In the authors' discussion, as in all to nearly all of our presently available
+theory, all the approaches are at least formally based upon a model involving normality-
+or, as I would rather say, Gaussiahity. I think that this is stressed by the discussion in
+Section 5 where one is asked to look first at the evidence from assumed Gaussianity, then
+at the evidence from an additional assumption of constancy of variance in the presence of
+Gaussianity and, finally, at the evidence from a further assumption of additivity in the
+presence of both other assumptions. So long as we are going to work with tight specifi-
+cations, where only a few parameters can be allowed to enter, it is hard to see how things
+can be done in any other way than this. But from the point of view of the man with the
+19641  Discussion on Paper by Professor Box and Professor Cox  247
+
+actual data, it would make much more sense to ask-possibly in vain-for an analysis in
+which one could examine first the evidence derived from assumed additivity in the absence
+of other assumptions, secondly (in those situations where this was appropriate) the evidence
+provided by an additional assumption of constant variance in the presence of additivity,
+and thirdly (in perhaps a few cases) the additional evidence provided by assumed
+Gaussianity, in the presence of both additivity and constancy of variance. (If additivity
+-or, more generally, parsimony-is at issue, considerations of constancy of variance and
+Gaussianity of distribution are usually negligible, at least so far as the choice of a mode
+of expression is concerned. If additivity is not at issue, constancy of variance usually
+dominates Gaussianity of distribution.) If all of us can have enough good ideas over a long
+enough period of time, perhaps we can come, eventually, to a theory which corresponds
+more directly to what we desire. It may well be that, with the exception of very rare
+instances, the differences in practice associated with such an approach would be in-
+appreciably different from those suggested by the present approach. The widespread
+tendency for additivity, constancy of variance and Gaussianity of distribution to come
+and go as a group offers us such a hope. It would be nice to know whether or not this hope
+is justified.
+
+    We are all used to having maximum-likelihood estimation combine different bits of
+evidence with quite appropriate weights. Accordingly, we may hope that this is still the
+case in the present situation, but I must report that the relative weighting of the evidence
+provided by interaction sums of squares and error sums of squares does not feel as if it
+were being quite fairly weighted when one merely looks, as in Table 3, at the total of these
+two sums of squares. Perhaps the decomposition into the three parts mentioned above, and
+concentration upon the part associated with the additivity assumption, might produce a
+much heavier weighting of the interaction sums of squares. Again it would be interesting
+to know whether or not this is true.
+
+    In most circumstances one is going to be more interested in reaching additivity than
+in maximizing the formal sensitivity of the main effects. There will be, however, a few
+instances where the reverse is true. I am not clear, from the discussion of Table 6, to what
+extent the results of applying the proposed approach rigorously and without thought
+will differ from the results obtained by seeking maximum sensitivity. If there should be
+differences which persist as the amount of data is increased without limit, I think one
+will have, in the long run, to look more carefully into the choice of criterion, where a
+decision to look need not imply an ultimate decision to adopt a different criterion.
+
+    Clearly Box and Cox have made a major step forward in the succession of approxi-
+mations which give us better and better answers to an important problem of practice.
+
+    The following written contribution was read by the Honorary Secretary.
+
+    Professor R. L. PLACKETTT:he authors have come up with the interesting ideas we
+would have expected from them, and deserve our congratulations for a paper which will
+be widely appreciated. They have made full use of modern computational facilities and
+the two systems of inference which are currently competing for our attention. An
+impression ltft by reading their paper is that the data should be fed into a large and
+powerful machine which will very quickly draw all the necessary graphs and print out the
+best analysis of variance available in the circumstances. Those accustomed to the blissful
+ease of the standard analysis of variance calculations will need to be convinced that such
+hard work is really necessary, and will ask for assuran'ce that too much responsibility has
+not been delegated.
+
+    So much has recently been said on Bayesian procedures that it is a relief to find that
+the authors are not really Bayesians at all, but have been very ingenious in using Bayesian
+arguments without ever becoming fully committed to them. Thus they call for uniform
+distributions, but only over the region where the likelihood is appreciable, and they justify
+their preference for a Bayesian procedure on the grounds that the confidence coefficients
+248  Discussion on Paper by Professor Box and Professor Cox  [No. 2,
+
+from asymptotic distribution theory are closer to their nominal values if Lb is used instead
+of L,,. It is true that in the further analysis separating out A and H they suggest that
+the two procedures may lead to appreciably different conclusions, but the circumstances
+in which this might occur are not closely defined. Surely it is not the magnitude of either
+S,,(h; z) or F(h; z) which is relevant, but that of the derivatives of these quantities with
+respect to A. In any case, the authors do not tell us what they would do if the conclusions
+differ markedly; but it accords with the spirit of this long-awaited collaboration that we
+should be left in doubt as to which method of inference to follow.
+
+    Likelihood procedures have also been well publicized and discussed, but there is a
+practical point which seems not to have been emphasized in the midst of a good deal of
+mathematical and logical argument. It arises because the likelihood function contains
+much that is taken for granted in the way of distributional forms, and is no substitute
+for an inspection of the data. As a simple illustration, consider a large sample of measure-
+ments in which half are clustered round the value a and half round the value b (a# b).
+The assumption that this constitutes a sample from a normal distribution with mean ,u
+and standard deviation a leads to an exactly parabolic log likelihood function for ,u, but
+the inferences that this would suggest conflict with those obtained directly from the data.
+
+    It is.tempting to contrast the smooth and deceptive character of a likelihood function
+with the spotty but straightforward nature of Anscombe and Tukey's procedures. They
+fit a full linear model to the original data and plot residuals against fitted values. Residuals
+are something which the authors have not calculated, but it would have been interesting
+to see other methods at work on the same examples. One might consider a modification
+of the Anscombe-Tukey procedure in which the predicted value Y is plotted against the
+observed value y. This will lead to a linearizing transformation Y =f(y) (e.g. by Dolby's,
+1963, analysis of the simple family); the procedure can be iterated if necessary and should
+converge under reasonable conditions. It may be objected that the possibility of differing
+variances isnot taken into account, but the usual argument is that the same transformation
+does for both. If a greatly differing transformation is necessary to equalize the variances,
+then the experiment is unlikely to be very successful.
+
+    I n the second part of their paper, the authors separate the contributions of linearity,
+constant variance and normality, but the place of normality in their analysis is logically
+different from that occupied by the other two, since normality is not a constraint which
+they either apply or relax. For that, they would presumably need to carry through the
+entire analysis with some other distribution.
+
+    Professor M. S. BARTLETTL:ike Professor Tukey, I think that the authors have made
+a major step forward in this paper on the theory of transformations. I think also, like
+Professor Plackett, I was a little uneasy about the extent to which complicated analysis
+might seem necessary.
+
+    Again, like Mr Nelder, I found myself wondering about the Box and Cox nature of the
+paper and in particular whether this kind of oscillatory character between likelihood and
+Bayes analysis had any relevance to the Box and Cox aspect! Perhaps Professor Cox
+may wish to comment on this; on this point of Bayes versus likelihood I would especially
+welcome his views on whether he is advocating them as equally useful or whether he has
+reached any conclusions as to whether one is better than the other. In particular I would
+certainly draw attention to the point made in the paper, and I think Professor Plackett
+made this point also, that whichever analysis you make, the inference is very conditional
+on your set of assumptions from which you start.
+
+    Now to come to other minor points, I think I have only two to make. One was in the
+
+approximation used for the log likelihood, the max log likelihood and the use of x 2 with
+
+this, and I wondered whether Professor Cox, or for that matter, Professor Box, could make
+any comment on the accuracy in this in other than very large samples. One knows that
+the distribution is valid up to but not including order lln, and one knows, for example,
+from Professor Box's work, that if you want to go to order lln you have to bring in a
+19641  Discussion on Paper by Professor Box and Professor Cox  249
+
+different multiplying factor to your x 2 approximation. And it would help to know whether
+there is any possibility of getting the sort of confidence limits based on the x2 analysis a
+
+bit more exact, and if not, how misleading they might occasionally be.
+    I think my last point is one that was raised by Professor Tukey and that is, I did wonder
+
+about the uniqueness of this order of taking the various factors, normality, additivity and
+homogeneity of variances, and whether you Would reach anything like the same sort of
+conclusion if you tried to take them in a different order.
+
+    Dr M. R. SAMPFORDLi:ke Professor Tukey, I am rather nervous about the effect of the
+assumed normality of the transformed variable on the additivity, in particular, and to a
+lesser extent on the homogeneity of variance, when in fact no single transformation will
+achieve all three properties. The relatively small amount of information about h obtained
+from the normality assumption in the example (Table 8) seems to be reassuring on this
+point, but the possible effects when the transformed distribution is rather far from normal
+might still be serious. Of course, one can sometimes advance a more plausible distributional
+model, and in this context it may be worth suggesting that, though the title of this paper
+should more properly be "An Analysis of Transformations to Normality", the ingenious
+approach on which it is based could perfectly well be applied to other distributions. For
+example, I have several times encountered response-time distributions-in particular,
+distributions of time to death-that appear log-normal at the lower end of the scale, but
+have a secondary mode in the upper tail. This might suggest that some animals die as a
+direct result of damage caused by the treatment, but that others, having a high tolerance
+or being, by chance, little damaged, may survive the initial shock, only to die later
+as a result of physiological disturbance caused by the damage. One might, by making
+some assumptions about distributions of damage and tolerances, derive a more or less
+plausible class of distributions for transformed times that might be expected to be con-
+sistent with variance homogeneity and at least approximate additivity. The method of
+this paper could then be applied to determine the most satisfactory transformation leading
+to a distribution in this class. This is perhaps a rather extreme example, but I hope suggests
+the potential value of the authors' approach in situations where additivity need not be
+expected to involve, as it often does, near-normality.
+
+    Dr C. A. B. SMITHI: merely wish to draw attention to a recent paper by A. F. Naylor
+(1964). He applied the arcsine, logit, log-log and normal equivalent deviate transformations
+to four sets of biological data. He concluded that for all practical purposes they could be
+considered as equivalent. For example, in most of the entries the expected numbers
+calculated from the four transformations differ only slightly in the first decimal place.
+
+    Mr D. KERRIDGEI :have two comments to make, one general and one particular. The
+general comment is that it is very pleasant to have a paper in which the idea is obvious.
+I am not saying this in any derogatory sense. I think all the great ideas were obvious
+ones. Nothing could be more obvious than the idea of taking a parametric family and
+estimating the parameter. It is strange that such an obvious idea should take such a long
+time to be seen, but in many ways, the simpler the idea, the greater the discovery. There is,
+for example, much more chance that a simple idea will be used in practice. The particular
+comment concerns the rather strange prior distribution which has the interesting property
+that it contains the observations. We cannot let the night go without saying something
+about that. Clearly this is not an expression of belief, so some people would not call it a
+probability. It is not prior, because it is determined a posteriori, and so it is a pseudo-prior
+pseudo-probability. Now I am not against it because of its strangeness, since obviously
+the authors have extremely good reasons for using it. They use it because it works. It is
+very interesting indeed to find a practical example in which you have to use something
+which clearly is a pseudo-probability. I believe that as we get to use Bayes's theorem
+instead of talking about it, as I hope we are going to do in the future, we are going to come
+250  Discussion on Paper by Professor Box and Professor Cox  [No. 2,
+
+up against many more of these peculiar things. For example, I think that to get sensible
+significance tests in Bayesian theory we are going to have to use prior probabilities which
+depend on the number of observations. These again will be pseudo-probabilities, in a
+sense pseudo-prior too. So this is a very interesting first example of something which will
+eventually, I think, shed some light on what probabilities really are. My view is that
+they do not express beliefs. They are a convenient figment introduced to do something
+we do not really understand yet, but by examining examples of this sort I hope that one
+day we will achieve understanding.
+
+    Mr E. M. L. BEALEI: should like to add my thanks to Professors Box and Cox for a
+most valuable paper, and to ask one question. Would the authors ever consider using a
+transformation of the type (1) when some y's are negative, or one of type (2) where some
+y,+ h, is negative? Such a transformation obviously has strange arithmetic properties.
+It gives a real answer if A, is integral, and I think one can always overcome any problems
+created by the fact that y may not be uniquely determined by the value of y(". But would
+the transformation ever make sense statistically?
+
+   The following written contribution was received after the meeting:
+
+    Professor F. J. ANSCOMBET:he authors are to be congratulated on a most remarkable
+paper. The basic idea is highly original, and the tackling of horrendous difficulties is
+breath-taking. The examples are illuminating, and the preliminary "rather informal"
+analysis of the textile example is statistry in the grand manner-but, indeed, the whole
+paper is that.
+
+    Because of my own efforts with residuals, I have been particularly interested by
+Section 6. In my 1961paper I gave a formula for roughly estimating the power transforma-
+tion that would remove Tukey's type of removable non-additivity, and also one for
+estimating the power transformation that would remove an exponential dependence of
+error variance on the mean. The formulas were based essentially on the statistics denoted
+by TI,and T,,, respectively, in this paper. I did not also give a formula aimed at removing
+skewness of the error distribution, based on the statistic here denoted by T,,, though I
+have since used such a formula; in the notation of my 1961 paper the formula goes
+
+(My p is Box and Cox's h, 8 is the overall sample mean, s the residual root mean square,
+
+and g, and g, are analogues of Fisher's g-statistics.) It was my thought that one would
+calculate one or more of these expressions, and (if more than one) hope they would
+somewhat agree. No doubt, with factorial data showing pronounced effects for at least
+two factors, one would attach primary importance to additivity. With only one effective
+factor, there would be no question of additivity, and one would attach primary importance
+to constancy of variance. With no effective factors, and in particular with a simple homo-
+geneous sample, there would be nothing to worry about except skewness.
+
+    Now,Professors Box and Cox have shown that these three separate estimates should
+(very nearly) be averaged in a certain proportion to yield a best estimate of the power.
+This result, for the relatively simple calculations based on residuals from a least-squares
+analysis on one scale, parallels the subtle decomposition of the likelihood function into
+three parts in Section 5.
+
+    Professor Cox replied briefly at the meeting and the authors subsequently replied
+more fully in writing as follows:
+
+    We are very grateful to the speakers for their encouraging and helpful remarks.
+    One important general issue raised by Professors Tukey, Plackett, Bartlett and
+D r Sampford cbncerns priorities for the criteria of simplicity of the model and specifically
+of additivity, A, homogeneity of variance, H, and normality, N. We certainly agree on
+19641  Discussion on Paper by Professor Box and Professor Cox  25 1
+
+the importance of the first of these, as indeed we indicate in our remarks at the end of
+
+Section 2. In the formal analysis of Section 5 we have considered N,HN,AHN as three
+
+models in that order. If one is to employ a parametric approach one must, it seems, start
+from some distributional assumption although, of course, if desired this could be broader
+than that adopted here. Furthermore, there is no reason in principle why A should not
+
+have been taken before H in discussing the biological example. We would then have to
+
+fit an additive model with separate within-cell variances. The rough justification for
+thinking that the procedure given in the paper genuinely separates out the effects of
+
+N, H and A is that M(h; z), on which (47) and (51) depend, is a valid descriptive
+
+measure of heterogeneity of variance independently of N. Likewise P(h; z) is a descriptive
+measure of non-additivity independently of H and N. If we started from a non-normal
+model, we would get a different measure of heterogeneity of variance, but except in
+extreme circumstances it is unlikely that it would be minimized by a value of h very
+different from that minimizing M(h; z). An analogous remark applies to F(h; z). Under
+non-normality the weighting of the different requirements will be different, but it is hard
+to see how a radically different value of h could emerge from the final analysis.
+
+    Concerning Professor Tukey's point about the appropriateness of the weighting given
+by the likelihood in the biological example, the truth seems to be that in this example
+non-additivity is not in fact the major contribution in determining h. The sizes of the
+mean squares in Table 3 seem rather to bear this out than to contradict it. Concerning
+Tables 3 and 6 a striking thing is not only the removal of non-additivity, or correspondingly
+in Table 6 the simplification of the model, but also the large increase in sensitivity of the
+experiment. The result achieved by transformation is in fact equivalent to threefold
+increase in experimental effort.
+
+    I n the. paper we were at pains t o stress that, where the procedures d o seem relevant,
+we recommend using them in a flexible way, and that the assumptions on which they are
+based are a tentative working basis for the analysis rather than anything to be adopted
+irrevocably. In particular, in the discussion of the textile example we deliberately gave
+first the "common-sense" analysis before the more elaborate one. As Mr Kerridge has
+very rightly stressed, the basic idea is an extremely simple one; in particular, the absence
+of iterative calculations is a considerable practical advantage. We hope that this will
+reassure Professor Plackett that we are not advocating unnecessary elaboration. Mr Nelder
+has stated extremely clearly the need for a more searching examination of "assumptions".
+
+    We have not specifically investigated the point raised by Professor Bartlett concerning
+the adequacy of the chi-squared approximation for confidence intervals for h. However,
+the line we have followed in finding a closer approximation to the posterior density of h
+leads to posterior intervals based on the F distribution and a similar approximation might
+
+be found for confidence intervals. The use of L,(h) instead of L,,,(h) was suggested by
+analogy with Bartlett's (1937) procedure of applying the likelihood-ratio procedure after
+suitable contrasts have been removed by transformation. The difficulty when h is unknown
+is that the transformations to remove the parameters 8 depend on A, so that the argument
+is at best approximate. We were most interested in Mr Nelder's remarks on this point
+and hope that he will develop his ideas further.
+
+    The maximum-likelihood approach and the Bayesian approach have deliberately been
+given as entirely separate but parallel developments. Professor Plackett suggests that we
+justify the Bayesian approach only because it leads to "better" confidence intervals; this
+is not so. Several speakers have commented on the special prior distribution (19) which
+involves the observations. As we remarked in the paper, it is possible that there is an
+alternative and better approach to this; one way may be to make the prior distributions
+for the contrasts depend on the general population mean. However, the observations
+enter (19) only in a mild way in establishing the overall level of the observations, usually
+the overall geometric mean in our special cases. It is essential that some allowance should
+be made for the fact that the prior distribution for the magnitude of the contrasts depends
+on the overall magnitude of the observations.
+Discussion on Paper by Professor Box and Professor Cox  [No. 2,
+
+    In answer to Mr Beale's question, we feel that, while it is probably possible to develop
+the theory for non-monotonic transformations of the dependent variable, we cannot think
+of any situations where such transformations would be physically allowable.
+
+    We are grateful to D r Smith for his reference to Naylor's work. However, Naylor
+seems to be considering situations where the transformations are, over the relevant range,
+practically linear functions of one another. In our examples the relative range of variation
+of the observations is high, the transformations are very non-linear and this is of course
+
+why we are able to obtain fairly sharp discrimination between the different values of A.
+
+In the quanta1 response case, the transformations in question become essentially different
+only in the tails of the response curve, and observations there would be required for the
+differences to be detectable and of practical importance.
+
+    We are very interested in Professor Anscombe's remarks on residuals. Further
+comparisons of the analysis of residuals with the methods of our paper would be of value.
+
+    We are interested in Dr Hartigan's problem and formulation. However, this seems
+essentially different from ours, partly because in our applications we are primarily interested
+in changes in response, rather than in absolute responses, and partly because one of our
+primary objectives is to find a scale on which the factor effects are succinctly characterized
+by a few parameters. Even if the distributional assumptions were to be phrased non-
+parametrically (which we would in any case not wish to do), we must have parameters
+in order to describe at all concisely the changes in response in a complex system.
+
+                                    REFERENCEINS THE DISCUSSION
+DOLBYJ,. L. (1963), "A quick method for choosing a transformation", Technometrics, 5, 317-326.
+NAYLORA, . F. (1964), "Comparisons of regression constants fitted by maximum likelihood to
+
+   four common transformations of binomial data", Ann. hum. Genet., Lond., 27, 241-246.
+

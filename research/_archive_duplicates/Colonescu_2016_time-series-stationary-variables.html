@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Principles of Econometrics with R</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="This is a beginner’s guide to applied econometrics using the free statistics software R.">
+  <meta name="generator" content="bookdown 0.1 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Principles of Econometrics with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://bookdown.org/ccolonescu/RPoE4/" />
+  
+  <meta property="og:description" content="This is a beginner’s guide to applied econometrics using the free statistics software R." />
+  <meta name="github-repo" content="ccolonescu/RPoE" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Principles of Econometrics with R" />
+  
+  <meta name="twitter:description" content="This is a beginner’s guide to applied econometrics using the free statistics software R." />
+  
+
+<meta name="author" content="Constantin Colonescu">
+
+<meta name="date" content="2016-09-01">
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="heteroskedasticity.html">
+<link rel="next" href="random-regressors.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">PoE with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>.</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#the-rstudio-screen"><i class="fa fa-check"></i><b>1.1</b> The RStudio Screen</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="intro.html"><a href="intro.html#the-script-or-data-view-window"><i class="fa fa-check"></i><b>1.1.1</b> The <code>Script</code>, or <code>data view</code> window</a></li>
+<li class="chapter" data-level="1.1.2" data-path="intro.html"><a href="intro.html#the-console-or-output-window"><i class="fa fa-check"></i><b>1.1.2</b> The <code>console</code>, or <code>output</code> window</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#intro_s1"><i class="fa fa-check"></i><b>1.2</b> How to Open a Data File</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#creating-graphs"><i class="fa fa-check"></i><b>1.3</b> Creating Graphs</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#an-r-cheat-sheet"><i class="fa fa-check"></i><b>1.4</b> An R Cheat Sheet</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="simplelm.html"><a href="simplelm.html"><i class="fa fa-check"></i><b>2</b> The Simple Linear Regression Model</a><ul>
+<li class="chapter" data-level="2.1" data-path="simplelm.html"><a href="simplelm.html#the-general-model"><i class="fa fa-check"></i><b>2.1</b> The General Model</a></li>
+<li class="chapter" data-level="2.2" data-path="simplelm.html"><a href="simplelm.html#food_exmpl"><i class="fa fa-check"></i><b>2.2</b> Example: Food Expenditure versus Income</a></li>
+<li class="chapter" data-level="2.3" data-path="simplelm.html"><a href="simplelm.html#estimating-a-linear-regression"><i class="fa fa-check"></i><b>2.3</b> Estimating a Linear Regression</a></li>
+<li class="chapter" data-level="2.4" data-path="simplelm.html"><a href="simplelm.html#prediction-with-the-linear-regression-model"><i class="fa fa-check"></i><b>2.4</b> Prediction with the Linear Regression Model</a></li>
+<li class="chapter" data-level="2.5" data-path="simplelm.html"><a href="simplelm.html#repeated-samples-to-assess-regression-coefficients"><i class="fa fa-check"></i><b>2.5</b> Repeated Samples to Assess Regression Coefficients</a></li>
+<li class="chapter" data-level="2.6" data-path="simplelm.html"><a href="simplelm.html#estimated-variances-and-covariance-of-regression-coefficients"><i class="fa fa-check"></i><b>2.6</b> Estimated Variances and Covariance of Regression Coefficients</a></li>
+<li class="chapter" data-level="2.7" data-path="simplelm.html"><a href="simplelm.html#non-linear-relationships"><i class="fa fa-check"></i><b>2.7</b> Non-Linear Relationships</a></li>
+<li class="chapter" data-level="2.8" data-path="simplelm.html"><a href="simplelm.html#using-indicator-variables-in-a-regression"><i class="fa fa-check"></i><b>2.8</b> Using Indicator Variables in a Regression</a></li>
+<li class="chapter" data-level="2.9" data-path="simplelm.html"><a href="simplelm.html#monte-carlo-simulation"><i class="fa fa-check"></i><b>2.9</b> Monte Carlo Simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="intervalest.html"><a href="intervalest.html"><i class="fa fa-check"></i><b>3</b> Interval Estimation and Hypothesis Testing</a><ul>
+<li class="chapter" data-level="3.1" data-path="intervalest.html"><a href="intervalest.html#edrc"><i class="fa fa-check"></i><b>3.1</b> The Estimated Distribution of Regression Coefficients</a></li>
+<li class="chapter" data-level="3.2" data-path="intervalest.html"><a href="intervalest.html#cig"><i class="fa fa-check"></i><b>3.2</b> Confidence Interval in General</a></li>
+<li class="chapter" data-level="3.3" data-path="intervalest.html"><a href="intervalest.html#ecifm"><i class="fa fa-check"></i><b>3.3</b> Example: Confidence Intervals in the <em>food</em> Model</a></li>
+<li class="chapter" data-level="3.4" data-path="intervalest.html"><a href="intervalest.html#cirs"><i class="fa fa-check"></i><b>3.4</b> Confidence Intervals in Repeated Samples</a></li>
+<li class="chapter" data-level="3.5" data-path="intervalest.html"><a href="intervalest.html#hypotests"><i class="fa fa-check"></i><b>3.5</b> Hypothesis Tests</a></li>
+<li class="chapter" data-level="3.6" data-path="intervalest.html"><a href="intervalest.html#the-p-value"><i class="fa fa-check"></i><b>3.6</b> The <em>p</em>-Value</a></li>
+<li class="chapter" data-level="3.7" data-path="intervalest.html"><a href="intervalest.html#testing-linear-combinations-of-parameters"><i class="fa fa-check"></i><b>3.7</b> Testing Linear Combinations of Parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html"><i class="fa fa-check"></i><b>4</b> Prediction, R-squared, and Modeling</a><ul>
+<li class="chapter" data-level="4.1" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#forecasting-predicting-a-particular-value"><i class="fa fa-check"></i><b>4.1</b> Forecasting (Predicting a Particular Value)</a></li>
+<li class="chapter" data-level="4.2" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#goodness-of-fit"><i class="fa fa-check"></i><b>4.2</b> Goodness-of-Fit</a></li>
+<li class="chapter" data-level="4.3" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#linear-log-models"><i class="fa fa-check"></i><b>4.3</b> Linear-Log Models</a></li>
+<li class="chapter" data-level="4.4" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#residuals-and-diagnostics"><i class="fa fa-check"></i><b>4.4</b> Residuals and Diagnostics</a></li>
+<li class="chapter" data-level="4.5" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#polynomial-models"><i class="fa fa-check"></i><b>4.5</b> Polynomial Models</a></li>
+<li class="chapter" data-level="4.6" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#log-linear-models"><i class="fa fa-check"></i><b>4.6</b> Log-Linear Models</a></li>
+<li class="chapter" data-level="4.7" data-path="prediction-r-squared-and-modeling.html"><a href="prediction-r-squared-and-modeling.html#the-log-log-model"><i class="fa fa-check"></i><b>4.7</b> The Log-Log Model</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="multiplereg.html"><a href="multiplereg.html"><i class="fa fa-check"></i><b>5</b> The Multiple Regression Model</a><ul>
+<li class="chapter" data-level="5.1" data-path="multiplereg.html"><a href="multiplereg.html#the-general-model-1"><i class="fa fa-check"></i><b>5.1</b> The General Model</a></li>
+<li class="chapter" data-level="5.2" data-path="multiplereg.html"><a href="multiplereg.html#example-big-andys-hamburger-sales"><i class="fa fa-check"></i><b>5.2</b> Example: Big Andy’s Hamburger Sales</a></li>
+<li class="chapter" data-level="5.3" data-path="multiplereg.html"><a href="multiplereg.html#interval-estimation-in-multiple-regression"><i class="fa fa-check"></i><b>5.3</b> Interval Estimation in Multiple Regression</a></li>
+<li class="chapter" data-level="5.4" data-path="multiplereg.html"><a href="multiplereg.html#hypothesis-testing-in-multiple-regression"><i class="fa fa-check"></i><b>5.4</b> Hypothesis Testing in Multiple Regression</a></li>
+<li class="chapter" data-level="5.5" data-path="multiplereg.html"><a href="multiplereg.html#polynomial-regression-models"><i class="fa fa-check"></i><b>5.5</b> Polynomial Regression Models</a></li>
+<li class="chapter" data-level="5.6" data-path="multiplereg.html"><a href="multiplereg.html#interaction-terms-in-linear-regression"><i class="fa fa-check"></i><b>5.6</b> Interaction Terms in Linear Regression</a></li>
+<li class="chapter" data-level="5.7" data-path="multiplereg.html"><a href="multiplereg.html#goodness-of-fit-in-multiple-regression"><i class="fa fa-check"></i><b>5.7</b> Goodness-of-Fit in Multiple Regression</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html"><i class="fa fa-check"></i><b>6</b> Further Inference in Multiple Regression</a><ul>
+<li class="chapter" data-level="6.1" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#joint-hypotheses-and-the-f-statistic"><i class="fa fa-check"></i><b>6.1</b> Joint Hypotheses and the F-statistic</a></li>
+<li class="chapter" data-level="6.2" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#testing-simultaneous-hypotheses"><i class="fa fa-check"></i><b>6.2</b> Testing Simultaneous Hypotheses</a></li>
+<li class="chapter" data-level="6.3" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#omitted-variable-bias"><i class="fa fa-check"></i><b>6.3</b> Omitted Variable Bias</a></li>
+<li class="chapter" data-level="6.4" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#irrelevant-variables"><i class="fa fa-check"></i><b>6.4</b> Irrelevant Variables</a></li>
+<li class="chapter" data-level="6.5" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#model-selection-criteria"><i class="fa fa-check"></i><b>6.5</b> Model Selection Criteria</a></li>
+<li class="chapter" data-level="6.6" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#collinearity"><i class="fa fa-check"></i><b>6.6</b> Collinearity</a></li>
+<li class="chapter" data-level="6.7" data-path="further-inference-in-multiple-regression.html"><a href="further-inference-in-multiple-regression.html#prediction-and-forecasting"><i class="fa fa-check"></i><b>6.7</b> Prediction and Forecasting</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="indvars.html"><a href="indvars.html"><i class="fa fa-check"></i><b>7</b> Using Indicator Variables</a><ul>
+<li class="chapter" data-level="7.1" data-path="indvars.html"><a href="indvars.html#factor-variables"><i class="fa fa-check"></i><b>7.1</b> Factor Variables</a></li>
+<li class="chapter" data-level="7.2" data-path="indvars.html"><a href="indvars.html#examples"><i class="fa fa-check"></i><b>7.2</b> Examples</a></li>
+<li class="chapter" data-level="7.3" data-path="indvars.html"><a href="indvars.html#comparing-two-regressions-the-chow-test"><i class="fa fa-check"></i><b>7.3</b> Comparing Two Regressions: the Chow Test</a></li>
+<li class="chapter" data-level="7.4" data-path="indvars.html"><a href="indvars.html#indicator-variables-in-log-linear-models"><i class="fa fa-check"></i><b>7.4</b> Indicator Variables in Log-Linear Models</a></li>
+<li class="chapter" data-level="7.5" data-path="indvars.html"><a href="indvars.html#the-linear-probability-model"><i class="fa fa-check"></i><b>7.5</b> The Linear Probability Model</a></li>
+<li class="chapter" data-level="7.6" data-path="indvars.html"><a href="indvars.html#treatment-effects"><i class="fa fa-check"></i><b>7.6</b> Treatment Effects</a></li>
+<li class="chapter" data-level="7.7" data-path="indvars.html"><a href="indvars.html#the-difference-in-differences-estimator"><i class="fa fa-check"></i><b>7.7</b> The Difference-in-Differences Estimator</a></li>
+<li class="chapter" data-level="7.8" data-path="indvars.html"><a href="indvars.html#using-panel-data"><i class="fa fa-check"></i><b>7.8</b> Using Panel Data</a></li>
+<li class="chapter" data-level="7.9" data-path="indvars.html"><a href="indvars.html#r-practicum"><i class="fa fa-check"></i><b>7.9</b> R Practicum</a><ul>
+<li class="chapter" data-level="7.9.1" data-path="indvars.html"><a href="indvars.html#extracting-various-information"><i class="fa fa-check"></i><b>7.9.1</b> Extracting Various Information</a></li>
+<li class="chapter" data-level="7.9.2" data-path="indvars.html"><a href="indvars.html#ggplot2-an-excellent-data-visualising-tool"><i class="fa fa-check"></i><b>7.9.2</b> <code>ggplot2</code>, An Excellent Data Visualising Tool</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html"><i class="fa fa-check"></i><b>8</b> Heteroskedasticity</a><ul>
+<li class="chapter" data-level="8.1" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#spotting-heteroskedasticity-in-scatter-plots"><i class="fa fa-check"></i><b>8.1</b> Spotting Heteroskedasticity in Scatter Plots</a></li>
+<li class="chapter" data-level="8.2" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#heteroskedasticity-tests"><i class="fa fa-check"></i><b>8.2</b> Heteroskedasticity Tests</a></li>
+<li class="chapter" data-level="8.3" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#heteroskedasticity-consistent-standard-errors"><i class="fa fa-check"></i><b>8.3</b> Heteroskedasticity-Consistent Standard Errors</a></li>
+<li class="chapter" data-level="8.4" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#gls-known-form-of-variance"><i class="fa fa-check"></i><b>8.4</b> GLS: Known Form of Variance</a></li>
+<li class="chapter" data-level="8.5" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#grouped-data"><i class="fa fa-check"></i><b>8.5</b> Grouped Data</a></li>
+<li class="chapter" data-level="8.6" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#gls-unknown-form-of-variance"><i class="fa fa-check"></i><b>8.6</b> GLS: Unknown Form of Variance</a></li>
+<li class="chapter" data-level="8.7" data-path="heteroskedasticity.html"><a href="heteroskedasticity.html#heteroskedasticity-in-the-linear-probability-model"><i class="fa fa-check"></i><b>8.7</b> Heteroskedasticity in the Linear Probability Model</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html"><i class="fa fa-check"></i><b>9</b> Time-Series: Stationary Variables</a><ul>
+<li class="chapter" data-level="9.1" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#an-overview-of-time-series-tools-in-r"><i class="fa fa-check"></i><b>9.1</b> An Overview of Time Series Tools in <em>R</em></a></li>
+<li class="chapter" data-level="9.2" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#finite-distributed-lags"><i class="fa fa-check"></i><b>9.2</b> Finite Distributed Lags</a></li>
+<li class="chapter" data-level="9.3" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#serial-correlation"><i class="fa fa-check"></i><b>9.3</b> Serial Correlation</a></li>
+<li class="chapter" data-level="9.4" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#estimation-with-serially-correlated-errors"><i class="fa fa-check"></i><b>9.4</b> Estimation with Serially Correlated Errors</a></li>
+<li class="chapter" data-level="9.5" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#nonlinear-least-squares-estimation"><i class="fa fa-check"></i><b>9.5</b> Nonlinear Least Squares Estimation</a></li>
+<li class="chapter" data-level="9.6" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#a-more-general-model"><i class="fa fa-check"></i><b>9.6</b> A More General Model</a></li>
+<li class="chapter" data-level="9.7" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#autoregressive-models"><i class="fa fa-check"></i><b>9.7</b> Autoregressive Models</a></li>
+<li class="chapter" data-level="9.8" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#forecasting"><i class="fa fa-check"></i><b>9.8</b> Forecasting</a></li>
+<li class="chapter" data-level="9.9" data-path="time-series-stationary-variables.html"><a href="time-series-stationary-variables.html#multiplier-analysis"><i class="fa fa-check"></i><b>9.9</b> Multiplier Analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="random-regressors.html"><a href="random-regressors.html"><i class="fa fa-check"></i><b>10</b> Random Regressors</a><ul>
+<li class="chapter" data-level="10.1" data-path="random-regressors.html"><a href="random-regressors.html#the-instrumental-variables-iv-method"><i class="fa fa-check"></i><b>10.1</b> The Instrumental Variables (IV) Method</a></li>
+<li class="chapter" data-level="10.2" data-path="random-regressors.html"><a href="random-regressors.html#specification-tests"><i class="fa fa-check"></i><b>10.2</b> Specification Tests</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="simultaneous-equations-models.html"><a href="simultaneous-equations-models.html"><i class="fa fa-check"></i><b>11</b> Simultaneous Equations Models</a></li>
+<li class="chapter" data-level="12" data-path="time-series-nonstationarity.html"><a href="time-series-nonstationarity.html"><i class="fa fa-check"></i><b>12</b> Time Series: Nonstationarity</a><ul>
+<li class="chapter" data-level="12.1" data-path="time-series-nonstationarity.html"><a href="time-series-nonstationarity.html#ar1-the-first-order-autoregressive-model"><i class="fa fa-check"></i><b>12.1</b> AR(1), the First-Order Autoregressive Model</a></li>
+<li class="chapter" data-level="12.2" data-path="time-series-nonstationarity.html"><a href="time-series-nonstationarity.html#spurious-regression"><i class="fa fa-check"></i><b>12.2</b> Spurious Regression</a></li>
+<li class="chapter" data-level="12.3" data-path="time-series-nonstationarity.html"><a href="time-series-nonstationarity.html#unit-root-tests-for-stationarity"><i class="fa fa-check"></i><b>12.3</b> Unit Root Tests for Stationarity</a></li>
+<li class="chapter" data-level="12.4" data-path="time-series-nonstationarity.html"><a href="time-series-nonstationarity.html#cointegration"><i class="fa fa-check"></i><b>12.4</b> Cointegration</a></li>
+<li class="chapter" data-level="12.5" data-path="time-series-nonstationarity.html"><a href="time-series-nonstationarity.html#the-error-correction-model"><i class="fa fa-check"></i><b>12.5</b> The Error Correction Model</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="vec-and-var-models.html"><a href="vec-and-var-models.html"><i class="fa fa-check"></i><b>13</b> VEC and VAR Models</a><ul>
+<li class="chapter" data-level="13.1" data-path="vec-and-var-models.html"><a href="vec-and-var-models.html#var-and-vec-models"><i class="fa fa-check"></i><b>13.1</b> VAR and VEC Models</a></li>
+<li class="chapter" data-level="13.2" data-path="vec-and-var-models.html"><a href="vec-and-var-models.html#estimating-a-vec-model"><i class="fa fa-check"></i><b>13.2</b> Estimating a VEC Model</a></li>
+<li class="chapter" data-level="13.3" data-path="vec-and-var-models.html"><a href="vec-and-var-models.html#estimating-a-var-model"><i class="fa fa-check"></i><b>13.3</b> Estimating a VAR Model</a></li>
+<li class="chapter" data-level="13.4" data-path="vec-and-var-models.html"><a href="vec-and-var-models.html#impulse-responses-and-variance-decompositions"><i class="fa fa-check"></i><b>13.4</b> Impulse Responses and Variance Decompositions</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="time-varying-volatility-and-arch-models.html"><a href="time-varying-volatility-and-arch-models.html"><i class="fa fa-check"></i><b>14</b> Time-Varying Volatility and ARCH Models</a><ul>
+<li class="chapter" data-level="14.1" data-path="time-varying-volatility-and-arch-models.html"><a href="time-varying-volatility-and-arch-models.html#the-arch-model"><i class="fa fa-check"></i><b>14.1</b> The ARCH Model</a></li>
+<li class="chapter" data-level="14.2" data-path="time-varying-volatility-and-arch-models.html"><a href="time-varying-volatility-and-arch-models.html#the-garch-model"><i class="fa fa-check"></i><b>14.2</b> The GARCH Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="panel-data-models.html"><a href="panel-data-models.html"><i class="fa fa-check"></i><b>15</b> Panel Data Models</a><ul>
+<li class="chapter" data-level="15.1" data-path="panel-data-models.html"><a href="panel-data-models.html#organizing-the-data-as-a-panel"><i class="fa fa-check"></i><b>15.1</b> Organizing the Data as a Panel</a></li>
+<li class="chapter" data-level="15.2" data-path="panel-data-models.html"><a href="panel-data-models.html#the-pooled-model"><i class="fa fa-check"></i><b>15.2</b> The Pooled Model</a></li>
+<li class="chapter" data-level="15.3" data-path="panel-data-models.html"><a href="panel-data-models.html#the-fixed-effects-model"><i class="fa fa-check"></i><b>15.3</b> The Fixed Effects Model</a></li>
+<li class="chapter" data-level="15.4" data-path="panel-data-models.html"><a href="panel-data-models.html#the-random-effects-model"><i class="fa fa-check"></i><b>15.4</b> The Random Effects Model</a></li>
+<li class="chapter" data-level="15.5" data-path="panel-data-models.html"><a href="panel-data-models.html#grunfelds-investment-example"><i class="fa fa-check"></i><b>15.5</b> Grunfeld’s Investment Example</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html"><i class="fa fa-check"></i><b>16</b> Qualitative and LDV Models</a><ul>
+<li class="chapter" data-level="16.1" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-linear-probability-model-1"><i class="fa fa-check"></i><b>16.1</b> The Linear Probability Model</a></li>
+<li class="chapter" data-level="16.2" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-probit-model"><i class="fa fa-check"></i><b>16.2</b> The Probit Model</a></li>
+<li class="chapter" data-level="16.3" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-transportation-example"><i class="fa fa-check"></i><b>16.3</b> The Transportation Example</a></li>
+<li class="chapter" data-level="16.4" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-logit-model-for-binary-choice"><i class="fa fa-check"></i><b>16.4</b> The Logit Model for Binary Choice</a></li>
+<li class="chapter" data-level="16.5" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#multinomial-logit"><i class="fa fa-check"></i><b>16.5</b> Multinomial Logit</a></li>
+<li class="chapter" data-level="16.6" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-conditional-logit-model"><i class="fa fa-check"></i><b>16.6</b> The Conditional Logit Model</a></li>
+<li class="chapter" data-level="16.7" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#ordered-choice-models"><i class="fa fa-check"></i><b>16.7</b> Ordered Choice Models</a></li>
+<li class="chapter" data-level="16.8" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#models-for-count-data"><i class="fa fa-check"></i><b>16.8</b> Models for Count Data</a></li>
+<li class="chapter" data-level="16.9" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-tobit-or-censored-data-model"><i class="fa fa-check"></i><b>16.9</b> The Tobit, or Censored Data Model</a></li>
+<li class="chapter" data-level="16.10" data-path="qualitative-and-ldv-models.html"><a href="qualitative-and-ldv-models.html#the-heckit-or-sample-selection-model"><i class="fa fa-check"></i><b>16.10</b> The Heckit, or Sample Selection Model</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Principles of Econometrics with <span class="math inline">\(R\)</span></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="time-series-stationary-variables" class="section level1">
+<h1><span class="header-section-number">Chapter 9</span> Time-Series: Stationary Variables</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(<span class="dt">list=</span><span class="kw">ls</span>()) <span class="co">#Removes all items in Environment!</span>
+<span class="kw">library</span>(dynlm) <span class="co">#for the `dynlm()` function</span>
+<span class="kw">library</span>(orcutt) <span class="co"># for the `cochrane.orcutt()` function</span>
+<span class="kw">library</span>(nlWaldTest) <span class="co"># for the `nlWaldtest()` function</span>
+<span class="kw">library</span>(zoo) <span class="co"># for time series functions (not much used here)</span>
+<span class="kw">library</span>(pdfetch) <span class="co"># for retrieving data (just mentioned here)</span>
+<span class="kw">library</span>(lmtest) <span class="co">#for `coeftest()` and `bptest()`.</span>
+<span class="kw">library</span>(broom) <span class="co">#for `glance(`) and `tidy()`</span>
+<span class="kw">library</span>(PoEdata) <span class="co">#for PoE4 datasets</span>
+<span class="kw">library</span>(car) <span class="co">#for `hccm()` robust standard errors</span>
+<span class="kw">library</span>(sandwich)
+<span class="kw">library</span>(knitr) <span class="co">#for kable()</span>
+<span class="kw">library</span>(forecast) </code></pre></div>
+<p>New packages: <code>dynlm</code> <span class="citation">(Zeileis <a href="#ref-R-dynlm">2016</a>)</span>; <code>orcutt</code> <span class="citation">(Spada, Quartagno, and Tamburini <a href="#ref-R-orcutt">2012</a>)</span>; <code>nlWaldTest</code> <span class="citation">(Komashko <a href="#ref-R-nlWaldTest">2016</a>)</span>; <code>zoo</code> [R-zoo]; <code>pdfetch</code> <span class="citation">(Reinhart <a href="#ref-R-pdfetch">2015</a>)</span>; and <code>forecast</code> <span class="citation">(Hyndman <a href="#ref-R-forecast">2016</a>)</span>.</p>
+<p>Time series are data on several variables on an observational unit (such as an individual, country, or firm) when observations span several periods. Correlation among subsequent observations, the importance of the natural order in the data and dynamics (past values of data influence present and future values) are features of time series that do not occur in cross-sectional data.</p>
+<p>Time series models assume, in addition to the usual linear regression assumptions, that the esries is <strong>stationary</strong>, that is, the distribution of the error term, as well as the correlation between error terms a few periods apart are constant over time. Constant distribution requires, in particular, that the variable does not display a trend in its mean or variance; constant correlation implies no clustering of observations in certain periods.</p>
+<div id="an-overview-of-time-series-tools-in-r" class="section level2">
+<h2><span class="header-section-number">9.1</span> An Overview of Time Series Tools in <em>R</em></h2>
+<p><span class="math inline">\(R\)</span> creates a time series variable or dataset using the function <code>ts()</code>, with the following main arguments: your <code>data</code> file in matrix or data frame form, the <code>start</code> period, the <code>end</code> period, the <code>frequency</code> of the data (1 is annual, 4 is quarterly, and 12 is monthly), and the <code>names</code> of your column variables. Another class of time series objects is created by the function <code>zoo()</code> in the package <code>zoo</code>, which, unlike <code>ts()</code>, can handle irregular or high-frequency time series. Both <code>ts</code> and <code>zoo</code> classes of objects can be used by the function <code>dynlm()</code> in the package with the same name to solve models that include lags and other time series specific operators.</p>
+<p>In standard <span class="math inline">\(R\)</span>, two functions are very useful when working with time series: the <em>difference</em> function, <span class="math inline">\(diff(y_{t})= y_{t}-y_{t-1}\)</span>, and the <em>lag</em> function, <span class="math inline">\(lag(y_{t})=y_{t-1}\)</span>.</p>
+<p>The package <code>pdfetch</code> is a very useful tool for getting <span class="math inline">\(R\)</span>-compatible time series data from different online sources such as the World Bank, Eurostat, European Central Bank, and Yahoo Finance. The package <code>WDI</code> retrieves data from the very rich World Development Indicators database, maintained by the World Bank.</p>
+</div>
+<div id="finite-distributed-lags" class="section level2">
+<h2><span class="header-section-number">9.2</span> Finite Distributed Lags</h2>
+A <em>finite distributed lag</em> model (FDL) assumes a linear relationship between a dependent variable <span class="math inline">\(y\)</span> and several lags of an independent variable <span class="math inline">\(x\)</span>. Equation \ref{eq:fdlgen9} shows a finite distributed lag model <strong>of order <em>q</em>.</strong>
+<span class="math display">\[\begin{equation}
+y_{t}=\alpha+\beta_{0}x_{t}+\beta_{1}x_{t-1}+...+\beta_{q}x_{t-q}+e_{t}
+\label{eq:fdlgen9}
+\end{equation}\]</span>
+<p>The coefficient <span class="math inline">\(\beta_{s}\)</span> is an <strong><span class="math inline">\(s\)</span>-period delay multiplier</strong>, and the coefficient <span class="math inline">\(\beta_{0}\)</span>, the immediate (contemporaneous) impact of a change in <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span>, is an <strong>impact multiplier</strong>. If <span class="math inline">\(x\)</span> increases by one unit today, the change in <span class="math inline">\(y\)</span> will be <span class="math inline">\(\beta_{0}+\beta_{1}+...+\beta_{s}\)</span> after <span class="math inline">\(s\)</span> periods; this quantity is called the <span class="math inline">\(s\)</span>-period <strong>interim multiplier</strong>. The <strong>total multiplier</strong> is equal to the sum of all <span class="math inline">\(\beta\)</span>s in the model.</p>
+<p>Let us look at Okun’s law as an example of an FDL model. Okun’s law relates contemporaneous (time <span class="math inline">\(t\)</span>) change in unemployment rate, <span class="math inline">\(DU_{t}\)</span>, to present and past levels of economic growth rate, <span class="math inline">\(G_{t-s}\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;okun&quot;</span>, <span class="dt">package=</span><span class="st">&quot;PoEdata&quot;</span>)
+<span class="kw">library</span>(dynlm)
+check.ts &lt;-<span class="st"> </span><span class="kw">is.ts</span>(okun) <span class="co"># &quot;is structured as time series?&quot;</span>
+okun.ts &lt;-<span class="st"> </span><span class="kw">ts</span>(okun, <span class="dt">start=</span><span class="kw">c</span>(<span class="dv">1985</span>,<span class="dv">2</span>), <span class="dt">end=</span><span class="kw">c</span>(<span class="dv">2009</span>,<span class="dv">3</span>),<span class="dt">frequency=</span><span class="dv">4</span>)
+okun.ts.tab &lt;-<span class="st"> </span><span class="kw">cbind</span>(okun.ts,
+                 <span class="kw">lag</span>(okun.ts[,<span class="dv">2</span>], -<span class="dv">1</span>),
+                 <span class="kw">diff</span>(okun.ts[,<span class="dv">2</span>], <span class="dt">lag=</span><span class="dv">1</span>),
+                 <span class="kw">lag</span>(okun.ts[,<span class="dv">1</span>], -<span class="dv">1</span>),
+                 <span class="kw">lag</span>(okun.ts[,<span class="dv">1</span>], -<span class="dv">2</span>),
+                 <span class="kw">lag</span>(okun.ts[,<span class="dv">1</span>], -<span class="dv">3</span>))
+<span class="kw">kable</span>(<span class="kw">head</span>(okun.ts.tab), 
+      <span class="dt">caption=</span><span class="st">&quot;The `okun` dataset with differences and lags&quot;</span>,
+      <span class="dt">col.names=</span><span class="kw">c</span>(<span class="st">&quot;g&quot;</span>,<span class="st">&quot;u&quot;</span>,<span class="st">&quot;uL1&quot;</span>,<span class="st">&quot;du&quot;</span>,<span class="st">&quot;gL1&quot;</span>,<span class="st">&quot;gL2&quot;</span>,<span class="st">&quot;gL3&quot;</span>))</code></pre></div>
+<table>
+<caption><span id="tab:okunexample9">Table 9.1: </span>The <code>okun</code> dataset with differences and lags</caption>
+<thead>
+<tr class="header">
+<th align="right">g</th>
+<th align="right">u</th>
+<th align="right">uL1</th>
+<th align="right">du</th>
+<th align="right">gL1</th>
+<th align="right">gL2</th>
+<th align="right">gL3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1.4</td>
+<td align="right">7.3</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">2.0</td>
+<td align="right">7.2</td>
+<td align="right">7.3</td>
+<td align="right">-0.1</td>
+<td align="right">1.4</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="right">1.4</td>
+<td align="right">7.0</td>
+<td align="right">7.2</td>
+<td align="right">-0.2</td>
+<td align="right">2.0</td>
+<td align="right">1.4</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">1.5</td>
+<td align="right">7.0</td>
+<td align="right">7.0</td>
+<td align="right">0.0</td>
+<td align="right">1.4</td>
+<td align="right">2.0</td>
+<td align="right">1.4</td>
+</tr>
+<tr class="odd">
+<td align="right">0.9</td>
+<td align="right">7.2</td>
+<td align="right">7.0</td>
+<td align="right">0.2</td>
+<td align="right">1.5</td>
+<td align="right">1.4</td>
+<td align="right">2.0</td>
+</tr>
+<tr class="even">
+<td align="right">1.5</td>
+<td align="right">7.0</td>
+<td align="right">7.2</td>
+<td align="right">-0.2</td>
+<td align="right">0.9</td>
+<td align="right">1.5</td>
+<td align="right">1.4</td>
+</tr>
+</tbody>
+</table>
+<p>Table <a href="time-series-stationary-variables.html#tab:okunexample9">9.1</a> shows how lags and differences work. Please note how each lag uses up an observation period.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">okunL3.dyn &lt;-<span class="st"> </span><span class="kw">dynlm</span>(<span class="kw">d</span>(u)~<span class="kw">L</span>(g, <span class="dv">0</span>:<span class="dv">3</span>), <span class="dt">data=</span>okun.ts)
+<span class="kw">kable</span>(<span class="kw">tidy</span>(<span class="kw">summary</span>(okunL3.dyn)), <span class="dt">digits=</span><span class="dv">4</span>,
+  <span class="dt">caption=</span><span class="st">&quot;The `okun` distributed lag model with three lags&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:okunL3dynlm9">Table 9.2: </span>The <code>okun</code> distributed lag model with three lags</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">0.5810</td>
+<td align="right">0.0539</td>
+<td align="right">10.7809</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="even">
+<td align="left">L(g, 0:3)0</td>
+<td align="right">-0.2021</td>
+<td align="right">0.0330</td>
+<td align="right">-6.1204</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="odd">
+<td align="left">L(g, 0:3)1</td>
+<td align="right">-0.1645</td>
+<td align="right">0.0358</td>
+<td align="right">-4.5937</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="even">
+<td align="left">L(g, 0:3)2</td>
+<td align="right">-0.0716</td>
+<td align="right">0.0353</td>
+<td align="right">-2.0268</td>
+<td align="right">0.0456</td>
+</tr>
+<tr class="odd">
+<td align="left">L(g, 0:3)3</td>
+<td align="right">0.0033</td>
+<td align="right">0.0363</td>
+<td align="right">0.0911</td>
+<td align="right">0.9276</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">okunL2.dyn &lt;-<span class="st"> </span><span class="kw">dynlm</span>(<span class="kw">d</span>(u)~<span class="kw">L</span>(g, <span class="dv">0</span>:<span class="dv">2</span>), <span class="dt">data=</span>okun.ts)
+<span class="kw">kable</span>(<span class="kw">tidy</span>(<span class="kw">summary</span>(okunL2.dyn)), <span class="dt">digits=</span><span class="dv">4</span>,
+  <span class="dt">caption=</span><span class="st">&quot;The `okun` distributed lag model with two lags&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:okunL2dynlm9">Table 9.3: </span>The <code>okun</code> distributed lag model with two lags</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">0.5836</td>
+<td align="right">0.0472</td>
+<td align="right">12.3604</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="even">
+<td align="left">L(g, 0:2)0</td>
+<td align="right">-0.2020</td>
+<td align="right">0.0324</td>
+<td align="right">-6.2385</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="odd">
+<td align="left">L(g, 0:2)1</td>
+<td align="right">-0.1653</td>
+<td align="right">0.0335</td>
+<td align="right">-4.9297</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="even">
+<td align="left">L(g, 0:2)2</td>
+<td align="right">-0.0700</td>
+<td align="right">0.0331</td>
+<td align="right">-2.1152</td>
+<td align="right">0.0371</td>
+</tr>
+</tbody>
+</table>
+<p>Tables <a href="time-series-stationary-variables.html#tab:okunL3dynlm9">9.2</a> and <a href="time-series-stationary-variables.html#tab:okunL2dynlm9">9.3</a> summarize the results of linear models with 3 and 2 lags respectively. Many of the output analysis functions that we have used with the <code>lm()</code> function, such as <code>summary()</code> and <code>coeftest()</code> are also applicable to <code>dynlm()</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">glL3 &lt;-<span class="st"> </span><span class="kw">glance</span>(okunL3.dyn)[<span class="kw">c</span>(<span class="st">&quot;r.squared&quot;</span>,<span class="st">&quot;statistic&quot;</span>,<span class="st">&quot;AIC&quot;</span>,<span class="st">&quot;BIC&quot;</span>)]
+glL2 &lt;-<span class="st"> </span><span class="kw">glance</span>(okunL2.dyn)[<span class="kw">c</span>(<span class="st">&quot;r.squared&quot;</span>,<span class="st">&quot;statistic&quot;</span>,<span class="st">&quot;AIC&quot;</span>,<span class="st">&quot;BIC&quot;</span>)]
+tabl &lt;-<span class="st"> </span><span class="kw">rbind</span>(glL3, <span class="kw">as.numeric</span>(glL2))
+<span class="kw">kable</span>(tabl, <span class="dt">caption=</span><span class="st">&quot;Goodness-of-fit statistics for `okun` models&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:okuntsglance9">Table 9.4: </span>Goodness-of-fit statistics for <code>okun</code> models</caption>
+<thead>
+<tr class="header">
+<th align="right">r.squared</th>
+<th align="right">statistic</th>
+<th align="right">AIC</th>
+<th align="right">BIC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0.652406</td>
+<td align="right">42.2306</td>
+<td align="right">-55.4318</td>
+<td align="right">-40.1085</td>
+</tr>
+<tr class="even">
+<td align="right">0.653946</td>
+<td align="right">57.9515</td>
+<td align="right">-58.9511</td>
+<td align="right">-46.1293</td>
+</tr>
+</tbody>
+</table>
+<p>Table <a href="time-series-stationary-variables.html#tab:okuntsglance9">9.4</a> compares the two FDL models of the <span class="math inline">\(okun\)</span> example. The first row is the model with three lags, the second is the model with two lags. All the measures in this table points to the second model (two lags) as a better specification.</p>
+<p>A note on how these tables were created in <span class="math inline">\(R\)</span> is of interest. Table <a href="time-series-stationary-variables.html#tab:okunexample9">9.1</a> was created using the function <code>cbind</code>, which puts together several columns (vectors); table <a href="time-series-stationary-variables.html#tab:okuntsglance9">9.4</a> used two functions: <code>rbind()</code>, which puts together two rows, and <code>as.numeric</code>, which extracts only the numbers from the <code>glance</code> object, without the names of the columns.</p>
+</div>
+<div id="serial-correlation" class="section level2">
+<h2><span class="header-section-number">9.3</span> Serial Correlation</h2>
+<p><strong>Serial correlation</strong>, or <strong>autocorrelation</strong> in a time series describes the correlation between two observations separated by one or several periods. Time series tend to display autocorrelation more than cross sections because of their ordered nature. Autocorrelation could be an attribute of one series, independent of the model in which this series appears. If this series is, however, an error term, its properties do depend on the model, since error series can only exist in relation to a model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(okun.ts[,<span class="st">&quot;g&quot;</span>], <span class="dt">ylab=</span><span class="st">&quot;growth&quot;</span>)
+<span class="kw">plot</span>(okun.ts[,<span class="st">&quot;u&quot;</span>], <span class="dt">ylab=</span><span class="st">&quot;unemployment&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:okuntsplot9"></span>
+<img src="Figs/okuntsplot9-1.png" alt="Growth and unemployment rates in the 'okun' dataset" width="49%" /><img src="Figs/okuntsplot9-2.png" alt="Growth and unemployment rates in the 'okun' dataset" width="49%" />
+<p class="caption">
+Figure 9.1: Growth and unemployment rates in the ‘okun’ dataset
+</p>
+</div>
+<p>The “growth” graph in Figure <a href="time-series-stationary-variables.html#fig:okuntsplot9">9.1</a> display clusters of values: positive for several periods followed by a few of negative values, which is an indication of autocorrelation; the same is true for unemployment, which does not change as dramatically as growth but still shows persistence.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ggL1 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">cbind</span>(okun.ts[,<span class="st">&quot;g&quot;</span>], <span class="kw">lag</span>(okun.ts[,<span class="st">&quot;g&quot;</span>],-<span class="dv">1</span>)))
+<span class="kw">names</span>(ggL1) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;g&quot;</span>,<span class="st">&quot;gL1&quot;</span>)
+<span class="kw">plot</span>(ggL1)
+meang &lt;-<span class="st"> </span><span class="kw">mean</span>(ggL1$g, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)
+<span class="kw">abline</span>(<span class="dt">v=</span>meang, <span class="dt">lty=</span><span class="dv">2</span>)
+<span class="kw">abline</span>(<span class="dt">h=</span><span class="kw">mean</span>(ggL1$gL1, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dt">lty=</span><span class="dv">2</span>)
+
+ggL2 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">cbind</span>(okun.ts[,<span class="st">&quot;g&quot;</span>], <span class="kw">lag</span>(okun.ts[,<span class="st">&quot;g&quot;</span>],-<span class="dv">2</span>)))
+<span class="kw">names</span>(ggL2) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;g&quot;</span>,<span class="st">&quot;gL2&quot;</span>)
+<span class="kw">plot</span>(ggL2)
+meang &lt;-<span class="st"> </span><span class="kw">mean</span>(ggL2$g, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)
+<span class="kw">abline</span>(<span class="dt">v=</span>meang, <span class="dt">lty=</span><span class="dv">2</span>)
+<span class="kw">abline</span>(<span class="dt">h=</span><span class="kw">mean</span>(ggL2$gL2, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dt">lty=</span><span class="dv">2</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:plotggL9"></span>
+<img src="Figs/plotggL9-1.png" alt="Scatter plots between 'g' and its lags" width="49%" /><img src="Figs/plotggL9-2.png" alt="Scatter plots between 'g' and its lags" width="49%" />
+<p class="caption">
+Figure 9.2: Scatter plots between ‘g’ and its lags
+</p>
+</div>
+<p>Figures <a href="time-series-stationary-variables.html#fig:plotggL9">9.2</a> illustrate the correlation between the growth rate and its first two lags, which is, indeed autocorrelation. But is there a more precise test to detect autocorrelation?</p>
+<p>Suppose we wish to test the hypothesis formulated in Equation \ref{eq:autocorhyp9}, where <span class="math inline">\(\rho_{k}\)</span> is the population <span class="math inline">\(k\)</span>-th order autocorrelation coefficient.</p>
+<span class="math display">\[\begin{equation}
+H_{0}: \rho_{k}=0,\;\;\; H_{A}:\rho_{k}\neq 0
+\label{eq:autocorhyp9}
+\end{equation}\]</span>
+A test can be constructed based on the sample correlation coefficient, <span class="math inline">\(r_{k}\)</span>, which measures the correlation between a variable and its <span class="math inline">\(k\)</span>-th lag; the test statistic is given in Equation \ref{eq:autocorZ9}, where <span class="math inline">\(T\)</span> is the number of periods.
+<span class="math display">\[\begin{equation}
+Z=\frac{r_{k}-0}{\sqrt{\frac{1}{T}}}=\sqrt{T}r_{k}\sim N(0,1)
+\label{eq:autocorZ9}
+\end{equation}\]</span>
+<p>For a <span class="math inline">\(5\%\)</span> significance level, <span class="math inline">\(Z\)</span> must be outside the interval <span class="math inline">\([-1.96, 1,96]\)</span>, that is, in the rejection region. Rejecting the null hypothesis is, in this case, bad news, since rejection constitutes evidence of autocorrelation. So, for a way to remember the meaning of the test, one may think of it as a <strong>test of non-autocorrelation</strong>.</p>
+<p>The results of the (non-) autocorrelation test are usually summarized in a <strong>correlogram</strong>, a bar diagram that visualizes the values of the test statistic <span class="math inline">\(\sqrt{T}r_{k}\)</span> for several lags as well as the <span class="math inline">\(95\%\)</span> confidence interval. A bar (<span class="math inline">\(\sqrt{T}r_{k}\)</span>) that exceedes (upward or downward) the limits of the confidence interval indicates autocorrelation for the corresponding lag.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">growth_rate &lt;-<span class="st"> </span>okun.ts[,<span class="st">&quot;g&quot;</span>]
+<span class="kw">acf</span>(growth_rate)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:acfG9"></span>
+<img src="Figs/acfG9-1.png" alt="Correlogram for the growth rate, dataset 'okun'" width="80%" />
+<p class="caption">
+Figure 9.3: Correlogram for the growth rate, dataset ‘okun’
+</p>
+</div>
+<p>Figure <a href="time-series-stationary-variables.html#fig:acfG9">9.3</a> is a correlogram, where each bar corresponding to one lag, starting with lag 0. The correlogram shows little or no evidence of autocorrelation, except for the first and second lag (second and third bar in the figure).</p>
+Let us consider another example, the dataset <em>phillips_aus</em>, which containes quarterly data on unemploymnt and inflation over the period 1987Q1 to 2009Q3. We wish to apply the autocorrelation test to the error term in a time series regression to see if the non-autocorrelation in the errors is violated. Let us consider the FDL model in Equation \ref{eq:philleq9}.
+<span class="math display">\[\begin{equation}
+inf_{t}=\beta_{1}+\beta_{2}Du_{t}+e_{t}
+\label{eq:philleq9}
+\end{equation}\]</span>
+<p>Let’s first take a look at plots of the data (visualising the data is said to be a good practice rule in data analysis.)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;phillips_aus&quot;</span>, <span class="dt">package=</span><span class="st">&quot;PoEdata&quot;</span>)
+phill.ts &lt;-<span class="st"> </span><span class="kw">ts</span>(phillips_aus, 
+               <span class="dt">start=</span><span class="kw">c</span>(<span class="dv">1987</span>,<span class="dv">1</span>), 
+               <span class="dt">end=</span><span class="kw">c</span>(<span class="dv">2009</span>,<span class="dv">3</span>),
+               <span class="dt">frequency=</span><span class="dv">4</span>)
+inflation &lt;-<span class="st"> </span>phill.ts[,<span class="st">&quot;inf&quot;</span>]
+Du &lt;-<span class="st"> </span><span class="kw">diff</span>(phill.ts[,<span class="st">&quot;u&quot;</span>])
+<span class="kw">plot</span>(inflation)
+<span class="kw">plot</span>(Du)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:phillipsdata9"></span>
+<img src="Figs/phillipsdata9-1.png" alt="Data time plots in the 'phillips' dataset" width="49%" /><img src="Figs/phillipsdata9-2.png" alt="Data time plots in the 'phillips' dataset" width="49%" />
+<p class="caption">
+Figure 9.4: Data time plots in the ‘phillips’ dataset
+</p>
+</div>
+<p>The plots in Figure <a href="time-series-stationary-variables.html#fig:phillipsdata9">9.4</a> definitely show patterns in the data for both inflation and unemployment rates. But we are interested to determine if the error term in Equation \ref{eq:philleq9} satisfies the non-autocorrelation assumption of the time series regression model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">phill.dyn &lt;-<span class="st"> </span><span class="kw">dynlm</span>(inf~<span class="kw">diff</span>(u),<span class="dt">data=</span>phill.ts)
+ehat &lt;-<span class="st"> </span><span class="kw">resid</span>(phill.dyn)
+<span class="kw">kable</span>(<span class="kw">tidy</span>(phill.dyn), <span class="dt">caption=</span><span class="st">&quot;Summary of the `phillips` model&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:phillipsest9">Table 9.5: </span>Summary of the <code>phillips</code> model</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">0.777621</td>
+<td align="right">0.065825</td>
+<td align="right">11.81347</td>
+<td align="right">0.000000</td>
+</tr>
+<tr class="even">
+<td align="left">diff(u)</td>
+<td align="right">-0.527864</td>
+<td align="right">0.229405</td>
+<td align="right">-2.30101</td>
+<td align="right">0.023754</td>
+</tr>
+</tbody>
+</table>
+<p>Table <a href="time-series-stationary-variables.html#tab:phillipsest9">9.5</a> gives a <span class="math inline">\(p\)</span>-value of <span class="math inline">\(0.0238\)</span>, which is significant at a $5% $ level. But is this <span class="math inline">\(p\)</span>-value reliable? Let us investigate the autocorrelation structure of the errors in this model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(ehat)
+<span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>, <span class="dt">lty=</span><span class="dv">2</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:peh9"></span>
+<img src="Figs/peh9-1.png" alt="Residuals of the Phillips equation" width="80%" />
+<p class="caption">
+Figure 9.5: Residuals of the Phillips equation
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">corrgm &lt;-<span class="st"> </span><span class="kw">acf</span>(ehat)
+<span class="kw">plot</span>(corrgm)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:phc9"></span>
+<img src="Figs/phc9-1.png" alt="Correlogram of the residuals in the Phillips model" width="80%" />
+<p class="caption">
+Figure 9.6: Correlogram of the residuals in the Phillips model
+</p>
+</div>
+<p>The time series plot in Figure <a href="time-series-stationary-variables.html#fig:peh9">9.5</a> suggests that some patterns exists in the residuals, which is confirmed by the correlogram in Figure <a href="time-series-stationary-variables.html#fig:phc9">9.6</a>. The previous result suggesting that there is a significant relationship between inflation and change in unemployment rate may not be, afterall, too reliable.</p>
+<p>While visualising the data and plotting the correlogram are powerful methods of spotting autocorrelation, in many applications we need a precise criterion, a test statistic to decide whether autocorrelation is a problem. One such a method is the <strong>Lagrange Multiplier</strong> test. Suppose we want to test for autocorrelation in the residuals the model given in Equation \ref{eq:bgeqinit9}, where we assume that the errors have the autocorrelation structure described in Equation \ref{eq:errstr9}.</p>
+<span class="math display">\[\begin{equation}
+y_{t}=\beta_{1}+\beta_{2}x_{t}+e_{t}
+\label{eq:bgeqinit9}
+\end{equation}\]</span>
+<span class="math display">\[\begin{equation}
+e_{t}=\rho e_{t-1}+\nu _{t}
+\label{eq:errstr9}
+\end{equation}\]</span>
+<p>A test for autocorrelation would be based on the hypothesis in Equation \ref{eq:achyp9}.</p>
+<span class="math display">\[\begin{equation}
+H_{0}:\rho =0,\;\;\;H_{A}:\rho \neq 0
+\label{eq:achyp9}
+\end{equation}\]</span>
+<p>After little algebraic manipulation, the auxiliary regression that the LM test actually uses is the one in Equation \ref{eq:bgtesteq9}.</p>
+<span class="math display">\[\begin{equation}
+\hat{e}_{t}=\gamma_{1}+\gamma_{2}x_{t}+\rho \hat{e}_{t-1}+\nu_{t}
+\label{eq:bgtesteq9}
+\end{equation}\]</span>
+<p>The test statistic is <span class="math inline">\(T\times R^2\)</span>, where <span class="math inline">\(R^2\)</span> is the coefficient of determination resulted from estimating the auxiliary equation (Equation \ref{eq:bgtesteq9}). In <span class="math inline">\(R\)</span>, all these calculations can be done in one command, <code>bgtest()</code>, which is the <strong>Breusch-Godfrey</strong> test for autocorrelation function. This function can test for autocorrelation of higher orders, which requires including higher lags for <span class="math inline">\(\hat{e}\)</span> in the auxiliary equation.</p>
+<p>Let us do this test for the Phillips example. The next code sequence does the test first for only one lag and using an <span class="math inline">\(F\)</span>-statistic; then, for lags up to 4, using a <span class="math inline">\(\chi^{2}\)</span>-statistic. <span class="math inline">\(R\)</span> does this test by either eliminating the first observations that are necessary to calculate the lags (<code>fill=NA</code>), or by setting them equal to zero (<code>fill=0</code>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">bgtest</span>(phill.dyn, <span class="dt">order=</span><span class="dv">1</span>, <span class="dt">type=</span><span class="st">&quot;F&quot;</span>, <span class="dt">fill=</span><span class="dv">0</span>)
+b &lt;-<span class="st"> </span><span class="kw">bgtest</span>(phill.dyn, <span class="dt">order=</span><span class="dv">1</span>, <span class="dt">type=</span><span class="st">&quot;F&quot;</span>, <span class="dt">fill=</span><span class="ot">NA</span>)
+c &lt;-<span class="st"> </span><span class="kw">bgtest</span>(phill.dyn, <span class="dt">order=</span><span class="dv">4</span>, <span class="dt">type=</span><span class="st">&quot;Chisq&quot;</span>, <span class="dt">fill=</span><span class="dv">0</span>)
+d &lt;-<span class="st"> </span><span class="kw">bgtest</span>(phill.dyn, <span class="dt">order=</span><span class="dv">4</span>, <span class="dt">type=</span><span class="st">&quot;Chisq&quot;</span>, <span class="dt">fill=</span><span class="ot">NA</span>)
+dfr &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">rbind</span>(a[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>)],
+                  b[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>)],
+                  c[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>)],
+                  d[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>)]
+                  ))
+dfr &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="kw">c</span>(<span class="st">&quot;1, F, 0&quot;</span>, 
+    <span class="st">&quot;1, F, NA&quot;</span>, <span class="st">&quot;4, Chisq, 0&quot;</span>, <span class="st">&quot;4, Chisq, NA&quot;</span>), dfr)
+<span class="kw">names</span>(dfr)&lt;-<span class="kw">c</span>(<span class="st">&quot;Method&quot;</span>, <span class="st">&quot;Statistic&quot;</span>, <span class="st">&quot;Parameters&quot;</span>, <span class="st">&quot;p-Value&quot;</span>)
+<span class="kw">kable</span>(dfr, <span class="dt">caption=</span><span class="st">&quot;Breusch-Godfrey test for the Phillips example&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:bgtestphill9">Table 9.6: </span>Breusch-Godfrey test for the Phillips example</caption>
+<thead>
+<tr class="header">
+<th align="left">Method</th>
+<th align="left">Statistic</th>
+<th align="left">Parameters</th>
+<th align="left">p-Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1, F, 0</td>
+<td align="left">38.4654</td>
+<td align="left">1, 87</td>
+<td align="left">1.82193e-08</td>
+</tr>
+<tr class="even">
+<td align="left">1, F, NA</td>
+<td align="left">38.6946</td>
+<td align="left">1, 86</td>
+<td align="left">1.73442e-08</td>
+</tr>
+<tr class="odd">
+<td align="left">4, Chisq, 0</td>
+<td align="left">36.6719</td>
+<td align="left">4</td>
+<td align="left">2.10457e-07</td>
+</tr>
+<tr class="even">
+<td align="left">4, Chisq, NA</td>
+<td align="left">33.5937</td>
+<td align="left">4</td>
+<td align="left">9.02736e-07</td>
+</tr>
+</tbody>
+</table>
+<p>All the four tests summarized in Table <a href="time-series-stationary-variables.html#tab:bgtestphill9">9.6</a> reject the null hypothesis of no autocorrelation. The above code sequence requires a bit of explanation. The first four lines do the BG test on the previously estimated Phillips model (<code>phill.dyn</code>), using various parametrs: <code>order</code> tells <span class="math inline">\(R\)</span> how many lags we want; <code>type</code> gives the test statistic to be used, either <span class="math inline">\(F\)</span> or <span class="math inline">\(\chi^{2}\)</span>; and, finally, <code>fill</code> tells <span class="math inline">\(R\)</span> whether to delete the first observations or replace them with <span class="math inline">\(e=0\)</span>. The first column in Table <a href="time-series-stationary-variables.html#tab:bgtestphill9">9.6</a> summarizes these options: number of lags, test statistic used, and how the missing observations are handeled.</p>
+<p>The remaining of the code sequence is just to create a clear and convenient way of presenting the results of the four tests. As always, to inspect the content of an object like <code>a</code> type and run the command <code>names(object)</code>.</p>
+<p>How many lags should be considered when performing the autocorrelation test? One suggestion would be to limit the test to the number of lags that the correlogram shows to exceed the confidence band.</p>
+<p><span class="math inline">\(R\)</span> can perform another autocorrelation test, <strong>Durbin-Watson</strong>, which is being used less and less today because of its limitations. However, it may be considered when the sample is small. The following command can be used to perform this test:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dwtest</span>(phill.dyn)</code></pre></div>
+<pre><code>## 
+##  Durbin-Watson test
+## 
+## data:  phill.dyn
+## DW = 0.8873, p-value = 2.2e-09
+## alternative hypothesis: true autocorrelation is greater than 0</code></pre>
+</div>
+<div id="estimation-with-serially-correlated-errors" class="section level2">
+<h2><span class="header-section-number">9.4</span> Estimation with Serially Correlated Errors</h2>
+<p>Similar to the case of heteroskedasticity, autocorrelation in the errors does not produce biased estimates of the coefficients in linear regression, but it produces incorrect standard errors. The similarity with heteroskedasticity goes even further: with autocorrelation it is possible to calculate correct (<strong>heteroskedasticity and autocorrelation consistent, HAC</strong>) standard errors, known as <strong>Newey-West</strong> standard errors.</p>
+<p>There are several functions in <span class="math inline">\(R\)</span> that compute HAC standard errors, of which I choose three, all available in the package <code>sandwich</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sandwich)
+s0 &lt;-<span class="st"> </span><span class="kw">coeftest</span>(phill.dyn)
+s1 &lt;-<span class="st"> </span><span class="kw">coeftest</span>(phill.dyn, <span class="dt">vcov.=</span><span class="kw">vcovHAC</span>(phill.dyn))
+s2 &lt;-<span class="st"> </span><span class="kw">coeftest</span>(phill.dyn, <span class="dt">vcov.=</span><span class="kw">NeweyWest</span>(phill.dyn))
+s3 &lt;-<span class="st"> </span><span class="kw">coeftest</span>(phill.dyn, <span class="dt">vcov.=</span><span class="kw">kernHAC</span>(phill.dyn))
+tbl &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">cbind</span>(s0[<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)],s1[<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)], 
+                        s2[<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)],s3[<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)]))
+<span class="kw">names</span>(tbl) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Incorrect&quot;</span>,<span class="st">&quot;vcovHAC&quot;</span>, <span class="st">&quot;NeweyWest&quot;</span>, <span class="st">&quot;kernHAC&quot;</span>)
+<span class="kw">row.names</span>(tbl) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;(Intercept&quot;</span>, <span class="st">&quot;Du&quot;</span>)
+<span class="kw">kable</span>(tbl, <span class="dt">digits=</span><span class="dv">3</span>,
+<span class="dt">caption=</span><span class="st">&quot;Comparing standard errors for the Phillips model&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:HACversions9">Table 9.7: </span>Comparing standard errors for the Phillips model</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">Incorrect</th>
+<th align="right">vcovHAC</th>
+<th align="right">NeweyWest</th>
+<th align="right">kernHAC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>(Intercept</td>
+<td align="right">0.066</td>
+<td align="right">0.095</td>
+<td align="right">0.128</td>
+<td align="right">0.131</td>
+</tr>
+<tr class="even">
+<td>Du</td>
+<td align="right">0.229</td>
+<td align="right">0.304</td>
+<td align="right">0.331</td>
+<td align="right">0.335</td>
+</tr>
+</tbody>
+</table>
+<p>Table <a href="time-series-stationary-variables.html#tab:HACversions9">9.7</a> compares three versions of HAC standard errors for the Phillips equation plus the incorrect ones from the initial equation. The differences come from different choices for the methods of calculating them.</p>
+<p>Correcting the standard errors in a model with autocorrelated errors does not make the estimator of the coefficients a minimum-variance one. Therefore, we would like to find better estimators, as we did in the case of heteroskedasticity. Let us look at models with a particular structure of the error term , a structure called <strong>first-order autoregressive process</strong>, or <strong>AR(1)model</strong>, described in Equation \ref{eq:ar1def9}. The variable in this process is assumed to have zero mean and constant variance, <span class="math inline">\(\sigma_{\nu}^2\)</span>, and the errors <span class="math inline">\(\nu_{t}\)</span> should not be autocorrelated. In addition, the <strong>autocorrelation coefficient</strong>, <span class="math inline">\(\rho\)</span>, should take values in the interval <span class="math inline">\((-1, 1)\)</span>. It can be shown that <span class="math inline">\(\rho=corr(e_{t}, e_{t-1})\)</span>.</p>
+<span class="math display">\[\begin{equation}
+e_{t}=\rho e_{t-1}+\nu _{t}
+\label{eq:ar1def9}
+\end{equation}\]</span>
+<p>The following code lines calculate and display the correlation coefficients for the first five lags in the residuals of the Phillips equation (Equation \ref{eq:philleq9}). Please notice that the autocorrelations tend to become smaller and smaller for distant lags, but they still remain higher than Equation \ref{eq:ar1def9} implies.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ehat &lt;-<span class="st"> </span><span class="kw">resid</span>(phill.dyn)
+ac &lt;-<span class="st"> </span><span class="kw">acf</span>(ehat, <span class="dt">plot=</span><span class="ot">FALSE</span>)
+<span class="co"># The Phillips equation: five lag correlations in residuals</span>
+ac$acf[<span class="dv">2</span>:<span class="dv">6</span>]</code></pre></div>
+<pre><code>## [1] 0.548659 0.455732 0.433216 0.420494 0.339034</code></pre>
+<p>The correlation coefficient for the first lag is an estimate of the coefficient <span class="math inline">\(\rho\)</span> in the <span class="math inline">\(AR(1)\)</span> process defined in Equation \ref{eq:ar1def9}, <span class="math inline">\(\;\hat\rho_{1}=\hat\rho=r_{1}=0.549\)</span></p>
+</div>
+<div id="nonlinear-least-squares-estimation" class="section level2">
+<h2><span class="header-section-number">9.5</span> Nonlinear Least Squares Estimation</h2>
+<p>The simple linear regression model in Equation \ref{eq:bgeqinit9} with AR(1) errors defined in Equation \ref{eq:errstr9} can be transformed into a model having uncorrelated errors, as Equation \ref{eq:nonlin9} shows.</p>
+<span class="math display">\[\begin{equation}
+y_{t}=\beta_{1}(1-\rho)+\beta_{2}x_{t}+\rho y_{t-1}-\rho \beta_{2}x_{t-1}+\nu_{t}
+\label{eq:nonlin9}
+\end{equation}\]</span>
+<p>Equation \ref{eq:nonlin9} is nonlinear in the coefficients, and therefore it needs special methods of estimation. Applying the same transformations to the Phillips model given in Equation \ref{eq:philleq9}, we obtain its nonlinear version, Equation \ref{eq:phillnonlin9}.</p>
+<span class="math display">\[\begin{equation}
+inf_{t}=\beta_{1}(1-\rho)+\beta_{2}Du_{t}+\rho inf_{t-1}-\rho \beta_{2}Du_{t-1}+\nu_{t}
+\label{eq:phillnonlin9}
+\end{equation}\]</span>
+<p>The next code line estimates the non-linear model in Equation \ref{eq:phillnonlin9} using the <code>nls()</code> function, which requires the data under a data frame form. The first few lines of code create a separate variables for <code>inf</code> and <code>u</code> and their lags, then brings all of them together in a data frame. The main arguments of the <code>nls</code> function are the following: <code>formula</code>, a nonlinear function of the regression parameters, <code>data=</code> a data frame, and `start=list(initial guess values of the parameters), and others.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dynlm)
+phill.dyn &lt;-<span class="st"> </span><span class="kw">dynlm</span>(inf~<span class="kw">diff</span>(u), <span class="dt">data=</span>phill.ts)
+<span class="co"># Non-linear AR(1) model with &#39;Cochrane-Orcutt method&#39;nls&#39;</span>
+
+phill.ts.tab &lt;-<span class="st"> </span><span class="kw">cbind</span>(phill.ts[,<span class="st">&quot;inf&quot;</span>],
+                      phill.ts[,<span class="st">&quot;u&quot;</span>],
+                      <span class="kw">lag</span>(phill.ts[,<span class="st">&quot;inf&quot;</span>], -<span class="dv">1</span>), 
+                      <span class="kw">diff</span>(phill.ts[,<span class="st">&quot;u&quot;</span>], <span class="dt">lag=</span><span class="dv">1</span>),
+                      <span class="kw">lag</span>(<span class="kw">diff</span>(phill.ts[,<span class="dv">2</span>],<span class="dt">lag=</span><span class="dv">1</span>), -<span class="dv">1</span>)
+                      )
+phill.dfr &lt;-<span class="st"> </span><span class="kw">data.frame</span>(phill.ts.tab)
+<span class="kw">names</span>(phill.dfr) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;inf&quot;</span>, <span class="st">&quot;u&quot;</span>, <span class="st">&quot;Linf&quot;</span>, <span class="st">&quot;Du&quot;</span>, <span class="st">&quot;LDu&quot;</span>)
+phill.nls &lt;-<span class="st"> </span><span class="kw">nls</span>(inf~b1*(<span class="dv">1</span>-rho)+b2*Du+rho*Linf-
+<span class="st">                 </span>rho*b2*LDu,
+                 <span class="dt">data=</span>phill.dfr,
+                 <span class="dt">start=</span><span class="kw">list</span>(<span class="dt">rho=</span><span class="fl">0.5</span>, <span class="dt">b1=</span><span class="fl">0.5</span>, <span class="dt">b2=</span>-<span class="fl">0.5</span>))
+s1 <span class="co"># This is `phill.dyn` with HAC errors:</span></code></pre></div>
+<pre><code>## 
+## t test of coefficients:
+## 
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.77762    0.09485   8.198 1.82e-12 ***
+## diff(u)     -0.52786    0.30444  -1.734   0.0864 .  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">phill.dyn <span class="co"># The simple linear model:</span></code></pre></div>
+<pre><code>## 
+## Time series regression with &quot;ts&quot; data:
+## Start = 1987(2), End = 2009(3)
+## 
+## Call:
+## dynlm(formula = inf ~ diff(u), data = phill.ts)
+## 
+## Coefficients:
+## (Intercept)      diff(u)  
+##       0.778       -0.528</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">phill.nls <span class="co"># The &#39;nls&#39; model:</span></code></pre></div>
+<pre><code>## Nonlinear regression model
+##   model: inf ~ b1 * (1 - rho) + b2 * Du + rho * Linf - rho * b2 * LDu
+##    data: phill.dfr
+##    rho     b1     b2 
+##  0.557  0.761 -0.694 
+##  residual sum-of-squares: 23.2
+## 
+## Number of iterations to convergence: 3 
+## Achieved convergence tolerance: 8.06e-06</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(phill.nls)[[<span class="st">&quot;rho&quot;</span>]]</code></pre></div>
+<pre><code>## [1] 0.557398</code></pre>
+<p>Comparing the nonlinear model with the two linear models (with, and without HAC standard errors) shows differences in both coefficients and standard errors. This is an indication that nonlinear estimation is a better choice than HAC standard errors. Please note that the NLS model provides an estimate of the autocorrelation coefficient, <span class="math inline">\(\rho=0.557\)</span>.</p>
+</div>
+<div id="a-more-general-model" class="section level2">
+<h2><span class="header-section-number">9.6</span> A More General Model</h2>
+<p>Equation \ref{eq:ardl9} gives an <strong>autoregresive distributed lag</strong> model, which is a generalization of the model presented in Equation \ref{eq:nonlin9}. The two models are equivalent under the restriction <span class="math inline">\(\delta_{1}=-\theta_{1}\delta_{0}\)</span>.</p>
+<span class="math display">\[\begin{equation}
+y_{t}=\delta+\theta_{1}y_{t-1}+\delta_{0}x_{t}+\delta_{1}x_{t-1}+\nu_{t}
+\label{eq:ardl9}
+\end{equation}\]</span>
+<p>Equation \ref{eq:ardlphill9} is the Phillips version of the ARDL model given by Equation \ref{eq:ardl9}.</p>
+<span class="math display">\[\begin{equation}
+inf_{t}=\delta+\theta_{1}inf_{t-1}+\delta_{0}Du_{t}+\delta_{1}Du_{t-1}+\nu_{t}
+\label{eq:ardlphill9}
+\end{equation}\]</span>
+<p>A Wald test can be used to decide if the two models, the nonlinear one and the more general one are equivalent.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s.nls &lt;-<span class="st"> </span><span class="kw">summary</span>(phill.nls)
+phill.gen &lt;-<span class="st"> </span><span class="kw">dynlm</span>(inf~<span class="kw">L</span>(inf)+<span class="kw">d</span>(u)+<span class="kw">L</span>(<span class="kw">d</span>(u)), 
+                   <span class="dt">data=</span>phill.ts)
+s.gen &lt;-<span class="st"> </span><span class="kw">summary</span>(phill.gen)
+nlW &lt;-<span class="st"> </span><span class="kw">nlWaldtest</span>(phill.gen, <span class="dt">texts=</span><span class="st">&quot;b[4]=-b[2]*b[3]&quot;</span>)</code></pre></div>
+<p>The <span class="math inline">\(R\)</span> function performing the Wald test is <code>nlWaldtest</code> in package <code>nlWaldTest</code>, which can test nonlinear restrictions. The result in our case is a <span class="math inline">\(\chi^2\)</span> value of <span class="math inline">\(0.11227\)</span>, with <span class="math inline">\(p\)</span>-value of <span class="math inline">\(0.737574\)</span>, which does not reject the null hypothesis that the restriction <span class="math inline">\(\delta_{1}=-\theta_{1}\delta_{0}\)</span> cannot be rejected, making, in turn, Equations \ref{eq:phillnonlin9} and \ref{eq:ardlphill9} equivalent.</p>
+<p>The code lines above use the <code>L</code> and <code>d</code> from package <code>dynlm</code> for constructing lags and differences in time series. Unlike the similar functions that we have previously used (<code>lag</code> and <code>diff</code>), these do not work outside the command <code>dynlm</code>. Please note that constructing lags with <code>lag()</code> requires specifying the negative sign of the lag, which is not necessary for the <code>L()</code> function..</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">phill1.gen &lt;-<span class="st"> </span><span class="kw">dynlm</span>(inf~<span class="kw">lag</span>(inf, -<span class="dv">1</span>)+<span class="kw">diff</span>(u)+<span class="kw">lag</span>(<span class="kw">diff</span>(u), -<span class="dv">1</span>), <span class="dt">data=</span>phill.ts)</code></pre></div>
+<p>The results can be compared in Tables <a href="time-series-stationary-variables.html#tab:Landd9">9.8</a> and <a href="time-series-stationary-variables.html#tab:lagdiff9">9.9</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kable</span>(<span class="kw">tidy</span>(phill.gen), 
+  <span class="dt">caption=</span><span class="st">&quot;Using dynlm with L and d operators&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:Landd9">Table 9.8: </span>Using dynlm with L and d operators</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">0.333633</td>
+<td align="right">0.089903</td>
+<td align="right">3.71104</td>
+<td align="right">0.000368</td>
+</tr>
+<tr class="even">
+<td align="left">L(inf)</td>
+<td align="right">0.559268</td>
+<td align="right">0.090796</td>
+<td align="right">6.15959</td>
+<td align="right">0.000000</td>
+</tr>
+<tr class="odd">
+<td align="left">d(u)</td>
+<td align="right">-0.688185</td>
+<td align="right">0.249870</td>
+<td align="right">-2.75417</td>
+<td align="right">0.007195</td>
+</tr>
+<tr class="even">
+<td align="left">L(d(u))</td>
+<td align="right">0.319953</td>
+<td align="right">0.257504</td>
+<td align="right">1.24252</td>
+<td align="right">0.217464</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kable</span>(<span class="kw">tidy</span>(phill1.gen), 
+  <span class="dt">caption=</span><span class="st">&quot;Using dynlm with lag and diff operators&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:lagdiff9">Table 9.9: </span>Using dynlm with lag and diff operators</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">0.333633</td>
+<td align="right">0.089903</td>
+<td align="right">3.71104</td>
+<td align="right">0.000368</td>
+</tr>
+<tr class="even">
+<td align="left">lag(inf, -1)</td>
+<td align="right">0.559268</td>
+<td align="right">0.090796</td>
+<td align="right">6.15959</td>
+<td align="right">0.000000</td>
+</tr>
+<tr class="odd">
+<td align="left">diff(u)</td>
+<td align="right">-0.688185</td>
+<td align="right">0.249870</td>
+<td align="right">-2.75417</td>
+<td align="right">0.007195</td>
+</tr>
+<tr class="even">
+<td align="left">lag(diff(u), -1)</td>
+<td align="right">0.319953</td>
+<td align="right">0.257504</td>
+<td align="right">1.24252</td>
+<td align="right">0.217464</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="autoregressive-models" class="section level2">
+<h2><span class="header-section-number">9.7</span> Autoregressive Models</h2>
+<p>An autoregressive model of order <span class="math inline">\(p\)</span>, <span class="math inline">\(AR(p)\)</span> (Equation \ref{eq:autoregressivegen9}) is a model with <span class="math inline">\(p\)</span> lags of the response acting as independent variables and no other regressors.</p>
+<span class="math display">\[\begin{equation}
+y_{t}=\delta+\theta_{1}y_{t-1}+\theta_{2}y_{t-2}+...+\theta_{p}y_{t-p}+\nu_{t}
+\label{eq:autoregressivegen9}
+\end{equation}\]</span>
+<p>The next code sequence and Table <a href="time-series-stationary-variables.html#tab:okunautoreg2ch9">9.10</a> show an autoregressive model of order 2 using the series <span class="math inline">\(g\)</span> in the data file <span class="math inline">\(okun\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(okun)
+okun.ts &lt;-<span class="st"> </span><span class="kw">ts</span>(okun)
+okun.ar2 &lt;-<span class="st"> </span><span class="kw">dynlm</span>(g~<span class="kw">L</span>(g)+<span class="kw">L</span>(g,<span class="dv">2</span>), <span class="dt">data=</span>okun.ts)
+<span class="kw">kable</span>(<span class="kw">tidy</span>(okun.ar2), <span class="dt">digits=</span><span class="dv">4</span>,
+<span class="dt">caption=</span><span class="st">&quot;Autoregressive model of order 2 using the dataset $okun$&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:okunautoreg2ch9">Table 9.10: </span>Autoregressive model of order 2 using the dataset <span class="math inline">\(okun\)</span></caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">0.4657</td>
+<td align="right">0.1433</td>
+<td align="right">3.2510</td>
+<td align="right">0.0016</td>
+</tr>
+<tr class="even">
+<td align="left">L(g)</td>
+<td align="right">0.3770</td>
+<td align="right">0.1000</td>
+<td align="right">3.7692</td>
+<td align="right">0.0003</td>
+</tr>
+<tr class="odd">
+<td align="left">L(g, 2)</td>
+<td align="right">0.2462</td>
+<td align="right">0.1029</td>
+<td align="right">2.3937</td>
+<td align="right">0.0187</td>
+</tr>
+</tbody>
+</table>
+<p>How can we decide how many lags to include in an autoregressive model? One way is to look at the correlogram of the series and include the lags that show autocorrelation. The follwing code creates the correlogram in the AR(2) residuals of the US GDP series. The correlogram in Figure <a href="time-series-stationary-variables.html#fig:acfokun9">9.7</a> shows that basically only the first two lags may be included.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res.ar2 &lt;-<span class="st"> </span><span class="kw">resid</span>(okun.ar2)
+<span class="kw">Acf</span>(res.ar2, <span class="dt">lag.max=</span><span class="dv">12</span>) <span class="co"># New: Acf() from package forecast</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:acfokun9"></span>
+<img src="Figs/acfokun9-1.png" alt="Residual correlogram for US GDP AR(2) model" width="80%" />
+<p class="caption">
+Figure 9.7: Residual correlogram for US GDP AR(2) model
+</p>
+</div>
+<p>Another way of choosing the specification of an autoregressive model is to compare models of several orders and choose the one that provides the lowest AIC or BIC value.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">aics &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>,<span class="dv">5</span>)
+bics &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>,<span class="dv">5</span>)
+y &lt;-<span class="st"> </span>okun.ts[,<span class="st">&quot;g&quot;</span>]
+for (i in <span class="dv">1</span>:<span class="dv">5</span>){
+  ari &lt;-<span class="st"> </span><span class="kw">dynlm</span>(y~<span class="kw">L</span>(y,<span class="dv">1</span>:i), <span class="dt">start=</span>i)
+  aics[i] &lt;-<span class="st"> </span><span class="kw">AIC</span>(ari)
+  bics[i] &lt;-<span class="st"> </span><span class="kw">BIC</span>(ari)
+}
+tbl &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">rbind</span>(aics, bics))
+<span class="kw">names</span>(tbl) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;1&quot;</span>,<span class="st">&quot;2&quot;</span>,<span class="st">&quot;3&quot;</span>,<span class="st">&quot;4&quot;</span>,<span class="st">&quot;5&quot;</span>)
+<span class="kw">row.names</span>(tbl) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;AIC&quot;</span>,<span class="st">&quot;BIC&quot;</span>)
+<span class="kw">kable</span>(tbl, <span class="dt">digits=</span><span class="dv">1</span>, <span class="dt">align=</span><span class="st">&#39;c&#39;</span>,
+      <span class="dt">caption=</span><span class="st">&quot;Lag order selection for an AR model&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:ARmodelselection9">Table 9.11: </span>Lag order selection for an AR model</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+<th align="center">4</th>
+<th align="center">5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>AIC</td>
+<td align="center">169.4</td>
+<td align="center">163.5</td>
+<td align="center">163.1</td>
+<td align="center">161.6</td>
+<td align="center">162.5</td>
+</tr>
+<tr class="even">
+<td>BIC</td>
+<td align="center">177.1</td>
+<td align="center">173.8</td>
+<td align="center">175.9</td>
+<td align="center">176.9</td>
+<td align="center">180.3</td>
+</tr>
+</tbody>
+</table>
+<p>Table <a href="time-series-stationary-variables.html#tab:ARmodelselection9">9.11</a> displays the AIC and BIC (or SC) values for autoregressive models on the US GDP in dataset <span class="math inline">\(okun\)</span> with number of lags from <span class="math inline">\(1\)</span> to <span class="math inline">\(5\)</span>. (As mentioned before, the numbers do not coincide with those in PoE, but the ranking does.) The lowest AIC value indicates that the optimal model should include four lags, while the BIC values indicate the model with only two lags as the winner. Other criteria may be taken into account in such a situation, for instance the correlogram, which agrees with the BIC’s choice of model.</p>
+<p>The previous code fragment needs some explanation. The first two lines initialize the vectors that are going to hold the AIC and BIC results. The problem of automatically changing the number of regressors is addressed by using the convenient function <code>L(y, 1:i)</code>. <code>AIC()</code> and <code>BIC()</code> are basic <span class="math inline">\(R\)</span> functions.</p>
+</div>
+<div id="forecasting" class="section level2">
+<h2><span class="header-section-number">9.8</span> Forecasting</h2>
+<p>Let us consider first an autoregressive (AR) model, exemplified by the US GDP growth with two lags specified in Equation \ref{eq:gartwo9}.</p>
+<span class="math display">\[\begin{equation}
+g_{t}=\delta+\theta_{1}g_{t-1}+\theta_{2}g_{t-2}+\nu_{t}
+\label{eq:gartwo9}
+\end{equation}\]</span>
+<p>Once the coefficients of this model are estimated, they can be used to predict (forecast) out-of-sample, future values of the response variable. Let us do this for periods <span class="math inline">\(T+1\)</span>, <span class="math inline">\(T+2\)</span>, and <span class="math inline">\(T+3\)</span>, where <span class="math inline">\(T\)</span> is the last period in the sample. Equation \ref{eq:ar2forecast9} gives the forecast for period <span class="math inline">\(s\)</span> into the future.</p>
+<span class="math display">\[\begin{equation}
+g_{T+s}=\delta+\theta_{1}g_{T+s-1}+\theta_{2}g_{T+s-2}+\nu_{T+s}
+\label{eq:ar2forecast9}
+\end{equation}\]</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span>okun.ts[,<span class="st">&quot;g&quot;</span>]
+g.ar2 &lt;-<span class="st"> </span><span class="kw">dynlm</span>(y~<span class="kw">L</span>(y, <span class="dv">1</span>:<span class="dv">2</span>))
+<span class="kw">kable</span>(<span class="kw">tidy</span>(g.ar2), <span class="dt">caption=</span><span class="st">&quot;The AR(2) growth model&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:ar2gforecast9">Table 9.12: </span>The AR(2) growth model</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">0.465726</td>
+<td align="right">0.143258</td>
+<td align="right">3.25097</td>
+<td align="right">0.001602</td>
+</tr>
+<tr class="even">
+<td align="left">L(y, 1:2)1</td>
+<td align="right">0.377001</td>
+<td align="right">0.100021</td>
+<td align="right">3.76923</td>
+<td align="right">0.000287</td>
+</tr>
+<tr class="odd">
+<td align="left">L(y, 1:2)2</td>
+<td align="right">0.246239</td>
+<td align="right">0.102869</td>
+<td align="right">2.39372</td>
+<td align="right">0.018686</td>
+</tr>
+</tbody>
+</table>
+<p>Table <a href="time-series-stationary-variables.html#tab:ar2gforecast9">9.12</a> shows the results of the AR(2) model. <span class="math inline">\(R\)</span> uses the function <code>forecast()</code> in package <code>forecast</code> to automatically calculate forecasts based on autoregressive or other time series models. One such model is <code>ar()</code>, which fits an autoregressive model to a univariate time series. The arguments of <code>ar()</code> include: <code>x=</code> the name of the time series, <code>aic=</code>TRUE, if we want automatic selection of the number of lags based on the AIC information criterion; otherwise, <code>aic=</code>FALSE; <code>order.max=</code> the maximum lag order in the autoregressive model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ar2g &lt;-<span class="st"> </span><span class="kw">ar</span>(y, <span class="dt">aic=</span><span class="ot">FALSE</span>, <span class="dt">order.max=</span><span class="dv">2</span>, <span class="dt">method=</span><span class="st">&quot;ols&quot;</span>)
+fcst &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">forecast</span>(ar2g, <span class="dv">3</span>))
+<span class="kw">kable</span>(fcst, <span class="dt">digits=</span><span class="dv">3</span>, 
+<span class="dt">caption=</span><span class="st">&quot;Forcasts for the AR(2) growth model&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:usingforecast9">Table 9.13: </span>Forcasts for the AR(2) growth model</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">Point.Forecast</th>
+<th align="right">Lo.80</th>
+<th align="right">Hi.80</th>
+<th align="right">Lo.95</th>
+<th align="right">Hi.95</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>99</td>
+<td align="right">0.718</td>
+<td align="right">0.021</td>
+<td align="right">1.415</td>
+<td align="right">-0.348</td>
+<td align="right">1.784</td>
+</tr>
+<tr class="even">
+<td>100</td>
+<td align="right">0.933</td>
+<td align="right">0.188</td>
+<td align="right">1.678</td>
+<td align="right">-0.206</td>
+<td align="right">2.073</td>
+</tr>
+<tr class="odd">
+<td>101</td>
+<td align="right">0.994</td>
+<td align="right">0.202</td>
+<td align="right">1.787</td>
+<td align="right">-0.218</td>
+<td align="right">2.207</td>
+</tr>
+</tbody>
+</table>
+<p>Table <a href="time-series-stationary-variables.html#tab:usingforecast9">9.13</a> shows the forecasted values for three future periods based on the AR(2) growth model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">forecast</span>(ar2g,<span class="dv">3</span>))</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:plotfcstar9"></span>
+<img src="Figs/plotfcstar9-1.png" alt="Forcasts and confidence intervals for three future periods" width="80%" />
+<p class="caption">
+Figure 9.8: Forcasts and confidence intervals for three future periods
+</p>
+</div>
+<p>Figure <a href="time-series-stationary-variables.html#fig:plotfcstar9">9.8</a> illustrates the forecasts produced by the AR(2) model of US GDP and their interval estimates.</p>
+<p>Using more information under the form of additional regressors can improve the accuracy of forecasting. We have already studied ARDL models; let us use such a model to forecast the rate of unemployment based on past unemployment and GDP growth data. The dataset is still <span class="math inline">\(okun\)</span>, and the model is an ARDL(1,1) as the one in Equation \ref{eq:ardlfcst9}.</p>
+<span class="math display">\[\begin{equation}
+Du_{t}=\delta+\theta_{1}Du_{t-1}+\delta_{0}g_{t}+\delta_{1}g_{t-1}+\nu_{t}
+\label{eq:ardlfcst9}
+\end{equation}\]</span>
+<p>Since we are interested in forecasting <em>levels</em> of unemployment, not differences, we want to transform the ARDL(1,1) model in Equation \ref{eq:ardlfcst9} into the ARDL(2,1) one in Equation \ref{eq:ardllevelfcst9}.</p>
+<span class="math display">\[\begin{equation}
+u_{T+1}=\delta+\theta_{1}^*u_{T}+\theta_{2}^*u_{T-1} +\delta_{0} g_{T+1}+\delta_{1}g_{T}+\nu_{T+1}
+\label{eq:ardllevelfcst9}
+\end{equation}\]</span>
+<p>Another forecasting model is the <strong>exponential smoothing</strong> one, which, like the AR model, uses only the variable to be forecasted. In addition, the exponential smoothing model requires a weighting parameter, <span class="math inline">\(\alpha\)</span>, and an initial level of the forecasted variable, <span class="math inline">\(\hat y\)</span>. Next period’s forecast is a weighted average of this period’s level and this period’s forecast, as indicated in Equation \ref{eq:expsmoothing9}.</p>
+<span class="math display">\[\begin{equation}
+\hat{y}_{T+1}=\alpha y_{T}+(1-\alpha)\hat{y}_{T}
+\label{eq:expsmoothing9}
+\end{equation}\]</span>
+<p>There are sevaral ways to compute an exponential smoothing forecast in <span class="math inline">\(R\)</span>. I only use two here, for comparison. The first is the function <code>ets()</code> in the <code>forecast</code> package.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span>okun.ts[,<span class="st">&quot;g&quot;</span>]
+okun.ets &lt;-<span class="st"> </span><span class="kw">ets</span>(y)
+okunf.ets &lt;-<span class="st"> </span><span class="kw">forecast</span>(okun.ets,<span class="dv">1</span>) <span class="co">#one-period forecast</span>
+<span class="kw">plot</span>(okunf.ets)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:ets9"></span>
+<img src="Figs/ets9-1.png" alt="Exponential smoothing forecast using 'ets'" width="80%" />
+<p class="caption">
+Figure 9.9: Exponential smoothing forecast using ‘ets’
+</p>
+</div>
+<p>The results include the computed value of the weight, <span class="math inline">\(\alpha=0.381\)</span>, the point estimate of the growth rate <span class="math inline">\(g_{T+1}=0.054\)</span>, and the 95 percent interval estimate <span class="math inline">\((-1.051, 1.158)\)</span>. Figure <a href="time-series-stationary-variables.html#fig:ets9">9.9</a> illustrates these results.</p>
+<p>The second method uses the function <code>HoltWinters</code> and is shown in the following code fragment.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">okun.HW &lt;-<span class="st"> </span><span class="kw">HoltWinters</span>(y, <span class="dt">beta=</span><span class="ot">FALSE</span>, <span class="dt">gamma=</span><span class="ot">FALSE</span>)
+<span class="kw">plot</span>(okun.HW)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:HW9"></span>
+<img src="Figs/HW9-1.png" alt="Exponential smoothing forecast using 'HoltWinters'" width="80%" />
+<p class="caption">
+Figure 9.10: Exponential smoothing forecast using ‘HoltWinters’
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">okunf.HW &lt;-<span class="st"> </span><span class="kw">forecast</span>(okun.HW,<span class="dv">1</span>)</code></pre></div>
+<p>Similar to the <code>ets</code> function, <code>HoltWinters</code> automatically determines the optimal weight <span class="math inline">\(\alpha\)</span> of the exponential smoothing model. In our case, the value is <span class="math inline">\(\alpha = 0.381\)</span>. The point estimate is <span class="math inline">\(g_{T+1}=0.054\)</span>, and the 95 percent interval estimate is <span class="math inline">\((-1.06,1.168)\)</span>. Figure <a href="time-series-stationary-variables.html#fig:HW9">9.10</a> compares the forecasted with the actual series.</p>
+</div>
+<div id="multiplier-analysis" class="section level2">
+<h2><span class="header-section-number">9.9</span> Multiplier Analysis</h2>
+<p>In an <span class="math inline">\(ARDL(p,q)\)</span> model, if one variable changes at some period it affects the response over several subsequent periods. Multiplier analysis quantifies these time effects. Let me remind you the form of the <span class="math inline">\(ARDL(p,q)\)</span> model in Equation \ref{eq:ardlpqgen9}.</p>
+<span class="math display">\[\begin{equation}
+y_{t}=\delta +\theta_{1}y_{t-1}+...+\theta_{p} y_{t-p}+\delta_{0}x_{t}+ \delta_{1}x_{t-1}+...+\delta_{q}x_{t-q}+\nu_{t}
+\label{eq:ardlpqgen9}
+\end{equation}\]</span>
+<p>The model in Equation \ref{eq:ardlpqgen9} can be transformed by iterative substitution in an infinite distributed lag model, which includes only explanatory variables with no lags of the response. The transformed model is shown in Equation \ref{eq:infdlmodel9}.</p>
+<span class="math display">\[\begin{equation}
+y_{t}=\alpha+\beta_{0}x_{t}+\beta_{1}x_{t-1}+\beta_{2}x_{t-2}+\beta_{3}x_{t-3}+...+e_{t}
+\label{eq:infdlmodel9}
+\end{equation}\]</span>
+<p>Coefficient <span class="math inline">\(\beta_{s}\)</span> in Equation \ref{eq:infdlmodel9} is called the <em>s-period delay multiplier</em>; the sum of the <span class="math inline">\(\beta\)</span>s from today to period <span class="math inline">\(s\)</span> in the past is called <em>interim multiplier</em>, and the sum of all periods to infinity is called <em>total multiplier</em>.</p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-R-dynlm">
+<p>Zeileis, Achim. 2016. <em>Dynlm: Dynamic Linear Regression</em>. <a href="https://CRAN.R-project.org/package=dynlm" class="uri">https://CRAN.R-project.org/package=dynlm</a>.</p>
+</div>
+<div id="ref-R-orcutt">
+<p>Spada, Stefano, Matteo Quartagno, and Marco Tamburini. 2012. <em>Orcutt: Estimate Procedure in Case of First Order Autocorrelation</em>. <a href="https://CRAN.R-project.org/package=orcutt" class="uri">https://CRAN.R-project.org/package=orcutt</a>.</p>
+</div>
+<div id="ref-R-nlWaldTest">
+<p>Komashko, Oleh. 2016. <em>NlWaldTest: Wald Test of Nonlinear Restrictions and Nonlinear Ci</em>. <a href="https://CRAN.R-project.org/package=nlWaldTest" class="uri">https://CRAN.R-project.org/package=nlWaldTest</a>.</p>
+</div>
+<div id="ref-R-pdfetch">
+<p>Reinhart, Abiel. 2015. <em>Pdfetch: Fetch Economic and Financial Time Series Data from Public Sources</em>. <a href="https://CRAN.R-project.org/package=pdfetch" class="uri">https://CRAN.R-project.org/package=pdfetch</a>.</p>
+</div>
+<div id="ref-R-forecast">
+<p>Hyndman, Rob. 2016. <em>Forecast: Forecasting Functions for Time Series and Linear Models</em>. <a href="https://CRAN.R-project.org/package=forecast" class="uri">https://CRAN.R-project.org/package=forecast</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="heteroskedasticity.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="random-regressors.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/09-timeseries1.Rmd",
+"text": null
+},
+"download": ["RPoE.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

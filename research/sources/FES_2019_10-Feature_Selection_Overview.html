@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>10&nbsp; Feature Selection Overview – Feature Engineering and Selection: A Practical Approach for Predictive Models</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./11-Greedy_Search_Methods.html" rel="next">
+<link href="./09-Working_with_Profile_Data.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-2a05d61727bd6c73eef362f092025688.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script>
+<link href="site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-7T996NL20Z"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-7T996NL20Z', { 'anonymize_ip': true});
+</script><style type="text/css">
+    .ps-root .ps-algorithm {
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+    .pseudocode-container {
+      text-align: left;
+    }
+    </style>
+<style type="text/css">
+      .ps-algorithm > .ps-line {
+        text-align: left;
+      }
+      </style>
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+</head>
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10-Feature_Selection_Overview.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Feature Selection Overview</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./premade/logo.jpeg" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none"><img src="./premade/logo.jpeg" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none"></a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Feature Engineering and Selection: A Practical Approach for Predictive Models</a> 
+        <div class="sidebar-tools-main">
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+<li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+</div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-Illustrative_Example_Predicting_Risk_of_Ischemic_Stroke.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Illustrative Example: Predicting Risk of Ischemic Stroke</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-Review_of_the_Modeling_Process.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">A Review of the Predictive Modeling Process</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-Exploratory_Visualizations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Exploratory Visualizations</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-Encoding_Categorical_Predictors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Encoding Categorical Predictors</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-Engineering_Numeric_Predictors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Engineering Numeric Predictors</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-Detecting_Interaction_Effects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Detecting Interaction Effects</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-Handling_Missing_Data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Handling Missing Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-Working_with_Profile_Data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Working with Profile Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-Feature_Selection_Overview.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Feature Selection Overview</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-Greedy_Search_Methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Greedy Search Methods</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-Global_Search.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Global Search Methods</span></span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#goals-of-feature-selection" id="toc-goals-of-feature-selection" class="nav-link active" data-scroll-target="#goals-of-feature-selection"><span class="header-section-number">10.1</span> Goals of Feature Selection</a></li>
+  <li><a href="#sec-classes-of-feature-selection-methodologies" id="toc-sec-classes-of-feature-selection-methodologies" class="nav-link" data-scroll-target="#sec-classes-of-feature-selection-methodologies"><span class="header-section-number">10.2</span> Classes of Feature Selection Methodologies</a></li>
+  <li><a href="#sec-feature-selection-simulation" id="toc-sec-feature-selection-simulation" class="nav-link" data-scroll-target="#sec-feature-selection-simulation"><span class="header-section-number">10.3</span> Effect of Irrelevant Features</a></li>
+  <li><a href="#sec-selection-overfitting" id="toc-sec-selection-overfitting" class="nav-link" data-scroll-target="#sec-selection-overfitting"><span class="header-section-number">10.4</span> Overfitting to Predictors and External Validation</a></li>
+  <li><a href="#a-case-study" id="toc-a-case-study" class="nav-link" data-scroll-target="#a-case-study"><span class="header-section-number">10.5</span> A Case Study</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">10.6</span> Next Steps</a></li>
+  <li><a href="#sec-selection-computing" id="toc-sec-selection-computing" class="nav-link" data-scroll-target="#sec-selection-computing"><span class="header-section-number">10.7</span> Computing</a></li>
+  <li><a href="#chapter-references" id="toc-chapter-references" class="nav-link" data-scroll-target="#chapter-references">Chapter References</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title"><span id="sec-selection" class="quarto-section-identifier"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Feature Selection Overview</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><p><a href="05-Encoding_Categorical_Predictors.html" class="quarto-xref"><span>Chapter 5</span></a> through <a href="09-Working_with_Profile_Data.html" class="quarto-xref"><span>Chapter 9</span></a> have provided tools for engineering features (or predictors) to put them in a form that enables models to better find the predictive signal relative to the outcome. Some of these techniques, like 1-1 transformations or dimensions reduction methods, lead to a new predictor set that has the as many or fewer predictors than the original data. Other transformations, like basis expansions, generate more features than the original data. The hope is that some of the newly engineered predictors capture a predictive relationship with the outcome. But some may not be relevant to the outcome. Moreover, many of the original predictors also may not contain predictive information. For a number of models, predictive performance is degraded as the number of uninformative predictors increases. Therefore, there is a genuine need to appropriately select predictors for modeling.</p>
+<p>The remaining chapters will focus on <em>supervised</em> feature selection where the choice of which predictors to retain is guided by their affect on the outcome. This chapter will provide an introduction to feature selection, the general nomenclature for these methods, and some notable pitfalls.</p>
+<section id="goals-of-feature-selection" class="level2" data-number="10.1"><h2 data-number="10.1" class="anchored" data-anchor-id="goals-of-feature-selection">
+<span class="header-section-number">10.1</span> Goals of Feature Selection</h2>
+<p>In practice, we often have found that collaborators desire to have a model that has the best predictive ability <em>and</em> is interpretable. But there is often a trade-off between predictive performance and interpretability, and it is generally not possible to maximize both at the same time <span class="citation" data-cites="shmueli2010explain">(<a href="#ref-shmueli2010explain" role="doc-biblioref">Shmueli 2010</a>)</span>. A misunderstanding of this trade-off leads to the belief that simply filtering out uninformative predictors will help elucidate which factors are influencing the outcome. Then an explanation can be constructed as to why the remaining predictors are related to the outcome. This rationale is problematic for several reasons. First, consider the case when the number of predictors is much greater than the number of samples. In this scenario, there are likely to be many mutually exclusive subsets of predictors that result in models of nearly equivalent predictive performance (e.g., local optima). To find the best global solution, i.e.&nbsp;the subset of predictors that has best performance, would require evaluating all possible predictor subsets and may be computationally infeasible. But even if it is possible to find the global optimum with the available data, the identified subset may not be the true global optimum (if one exists) due to the inherent noise in the available predictors and outcome.</p>
+<p>Many models are complex in the ways that they relate the predictors to the outcome. For such models it is nearly impossible to decipher the relationship between any individual predictor and the outcome. One approach that attempts to gain insight for an individual predictor in a complex model is to fix all other selected predictors to a single value, then observe the effect on the outcome by varying the predictor of interest. This approach, called a partial dependence plot, is overly simplistic and only provides a small sliver of insight on the predictor’s true impact.</p>
+<p>Here we would like to refocus the motivations for removing predictors from a model. The primary motivations should be to either mitigate a specific problem in the interplay between predictors and a model, or to reduce model complexity. For example:</p>
+<ul>
+<li><p>Some models, notably support vector machines and neural networks, are sensitive to irrelevant predictors. As will be shown below, superfluous predictors can lead to reduced predictive performance in some situations.</p></li>
+<li><p>Other models like linear or logistic regression are vulnerable to correlated predictors (see <a href="06-Engineering_Numeric_Predictors.html" class="quarto-xref"><span>Chapter 6</span></a>). Removing correlated predictors will reduce multicollinearity and thus enable these types of models to be fit.</p></li>
+<li><p>Even when a predictive model is <em>insensitive</em> to extra predictors, it makes good scientific sense to include the minimum possible set that provides acceptable results. In some cases, removing predictors can reduce the cost of acquiring data or improve the throughput of the software used to make predictions.</p></li>
+</ul>
+<p>The working premise here is that it is generally better to have fewer predictors in a model. For the remaining chapters, the goal of feature selection will be re-framed to</p>
+<blockquote class="blockquote">
+<p>Reduce the number of predictors as far as possible without compromising predictive performance.</p>
+</blockquote>
+<p>There are a variety of methods to reduce the predictor set. The next section provides an overview of the general classes of feature selection techniques.</p>
+</section><section id="sec-classes-of-feature-selection-methodologies" class="level2" data-number="10.2"><h2 data-number="10.2" class="anchored" data-anchor-id="sec-classes-of-feature-selection-methodologies">
+<span class="header-section-number">10.2</span> Classes of Feature Selection Methodologies</h2>
+<p>Feature selection mythologies fall into three general classes: intrinsic (or implicit) methods, filter methods, and wrapper methods. Intrinsic methods have feature selection naturally incorporated with the modeling process, whereas filter and wrapper methods work to marry feature selection approaches with modeling techniques. The most seamless and important of the three classes for reducing features are intrinsic methods. Some examples include:</p>
+<ul>
+<li><p>Tree- and rule-based models. These models search for the best predictor and split point such that the outcomes are more homogeneous within each new partition (recall <a href="05-Encoding_Categorical_Predictors.html#sec-categorical-trees" class="quarto-xref"><span>Section 5.7</span></a>). Therefore if a predictor is not used in any split, it is functionally independent of the prediction equation and has been excluded from the model. Ensembles of trees have the same property, although some algorithms, such as random forest, deliberately force splits on irrelevant predictors when constructing the tree. This results in the over-selection of predictors (as shown below).</p></li>
+<li><p>Multivariate adaptive regression spline (MARS) models. These models create new features of the data that involve one or two predictors at a time (<a href="06-Engineering_Numeric_Predictors.html#sec-numeric-basis-functions" class="quarto-xref"><span>Section 6.2.1</span></a>). The predictors are then added to a linear model in sequence. Like trees, if a predictor is not involved in at least one MARS feature, it is excluded from the model.</p></li>
+<li><p>Regularization models. The regularization approach penalizes or shrinks predictor coefficients to improve the model fit. The lasso (<a href="07-Detecting_Interaction_Effects.html#sec-complete-enumeration" class="quarto-xref"><span>Section 7.3</span></a>) uses a type of penalty that shrinks coefficients to absolute zero. This forces predictors to be excluded from the final model.</p></li>
+</ul>
+<p>The advantage of implicit feature selection methods is that they are relatively fast since the selection process is embedded within the model fitting process; no external feature selection tool is required. Also, implicit methods provide a direct connection between selecting features and the <em>objective function</em>. The objective function is the statistic that the model attempts to optimize (e.g., the likelihood in generalized linear models or the impurity in tree-based models). The direct link between selection and modeling objective makes it easier to make informed choices between feature sparsity and predictive performance.</p>
+<p>The main downside to intrinsic feature selection is that it is model-dependent. If the data are better fit by a non-intrinsic feature selection type of model, then predictive performance may be sub-optimal when all features are used. In addition, some intrinsic models (like single tree models) use a <em>greedy</em> approach to feature selection. Greedy approaches usually identify a narrow set of features that have sub-optimal predictive performance. A more detailed discussion of this problem appears later in this chapter.</p>
+<p>If a model does not have intrinsic feature selection, then some sort of search procedure is required to identify feature subsets that improve predictive performance. There are two general classes of techniques for this purpose: <em>filters</em> and <em>wrappers</em>.</p>
+<p>Filter methods conduct an initial supervised analysis of the predictors to determine which are important and then only provide these to the model. Here, the search is performed just once. The filter methods often consider each predictor separately although this is not a requirement. An example of filtering occurred in <a href="05-Encoding_Categorical_Predictors.html#sec-text-data" class="quarto-xref"><span>Section 5.6</span></a> where we considered a set of keywords derived from the OkCupid text fields. The relationship between the occurrence of the keyword and the outcome was assessed using an odds-ratio. The rationale to keep or exclude a word (i.e., the filtering rule) was based on statistical significance as well as the magnitude of the odds-ratio. The words that made it past the filter were then added to the logistic regression model. Since each keyword was considered separately, they are unlikely to be capturing independent trends in the data. For instance the words <code>programming</code> and <code>programmer</code> were both selected using the filtering criteria and represent nearly the same meaning with respect to the outcome</p>
+<p>Filters are simple and tend to be fast. In addition, they can be effective at capturing the large trends (i.e., individual predictor-outcome relationship) in the data. However, as just mentioned, they are prone to over-selecting predictors. In many cases, some measure of statistical significance is used to judge “importance” such as a raw or multiplicity adjusted p-value. In these cases, there may be a disconnect between the objective function for the filter method (e.g., significance) and what the model requires (predictive performance). In other words, a selection of predictors that meets a filtering criteria like statistical significance may not be a set that improves predictive performance<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Filters will be discussed in more detail in <a href="11-Greedy_Search_Methods.html" class="quarto-xref"><span>Chapter 11</span></a>.</p>
+<p>Wrapper methods use iterative search procedures that repeatedly supply predictor subsets to the model and then use the resulting model performance estimate to guide the selection of the <em>next subset</em> to evaluate. If successful, a wrapper method will iterate to a smaller set of predictors that has better predictive performance than the original predictor set. Wrapper methods can take either a <em>greedy</em> or non-greedy approach to feature selection. A greedy search is one that chooses the search path based on the direction that seems <em>best at the time</em> in order to achieve the best immediate benefit. While this can be an effective strategy, it may show immediate benefits in predictive performance that stall out at a locally best setting. A non-greedy search method would re-evaluate previous feature combinations and would have the ability to move in a direction that is initially unfavorable if it appears to have a potential benefit <em>after</em> the current step. This allows the non-greedy approach to escape being trapped in a local optimum.</p>
+<p>An example of a greedy wrapper method is backwards selection (otherwise known as <em>recursive feature elimination</em> or RFE). Here, the predictors are initially ranked by some measure of importance. An initial model is created using the complete predictor set. The next model is based on a smaller set of predictors where the least important have been removed. This process continues down a prescribed path (based on the ranking generated by the importances) until a very small number of predictors are in the model. Performance estimates are used to determine when too many features have been removed; hopefully a smaller subset of predictors can result in an improvement. Notice that the RFE procedure is greedy in that it considers the variable ranking as the search direction. It does not re-evaluate the search path at any point or consider subsets of mixed levels of importance. This approach to feature selection will likely fail if there are important interactions between predictors where onlyone of the predictors is significant only in the presence of the other(s). RFE will be discussed in more detail in <a href="11-Greedy_Search_Methods.html" class="quarto-xref"><span>Chapter 11</span></a> and in <a href="#sec-selection-overfitting" class="quarto-xref"><span>Section 10.4</span></a> below.</p>
+<p>Examples of non-greedy wrapper methods are genetic algorithms (GA) and simulated annealing (SA). The SA method is non-greedy since it incorporate randomness into the feature selection process. The random component of the process helps SA to find new search spaces that often lead to more optimal results. Both of these techniques will be discussed in detail in <a href="12-Global_Search.html" class="quarto-xref"><span>Chapter 12</span></a>.</p>
+<p>Wrappers have the potential advantage of searching a wider variety of predictor subsets than simple filters or models with built-in feature selection. They have the most potential to find the globally best predictor subset (if it exists). The primary drawback is the computational time required for these methods to find the optimal or near optimal subset. The additional time can be excessive to the extent of being counter-productive. The computational time problem can be further exacerbated by the type of model with which it is coupled. For example, the models that are in most need of feature selection (e.g., SVMs and neural networks) can be very computationally taxing themselves. Another disadvantage of wrappers is that they have the most potential to overfit the predictors to the training data and require <em>external validation</em> (as discussed below).</p>
+<p><a href="#fig-selection-search" class="quarto-xref">Figure&nbsp;<span>10.1</span></a> visually contrasts greedy and non-greedy search methods using the Goldstein-Price equation:</p>
+<p><span class="math display">\[
+\begin{align}
+f(x, y) &amp;= [1+(x+y+1)^2(19-14x+3x^2-14y+6xy+3y^2)] \times \notag \\
+&amp; [30+(2x-3y)^2(18-32x+12x^2+48y-36xy+27y^2)] \notag
+\end{align}
+\]</span></p>
+<p>The minimum of this function, where both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are between -2 and 2, is located at <span class="math inline">\(x = 0\)</span> and <span class="math inline">\(y = -1\)</span>. The function’s outcome is relatively flat in the middle with large values along the top and lower-right edges. Panel (a) shows the results of two greedy methods that use gradient decent to find the minimum. The first starting value (in red, top right) moves along a path defined by the gradient and stalls at a local minimum. It is unable to re-evaluate the search. The second attempt, starting at <span class="math inline">\(x = -1\)</span> and <span class="math inline">\(y = 1\)</span>, also follows a different greedy path and, after some course-corrections, finds a solution close to the best value. Each change in the path was to a new direction of immediate benefit. Panel (b) shows a global search methods called <em>simulated annealing</em>. This is a controlled but random approach that will be discussed in greater detail later. It generates a new candidate point using random deviations from the current point. If the new point is better, the process continues. If it is a worse solution, it may accept it with a certain probability. In this way, the global search does not always proceed in the current best direction and tends to explore a broader range of candidate values. In this particular search, a value near the optimum is determined very quickly.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-selection-search" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-selection-search-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="10-Feature_Selection_Overview_files/figure-html/fig-selection-search-1.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-selection-search-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.1: Examples of greedy and global search methods when solving functions with continuous inputs.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Given the advantages and disadvantages of the different types of feature selection methods, how should one utilize these techniques? A good strategy which we use in practice is to start the feature selection process with one or more intrinsic methods to see what they yield. Note that it is unrealistic to expect that models using intrinsic feature selection would select the same predictor subset, especially if linear and nonlinear methods are being compared. If a non-linear intrinsic method has good predictive performance, then we could proceed to a wrapper method that is combined with a non-linear model. Similarly, if a linear intrinsic method has good predictive performance, then we could proceed to a wrapper method combined with a linear model. If multiple approaches select <em>large</em> predictor sets then this may imply that reducing the number of features may not be feasible.</p>
+<p>Before proceeding, let’s examine the effect of irrelevant predictors on different types of models and how the effect changes over different scenarios.</p>
+</section><section id="sec-feature-selection-simulation" class="level2" data-number="10.3"><h2 data-number="10.3" class="anchored" data-anchor-id="sec-feature-selection-simulation">
+<span class="header-section-number">10.3</span> Effect of Irrelevant Features</h2>
+<p>How much do extraneous predictors hurt a model? Predictably, that depends on the type of model, the nature of the predictors, as well as the ratio of the size of the training set to the number of predictors (a.k.a the <span class="math inline">\(p:n\)</span> ratio). To investigate this, a simulation was used to emulate data with varying numbers of irrelevant predictors and to monitor performance. The simulation system is taken from <span class="citation" data-cites="sapp2014subsemble">Sapp, Laan, and Canny (<a href="#ref-sapp2014subsemble" role="doc-biblioref">2014</a>)</span> and consists of a nonlinear function of the 20 relevant predictors:</p>
+<p><span class="math display">\[\begin{align}
+y =  &amp; x_1 + \sin(x_2) + \log(|x_3|) + x_4^2 + x_5x_6 + I(x_7x_8x_9 &lt; 0) + I(x_{10} &gt; 0) + \notag \\
+     &amp; x_{11}I(x_{11} &gt; 0) + \sqrt{|x_{12}|} +\cos(x_{13}) + 2x_{14} + |x_{15}| + I(x_{16} &lt; -1) + \notag \\
+     &amp; x_{17}I(x_{17} &lt; -1) - 2 x_{18}- x_{19}x_{20} + \epsilon
+\end{align}\]</span></p>
+<p>Each of these predictors was generated using independent standard normal random variables and the error was simulated as random normal with a zero mean and standard deviation of 3. To evaluate the effect of extra variables, varying numbers of random standard normal predictors (with no connection to the outcome) were added. Between 10 and 200 extra columns were appended to the original feature set. The training set size was either <span class="math inline">\(n = 500\)</span> or <span class="math inline">\(n = 1,000\)</span>. The root mean squared error (RMSE) was used to measure the quality of the model using a large simulated test set since RMSE is a good estimate of irreducible error.</p>
+<p>A number of models were tuned and trained for each of the simulated data sets, including linear, nonlinear, and tree/rule-based models<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. The details and code for the each model can be found in a GitHub repo<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> and the results are summarized below.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-selection-rmse" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-selection-rmse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="10-Feature_Selection_Overview_files/figure-html/fig-selection-rmse-1.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-selection-rmse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.2: RMSE trends for different models and simulation configurations.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-selection-rmse" class="quarto-xref">Figure&nbsp;<span>10.2</span></a> shows the results. The linear models (ordinary linear regression and the glmnet) showed mediocre performance overall. Extra predictors eroded the performance of linear regression while the lasso penalty used by the glmnet resulted in stable performance as the number of irrelevant predictors increased. The effect on linear regression was smaller as the training set size increases from 500 to 1,000. This reinforces the notation that the <span class="math inline">\(p:n\)</span> ratio may be the underlying issue.</p>
+<p>Nonlinear models had different trends. <span class="math inline">\(K\)</span>-nearest neighbors had overall poor performance that was moderately impacted by the increase in <span class="math inline">\(p\)</span>. MARS performance was good and showed good resistance to noise features due to the intrinsic feature selection used by that model. Again, the effect of extra predictors was smaller with the larger training set size. Single layer neural networks and support vector machines showed the overall best performance (getting closest to the best possible RMSE of 3.0) when no extra predictors were added. However, both methods were drastically affected by the inclusion of noise predictors to the point of having some of the worst performance seen in the simulation.</p>
+<p>For trees, random forest and bagging showed similar but mediocre performance that was not affected by the increase in <span class="math inline">\(p\)</span>. The rule-based ensemble Cubist and boosted trees faired better. However, both models showed a moderate decrease in performance as irrelevant predictors were added; boosting was more susceptible to this issue than Cubist.</p>
+<p>These results clearly show that there are a number of models that may require a reduction of predictors to avoid a decrease in performance. Also, for models such as random forest or the glmnet, it appears that feature selection may be useful to find a smaller subset of predictors without affecting the model’s efficacy.</p>
+<p>Since this is a simulation, we can also assess how models with built-in feature selection performed at finding the <em>correct predictor subset</em>. There are 20 relevant predictors in the data. Based on which predictors were selected, a <em>sensitivity</em>-like proportion can be computed that describes the rate at which the true predictors were retained in the model. Similarly, the number of irrelevant predictors that were selected gives a sense of the <em>false positive</em> rate (i.e., one minus specificity) of the selection procedure. <a href="#fig-selection-roc" class="quarto-xref">Figure&nbsp;<span>10.3</span></a> shows these results using a plot similar to how ROC curves are visualized.</p>
+<p>The three tree ensembles (bagging, random forest, and boosting) have excellent true positive rates; the truly relevant predictors are almost always retained. However, they also show poor results for irrelevant predictors by selecting many of the noise variables. This is somewhat related to the nature of the simulation where most of the predictors enter the system as smooth, continuous functions. This may be causing the tree-based models to try too hard to achieve performance by training deep trees or larger ensembles.</p>
+<p>Cubist had a more balanced result where the true positive rate was greater than 70<span class="math inline">\(\%\)</span>. The false positive rate is around 50<span class="math inline">\(\%\)</span> for a smaller training set size and <em>increased</em> when the training set was larger and less than or equal to 100 extra predictors. The overall difference between the Cubist and tree ensemble results can be explained by the factor that Cubist uses an ensemble of linear regression models that are fit on small subsets of the training set (defined by rules). The nature of the simulation system might be better served by this type of model.</p>
+<p>Recall that the main random forest tuning parameter, <span class="math inline">\(m_{try}\)</span>, is the number of randomly selected variables that should be evaluated at each split. While this encourages diverse trees (to improve performance), it can necessitate the splitting of irrelevant predictors. Random forest often splits on the majority of the predictors (regardless of their importance) and will vastly over-select predictors. For this reason, an additional analysis might be needed to determine which predictors are truly essential based on that model’s variable importance scores. Additionally, trees in general poorly estimate the importance of highly correlated predictors. For example, adding a duplicate column that is an exact copy of another predictor will numerically dilute the importance scores generated by these models. For this reason, important predictors can have low rankings when using these models.</p>
+<p>MARS and the glmnet also made trade-offs between sensitivity and specificity in these simulations that tended to favor specificity. These models had false positive rates under 25<span class="math inline">\(\%\)</span> and true positive rates that were usually between 40<span class="math inline">\(\%\)</span> and 60<span class="math inline">\(\%\)</span>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-selection-roc" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-selection-roc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="10-Feature_Selection_Overview_files/figure-html/fig-selection-roc-1.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-selection-roc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.3: ROC-like plots for the feature selection results in the simulated data sets. The value p represents the number of relevant predictors, while the additional number represents the number of irrelevant predictors.
+</figcaption></figure>
+</div>
+</div>
+</div>
+</section><section id="sec-selection-overfitting" class="level2" data-number="10.4"><h2 data-number="10.4" class="anchored" data-anchor-id="sec-selection-overfitting">
+<span class="header-section-number">10.4</span> Overfitting to Predictors and External Validation</h2>
+<p><a href="03-Review_of_the_Modeling_Process.html#sec-tuning" class="quarto-xref"><span>Section 3.5</span></a> introduced a simple example of the problem of overfitting the available data during selection of model tuning parameters. The example illustrated the risk of finding tuning parameter values that over-learn the relationship between the predictors and the outcome in the training set. When models over-interpret patterns in the training set, the predictive performance suffers with new data. The solution to this problem is to evaluate the tuning parameters on a data set that is not used to estimate the model parameters (via validation or assessment sets).</p>
+<p>An analogous problem can occur when performing feature selection. For many data sets it is possible to find a subset of predictors that has good predictive performance on the training set but has poor performance when used on a test set or other new data set. The solution to this problem is similar to the solution to the problem of overfitting: feature selection needs to be part of the resampling process.</p>
+<p>Unfortunately, despite the need, practitioners often combine feature selection and resampling inappropriately. The most common mistake is to only conduct resampling <em>inside</em> of the feature selection procedure. For example, suppose that there are five predictors in a model (labeled as <em>A</em> though <em>E</em>) and that each has an associated measure of importance derived from the training set (with <em>A</em> being the most important and <em>E</em> being the least). Applying backwards selection, the first model would contain all five predictors, the second would remove the least important (<em>E</em> in this example), and so on. A general outline of one approach is:</p>
+<div id="alg-rfe-bad" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-alg figure"><div aria-describedby="alg-rfe-bad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="columns">
+<div class="column" style="width:10%;">
+
+</div><div class="column" style="width:80%;">
+<div class="pseudocode-container quarto-float" data-no-end="false" data-comment-delimiter="//" data-line-number="true" data-pseudocode-number="1" data-indent-size="1.2em" data-line-number-punc=":" data-chapter-level="10" data-caption-prefix="Algorithm">
+<div class="pseudocode">
+\begin{algorithm} \begin{algorithmic} \STATE Rank the predictors using the training set \FOR{a feature subset of size 5 to 1} \FOR{each resample} \STATE Fit model with the feature subset on the analysis set \STATE Predict the assessment set \ENDFOR \STATE Determine the best feature subset using resampled performance \STATE Fit the best feature subset using the entire training set \ENDFOR \end{algorithmic} \end{algorithm}
+</div>
+</div>
+</div><div class="column" style="width:10%;">
+
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-alg" id="alg-rfe-bad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Algorithm&nbsp;10.1: An inappropriate resampling scheme for recursive feature elimination.
+</figcaption></figure>
+</div>
+<p>There are two key problems with this procedure:</p>
+<ol type="1">
+<li><p>Since the feature selection is <em>external</em> to the resampling, resampling cannot effectively measure the impact (good or bad) of the selection process. Here, resampling is not being exposed to the variation in the selection process and therefore cannot measure its impact.</p></li>
+<li><p>The same data are being used to measure performance and to guide the direction of the selection routine. This is analogous to fitting a model to the training set and then re-predicting the same set to measure performance. There is an obvious bias that can occur if the model is able to closely fit the training data. Some sort of <em>out-of-sample</em> data are required to accurately determine how well the model is doing. If the selection process results in overfitting, there are no data remaining that could possibly inform us of the problem.</p></li>
+</ol>
+<p>As a real example of this issue, <span class="citation" data-cites="Ambroise">Ambroise and McLachlan (<a href="#ref-Ambroise" role="doc-biblioref">2002</a>)</span> reanalyzed the results of <span class="citation" data-cites="Guyon">Guyon et al. (<a href="#ref-Guyon" role="doc-biblioref">2002</a>)</span> where high-dimensional classification data from a RNA expression microarray were modeled. In these analyses, the number of samples was low (i.e., less than 100) while the number of predictors was high (2K to 7K). Linear support vector machines were used to fit the data and backwards elimination (a.k.a. RFE) was used for feature selection. The original analysis used leave-one-out (LOO) cross validation with the scheme outlined above. In these analyses, LOO resampling reported error rates very close to zero. However, when a set of samples were held out and only used to measure performance, the error rates were measured to be 15%–20% higher. In one case, where the <span class="math inline">\(p:n\)</span> ratio was at its worst, <span class="citation" data-cites="Ambroise">Ambroise and McLachlan (<a href="#ref-Ambroise" role="doc-biblioref">2002</a>)</span> shows that a zero LOO error rate could sill be achieved <em>even when the class labels were scrambled</em>.</p>
+<p>A better way of combining feature selection and resampling is to make feature selection a <strong>component of the modeling process</strong>. Feature selection should be incorporated the same way as preprocessing and other engineering tasks. What we mean is that that an appropriate way to perform feature selection is to do this inside of the resampling process<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. Using the previous example with five predictors the algorithm for feature selection within resampling is modified to:</p>
+<div id="alg-rfe-good" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-alg figure"><div aria-describedby="alg-rfe-good-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="columns">
+<div class="column" style="width:10%;">
+
+</div><div class="column" style="width:80%;">
+<div class="pseudocode-container quarto-float" data-no-end="false" data-comment-delimiter="//" data-line-number="true" data-pseudocode-number="1" data-indent-size="1.2em" data-line-number-punc=":" data-chapter-level="10" data-caption-prefix="Algorithm">
+<div class="pseudocode">
+\begin{algorithm} \begin{algorithmic} \STATE Split data into analysis and assessment sets; \FOR{each resample} \STATE Rank the predictors using the analysis set \FOR{a feature subset of size 5 to 1} \STATE Fit model with the feature subset on the analysis set \STATE Predict the assessment set \ENDFOR \STATE Average the resampled performance for each model and feature subset size \STATE Fit the best feature subset using the entire training set \STATE Choose the model and feature subset with the best performance \STATE Fit a model with the best feature subset using the entire training set \ENDFOR \end{algorithmic} \end{algorithm}
+</div>
+</div>
+</div><div class="column" style="width:10%;">
+
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-alg" id="alg-rfe-good-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Algorithm&nbsp;10.2: Appropriate resampling for recursive feature elimination.
+</figcaption></figure>
+</div>
+<p>In this procedure, the same data set are <strong>not</strong> being used to determine both the optimal subset size and the predictors within the subset. Instead different versions of the data are used for each purpose. The external resampling loop is used to decide <em>how far</em> down the removal path that the selection process should go. This is then used to decide the subset size that should be used in the final model on the entire training set. Basically, the subset size is treated as a tuning parameter. In addition, separate data are then used to determine the <em>direction</em> that the selection path should take. The direction is determined by the variable rankings computed on analysis sets (inside of resampling) or the entire training set (for the final model).</p>
+<p>Performing feature selection within the resampling process has two notable implications. The first implication is that the process provides a more realistic estimate of predictive performance. It may be hard to conceptualize the idea that different sets of features may be selected during resampling. Recall, resampling forces the modeling process to use different data sets so that the variation in performance can be accurately measured. The results reflect different realizations of the entire modeling process. If the feature selection process is unstable, it is helpful to understand how noisy the results could be. In the end, resampling is used to measure the overall performance of the modeling process and tries to estimate what performance <em>will</em> be when the final model is fit to the training set with the best predictors. The second implication is an increase in computational burden<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. For models that are sensitive to the choice of tuning parameters, there may be a need to <em>retune</em> the model when each subset is evaluated. In this case, a separate, nested resampling process is required to tune the model. In many cases, the computational costs may make the search tools practically infeasible.</p>
+<p>In situations where the selection process is unstable, using multiple resamples is an expensive but worthwhile approach. This could happen if the data set were small, and/or if the number of features were large, or if an extreme class imbalance exists. These factors might yield different feature sets when the data are slightly changed. On the other extreme, large data sets tend to greatly reduce the risk of overfitting to the predictors during feature selection. In this case, using separate data splits for feature ranking/filtering, modeling, and evaluation can be both efficient and effective.</p>
+</section><section id="a-case-study" class="level2" data-number="10.5"><h2 data-number="10.5" class="anchored" data-anchor-id="a-case-study">
+<span class="header-section-number">10.5</span> A Case Study</h2>
+<p>One of our recent collaborations highlights the perils of incorrectly combining feature selection and resampling. In this problem, a researcher had collected 75 samples from each of the two classes. There were approximately 10,000 predictors for each data point. The ultimate goal was to attempt to identify a subset of predictors that had the ability to classify samples into the correct response with an accuracy of at least 80%.</p>
+<p>The researcher chose to use 70% of the data for a training set, 10-fold cross-validation for model training, and the implicit feature selection methods of the glmnet and random forest. The best cross-validation accuracy found after a broad search through the tuning parameter space of each model was just under 60%, far from the desired performance. Reducing the dimensionality of the problem might help, so principal component analysis followed by linear discriminant analysis and partial least squares discriminant analysis were tried next. Unfortunately, the cross-validation accuracy of these methods was even worse.</p>
+<p>The researcher surmised that part of the challenge in finding a predictive subset of variables was the vast number of irrelevant predictors in the data. The logic was then to first identify and select predictors that had a univariate signal with the response. A t-test was performed for each predictors, and predictors were ranked by significance of separating the classes. The top 300 predictors were selected for modeling.</p>
+<p>To demonstrate that this selection approach was able to identify predictors that captured the best predictors for classifying the response, the researcher performed principal component analysis on the 300 predictors and plotted the samples projected onto first two components colored by response category. This plot revealed near perfect classification between groups, and the researcher concluded that there was good evidence of predictors that could classify the samples.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-selection-random-predictors" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-selection-random-predictors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="10-Feature_Selection_Overview_files/figure-html/fig-selection-random-predictors-1.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-selection-random-predictors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.4: The first two principal components applied to the top features identified using a feature selection routine outside of resampling. The predictors and response on which this procedure was performed were randomly generated, indicating that feature selection outside of resampling leads to spurious results.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Regrettably, because feature selection was performed outside of resampling, the apparent signal that was found was simply due to random chance. In fact, the univariate feature selection process used by the researcher can be shown to produce perfect separation between two groups in completely random data. To illustrate this point we have generated a 150-by-10,000 matrix of random standard normal numbers (<span class="math inline">\(\mu = 0\)</span> and <span class="math inline">\(\sigma = 1\)</span>). The response was also a random selection such that 75 samples were in each class. A t-test was performed for each predictor and the top 300 predictors were selected. The plot of the samples onto the first two principal components colored by response status is displayed in <a href="#fig-selection-random-predictors" class="quarto-xref">Figure&nbsp;<span>10.4</span></a>.</p>
+<p>Clearly having good separation using this procedure does not imply that the selected features have the ability to predict the response. Rather, it is as likely that the apparent separation is due to random chance and an improper feature selection routine.</p>
+</section><section id="next-steps" class="level2" data-number="10.6"><h2 data-number="10.6" class="anchored" data-anchor-id="next-steps">
+<span class="header-section-number">10.6</span> Next Steps</h2>
+<p>In the following chapters, the topics that were introduced here will be revisited with examples. In the next chapter, greedy selection methods will be described (such as simple filters and backwards selection). Then the subsequent chapter describes more complex (and computationally costly) approaches that are not greedy and more likely to find a better local optimum.</p>
+</section><section id="sec-selection-computing" class="level2" data-number="10.7"><h2 data-number="10.7" class="anchored" data-anchor-id="sec-selection-computing">
+<span class="header-section-number">10.7</span> Computing</h2>
+<p>The website <a href="http://bit.ly/fes-selection"><code>http://bit.ly/fes-selection</code></a> contains R programs for reproducing these analyses.</p>
+</section><section id="chapter-references" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="chapter-references">Chapter References</h2>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Ambroise" class="csl-entry" role="listitem">
+Ambroise, C, and G McLachlan. 2002. <span>“Selection Bias in Gene Extraction on the Basis of Microarray Gene-Expression Eata.”</span> <em>Proceedings of the National Academy of Sciences</em> 99 (10): 6562–66.
+</div>
+<div id="ref-Guyon" class="csl-entry" role="listitem">
+Guyon, I, J Weston, S Barnhill, and V Vapnik. 2002. <span>“Gene Selection for Cancer Classification Using Support Vector Machines.”</span> <em>Machine Learning</em> 46 (1): 389–422.
+</div>
+<div id="ref-sapp2014subsemble" class="csl-entry" role="listitem">
+Sapp, S, Mark J M van der Laan, and J Canny. 2014. <span>“Subsemble: An Ensemble Method for Combining Subset-Specific Algorithm Fits.”</span> <em>Journal of Applied Statistics</em> 41 (6): 1247–59.
+</div>
+<div id="ref-shmueli2010explain" class="csl-entry" role="listitem">
+Shmueli, G. 2010. <span>“To Explain or to Predict?”</span> <em>Statistical Science</em> 25 (3): 289–310.
+</div>
+</div>
+</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+<ol>
+<li id="fn1"><p>An example of this was discussed in the context of simple screening in <a href="07-Detecting_Interaction_Effects.html#sec-complete-enumeration" class="quarto-xref"><span>Section 7.3</span></a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Clearly, this data set requires nonlinear models. However, the simulation is being used to look at the relative impact of irrelevant predictors (as opposed to absolute performance). For linear models, we assumed that the interaction terms <span class="math inline">\(x_5x_6\)</span> and <span class="math inline">\(x_{19}x_{20}\)</span> would be identified and included in the linear models.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><a href="https://github.com/topepo/FES_Selection_Simulation"><code>https://github.com/topepo/FES_Selection_Simulation</code></a>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Even if it is a single (hopefully large) validation set.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Global search methods described in <a href="12-Global_Search.html" class="quarto-xref"><span>Chapter 12</span></a> also exacerbate this problem.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/warm-bread-coffin\.org");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./09-Working_with_Profile_Data.html" class="pagination-link" aria-label="Working with Profile Data">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Working with Profile Data</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./11-Greedy_Search_Methods.html" class="pagination-link" aria-label="Greedy Search Methods">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Greedy Search Methods</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+    <script type="text/javascript">
+    (function(d) {
+      d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+        let pseudocodeOptions = {
+          indentSize: el.dataset.indentSize,
+          commentDelimiter: " " + el.dataset.commentDelimiter + " ",
+          lineNumber: el.dataset.lineNumber.toLowerCase() === "true",
+          lineNumberPunc: el.dataset.lineNumberPunc,
+          noEnd: el.dataset.noEnd.toLowerCase() === "true",
+          titlePrefix: el.dataset.captionPrefix,
+        };
+        pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+      });
+    })(document);
+    (function(d) {
+      d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+        let captionSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+        if (captionSpan !== null) {
+          let captionPrefix = el.dataset.captionPrefix + " ";
+          let captionNumber = "";
+          if (el.dataset.pseudocodeNumber) {
+            captionNumber = el.dataset.pseudocodeNumber + " ";
+            if (el.dataset.chapterLevel) {
+              captionNumber = el.dataset.chapterLevel + "." + captionNumber;
+            }
+          }
+          captionSpan.innerHTML = captionPrefix + captionNumber;
+        }
+      });
+    })(document);
+    </script>
+
+
+</body></html>

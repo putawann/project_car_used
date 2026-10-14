@@ -1,0 +1,163 @@
+
+ shapiro — SciPy v1.18.0 Manual 
+ Skip to main content 
+ Back to top 
+ Ctrl + K 
+ SciPy 
+ Installing
+ User Guide
+ API reference
+ Building from source
+ Development
+ Release notes
+ Choose version 
+ System Settings 
+ Light 
+ Dark 
+ GitHub 
+ Scientific Python Forum 
+ Installing
+ User Guide
+ API reference
+ Building from source
+ Development
+ Release notes
+ Choose version 
+ System Settings 
+ Light 
+ Dark 
+ GitHub 
+ Scientific Python Forum 
+ Search 
+ Ctrl + K 
+ Section Navigation 
+ scipy 
+ scipy.cluster 
+ scipy.constants 
+ scipy.datasets 
+ scipy.differentiate 
+ scipy.fft 
+ scipy.fftpack 
+ scipy.integrate 
+ scipy.interpolate 
+ scipy.io 
+ scipy.linalg 
+ scipy.ndimage 
+ scipy.odr 
+ scipy.optimize 
+ scipy.signal 
+ scipy.sparse 
+ scipy.spatial 
+ scipy.special 
+ scipy.stats 
+ SciPy API 
+ Statistical functions ( scipy.stats ) 
+ shapiro 
+ scipy.stats. 
+ shapiro # 
+ scipy.stats. shapiro ( x , * , axis = None , nan_policy = 'propagate' , keepdims = False ) [source] # 
+ Perform the Shapiro-Wilk test for normality. 
+ The Shapiro-Wilk test tests the null hypothesis that the
+data was drawn from a normal distribution. 
+ Parameters : 
+ x array_like Array of sample data. Must contain at least three observations. 
+ axis int or None, default: None If an int, the axis of the input along which to compute the statistic.
+The statistic of each axis-slice (e.g. row) of the input will appear in a
+corresponding element of the output.
+If None , the input will be raveled before computing the statistic. 
+ nan_policy {‘propagate’, ‘omit’, ‘raise’} Defines how to handle input NaNs. 
+ propagate : if a NaN is present in the axis slice (e.g. row) along
+which the statistic is computed, the corresponding entry of the output
+will be NaN. 
+ omit : NaNs will be omitted when performing the calculation.
+If insufficient data remains in the axis slice along which the
+statistic is computed, the corresponding entry of the output will be
+NaN. 
+ raise : if a NaN is present, a ValueError will be raised. 
+ keepdims bool, default: False If this is set to True, the axes which are reduced are left
+in the result as dimensions with size one. With this option,
+the result will broadcast correctly against the input array. 
+ Returns : 
+ statistic float The test statistic. 
+ p-value float The p-value for the hypothesis test. 
+ See also 
+ anderson The Anderson-Darling test for normality 
+ kstest The Kolmogorov-Smirnov test for goodness of fit. 
+ Shapiro-Wilk test for normality Extended example 
+ Notes 
+ The algorithm used is described in [4] , but censoring parameters as
+described are not implemented. For N > 5000 the W test statistic is
+accurate, but the p-value may not be. 
+ Beginning in SciPy 1.9, np.matrix inputs (not recommended for new
+code) are converted to np.ndarray before the calculation is performed. In
+this case, the output will be a scalar or np.ndarray of appropriate shape
+rather than a 2D np.matrix . Similarly, while masked elements of masked
+arrays are ignored, the output will be a scalar or np.ndarray rather than a
+masked array with mask=False . 
+ Array API Standard Support 
+ shapiro has experimental support for Python Array API Standard compatible
+backends in addition to NumPy. Please consider testing these features
+by setting an environment variable SCIPY_ARRAY_API=1 and providing
+CuPy, PyTorch, JAX, or Dask arrays as array arguments. The following
+combinations of backend and device (or other capability) are supported. 
+ Library 
+ CPU 
+ GPU 
+ NumPy 
+ ✅ 
+ n/a 
+ CuPy 
+ n/a 
+ ✅ 
+ PyTorch 
+ ✅ 
+ ✅ 
+ JAX 
+ ✅ 
+ ✅ 
+ Dask 
+ ✅ 
+ n/a 
+ See Support for the array API standard for more information. 
+ References 
+ [ 1 ] 
+ https://www.itl.nist.gov/div898/handbook/prc/section2/prc213.htm 
+ DOI:10.18434/M32189 
+ [ 2 ] 
+ Shapiro, S. S. & Wilk, M.B, “An analysis of variance test for
+normality (complete samples)”, Biometrika, 1965, Vol. 52,
+pp. 591-611, DOI:10.2307/2333709 
+ [ 3 ] 
+ Razali, N. M. & Wah, Y. B., “Power comparisons of Shapiro-Wilk,
+Kolmogorov-Smirnov, Lilliefors and Anderson-Darling tests”, Journal
+of Statistical Modeling and Analytics, 2011, Vol. 2, pp. 21-33. 
+ [ 4 ] 
+ Royston, P. “A toolkit for testing for non-normality in complete and
+censored samples.” Journal of the Royal Statistical Society: Series D
+(The Statistician) 42.1 (1993): 37-43. 
+ Examples 
+ Try it in your browser! 
+ >>> import numpy as np 
+ >>> from scipy import stats 
+ >>> rng = np . random . default_rng () 
+ >>> x = stats . norm . rvs ( loc = 5 , scale = 3 , size = 100 , random_state = rng ) 
+ >>> shapiro_test = stats . shapiro ( x ) 
+ >>> shapiro_test 
+ ShapiroResult(statistic=0.9813305735588074, pvalue=0.16855233907699585) 
+ >>> shapiro_test . statistic 
+ 0.9813305735588074 
+ >>> shapiro_test . pvalue 
+ 0.16855233907699585 
+ For a more detailed example, see Shapiro-Wilk test for normality . 
+ Go Back Open In Tab 
+ previous 
+ jarque_bera 
+ next 
+ anderson 
+ On this page
+ shapiro 
+ so the DOM is not blocked -->
+ © Copyright 2008, The SciPy community.
+ Created using Sphinx 8.1.3.
+ Built with the PyData Sphinx Theme 0.19.0.
+ 

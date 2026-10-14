@@ -1,0 +1,473 @@
+Appears in the International Joint Conference on Arti cial Intelligence (IJCAI), 1995
+
+ A Study of Cross-Validation and Bootstrap
+for Accuracy Estimation and Model Selection
+
+                   Ron Kohavi
+
+              Computer Science Department
+                    Stanford University
+                   Stanford, CA. 94305
+
+                      ronnyk@CS.Stanford.EDU
+            http://robotics.stanford.edu/~ronnyk
+
+               Abstract                                        for low variance, assuming the bias a ects all classi ers
+                                                               similarly (e.g., estimates are 5% pessimistic).
+    We review accuracy estimation methods and
+    compare the two most common methods: cross-                  In this paper we explain some of the assumptions made
+    validation and bootstrap. Recent experimen-                by the di erent estimation methods, and present con-
+    tal results on arti cial data and theoretical re-          crete examples where each method fails. While it is
+    sults in restricted settings have shown that for           known that no accuracy estimation can be correct all
+    selecting a good classi er from a set of classi-           the time (Wolpert 1994b, Scha er 1994), we are inter-
+     ers (model selection), ten-fold cross-validation          ested in identifying a method that is well suited for the
+    may be better than the more expensive leave-               biases and trends in typical real world datasets.
+    one-out cross-validation. We report on a large-
+    scale experiment|over half a million runs of                 Recent results, both theoretical and experimental,
+    C4.5 and a Naive-Bayes algorithm|to estimate               have shown that it is not always the case that increas-
+    the e ects of di erent parameters on these al-             ing the computational cost is bene cial, especially if the
+    gorithms on real-world datasets. For cross-                relative accuracies are more important than the exact
+    validation, we vary the number of folds and                values. For example, leave-one-out is almost unbiased,
+    whether the folds are strati ed or not for boot-           but it has high variance, leading to unreliable estimates
+    strap, we vary the number of bootstrap sam-                (Efron 1983). For linear models, using leave-one-out
+    ples. Our results indicate that for real-word              cross-validation for model selection is asymptotically in-
+    datasets similar to ours, the best method to use           consistent in the sense that the probability of selecting
+    for model selection is ten-fold strati ed cross            the model with the best predictive power does not con-
+    validation, even if computation power allows               verge to one as the total number of observations ap-
+    using more folds.                                          proaches in nity (Zhang 1992, Shao 1993).
+
+1 Introduction                                                   This paper is organized as follows. Section 2 describes
+                                                               the common accuracy estimation methods and ways of
+             It can not be emphasized enough that no claim     computing con dence bounds that hold under some as-
+             whatsoever is being made in this paper that all   sumptions. Section 3 discusses related work comparing
+           algorithms are equivalent in practice, in the real  cross-validation variants and bootstrap variants. Sec-
+      world. In particular, no claim is being made that one    tion 4 discusses methodology underlying our experiment.
+           should not use cross-validation in the real world.  The results of the experiments are given Section 5 with a
+                                                               discussion of important observations. We conclude with
+                                       |Wolpert (1994a)        a summary in Section 6.
+
+  Estimating the accuracy of a classi er induced by su-        2 Methods for Accuracy Estimation
+pervised learning algorithms is important not only to
+predict its future prediction accuracy, but also for choos-    A classi er is a function that maps an unlabelled in-
+ing a classi er from a given set (model selection), or         stance to a label using internal data structures. An in-
+combining classi ers (Wolpert 1992). For estimating the        ducer, or an induction algorithm, builds a classi er from
+ nal accuracy of a classi er, we would like an estimation
+method with low bias and low variance. To choose a             a given dataset. CART and C4.5 (Breiman, Friedman,
+classi er or to combine classi ers, the absolute accura-       Olshen & Stone 1984, Quinlan 1993) are decision tree in-
+cies are less important and we are willing to trade o bias     ducers that build decision tree classi ers. In this paper,
+                                                               we are not interested in the speci c method for inducing
+ A longer version of the paper can be retrieved by anony-      classi ers, but assume access to a dataset and an inducer
+mous ftp to starry.stanford.edu:pub/ronnyk/accEst-long.ps      of interest.
+
+                                                                Let V be the space of unlabelled instances and Y the
+set of possible labels. Let X = V Y be the space of            the classi er) and a variance of acc (1 ; acc)=h. Thus,
+labelled instances and D = fx1 x2 : : : xng be a dataset       by De Moivre-Laplace limit theorem, we have
+(possibly a multiset) consisting of n labelled instances,
+where xi = hvi 2 V yi 2 Yi. A classi er C maps an unla-                 ( acch ; acc ) < z (2)
+belled instance v 2 V to a label y 2 Y and an inducer I               Pr ;z < pacc(1 ; acc)=h
+maps a given dataset D into a classi er C. The notation
+I(D v) will denote the label assigned to an unlabelled in-     where z is the (1+ )=2-th quantile point of the standard
+stance v by the classi er built by inducer I on dataset D,     normal distribution. To get a 100 percent con dence
+i.e., I(D v) = (I(D))(v). We assume that there exists a        interval, one determines z and inverts the inequalities.
+distribution on the set of labelled instances and that our     Inversion of the inequalities leads to a quadratic equation
+dataset consists of i.i.d. (independently and identically      in acc, the roots of which are the low and high con dence
+distributed) instances. We consider equal misclassi ca-        points:
+tion costs using a 0/1 loss function, but the accuracy         2h acch + z2 z p4h acch + z2 ; 4h acc2h
+estimation methods can easily be extended to other loss                 2(h + z2)                       : (3)
+functions.
+                                                               The above equation is not conditioned on the dataset D
+ The accuracy of a classi er C is the probability of           if more information is available about the probability of
+                                                               the given dataset, it must be taken into account.
+correctly classifying a randomly selected instance, i.e.,
+acc = Pr(C(v) = y) for a randomly selected instance              The holdout estimate is a random number that de-
+hv yi 2 X, where the probability distribution over the         pends on the division into a training set and a test set.
+instance space is the same as the distribution that was
+used to select instances for the inducer's training set.       In random subsampling, the holdout method is re-
+Given a nite dataset, we would like to estimate the fu-
+ture performance of a classi er induced by the given in-       peated k times, and the estimated accuracy is derived
+ducer and dataset. A single accuracy estimate is usually       by averaging the runs. The standard deviation can be
+meaningless without a con dence interval thus we will          estimated as the standard deviation of the accuracy es-
+consider how to approximate such an interval when pos-         timations from each holdout run.
+sible. In order to identify weaknesses, we also attempt
+to identify cases where the estimates fail.                      The main assumption that is violated in random sub-
+                                                               sampling is the independence of instances in the test set
+2.1 Holdout                                                    from those in the training set. If the training and test
+                                                               set are formed by a split of an original dataset, then
+The holdout method, sometimes called test sample esti-         an over-represented class in one subset will be a under-
+mation, partitions the data into two mutually exclusive        represented in the other. To demonstrate the issue, we
+subsets called a training set and a test set, or holdout set.  simulated a 2/3, 1/3 split of Fisher's famous iris dataset
+It is common to designate 2/3 of the data as the training      and used a majority inducer that builds a classi er pre-
+set and the remaining 1/3 as the test set. The training        dicting the prevalent class in the training set. The iris
+set is given to the inducer, and the induced classi er is      dataset describes iris plants using four continuous fea-
+tested on the test set. Formally, let Dh, the holdout set,     tures, and the task is to classify each instance (an iris)
+be a subset of D of size h, and let Dt be D n Dh. The          as Iris Setosa, Iris Versicolour, or Iris Virginica. For each
+holdout estimated accuracy is de ned as                        class label, there are exactly one third of the instances
+             1X                                                with that label (50 instances of each class from a to-
+acch = h                 (I(Dt vi) yi)   (1)                   tal of 150 instances) thus we expect 33.3% prediction
+             hvi yii2Dh                                        accuracy. However, because the test set will always con-
+                                                               tain less than 1/3 of the instances of the class that was
+where (i j) = 1 if i = j and 0 otherwise. Assuming             prevalent in the training set, the accuracy predicted by
+that the inducer's accuracy increases as more instances        the holdout method is 27.68% with a standard deviation
+are seen, the holdout method is a pessimistic estimator        of 0.13% (estimated by averaging 500 holdouts).
+because only a portion of the data is given to the inducer
+for training. The more instances we leave for the test set,      In practice, the dataset size is always nite, and usu-
+the higher the bias of our estimate however, fewer test        ally smaller than we would like it to be. The holdout
+set instances means that the con dence interval for the        method makes ine cient use of the data: a third of
+accuracy will be wider as shown below.                         dataset is not used for training the inducer.
+
+  Each test instance can be viewed as a Bernoulli trial:       2.2 Cross-Validation, Leave-one-out, and
+correct or incorrect prediction. Let S be the number                 Strati cation
+of correct classi cations on the test set, then S is dis-
+tributed binomially (sum of Bernoulli trials). For rea-        In k-fold cross-validation, sometimes called rotation esti-
+sonably large holdout sets, the distribution of S=h is ap-     mation, the dataset D is randomly split into k mutually
+proximately normal with mean acc (the true accuracy of         exclusive subsets (the folds) D1 D2 : : : Dk of approx-
+                                                               imately equal size. The inducer is trained and tested
+k times each time t 2 f1 2 : : : kg, it is trained on         The above proposition helps understand one possible
+D n Dt and tested on Dt. The cross-validation estimate      assumption that is made when using cross-validation: if
+of accuracy is the overall number of correct classi ca-     an inducer is unstable for a particular dataset under a set
+tions, divided by the number of instances in the dataset.   of perturbations introduced by cross-validation, the ac-
+Formally, let D(i) be the test set that includes instance   curacy estimate is likely to be unreliable. If the inducer
+xi = hvi yii, then the cross-validation estimate of accu-   is almost stable on a given dataset, we should expect
+racy                                                        a reliable estimate. The next corollary takes the idea
+                                                            slightly further and shows a result that we have observed
+      acccv = 1 X (I(D n D(i) vi) yi) : (4)                 empirically: there is almost no change in the variance of
+                                                            the cross-validation estimate when the number of folds
+               n hvi yii2D                                  is varied.
+
+The cross-validation estimate is a random number            Corollary 2 (Variance in cross-validation)
+that depends on the division into folds;. Complete
+cross-validation is the average of all   m   possibil-      Given a dataset and an inducer. If the inducer is sta-
+                                        m=k                 ble under the perturbations caused by deleting the test
+ities for choosing m=k instances out of m, but it is        instances for the folds in k-fold cross-validation for var-
+usually too expensive. Except for leave-one-one (n-fold     ious values of k, then the variance of the estimates will
+cross-validation), which is always complete, k-fold cross-  be the same.
+validation is estimating complete k-fold cross-validation   Proof: The variance of k-fold cross-validation in Propo-
+using a single split of the data into the folds. Repeat-    sition 1 does not depend on k.
+ing cross-validation multiple times using di erent splits
+into folds provides a better Monte-Carlo estimate to the      While some inducers are likely to be inherently more
+complete cross-validation at an added cost. In strati-      stable, the following example shows that one must also
+ed cross-validation, the folds are strati ed so that        take into account the dataset and the actual perturba-
+they contain approximately the same proportions of la-      tions.
+bels as the original dataset.
+An inducer is stable for a given dataset and a set of       Example 1 (Failure of leave-one-out)
+perturbations, if it induces classi ers that make the same
+predictions when it is given the perturbed datasets.        Fisher's iris dataset contains 50 instances of each class,
+                                                            leading one to expect that a majority inducer should
+Proposition 1 (Variance in k-fold CV)                       have accuracy about 33%. However, the combination of
+                                                            this dataset with a majority inducer is unstable for the
+Given a dataset and an inducer. If the inducer is           small perturbations performed by leave-one-out. When
+stable under the perturbations caused by deleting the       an instance is deleted from the dataset, its label is a mi-
+instances for the folds in k-fold cross-validation, the     nority in the training set thus the majority inducer pre-
+cross-validation estimate will be unbiased and the vari-    dicts one of the other two classes and always errs in clas-
+ance of the estimated accuracy will be approximately        sifying the test instance. The leave-one-out estimated
+                                                            accuracy for a majority inducer on the iris dataset is
+acccv (1;acccv)=n, where n is the number of instances       therefore 0%. Moreover, all folds have this estimated ac-
+                                                            curacy thus the standard deviation of the folds is again
+in the dataset.                                             0%, giving the unjusti ed assurance that the estimate is
+                                                            stable.
+Proof: If we assume that the k classi ers produced make
+the same predictions, then the estimated accuracy has         The example shows an inherent problem with cross-
+a binomial distribution with n trials and probability of    validation that applies to more than just a majority in-
+success equal to the accuracy of the classi er.             ducer. In a no-information dataset, where the label val-
+                                                            ues are completely random, the best an induction algo-
+  For large enough n, a con dence interval may be com-      rithm can do is predict majority. Leave-one-out on such
+puted using Equation 3 with h equal to n, the number        a dataset with 50% of the labels for each class and a
+of instances.                                               majority inducer (the best possible inducer) would still
+                                                            predict 0% accuracy.
+  In reality, a complex inducer is unlikely to be stable
+for large perturbations, unless it has reached its maximal  2.3 Bootstrap
+learning capacity. We expect the perturbations induced
+by leave-one-out to be small and therefore the classi er    The bootstrap family was introduced by Efron and is
+should be very stable. As we increase the size of the       fully described in Efron & Tibshirani (1993). Given a
+perturbations, stability is less likely to hold: we expect
+stability to hold more in 20-fold cross-validation than in  dataset of size n, a bootstrap sample is created by
+10-fold cross-validation and both should be more stable
+than holdout of 1/3. The proposition does not apply         sampling n instances uniformly from the data (with re-
+to the resubstitution estimate because it requires the in-  placement). Since the dataset is sampled with replace-
+ducer to be stable when no instances are given in the       ment, the probability of any given instance not being
+dataset.                                                    chosen after n samples is (1 ; 1=n)n e;1 0:368 the
+expected number of distinct instances from the original         Jain, Dubes & Chen (1987) compared the performance
+dataset appearing in the test set is thus 0:632n. The 0       of the 0 bootstrap and leave-one-out cross-validation
+accuracy estimate is derived by using the bootstrap sam-      on nearest neighbor classi ers using arti cial data and
+ple for training and the rest of the instances for testing.   claimed that the con dence interval of the bootstrap
+Given a number b, the number of bootstrap samples, let        estimator is smaller than that of leave-one-out. Weiss
+0i be the accuracy estimate for bootstrap sample i. The       (1991) followed similar lines and compared strati ed
+.632 bootstrap estimate is de ned as                          cross-validation and two bootstrap methods with near-
+                                                              est neighbor classi ers. His results were that strati ed
+               1 Xb                                           two-fold cross validation is relatively low variance and
+                                                              superior to leave-one-out.
+      accboot = b (0:632 0i + :368 accs) (5)
+                                                                Breiman & Spector (1992) conducted a feature sub-
+                       i=1                                    set selection experiments for regression, and compared
+                                                              leave-one-out cross-validation, k-fold cross-validation
+where accs is the resubstitution accuracy estimate on         for various k, strati ed k-fold cross-validation, bias-
+the full dataset (i.e., the accuracy on the training set).    corrected bootstrap, and partial cross-validation (not
+The variance of the estimate can be determined by com-        discussed here). Tests were done on arti cial datasets
+puting the variance of the estimates for the samples.         with 60 and 160 instances. The behavior observed
+                                                              was: (1) the leave-one-out has low bias and RMS (root
+  The assumptions made by bootstrap are basically the         mean square) error, whereas two-fold and ve-fold cross-
+same as that of cross-validation, i.e., stability of the al-  validation have larger bias and RMS error only at models
+gorithm on the dataset: the \bootstrap world" should          with many features (2) the pessimistic bias of ten-fold
+closely approximate the real world. The .632 bootstrap        cross-validation at small samples was signi cantly re-
+fails to give the expected result when the classi er is a     duced for the samples of size 160 (3) for model selection,
+perfect memorizer (e.g., an unpruned decision tree or a       ten-fold cross-validation is better than leave-one-out.
+one nearest neighbor classi er) and the dataset is com-
+pletely random, say with two classes. The resubstitution        Bailey & Elkan (1993) compared leave-one-out cross-
+accuracy is 100%, and the 0 accuracy is about 50%.            validation to .632 bootstrap using the FOIL inducer
+Plugging these into the bootstrap formula, one gets an        and four synthetic datasets involving Boolean concepts.
+estimated accuracy of about 68.4%, far from the real ac-      They observed high variability and little bias in the
+curacy of 50%. Bootstrap can be shown to fail if we add       leave-one-out estimates, and low variability but large
+a memorizer module to any given inducer and adjust its        bias in the .632 estimates.
+predictions. If the memorizer remembers the training set
+and makes the predictions when the test instance was a          Weiss and Indurkyha (Weiss & Indurkhya 1994) con-
+training instances, adjusting its predictions can make the    ducted experiments on real-world data to determine the
+resubstitution accuracy change from 0% to 100% and can        applicability of cross-validation to decision tree pruning.
+thus bias the overall estimated accuracy in any direction     Their results were that for samples at least of size 200,
+we want.                                                      using strati ed ten-fold cross-validation to choose the
+                                                              amount of pruning yields unbiased trees (with respect to
+3 Related Work                                                their optimal size).
+
+Some experimental studies comparing di erent accuracy         4 Methodology
+estimation methods have been previously done, but most
+of them were on arti cial or small datasets. We now           In order to conduct a large-scale experiment we decided
+describe some of these e orts.                                to use C4.5 and a Naive-Bayesian classi er. The C4.5
+                                                              algorithm (Quinlan 1993) is a descendent of ID3 that
+  Efron (1983) conducted ve sampling experiments and          builds decision trees top-down. The Naive-Bayesian clas-
+compared leave-one-out cross-validation, several variants     si er (Langley, Iba & Thompson 1992) used was the one
+of bootstrap, and several other methods. The purpose          implemented in MLC++ (Kohavi, John, Long, Manley
+of the experiments was to \investigate some related es-       & P eger 1994) that uses the observed ratios for nominal
+timators, which seem to o er considerably improved es-        features and assumes a Gaussian distribution for contin-
+timation in small samples." The results indicate that         uous features. The exact details are not crucial for this
+leave-one-out cross-validation gives nearly unbiased esti-    paper because we are interested in the behavior of the
+mates of the accuracy, but often with unacceptably high       accuracy estimation methods more than the internals
+variability, particularly for small samples and that the      of the induction algorithms. The underlying hypothe-
+.632 bootstrap performed best.                                sis spaces|decision trees for C4.5 and summary statis-
+                                                              tics for Naive-Bayes|are di erent enough that we hope
+  Breiman et al. (1984) conducted experiments using           conclusions based on these two induction algorithms will
+cross-validation for decision tree pruning. They chose        apply to other induction algorithms.
+ten-fold cross-validation for the CART program and
+claimed it was satisfactory for choosing the correct tree.      Because the target concept is unknown for real-world
+They claimed that \the di erence in the cross-validation
+estimates of the risks of two rules tends to be much more
+accurate than the two estimates themselves."
+concepts, we used the holdout method to estimate the         % acc
+quality of the cross-validation and bootstrap estimates.     75
+To choose a set of datasets, we looked at the learning
+curves for C4.5 and Naive-Bayes for most of the super-       70 Soybean
+vised classi cation datasets at the UC Irvine repository
+(Murphy & Aha 1995) that contained more than 500             65
+instances (about 25 such datasets). We felt that a min-
+imum of 500 instances were required for testing. While       60 Vehicle
+the true accuracies of a real dataset cannot be computed
+because we do not know the target concept, we can esti-      55
+mate the true accuracies using the holdout method. The
+\true" accuracy estimates in Table 1 were computed by        50 Rand
+taking a random sample of the given size, computing the
+accuracy using the rest of the dataset as a test set, and    45            2 5 10 20 -5 -2 -1   folds
+repeating 500 times.
+                                                              % acc
+  We chose six datasets from a wide variety of domains,      100
+such that the learning curve for both algorithms did
+not atten out too early, that is, before one hundred         99.5 Mushroom
+instances. We also added a no information dataset,              99
+rand, with 20 Boolean features and a Boolean random
+label. On one dataset, vehicle, the generalization accu-     98.5   Hypo
+racy of the Naive-Bayes algorithm deteriorated by more          98  Chess
+than 4% as more instances were given. A similar phe-
+nomenon was observed on the shuttle dataset. Such            97.5
+a phenomenon was predicted by Scha er and Wolpert
+(Scha er 1994, Wolpert 1994b), but we were surprised         97
+that it was observed on two real-world datasets.
+                                                             96.5
+  To see how well an accuracy estimation method per-
+forms, we sampled instances from the dataset (uniformly      96             2 5 10 20 -5 -2 -1  folds
+without replacement), and created a training set of the
+desired size. We then ran the induction algorithm on         Figure 1: C4.5: The bias of cross-validation with varying
+the training set and tested the classi er on the rest of     folds. A negative k folds stands for leave-k-out. Error
+the instances in the dataset. This was repeated 50 times     bars are 95% con dence intervals for the mean. The gray
+at points where the learning curve was sloping up. The       regions indicate 95% con dence intervals for the true ac-
+same folds in cross-validation and the same samples in       curacies. Note the di erent ranges for the accuracy axis.
+bootstrap were used for both algorithms compared.
+                                                             validation for small k's is apparent. Most of the esti-
+5 Results and Discussion                                     mates are reasonably good at 10 folds and at 20 folds
+                                                             they are almost unbiased.
+We now show the experimental results and discuss their
+signi cance. We begin with a discussion of the bias in         Strati ed cross-validation (not shown) had similar be-
+the estimation methods and follow with a discussion of       havior, except for lower pessimism. The estimated accu-
+the variance. Due to lack of space, we omit some graphs      racy for soybean at 2-fold was 7% higher and at ve-fold,
+for the Naive-Bayes algorithm when the behavior is ap-       4.7% higher for vehicle at 2-fold, the accuracy was 2.8%
+proximately the same as that of C4.5.                        higher and at ve-fold, 1.9% higher. Thus strati cation
+                                                             seems to be a less biased estimation method.
+5.1 The Bias
+                                                               Figure 2 shows the bias and variance for the .632 boot-
+The bias of a method to estimate a parameter is de-          strap accuracy estimation method. Although the .632
+                                                             bootstrap is almost unbiased for chess, hypothyroid, and
+ ned as the expected value minus the estimated value.        mushroom for both inducers, it is highly biased for soy-
+An unbiased estimation method is a method that has           bean with C4.5, vehicle with both inducers, and rand
+zero bias. Figure 1 shows the bias and variance of k-fold    with both inducers. The bias with C4.5 and vehicle is
+cross-validation on several datasets (the breast cancer      9.8%.
+dataset is not shown).
+                                                             5.2 The Variance
+  The diagrams clearly show that k-fold cross-validation
+is pessimistically biased, especially for two and ve folds.  While a given method may have low bias, its perfor-
+For the learning curves that have a large derivative at      mance (accuracy estimation in our case) may be poor
+the measurement point, the pessimism in k-fold cross-        due to high variance. In the experiments above, we have
+                                                             formed con dence intervals by using the standard de-
+                                                             viation of the mean accuracy. We now switch to the
+                                                             standard deviation of the population, i.e., the expected
+                                                             standard deviation of a single accuracy estimation run.
+                                                             In practice, if one does a single cross-validation run, the
+                                                             expected accuracy will be the mean reported abovep, but
+                                                             the standard deviation will be higher by a factor of 50,
+                                                             the number of runs we averaged in the experiments.
+        Dataset       no. of sample-size no. of duplicate C4.5 Naive-Bayes
+                      attr. / total size categories instances
+        Breast cancer 10 50/699                                            2   8 91.37 0.10 94.22 0.10
+        Chess         36 900/3196                                          2   0 98.19 0.03 86.80 0.07
+        Hypothyroid 25 400/3163                                            2   77 98.52 0.03 97.63 0.02
+        Mushroom      22 800/8124                                          2   0 99.36 0.02 94.54 0.03
+        Soybean large 35 100/683                                           19  52 70.49 0.22 79.76 0.14
+        Vehicle       18 100/846                                           4   0 60.11 0.16 46.80 0.16
+        Rand          20 100/3000                                          2   9 49.96 0.04 49.90 0.04
+
+Table 1: True accuracy estimates for the datasets using C4.5 and Naive-Bayes classi ers at the chosen sample sizes.
+
+% acc                                                                          std dev                        C4.5
+                                                                                       Vehicle
+75                    Estimated                                                                                                                        folds
+70 Soybean             Soybean                                                     7 Soybean            5 10 20 -5 -2 -1
+                       Vehicle                                                                          Naive-Bayes
+65                                                                                 6
+                          Rand                                                     5 Rand                                                              folds
+                                                                                                        5 10 20 -5 -2 -1
+60 Vehicle                                                                              Breast
+                                                                                   4
+55
+                                                                                   3
+50 Rand               5 10 20 50 100  samples
+45                                                                                 2
+                                                                                          Hypo
+                12
+                                                                                   1 Chess
+ % acc                                                                                Mushroom
+100
+                                                                                   0
+99.5 Mushroom                                                                                        2
+   99
+                                                                               std dev
+98.5   Hypo
+   98  Chess                                                                       7
+                                                                                       Vehicle
+97.5
+                                                                                   6 Rand
+97                                                                                     Soybean
+
+96.5                                                                               5
+                                                                                   4 Breast
+96                                                                samples
+                   1  2 5 10 20 50 100                                             3
+
+                                                                                   2
+                                                                                         Chess
+
+                                                                                   1 Hypo
+                                                                                      Mushroom
+
+                                                                                   0
+                                                                                                     2
+
+Figure 2: C4.5: The bias of bootstrap with varying sam-                    Figure 3: Cross-validation: standard deviation of accu-
+ples. Estimates are good for mushroom, hypothyroid,                        racy (population). Di erent line styles are used to help
+and chess, but are extremely biased (optimistically) for                   di erentiate between curves.
+vehicle and rand, and somewhat biased for soybean.
+                                                                           6 Summary
+  In what follows, all gures for standard deviation will
+be drawn with the same range for the standard devi-                        We reviewed common accuracy estimation methods in-
+ation: 0 to 7.5%. Figure 3 shows the standard devia-                       cluding holdout, cross-validation, and bootstrap, and
+tions for C4.5 and Naive Bayes using varying number                        showed examples where each one fails to produce a good
+of folds for cross-validation. The results for strati ed                   estimate. We have compared the latter two approaches
+cross-validation were similar with slightly lower variance.                on a variety of real-world datasets with di ering charac-
+Figure 4 shows the same information for .632 bootstrap.                    teristics.
+
+  Cross-validation has high variance at 2-folds on both                      Proposition 1 shows that if the induction algorithm
+C4.5 and Naive-Bayes. On C4.5, there is high variance                      is stable for a given dataset, the variance of the cross-
+at the high-ends too|at leave-one-out and leave-two-                       validation estimates should be approximately the same,
+out|for three les out of the seven datasets. Strati ca-                    independent of the number of folds. Although the induc-
+tion reduces the variance slightly, and thus seems to be                   tion algorithms are not stable, they are approximately
+uniformly better than cross-validation, both for bias and                  stable. k-fold cross-validation with moderate k values
+variance.                                                                  (10-20) reduces the variance while increasing the bias.
+                                                                           As k decreases (2-5) and the sample sizes get smaller,
+                                                                           there is variance due to the instability of the training
+std dev                       C4.5                                           Jain, A. K., Dubes, R. C. & Chen, C. (1987), \Boot-
+                                                                    samples      strap techniques for error estimation", IEEE trans-
+    7 Soybean                                                                    actions on pattern analysis and machine intelli-
+    6 Rand              2 5 10 20 50 100
+                                                                                gence PAMI-9(5), 628{633.
+        Vehicle
+    5                                                                        Kohavi, R., John, G., Long, R., Manley, D. &
+                                                                                 P eger, K. (1994), MLC++: A machine learn-
+         Breast                                                                  ing library in C++, in \Tools with Arti cial
+    4                                                                            Intelligence", IEEE Computer Society Press,
+                                                                                 pp. 740{743. Available by anonymous ftp from:
+    3                                                                            starry.Stanford.EDU:pub/ronnyk/mlc/toolsmlc.ps.
+
+    2                                                                        Langley, P., Iba, W. & Thompson, K. (1992), An anal-
+    1 Hypo Mushroom                                                              ysis of bayesian classi ers, in \Proceedings of the
+                                                                                 tenth national conference on arti cial intelligence",
+          Chess                                                                  AAAI Press and MIT Press, pp. 223{228.
+    0
+                                                                             Murphy, P. M. & Aha, D. W. (1995), UCI
+                     1                                                           repository of machine learning databases,
+                                                                                 http://www.ics.uci.edu/~mlearn/MLRepository.html.
+Figure 4: .632 Bootstrap: standard deviation in accu-
+racy (population).                                                           Quinlan, J. R. (1993), C4.5: Programs for Machine
+                                                                                 Learning, Morgan Kaufmann, Los Altos, California.
+sets themselves, leading to an increase in variance. This
+is most apparent for datasets with many categories, such                     Scha er, C. (1994), A conservation law for generalization
+as soybean. In these situations, strati cation seems to                          performance, in \Machine Learning: Proceedings
+help, but repeated runs may be a better approach.                                of the Eleventh International Conference", Morgan
+                                                                                 Kaufmann, pp. 259{265.
+  Our results indicate that strati cation is generally a
+better scheme, both in terms of bias and variance, when                      Shao, J. (1993), \Linear model selection via cross-
+compared to regular cross-validation. Bootstrap has low                          validation", Journal of the American Statistical As-
+variance, but extremely large bias on some problems. We
+recommend using strati ed ten-fold cross-validation for                         sociation 88(422), 486{494.
+model selection.
+                                                                             Weiss, S. M. (1991), \Small sample error rate estimation
+Acknowledgments We thank David Wolpert for a                                     for k-nearest neighbor classi ers", IEEE Transac-
+                                                                                 tions on Pattern Analysis and Machine Intelligence
+thorough reading of this paper and many interesting dis-
+cussions. We thank Wray Buntine, Tom Bylander, Brad                             13(3), 285{289.
+Efron, Jerry Friedman, Rob Holte, George John, Pat
+Langley, Rob Tibshirani, and Sholom Weiss for their                          Weiss, S. M. & Indurkhya, N. (1994), Decision tree
+helpful comments and suggestions. Dan Sommer eld                                 pruning : Biased or optimal, in \Proceedings of
+implemented the bootstrap method in MLC++. All ex-                               the twelfth national conference on arti cial intel-
+periments were conducted using MLC++, partly partly                              ligence", AAAI Press and MIT Press, pp. 626{632.
+funded by ONR grant N00014-94-1-0448 and NSF grants
+IRI-9116399 and IRI-9411306.                                                 Wolpert, D. H. (1992), \Stacked generalization", Neural
+
+References                                                                      Networks 5, 241{259.
+
+Bailey, T. L. & Elkan, C. (1993), Estimating the ac-                         Wolpert, D. H. (1994a), O -training set error and a pri-
+    curacy of learned concepts, in \Proceedings of In-                           ori distinctions between learning algorithms, Tech-
+    ternational Joint Conference on Arti cial Intelli-                           nical Report SFI TR 94-12-123, The Sante Fe In-
+    gence", Morgan Kaufmann Publishers, pp. 895{900.                             stitute.
+
+Breiman, L. & Spector, P. (1992), \Submodel selection                        Wolpert, D. H. (1994b), The relationship between PAC,
+    and evaluation in regression. the x-random case",                            the statistical physics framework, the Bayesian
+                                                                                 framework, and the VC framework, Technical re-
+    International Statistical Review 60(3), 291{319.                             port, The Santa Fe Institute, Santa Fe, NM.
+
+Breiman, L., Friedman, J. H., Olshen, R. A. & Stone,                         Zhang, P. (1992), \On the distributional properties of
+    C. J. (1984), Classi cation and Regression Trees,                            model selection criteria", Journal of the American
+    Wadsworth International Group.
+                                                                                Statistical Association 87(419), 732{737.
+Efron, B. (1983), \Estimating the error rate of a pre-
+    diction rule: improvement on cross-validation",
+    Journal of the American Statistical Association
+
+    78(382), 316{330.
+
+Efron, B. & Tibshirani, R. (1993), An introduction to
+    the bootstrap, Chapman & Hall.
+

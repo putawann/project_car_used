@@ -1,0 +1,35 @@
+﻿brand,model,rows,wrong_rows,file_type,should_be,n,source_url
+AUDI,AUDI A4,3,1,Hatchback,Sedan/Wagon,1,https://en.wikipedia.org/wiki/Audi_A4
+AUDI,AUDI A5,2,1,Sedan,Convertible/Coupe/Hatchback,1,https://en.wikipedia.org/wiki/Audi_A5
+AUDI,AUDI RS5,1,1,wagon,Coupe/Hatchback,1,https://en.wikipedia.org/wiki/Audi_A5
+AUSTIN,MINI,2,1,Hatchback,Pickup/Sedan/Van/Wagon,1,https://en.wikipedia.org/wiki/Mini
+BENTLEY,CONTINENTAL,12,4,Sedan,Convertible/Coupe,4,https://en.wikipedia.org/wiki/Bentley_Continental_GT
+BMW,218I,25,17,Hatchback,Convertible/Coupe/MPV,17,https://en.wikipedia.org/wiki/BMW_2_Series
+BMW,220,6,6,Coupe,MPV/Sedan,6,https://en.wikipedia.org/wiki/BMW_2_Series
+BMW,316I,11,1,Coupe,Convertible/Sedan/Wagon,1,https://en.wikipedia.org/wiki/BMW_3_Series
+BMW,318I,37,4,Coupe,Convertible/Sedan/Wagon,4,https://en.wikipedia.org/wiki/BMW_3_Series
+BMW,320I,60,1,Coupe,Convertible/Sedan,1,https://en.wikipedia.org/wiki/BMW_3_Series
+HYUNDAI,GRAND STAREX,106,106,Wagon,MPV/Van,106,https://en.wikipedia.org/wiki/Hyundai_Starex
+MAZDA,FAMILIA,3,3,Pickup,Hatchback/Sedan,3,https://en.wikipedia.org/wiki/Mazda_Familia
+MERCEDES-BENZ,C200,183,29,Coupe,Sedan/Wagon,29,https://en.wikipedia.org/wiki/Mercedes-Benz_C-Class
+MERCEDES-BENZ,C230 KOMPRESSOR,7,3,Coupe,Sedan/Wagon,3,https://en.wikipedia.org/wiki/Mercedes-Benz_C-Class_(W203)
+MERCEDES-BENZ,C43,30,10,Coupe,Sedan/Wagon,10,https://en.wikipedia.org/wiki/Mercedes-Benz_C-Class
+MERCEDES-BENZ,CLA-CLASS,31,4,Hatchback,Sedan/Wagon,2,https://en.wikipedia.org/wiki/Mercedes-Benz_CLA-Class
+MERCEDES-BENZ,CLA-CLASS,31,4,SUV,Sedan/Wagon,1,https://en.wikipedia.org/wiki/Mercedes-Benz_CLA-Class
+MERCEDES-BENZ,CLA-CLASS,31,4,Coupe,Sedan/Wagon,1,https://en.wikipedia.org/wiki/Mercedes-Benz_CLA-Class
+MERCEDES-BENZ,CLA200,36,5,Coupe,Sedan/Wagon,5,https://en.wikipedia.org/wiki/Mercedes-Benz_CLA-Class
+MERCEDES-BENZ,CLA250,132,93,Coupe,Sedan/Wagon,93,https://en.wikipedia.org/wiki/Mercedes-Benz_CLA-Class
+MERCEDES-BENZ,CLA45,4,4,Coupe,Sedan/Wagon,4,https://en.wikipedia.org/wiki/Mercedes-Benz_CLA-Class
+MERCEDES-BENZ,CLS-CLASS,7,2,Sedan,Coupe/Wagon,1,https://en.wikipedia.org/wiki/Mercedes-Benz_CLS-Class
+MERCEDES-BENZ,CLS-CLASS,7,2,Hatchback,Coupe/Wagon,1,https://en.wikipedia.org/wiki/Mercedes-Benz_CLS-Class
+MERCEDES-BENZ,CLS350,10,4,Sedan,Coupe/Wagon,4,https://en.wikipedia.org/wiki/Mercedes-Benz_CLS-Class
+MERCEDES-BENZ,R300,3,3,SUV,MPV/Wagon,3,https://en.wikipedia.org/wiki/Mercedes-Benz_R-Class
+MITSUBISHI,RVR,2,1,Wagon,MPV/SUV,1,https://en.wikipedia.org/wiki/Mitsubishi_RVR
+NISSAN,LIVINA,7,7,SUV,Hatchback/Wagon,7,https://en.wikipedia.org/wiki/Nissan_Livina
+NISSAN,PATROL,1,1,Wagon,Pickup/SUV,1,https://en.wikipedia.org/wiki/Nissan_Patrol
+PORSCHE,PANAMERA,91,1,S,Sedan/Wagon,1,https://en.wikipedia.org/wiki/Porsche_Panamera
+SMART,CITY,1,1,Coupe,Convertible/Hatchback,1,https://en.wikipedia.org/wiki/Smart_Fortwo
+SUZUKI,APV,3,3,Wagon,Pickup/Van,3,https://en.wikipedia.org/wiki/Suzuki_APV
+TOYOTA,CROWN,21,5,Hatchback,SUV/Sedan/Wagon,5,https://en.wikipedia.org/wiki/Toyota_Crown
+VOLKSWAGEN,BEETLE,38,29,Coupe,Convertible/Hatchback,29,https://en.wikipedia.org/wiki/Volkswagen_Beetle
+VOLKSWAGEN,NEW BEETLE,20,9,Coupe,Convertible/Hatchback,9,https://en.wikipedia.org/wiki/Volkswagen_New_Beetle

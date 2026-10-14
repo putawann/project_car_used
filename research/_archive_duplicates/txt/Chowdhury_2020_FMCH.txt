@@ -1,0 +1,474 @@
+Open access                                                                                                                             Methodology
+
+                                   Variable selection strategies and its
+                                   importance in clinical
+                                   prediction modelling
+
+                                   Mohammad Ziaul Islam Chowdhury,1 Tanvir C Turin1,2
+
+To cite: Chowdhury MZI,            Abstract                                                      can be classified broadly into two catego-
+Turin TC. Variable selection       Clinical prediction models are used frequently in clinical    ries: mathematical/statistical modelling and
+strategies and its importance      practice to identify patients who are at risk of developing   computer-­based modelling. Regardless of
+in clinical prediction modelling.  an adverse outcome so that preventive measures can            the modelling technique used, one needs to
+Fam Med Com Health                 be initiated. A prediction model can be developed in          apply appropriate variable selection methods
+2020;8:e000262. doi:10.1136/       a number of ways; however, an appropriate variable            during the model building stage. Selecting
+fmch-2019-000262                   selection strategy needs to be followed in all cases. Our     appropriate variables for inclusion in a model
+                                   purpose is to introduce readers to the concept of variable    is often considered the most important and
+© Author(s) (or their              selection in prediction modelling, including the importance   difficult part of model building. In this paper,
+employer(s)) 2020. Re-­use         of variable selection and variable reduction strategies. We   we will discuss what is meant by variable selec-
+permitted under CC BY-­NC. No      will discuss the various variable selection techniques that   tion, why variable selection is important, the
+commercial re-u­ se. See rights    can be applied during prediction model building (backward     different methods for variable selection and
+and permissions. Published by      elimination, forward selection, stepwise selection and all    their advantages and disadvantages. We have
+BMJ.                               possible subset selection), and the stopping rule/selection   also used examples of prediction models to
+1Department of Community           criteria in variable selection (p values, Akaike information  demonstrate how these variable selection
+Health Sciences, Cumming           criterion, Bayesian information criterion and Mallows'        methods are applied in model building. The
+School of Medicine, University     Cp statistic). This paper focuses on the importance of        concept of variable selection is heavily statis-
+of Calgary, Calgary, Alberta,      including appropriate variables, following the proper steps,  tical and general readers may not be familiar
+Canada                             and adopting the proper methods when selecting variables      with many of the concepts discussed in this
+2Department of Family Medicine,    for prediction models.                                        paper. However, we have attempted to present
+Cumming School of Medicine,                                                                      a non-t­echnical discussion of the concept in
+University of Calgary, Calgary,    Introduction                                                  a plain language that should be accessible
+Alberta, Canada                    Prediction models play a vital role in estab-                 to readers with a basic level of statistical
+Correspondence to                  lishing the relation between the variables                    understanding. This paper will be helpful
+Dr Tanvir C Turin;                 used in the particular model and the                          for those who wish to be better informed of
+turin.chowdhury@ucalgary.ca        outcomes achieved and help forecast the                       variable selection in prediction modelling,
+                                   future of a proposed outcome. A prediction                    have more meaningful conversations with
+                                   model can provide information on the vari-                    biostatisticians/data analysts about their
+                                   ables that are determining the outcome, their                 project or select an appropriate method for
+                                   strength of association with the outcome and                  variable selection in model building with the
+                                   predict the future of an outcome using their                  advanced training information provided by
+                                   specific values. Prediction models have count-                our paper. Our intention is to provide readers
+                                   less applications in diverse areas, including                 with a basic understanding of this extremely
+                                   clinical settings, where a prediction model                   important topic to assist them when devel-
+                                   can help with detecting or screening high-­                   oping a prediction model.
+                                   risk subjects for asymptomatic diseases (to
+                                   help prevent developing diseases with early                   Basic principles of variable selection in
+                                   interventions), predicting a future disease                   clinical prediction modelling
+                                   (to help facilitate patient-doctor communi-                   The concept of variable selection
+                                   cation based on more objective information),                  Variable selection means choosing among
+                                   assisting in medical decision-m­ aking (to help               many variables which to include in a particular
+                                   both doctors and patients make an informed                    model, that is, to select appropriate variables
+                                   choice regarding treatment) and assisting                     from a complete list of variables by removing
+                                   healthcare services with planning and quality                 those that are irrelevant or redundant.1 The
+                                   management.                                                   purpose of such selection is to determine a
+
+                                     Different methodologies can be applied to
+                                   build a prediction model, which techniques
+
+                                   Chowdhury MZI, Turin TC. Fam Med Com Health 2020;8:e000262. doi:10.1136/fmch-2019-000262  1
+ Open access                                                    rule' implies that four variables can be considered reli-
+                                                                ably in the model to give a good fit. Other rules also exist,
+set of variables that will provide the best fit for the model   such as the `one in twenty rule',10 `one in fifty rule'11
+so that accurate predictions can be made. Variable selec-       or `five to nine events per variable rule',12 depending
+tion is one of the most difficult aspects of model building.    on the research question(s). Peduzzi et al9 13 suggested
+It is often advised that variable selection should be more      10-15 events per variable for logistics and survival models
+focused on clinical knowledge and previous literature           to produce reasonably stable estimates. While there
+than statistical selection methods alone.2 Data often           are many different rules, these rules are only approxi-
+contain many additional variables that are not ultimately       mations, and there are situations where fewer or more
+used in model developing.3 Selection of appropriate vari-       observations than have been suggested are needed.14 If
+ables should be undertaken carefully to avoid including         more variables are included in a prediction model than
+noise variables in the final model.                             the sample data can support, the issue of overfitting
+                                                                (achieving overly optimistic results that do not really exist
+Importance of variable selection                                in the population and hence fail to replicate the results
+Due to rapid digitalisation, big data (a term frequently used   in another sample) may arise, and prediction outside the
+to describe a collection of data that is extremely large in     training data (the data used to develop the model) will be
+size, is complex and continues to grow exponentially with       not useful. Having too many variables (with respect to the
+time) have emerged in healthcare and become a critical          number of observation/data set) in a model will result in
+source of the data that has helped conceptualise precision      a relation between variables and the outcome that only
+public health and precision medicine approaches. At its         exists in that particular data set but not in the true popu-
+simplest level, precision health involves applying appro-       lation and power (the probability of detecting an effect
+priate statistical modelling based on available clinical and    when the effect is already there) to detect the true rela-
+biological data to predict patient outcomes more accu-          tionships will be reduced.14 Including too many variables
+rately. Big data sets contain thousands of variables, which     in a model may deliver results that appear important
+makes it difficult to handle and manage efficiently using       but may not be in the true population context.14 There
+traditional approaches. Consequently, variable selection        are examples where prediction models developed using
+has become the focus of much research in different areas        too many candidate variables in a small data set perform
+including health. Variable selection offers many benefits       poorly when applied to an external data set.15 16
+such as improving the performance of models in terms
+of prediction, delivering variables more quickly and cost-­       Existing theory and literature, as well as experience and
+effectively by reducing training and utilisation time, facil-   clinical knowledge, provide a general idea as to which
+itating data visualisation and offering an overall better       candidate variables should be considered for inclusion
+understanding of the underlying process that generated          in a prediction model. Nevertheless, the actual variables
+the data.4                                                      used in the final prediction model should be determined
+                                                                by analysing the data. Determining the set of variables
+  There are many reasons why variables should be                for the final model is called variable selection. Variable
+selected, including practicality issues. It is not practical    selection serves two purposes. First, it helps determine all
+to use a large set of variables in a model. Information         of the variables that are related to the outcome, which
+involving a large number of variables may not be avail-         makes the model complete and accurate. Second, it helps
+able for all patients or may be costly to collect. Some vari-   select a model with few variables by eliminating irrelevant
+ables also may have a negligible effect on outcome and          variables that decrease the precision and increase the
+can therefore be excluded. Having fewer variables in the        complexity of the model. Ultimately, variable selection
+model means less computational time and complexity.5            provides a balance between simplicity and fit. Figure 1
+According to the principle of parsimony, simple models          describes the steps to follow in variable selection during
+with fewer variables are preferred over complex models          model building.
+with many variables. Many variables in the model make
+the model more dependent on the observed data.6                 Variable reduction strategies
+Simple models are easier to interpret, generalise and use
+in practice.7 However, one needs to ensure that important       One way to restrict the list of potential variables is to
+variables are not excluded from the simple model.               choose the candidate variables first, particularly, if the
+                                                                sample is small. Candidate variables for a specific topic
+  There is no set rule as to the number of variables to         are those that have demonstrated previous prognostic
+include in a prediction model as it often depends on            performance with the outcome.17 Candidate variables for
+several factors. The `one in ten rule', a rule that stipulates  a specific topic can be selected based on subject matter
+for how many variables/parameters can be estimated              knowledge before a study begins. This can be achieved
+from a data set, is quite popular in traditional clinical       by reviewing the existing literature on the topic and
+prediction modelling strategy (eg, logistic regression          consulting with experts in the area.7 In addition, system-
+and survival models). According to this rule, one variable      atic reviews and meta-a­ nalyses can be performed to iden-
+can be considered in a model for every 10 events.8 9 To         tify candidate variables. With respect to systematic reviews,
+illustrate, if information for 500 patients is available in a   counting the number of times a variable was found
+data set and 40 patients die (events) during the study/
+follow-u­ p period, in predicting mortality, the `one in ten
+
+2  Chowdhury MZI, Turin TC. Fam Med Com Health 2020;8:e000262. doi:10.1136/fmch-2019-000262
+Figure 1 Variable selection steps. AIC, Akaike information                                                         Open access
+criterion; BIC, Bayesian information criterion.
+                                                              inclusion in the final model. There are different ways of
+important/significant in the different studies has been       selecting variables for a final model. However, there is
+shown to be helpful in identifying candidate variables.7      no consensus on which method is the best.17 There are
+                                                              recommendations that all candidate variables should
+  Grouping/combining similar, related variables based         be included in the model, which approach is called the
+on subject knowledge and statistical technique can also       full model approach.17 A model developed using the
+help restrict the number of variables. If variables are       full model approach has advantages. In a full model
+strongly correlated, combining them into a single vari-       approach, the problem of selection bias is absent and the
+able has been considered prudent.7 For example, systolic      SEs and p values of the variables are correct.17 However,
+blood pressure and diastolic blood pressure are strongly      due to practical reason and the difficulties involved in
+correlated. In choosing between the two, mean blood           defining a full model, it often is not possible to consider
+pressure may be a better option than selecting either         the full model approach.17
+one of them individually.7 However, it has also been
+argued that variables that are highly correlated should         It has also been suggested that variable selection should
+be excluded a priori as they provide little independent       start with the univariate analysis of each variable.6 Vari-
+information.17 18 Removing a correlated variable should       ables that show significance (p<0.25) in the univariate
+not affect the performance of the model, as it measures       analysis, as well as those that are clinically important,
+the same underlying information as the variable to which      should be included for multivariate analysis.6 Neverthe-
+it correlates.5 Ultimately, both combining correlated vari-   less, univariate analysis ignores the fact that individual
+ables and excluding them beforehand help restrict the         variables that are weakly associated with the outcome can
+number of variables.                                          contribute significantly when they are combined.6 This
+                                                              issue can be solved partially by setting a higher signif-
+  How variables are distributed can also provide an indi-     icance level to allow more variables to illustrate signifi-
+cation of which ones to restrict. Variables that have a       cance in the univariate analysis.6 In general, when there
+large number of missing values can be excluded, because       are many candidate variables available and there is confu-
+imputing a large number of missing values will be suspi-      sion or uncertainty regarding which variables to consider
+cious to many readers due to the lack of reliable estima-     in the final model development, formal variable selection
+tion, which problem may recur in applications of the          methods should be followed. Outlined below are four
+model.7 17 Often, 5-20 candidate variables are sufficient to  major variable selection methods: backward elimination,
+build an adequate prediction model.7 Nevertheless, care       forward selection, stepwise selection and all possible
+must be taken in restricting variables, as one drawback is    subset selection, and a discussion of their pros and cons.
+that certain variables and their effects may be excluded
+from the prediction model.                                    Backward elimination
+                                                              Backward elimination is the simplest of all variable selec-
+Variable selection methods                                    tion methods. This method starts with a full model that
+Once the number of potential candidate variables has          considers all of the variables to be included in the model.
+been identified from the list of all available variables in   Variables then are deleted one by one from the full model
+the data set, a further selection of variables is made for    until all remaining variables are considered to have some
+                                                              significant contribution to the outcome.1 The variable
+                                                              with the smallest test statistic (a measure of the variable's
+                                                              contribution to the model) less than the cut-­off value or
+                                                              with the highest p value greater than the cut-­off value--
+                                                              the least significant variable--is deleted first. Then the
+                                                              model is refitted without the deleted variable and the test
+                                                              statistics or p values are recomputed. Again, the variable
+                                                              with the smallest test statistic or with the highest p value
+                                                              greater than the cut-o­ ff value is deleted in the refitted
+                                                              model. This process is repeated until every remaining
+                                                              variable is significant at the cut-o­ ff value. The cut-o­ ff value
+                                                              associated with the p value is sometimes referred to as
+                                                              `p-­to-­remove' and does not have to be set at 0.05.
+
+                                                                Kshirsagar et al19 developed a hypertension prediction
+                                                              model for middle-a­ ged and older adults using data from
+                                                              two community-b­ ased cohorts in the USA. The purpose
+                                                              of the study was to develop a simple prediction model/
+                                                              score with easy and routinely available variables. The
+                                                              model was developed using 7610 participants and eight
+                                                              variables (age, level of systolic and diastolic blood pres-
+                                                              sure, smoking, family history of hypertension, diabetes
+
+Chowdhury MZI, Turin TC. Fam Med Com Health 2020;8:e000262. doi:10.1136/fmch-2019-000262  3
+ Open access                                                      Dang et al20 developed a predictive model (BariWound)
+                                                                for incisional surgical site infections (SSI) within 30 days
+mellitus, female sex, high body mass index (BMI), lack          of bariatric surgery. The objective was to construct a clin-
+of exercise). Candidate variables were selected based           ically useful prediction model to stratify individuals into
+on the scientific literature and numeric evidence. One          different risk groups (eg, very high, high, medium and
+of the data sets did not have information on a specific         low). A clinically rich database, Metabolic and Bariatric
+variable (family history of hypertension) used in the final     Surgery Accreditation and Quality Improvement
+model. Values for this variable were imputed, however,          Program was used to develop the prediction model. An
+this approach is not ideal and often not recommended,7          initial univariate screen was performed to identify base-
+as imputing a large number of missing values can raise          line variables that were significantly associated (p<0.05)
+questions as to acceptability and accuracy of the outcome.      with the outcome 30-­day SSI. Variables then were checked
+The study applied a backward elimination variable selec-        further for clinical relevance with the outcome. Finally, a
+tion technique to select variables for the final model with     forward selection procedure (p<0.01) was applied among
+a conventional p value threshold of 0.05. The study found       the selected variables in the univariate screen to build the
+that some important variables did not contribute inde-          prediction model. A total of nine variables (procedure
+pendently to the outcome following multivariate adjust-         type, chronic steroid or immunosuppressant use, gastro-­
+ment. Setting a higher threshold for the p value and            oesophageal reflux disease, obstructive sleep apnoea, sex,
+giving priority to clinical reasoning in selecting variables,   type 2 diabetes, hypertension, operative time and BMI)
+along with statistical significance, perhaps would have         identified through forward selection were included in the
+allowed more important variables to be entered into the         final model. As mentioned earlier, a p value threshold of
+model.                                                          0.05 in univariate screening and of 0.01 in forward selec-
+                                                                tion is a concern, as it creates the chance of missing some
+  While a set of variables can have significant predictive      important variables in the model.
+ability, a particular subset of them may not. Unfortunately,
+both forward selection and stepwise selection do not have         One advantage of forward selection is that it starts with
+the capacity to identify less predictive individual vari-       smaller models. Also, this procedure is less susceptible to
+ables that may not enter the model to demonstrate their         collinearity (very high intercorrelations or interassocia-
+joint behaviour. However, backward elimination has the          tions among independent variables). Like backward elim-
+advantage to assess the joint predictive ability of variables   ination, forward selection also has drawbacks. In forward
+as the process starts with all variables being included in      selection, inclusion of a new variable may make an
+the model. Backward elimination also removes the least          existing variable in the model non-s­ignificant; however,
+important variables early on and leaves only the most           the existing variable cannot be deleted from the model.
+important variables in the model. One disadvantage of           A balance between backward elimination and forward
+the backward elimination method is that once a variable         selection is therefore required which can be achieved in
+is eliminated from the model it is not re-e­ ntered again.      stepwise selection.
+However, a dropped variable may become significant
+later in the final model.                                       Stepwise selection
+                                                                Stepwise selection methods are a widely used variable
+Forward selection                                               selection technique, particularly in medical applications.
+The forward selection method of variable selection is the       This method is a combination of forward and backward
+reverse of the backward elimination method. The method          selection procedures that allows moving in both direc-
+starts with no variables in the model then adds variables       tions, adding and removing variables at different steps.
+to the model one by one until any variable not included         The process can start with both a backward elimination
+in the model can add any significant contribution to            and forward selection approach. For example, if stepwise
+the outcome of the model.1 At each step, each variable          selection starts with forward selection, variables are added
+excluded from the model is tested for inclusion in the          to the model one at a time based on statistical signifi-
+model. If an excluded variable is added to the model, the       cance. At each step, after a variable is added, the proce-
+test statistic or p value is calculated. The variable with the  dure checks all the variables already added to the model
+largest test statistic greater than the cut-­off value or the   to delete any variable that is not significant in the model.
+lowest p value less than the cut-o­ ff value is selected and    The process continues until every variable in the model
+added to the model. In other words, the most significant        is significant and every excluded variable is insignificant.
+variable is added first. The model then is refitted with        Due to its similarity, this approach is sometimes consid-
+this variable and test statistics or p values are recomputed    ered as a modified forward selection. However, it differs
+for all remaining variables. Again, the variable with the       from forward selection in that variables entered into the
+largest test statistic greater than the cut-­off value or the   model do not necessarily remain in the model. However,
+lowest p value less than the cut-o­ ff value is chosen from     if stepwise selection starts with backward elimination,
+among the remaining variables and added to the model.           the variables are deleted from the full model based on
+This process continues until no remaining variable is           statistical significance and then added back if they later
+significant at the cut-­off level when added to the model.      appear significant. The process is a rotation of choosing
+In forward selection, if a variable is added to the model,
+it remains there.1
+
+4  Chowdhury MZI, Turin TC. Fam Med Com Health 2020;8:e000262. doi:10.1136/fmch-2019-000262
+the least significant variable to drop from the model                                                                Open access
+and then reconsidering all dropped variables to re-e­ nter
+into the model. Stepwise selection requires two separate        a large effective sample size (50 events per variable)
+significance levels (cut-­offs) for adding and deleting vari-   can help overcome this issue.6 The p values obtained by
+ables from the model. The significance levels for adding        this method are also in doubt, as so many multiple tests
+variables should be less than the significance levels for       occur during the selection process. If there are too many
+deleting variables so that the procedure does not get           candidate variables, then the method fails to provide the
+into an infinite loop. Within stepwise selection, backward      best model, as some irrelevant variables are entered into
+elimination is often given preference as in backward elim-      the model.1 6 The regression coefficients obtained by
+ination the full model is considered, and the effect of all     this method are also biased. It also prevents researchers
+candidate variables is assessed.7                               from thinking about the problem.1 There is also criticism
+                                                                that stepwise and other automated variable selection
+  Chien et al21 developed a new prediction model for            processes can generate biologically implausible models.6
+hypertension risk in the Chinese population. A prospec-         Collinearity is often considered a serious issue in stepwise
+tive cohort of 2506 ethnic Chinese community individuals        variable selection. Variables that best describe a partic-
+in Taiwan was used to develop the model. Two different          ular data set are chosen by the stepwise procedure due
+models, a clinical model with five variables and a biochem-     to their high-m­ agnitude coefficients for that data set, not
+ical model with eight variables, were developed. The            necessarily for the underlying population. If there are two
+objective was to identify high-­risk Chinese community          highly correlated variables and they contribute equally
+individuals with hypertension risk using the newly devel-       to the outcome, there is a good chance that both of the
+oped model. The variables for the model were selected           correlated variables will be out of the model in stepwise
+using the stepwise selection method, the most common            selection if they are individually less significant than other
+method for variable selection that permits using both           non-­correlated variables. Conversely, if one of the two
+forward and backward procedures iteratively in model            correlated variables contributes substantially better to the
+building. Generally, to apply a stepwise selection proce-       outcome for a particular data set and thus appears in the
+dure, a set of candidate variables need to be identified        model, the estimate of its coefficient can be much higher
+first. However, information about candidate variables and       in magnitude than its true population value. Additionally,
+the number of variables considered in stepwise selection        potential valuable information from its correlated vari-
+was absent in this study. Although it was indicated that        able can be lost and the results less generalisable.
+the selected variables were statistically associated with
+the risk of hypertension, without a discussion about the        All possible subset selection
+potential candidate variables, how variables were selected      In all possible subset selection, every possible combina-
+and how many were included in the model, the reader             tion of variables is checked to determine the best subset
+is left uninformed about the variable selection process,        of variables for the prediction model. With this proce-
+which raises concern about the reliability of the finally       dure, all one-v­ ariable, two-v­ ariable, three-v­ ariable models,
+selected variables. Moreover, setting a higher signifi-         and so on, are built to determine which one is the best
+cance level is strongly recommended in stepwise selec-          according to some specific criteria. If there are K vari-
+tion to allow more variables to be included in the model.       ables, then there are 2K possible models that can be built.
+A significance level of only 0.05 was used in this study,
+and that cut-­off value can sometimes miss important vari-        Holden et al22 developed a model to identify variables
+ables in the model. This likely happened in this study,         (which combination of perceptions) that best predict
+as an important variable termed `gender' was forcefully         bar-­coded medication administration (BCMA) accep-
+entered into the biochemical model even though it did           tance (intention to use, satisfaction) using cross-s­ ectional
+not appear significant at the 0.05 level. Alternatively, the    survey data among registered nurses in the Midwest
+study could use Akaike information criterion (AIC) or           United States. An all possible subset selection procedure
+Bayesian information criterion (BIC) (discussed later),         was used to identify combinations of variables to model
+which often provide the most parsimonious model.                BCMA acceptance most efficiently. Two different models
+                                                                were constructed. In model 1, the outcome of acceptance
+  The stepwise selection method is perhaps the most             was nurses' behavioural intention to use BCMA while in
+widely used method of variable selection. One reason is         model 2, the outcome of acceptance was nurses' satis-
+that it is easy to apply in statistical software.7 This method  faction with BCMA. A set of nine theory-­based candi-
+allows researchers to examine models with different             date variables (seven perception and two demographic)
+combinations of variables that otherwise may be over-           were assessed for inclusion in the models. To determine
+looked.6 The method is also comparatively objective as          the optimal set of variables for the models, investigators
+the same variables are generally selected from the same         assessed every combination of the models generated
+data set even though different persons are conducting           by an all possible subset selection procedure using five
+the analysis. This helps reproduce the results and vali-        different measures. After comparing the various models
+date in model.7 There are also disadvantages to using           according to five different measures, the best model was
+the stepwise selection method. There is instability of          selected. Application of an all possible subset selection
+variable selection if a different sample is used; however,      procedure was feasible here due to the small number of
+                                                                candidate variables.
+
+Chowdhury MZI, Turin TC. Fam Med Com Health 2020;8:e000262. doi:10.1136/fmch-2019-000262  5
+ Open access                                                   information loss and it is important to select the model
+                                                               that best minimises that loss. Candidate models for the
+  The ability to identify a combination of variables,          specific data are ranked from best to worst according to
+which is not available in other selection procedures, is       the value of AIC.24 Among the available models for the
+an advantage of this method.7 Among the disadvantages,         specific data, the model with minimum AIC is best.26
+computing can be an issue in an all subset selection
+procedure, as the number of possible subsets can be huge         AIC only provides information about the quality of a
+and many models can be produced, particularly when the         model relative to the other models and does not provide
+number of variables is large. In addition, an all possible     information on the absolute quality of the model. With
+subset selection procedure can produce models that are         a small sample size (relative to a large number of param-
+too small23 or overfitted due to examining many models         eters/variables or any number of variables/parameters),
+with multiple testing.7 Further, a selection criterion needs   AIC often provides models with too many variables.
+to be specified in advance.                                    However, this issue can be solved with a modified version
+                                                               of AIC called AICC, which introduces an extra penalty
+Stopping rule/selection criteria in variable selection         term for the number of variables/parameters. For a
+In all stepwise selection methods including all subset         large sample size, this penalty term becomes zero and
+selection, a stopping rule or selection criteria for inclu-    AICC subsequently converges to AIC, which is why it is
+sion or exclusion of variables need to be set. Generally, a    suggested that AICC be used in practice.24
+standard significance level for hypothesis testing is used.7
+However, other criteria are also frequently used as a stop-    Bayesian information criterion
+ping rule such as the AIC, BIC or Mallows' Cp statistic. We
+discuss these major selection criteria below.                  BIC is another variable selection criterion that is similar
+                                                               to AIC, but with a different penalty for the number of vari-
+P values                                                       ables (parameters) included in the model. Like AIC, BIC
+If the stopping rule is based on p values, the traditional     also balances between simplicity and goodness of model
+choice for significance level is 0.05 or 0.10. However, the    fitting. In practice, for a given data set, BIC is calculated
+optimum value of the significance level to decide which        for each of the candidate models, and the model corre-
+variable to include in the model is suggested to be 1, which   sponding to the minimum BIC value is chosen. BIC often
+exceeds the traditional choices.18 This suggestion assumes     chooses models that are more parsimonious than AIC,
+absence of few strong variables or completely irrelevant       as BIC penalises bigger models more due to the larger
+variables in the data.18 In reality, some strong and some      penalty term inherent in its formula.27
+irrelevant variables always exist in the outcome. In such
+a situation, a significance level of 0.50 is proposed, which     Although there are similarities between AIC and BIC,
+allows some variables to exit in the selection process.18      and both criteria balance simplicity and model fit, differ-
+There is also a strong recommendation for using a p value      ences exist between them. The underlying theory behind
+in the range of 0.15-0.206, although using a higher signif-    AIC is that the data stem from a very complex model,
+icance level has the disadvantages that some unimportant       there are many candidate models to fit the data and none
+variables may be included in the model.6 However, we           of the candidate models (including the best model) are
+believe a higher significance level for variable selection     the exact functional form of the true model.25 In addition,
+should be considered so that important variables relevant      the number of variables (parameters) in the best model
+to the outcome are not missed and to avoid deleting less       may not include all variables (parameters) in the true
+significant variables that may have practical and clinical     model.25 In other words, a best model is only an approxi-
+reasoning.                                                     mation of the true model and a true model that perfectly
+                                                               represents reality does not exist.24 Conversely, the under-
+Akaike information criterion                                   lying theory behind BIC is that the data are derived from
+AIC is a tool for model selection that compares different      a simple model and there exists a candidate model that
+models. Including different variables in the model             represents the true model.25 Depending on the situation,
+provides different models, and AIC attempts to select          however, each criterion has an advantage over the other.
+the model by balancing underfitting (too few variables         There are many studies that have compared AIC and BIC
+in the model) and overfitting (too many variables in the       and recommended which one to use. If our objective is to
+model).24 Including too few variables often fails to capture   select a best model that will provide maximum predictive
+the true relation and too many variables create a gener-       accuracy, then AIC is superior (because there is no true
+alisability problem.25 A trade-o­ff is therefore required      model, and the best model is selected to maximise the
+between simplicity and adequacy of model fitting and           predictive accuracy and represent an approximate true
+AIC can help achieve this.26 A model cannot precisely          relation). However, if the goal is to select a correct model
+represent the true relation that exists in the data, as there  that is consistent, then BIC is superior (because BIC
+is some information loss in estimating the true relation       consistently selects the correct model from among the
+through modelling. AIC tries to estimate that relative         candidate models that best represent the true model).25
+information loss compared with other candidate models.         For large data sets, the performance of both criteria
+Quality of the model is believed to be better with smaller     improves, but with different objectives.25
+
+6  Chowdhury MZI, Turin TC. Fam Med Com Health 2020;8:e000262. doi:10.1136/fmch-2019-000262
+Mallows' Cp statistic                                                                                                                     Open access
+Mallows' Cp statistic is another criterion used in variable
+selection. The purpose of the statistic is to select the best                          3 Lee Y-­ho, Bang H, Kim DJ. How to establish clinical prediction
+model using a subset of variables from all available vari-                                 models. Endocrinol Metab 2016;31:38-44.
+ables. This criterion is most widely used in the all subset
+selection method. Different models derived in all subset                               4 Guyon I, Elisseeff A. An introduction to variable and feature selection.
+selection are compared based on Mallows' Cp statistic and                                  Journal of machine learning research 2003;3:1157-82.
+the model with the lowest Mallows' Cp statistic closest to
+the number of variables plus the constant is often chosen.                             5 Kuhn M, Johnson K. Applied predictive modeling. New York:
+A small Mallows' Cp value near the number of variables                                     Springer, 2013.
+indicates that the model is relatively more precise than
+other models (small variance and less bias).28                                         6 Hosmer DW, Lemeshow S, Sturdivant RX. Applied logistic
+                                                                                           regression. New York: John Wiley & Sons, Incorporated, 2013.
+Conclusion
+It is extremely important to include appropriate variables                             7 Steyerberg EW. Clinical prediction models: a practical approach to
+in prediction modelling, as model's performance largely                                    development, validation, and updating. Springer Science & Business
+depends on which variables are ultimately included in                                      Media, 2008.
+the model. Failure to include the proper variables in the
+model provides inaccurate results, and the model will                                  8 Harrell FE, Lee KL, Califf RM, et al. Regression modelling strategies
+fail to capture the true relation that exists in the data                                  for improved prognostic prediction. Stat Med 1984;3:143-52.
+between the outcome and the selected variables. There
+are numerous occasions when prediction models are                                      9 Peduzzi P, Concato J, Kemper E, et al. A simulation study of the
+developed without following the proper steps or adopting                                   number of events per variable in logistic regression analysis. J Clin
+the proper method of variable selection. Researchers                                       Epidemiol 1996;49:1373-9.
+need to be more aware of and cautious about these very
+important aspects of prediction modelling.                                            10 Ogundimu EO, Altman DG, Collins GS. Adequate sample size for
+                                                                                           developing prediction models is not simply related to events per
+Twitter Tanvir C Turin @drturin                                                            variable. J Clin Epidemiol 2016;76:175-82.
+
+Contributors TCT and MZIC developed the study idea. MZIC prepared the                 11 Steyerberg EW, Eijkemans MJC, Harrell FE, et al. Prognostic
+manuscript with critical intellectual inputs from TCT. The manuscript has been             modelling with logistic regression analysis: a comparison of
+finalised by MZIC and TCT.                                                                 selection and estimation methods in small data sets. Stat Med
+                                                                                           2000;19:1059-79.
+Funding The authors have not declared a specific grant for this research from any
+funding agency in the public, commercial or not-­for-­profit sectors.                 12 Vittinghoff E, McCulloch CE. Relaxing the rule of ten events
+                                                                                           per variable in logistic and COX regression. Am J Epidemiol
+Competing interests None declared.                                                         2007;165:710-8.
+
+Patient consent for publication Not required.                                         13 Peduzzi PN, Concato J, Holford TR, et al. The importance of events
+                                                                                           per independent variable in multivariable analysis, II: accuracy and
+Provenance and peer review Not commissioned; externally peer reviewed.                     precision of regression estimates. J Clin Epidemiol 1995;48:1503-10.
+
+Data availability statement There are no data in this work.                           14 Babyak MA. What you see may not be what you get: a brief,
+                                                                                           nontechnical introduction to overfitting in regression-t­ype models.
+Open access This is an open access article distributed in accordance with the              Psychosom Med 2004;66:411-21.
+Creative Commons Attribution Non Commercial (CC BY-­NC 4.0) license, which
+permits others to distribute, remix, adapt, build upon this work non-c­ ommercially,  15 Bleeker SE, Moons KGM, Derksen-­Lubsen G, et al. Predicting
+and license their derivative works on different terms, provided the original work is       serious bacterial infection in young children with fever without
+properly cited, appropriate credit is given, any changes made indicated, and the use       apparent source. Acta Paediatr 2001;90:1226-31.
+is non-­commercial. See: http://creativecommons.org/licenses/by-nc/4.0/.
+                                                                                      16 Bleeker SE, Derksen-­Lubsen G, Grobbee DE, et al. Validating and
+References                                                                                 updating a prediction rule for serious bacterial infection in patients
+                                                                                           with fever without source. Acta Paediatr 2007;96:100-4.
+  1 Ratner B. Variable selection methods in regression: Ignorable
+      problem, outing notable solution. Journal of Targeting, Measurement             17 Royston P, Moons KGM, Altman DG, et al. Prognosis and prognostic
+      and Analysis for Marketing 2010;18:65-75.                                            research: developing a prognostic model. BMJ 2009;338:b604.
+
+  2 Steyerberg EW, Vergouwe Y. Towards better clinical prediction                     18 Harrell FE. Regression modeling strategies with applications to linear
+      models: seven steps for development and an ABCD for validation.                      models, logistic regression, and survival analysis. New York: Springer,
+      Eur Heart J 2014;35:1925-31.                                                         2001.
+
+                                                                                      19 Kshirsagar AV, Chiu Y-L­ , Bomback AS, et al. A hypertension
+                                                                                           risk score for middle-­aged and older adults. J Clin Hypertens
+                                                                                           2010;12:800-8.
+
+                                                                                      20 Dang JT, Tran C, Switzer N, et al. Predicting surgical site infections
+                                                                                           following laparoscopic bariatric surgery: development of the
+                                                                                           BariWound tool using the MBSAQIP database. Surg Endosc
+                                                                                           2019;21:1-0.
+
+                                                                                      21 Chien K-­L, Hsu H-­C, Su T-C­ , et al. Prediction models for the risk
+                                                                                           of new-­onset hypertension in ethnic Chinese in Taiwan. J Hum
+                                                                                           Hypertens 2011;25:294-303.
+
+                                                                                      22 Holden RJ, Brown RL, Scanlon MC, et al. Modeling nurses'
+                                                                                           acceptance of bar coded medication administration technology at a
+                                                                                           pediatric hospital. J Am Med Inform Assoc 2012;19:1050-8.
+
+                                                                                      23 Roecker EB. Prediction error and its estimation for subset-­selected
+                                                                                           models. Technometrics 1991;33:459-68.
+
+                                                                                      24 Burnham KP, Anderson DR. Multimodel inference: understanding AIC
+                                                                                           and BIC in model selection. Sociol Methods Res 2004;33:261-304.
+
+                                                                                      25 Aho K, Derryberry D, Peterson T. Model selection for ecologists: the
+                                                                                           worldviews of AIC and BIC. Ecology 2014;95:631-6.
+
+                                                                                      26 Snipes M, Taylor DC. Model selection and Akaike information criteria:
+                                                                                           an example from wine ratings and prices. Wine Economics and
+                                                                                           Policy 2014;3:3-9.
+
+                                                                                      27 Neath AA, Cavanaugh JE. The Bayesian information criterion:
+                                                                                           background, derivation, and applications. Wiley Interdisciplinary
+                                                                                           Reviews: Computational Statistics 2012;4:199-203.
+
+                                                                                      28 Gilmour SG. The interpretation of Mallows's Cp-s­ tatistic. The
+                                                                                           Statistician 1996;1:49-56.
+
+Chowdhury MZI, Turin TC. Fam Med Com Health 2020;8:e000262. doi:10.1136/fmch-2019-000262  7
+

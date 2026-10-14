@@ -1,0 +1,617 @@
+Generalized Collinearity Diagnostics
+Author(s): John Fox and Georges Monette
+Source: Journal of the American Statistical Association , Mar., 1992, Vol. 87, No. 417
+(Mar., 1992), pp. 178-183
+Published by: Taylor & Francis, Ltd. on behalf of the American Statistical Association
+Stable URL: https://www.jstor.org/stable/2290467
+
+JSTOR is a not-for-profit service that helps scholars, researchers, and students discover, use, and build upon a wide
+range of content in a trusted digital archive. We use information technology and tools to increase productivity and
+facilitate new forms of scholarship. For more information about JSTOR, please contact support@jstor.org.
+Your use of the JSTOR archive indicates your acceptance of the Terms & Conditions of Use, available at
+https://about.jstor.org/terms
+
+                  Taylor & Francis, Ltd. and American Statistical Association are collaborating with JSTOR to
+                  digitize, preserve and extend access to Journal of the American Statistical Association
+
+                                                                                This content downloaded from
+                                                         128.2.149.7 on Wed, 29 Sep 2021 16:46:03 UTC
+
+                                                                       All use subject to https://about.jstor.org/terms
+                                  Generalized Collinearity Diagnostics
+
+JOHN FOX and GEORGES MONETTE*
+
+Working in the context of the linear model y = X, + c, we generalize the concept of variance inflation as a measure of
+collinearity to a subset of parameters in , (denoted by ,1, with the associated columns of X given by XI). The essential idea
+underlying this generalization is to examine the impact on the precision of estimation-in particular, the size of an ellipsoidal
+joint confidence region for P1-of less-than-optimal selection of other columns of the design matrix (X2), treating still other
+columns (X0) as unalterable, even hypothetically. In typical applications, XI contains a set of dummy regressors coding categories
+of a qualitative variable or a set of polynomial regressors in a quantitative variable; X2 contains all other regressors in the model,
+save the constant, which is in X0. If o2V denotes the realized variance of P8 and o2U is the variance associated with an optimal
+selection of X2, then the corresponding scaled dispersion ellipsoids to be compared are Zv = {x: x'V-'x ' 1} and Zu = {x:
+x'U-'x ' 1}, where &u is contained in 4v. The two ellipsoids can be compared by considering the radii of 4v relative to Zu,
+obtained4 through the spectral decomposition of V relative to U. We proceed to explore the geometry of generalized variance
+inflation, to show the relationship of these measures to correlation-matrix determinants and canonical correlations, to consider
+X matrices structured by relations of marginality among regressor subspaces, to develop the relationship of generalized variance
+inflation to hypothesis tests in the multivariate normal linear model, and to present several examples.
+
+KEY WORDS: Canonical correlation; Joint confidence regions; Spectral decomposition; Variance inflation.
+
+1. INTRODUCTION                                                                 gressors: If the regressors are uncorrelated, then Rj = 0 and
+
+Consider the linear model                                                       VIFj attains its minimum value of 1.
+
+                                                                                    The variance-inflation factor is a useful diagnostic be-
+
+y = Xfi + -, (1) cause it indicates directly the harm inflicted by collinearity
+
+where y is an n x 1 vector of observations on a response on the precision of estimation: Indeed, a confidence inter-
+
+or dependent variable; X is an n x p full-rank design matrix                    val around f,j has width proportional to VIFj'2, which w
+of fixed constants, the first column of which consists of Is;
+                                                                                term the standard-error inflation factor (SIF). But the VIF
+
+                                                                                (or SIF) is only relevant when individual coefficients are
+
+P is a p x 1 vector of parameters to be estimated; andofe direct interest.
+is an n x 1 vector of unobserved errors with E(e) = 0 and
+                                                                                It is often natural to be concerned with sets of regressors
+V(e) = o-21. For some purposes we shall also assume that
+                                                                                and the column subspaces of X that they span rather than
+e is normally distributed Nn(O, 0.21). The usual least squares
+                                                                                with individual regressors and their associated coefficients.
+estimate of , is f = (X'X)- X'y, for which V(P) = This is the case, for example, when a qualitative indepen-
+u2(X'X)-1 (e.g., Fox 1984).
+                                                                                dent variable gives rise to a set of dummy-variable regres-
+Since the methods developed in this article pertain to
+                                                                                sors and when polynomial terms in a quantitative indepen-
+subspaces of the column space of X, a deficient-rank pa-
+                                                                                dent variable appear in a linear model. In each of these
+rameterization of the model can be accommodated by se-
+                                                                                cases, the specific basis selected for a subspace of X is
+lecting arbitrary bases for the subspaces. It is, likewise,
+                                                                                essentially arbitrary, though the subspace itself is not. Here
+possible to develop these methods for models without con-
+                                                                                relations among different sets of regressors and the sub-
+stants, simply by excluding the constant regressor from the
+                                                                                spaces that they generate are still of interest.
+X0 matrix defined subsequently.
+                                                                                The plan of this article is as follows: In Section 2 we
+If interest inheres in individual coefficients of the model,
+                                                                                suggest a generalization of variance inflation to subsets of
+as is common in regression analysis, then the diagonal en-
+                                                                                coefficients, and in Section 3 we consider a simple special
+
+tries of V(ft) reflect the (im)precision of estimation.cSaspeeo-f generalized variance inflation that will often be of
+cifically, it may be shown that (Fox 1984; Theil 1971)
+                                                                                interest in applications and develop the relationship of vari-
+
+                 .1 O'2 1                                                       ance inflation to correlation-matrix determinants. Section 4
+                                                                                presents some elementary examples. Section 5 develops the
+J08 =xjX) 1 (2)                                                                 relationship of generalized variance inflation to angles be-
+
+where 3,j is the jth entry in , (but nottwetenhreegriensstoresrubcsepapcets aensd ttoim mualttiveariate test statistics.
+
+f31); xi; is the entry in the ith row, jthSecctoiolnum 6 sn howosfhoXw; tx he; niostiotnhoef generalized variance
+
+mean of the jth column; and Rj is the square of the multiple inflation may be applied to models in which the design ma-
+
+correlation from the regression of the jth column of X on trix is structured by relations of marginality among regres-
+
+the other columns. The second term in Equation (2) is called sor subspaces. Section 7 presents an illustrative application,
+
+the variance-inflation factor (VIF) (Marquardt 1970), for it and Section 8 offers brief conclusions.
+
+reflects the degree to which the sampling variance of /% is                     2. GENERALIZED VARIANCE INFLATION
+increased as a consequence of correlations among the re-
+
+                                                                                We begin by rewriting model (1):
+
+    * John Fox is Professor of Sociology and Mathematics and Statistics         y = XOPO + XIlSI + X2s2 + E, (3)
+and Georges Monette is Associate Professor of Mathematics and Statistics
+at York University, Toronto, Ontario, Canada M3J 1P3. Both are asso-                               ? 1992 American Statistical Association
+ciated with the Statistical Consulting Service of the York University In-              Journal of the American Statistical Association
+stitute for Social Research.                                                    March 1992, Vol. 87, No. 417, Theory and Methods
+
+                                                                           178
+
+                                                       This content downloaded from
+                                 128.2.149.7 on Wed, 29 Sep 2021 16:46:03 UTC
+
+                                              All use subject to https://about.jstor.org/terms
+Fox and Monelte: Collinearity Diagnostics 179
+
+where the n x p design matrix X has been partitioned into      W1I.02, the residual sum of squares and cross-products (SSCP)
+(a) XO with po columns, containing variables whose values
+could not have been selected differently by the investigator,  matrix for X1 regressed on X0 and X2, whereas U`1 = WIIO,
+                                                               the residual SSCP matrix for X1 regressed on X0 alone. We
+
+even hypothetically (the archetypal example is the constant shall also show in Section 5 that the set of A's exceeding
+
+regressor); (b) X1 with p, columns, containing variable1s remains the same when the roles of X1 and X2 are
+
+whose "effects" are of simultaneous interest-a set of dummy interchanged.
+
+regressors, for example; (c) X2 with P2 columns, containing    A consequence of Property 2 is that the variables in X1
+
+variables that are "controlled" in defining the effects of the can be individually rescaled and centered (if X0 contains a
+
+variables in X1 and whose values could potentially be se- constant regressor) without changing the A's. The same, of
+
+lected by the investigator, at least in imagination.           course, is true (from Property 3) for the variables in X2.
+
+We wish to assess the impact of the particular "selection"     Measuring the "loss" due to the choice of X2 is a ques-
+
+of values for X2 on the estimation of PI in model (3). Lettion of assessing how much larger Zv is than Zu. Although
+
+Wij denote XXj. We can compare the variance of 6,              this assessment can be made by considering the entire se-
+
+                                                               quence of A's, it is convenient in practice to have a single
+
+WOO) = f[Wl - [WI09 W12] [w20 W22J LW21 ]                      index as a summary. The following possibilities are sug-
+                                                               gested in analogy to test statistics used in multivariate anal-
+
+            = 0&V, (4)                                         ysis of variance (MANOVA) (Eaton 1983) to compare the
+                                                               marginal dispersion of the dependent variables with their
+with what the variance could have been had the X2 vari-        conditional dispersion under a hypothetical model:
+ables been selected to maximize the precision of estimation
+of f 1:                                                            1. HtAi measures the ratio of volumes of the ellipsoids
+
+                2U = 2(W1 - W1OWo'WO0)-. (5)                   and corresponds to Wilks's criterion in MANOVA. We prefer
+                                                               this measure, which we term a generalized standard-error
+Expressions (4) and (5) are obtained using standard for-       inflation factor (GSIF), for its straightforward interpreta-
+mulas (Graybill 1976) for the inverse of a partitioned ma-     tion if for no deeper reason., Thus the generalized variance-
+trix. That (5) minimizes (4) for fixed X1 and a fixed span
+for XO is shown in Section 5. We will refer to (5) as the      inflation factor is GVIF = GSIF2. Similar measures com-
+"utopian" variance of 1, to emphasize that it is the best
+attainable variance for a selection of X2 that may not be      paring confidence-ellipsoid volumes were suggested by An-
+feasible under the circumstances of the investigation. It is   drews and Pregibon (1978) and Belsley, Kuh, and Welsch
+easily shown that the dispersion ellipsoid                     (1980) for assessing the influence of observations on the
+                                                               precision of regression estimates.
+                       %v= {x: x'Vlx ?1} (6)
+                                                                   2. 'A 2 corresponds to Pillai's trace criterion in
+contains the utopian ellipsoid                                 MANOVA.
+
+                      %u = {x : x'UWlx ? 1}. (7)                   3. A2 corresponds to Roy's maximum-root criterion in
+                                                               MANOVA.
+
+                                                                3. GENERALIZED VARIANCE-INFLATION FACTORS AND
+                                                                              CORRELATION-MATRIX DETERMINANTS
+
+The motivation for adopting an explicit point of coImn pmaarniys,olnikely most, applications, the investigator is in-
+
+in assessing collinearity was well developed by Ctoeorekste(1d9i8n4a)s.sessing the effect of a particular set of re-
+
+The two ellipsoids (6) and (7) can be compared by con- gressors (perhaps a set of dummy regressors) adjusting for
+
+sidering the radii of Zv relative to Wu, obtained through atlhl eother variables in the model. In this case X0 of model
+
+spectral decomposition of V relative to U. By a version of (3) contains only the constant regressor. We find it con-
+
+the spectral decomposition theorem (Rao 1973), there ex- venient here to scale each column of X1 and X2 to 0 mean
+
+ists a nonsingular matrix G of order Pi such that U = GG' and length 1 which, as we have shown, does not affect
+
+and V GA2G', where A = diag(AI, ..., Akpl) with Ag1en' eralized variance inflation. Under these transformations
+
+A2 > .- .> Apl. Because V 2 U, the smallest eigenvasluumes of cross-products are correlations and thus (special-
+
+AP2I -,> 1. The A's are all 1 when the ellipsoids tv and Zizuing Eq. 4),
+
+coincide.
+
+The sequence of A's is invariant under the following                      V(W1) = 2(RI, - R2R221R2I) 1, (8)
+
+transformations:                                               where Ri1 is the matrix of correlations between Xi and Xj.
+
+1. Nonsingular linear transformation of the variables in More generally; when X0 contains more than the constant
+
+XO.                                                            regressor, Rij represents the correlations between Xi and Xj
+    2. Nonsingular linear transformation of the variables in   partialing for X0.
+
+X1 and addition of linear combinations of variables in XOIn the utopian situation, where, X1 and X2 are uncorre-
+
+to those in X1.                                                lated, Equation (8) reduces to V(W1) = &r2Rj11, and the gen-
+
+3. Nonsingular linear transformation of the variables in eralized variance-inflation factor may, therefore, be ex-
+
+X2 and addition of linear combinations of variables in XO pressed in the following simplified form:
+
+to those in X2.                                                                                        detR1
+   Properties 1-3 follow easily by observing that V-1 =                   GVIF1 =deR1-R1RR)(9
+
+                                        This content downloaded from
+                  128.2.149.7 on Wed, 29 Sep 2021 16:46:03 UTC
+
+                               All use subject to https://about.jstor.org/terms
+180 Journal of the American Statistical Association
+
+    Now, let R denote the correlation matrix among all of         Table 1. Illustrative Cell Frequencies for Two-Way Classifications,
+the columns of X excluding the constant (or correlations        Showing Generalized Variance-Inflation Factors for Row and Column
+among all columns in X1 and X2 partialing for X0). Then
+                                                                                     Effects Employing Dummy-Variable Coding
+det R = det R22 x det(R11 - R12RJ-R2,) and, conse-
+                                                                   (A) Row and Column Classifications Independent
+quently, Equation (9) simplifies further to
+                                                                      10        20   30
+                   GVIF1 = det RI, x det R22 (10)                     20        40   60
+                                                                            10      15
+                                                        det R           5       30   45
+                                                                      15
+
+This last result establishes the equality of GVIF1 and GVIF2.         GVIFP = .694/.694 = 1
+    The determinant of R, incidentally, is a common ad hoc
+                                                                          GVIFC= .9.9 = 1
+
+                                                                                A1 = A2 = 1
+
+global measure of collinearity (e.g., Kmenta 1986), usually                 (B) Weak Association
+justified by noting that det R = 1 for orthogonal data and
+
+det R = 0 for perfectly collinear data. Alternatively, some           20 15 10 5
+researchers no doubt have noted that det R is inversely pro-          15 20 15 10
+portional to the generalized variance of j8 (omitting the con-        10 15 20 15
+stant) in a model in which the X variables are standardized.
+A deeper, and related, justification of this measure is pro-            5 10 15 20
+vided by examining the size of the joint confidence region
+for f (excluding the constant) relative to that obtained for                     GVIFRq = .556/.490 = 1.14
+                                                                                 GVIFc = .556/.490 = 1.14
+
+                                                                                           GVIFl/2x3 = 1.02
+                                                                             A1 = 1.06, A2 = 1.00, A3 = 1.00
+
+orthogonal X (again, excluding the constant): GVIF* = det                         (C) Stronger Association
+R-1/det I; thus det R = GVIF*-1. (Here we use GVIF* to
+represent a ratio of squared ellipsoid volumes, but not of            10 0 0 0
+the ellipsoids defined in Section 2-hence the asterisk.)               2 10 0 0
+                                                                       0 2 10 0
+    Admitting det R as a global index of collinearity suggests         0 0 2 10
+the following interpretation of Equation (10): The gener-              0 0 0 10
+alized variance-inflation factor GVIF1 = GVIF2 represents
+the global collinearity in X scaled by the product of the                     GVIFR = .514/.00421 = 122
+collinearity internal to each of X1 and X2. This scaling in                   GVIFC = .476/.00390 = 122
+effect adjusts for the arbitrary selection of bases for the spans
+                                                                                       GVIFl'/2X4 = 1.82
+                                                                                        GVIF1/2x3 = 2.23
+                                                                           A1 = 2.61, A2 = 1.41, A3 = 1.08
+
+of X1 and X2.                                                         (D) A Perfect Dependency
+    These observations explain why det R is an unreasonable
+                                                                      10     10 10 0
+global measure of collinearity when the columns of X par-             10     10 10 0
+tition naturally into sets, some of which contain more than           10     10 10 0
+one member: To the extent that these sets have arbitrary                    0 0 10
+bases for their column spans, some of the collinearity de-               0
+tected is artifactual. Instead, given a partition of X into k
+                                                                            GVIFR = .292/0 = 00
+sets, it is natural to compute det RI, x det R22 X ... X                    GVIFc = .292/0 = 00
+det Rkk/det R as a global index of collinearity invariant                   A1 = 00, A2 = A3 = 1
+
+with respect to changes of basis within sets.                       Note that the specific bases selected for the regressor
+   To preserve comparability across subspaces of different      subspaces generated by rows and columns are immaterial,
+                                                                (the
+dimension, we suggest examining GVIF'/2P' = GSIF'/P1            affecting the determinants in the numerator and denomi-
+geometric mean of the A's) in place of GVIF. Notice that        nator of Equation (9) but not their ratio. Furthermore, note
+when Pi = 1 the generalized variance-inflation factor re-       that (as is clear from Eq. 10, as well as the results given
+duces to the usual VIF (Eq. 2), since then RI =                 in Sec. 5) GVIFR and GVIFc are necessarily equal since R,
+R12R2lR21.                                                      C, and the constant comprise the entire design. The se-
+
+4. SOME SIMPLE ILLUSTRATIONS                                    quence of X's is also shown for each example. In Section
+                                                                6, we consider analysis-of-variance designs that include
+
+Table 1 shows several two-way contingency tables, each interactions.
+
+of which, we imagine, relates two qualitative independent       In Example A, the row and column classifications are
+
+variables in a linear model. From the contingency tables independent, yielding GVIF's of 1. In Example B, there is
+
+we constructed dummy-variable regressors for rows and a weak dependency between rows and columns, producing
+
+columns, employing a 0/1 coding scheme and treating thGeVIF's slightly in excess of 1. Example C illustrates a
+
+last row and column as "baseline" categories (the coding stronger dependency between rows and columns, giving rise
+
+scheme implicitly employed by the SAS GLM procedure, to larger variance-inflation factors (of 122), though even
+
+for example); then we computed correlations among the here the one-dimensional indices (GVIF112P') are not par-
+
+dummy regressors; and, finally, we evaluated the gener- ticularly large. Finally, Example D illustrates a perfect de-
+
+alized variance-inflation factors for row and column re- pendency (produced by the coincidence of the last row and
+
+gressors (shown as GVIFR and GVIFC) using Equation (9). last column), which yields infinite GVIF's. Note though
+
+                      This content downloaded from
+128.2.149.7 on Wed, 29 Sep 2021 16:46:03 UTC
+
+             All use subject to https://about.jstor.org/terms
+Fox and Monette: Collinearity Diagnostics 181
+
+that two of the three A'smaa trr ix,eand1th,e rer greessforls e foc r ttheim naig n efftech ts e ai anb d /a38la ofnc
+
+first three rows and columns of the design.                   rows and columns span subspaces that are marginal to this
+
+5. GVIF's, CANONICAL ANGLES, AND                              space. A simple approach to the model is to employ a con-
+                MULTIVARIATE TESTS                            venient reparameterization that yields a full-rank design and
+                                                              permits direct tests of hypotheses of interest concerning cell
+
+The ellipsoids tv and Cu [given in (6) and (7)] occur in and marginal means. One such reparameterization is pro-
+
+two problems that are closely related to variance inflation:  duced by constraining Eai = 0; EY3j = 0, Yi2yij = O(j = 1,
+Fitting a multivariate linear model and canonical correla-    ..., c), and Ejyij = 0 (i = 1, ..., r). The resulting design
+tions between two sets of variables adjusted for a third.     matrix is of full column rank as long as all cells of the
+These relationships illuminate the essential character of     design are filled. The essential point here is not to argue
+variance inflation.
+                                                              for full-rank as opposed to deficient-rank parameterizations
+
+   A multivariate linear model with X1 as dependent vari- of the model, since the two are equivalent if treated prop-
+                                                                                                 erly, but rather to demonstrate how collinearity of the sub-
+
+ables and XO and X2 as regressors may be written as X1 =
+                                                                                                   space for interactions with the subspaces for main effects.
+
+X000 + X2X2 + A, where ,: and '2 are PO X Pi and P2
+
+x Pi matrices of regression coefficients, respectively, andmay reasonably be assessed despite the fact that the latter
+
+A is an n x Pi matrix of "errors."                            subspaces are marginal to the former.
+   In considering the hypothesis Ho 2 = 0 we are led to          For our purposes, the reparameterization has the conve-
+
+compare the residual SSCP matrices resulting from fitting nient property that for "balanced" data (i.e., all nij = nl
+a full model and from fitting a restricted model in which rc), the main-effect and interaction subspaces are mutually
+2 = 0. The full model yields the residual SSCP matrix orthogonal. For unbalanced data, the generalized variance-
+                                                              inflation factor for the interactions after main effects ex-
+WII.02 = V-1; the restricted model yields the residual SSCP
+                                                              ceeds 1 and is a useful index of the extent to which im-
+matrix WII.O = UW1. Expression (5) is a minimum for (4)
+                                                              balance compromises our ability to estimate interactions
+if X2 is free to vary because WII.O is a maximum for W11.02.
+If the rows of A are independent and normally distrib- accurately.
+uted, then the usual tests of Ho are based on the eigenvalues Since we are typically not interested in separately esti-
+in the spectral decomposition of U-1 relative to V-1 (Eaton mating main effects in the presence of interactions, we would
+1983). These eigenvalues are the same as those of V rel- usually find generalized variance-inflation factors for main
+ative to U. In the present context, we can make no as- effects adjusted for each other (as in Table 1) but ignoring
+                                                              interactions (corresponding, for example, to Type II sums
+sumptions about the distribution of A, but the various test
+criteria (enumerated in Sec. 2) nevertheless provide mea- of squares in SAS). Our approach is more general, how-
+sures of the association of X1 with X2 adjusting for XO. ever, and permits assessing collinearity of main effects ad-
+The A's are also interpretable as "angle cosecants" of the justing for other main effects and interactions (correspond-
+                                                              ing to Type III sums of squares).
+column spaces of X1 and X2 adjusted for XO. Let XI.O be The full-rank methods developed in this article will func-
+the residuals of X1 on regression on XO, and let X2.0 be
+defined similarly. Let ?io.0 = span(Xi.0) for i = 1, 2. Finding tion properly as long as all cells in the design are filled. If
+                                                              there is an empty cell, then some interaction contrasts are
+canonical correlations between XI.O and X2.0 is equivalent
+to finding the cosines of angles between pairs of "canonical not estimable, and the reduced design matrix based on the
+                                                              usual constraints is of deficient rank. In this case the gen-
+vectors" in 21.o and ?2.0 (Eaton 1983). Let Pi, . . ., p,P be
+the ordered angle cosines (correlations) between 21. and eralized variance-inflation factor is infinite. Equation (9)
+                                                              may fail, however, since in a sparse design the numerator
+?T2.0. Since Pi, . . ., p,P are the nonnegative roots of the de- as well as the denominator may be 0; this situation occurs
+terminantal equation det(W12.0W22.0W21.0 - P2W11.0) = 0
+                                                              when the regressors coding the interactions are themselves
+(Rao 1973), it follows that A2 = (1- p2)-l' for i = 1,
+                                                              not of full column rank.
+Pi* Hence the A71 are angle sines and the Ai are angle co-
+                                                               Generalized variance-inflation factors for interactions in
+secants between the two spaces. This result also shows the
+equality of the A's greater than 1 when the roles of X1 and the two-way classifications given in Examples (A) and (B)
+X2 are interchanged and, hence, the equality of the GVIF's of Table 1 are as follows: (A) GVIF = .0209/.00704 =
+for X1 and X2 (a property that was established in an alter- 2.96, GVIIFl/2x6 = 1.10; (B) GVIF = .0128/.00628 = 2.03,
+                                                              GVIFl/2x9 = 1.04. Note that Example (A) is unbalanced
+native manner in Sec. 3).
+                                                              for the interactions even though the main-effect subspaces
+
+6. MARGINAL SUBSPACES                                         are orthogonal to one another.
+
+In certain linear models-for example, those containing              7. AN ILLUSTRATIVE APPLICATION
+
+both main-effect and interaction regressors-some sub-          Heberlein and Baumgartner (1978) developed a 10-re-
+
+spaces are marginal to others when the model is "overparg-ressor model for predicting response rates in mail surveys
+
+ameterized" (e.g., McCullagh and Nelder 1983). A simple, conducted principally in the United States. When they failed
+
+and common, example is the two-way analysis-of-variance to replicate certain of Heberlein and Baumgartner's find-
+
+model Yijk = y+ ai+ PJ+ yi+E1ijk fori =1,**., rin; gjs in a similar study of surveys conducted in Europe,
+
+          = 1,... c;k = , .., iz. Here, the regressors for the Eichner and Habermehl (1981) suggested that the discrep-
+
+interactions -yi span the full colum space of the design ancy might be partly due to collinearity, producing unstable
+
+                                                 This content downloaded from
+                           128.2.149.7 on Wed, 29 Sep 2021 16:46:03 UTC
+
+                                        All use subject to https://about.jstor.org/terms
+182 Journal of the American Statistical Association
+
+estimates of regression coefficients. Further work by Goy-                                               Eichner and Habermehl (1981), Goyder (1982), and He-
+
+der (1982), employing a different sample of mail surveys berlein and Baumgartner (1981) (in response to criticism)
+
+mostly from the United States, yielded results similar to furnished multiple correlations between each regressor and
+
+those in the initial study. Goyder (1985) provided a com- all others in the model. The largest of these multiple cor-
+
+parison between surveys conducted in the United States and relations (less than .8) is not indicative of serious collin-
+
+Canada.                                                                                             earity (corresponding to inflation in coefficient standard er-
+
+The issue of interstudy coefficient differences should, of rors of less than 2). As well, two of the variables employed
+
+course, be addressed directly-for the coefficient vector as in the model-sponsor and type of population-give rise
+
+a whole and for individual coefficients-but none of the to more than one dummy regressor. In the case of spon-
+
+reports cited includes the necessary information (for ex- sorship, the baseline category (neither government nor mar-
+
+ample, coefficient standard errors). On the basis of Table ket research) provides an arguably natural comparison, but
+
+2, calculated from Goyder's (1985) data, it seems likely in the case of type of population, the selected baseline (nei-
+
+that some of the coefficient differences between the He- ther general, employee, nor school or army) is clearly ar-
+
+berlein and Baumgartner (1978) and Eichner and Haber- bitrary. Consequently, the methods of this article are rel-
+
+mehl (1981) studies are statistically significant. Neverthe- evant for addressing the issue of collinearity here.
+
+less, several coefficients are imprecisely estimated.                                                    The results shown in Table 2 are for a data set generously
+
+                                                                                                    provided by John Goyder (Goyder 1985). There were 270
+
+Table 2. Regression Coefficients and Variance-Inflation Factors for                                 U.S. mail surveys included in the data set, 102 of which
+
+Regression of Final Percent Response Rates in U.S. Mail Surveys                                     had valid data for all of the variables employed in the anal-
+ on Sponsorship, Type of Population, Saliency of Topic, Length in                                   ysis. To be consistent with Goyder (1985), missing data
+Pages, Number of Contacts, Special Third Contact, and Incentive                                     were imputed, primarily by substituting means for missing
+
+                                     (A) Regression Results                                         values. An analysis based only on complete cases provides
+                                                                                                    essentially similar results. With this substantial quantity of
+                                                                                  Standard          missing data, however, a more sophisticated approach than
+                                                                                                    mean imputation or complete-case analysis would be de-
+Regressor Coefficient Error SIF                                                                     sirable [see, for example, Little and Rubin (1987)].
+
+   Constant 29.3 3.15                                                                                   Part A of Table 2 shows estimated regression coeffi-
+Sponsorshipa                                                                                        cients, standard errors, and individual standard error infla-
+                                                                                                    tion factors. Multiple-degree-of-freedom tests for sponsor-
+     Market research -4.34 2.78 1.28                                                                ship and type of population yield the following results:
+      Government 12.4 3.25 1.12                                                                     Sponsorship, F(2,259) = 9.15, p < .0001; Type of Pop-
+ Type of populationb                                                                                ulation, F(3,259) = 2.41, p = .066. Part B of the table
+      General -5.73 2.65 1.13                                                                       shows generalized variance-inflation factors for sponsor-
+      Employee -1.00 4.69 1.04                                                                      ship and type of population. It is apparent that collinearity
+     School or army 4.42 3.45 1.03                                                                  is not a substantial problem here.
+ Saliency of topicc 11.8 1.75 1.31
+ Length in pages -0.343 0.199 1.07                                                                     This conclusion has implications for how one might pro-
+ Number of contacts 7.00 1.09 1.59                                                                  ceed to obtain improved estimates. Were the level of col-
+ Special third contactd 3.88 1.66 1.56
+   Incentivee 7.27 1.49 1.06
+
+Standard error of regression 15.34
+
+R2                   .618
+
+Number of casesf 270
+
+                    (B) Generalized Variance-Inflation Factors                                      linearity high, then the ideal procedure would be to collect
+                                            Sponsorship                                             additional, noncollinear data, perhaps experimentally. Be-
+
+                         Pi Aj                                                                      cause collinearity is not seriously problematic, however, it
+                                                                                                    would be more fruitful to increase the number of obser-
+                     .639 1.30                                                                      vations, especially in sparse categories of qualitative in-
+                     .380 1.08                                                                      dependent variables (such as surveys conducted on em-
+                                                                                                    ployee populations), to increase the variability of quantitative
+                                GVIF = 1.97
+                            GVIFl/2x2 = 1.19
+
+                     Type of population                                                             independent variables (such as incentive for responding to
+
+                                     Pi Ai                                                          the survey), and to reduce the error variance by improving
+                                                                                                    the specification of the model. It might also be of interest
+                                       .448 1.12                                                    to consider further the role of cultural differences among
+                                       .231 1.03                                                    populations in determining survey nonresponse. Indeed, it
+                                     .130 1.01                                                      is our impression that social scientisits are too quick to as-
+                                                                                                    cribe imprecise and (upon replication) unstable coefficient
+                                                GVIF = 1.34                                         estimates to collinearity when more likely culprits are large
+                                          GVIFl12x3 = 1.05                                          error variances, small effects, poorly specified models,
+                                                                                                    nontrivial differences among studies, and other substantive
+NOTE: The source of the data is personal communication from John Goyder. See Goyder                 problems.
+(1985) and Heberlein and Baumgartner (1978) for more detailed information about the defi-
+nition of variables.
+
+   aBaseline category for sponsorship: neither govemment nor market research.
+   bBaseline category for type of population: other type of population.
+   cCoding of saliency: (0) not salient; (1) possibly salient; (3) salient.
+   dco_ing of special third contact: (0) no third contact; (1) regular mail; (2) special mail; (3)
+
+telephone or personal.                                                                                   8. CONCLUDING COMMENTS
+    eCoding of incentive (on first contact): (0) no incentive; (1 ) less than $.25; (2) $.25; (3) $.50;
+
+(4) $1.00 or more.                                                                                       When our interest in collinearity is not for its numerical
+
+fThe reported results are based on imputing missing values, as in Goyder (1985); there are
+
+102 complete cases.                                                                                 consequences [the approach emphasized, for example, by
+
+                                           This content downloaded from
+                     128.2.149.7 on Wed, 29 Sep 2021 16:46:03 UTC
+
+                                  All use subject to https://about.jstor.org/terms
+Fox and Monette: Collinearity Diagnostics 183
+
+Belsley et al. (1980)] but for its impact on the variability Belsley, D. A., Kuh, E., and Welsch, R. E. (1980), Regression Diag-
+
+of estimates (an admittedly related, though distinguishable nostics, New York: John Wiley.
+
+phenomenon), it is important to realize that we essentially Cook, R. D. (1984), Comment on "Demeaning Conditioning Diagnostics
+
+                                                                                                                       Through Centering," by D. A. Belsley, The American Statistician, 38,
+
+wish to compare two sets of X values-the ones that we                       78-79.
+
+have and the ones that we wish we had. This point was                       Eaton, M. L. (1983), Multivariate Statistics: A Vector Space Approach,
+made clearly by Cook (1984); also see Leamer (1973, 1983).                     New York: John Wiley.
+
+   A reviewer of an earlier version of this article suggested               Eichner, K., and Habermehl, W. (1981), "Predicting Response Rates to
+                                                                               Mailed Questionnaires," Comment on "Factors Affecting Response Rates
+
+that "collinearity is not so much a problem as a state of                      to Mailed Questionnaires" by T. A. Heberlein and R. Baumgartner
+nature-like the law of gravity-and that railing against                        (1978), American Sociological Review, 46, 361-363.
+                                                                            Fox, J. (1984), Linear Statistical Models and Related Methods, With Ap-
+
+collinearity is rather like complaining about not being ableplications to Social Research, New York: John Wiley.
+
+to fly by flapping your arms." Although we have some                        Goyder, J. (1982), "Factors Affecting Response Rates to Mailed Ques-
+sympathy with this point of view, we believe that it over-                     tionnaires," American Sociological Review, 47, 550-553.
+states the case: The identification of specific sources of im-                           (1985), "Nonresponse on Surveys," Canadian Journal of Soci-
+                                                                               ology, 10, 231-251.
+
+precision in estimation may, in certain instances, suggest                  Graybill, F. A. (1976), Theory and Applications of the Linear Model,
+how estimates can be improved, for example, by collecting                      North Scituate, MA: Duxbury Press.
+
+                                                                            Heberlein, T. A., and Baumgartner, R. (1978), "Factors Affecting Re-
+
+additional data (abandoning arm-flapping and trying an air-                 sponse Rates to Mailed Questionnaires," American Sociologial Review,
+
+plane). In other instances, the discovery of collinearity may               43, 447-462.
+motivate respecification of a statistical model or reorien-
+tation of the goals of a study-as when a variable selection                          (1981), "The Effectiveness of the Heberlein-Baumgartner Model
+                                                                            for Predicting Response Rates to Mailed Questionnaires: Europea
+                                                                            U.S. Examples" (Reply to comment by Eichner and Habermehl),
+
+method is employed for prediction.                                             American Sociological Review, 46, 363-367.
+   The method introduced in this article extends collinearity               Kmenta, J. (1986), Elements of Econometrics (2nd ed.), New York: Mac-
+
+                                                                               millan.
+
+diagnostics to subsets of coefficients. This method is easy Leamer, E. E. (1973), "Multicollinearity: A Bayesian Interpretation,"
+
+to apply because it involves familiar computations; it is                   Review of Economics and Statistics, 55, 371-380.
+
+                                                                            (1983), "Model Choice and Specification Analysis," in Hand-
+flexible because it permits distinctions between intrinsicallybook of Econometrics, Volume 1, eds. Z. Griliches and M. D. Intri-
+
+fixed variables and those that could be selected or sampled ligator, Amsterdam: North-Holland, pp. 285-330.
+
+differently; and it is cogent because it speaks                   directly  to Ltihttele, R. J. A., and Rubin, D. B. (1987), Statistical Analysis With Miss-
+harm produced by collinearity.
+                                                                                     ing Data, New York: John Wiley.
+                  [Received January 1990. Revised January 1991.]                Marquardt, D. W. (1970), "Generalized Inverses, Ridge Regression, Biased
+
+                                                                                    Linear Estimation, and Nonlinear Estimation," Technometrics, 12, 591-
+                                                                                     612.
+
+REFERENCES                                                                  McCullagh, P., and Nelder, J. A. (1983), Generalized Linear Models,
+                                                                               London: Chapman & Hall.
+
+Andrews, D. F., and Pregibon, D. (1978), "Finding Outliers That Mat-        Rao, C. R. (1973), Linear Statistical Inference and Its Applications (2nd
+   ter," Journal of the Royal Statistical Society, Ser. B, 40, 85-93.          ed.), New York: John Wiley.
+
+                                                                            Theil, H. (1971), Principles of Econometrics, New York: John Wiley.
+
+                      This content downloaded from
+128.2.149.7 on Wed, 29 Sep 2021 16:46:03 UTC
+
+             All use subject to https://about.jstor.org/terms
+

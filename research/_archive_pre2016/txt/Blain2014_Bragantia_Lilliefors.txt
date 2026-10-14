@@ -1,0 +1,700 @@
+Agrometeorogy | Article       http://dx.doi.org/10.1590/brag.2014.015
+
+                           Revisiting the critical values of the Lilliefors test:
+                           towards the correct agrometeorological use of the
+                           Kolmogorov-Smirnov framework
+
+                            Gabriel Constantino Blain (*)
+
+                             Instituto Agronômico (IAC), Avenida Barão de Itapura, 1481, 13020-902 Campinas (SP), Brasil.
+                             (*) Corresponding author: gabriel@iac.sp.gov.br
+
+                             Received: Feb. 17, 2014; Accepted: Mar. 18, 2014
+
+                             Abstract
+                                Several studies have applied the Kolmogorov-Smirnov test (KS) to verify if a particular parametric distribution can be used to
+                                assess the probability of occurrence of a given agrometeorological variable. However, when this test is applied to the same data
+                                sample from which the distribution parameters have been estimated, it leads to a high probability of failure to reject a false null
+                                hypothesis. Although the Lilliefors test had been proposed to remedy this drawback, several studies still use the KS test even
+                                when the requirement of independence between the data and the estimated parameters is not met. Aiming at stimulating the
+                                use of the Lilliefors test, we revisited the critical values of the Lilliefors test for both gamma (gam) and normal distributions,
+                                provided easy-to-use procedures capable of calculating the Lilliefors test and evaluated the performance of these two tests in
+                                correctly accepting a hypothesized distribution. The Lilliefors test was calculated by using critical values previously presented
+                                in the scientific literature (KSLcrit) and those obtained from the procedures proposed in this study (NKSLcrit). Through Monte
+                                Carlo simulations we demonstrated that the frequency of occurrence of Type I (II) errors associated with the KSLcrit may be
+                                unacceptably low (high). By using the NKSLcrit we were able to meet the significance level in all Monte Carlo experiments. The
+                                NKSLcrit also led to the lowest rate of Type II errors. Finally, we also provided polynomial equations that eliminate the need to
+                                perform statistical simulations to calculate the Lilliefors test for both gam and normal distributions.
+                                Key words: goodness of fit, gamma distribution, normal distribution.
+
+                            Revisão dos valores críticos do teste Lilliefors: em direção ao correto uso
+                            agrometeorológico do algoritmo de Kolmogorov-Smirnov
+
+                             Resumo
+                                Diversos estudos têm aplicado o teste de Kolmogorov-Smirnov (KS) para verificar se determinada distribuição paramétrica
+                                pode ser utilizada para estimar a probabilidade de ocorrência de variáveis agrometeorológicas. Contudo, a probabilidade de
+                                não rejeição de uma falsa hipótese de nulidade (H0; erro tipo II) torna-se elevada quando o KS é aplicado à mesma amostra de
+                                dados utilizada para estimar os parâmetros da distribuição. Embora uma adaptação denominada Lilliefors tenha sido proposta
+                                para permitir o uso do algoritmo de Kolmogorov-Smirnov na condição anteriormente mencionada, o KS em sua forma original
+                                é ainda frequentemente utilizado. Objetivando estimular o correto uso do KS e de sua referida adaptação, este trabalho revisou
+                                os valores críticos do Lilliefors para as distribuições gama e normal, desenvolveu procedimentos computacionais capazes de
+                                calcular esses testes de aderência e comparou a habilidade do KS e do Lilliefors em aceitar corretamente uma H0. O teste de
+                                Lilliefors foi calculado utilizando-se tanto valores críticos previamente apresentados na literatura científica (KSLcrit) quanto novos
+                                valores propostos neste estudo (NKSLcrit). Por meio de simulações de Monte Carlo demonstrou-se que a frequência de ocorrência
+                                de erros tipo I (II) associada ao KSLcrit pode ser consideravelmente baixa (elevada). A frequência de erros tipo I associada ao
+                                NKSLcrit permaneceu próxima ao nível de significância adotado em todos os experimentos. O NKSLcrit também demonstra menor
+                                taxa de erros tipo II. Considerando-se as distribuições gama e normal, este trabalho também desenvolveu equações polinomiais
+                                que eliminam a necessidade de realizar simulações estatísticas para calcular o teste Lilliefors.
+                                Palavras-chave: teste de aderência, distribuição gama, distribuição normal.
+
+                         192 Bragantia, Campinas, v. 73, n. 2, p.192-202, 2014
+                                                                     Correct use of the Kolmogorov-Smirnov test
+
+1. INTRODUCTION                                                      or to the normal distributions (Chen et al., 2013; Vlcek
+                                                                     and Huth, 2009; Wilks 2011). However, Vlcek and Huth
+    Parametric distributions have been widely used to                (2009) indicate that it may be difficult to use the KSLcrit
+represent meteorological data. Although the use of these             values because they are tabulated only for integer values of
+mathematical functions may be regarded as a theoretical              the shape parameter of the gam distribution. Moreover, it is
+idealization of the actual data, it is not free from empirical       worth recalling that these critical values were obtained from
+considerations (Wilks, 2011). In fact, before adopting a             a computer-based technique called Monte Carlo simulation.
+particular distribution to assess the probability of occurrence      Thus, it becomes natural to suppose that the current capacity
+of a given data value one needs to check if the parametric           of the personal computers may provide better estimates for
+function does provide a reasonable fit. The selection of an          the critical values of the Lilliefors test (NKSLcrit).
+appropriate candidate distribution requires the use of actual
+data (Wilks, 2011) and it is frequently based on statistical             Thus, the aims of this study are: to (i) review the critical
+methods called goodness-of-fit tests. The goodness-of-fit tests      values of the Lilliefors test for both gam and normal
+are usually computed to obtain evidences in favor of the             distributions, to (ii) provide easy-to-use procedures capable of
+null hypothesis (H0) that states that the data under analysis        calculating the Lilliefors test for these two distributions and
+were drawn from a particular distribution (Wilks, 2011).             to (iii) evaluate the performance of the KS and Lilliefors tests
+                                                                     in correctly accepting or rejecting a candidate distribution
+    The one-sample Kolmogorov-Smirnov test (KS) is a                 to assess the probability of occurrence of a given variable.
+widely used goodness-of-fit test (Wilks, 2011). It compares          The Lilliefors test was calculated by using the critical values
+the empirical (edf ) and the cumulative distribution function        presented by Crutcher (1975) and those obtained from
+(cdf ). And, for continuous data, the KS test tends to be            the easy-to-use procedures proposed in this study. We
+more powerful than other tests that compare the data                 hope this study stimulates the use of the Lilliefors test in
+histogram with the probability density function (e.g. the            meteorological studies.
+chi-square test, Wilks, 2011). However, the original KS is
+applicable if, and only if, the parameters of the theoretical        2. MATERIAL AND METHODS
+distribution have not been estimated from the same bunch
+of data used to apply this goodness-of-fit test. If this             Theoretical background
+requirement is not fulfilled, the probability of accepting
+a false H0 becomes unacceptable high (Crutcher, 1975;                    The null hypothesis (H0) of a hypothesis test defines
+Lilliefors, 1967; Steinskog et al., 2007; Vlcek and Huth,            a particular logical frame (Wilks, 2011) that allows us to
+2009; Wilks, 2011). Yet, the original KS test has still been         generate the sample null distribution for the test statistic.
+frequently used when the requirement of independence                 As in other goodness-of-fit tests, the H0 of the KS test
+between the data and the estimated parameters is not met             states that the data under analysis were drawn from the
+(Steinskog et al., 2007; Vlcek and Huth, 2009). Naturally,           hypothesized distribution. Accordingly, if the calculated test
+this statement suggests that further efforts are required to         statistic falls in the rejection region of the null distribution,
+avoid this misuse of the original KS.                                the proposed H0 is rejected. Otherwise, the calculated test
+                                                                     statistic is regarded as consistent with the null hypothesis
+    In situations where the parameters of the distribution           (the H0 is not rejected). At this point, it is worth recalling
+have been estimated from all available data or from the              that the rejection region of the null distribution is defined by
+same bunch of data used to calculate the goodness of fit, a          the adopted significance level. Accordingly, the probability
+modification of the original KS test must be adopted. This           of a Type I error (rejecting a true H0) must be equal to the
+modification is frequently called Kolmogorov-Smirnov/                adopted significance level. By way of analogy, a Type II error
+Lilliefors test or simply Lilliefors test (Lilliefors, 1967; 1969).  occurs if a false H0 is not rejected. The alternative hypothesis
+In order to draw the attention of the scientific community to        (HA) is another fundamental element of a hypothesis test and
+Lilliefors' findings, Crutcher (1975) tabulated critical values      is frequently defined as: the null hypothesis is not true (this
+for the Lilliefors test (KSLcrit) that can be used for several       definition was adopted in this study). Further information
+univariate distributions, such as the 2-parameter gamma              regarding the fundamental elements of any hypothesis test
+(gam) and normal distributions (it is worth emphasizing              can be found in several studies such as Wilks (2011) which
+that the chi-square and the exponential distributions may            is recommended reading.
+be regarded as particular cases of the gam distribution). The
+KSLcrit values provided by Crutcher (1975) have been widely
+used to evaluate the fit of meteorological data to the gam
+
+                                                                     Bragantia, Campinas, v. 73, n. 2, p.192-202, 2014 193
+G.C. Blain
+
+The Kolmogorov-Smirnov and the Lilliefors                                  gam and normal distributions. The Monte Carlo simulations
+tests                                                                      used to approximate the NKSLcrit is described as follow:
+
+    The KS test is based on the comparison between the                         The simulation procedure starts by generating a large
+theoretical [F'(x)] and the empirical cumulative distributions             number of samples from the hypothesized distribution. For
+[F(x)] (equation 1).                                                       the gam distribution, we generated Ns=500000 samples for
+                                                                           each assumed shape and n value. For the normal distribution,
+D=max|F'(x)-F(x)                                       (1)                 we generated Ns=500000 data samples for each assumed
+                                                                           n value. The parameters of the gam or normal distribution
+    The statistic D describes the largest discrepancy between              were then estimated from each synthetic data samples. F(x)
+                                                                           and F'(x) were then estimated for each synthetic dataset
+[F'(x)] and [F(x)]. Naturally, sufficiently large D values lead            generating 500000 D values for each shape and n values
+                                                                           (gam) or for each n value (normal). At this point, it is
+to the rejection of H0. According to Stephens (1974) the                   worth emphasizing that the H0 is true for each D value.
+critical values of the original KS test may be approximated by:            Accordingly, each collection of D values is, in fact, the
+                                                                           null distribution of the hypothesis test. Thus, the NKSLcrit
+KScrit = K                                             (2)                 values were approximated as the (1-) quantile of each null
+            n + 0.12 + 0.11 / n                                            distribution ( is the adopted significance level). Further
+                                                                           information regarding this procedure can be found in several
+    Where n is the sample size. K is set to 1.358 (1.224)                  studies such as Wilks (2011) and Shin et al. (2012). Note
+when the test is performed at the 5% (10%) significance level.             that this procedure can be used to derive NKSLcrit for any
+                                                                           shape, sample size and significance level () of interest. The
+    The KS test may be regarded as a distribution-free test                r-codes used to run these procedures are exemplified as follow.
+because its null distribution does not depends upon the                    ### Lilliefors test for the 2-parameter gamma distribution
+explicit form of the distribution under analysis. In other
+words, the critical values obtained from equation 2 are                    Ns=500000 # number of synthetic samples
+applicable to any distribution regardless the values of its                n=50 # sample size (given by the user)
+parameters. As previously described, equation 2 can only                   shape= 3 # shape parameter (given by the user)
+be used if the parameters of the distribution have not been                beta=30 # scale parameter (given by the user)
+estimated from the same data sample used to calculate the                  x=matrix(NA,n,1)
+KScrit value.                                                              lilliefors=matrix(NA,Ns,1)
+                                                                           probpar=matrix(NA,n,1)
+    Although the Lilliefors test is also based on equation 2,              pos=matrix(1: n, n, 1)/n
+it cannot be regarded as a distribution-free test because                  for (i in 1:Ns){
+for distributions, such as the gam distribution, the sample
+distribution of D depends on the sample size and on the                     x[,1]=rgamma(n,shape,1/beta)
+values of the shape parameter. Crutcher (1975) tabulated                    A=log(mean(x))-((sum(log(x)))/n)
+KSLcrit values for both gam and normal distributions                        alfali=(1/(4*A))*(1+sqrt(1+(4*A/3)))
+(Table 1). The studies of Husak et al. (2007), Steingnov                    betali=mean(x)/alfali
+(2009), Blain (2011) and Wilks (2011) used these critical                   probpar[,1]=pgamma(sort(x), alfali, 1/betali, lower.tail = TRUE,
+values to evaluate the suitability of the gam distribution in               log.p = FALSE)
+describing rainfall series.                                                 Dmax=max(abs(pos- probpar))
+                                                                            lilliefors[i,1]=Dmax}
+    In order to review the critical values tabulated by Crutcher           NKScrit5=quantile(lilliefors, probs=0.95) # 5% significance level
+(1975) we generated new critical values (NKSLcrit) for both                NKScrit10=quantile(lilliefors, probs=0.90) # 10% significance level
+                                                                           format(NKScrit5, digits=3)
+Table 1. Critical values for the Lilliefors test. Extracted from Crutcher  format(NKScrit10, digits=3)
+(1975).  is the significance level, Shape is the shape parameter of the
+2-parameter gamma distribution and n is the sample size                    ###Lilliefors test for the normal distribution
+
+                   = 10%                 = 5%                              Ns=50000 # number of synthetic samples
+                                                                           n=50 # sample size (given by the user)
+            Sample Size (n)      Sample Size (n)                           average=0 # (given by the user)
+                                                                           standard_deviation=2 # (given by the user)
+            n = 30  n > 30       n = 30  n => 30                           lilliefors=matrix(NA,Ns,1)
+                                                                           probpar= matrix(NA,n,1)
+Shape              2-parameter gamma distribution                          x=matrix(NA,n,1)
+                                                                           lilliefors=matrix(NA,Ns,1)
+1           0.169   0.95/n       0.184   1.05/n                            probpar= matrix(NA,n,1)
+                                                                           pos=matrix(1: n, n, 1)/n
+2           0.161   0.91/n       0.175   0.97/n                            for (i in 1:Ns){
+
+3           0.151   0.86/n       0.165   0.94/n                             x[,1]=rnorm(n,average,standard_deviation)
+                                                                            xsd=data.frame(x)
+4           0.148   0.83/n       0.163   0.91/n                             averages=mean(x)
+
+8           0.146   0.81/n       0.161   0.89/n
+
+                    Normal distribution
+
+            0.144   0.805/n      0.161   0.886/n
+
+194 Bragantia, Campinas, v. 73, n. 2, p.192-202, 2014
+                                                                   Correct use of the Kolmogorov-Smirnov test
+
+  standard_deviations=sapply(xsd,sd)                               method of goodness-of-fit (Wilks, 2011). It is capable of
+ probpar[,1]=pnorm(sort(x), averages, standard_deviations, lower.  indicating where the parametric representation of the data
+ tail = TRUE, log.p = FALSE)                                       is inadequate (Wilks, 2011).
+ Dmaxs=max(abs(pos- probpar))
+ lilliefors[i,1]=Dmaxs}                                            Regression models
+NKScrit5=quantile(lilliefors, probs=0.95) # 5% significance level
+NKScrit10=quantile(lilliefors, probs=0.90) # 10% significance          Theoretically the statistical simulation procedure described
+level                                                              in section "The Kolmogorov-Smirnov and the Lilliefors tests"
+format(NKScrit5, digits=3)                                         can be used to derive NKSLcrit values for any distribution
+format(NKScrit10, digits=3)                                        at any significance level (Wilks, 2011). However, we are
+####################                                               aware that many researchers around the world may not be
+                                                                   familiar with statistical simulations techniques. This fact may
+On the performance of the tests: type I and                        be one of the reasons why the KS test has been erroneously
+II errors                                                          used in several scientific papers. Accordingly, by following
+                                                                   authors such as Shin et al. (2012) we provided the NKSLcrit
+    To evaluate the probability of a type I error associated       as a function of shape parameter and sample size (gam) or
+with KScrit, KSLcrit and NKSLcrit we generated 50000 series        as a function of sample size (normal) for two frequently
+from gam (normal) distributions with shape parameter equal         used significance levels (5% and 10%). We applied the
+to 1, 2 and 3 (with 0 mean and standard deviation equal to         response function form described in Tolikas and Heravi
+1) and sample sizes equal to 30, 40, 50, 60, 70, 80 and 90.        (2008) to approximate the NKSLcrit values for the gam
+The scale parameter was set to 40. We fitted the gam (normal)      distribution (equation 3). We also verified that the rational
+distribution to each simulated series. The agreement, for          model described by equation 4 is suited to approximate the
+each simulated series, between F(x) and F'(x) were assessed        NKSLcrit values for the normal distribution.
+by using the KScrit, KSLcrit and NKSLcrit. As one may note
+the H0 is true for all simulated series. Thus, the frequency       NKSLcrit = a + (b/n)+(c/n2)+d*shape+(e*shape2) (3)
+of occurrence of type I errors is simply the ratio between
+the number of cases in which H0 was erroneously rejected           NKSLcrit = (p1*n2 + p2*n + p3)/(n + q1)  (4)
+and the number of simulated series (50000).
+                                                                       Where: n is the sample size; shape is the shape parameter
+    As previously described, a Type II error occurs when
+a false H0 is not rejected. To evaluate the frequency of           of the 2-parameter gamma distribution; a, b, d, e, p1, p2,
+occurrence of Type II errors obtained by using each of the
+three critical values we generated 50000 series from gam           p3 and q1 are the parameters of the regression models.
+distributions with shape parameter equal to 1 and 2 and                The coefficient of determination (r2), the mean absolute
+sample size equal to 30, 40, 50, 60, 70, 80 and 90. After
+that, we fitted a normal distribution to each series and           error (MAE) and the square root of the mean square error
+assessed this fit by using the KScrit, KSLcrit and NKSLcrit.
+In this procedure, the H0 is false. Thus, the frequency of         (RMSE) were used to assess the agreement between the
+occurrence of type II errors is simply the ratio between
+the number of cases in which H0 was not rejected and the           NKSLcrit generated from the Monte Carlo simulations
+number of simulated series (50000).                                (section 2.b) and the NKSLcrit calculated from the regression
+                                                                   equations. We also performed an additional step to validate
+    As a case of study, the fit of monthly rainfall data,
+obtained from the weather station of Ribeirão Preto (State         the above-mentioned regression models. NKSLcrit values were
+of São Paulo, Brazil; 1970-2010), to the gam distribution          generated from another set of Monte Carlo simulations in
+were evaluated by using the KScrit, KSLcrit and NKSLcrit tests.
+This weather station belongs to the Agronomic Institute            which the shape parameter was set to vary from 0.8 to 6.3
+of Campinas (Instituto Agronômico, IAC/APTA-SAA).
+These monthly series present no missing values and their           (by steps of 0.5) and the sample size was set to vary from
+consistency have already been verified in previous studies         35 to 170 (by steps of 10). The r2, MAE and RMSE were
+(Blain, 2011). The maximum likelihood estimates of the
+parameters of the gam distribution were calculated as              used to evaluate the agreement between the NKSLcrit values
+described in Husak et al. (2007). The goodness-of-fit tests
+were performed at the 5% significance level (the r-code            obtained from the Monte Carlo simulations and from
+is described in appendix I). The quantil-quantil plot was
+used to evaluate the different conclusions indicated by the        the regression equations. It is worth mentioning that this
+three tests. The QQ plots may be regarded as a qualitative
+                                                                   additional step was based on NKSLcrit values that were not
+                                                                   used to estimate the parameters of the regression models.
+
+                                                                   3. RESULTS AND DISCUSSION
+
+                                                                       Tables 2 and 3 presents NKSLcrit values obtained by using
+                                                                   the r-codes described in section "The Kolmogorov-Smirnov
+                                                                   and the Lilliefors tests" As can be noted, the shape parameter
+
+                                                                   Bragantia, Campinas, v. 73, n. 2, p.192-202, 2014 195
+G.C. Blain
+
+Table 2. Critical values for the Lilliefors test obtained from the procedure described in section 2.b (5% significance level)
+
+                                                               Sample size
+
+Shape       30      40     50    60                            70  80       90          100    110                               120
+
+                   0.144  0.131                        2-parameter gamma distribution  0.095  0.091                             0.088
+                   0.136  0.123                                                        0.089  0.085                             0.082
+                   0.134  0.121  Critical Values - 5% significant level                0.087  0.084                             0.080
+                   0.133  0.120                                                        0.087  0.083                             0.080
+0.5         0.165  0.132  0.120  0.120                 0.112       0.106    0.100      0.086  0.082                             0.079
+                   0.132  0.119                                                        0.086  0.083                             0.079
+1.0         0.155  0.132  0.119  0.113                 0.105       0.099    0.093      0.086  0.082                             0.079
+                   0.132  0.119                                                        0.086  0.082                             0.079
+1.5         0.153  0.132  0.119  0.111                 0.103       0.097    0.092      0.086  0.082                             0.079
+                   0.132  0.119                                                        0.086  0.082                             0.079
+2.0         0.152  0.131  0.118  0.110                 0.103       0.097    0.091      0.086  0.082                             0.079
+                   0.131  0.118                                                        0.086  0.082                             0.079
+2.5         0.151  0.131  0.118  0.110                 0.102       0.096    0.091      0.086  0.082                             0.079
+                   0.131  0.118                                                        0.086  0.082                             0.079
+3.0         0.151  0.131  0.118  0.110                 0.102       0.096    0.091      0.086  0.082                             0.078
+                   0.131  0.118                                                        0.086  0.082                             0.079
+3.5         0.151                0.109                 0.102       0.096    0.090
+                   0.130  0.118                                                        0.085  0.081                             0.078
+4.0         0.150                0.109                 0.102       0.096    0.090
+
+4.5         0.150                0.109                 0.102       0.095    0.090
+
+5.0         0.150                0.109                 0.102       0.095    0.090
+
+5.5         0.150                0.109                 0.102       0.095    0.090
+
+6.0         0.150                0.109                 0.101       0.095    0.090
+
+6.5         0.150                0.109                 0.101       0.095    0.090
+
+7.0         0.150                0.109                 0.101       0.095    0.090
+
+7.5         0.150                0.109                 0.101       0.095    0.090
+
+8.0         0.150                0.109                 0.101       0.095    0.090
+
+                                                       Normal distribution
+
+            0.148                0.108                 0.101       0.095    0.089
+
+Table 3. Critical values for the Lilliefors test obtained from the procedure described in section 2.b (10% significance level)
+
+                                                               Sample size
+
+Shape        30     40     50    60                            70  80       90          100    110                               120
+
+  0.5       0.149  0.131  0.119                        2-parameter gamma distribution  0.087  0.083                             0.080
+  1.0       0.141  0.124  0.112                                                        0.081  0.077                             0.074
+  1.5       0.139  0.122  0.110  Critical Values - 10% significant level               0.080  0.076                             0.073
+  2.0       0.138  0.121  0.109                                                        0.079  0.076                             0.073
+  2.5       0.137  0.121  0.109  0.110                 0.102       0.096    0.091      0.079  0.075                             0.072
+  3.0       0.137  0.120  0.109                                                        0.079  0.075                             0.072
+  3.5       0.137  0.120  0.108  0.103                 0.096       0.090    0.085      0.079  0.075                             0.072
+  4.0       0.137  0.120  0.108                                                        0.078  0.075                             0.072
+  4.5       0.137  0.120  0.108  0.101                 0.094       0.089    0.084      0.078  0.075                             0.072
+  5.0       0.137  0.120  0.108                                                        0.078  0.075                             0.072
+  5.5       0.137  0.120  0.108  0.101                 0.093       0.088    0.083      0.078  0.075                             0.072
+  6.0       0.137  0.120  0.108                                                        0.078  0.075                             0.072
+  6.5       0.137  0.120  0.108  0.100                 0.093       0.087    0.083      0.078  0.075                             0.072
+  7.0       0.136  0.120  0.108                                                        0.078  0.075                             0.072
+  7.5       0.136  0.119  0.108  0.100                 0.093       0.087    0.083      0.078  0.075                             0.072
+  8.0       0.136  0.120  0.108                                                        0.078  0.075                             0.072
+                                 0.100                 0.093       0.087    0.083
+            0.135  0.119  0.107                                                        0.078  0.074                             0.071
+                                 0.100                 0.093       0.087    0.082
+
+                                 0.099                 0.093       0.087    0.082
+
+                                 0.099                 0.093       0.087    0.082
+
+                                 0.099                 0.093       0.087    0.082
+
+                                 0.099                 0.092       0.087    0.082
+
+                                 0.099                 0.092       0.087    0.082
+
+                                 0.099                 0.092       0.087    0.082
+
+                                 0.099                 0.092       0.087    0.082
+
+                                 0.099                 0.092       0.087    0.082
+
+                                                       Normal distribution
+
+                                 0.099                 0.092       0.086    0.082
+
+of the gam distribution was set to vary from 0.50 to 8.0 by        new critical values were also generated for several sample
+steps of 0.50. The scale parameter was set to 30 without
+loss of generality. By assuming these different values of the      sizes (n) that vary from 30 (a climatological normal period)
+shape parameter the probability density function of the gam
+distribution varies from an exponential form to a bell-shaped      to 120 by steps of 10.
+form that tends to approach the normal distribution. These
+                                                                       Surprisingly, the NKSLcrit values (Tables 2 and 3) are
+                                                                   considerably lower than the KSLcrit presented by Crutcher
+                                                                   (1975; Table 1). Accordingly, one may indicate that the
+
+196 Bragantia, Campinas, v. 73, n. 2, p.192-202, 2014
+                                                                         Correct use of the Kolmogorov-Smirnov test
+
+probability of occurrence of Type I and II errors associated     lower than the adopted significant level. Therefore, the
+                                                                 results presented in table 4 indicate that the Lilliefors test
+with the use of the KSLcrit and NKSLcrit will also differ from   calculated by using the KSLcrit values may be regarded as
+each other. This inference is further evaluated from the         a conservative test with respect to the Type I errors. This
+                                                                 statement holds for both gam and normal distributions.
+results presented in tables 3 and 5.                             The rejection rates obtained from the NKSLcrit were capable
+                                                                 of meeting the adopted significant level. The frequency of
+    As expected (Crutcher, 1975; Lilliefors, 1967;               Type I errors associated with these latter critical values varied
+                                                                 from 4.83% to 5.34% (5% significance level) and from
+Steinskog et al., 2007; Vlcek and Huth, 2009; Wilks,             9.45% to 10.53% (10% significance level). It is also worth
+                                                                 emphasizing that the frequencies of occurrence of Type I
+2011), the frequency of occurrence of Type I errors associated   errors, obtained from the NKSLcrit were little affected by
+
+with the use of the KScrit is much lower than the adopted
+significant levels (Tables 4). The rejection rates obtained
+
+by using the KScrit were always lower than 1% (at both 5
+and 10% significance level). The frequency of Type I errors
+
+obtained by using the KSLcrit values are higher than those
+associated with the KScrit. However, they are also considerably
+
+Table 4. Frequency of Type I errors (%) associated with the use of the KScrit (equation 2), KSLcrit (Crutcher, 1975) and NKSLcrit (section
+The Kolmogorov-Smirnov and the Lilliefors tests)
+
+              30                    40     50                    60      70     80     90
+
+Sample Size                                      5% significance level
+
+                                                 shape= 1; scale = 40
+
+KScrit        0.04                  0.01   0.03                  0.01    0.01   0.03   0.03
+KSLcrit
+NKSLcrit      0.80                  0.75   0.71                  0.68    0.82   0.92   0.83
+
+              4.86                  5.07   5.00                  5.11    5.05   5.18   4.81
+
+                                                 shape= 2; scale = 40
+
+KScrit        0.00                  0.00   0.00                  0.02    0.02   0.02   0.01
+KSLcrit
+NKSLcrit      1.31                  1.27   1.38                  1.52    1.64   1.67   1.68
+
+              4.98                  5.10   4.81                  5.12    5.34   5.12   4.95
+
+                                                 shape= 3; scale = 40
+
+KScrit        0.01                  0.01   0.02                  0.01    0.01   0.02   0.02
+KSLcrit
+NKSLcrit      2.36                  1.60   1.88                  2.03    2.10   2.21   2.29
+
+              4.97                  4.83   5.18                  4.90    5.02   5.14   4.80
+
+                                                 10% significance level
+
+                                                 shape= 1; scale = 40
+
+KS            0.11                  0.12   0.14                  0.1     0.08   0.19   0.18
+
+KSLcrit       2.2                   1.78   2.13                  2.15    2.54   2.53   2.75
+NKSLcrit
+              10.53                 9.45   9.51                  9.75    10.36  10.35  10.36
+
+                                                 shape= 2; scale = 40
+
+KScrit        0.04                  0.05   0.1                   0.05    0.11   0.05   0.05
+
+KSLcrit       3.16                  2.33   2.62                  2.74    3.02   3.16   3.14
+
+    NKSLcrit  10.24                 10.07  9.99                  10.44   10.52  9.95   10.02
+
+              shape= 3; scale = 40
+
+KScrit        0.05                  0.09   0.05                  0.1     0.09   0.09   0.08
+KSLcrut
+              4.69                  3.83   4.08                  4.38    4.79   4.53   4.18
+
+NKSL          9.89                  9.98   9.74                  9.99    10.2   10.06  9.81
+
+                                                 Normal distribution
+
+                                                 5% significance level
+
+KScrit        0.00                  0.00   0.01                  0.00    0.01   0.01   0.01
+KSLcrit
+NKSLcrit      2.61                  2.72   2.80                  2.85    3.26   3.30   3.43
+
+              4.97                  5.16   4.81                  4.89    4.85   4.82   5.23
+
+                                                 10% significance level
+
+KScrit        0.05                  0.04   0.05                  0.07    0.05   0.06   0.06
+KSLcrit
+NKSLcrit      6.49                  5.79   6.38                  6.65    6.94   7.23   7.45
+
+              10.22                 9.53   9.94                  9.55    9.71   10.13  9.56
+
+                                                                        Bragantia, Campinas, v. 73, n. 2, p.192-202, 2014 197
+G.C. Blain
+
+Table 5. Frequency of Type II errors (%) associated with the use of the KScrit (equation 2), KSLcrit (Crutcher, 1975) and NKSLcrit (section
+"The Kolmogorov-Smirnov and the Lilliefors tests")
+
+KS              30     40                                50                60           70     80       90
+KSLcrut                                                       5% significance level
+NKSL          88.93  77.99                             65.12    shape= 1 scale =40    37.76  26.00    16.79
+              25.17  12.52                              5.66                           0.75   0.24     0.06
+KS            16.26                                     1.46             51.01         0.15   0.05     0.01
+KSLcrut               7.14                                                 2.18
+NKSL          97.74                                    91.83               0.52       82.61  77.01    70.74
+              55.73  95.25                             31.30                          16.06  11.01     7.39
+KS            43.69  42.63                             13.99    shape= 2 scale =40                     3.26
+KSLcrut              31.21                                               87.80         7.36   4.57
+NKSL          75.41                                    43.55             22.97                         5.79
+              12.90  59.24                              2.26             10.31        18.56  11.04     0.02
+KS                    6.00                              1.16                           0.20   0.08     0.00
+KSLcrut        8.44   3.32                                    10% significance level   0.09   0.03
+NKSL                                                   80.91    shape= 1 scale =40                    50.22
+              92.87  87.42                             19.13             29.87        65.76  57.98     3.02
+              38.56  29.01                             13.15               0.72        7.99   5.06     1.28
+              29.73  20.89                                                 0.40        5.61   3.43
+                                                                shape= 2 scale =40
+                                                                         73.64
+                                                                         12.78
+                                                                           9.14
+
+Table 6. Monthly rainfall series of Ribeirão Preto, State of São Paulo, Brazil (1970-2010). Shape and Scale are the parameters of the gamma
+
+distribution, # zeroes is the number of zeroes in each monthly series and KSLcrit and NKSLcrit are the critical values for the Lilliefors test
+respectively obtained from Crutcher (1975) and from section "The Kolmogorov-Smirnov and the Lilliefors tests" of this study
+
+       Month  Shape         Scale                             Dmax   # zeroes                KSLcrit  NKSLcrit
+January        6.70         41.35                             0.061       0                  0.139     0.130
+February       3.31         67.97                             0.087       0                  0.147     0.131
+March          4.49         35.98                             0.073       0                  0.142     0.130
+April          1.30         62.32                             0.084       0                  0.164     0.133
+May            1.25         49.90                             0.153       0                  0.164     0.133
+June           0.75         49.74                             0.115       8                  0.183     0.152
+July           0.75         39.35                             0.080       6                  0.177     0.148
+August         0.74         49.95                             0.083      13                  0.198     0.163
+September      1.12         56.72                             0.095       0                  0.164     0.133
+October        3.51         34.15                             0.123       0                  0.142     0.131
+November       5.89         30.43                             0.055       0                  0.142     0.130
+December       7.93         35.21                             0.108       0                  0.139     0.130
+
+the different shape parameters and/or sample sizes adopted       Figure 1. Quantile-quantile plot. Observed monthly rainfall data
+                                                                 of the location of Ribeirão Preto, State of São Paulo, Brazil (1970-
+in this study.                                                   2010) and quantile estimates obtained from a 2-parameter gamma
+                                                                 distribution.
+    Regarding the probability of a Type II error, the results
+
+presented in table 5 indicate that the KScrit must not be
+used when the parameters of the distribution have been
+
+fitted from the same data set used to apply the KS test. In
+
+other words, when erroneously applied, the KScrit frequently
+leads to the conclusion that a given bunch of data was
+
+drawn from a parent distribution that may be considerably
+
+different from the process that has generated the data. For
+
+instance, when n was set to 30 the rate of type II errors
+were, approximately, 89% (=0.05) and 75% (=0.10).
+
+Different from what is observed for the Type I errors, the
+
+frequency of Type II errors, obtained from both KSLcrit and
+NKSLcrit, is a decreasing function of the sample size. In other
+
+198 Bragantia, Campinas, v. 73, n. 2, p.192-202, 2014
+                                                                                                                            Correct use of the Kolmogorov-Smirnov test
+
+Figure 2. Simple linear regression analysis between the NKSLcrit generated from the Monte Carlo simulations (section 2.b) and the NKSLcrit
+calculated from the regression equations. MAE is the mean absolute error and RMSE is the square root of the mean. Figures on the left are
+based on NKSLcrit values that were not used to estimate the parameters of thel regression models (equations 5 and 6).
+
+                                                                                                          Bragantia, Campinas, v. 73, n. 2, p.192-202, 2014 199
+G.C. Blain
+
+words, the smaller the sample size, the lower the power of        be used to approximate the NKSLcrit values for the gam and
+the tests. The results presented in table 5 also indicate that    normal distributions.
+when compared to the KSLcrit the NKSLcrit increases the
+power of the Lilliefors test. As can be noted, the frequency      NKSLcrit(5%)= 0.04889+(4.601/n)+(-42.24/n2)-                         (5.1)
+of Type II errors obtained from the NKLScrit values are
+lower than those obtained from the KSLcrit values for all                                                                           2
+simulations performed in this study. Thus, by considering         0.001945shape+0.0001695shape
+the results presented in tables 4 and 5, we concluded that
+the NKSLcrit improves the capability of the lilliefors test in    NKSLcrit(10%)= 0.04435+(4.201/n)+(-39.07/n2)-                        (5.2)
+correctly reject a false H0.                                      0.001639shape +0.0001416shape2
+
+    As previously described, the KSLcrit are tabulated only       NKSLcrit(5%) = (((-8.530*10-5)(n2))+                                 (6.1)
+for discrete values of the shape parameter. Authors such          0.05645n+4.906)/(n+13.90)
+Vlcek and Huth (2009) and Wilks (2011) deal with this
+difficulty by adopting the KSLcrit associated with the tabulated  NKSLcrit(10%) = (((-8.225*10-5)(n2))+                                (6.2)
+shape parameter closest to the estimated one. The same            0.05255n+4.422)/(n+13.83)
+procedure was used in this study because the same difficult
+were observed when we used the KSLcrit to evaluate the fit        4. SUMMARY
+of the monthly rainfall series of Ribeirão Preto to the gam
+distribution (table 6).                                               The Kolmogorov-Smirnov test is a frequently used
+                                                                  goodness-of-fit test. However, in its original form this test
+    The NKSLcrit and KSLcrit lead to different conclusions        requires that the parameters of the theoretical distribution
+only for the rainfall amounts observed during the month           have not been estimated from the same bunch of data used
+of May (Table 6). The KSLcrit values indicates that the gam       to apply this goodness-of-fit test. As described in several
+distribution can be used to assess probability of the monthly     studies, if the original KS test is applied under this above-
+rainfall amounts of weather station of Ribeirão Preto for any     mentioned situation the probability of accepting a false
+month (including the month of May). However, according            H0 becomes unacceptably high. The results obtained in
+to the NKSLcrit the gam distribution cannot be used to assess     this study are consistent with these previous studies. This
+the probability of occurrence of the rainfall amounts observed    study demonstrated that the use of the original KScrit leads
+during the months of May. At this point it becomes worth          to a frequency of occurrence of Type I errors much lower
+emphasizing that if the gam distribution is an appropriate        than the adopted significant level and to a high probability
+model for representing the above-mentioned monthly                of failure to reject a false H0 (Type II error). The so-called
+rainfall amounts, the points of figure 1 (Q-Q plot) should        Lilliefors test has been proposed to remedy this drawback.
+lie close to the unit diagonal (Coles, 2001). However, the        This latter test is capable of achieving a better balance
+visual inspection of figure 1 reveals substantial departures      between type I and II errors. In this sense, by using the critical
+from linearity. Thus, we concluded that the results depicted      values described in Crutcher (1975), for both 2-parameter
+in figure 1 are more consistent with the conclusion reached       gamma and normal distributions, one is capable of bringing
+by using the NKSLcrit. This last inference is also consistent     the probability of a Type I error more close to the adopted
+with the results presented in tables 3, in the sense that the     significance level. However, this study also demonstrated
+NKSLcrit improves the capability of the lilliefors test in        that the frequency of occurrence of Type I errors associated
+correctly reject a false H0.                                      with the above-mentioned values is still considerably lower
+                                                                  than the adopted significance level. In addition, especially
+Regression equations                                              for small sample sizes, the probability of a Type II error
+                                                                  associated with the critical values described in Crutcher
+    Although we claim that the r-code presented in this           (1975) may be unacceptably high. For instance, from the
+study may be regarded as an easy-to-use procedure, one may        results presented in table 5, one may verify that when the
+correctly argue that they require some level of knowledge         sample size was set to 30 the frequency of occurrence of Type
+of the r-software. Thus, by considering that the main goal        II errors, obtained by using these critical values (at the 5%
+of this study is to stimulate the use of the lilliefors test, we  significance level) were greater than 25%. From the above-
+have also provided polynomial equations (equations 5 and          mentioned results, one may also note that the probability
+6) capable of calculating the NKSLcrit for the range of shape     of a Type II error decreases as the sample size increases.
+parameters and sample sizes presented in tables 1 and 2. In
+this view, figure 2 depicts the linear regression between the         We revisited the critical values presented by Crutcher
+NKSLcrit values obtained from the Monte Carlo simulations         (1975). Based on sets of 500000 simulated series with
+and the NKSLcrit values obtained from equations 5-6. The r2,      different sample sizes we derived new critical values for
+MAE and RMSE indicate that the regression equations can           the Lilliefors test that can be used to assess the fit of the
+
+200 Bragantia, Campinas, v. 73, n. 2, p.192-202, 2014
+                                                                       Correct use of the Kolmogorov-Smirnov test
+
+2-parameter gamma and normal distributions. By using                   1975. http://dx.doi.org/10.1175/1520-0450(1975)014<1600:AN
+these new critical values (or the r-code devised to calculate          OTPM>2.0.CO;2
+these critical values) we were able to meet the adopted
+significance level in all simulations carried out in this study.       HUSAK, G.J.; MICHAELSEN, J.; FUNK, C. Use of the gamma
+In addition, these new critical values also led to the lowest          distribution to represent monthly rainfall in Africa for drought
+frequency of occurrence of Type II errors observed in this             monitoring applications. International Journal of Climatology, v.27,
+study. Finally, by assuming that many researchers around               p.935-944, 2007. http://dx.doi.org/10.1002/joc.1441
+the world may not be familiar with statistical simulations
+techniques (or with the R-software), we have also provided             LILLIEFORS, H.W. On the Kolmogorov-Smirnov test for normality
+polynomial equations that eliminate the need to use the                with mean and variance unknown. Journal of the American Statistical
+r-codes to calculate the NKSLcrit values presented in this             Association, v.62, p.399-402, 1967. http://dx.doi.org/10.1080/016
+study. We hope this study stimulates the correct use of the            21459.1967.10482916
+Lilliefors test.
+                                                                       LILLIEFORS, H.W. On the Kolmogorov-Smirnov test on the
+ACKNOWLEDGEMENTS                                                       exponential distribution with mean unknown. Journal of the American
+                                                                       Statistical Association, v.64, p.387-389, 1969. http://dx.doi.org/10.
+    The author greatly appreciates Dr. Patrícia Cia's                  1080/01621459.1969.10500983
+constructive suggestions.
+                                                                       SHIN, H.; JUNG, Y.; JEONG, C.; HEO, J. Assessment of modified
+REFERENCES                                                             Anderson-Darling test statistics for the generalized extreme value
+                                                                       and generalized logistic distributions. Stochastic Environmental
+BLAIN, G.C. Monthly values of the standardized precipitation index     Research and Risk Assessment, v.26, p.105-114, 2012. http://dx.doi.
+in the State of São Paulo, Brazil: trends and spectral features under  org/10.1007/s00477-011-0463-y
+the normality assumption. Bragantia, v.71, p.122-131, 2011. http://
+dx.doi.org/10.1590/S0006-87052012005000004                             TOLIKAS, K.; HERAVI, S. The Anderson-Darling goodness-
+                                                                       of-fit test statistic for the three-parameter lognormal distribution.
+CHEN, B.; YANG, J.; PU, J. Statistical Characteristics of Raindrop     Communications in Statistics - Theory and Methods, v.37, p.3135-
+Size Distribution in the Meiyu Season Observed in Eastern China.       3143, 2008. http://dx.doi.org/10.1080/03610920802101571
+Journal of the Meteorological Society of Japan Ser. II, v.91, p.215-
+227, 2013. http://dx.doi.org/10.2151/jmsj.2013-208                     STEINSKOG, D.J.; TJØSTHEIM, D.B.; KVAMSTØ, N.G. A
+                                                                       cautionary note on the use of the Kolmogorov-Smirnov test for
+COLES, S. An introduction to statistical modeling of extreme value.    normality. Monthly Weather Review, v.135, p.1151-1157, 2007.
+London: Springer, 2001. http://dx.doi.org/10.1007/978-1-4471-3675-0    http://dx.doi.org/10.1175/MWR3326.1
+
+CRUTCHER, H.L. A note on the possible misuse of the Kolmogorov-        STEPHENS, M.A. EDF Statistics for goodness of fit. Journal of
+Smirnov test. Journal of Applied Meteorology, v.14, p.1600-1603,       the American Statistical Association, v.69, p.730-737, 1974. http://
+                                                                       dx.doi.org/10.1080/01621459.1974.10480196
+
+                                                                       VLCEK, O.; HUTH, R. Is daily precipitation Gamma-distributed?
+                                                                       Adverse effects of an incorrect application of the Kolmogorov-Smirnov
+                                                                       test. Atmospheric Research, v.93, p.759-766, 2009. http://dx.doi.
+                                                                       org/10.1016/j.atmosres.2009.03.005
+
+                                                                       WILKS, D.S. Statistical methods in the atmospheric sciences. 2nded.
+                                                                       San Diego: Academic Press, 2011. 629p.
+
+                                                                       Bragantia, Campinas, v. 73, n. 2, p.192-202, 2014 201
+G.C. Blain
+
+APPENDIX I
+
+################
+# datamatrix is a matrix in which each column corresponds to each month
+datamatrix= as.matrix(read.table("datamatrix.txt", head=T))
+shape=matrix(NA,12,1)
+scale=matrix(NA,12,1)
+Dmax=matrix(NA,12,1)
+NKSLcrit5=matrix(NA,12,1)
+NKSLcrit10=matrix(NA,12,1)
+pvalue=matrix(NA,12,1)
+for (month in 1:12){
+data=datamatrix[,month]
+data1=data> 0
+datap=data[data1] # the 2-parameter gamma is undefined for x  0
+n=length(data)
+np=length(datap)
+nz=n-np
+probzero=(n-nz)/n
+Ns=50000
+probacum=matrix(NA,np,1)
+lilliefors=matrix(NA,Ns,1)
+probpar= matrix(NA,np,1)
+A=log(mean(datap))-((sum(log(datap)))/np)
+shape[month,1]=(1/(4*A))*(1+sqrt(1+(4*A/3)))
+scale[month,1]=mean(datap)/shape[month,1]
+pos=matrix(1:np, np, 1)/np
+probacum[,1]= (pgamma(sort(datap), shape[month,1], 1/scale[month,1], lower.tail = TRUE, log.p = FALSE))
+Dmax[month,1]=max(abs(pos- probacum))
+########Lilliefors
+x=matrix(NA,np,1)
+lilliefors=matrix(NA,Ns,1)
+probpar=matrix(NA,np,1)
+poss=matrix(1: np, np, 1)/np
+for (i in 1:Ns){
+x[,1]=rgamma(np,shape[month,1],1/scale[month,1])
+As=log(mean(x))-((sum(log(x)))/np)
+alfals=(1/(4*As))*(1+sqrt(1+(4*As/3)))
+betals=mean(x)/alfals
+probpar[,1]=pgamma(sort(x), alfals, 1/betals, lower.tail = TRUE, log.p = FALSE)
+Dmaxs=max(abs(poss- probpar))
+lilliefors[i,1]=Dmaxs}
+NKSLcrit5[month,1]=quantile(lilliefors, probs=0.95)
+NKSLcrit10[month,1]=quantile(lilliefors, probs=0.90)
+m=lilliefors>Dmax[month,1]
+pvalue[month,1]=(length(lilliefors[m]))/Ns}
+Goodness=c("shape", shape, "scale", scale, "Dmax", Dmax, "NKSLcrit5%", NKSLcrit5, "NKSLcrit10%", NKSLcrit10,
+"p-value", pvalue)
+write.csv(Goodness, "GoodnessGamma.csv")
+##############
+
+202 Bragantia, Campinas, v. 73, n. 2, p.192-202, 2014
+

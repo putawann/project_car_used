@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Modeling Process | Hands-On Machine Learning with R</title>
+  <meta name="description" content="A Machine Learning Algorithmic Deep Dive Using R." />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Modeling Process | Hands-On Machine Learning with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A Machine Learning Algorithmic Deep Dive Using R." />
+  <meta name="github-repo" content="bradleyboehmke/hands-on-machine-learning-with-r" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Modeling Process | Hands-On Machine Learning with R" />
+  
+  <meta name="twitter:description" content="A Machine Learning Algorithmic Deep Dive Using R." />
+  
+
+<meta name="author" content="Bradley Boehmke &amp; Brandon Greenwell" />
+
+
+<meta name="date" content="2020-02-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="intro.html">
+<link rel="next" href="engineering.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="extra.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Hands-on Machine Learning with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#who-should-read-this"><i class="fa fa-check"></i>Who should read this</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-r"><i class="fa fa-check"></i>Why R</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#conventions-used-in-this-book"><i class="fa fa-check"></i>Conventions used in this book</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#additional-resources"><i class="fa fa-check"></i>Additional resources</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#feedback"><i class="fa fa-check"></i>Feedback</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#software-information"><i class="fa fa-check"></i>Software information</a></li>
+</ul></li>
+<li class="part"><span><b>I Fundamentals</b></span></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to Machine Learning</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#supervised-learning"><i class="fa fa-check"></i><b>1.1</b> Supervised learning</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="intro.html"><a href="intro.html#regression-problems"><i class="fa fa-check"></i><b>1.1.1</b> Regression problems</a></li>
+<li class="chapter" data-level="1.1.2" data-path="intro.html"><a href="intro.html#classification-problems"><i class="fa fa-check"></i><b>1.1.2</b> Classification problems</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#unsupervised-learning"><i class="fa fa-check"></i><b>1.2</b> Unsupervised learning</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#roadmap"><i class="fa fa-check"></i><b>1.3</b> Roadmap</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#data"><i class="fa fa-check"></i><b>1.4</b> The data sets</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="process.html"><a href="process.html"><i class="fa fa-check"></i><b>2</b> Modeling Process</a><ul>
+<li class="chapter" data-level="2.1" data-path="process.html"><a href="process.html#prerequisites"><i class="fa fa-check"></i><b>2.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="2.2" data-path="process.html"><a href="process.html#splitting"><i class="fa fa-check"></i><b>2.2</b> Data splitting</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="process.html"><a href="process.html#simple-random-sampling"><i class="fa fa-check"></i><b>2.2.1</b> Simple random sampling</a></li>
+<li class="chapter" data-level="2.2.2" data-path="process.html"><a href="process.html#stratified"><i class="fa fa-check"></i><b>2.2.2</b> Stratified sampling</a></li>
+<li class="chapter" data-level="2.2.3" data-path="process.html"><a href="process.html#class-imbalances"><i class="fa fa-check"></i><b>2.2.3</b> Class imbalances</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="process.html"><a href="process.html#creating-models-in-r"><i class="fa fa-check"></i><b>2.3</b> Creating models in R</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="process.html"><a href="process.html#many-formula-interfaces"><i class="fa fa-check"></i><b>2.3.1</b> Many formula interfaces</a></li>
+<li class="chapter" data-level="2.3.2" data-path="process.html"><a href="process.html#many-engines"><i class="fa fa-check"></i><b>2.3.2</b> Many engines</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="process.html"><a href="process.html#resampling"><i class="fa fa-check"></i><b>2.4</b> Resampling methods</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="process.html"><a href="process.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>2.4.1</b> <em>k</em>-fold cross validation</a></li>
+<li class="chapter" data-level="2.4.2" data-path="process.html"><a href="process.html#bootstrapping"><i class="fa fa-check"></i><b>2.4.2</b> Bootstrapping</a></li>
+<li class="chapter" data-level="2.4.3" data-path="process.html"><a href="process.html#alternatives"><i class="fa fa-check"></i><b>2.4.3</b> Alternatives</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="process.html"><a href="process.html#bias-var"><i class="fa fa-check"></i><b>2.5</b> Bias variance trade-off</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="process.html"><a href="process.html#bias"><i class="fa fa-check"></i><b>2.5.1</b> Bias</a></li>
+<li class="chapter" data-level="2.5.2" data-path="process.html"><a href="process.html#variance"><i class="fa fa-check"></i><b>2.5.2</b> Variance</a></li>
+<li class="chapter" data-level="2.5.3" data-path="process.html"><a href="process.html#tune-overfit"><i class="fa fa-check"></i><b>2.5.3</b> Hyperparameter tuning</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="process.html"><a href="process.html#model-eval"><i class="fa fa-check"></i><b>2.6</b> Model evaluation</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="process.html"><a href="process.html#regression-models"><i class="fa fa-check"></i><b>2.6.1</b> Regression models</a></li>
+<li class="chapter" data-level="2.6.2" data-path="process.html"><a href="process.html#classification-models"><i class="fa fa-check"></i><b>2.6.2</b> Classification models</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="process.html"><a href="process.html#put-process-together"><i class="fa fa-check"></i><b>2.7</b> Putting the processes together</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="engineering.html"><a href="engineering.html"><i class="fa fa-check"></i><b>3</b> Feature &amp; Target Engineering</a><ul>
+<li class="chapter" data-level="3.1" data-path="engineering.html"><a href="engineering.html#prerequisites-1"><i class="fa fa-check"></i><b>3.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="3.2" data-path="engineering.html"><a href="engineering.html#target-engineering"><i class="fa fa-check"></i><b>3.2</b> Target engineering</a></li>
+<li class="chapter" data-level="3.3" data-path="engineering.html"><a href="engineering.html#dealing-with-missingness"><i class="fa fa-check"></i><b>3.3</b> Dealing with missingness</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="engineering.html"><a href="engineering.html#visualizing-missing-values"><i class="fa fa-check"></i><b>3.3.1</b> Visualizing missing values</a></li>
+<li class="chapter" data-level="3.3.2" data-path="engineering.html"><a href="engineering.html#impute"><i class="fa fa-check"></i><b>3.3.2</b> Imputation</a><ul>
+<li class="chapter" data-level="3.3.2.1" data-path="engineering.html"><a href="engineering.html#estimated-statistic"><i class="fa fa-check"></i><b>3.3.2.1</b> Estimated statistic</a></li>
+<li class="chapter" data-level="3.3.2.2" data-path="engineering.html"><a href="engineering.html#k-nearest-neighbor"><i class="fa fa-check"></i><b>3.3.2.2</b> <em>K</em>-nearest neighbor</a></li>
+<li class="chapter" data-level="3.3.2.3" data-path="engineering.html"><a href="engineering.html#tree-based"><i class="fa fa-check"></i><b>3.3.2.3</b> Tree-based</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="engineering.html"><a href="engineering.html#feature-filtering"><i class="fa fa-check"></i><b>3.4</b> Feature filtering</a></li>
+<li class="chapter" data-level="3.5" data-path="engineering.html"><a href="engineering.html#numeric-feature-engineering"><i class="fa fa-check"></i><b>3.5</b> Numeric feature engineering</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="engineering.html"><a href="engineering.html#skewness"><i class="fa fa-check"></i><b>3.5.1</b> Skewness</a></li>
+<li class="chapter" data-level="3.5.2" data-path="engineering.html"><a href="engineering.html#standardization"><i class="fa fa-check"></i><b>3.5.2</b> Standardization</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="engineering.html"><a href="engineering.html#categorical-feature-engineering"><i class="fa fa-check"></i><b>3.6</b> Categorical feature engineering</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="engineering.html"><a href="engineering.html#lumping"><i class="fa fa-check"></i><b>3.6.1</b> Lumping</a></li>
+<li class="chapter" data-level="3.6.2" data-path="engineering.html"><a href="engineering.html#one-hot-dummy-encoding"><i class="fa fa-check"></i><b>3.6.2</b> One-hot &amp; dummy encoding</a></li>
+<li class="chapter" data-level="3.6.3" data-path="engineering.html"><a href="engineering.html#label-encoding"><i class="fa fa-check"></i><b>3.6.3</b> Label encoding</a></li>
+<li class="chapter" data-level="3.6.4" data-path="engineering.html"><a href="engineering.html#alternatives-1"><i class="fa fa-check"></i><b>3.6.4</b> Alternatives</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="engineering.html"><a href="engineering.html#feature-reduction"><i class="fa fa-check"></i><b>3.7</b> Dimension reduction</a></li>
+<li class="chapter" data-level="3.8" data-path="engineering.html"><a href="engineering.html#proper-implementation"><i class="fa fa-check"></i><b>3.8</b> Proper implementation</a><ul>
+<li class="chapter" data-level="3.8.1" data-path="engineering.html"><a href="engineering.html#sequential-steps"><i class="fa fa-check"></i><b>3.8.1</b> Sequential steps</a></li>
+<li class="chapter" data-level="3.8.2" data-path="engineering.html"><a href="engineering.html#data-leakage"><i class="fa fa-check"></i><b>3.8.2</b> Data leakage</a></li>
+<li class="chapter" data-level="3.8.3" data-path="engineering.html"><a href="engineering.html#engineering-process-example"><i class="fa fa-check"></i><b>3.8.3</b> Putting the process together</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>II Supervised Learning</b></span></li>
+<li class="chapter" data-level="4" data-path="linear-regression.html"><a href="linear-regression.html"><i class="fa fa-check"></i><b>4</b> Linear Regression</a><ul>
+<li class="chapter" data-level="4.1" data-path="linear-regression.html"><a href="linear-regression.html#prerequisites-2"><i class="fa fa-check"></i><b>4.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="4.2" data-path="linear-regression.html"><a href="linear-regression.html#simple-linear-regression"><i class="fa fa-check"></i><b>4.2</b> Simple linear regression</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="linear-regression.html"><a href="linear-regression.html#estimation"><i class="fa fa-check"></i><b>4.2.1</b> Estimation</a></li>
+<li class="chapter" data-level="4.2.2" data-path="linear-regression.html"><a href="linear-regression.html#inference"><i class="fa fa-check"></i><b>4.2.2</b> Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="linear-regression.html"><a href="linear-regression.html#multi-lm"><i class="fa fa-check"></i><b>4.3</b> Multiple linear regression</a></li>
+<li class="chapter" data-level="4.4" data-path="linear-regression.html"><a href="linear-regression.html#assessing-model-accuracy"><i class="fa fa-check"></i><b>4.4</b> Assessing model accuracy</a></li>
+<li class="chapter" data-level="4.5" data-path="linear-regression.html"><a href="linear-regression.html#lm-residuals"><i class="fa fa-check"></i><b>4.5</b> Model concerns</a></li>
+<li class="chapter" data-level="4.6" data-path="linear-regression.html"><a href="linear-regression.html#PCR"><i class="fa fa-check"></i><b>4.6</b> Principal component regression</a></li>
+<li class="chapter" data-level="4.7" data-path="linear-regression.html"><a href="linear-regression.html#partial-least-squares"><i class="fa fa-check"></i><b>4.7</b> Partial least squares</a></li>
+<li class="chapter" data-level="4.8" data-path="linear-regression.html"><a href="linear-regression.html#lm-model-interp"><i class="fa fa-check"></i><b>4.8</b> Feature interpretation</a></li>
+<li class="chapter" data-level="4.9" data-path="linear-regression.html"><a href="linear-regression.html#final-thoughts"><i class="fa fa-check"></i><b>4.9</b> Final thoughts</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>5</b> Logistic Regression</a><ul>
+<li class="chapter" data-level="5.1" data-path="logistic-regression.html"><a href="logistic-regression.html#prerequisites-3"><i class="fa fa-check"></i><b>5.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="5.2" data-path="logistic-regression.html"><a href="logistic-regression.html#why-logistic-regression"><i class="fa fa-check"></i><b>5.2</b> Why logistic regression</a></li>
+<li class="chapter" data-level="5.3" data-path="logistic-regression.html"><a href="logistic-regression.html#simple-logistic-regression"><i class="fa fa-check"></i><b>5.3</b> Simple logistic regression</a></li>
+<li class="chapter" data-level="5.4" data-path="logistic-regression.html"><a href="logistic-regression.html#multiple-logistic-regression"><i class="fa fa-check"></i><b>5.4</b> Multiple logistic regression</a></li>
+<li class="chapter" data-level="5.5" data-path="logistic-regression.html"><a href="logistic-regression.html#assessing-model-accuracy-1"><i class="fa fa-check"></i><b>5.5</b> Assessing model accuracy</a></li>
+<li class="chapter" data-level="5.6" data-path="logistic-regression.html"><a href="logistic-regression.html#glm-residuals"><i class="fa fa-check"></i><b>5.6</b> Model concerns</a></li>
+<li class="chapter" data-level="5.7" data-path="logistic-regression.html"><a href="logistic-regression.html#feature-interpretation"><i class="fa fa-check"></i><b>5.7</b> Feature interpretation</a></li>
+<li class="chapter" data-level="5.8" data-path="logistic-regression.html"><a href="logistic-regression.html#final-thoughts-1"><i class="fa fa-check"></i><b>5.8</b> Final thoughts</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="regularized-regression.html"><a href="regularized-regression.html"><i class="fa fa-check"></i><b>6</b> Regularized Regression</a><ul>
+<li class="chapter" data-level="6.1" data-path="regularized-regression.html"><a href="regularized-regression.html#prerequisites-4"><i class="fa fa-check"></i><b>6.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="6.2" data-path="regularized-regression.html"><a href="regularized-regression.html#why"><i class="fa fa-check"></i><b>6.2</b> Why regularize?</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="regularized-regression.html"><a href="regularized-regression.html#ridge"><i class="fa fa-check"></i><b>6.2.1</b> Ridge penalty</a></li>
+<li class="chapter" data-level="6.2.2" data-path="regularized-regression.html"><a href="regularized-regression.html#lasso"><i class="fa fa-check"></i><b>6.2.2</b> Lasso penalty</a></li>
+<li class="chapter" data-level="6.2.3" data-path="regularized-regression.html"><a href="regularized-regression.html#elastic"><i class="fa fa-check"></i><b>6.2.3</b> Elastic nets</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="regularized-regression.html"><a href="regularized-regression.html#implementation"><i class="fa fa-check"></i><b>6.3</b> Implementation</a></li>
+<li class="chapter" data-level="6.4" data-path="regularized-regression.html"><a href="regularized-regression.html#regression-glmnet-tune"><i class="fa fa-check"></i><b>6.4</b> Tuning</a></li>
+<li class="chapter" data-level="6.5" data-path="regularized-regression.html"><a href="regularized-regression.html#lm-features"><i class="fa fa-check"></i><b>6.5</b> Feature interpretation</a></li>
+<li class="chapter" data-level="6.6" data-path="regularized-regression.html"><a href="regularized-regression.html#attrition-data"><i class="fa fa-check"></i><b>6.6</b> Attrition data</a></li>
+<li class="chapter" data-level="6.7" data-path="regularized-regression.html"><a href="regularized-regression.html#final-thoughts-2"><i class="fa fa-check"></i><b>6.7</b> Final thoughts</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>7</b> Multivariate Adaptive Regression Splines</a><ul>
+<li class="chapter" data-level="7.1" data-path="mars.html"><a href="mars.html#prerequisites-5"><i class="fa fa-check"></i><b>7.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="7.2" data-path="mars.html"><a href="mars.html#the-basic-idea"><i class="fa fa-check"></i><b>7.2</b> The basic idea</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="mars.html"><a href="mars.html#multivariate-adaptive-regression-splines"><i class="fa fa-check"></i><b>7.2.1</b> Multivariate adaptive regression splines</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="mars.html"><a href="mars.html#fitting-a-basic-mars-model"><i class="fa fa-check"></i><b>7.3</b> Fitting a basic MARS model</a></li>
+<li class="chapter" data-level="7.4" data-path="mars.html"><a href="mars.html#tuning"><i class="fa fa-check"></i><b>7.4</b> Tuning</a></li>
+<li class="chapter" data-level="7.5" data-path="mars.html"><a href="mars.html#mars-features"><i class="fa fa-check"></i><b>7.5</b> Feature interpretation</a></li>
+<li class="chapter" data-level="7.6" data-path="mars.html"><a href="mars.html#attrition-data-1"><i class="fa fa-check"></i><b>7.6</b> Attrition data</a></li>
+<li class="chapter" data-level="7.7" data-path="mars.html"><a href="mars.html#final-thoughts-3"><i class="fa fa-check"></i><b>7.7</b> Final thoughts</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="knn.html"><a href="knn.html"><i class="fa fa-check"></i><b>8</b> <em>K</em>-Nearest Neighbors</a><ul>
+<li class="chapter" data-level="8.1" data-path="knn.html"><a href="knn.html#prerequisites-6"><i class="fa fa-check"></i><b>8.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="8.2" data-path="knn.html"><a href="knn.html#measuring-similarity"><i class="fa fa-check"></i><b>8.2</b> Measuring similarity</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="knn.html"><a href="knn.html#knn-distance"><i class="fa fa-check"></i><b>8.2.1</b> Distance measures</a></li>
+<li class="chapter" data-level="8.2.2" data-path="knn.html"><a href="knn.html#knn-preprocess"><i class="fa fa-check"></i><b>8.2.2</b> Pre-processing</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="knn.html"><a href="knn.html#choosing-k"><i class="fa fa-check"></i><b>8.3</b> Choosing <em>k</em></a></li>
+<li class="chapter" data-level="8.4" data-path="knn.html"><a href="knn.html#knn-mnist"><i class="fa fa-check"></i><b>8.4</b> MNIST example</a></li>
+<li class="chapter" data-level="8.5" data-path="knn.html"><a href="knn.html#final-thoughts-4"><i class="fa fa-check"></i><b>8.5</b> Final thoughts</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="DT.html"><a href="DT.html"><i class="fa fa-check"></i><b>9</b> Decision Trees</a><ul>
+<li class="chapter" data-level="9.1" data-path="DT.html"><a href="DT.html#prerequisites-7"><i class="fa fa-check"></i><b>9.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="9.2" data-path="DT.html"><a href="DT.html#structure"><i class="fa fa-check"></i><b>9.2</b> Structure</a></li>
+<li class="chapter" data-level="9.3" data-path="DT.html"><a href="DT.html#partitioning"><i class="fa fa-check"></i><b>9.3</b> Partitioning</a></li>
+<li class="chapter" data-level="9.4" data-path="DT.html"><a href="DT.html#how-deep"><i class="fa fa-check"></i><b>9.4</b> How deep?</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="DT.html"><a href="DT.html#early-stopping"><i class="fa fa-check"></i><b>9.4.1</b> Early stopping</a></li>
+<li class="chapter" data-level="9.4.2" data-path="DT.html"><a href="DT.html#pruning"><i class="fa fa-check"></i><b>9.4.2</b> Pruning</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="DT.html"><a href="DT.html#ames-housing-example"><i class="fa fa-check"></i><b>9.5</b> Ames housing example</a></li>
+<li class="chapter" data-level="9.6" data-path="DT.html"><a href="DT.html#dt-vip"><i class="fa fa-check"></i><b>9.6</b> Feature interpretation</a></li>
+<li class="chapter" data-level="9.7" data-path="DT.html"><a href="DT.html#final-thoughts-5"><i class="fa fa-check"></i><b>9.7</b> Final thoughts</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>10</b> Bagging</a><ul>
+<li class="chapter" data-level="10.1" data-path="bagging.html"><a href="bagging.html#prerequisites-8"><i class="fa fa-check"></i><b>10.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="10.2" data-path="bagging.html"><a href="bagging.html#why-bag"><i class="fa fa-check"></i><b>10.2</b> Why and when bagging works</a></li>
+<li class="chapter" data-level="10.3" data-path="bagging.html"><a href="bagging.html#implementation-1"><i class="fa fa-check"></i><b>10.3</b> Implementation</a></li>
+<li class="chapter" data-level="10.4" data-path="bagging.html"><a href="bagging.html#easily-parallelize"><i class="fa fa-check"></i><b>10.4</b> Easily parallelize</a></li>
+<li class="chapter" data-level="10.5" data-path="bagging.html"><a href="bagging.html#bagging-vip"><i class="fa fa-check"></i><b>10.5</b> Feature interpretation</a></li>
+<li class="chapter" data-level="10.6" data-path="bagging.html"><a href="bagging.html#bagging-thoughts"><i class="fa fa-check"></i><b>10.6</b> Final thoughts</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="random-forest.html"><a href="random-forest.html"><i class="fa fa-check"></i><b>11</b> Random Forests</a><ul>
+<li class="chapter" data-level="11.1" data-path="random-forest.html"><a href="random-forest.html#prerequisites-9"><i class="fa fa-check"></i><b>11.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="11.2" data-path="random-forest.html"><a href="random-forest.html#extending-bagging"><i class="fa fa-check"></i><b>11.2</b> Extending bagging</a></li>
+<li class="chapter" data-level="11.3" data-path="random-forest.html"><a href="random-forest.html#out-of-the-box-performance"><i class="fa fa-check"></i><b>11.3</b> Out-of-the-box performance</a></li>
+<li class="chapter" data-level="11.4" data-path="random-forest.html"><a href="random-forest.html#hyperparameters"><i class="fa fa-check"></i><b>11.4</b> Hyperparameters</a><ul>
+<li class="chapter" data-level="11.4.1" data-path="random-forest.html"><a href="random-forest.html#number-of-trees"><i class="fa fa-check"></i><b>11.4.1</b> Number of trees</a></li>
+<li class="chapter" data-level="11.4.2" data-path="random-forest.html"><a href="random-forest.html#mtry"><i class="fa fa-check"></i><b>11.4.2</b> <span class="math inline">\(m_{try}\)</span></a></li>
+<li class="chapter" data-level="11.4.3" data-path="random-forest.html"><a href="random-forest.html#tree-complexity"><i class="fa fa-check"></i><b>11.4.3</b> Tree complexity</a></li>
+<li class="chapter" data-level="11.4.4" data-path="random-forest.html"><a href="random-forest.html#sampling-scheme"><i class="fa fa-check"></i><b>11.4.4</b> Sampling scheme</a></li>
+<li class="chapter" data-level="11.4.5" data-path="random-forest.html"><a href="random-forest.html#split-rule"><i class="fa fa-check"></i><b>11.4.5</b> Split rule</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="random-forest.html"><a href="random-forest.html#rf-tuning-strategy"><i class="fa fa-check"></i><b>11.5</b> Tuning strategies</a></li>
+<li class="chapter" data-level="11.6" data-path="random-forest.html"><a href="random-forest.html#rf-vip"><i class="fa fa-check"></i><b>11.6</b> Feature interpretation</a></li>
+<li class="chapter" data-level="11.7" data-path="random-forest.html"><a href="random-forest.html#final-thoughts-6"><i class="fa fa-check"></i><b>11.7</b> Final thoughts</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="gbm.html"><a href="gbm.html"><i class="fa fa-check"></i><b>12</b> Gradient Boosting</a><ul>
+<li class="chapter" data-level="12.1" data-path="gbm.html"><a href="gbm.html#prerequisites-10"><i class="fa fa-check"></i><b>12.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="12.2" data-path="gbm.html"><a href="gbm.html#how-boosting-works"><i class="fa fa-check"></i><b>12.2</b> How boosting works</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="gbm.html"><a href="gbm.html#a-sequential-ensemble-approach"><i class="fa fa-check"></i><b>12.2.1</b> A sequential ensemble approach</a></li>
+<li class="chapter" data-level="12.2.2" data-path="gbm.html"><a href="gbm.html#gbm-gradient"><i class="fa fa-check"></i><b>12.2.2</b> Gradient descent</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="gbm.html"><a href="gbm.html#basic-gbm"><i class="fa fa-check"></i><b>12.3</b> Basic GBM</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="gbm.html"><a href="gbm.html#hyper-gbm1"><i class="fa fa-check"></i><b>12.3.1</b> Hyperparameters</a></li>
+<li class="chapter" data-level="12.3.2" data-path="gbm.html"><a href="gbm.html#implementation-2"><i class="fa fa-check"></i><b>12.3.2</b> Implementation</a></li>
+<li class="chapter" data-level="12.3.3" data-path="gbm.html"><a href="gbm.html#tuning-strategy"><i class="fa fa-check"></i><b>12.3.3</b> General tuning strategy</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="gbm.html"><a href="gbm.html#stochastic-gbms"><i class="fa fa-check"></i><b>12.4</b> Stochastic GBMs</a><ul>
+<li class="chapter" data-level="12.4.1" data-path="gbm.html"><a href="gbm.html#hyper-gbm2"><i class="fa fa-check"></i><b>12.4.1</b> Stochastic hyperparameters</a></li>
+<li class="chapter" data-level="12.4.2" data-path="gbm.html"><a href="gbm.html#stochastic-gbm-h2o"><i class="fa fa-check"></i><b>12.4.2</b> Implementation</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="gbm.html"><a href="gbm.html#xgboost"><i class="fa fa-check"></i><b>12.5</b> XGBoost</a><ul>
+<li class="chapter" data-level="12.5.1" data-path="gbm.html"><a href="gbm.html#xgboost-hyperparameters"><i class="fa fa-check"></i><b>12.5.1</b> XGBoost hyperparameters</a><ul>
+<li class="chapter" data-level="12.5.1.1" data-path="gbm.html"><a href="gbm.html#xgb-regularization"><i class="fa fa-check"></i><b>12.5.1.1</b> Regularization</a></li>
+<li class="chapter" data-level="12.5.1.2" data-path="gbm.html"><a href="gbm.html#dropout"><i class="fa fa-check"></i><b>12.5.1.2</b> Dropout</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5.2" data-path="gbm.html"><a href="gbm.html#xgb-tuning-strategy"><i class="fa fa-check"></i><b>12.5.2</b> Tuning strategy</a></li>
+</ul></li>
+<li class="chapter" data-level="12.6" data-path="gbm.html"><a href="gbm.html#feature-interpretation-1"><i class="fa fa-check"></i><b>12.6</b> Feature interpretation</a></li>
+<li class="chapter" data-level="12.7" data-path="gbm.html"><a href="gbm.html#final-thoughts-7"><i class="fa fa-check"></i><b>12.7</b> Final thoughts</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="deep-learning.html"><a href="deep-learning.html"><i class="fa fa-check"></i><b>13</b> Deep Learning</a><ul>
+<li class="chapter" data-level="13.1" data-path="deep-learning.html"><a href="deep-learning.html#prerequisites-11"><i class="fa fa-check"></i><b>13.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="13.2" data-path="deep-learning.html"><a href="deep-learning.html#why-dl"><i class="fa fa-check"></i><b>13.2</b> Why deep learning</a></li>
+<li class="chapter" data-level="13.3" data-path="deep-learning.html"><a href="deep-learning.html#ff"><i class="fa fa-check"></i><b>13.3</b> Feedforward DNNs</a></li>
+<li class="chapter" data-level="13.4" data-path="deep-learning.html"><a href="deep-learning.html#arch"><i class="fa fa-check"></i><b>13.4</b> Network architecture</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="deep-learning.html"><a href="deep-learning.html#layers-and-nodes"><i class="fa fa-check"></i><b>13.4.1</b> Layers and nodes</a><ul>
+<li class="chapter" data-level="13.4.1.1" data-path="deep-learning.html"><a href="deep-learning.html#hidden-layers"><i class="fa fa-check"></i><b>13.4.1.1</b> Hidden layers</a></li>
+<li class="chapter" data-level="13.4.1.2" data-path="deep-learning.html"><a href="deep-learning.html#output-layers"><i class="fa fa-check"></i><b>13.4.1.2</b> Output layers</a></li>
+<li class="chapter" data-level="13.4.1.3" data-path="deep-learning.html"><a href="deep-learning.html#implementation-3"><i class="fa fa-check"></i><b>13.4.1.3</b> Implementation</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4.2" data-path="deep-learning.html"><a href="deep-learning.html#activation"><i class="fa fa-check"></i><b>13.4.2</b> Activation</a><ul>
+<li class="chapter" data-level="13.4.2.1" data-path="deep-learning.html"><a href="deep-learning.html#activations"><i class="fa fa-check"></i><b>13.4.2.1</b> Activation functions</a></li>
+<li class="chapter" data-level="13.4.2.2" data-path="deep-learning.html"><a href="deep-learning.html#implementation-4"><i class="fa fa-check"></i><b>13.4.2.2</b> Implementation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="deep-learning.html"><a href="deep-learning.html#dl-back"><i class="fa fa-check"></i><b>13.5</b> Backpropagation</a></li>
+<li class="chapter" data-level="13.6" data-path="deep-learning.html"><a href="deep-learning.html#dl-train"><i class="fa fa-check"></i><b>13.6</b> Model training</a></li>
+<li class="chapter" data-level="13.7" data-path="deep-learning.html"><a href="deep-learning.html#dl-tuning"><i class="fa fa-check"></i><b>13.7</b> Model tuning</a><ul>
+<li class="chapter" data-level="13.7.1" data-path="deep-learning.html"><a href="deep-learning.html#model-capacity"><i class="fa fa-check"></i><b>13.7.1</b> Model capacity</a></li>
+<li class="chapter" data-level="13.7.2" data-path="deep-learning.html"><a href="deep-learning.html#batch-normalization"><i class="fa fa-check"></i><b>13.7.2</b> Batch normalization</a></li>
+<li class="chapter" data-level="13.7.3" data-path="deep-learning.html"><a href="deep-learning.html#dl-regularization"><i class="fa fa-check"></i><b>13.7.3</b> Regularization</a></li>
+<li class="chapter" data-level="13.7.4" data-path="deep-learning.html"><a href="deep-learning.html#adjust-learning-rate"><i class="fa fa-check"></i><b>13.7.4</b> Adjust learning rate</a></li>
+</ul></li>
+<li class="chapter" data-level="13.8" data-path="deep-learning.html"><a href="deep-learning.html#grid-search"><i class="fa fa-check"></i><b>13.8</b> Grid Search</a></li>
+<li class="chapter" data-level="13.9" data-path="deep-learning.html"><a href="deep-learning.html#final-thoughts-8"><i class="fa fa-check"></i><b>13.9</b> Final thoughts</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="svm.html"><a href="svm.html"><i class="fa fa-check"></i><b>14</b> Support Vector Machines</a><ul>
+<li class="chapter" data-level="14.1" data-path="svm.html"><a href="svm.html#prerequisites-12"><i class="fa fa-check"></i><b>14.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="14.2" data-path="svm.html"><a href="svm.html#hyperplanes"><i class="fa fa-check"></i><b>14.2</b> Optimal separating hyperplanes</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="svm.html"><a href="svm.html#the-hard-margin-classifier"><i class="fa fa-check"></i><b>14.2.1</b> The hard margin classifier</a></li>
+<li class="chapter" data-level="14.2.2" data-path="svm.html"><a href="svm.html#the-soft-margin-classifier"><i class="fa fa-check"></i><b>14.2.2</b> The soft margin classifier</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="svm.html"><a href="svm.html#the-support-vector-machine"><i class="fa fa-check"></i><b>14.3</b> The support vector machine</a><ul>
+<li class="chapter" data-level="14.3.1" data-path="svm.html"><a href="svm.html#more-than-two-classes"><i class="fa fa-check"></i><b>14.3.1</b> More than two classes</a></li>
+<li class="chapter" data-level="14.3.2" data-path="svm.html"><a href="svm.html#support-vector-regression"><i class="fa fa-check"></i><b>14.3.2</b> Support vector regression</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="svm.html"><a href="svm.html#job-attrition-example"><i class="fa fa-check"></i><b>14.4</b> Job attrition example</a><ul>
+<li class="chapter" data-level="14.4.1" data-path="svm.html"><a href="svm.html#class-weights"><i class="fa fa-check"></i><b>14.4.1</b> Class weights</a></li>
+<li class="chapter" data-level="14.4.2" data-path="svm.html"><a href="svm.html#class-probabilities"><i class="fa fa-check"></i><b>14.4.2</b> Class probabilities</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="svm.html"><a href="svm.html#feature-interpretation-2"><i class="fa fa-check"></i><b>14.5</b> Feature interpretation</a></li>
+<li class="chapter" data-level="14.6" data-path="svm.html"><a href="svm.html#final-thoughts-9"><i class="fa fa-check"></i><b>14.6</b> Final thoughts</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="stacking.html"><a href="stacking.html"><i class="fa fa-check"></i><b>15</b> Stacked Models</a><ul>
+<li class="chapter" data-level="15.1" data-path="stacking.html"><a href="stacking.html#h20-prereqs"><i class="fa fa-check"></i><b>15.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="15.2" data-path="stacking.html"><a href="stacking.html#the-idea"><i class="fa fa-check"></i><b>15.2</b> The Idea</a><ul>
+<li class="chapter" data-level="15.2.1" data-path="stacking.html"><a href="stacking.html#common-ensemble-methods"><i class="fa fa-check"></i><b>15.2.1</b> Common ensemble methods</a></li>
+<li class="chapter" data-level="15.2.2" data-path="stacking.html"><a href="stacking.html#super-learner-algorithm"><i class="fa fa-check"></i><b>15.2.2</b> Super learner algorithm</a></li>
+<li class="chapter" data-level="15.2.3" data-path="stacking.html"><a href="stacking.html#available-packages"><i class="fa fa-check"></i><b>15.2.3</b> Available packages</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="stacking.html"><a href="stacking.html#stacking-existing"><i class="fa fa-check"></i><b>15.3</b> Stacking existing models</a></li>
+<li class="chapter" data-level="15.4" data-path="stacking.html"><a href="stacking.html#stacking-a-grid-search"><i class="fa fa-check"></i><b>15.4</b> Stacking a grid search</a></li>
+<li class="chapter" data-level="15.5" data-path="stacking.html"><a href="stacking.html#automated-machine-learning"><i class="fa fa-check"></i><b>15.5</b> Automated machine learning</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="iml.html"><a href="iml.html"><i class="fa fa-check"></i><b>16</b> Interpretable Machine Learning</a><ul>
+<li class="chapter" data-level="16.1" data-path="iml.html"><a href="iml.html#prerequisites-13"><i class="fa fa-check"></i><b>16.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="16.2" data-path="iml.html"><a href="iml.html#the-idea-1"><i class="fa fa-check"></i><b>16.2</b> The idea</a><ul>
+<li class="chapter" data-level="16.2.1" data-path="iml.html"><a href="iml.html#global-interpretation"><i class="fa fa-check"></i><b>16.2.1</b> Global interpretation</a></li>
+<li class="chapter" data-level="16.2.2" data-path="iml.html"><a href="iml.html#local-interpretation"><i class="fa fa-check"></i><b>16.2.2</b> Local interpretation</a></li>
+<li class="chapter" data-level="16.2.3" data-path="iml.html"><a href="iml.html#agnostic"><i class="fa fa-check"></i><b>16.2.3</b> Model-specific vs. model-agnostic</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="iml.html"><a href="iml.html#permutation-based-feature-importance"><i class="fa fa-check"></i><b>16.3</b> Permutation-based feature importance</a><ul>
+<li class="chapter" data-level="16.3.1" data-path="iml.html"><a href="iml.html#concept"><i class="fa fa-check"></i><b>16.3.1</b> Concept</a></li>
+<li class="chapter" data-level="16.3.2" data-path="iml.html"><a href="iml.html#implementation-5"><i class="fa fa-check"></i><b>16.3.2</b> Implementation</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="iml.html"><a href="iml.html#partial-dependence"><i class="fa fa-check"></i><b>16.4</b> Partial dependence</a><ul>
+<li class="chapter" data-level="16.4.1" data-path="iml.html"><a href="iml.html#concept-1"><i class="fa fa-check"></i><b>16.4.1</b> Concept</a></li>
+<li class="chapter" data-level="16.4.2" data-path="iml.html"><a href="iml.html#implementation-6"><i class="fa fa-check"></i><b>16.4.2</b> Implementation</a></li>
+<li class="chapter" data-level="16.4.3" data-path="iml.html"><a href="iml.html#alternative-uses"><i class="fa fa-check"></i><b>16.4.3</b> Alternative uses</a></li>
+</ul></li>
+<li class="chapter" data-level="16.5" data-path="iml.html"><a href="iml.html#individual-conditional-expectation"><i class="fa fa-check"></i><b>16.5</b> Individual conditional expectation</a><ul>
+<li class="chapter" data-level="16.5.1" data-path="iml.html"><a href="iml.html#concept-2"><i class="fa fa-check"></i><b>16.5.1</b> Concept</a></li>
+<li class="chapter" data-level="16.5.2" data-path="iml.html"><a href="iml.html#implementation-7"><i class="fa fa-check"></i><b>16.5.2</b> Implementation</a></li>
+</ul></li>
+<li class="chapter" data-level="16.6" data-path="iml.html"><a href="iml.html#feature-interactions"><i class="fa fa-check"></i><b>16.6</b> Feature interactions</a><ul>
+<li class="chapter" data-level="16.6.1" data-path="iml.html"><a href="iml.html#concept-3"><i class="fa fa-check"></i><b>16.6.1</b> Concept</a></li>
+<li class="chapter" data-level="16.6.2" data-path="iml.html"><a href="iml.html#implementation-8"><i class="fa fa-check"></i><b>16.6.2</b> Implementation</a></li>
+<li class="chapter" data-level="16.6.3" data-path="iml.html"><a href="iml.html#alternatives-2"><i class="fa fa-check"></i><b>16.6.3</b> Alternatives</a></li>
+</ul></li>
+<li class="chapter" data-level="16.7" data-path="iml.html"><a href="iml.html#local-interpretable-model-agnostic-explanations"><i class="fa fa-check"></i><b>16.7</b> Local interpretable model-agnostic explanations</a><ul>
+<li class="chapter" data-level="16.7.1" data-path="iml.html"><a href="iml.html#concept-4"><i class="fa fa-check"></i><b>16.7.1</b> Concept</a></li>
+<li class="chapter" data-level="16.7.2" data-path="iml.html"><a href="iml.html#implementation-9"><i class="fa fa-check"></i><b>16.7.2</b> Implementation</a></li>
+<li class="chapter" data-level="16.7.3" data-path="iml.html"><a href="iml.html#tuning-1"><i class="fa fa-check"></i><b>16.7.3</b> Tuning</a></li>
+<li class="chapter" data-level="16.7.4" data-path="iml.html"><a href="iml.html#alternative-uses-1"><i class="fa fa-check"></i><b>16.7.4</b> Alternative uses</a></li>
+</ul></li>
+<li class="chapter" data-level="16.8" data-path="iml.html"><a href="iml.html#shapley-values"><i class="fa fa-check"></i><b>16.8</b> Shapley values</a><ul>
+<li class="chapter" data-level="16.8.1" data-path="iml.html"><a href="iml.html#concept-5"><i class="fa fa-check"></i><b>16.8.1</b> Concept</a></li>
+<li class="chapter" data-level="16.8.2" data-path="iml.html"><a href="iml.html#implementation-10"><i class="fa fa-check"></i><b>16.8.2</b> Implementation</a></li>
+<li class="chapter" data-level="16.8.3" data-path="iml.html"><a href="iml.html#xgboost-and-built-in-shapley-values"><i class="fa fa-check"></i><b>16.8.3</b> XGBoost and built-in Shapley values</a></li>
+</ul></li>
+<li class="chapter" data-level="16.9" data-path="iml.html"><a href="iml.html#localized-step-wise-procedure"><i class="fa fa-check"></i><b>16.9</b> Localized step-wise procedure</a><ul>
+<li class="chapter" data-level="16.9.1" data-path="iml.html"><a href="iml.html#concept-6"><i class="fa fa-check"></i><b>16.9.1</b> Concept</a></li>
+<li class="chapter" data-level="16.9.2" data-path="iml.html"><a href="iml.html#implementation-11"><i class="fa fa-check"></i><b>16.9.2</b> Implementation</a></li>
+</ul></li>
+<li class="chapter" data-level="16.10" data-path="iml.html"><a href="iml.html#final-thoughts-10"><i class="fa fa-check"></i><b>16.10</b> Final thoughts</a></li>
+</ul></li>
+<li class="part"><span><b>III Dimension Reduction</b></span></li>
+<li class="chapter" data-level="17" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>17</b> Principal Components Analysis</a><ul>
+<li class="chapter" data-level="17.1" data-path="pca.html"><a href="pca.html#prerequisites-14"><i class="fa fa-check"></i><b>17.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="17.2" data-path="pca.html"><a href="pca.html#the-idea-2"><i class="fa fa-check"></i><b>17.2</b> The idea</a></li>
+<li class="chapter" data-level="17.3" data-path="pca.html"><a href="pca.html#finding-principal-components"><i class="fa fa-check"></i><b>17.3</b> Finding principal components</a></li>
+<li class="chapter" data-level="17.4" data-path="pca.html"><a href="pca.html#performing-pca-in-r"><i class="fa fa-check"></i><b>17.4</b> Performing PCA in R</a></li>
+<li class="chapter" data-level="17.5" data-path="pca.html"><a href="pca.html#pca-selecting-pcs"><i class="fa fa-check"></i><b>17.5</b> Selecting the number of principal components</a><ul>
+<li class="chapter" data-level="17.5.1" data-path="pca.html"><a href="pca.html#eigenvalue-criterion"><i class="fa fa-check"></i><b>17.5.1</b> Eigenvalue criterion</a></li>
+<li class="chapter" data-level="17.5.2" data-path="pca.html"><a href="pca.html#PVE"><i class="fa fa-check"></i><b>17.5.2</b> Proportion of variance explained criterion</a></li>
+<li class="chapter" data-level="17.5.3" data-path="pca.html"><a href="pca.html#scree"><i class="fa fa-check"></i><b>17.5.3</b> Scree plot criterion</a></li>
+</ul></li>
+<li class="chapter" data-level="17.6" data-path="pca.html"><a href="pca.html#final-thoughts-11"><i class="fa fa-check"></i><b>17.6</b> Final thoughts</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="GLRM.html"><a href="GLRM.html"><i class="fa fa-check"></i><b>18</b> Generalized Low Rank Models</a><ul>
+<li class="chapter" data-level="18.1" data-path="GLRM.html"><a href="GLRM.html#prerequisites-15"><i class="fa fa-check"></i><b>18.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="18.2" data-path="GLRM.html"><a href="GLRM.html#the-idea-3"><i class="fa fa-check"></i><b>18.2</b> The idea</a></li>
+<li class="chapter" data-level="18.3" data-path="GLRM.html"><a href="GLRM.html#finding-the-lower-ranks"><i class="fa fa-check"></i><b>18.3</b> Finding the lower ranks</a><ul>
+<li class="chapter" data-level="18.3.1" data-path="GLRM.html"><a href="GLRM.html#alternating-minimization"><i class="fa fa-check"></i><b>18.3.1</b> Alternating minimization</a></li>
+<li class="chapter" data-level="18.3.2" data-path="GLRM.html"><a href="GLRM.html#loss-functions"><i class="fa fa-check"></i><b>18.3.2</b> Loss functions</a></li>
+<li class="chapter" data-level="18.3.3" data-path="GLRM.html"><a href="GLRM.html#regularization"><i class="fa fa-check"></i><b>18.3.3</b> Regularization</a></li>
+<li class="chapter" data-level="18.3.4" data-path="GLRM.html"><a href="GLRM.html#selecting-k"><i class="fa fa-check"></i><b>18.3.4</b> Selecting <em>k</em></a></li>
+</ul></li>
+<li class="chapter" data-level="18.4" data-path="GLRM.html"><a href="GLRM.html#fitting-glrms-in-r"><i class="fa fa-check"></i><b>18.4</b> Fitting GLRMs in R</a><ul>
+<li class="chapter" data-level="18.4.1" data-path="GLRM.html"><a href="GLRM.html#basic-glrm-model"><i class="fa fa-check"></i><b>18.4.1</b> Basic GLRM model</a></li>
+<li class="chapter" data-level="18.4.2" data-path="GLRM.html"><a href="GLRM.html#tuning-to-optimize-for-unseen-data"><i class="fa fa-check"></i><b>18.4.2</b> Tuning to optimize for unseen data</a></li>
+</ul></li>
+<li class="chapter" data-level="18.5" data-path="GLRM.html"><a href="GLRM.html#final-thoughts-12"><i class="fa fa-check"></i><b>18.5</b> Final thoughts</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="autoencoders.html"><a href="autoencoders.html"><i class="fa fa-check"></i><b>19</b> Autoencoders</a><ul>
+<li class="chapter" data-level="19.1" data-path="autoencoders.html"><a href="autoencoders.html#prerequisites-16"><i class="fa fa-check"></i><b>19.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="19.2" data-path="autoencoders.html"><a href="autoencoders.html#undercomplete-autoencoders"><i class="fa fa-check"></i><b>19.2</b> Undercomplete autoencoders</a><ul>
+<li class="chapter" data-level="19.2.1" data-path="autoencoders.html"><a href="autoencoders.html#comparing-pca-to-an-autoencoder"><i class="fa fa-check"></i><b>19.2.1</b> Comparing PCA to an autoencoder</a></li>
+<li class="chapter" data-level="19.2.2" data-path="autoencoders.html"><a href="autoencoders.html#stacked-autoencoders"><i class="fa fa-check"></i><b>19.2.2</b> Stacked autoencoders</a></li>
+<li class="chapter" data-level="19.2.3" data-path="autoencoders.html"><a href="autoencoders.html#visualizing-the-reconstruction"><i class="fa fa-check"></i><b>19.2.3</b> Visualizing the reconstruction</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="autoencoders.html"><a href="autoencoders.html#sparse-autoencoders"><i class="fa fa-check"></i><b>19.3</b> Sparse autoencoders</a></li>
+<li class="chapter" data-level="19.4" data-path="autoencoders.html"><a href="autoencoders.html#denoising-autoencoders"><i class="fa fa-check"></i><b>19.4</b> Denoising autoencoders</a></li>
+<li class="chapter" data-level="19.5" data-path="autoencoders.html"><a href="autoencoders.html#anomaly-detection"><i class="fa fa-check"></i><b>19.5</b> Anomaly detection</a></li>
+<li class="chapter" data-level="19.6" data-path="autoencoders.html"><a href="autoencoders.html#final-thoughts-13"><i class="fa fa-check"></i><b>19.6</b> Final thoughts</a></li>
+</ul></li>
+<li class="part"><span><b>IV Clustering</b></span></li>
+<li class="chapter" data-level="20" data-path="kmeans.html"><a href="kmeans.html"><i class="fa fa-check"></i><b>20</b> <em>K</em>-means Clustering</a><ul>
+<li class="chapter" data-level="20.1" data-path="kmeans.html"><a href="kmeans.html#prerequisites-17"><i class="fa fa-check"></i><b>20.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="20.2" data-path="kmeans.html"><a href="kmeans.html#distance-measures"><i class="fa fa-check"></i><b>20.2</b> Distance measures</a></li>
+<li class="chapter" data-level="20.3" data-path="kmeans.html"><a href="kmeans.html#defining-clusters"><i class="fa fa-check"></i><b>20.3</b> Defining clusters</a></li>
+<li class="chapter" data-level="20.4" data-path="kmeans.html"><a href="kmeans.html#k-means-algorithm"><i class="fa fa-check"></i><b>20.4</b> <em>k</em>-means algorithm</a></li>
+<li class="chapter" data-level="20.5" data-path="kmeans.html"><a href="kmeans.html#clustering-digits"><i class="fa fa-check"></i><b>20.5</b> Clustering digits</a></li>
+<li class="chapter" data-level="20.6" data-path="kmeans.html"><a href="kmeans.html#determine-k"><i class="fa fa-check"></i><b>20.6</b> How many clusters?</a></li>
+<li class="chapter" data-level="20.7" data-path="kmeans.html"><a href="kmeans.html#cluster-mixed"><i class="fa fa-check"></i><b>20.7</b> Clustering with mixed data</a></li>
+<li class="chapter" data-level="20.8" data-path="kmeans.html"><a href="kmeans.html#alt-partitioning-methods"><i class="fa fa-check"></i><b>20.8</b> Alternative partitioning methods</a></li>
+<li class="chapter" data-level="20.9" data-path="kmeans.html"><a href="kmeans.html#final-thoughts-14"><i class="fa fa-check"></i><b>20.9</b> Final thoughts</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="hierarchical.html"><a href="hierarchical.html"><i class="fa fa-check"></i><b>21</b> Hierarchical Clustering</a><ul>
+<li class="chapter" data-level="21.1" data-path="hierarchical.html"><a href="hierarchical.html#prerequisites-18"><i class="fa fa-check"></i><b>21.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="21.2" data-path="hierarchical.html"><a href="hierarchical.html#hierarchical-clustering-algorithms"><i class="fa fa-check"></i><b>21.2</b> Hierarchical clustering algorithms</a></li>
+<li class="chapter" data-level="21.3" data-path="hierarchical.html"><a href="hierarchical.html#hierarchical-clustering-in-r"><i class="fa fa-check"></i><b>21.3</b> Hierarchical clustering in R</a><ul>
+<li class="chapter" data-level="21.3.1" data-path="hierarchical.html"><a href="hierarchical.html#agglomerative-hierarchical-clustering"><i class="fa fa-check"></i><b>21.3.1</b> Agglomerative hierarchical clustering</a></li>
+<li class="chapter" data-level="21.3.2" data-path="hierarchical.html"><a href="hierarchical.html#divisive-hierarchical-clustering"><i class="fa fa-check"></i><b>21.3.2</b> Divisive hierarchical clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="21.4" data-path="hierarchical.html"><a href="hierarchical.html#determining-optimal-clusters"><i class="fa fa-check"></i><b>21.4</b> Determining optimal clusters</a></li>
+<li class="chapter" data-level="21.5" data-path="hierarchical.html"><a href="hierarchical.html#working-with-dendrograms"><i class="fa fa-check"></i><b>21.5</b> Working with dendrograms</a></li>
+<li class="chapter" data-level="21.6" data-path="hierarchical.html"><a href="hierarchical.html#final-thoughts-15"><i class="fa fa-check"></i><b>21.6</b> Final thoughts</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="model-clustering.html"><a href="model-clustering.html"><i class="fa fa-check"></i><b>22</b> Model-based Clustering</a><ul>
+<li class="chapter" data-level="22.1" data-path="model-clustering.html"><a href="model-clustering.html#prerequisites-19"><i class="fa fa-check"></i><b>22.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="22.2" data-path="model-clustering.html"><a href="model-clustering.html#measuring-probability-and-uncertainty"><i class="fa fa-check"></i><b>22.2</b> Measuring probability and uncertainty</a></li>
+<li class="chapter" data-level="22.3" data-path="model-clustering.html"><a href="model-clustering.html#covariance-types"><i class="fa fa-check"></i><b>22.3</b> Covariance types</a></li>
+<li class="chapter" data-level="22.4" data-path="model-clustering.html"><a href="model-clustering.html#model-selection"><i class="fa fa-check"></i><b>22.4</b> Model selection</a></li>
+<li class="chapter" data-level="22.5" data-path="model-clustering.html"><a href="model-clustering.html#my-basket-example"><i class="fa fa-check"></i><b>22.5</b> My basket example</a></li>
+<li class="chapter" data-level="22.6" data-path="model-clustering.html"><a href="model-clustering.html#final-thoughts-16"><i class="fa fa-check"></i><b>22.6</b> Final thoughts</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Hands-On Machine Learning with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="process" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Modeling Process</h1>
+<p>Much like EDA, the ML process is very iterative and heurstic-based. With minimal knowledge of the problem or data at hand, it is difficult to know which ML method will perform best. This is known as the <em>no free lunch</em> theorem for ML <span class="citation">(Wolpert <a href="#ref-wolpert1996lack">1996</a>)</span>. Consequently, it is common for many ML approaches to be applied, evaluated, and modified before a final, optimal model can be determined. Performing this process correctly provides great confidence in our outcomes. If not, the results will be useless and, potentially, damaging.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p>Approaching ML modeling correctly means approaching it strategically by spending our data wisely on learning and validation procedures, properly pre-processing the feature and target variables, minimizing <em>data leakage</em> (Section <a href="engineering.html#data-leakage">3.8.2</a>), tuning hyperparameters, and assessing model performance. Many books and courses portray the modeling process as a short sprint. A better analogy would be a marathon where many iterations of these steps are repeated before eventually finding the final optimal model. This process is illustrated in Figure <a href="process.html#fig:modeling-process-modeling-process">2.1</a>. Before introducing specific algorithms, this chapter, and the next, introduce concepts that are fundamental to the ML modeling process and that you’ll see briskly covered in future modeling chapters.</p>
+<div class="note">
+<p>
+Although the discussions in this chapter focus on supervised ML modeling, many of the topics also apply to unsupervised methods.
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:modeling-process-modeling-process"></span>
+<img src="images/modeling_process.png" alt="General predictive machine learning process." width="90%" height="90%" />
+<p class="caption">
+Figure 2.1: General predictive machine learning process.
+</p>
+</div>
+<div id="prerequisites" class="section level2">
+<h2><span class="header-section-number">2.1</span> Prerequisites</h2>
+<p>This chapter leverages the following packages.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Helper packages</span>
+<span class="kw">library</span>(dplyr)     <span class="co"># for data manipulation</span>
+<span class="kw">library</span>(ggplot2)   <span class="co"># for awesome graphics</span>
+
+<span class="co"># Modeling process packages</span>
+<span class="kw">library</span>(rsample)   <span class="co"># for resampling procedures</span>
+<span class="kw">library</span>(caret)     <span class="co"># for resampling and model training</span>
+<span class="kw">library</span>(h2o)       <span class="co"># for resampling and model training</span>
+
+<span class="co"># h2o set-up </span>
+<span class="kw">h2o.no_progress</span>()  <span class="co"># turn off h2o progress bars</span>
+<span class="kw">h2o.init</span>()         <span class="co"># launch h2o</span></code></pre>
+<p>To illustrate some of the concepts, we’ll use the Ames Housing and employee attrition data sets introduced in Chapter <a href="intro.html#intro">1</a>. Throughout this book, we’ll demonstrate approaches with ordinary R data frames. However, since many of the supervised machine learning chapters leverage the <strong>h2o</strong> package, we’ll also show how to do some of the tasks with H2O objects. You can convert any R data frame to an H2O object (i.e., import it to the H2O cloud) easily with <code>as.h2o(&lt;my-data-frame&gt;)</code>.</p>
+<div class="warning">
+<p>
+If you try to convert the original <code>rsample::attrition</code> data set to an H2O object an error will occur. This is because several variables are <em>ordered factors</em> and H2O has no way of handling this data type. Consequently, you must convert any ordered factors to unordered; see <code>?base::ordered</code> for details.
+</p>
+</div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Ames housing data</span>
+ames &lt;-<span class="st"> </span>AmesHousing<span class="op">::</span><span class="kw">make_ames</span>()
+ames.h2o &lt;-<span class="st"> </span><span class="kw">as.h2o</span>(ames)
+
+<span class="co"># Job attrition data</span>
+churn &lt;-<span class="st"> </span>rsample<span class="op">::</span>attrition <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate_if</span>(is.ordered, <span class="dt">.funs =</span> factor, <span class="dt">ordered =</span> <span class="ot">FALSE</span>)
+churn.h2o &lt;-<span class="st"> </span><span class="kw">as.h2o</span>(churn)</code></pre>
+</div>
+<div id="splitting" class="section level2">
+<h2><span class="header-section-number">2.2</span> Data splitting</h2>
+<p>A major goal of the machine learning process is to find an algorithm <span class="math inline">\(f\left(X\right)\)</span> that most accurately predicts future values (<span class="math inline">\(\hat{Y}\)</span>) based on a set of features (<span class="math inline">\(X\)</span>). In other words, we want an algorithm that not only fits well to our past data, but more importantly, one that predicts a future outcome accurately. This is called the <strong><em>generalizability</em></strong> of our algorithm. How we “spend” our data will help us understand how well our algorithm generalizes to unseen data.</p>
+<p>To provide an accurate understanding of the generalizability of our final optimal model, we can split our data into training and test data sets:</p>
+<ul>
+<li><strong>Training set</strong>: these data are used to develop feature sets, train our algorithms, tune hyperparameters, compare models, and all of the other activities required to choose a final model (e.g., the model we want to put into production).</li>
+<li><strong>Test set</strong>: having chosen a final model, these data are used to estimate an unbiased assessment of the model’s performance, which we refer to as the <em>generalization error</em>.</li>
+</ul>
+<div class="warning">
+<p>
+It is critical that the test set not be used prior to selecting your final model. Assessing results on the test set prior to final model selection biases the model selection process since the testing data will have become part of the model development process.
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:modeling-process-split"></span>
+<img src="images/data_split.png" alt="Splitting data into training and test sets." width="30%" height="30%" />
+<p class="caption">
+Figure 2.2: Splitting data into training and test sets.
+</p>
+</div>
+<p>Given a fixed amount of data, typical recommendations for splitting your data into training-test splits include 60% (training)–40% (testing), 70%–30%, or 80%–20%. Generally speaking, these are appropriate guidelines to follow; however, it is good to keep the following points in mind:</p>
+<ul>
+<li>Spending too much in training (e.g., <span class="math inline">\(&gt;80\%\)</span>) won’t allow us to get a good assessment of predictive performance. We may find a model that fits the training data very well, but is not generalizable (<em>overfitting</em>).</li>
+<li>Sometimes too much spent in testing (<span class="math inline">\(&gt;40\%\)</span>) won’t allow us to get a good assessment of model parameters.</li>
+</ul>
+<p>Other factors should also influence the allocation proportions. For example, very large training sets (e.g., <span class="math inline">\(n &gt; 100\texttt{K}\)</span>) often result in only marginal gains compared to smaller sample sizes. Consequently, you may use a smaller training sample to increase computation speed (e.g., models built on larger training sets often take longer to score new data sets in production). In contrast, as <span class="math inline">\(p \geq n\)</span> (where <span class="math inline">\(p\)</span> represents the number of features), larger samples sizes are often required to identify consistent signals in the features.</p>
+<p>The two most common ways of splitting data include <strong><em>simple random sampling</em></strong> and <strong><em>stratified sampling</em></strong>.</p>
+<div id="simple-random-sampling" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Simple random sampling</h3>
+<p>The simplest way to split the data into training and test sets is to take a simple random sample. This does not control for any data attributes, such as the distribution of your response variable (<span class="math inline">\(Y\)</span>). There are multiple ways to split our data in R. Here we show four options to produce a 70–30 split in the Ames housing data:</p>
+<div class="note">
+<p>
+Sampling is a random process so setting the random number generator with a common seed allows for reproducible results. Throughout this book we’ll often use the seed <code>123</code> for reproducibility but the number itself has no special meaning.
+</p>
+</div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Using base R</span>
+<span class="kw">set.seed</span>(<span class="dv">123</span>)  <span class="co"># for reproducibility</span>
+index_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(ames), <span class="kw">round</span>(<span class="kw">nrow</span>(ames) <span class="op">*</span><span class="st"> </span><span class="fl">0.7</span>))
+train_<span class="dv">1</span> &lt;-<span class="st"> </span>ames[index_<span class="dv">1</span>, ]
+test_<span class="dv">1</span>  &lt;-<span class="st"> </span>ames[<span class="op">-</span>index_<span class="dv">1</span>, ]
+
+<span class="co"># Using caret package</span>
+<span class="kw">set.seed</span>(<span class="dv">123</span>)  <span class="co"># for reproducibility</span>
+index_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">createDataPartition</span>(ames<span class="op">$</span>Sale_Price, <span class="dt">p =</span> <span class="fl">0.7</span>, 
+                               <span class="dt">list =</span> <span class="ot">FALSE</span>)
+train_<span class="dv">2</span> &lt;-<span class="st"> </span>ames[index_<span class="dv">2</span>, ]
+test_<span class="dv">2</span>  &lt;-<span class="st"> </span>ames[<span class="op">-</span>index_<span class="dv">2</span>, ]
+
+<span class="co"># Using rsample package</span>
+<span class="kw">set.seed</span>(<span class="dv">123</span>)  <span class="co"># for reproducibility</span>
+split_<span class="dv">1</span>  &lt;-<span class="st"> </span><span class="kw">initial_split</span>(ames, <span class="dt">prop =</span> <span class="fl">0.7</span>)
+train_<span class="dv">3</span>  &lt;-<span class="st"> </span><span class="kw">training</span>(split_<span class="dv">1</span>)
+test_<span class="dv">3</span>   &lt;-<span class="st"> </span><span class="kw">testing</span>(split_<span class="dv">1</span>)
+
+<span class="co"># Using h2o package</span>
+split_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">h2o.splitFrame</span>(ames.h2o, <span class="dt">ratios =</span> <span class="fl">0.7</span>, 
+                          <span class="dt">seed =</span> <span class="dv">123</span>)
+train_<span class="dv">4</span> &lt;-<span class="st"> </span>split_<span class="dv">2</span>[[<span class="dv">1</span>]]
+test_<span class="dv">4</span>  &lt;-<span class="st"> </span>split_<span class="dv">2</span>[[<span class="dv">2</span>]]</code></pre>
+<p>With sufficient sample size, this sampling approach will typically result in a similar distribution of <span class="math inline">\(Y\)</span> (e.g., <code>Sale_Price</code> in the <code>ames</code> data) between your training and test sets, as illustrated below.</p>
+<div class="figure" style="text-align: center"><span id="fig:modeling-process-distributions"></span>
+<img src="02-modeling-process_files/figure-html/modeling-process-distributions-1.png" alt="Training (black) vs. test (red) response distribution." width="864" />
+<p class="caption">
+Figure 2.3: Training (black) vs. test (red) response distribution.
+</p>
+</div>
+</div>
+<div id="stratified" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Stratified sampling</h3>
+<p>If we want to explicitly control the sampling so that our training and test sets have similar <span class="math inline">\(Y\)</span> distributions, we can use stratified sampling. This is more common with classification problems where the response variable may be severely imbalanced (e.g., 90% of observations with response “Yes” and 10% with response “No”). However, we can also apply stratified sampling to regression problems for data sets that have a small sample size and where the response variable deviates strongly from normality (i.e., positively skewed like <code>Sale_Price</code>). With a continuous response variable, stratified sampling will segment <span class="math inline">\(Y\)</span> into quantiles and randomly sample from each. Consequently, this will help ensure a balanced representation of the response distribution in both the training and test sets.</p>
+<p>The easiest way to perform stratified sampling on a response variable is to use the <strong>rsample</strong> package, where you specify the response variable to <code>strata</code>fy. The following illustrates that in our original employee attrition data we have an imbalanced response (No: 84%, Yes: 16%). By enforcing stratified sampling, both our training and testing sets have approximately equal response distributions.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># orginal response distribution</span>
+<span class="kw">table</span>(churn<span class="op">$</span>Attrition) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">prop.table</span>()
+<span class="co">## </span>
+<span class="co">##        No       Yes </span>
+<span class="co">## 0.8387755 0.1612245</span>
+
+<span class="co"># stratified sampling with the rsample package</span>
+<span class="kw">set.seed</span>(<span class="dv">123</span>)
+split_strat  &lt;-<span class="st"> </span><span class="kw">initial_split</span>(churn, <span class="dt">prop =</span> <span class="fl">0.7</span>, 
+                              <span class="dt">strata =</span> <span class="st">&quot;Attrition&quot;</span>)
+train_strat  &lt;-<span class="st"> </span><span class="kw">training</span>(split_strat)
+test_strat   &lt;-<span class="st"> </span><span class="kw">testing</span>(split_strat)
+
+<span class="co"># consistent response ratio between train &amp; test</span>
+<span class="kw">table</span>(train_strat<span class="op">$</span>Attrition) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">prop.table</span>()
+<span class="co">## </span>
+<span class="co">##       No      Yes </span>
+<span class="co">## 0.838835 0.161165</span>
+<span class="kw">table</span>(test_strat<span class="op">$</span>Attrition) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">prop.table</span>()
+<span class="co">## </span>
+<span class="co">##        No       Yes </span>
+<span class="co">## 0.8386364 0.1613636</span></code></pre>
+</div>
+<div id="class-imbalances" class="section level3">
+<h3><span class="header-section-number">2.2.3</span> Class imbalances</h3>
+<p>Imbalanced data can have a significant impact on model predictions and performance <span class="citation">(Kuhn and Johnson <a href="#ref-apm">2013</a>)</span>. Most often this involves classification problems where one class has a very small proportion of observations (e.g., defaults - 5% versus nondefaults - 95%). Several sampling methods have been developed to help remedy class imbalance and most of them can be categorized as either <em>up-sampling</em> or <em>down-sampling</em>.</p>
+<p>Down-sampling balances the dataset by reducing the size of the abundant class(es) to match the frequencies in the least prevalent class. This method is used when the quantity of data is sufficient. By keeping all samples in the rare class and randomly selecting an equal number of samples in the abundant class, a balanced new dataset can be retrieved for further modeling. Furthermore, the reduced sample size reduces the computation burden imposed by further steps in the ML process.</p>
+<p>On the contrary, up-sampling is used when the quantity of data is insufficient. It tries to balance the dataset by increasing the size of rarer samples. Rather than getting rid of abundant samples, new rare samples are generated by using repetition or bootstrapping (described further in Section <a href="process.html#bootstrapping">2.4.2</a>).</p>
+<p>Note that there is no absolute advantage of one sampling method over another. Application of these two methods depends on the use case it applies to and the data set itself. A combination of over- and under-sampling is often successful and a common approach is known as Synthetic Minority Over-Sampling Technique, or SMOTE <span class="citation">(Chawla et al. <a href="#ref-chawla2002smote">2002</a>)</span>. This alternative sampling approach, as well as others, can be implemented in R (see the <code>sampling</code> argument in <code>?caret::trainControl()</code>). Furthermore, many ML algorithms implemented in R have class weighting schemes to remedy imbalances internally (e.g., most <strong>h2o</strong> algorithms have a <code>weights_column</code> and <code>balance_classes</code> argument).</p>
+</div>
+</div>
+<div id="creating-models-in-r" class="section level2">
+<h2><span class="header-section-number">2.3</span> Creating models in R</h2>
+<p>The R ecosystem provides a wide variety of ML algorithm implementations. This makes many powerful algorithms available at your fingertips. Moreover, there are almost always more than one package to perform each algorithm (e.g., there are over 20 packages for fitting random forests). There are pros and cons to this wide selection; some implementations may be more computationally efficient while others may be more flexible (i.e., have more hyperparameter tuning options). Future chapters will expose you to many of the packages and algorithms that perform and scale best to the kinds of tabular data and problems encountered by most organizations.</p>
+<p>However, this also has resulted in some drawbacks as there are inconsistencies in how algorithms allow you to define the formula of interest and how the results and predictions are supplied.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> In addition to illustrating the more popular and powerful packages, we’ll also show you how to use implementations that provide more consistency.</p>
+<div id="many-formula-interfaces" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> Many formula interfaces</h3>
+<p>To fit a model to our data, the model terms must be specified. Historically, there are two main interfaces for doing this. The formula interface uses R’s formula rules to specify a symbolic representation of the terms. For example, <code>Y ~ X</code> where we say “Y is a function of X”. To illustrate, suppose we have some generic modeling function called <code>model_fn()</code> which accepts an R formula, as in the following examples:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Sale price as function of neighborhood and year sold</span>
+<span class="kw">model_fn</span>(Sale_Price <span class="op">~</span><span class="st"> </span>Neighborhood <span class="op">+</span><span class="st"> </span>Year_Sold, 
+         <span class="dt">data =</span> ames)
+
+<span class="co"># Variables + interactions</span>
+<span class="kw">model_fn</span>(Sale_Price <span class="op">~</span><span class="st"> </span>Neighborhood <span class="op">+</span><span class="st"> </span>Year_Sold <span class="op">+</span><span class="st"> </span>
+<span class="st">           </span>Neighborhood<span class="op">:</span>Year_Sold, <span class="dt">data =</span> ames)
+
+<span class="co"># Shorthand for all predictors</span>
+<span class="kw">model_fn</span>(Sale_Price <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> ames)
+
+<span class="co"># Inline functions / transformations</span>
+<span class="kw">model_fn</span>(<span class="kw">log10</span>(Sale_Price) <span class="op">~</span><span class="st"> </span><span class="kw">ns</span>(Longitude, <span class="dt">df =</span> <span class="dv">3</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">           </span><span class="kw">ns</span>(Latitude, <span class="dt">df =</span> <span class="dv">3</span>), <span class="dt">data =</span> ames)</code></pre>
+<p>This is very convenient but it has some disadvantages. For example:</p>
+<ul>
+<li>You can’t nest in-line functions such as performing principal components analysis on the feature set prior to executing the model (<code>model_fn(y ~ pca(scale(x1), scale(x2), scale(x3)), data = df)</code>).</li>
+<li>All the model matrix calculations happen at once and can’t be recycled when used in a model function.</li>
+<li>For very wide data sets, the formula method can be extremely inefficient <span class="citation">(Kuhn <a href="#ref-kuhnFormula">2017</a><a href="#ref-kuhnFormula">b</a>)</span>.</li>
+<li>There are limited roles that variables can take which has led to several re-implementations of formulas.</li>
+<li>Specifying multivariate outcomes is clunky and inelegant.</li>
+<li>Not all modeling functions have a formula method (lack of consistency!).</li>
+</ul>
+<p>Some modeling functions have a non-formula (XY) interface. These functions have separate arguments for the predictors and the outcome(s):</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Use separate inputs for X and Y</span>
+features &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Year_Sold&quot;</span>, <span class="st">&quot;Longitude&quot;</span>, <span class="st">&quot;Latitude&quot;</span>)
+<span class="kw">model_fn</span>(<span class="dt">x =</span> ames[, features], <span class="dt">y =</span> ames<span class="op">$</span>Sale_Price)</code></pre>
+<p>This provides more efficient calculations but can be inconvenient if you have transformations, factor variables, interactions, or any other operations to apply to the data prior to modeling.</p>
+<p>Overall, it is difficult to determine if a package has one or both of these interfaces. For example, the <code>lm()</code> function, which performs linear regression, only has the formula method. Consequently, until you are familiar with a particular implementation you will need to continue referencing the corresponding help documentation.</p>
+<p>A third interface, is to use <em>variable name specification</em> where we provide all the data combined in one training frame but we specify the features and response with character strings. This is the interface used by the <strong>h2o</strong> package.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">model_fn</span>(
+  <span class="dt">x =</span> <span class="kw">c</span>(<span class="st">&quot;Year_Sold&quot;</span>, <span class="st">&quot;Longitude&quot;</span>, <span class="st">&quot;Latitude&quot;</span>),
+  <span class="dt">y =</span> <span class="st">&quot;Sale_Price&quot;</span>,
+  <span class="dt">data =</span> ames.h2o
+)</code></pre>
+<p>One approach to get around these inconsistencies is to use a meta engine, which we discuss next.</p>
+</div>
+<div id="many-engines" class="section level3">
+<h3><span class="header-section-number">2.3.2</span> Many engines</h3>
+<p>Although there are many individual ML packages available, there is also an abundance of meta engines that can be used to help provide consistency. For example, the following all produce the same linear regression model output:</p>
+<pre class="sourceCode r"><code class="sourceCode r">lm_lm    &lt;-<span class="st"> </span><span class="kw">lm</span>(Sale_Price <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> ames)
+lm_glm   &lt;-<span class="st"> </span><span class="kw">glm</span>(Sale_Price <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> ames, 
+                <span class="dt">family =</span> gaussian)
+lm_caret &lt;-<span class="st"> </span><span class="kw">train</span>(Sale_Price <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> ames, 
+                  <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</code></pre>
+<p>Here, <code>lm()</code> and <code>glm()</code> are two different algorithm engines that can be used to fit the linear model and <code>caret::train()</code> is a meta engine (aggregator) that allows you to apply almost any direct engine with <code>method = &quot;&lt;method-name&gt;&quot;</code>. There are trade-offs to consider when using direct versus meta engines. For example, using direct engines can allow for extreme flexibility but also requires you to familiarize yourself with the unique differences of each implementation. For example, the following highlights the various syntax nuances required to compute and extract predicted class probabilities across different direct engines.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
+<table>
+<caption>Table 1: Syntax for computing predicted class probabilities with direct engines.</caption>
+<thead>
+<tr class="header">
+<th>Algorithm</th>
+<th>Package</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Linear discriminant analysis</td>
+<td><strong>MASS</strong></td>
+<td><code>predict(obj)</code></td>
+</tr>
+<tr class="even">
+<td>Generalized linear model</td>
+<td><strong>stats</strong></td>
+<td><code>predict(obj, type = &quot;response&quot;)</code></td>
+</tr>
+<tr class="odd">
+<td>Mixture discriminant analysis</td>
+<td><strong>mda</strong></td>
+<td><code>predict(obj, type = &quot;posterior&quot;)</code></td>
+</tr>
+<tr class="even">
+<td>Decision tree</td>
+<td><strong>rpart</strong></td>
+<td><code>predict(obj, type = &quot;prob&quot;)</code></td>
+</tr>
+<tr class="odd">
+<td>Random Forest</td>
+<td><strong>ranger</strong></td>
+<td><code>predict(obj)$predictions</code></td>
+</tr>
+<tr class="even">
+<td>Gradient boosting machine</td>
+<td><strong>gbm</strong></td>
+<td><code>predict(obj, type = &quot;response&quot;, n.trees)</code></td>
+</tr>
+</tbody>
+</table>
+<p>Meta engines provide you with more consistency in how you specify inputs and extract outputs but can be less flexible than direct engines. Future chapters will illustrate both approaches. For meta engines, we’ll focus on the <strong>caret</strong> package in the hardcopy of the book while also demonstrating the newer <strong>parsnip</strong> package in the additional online resources.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
+</div>
+</div>
+<div id="resampling" class="section level2">
+<h2><span class="header-section-number">2.4</span> Resampling methods</h2>
+<p>In Section <a href="process.html#splitting">2.2</a> we split our data into training and testing sets. Furthermore, we were very explicit about the fact that we <strong><em>do not</em></strong> use the test set to assess model performance during the training phase. So how do we assess the generalization performance of the model?</p>
+<p>One option is to assess an error metric based on the training data. Unfortunately, this leads to biased results as some models can perform very well on the training data but not generalize well to a new data set (we’ll illustrate this in Section <a href="process.html#bias-var">2.5</a>).</p>
+<p>A second method is to use a <em>validation</em> approach, which involves splitting the training set further to create two parts (as in Section <a href="process.html#splitting">2.2</a>): a training set and a validation set (or <em>holdout set</em>). We can then train our model(s) on the new training set and estimate the performance on the validation set. Unfortunately, validation using a single holdout set can be highly variable and unreliable unless you are working with very large data sets <span class="citation">(Molinaro, Simon, and Pfeiffer <a href="#ref-molinaro2005prediction">2005</a>; Hawkins, Basak, and Mills <a href="#ref-hawkins2003assessing">2003</a>)</span>. As the size of your data set reduces, this concern increases.</p>
+<div class="note">
+<p>
+Although we stick to our definitions of test, validation, and holdout sets, these terms are sometimes used interchangeably in other literature and software. What’s important to remember is to always put a portion of the data under lock and key until a final model has been selected (we refer to this as the test data, but others refer to it as the holdout set).
+</p>
+</div>
+<p><strong>Resampling methods</strong> provide an alternative approach by allowing us to repeatedly fit a model of interest to parts of the training data and test its performance on other parts. The two most commonly used resampling methods include <em>k-fold cross validation</em> and <em>bootstrapping</em>.</p>
+<div id="k-fold-cross-validation" class="section level3">
+<h3><span class="header-section-number">2.4.1</span> <em>k</em>-fold cross validation</h3>
+<p><em>k</em>-fold cross-validation (aka <em>k</em>-fold CV) is a resampling method that randomly divides the training data into <em>k</em> groups (aka folds) of approximately equal size. The model is fit on <span class="math inline">\(k-1\)</span> folds and then the remaining fold is used to compute model performance. This procedure is repeated <em>k</em> times; each time, a different fold is treated as the validation set. This process results in <em>k</em> estimates of the generalization error (say <span class="math inline">\(\epsilon_1, \epsilon_2, \dots, \epsilon_k\)</span>). Thus, the <em>k</em>-fold CV estimate is computed by averaging the <em>k</em> test errors, providing us with an approximation of the error we might expect on unseen data.</p>
+<div class="figure" style="text-align: center"><span id="fig:modeling-process-cv-diagram"></span>
+<img src="images/cv.png" alt="Illustration of the k-fold cross validation process." width="90%" height="90%" />
+<p class="caption">
+Figure 2.4: Illustration of the k-fold cross validation process.
+</p>
+</div>
+<p>Consequently, with <em>k</em>-fold CV, every observation in the training data will be held out one time to be included in the test set as illustrated in Figure <a href="process.html#fig:modeling-process-cv">2.5</a>. In practice, one typically uses <span class="math inline">\(k = 5\)</span> or <span class="math inline">\(k = 10\)</span>. There is no formal rule as to the size of <em>k</em>; however, as <em>k</em> gets larger, the difference between the estimated performance and the true performance to be seen on the test set will decrease. On the other hand, using too large <em>k</em> can introduce computational burdens. Moreover, <span class="citation">Molinaro, Simon, and Pfeiffer (<a href="#ref-molinaro2005prediction">2005</a>)</span> found that <span class="math inline">\(k=10\)</span> performed similarly to leave-one-out cross validation (LOOCV) which is the most extreme approach (i.e., setting <span class="math inline">\(k = n\)</span>).</p>
+<div class="figure" style="text-align: center"><span id="fig:modeling-process-cv"></span>
+<img src="02-modeling-process_files/figure-html/modeling-process-cv-1.png" alt="10-fold cross validation on 32 observations. Each observation is used once for validation and nine times for training." width="864" />
+<p class="caption">
+Figure 2.5: 10-fold cross validation on 32 observations. Each observation is used once for validation and nine times for training.
+</p>
+</div>
+<p>Although using <span class="math inline">\(k \geq 10\)</span> helps to minimize the variability in the estimated performance, <em>k</em>-fold CV still tends to have higher variability than bootstrapping (discussed next). <span class="citation">Kim (<a href="#ref-kim2009estimating">2009</a>)</span> showed that repeating <em>k</em>-fold CV can help to increase the precision of the estimated generalization error. Consequently, for smaller data sets (say <span class="math inline">\(n &lt; 10,000\)</span>), 10-fold CV repeated 5 or 10 times will improve the accuracy of your estimated performance and also provide an estimate of its variability.</p>
+<p>Throughout this book we’ll cover multiple ways to incorporate CV as you can often perform CV directly within certain ML functions:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Example using h2o</span>
+h2o.cv &lt;-<span class="st"> </span><span class="kw">h2o.glm</span>(
+  <span class="dt">x =</span> x, 
+  <span class="dt">y =</span> y, 
+  <span class="dt">training_frame =</span> ames.h2o,
+  <span class="dt">nfolds =</span> <span class="dv">10</span>  <span class="co"># perform 10-fold CV</span>
+)</code></pre>
+<p>Or externally as in the below chunk<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>. When applying it externally to an ML algorithm as below, we’ll need a process to apply the ML model to each resample, which we’ll also cover.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">vfold_cv</span>(ames, <span class="dt">v =</span> <span class="dv">10</span>)
+<span class="co">## #  10-fold cross-validation </span>
+<span class="co">## # A tibble: 10 x 2</span>
+<span class="co">##    splits             id    </span>
+<span class="co">##    &lt;named list&gt;       &lt;chr&gt; </span>
+<span class="co">##  1 &lt;split [2.6K/293]&gt; Fold01</span>
+<span class="co">##  2 &lt;split [2.6K/293]&gt; Fold02</span>
+<span class="co">##  3 &lt;split [2.6K/293]&gt; Fold03</span>
+<span class="co">##  4 &lt;split [2.6K/293]&gt; Fold04</span>
+<span class="co">##  5 &lt;split [2.6K/293]&gt; Fold05</span>
+<span class="co">##  6 &lt;split [2.6K/293]&gt; Fold06</span>
+<span class="co">##  7 &lt;split [2.6K/293]&gt; Fold07</span>
+<span class="co">##  8 &lt;split [2.6K/293]&gt; Fold08</span>
+<span class="co">##  9 &lt;split [2.6K/293]&gt; Fold09</span>
+<span class="co">## 10 &lt;split [2.6K/293]&gt; Fold10</span></code></pre>
+</div>
+<div id="bootstrapping" class="section level3">
+<h3><span class="header-section-number">2.4.2</span> Bootstrapping</h3>
+<p>A bootstrap sample is a random sample of the data taken <em>with replacement</em> <span class="citation">(Efron and Tibshirani <a href="#ref-efron1986bootstrap">1986</a>)</span>. This means that, after a data point is selected for inclusion in the subset, it’s still available for further selection. A bootstrap sample is the same size as the original data set from which it was constructed. Figure <a href="process.html#fig:modeling-process-bootstrapscheme">2.6</a> provides a schematic of bootstrap sampling where each bootstrap sample contains 12 observations just as in the original data set. Furthermore, bootstrap sampling will contain approximately the same distribution of values (represented by colors) as the original data set.</p>
+<div class="figure" style="text-align: center"><span id="fig:modeling-process-bootstrapscheme"></span>
+<img src="images/bootstrap-scheme.png" alt="Illustration of the bootstrapping process." width="70%" height="70%" />
+<p class="caption">
+Figure 2.6: Illustration of the bootstrapping process.
+</p>
+</div>
+<p>Since samples are drawn with replacement, each bootstrap sample is likely to contain duplicate values. In fact, on average, <span class="math inline">\(\approx 63.21\)</span>% of the original sample ends up in any particular bootstrap sample. The original observations not contained in a particular bootstrap sample are considered <em>out-of-bag</em> (OOB). When bootstrapping, a model can be built on the selected samples and validated on the OOB samples; this is often done, for example, in random forests (see Chapter <a href="random-forest.html#random-forest">11</a>).</p>
+<p>Since observations are replicated in bootstrapping, there tends to be less variability in the error measure compared with <em>k</em>-fold CV <span class="citation">(Efron <a href="#ref-efron1983estimating">1983</a>)</span>. However, this can also increase the bias of your error estimate. This can be problematic with smaller data sets; however, for most average-to-large data sets (say <span class="math inline">\(n \geq 1,000\)</span>) this concern is often negligible.</p>
+<p>Figure <a href="process.html#fig:modeling-process-sampling-comparison">2.7</a> compares bootstrapping to 10-fold CV on a small data set with <span class="math inline">\(n = 32\)</span> observations. A thorough introduction to the bootstrap and its use in R is provided in <span class="citation">Davison, Hinkley, and others (<a href="#ref-davison1997bootstrap">1997</a>)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:modeling-process-sampling-comparison"></span>
+<img src="02-modeling-process_files/figure-html/modeling-process-sampling-comparison-1.png" alt="Bootstrap sampling (left) versus 10-fold cross validation (right) on 32 observations. For bootstrap sampling, the observations that have zero replications (white) are the out-of-bag observations used for validation." width="1152" />
+<p class="caption">
+Figure 2.7: Bootstrap sampling (left) versus 10-fold cross validation (right) on 32 observations. For bootstrap sampling, the observations that have zero replications (white) are the out-of-bag observations used for validation.
+</p>
+</div>
+<p>We can create bootstrap samples easily with <code>rsample::bootstraps()</code>, as illustrated in the code chunk below.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bootstraps</span>(ames, <span class="dt">times =</span> <span class="dv">10</span>)
+<span class="co">## # Bootstrap sampling </span>
+<span class="co">## # A tibble: 10 x 2</span>
+<span class="co">##    splits              id         </span>
+<span class="co">##    &lt;list&gt;              &lt;chr&gt;      </span>
+<span class="co">##  1 &lt;split [2.9K/1.1K]&gt; Bootstrap01</span>
+<span class="co">##  2 &lt;split [2.9K/1.1K]&gt; Bootstrap02</span>
+<span class="co">##  3 &lt;split [2.9K/1.1K]&gt; Bootstrap03</span>
+<span class="co">##  4 &lt;split [2.9K/1K]&gt;   Bootstrap04</span>
+<span class="co">##  5 &lt;split [2.9K/1.1K]&gt; Bootstrap05</span>
+<span class="co">##  6 &lt;split [2.9K/1.1K]&gt; Bootstrap06</span>
+<span class="co">##  7 &lt;split [2.9K/1.1K]&gt; Bootstrap07</span>
+<span class="co">##  8 &lt;split [2.9K/1.1K]&gt; Bootstrap08</span>
+<span class="co">##  9 &lt;split [2.9K/1.1K]&gt; Bootstrap09</span>
+<span class="co">## 10 &lt;split [2.9K/1K]&gt;   Bootstrap10</span></code></pre>
+<p>Bootstrapping is, typically, more of an internal resampling procedure that is naturally built into certain ML algorithms. This will become more apparent in Chapters <a href="bagging.html#bagging">10</a>–<a href="random-forest.html#random-forest">11</a> where we discuss bagging and random forests, respectively.</p>
+</div>
+<div id="alternatives" class="section level3">
+<h3><span class="header-section-number">2.4.3</span> Alternatives</h3>
+<p>It is important to note that there are other useful resampling procedures. If you’re working with time-series specific data then you will want to incorporate rolling origin and other time series resampling procedures. <span class="citation">Hyndman and Athanasopoulos (<a href="#ref-hyndman2018forecasting">2018</a>)</span> is the dominant, R-focused, time series resource<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>.</p>
+<p>Additionally, <span class="citation">Efron (<a href="#ref-efron1983estimating">1983</a>)</span> developed the “632 method” and <span class="citation">Efron and Tibshirani (<a href="#ref-efron1997improvements">1997</a>)</span> discuss the “632+ method”; both approaches seek to minimize biases experienced with bootstrapping on smaller data sets and are available via <strong>caret</strong> (see <code>?caret::trainControl</code> for details).</p>
+</div>
+</div>
+<div id="bias-var" class="section level2">
+<h2><span class="header-section-number">2.5</span> Bias variance trade-off</h2>
+<p>Prediction errors can be decomposed into two important subcomponents: error due to “bias” and error due to “variance”. There is often a tradeoff between a model’s ability to minimize bias and variance. Understanding how different sources of error lead to bias and variance helps us improve the data fitting process resulting in more accurate models.</p>
+<div id="bias" class="section level3">
+<h3><span class="header-section-number">2.5.1</span> Bias</h3>
+<p><em>Bias</em> is the difference between the expected (or average) prediction of our model and the correct value which we are trying to predict. It measures how far off in general a model’s predictions are from the correct value, which provides a sense of how well a model can conform to the underlying structure of the data. Figure <a href="process.html#fig:modeling-process-bias-model">2.8</a> illustrates an example where the polynomial model does not capture the underlying structure well. Linear models are classical examples of high bias models as they are less flexible and rarely capture non-linear, non-monotonic relationships.</p>
+<p>We also need to think of bias-variance in relation to resampling. Models with high bias are rarely affected by the noise introduced by resampling. If a model has high bias, it will have consistency in its resampling performance as illustrated by Figure <a href="process.html#fig:modeling-process-bias-model">2.8</a>.</p>
+<div class="figure" style="text-align: center"><span id="fig:modeling-process-bias-model"></span>
+<img src="02-modeling-process_files/figure-html/modeling-process-bias-model-1.png" alt="A biased polynomial model fit to a single data set does not capture the underlying non-linear, non-monotonic data structure (left).  Models fit to 25 bootstrapped replicates of the data are underterred by the noise and generates similar, yet still biased, predictions (right)." width="960" />
+<p class="caption">
+Figure 2.8: A biased polynomial model fit to a single data set does not capture the underlying non-linear, non-monotonic data structure (left). Models fit to 25 bootstrapped replicates of the data are underterred by the noise and generates similar, yet still biased, predictions (right).
+</p>
+</div>
+</div>
+<div id="variance" class="section level3">
+<h3><span class="header-section-number">2.5.2</span> Variance</h3>
+<p>On the other hand, error due to <em>variance</em> is defined as the variability of a model prediction for a given data point. Many models (e.g., <em>k</em>-nearest neighbor, decision trees, gradient boosting machines) are very adaptable and offer extreme flexibility in the patterns that they can fit to. However, these models offer their own problems as they run the risk of overfitting to the training data. Although you may achieve very good performance on your training data, the model will not automatically generalize well to unseen data.</p>
+<div class="figure" style="text-align: center"><span id="fig:modeling-process-variance-model"></span>
+<img src="02-modeling-process_files/figure-html/modeling-process-variance-model-1.png" alt="A high variance _k_-nearest neighbor model fit to a single data set captures the underlying non-linear, non-monotonic data structure well but also overfits to individual data points (left).  Models fit to 25 bootstrapped replicates of the data are deterred by the noise and generate highly variable predictions (right)." width="960" />
+<p class="caption">
+Figure 2.9: A high variance <em>k</em>-nearest neighbor model fit to a single data set captures the underlying non-linear, non-monotonic data structure well but also overfits to individual data points (left). Models fit to 25 bootstrapped replicates of the data are deterred by the noise and generate highly variable predictions (right).
+</p>
+</div>
+<p>Since high variance models are more prone to overfitting, using resampling procedures are critical to reduce this risk. Moreover, many algorithms that are capable of achieving high generalization performance have lots of <em>hyperparameters</em> that control the level of model complexity (i.e., the tradeoff between bias and variance).</p>
+</div>
+<div id="tune-overfit" class="section level3">
+<h3><span class="header-section-number">2.5.3</span> Hyperparameter tuning</h3>
+<p>Hyperparameters (aka <em>tuning parameters</em>) are the “knobs to twiddle”<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> to control the complexity of machine learning algorithms and, therefore, the bias-variance trade-off. Not all algorithms have hyperparameters (e.g., ordinary least squares<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>); however, most have at least one or more.</p>
+<p>The proper setting of these hyperparameters is often dependent on the data and problem at hand and cannot always be estimated by the training data alone. Consequently, we need a method of identifying the optimal setting. For example, in the high variance example in the previous section, we illustrated a high variance <em>k</em>-nearest neighbor model (we’ll discuss <em>k</em>-nearest neighbor in Chapter <a href="knn.html#knn">8</a>). <em>k</em>-nearest neighbor models have a single hyperparameter (<em>k</em>) that determines the predicted value to be made based on the <em>k</em> nearest observations in the training data to the one being predicted. If <em>k</em> is small (e.g., <span class="math inline">\(k=3\)</span>), the model will make a prediction for a given observation based on the average of the response values for the 3 observations in the training data most similar to the observation being predicted. This often results in highly variable predicted values because we are basing the prediction (in this case, an average) on a very small subset of the training data. As <em>k</em> gets bigger, we base our predictions on an average of a larger subset of the training data, which naturally reduces the variance in our predicted values (remember this for later, averaging often helps to reduce variance!). Figure <a href="process.html#fig:modeling-process-knn-options">2.10</a> illustrates this point. Smaller <em>k</em> values (e.g., 2, 5, or 10) lead to high variance (but lower bias) and larger values (e.g., 150) lead to high bias (but lower variance). The optimal <em>k</em> value might exist somewhere between 20–50, but how do we know which value of <em>k</em> to use?</p>
+<div class="figure" style="text-align: center"><span id="fig:modeling-process-knn-options"></span>
+<img src="02-modeling-process_files/figure-html/modeling-process-knn-options-1.png" alt="_k_-nearest neighbor model with differing values for _k_." width="960" />
+<p class="caption">
+Figure 2.10: <em>k</em>-nearest neighbor model with differing values for <em>k</em>.
+</p>
+</div>
+<p>One way to perform hyperparameter tuning is to fiddle with hyperparameters manually until you find a great combination of hyperparameter values that result in high predictive accuracy (as measured using <em>k</em>-fold CV, for instance). However, this can be very tedious work depending on the number of hyperparameters. An alternative approach is to perform a <em>grid search</em>. A grid search is an automated approach to searching across many combinations of hyperparameter values.</p>
+<p>For our <em>k</em>-nearest neighbor example, a grid search would predefine a candidate set of values for <em>k</em> (e.g., <span class="math inline">\(k = 1, 2, \dots, j\)</span>) and perform a resampling method (e.g., <em>k</em>-fold CV) to estimate which <em>k</em> value generalizes the best to unseen data. Figure <a href="process.html#fig:modeling-process-knn-tune">2.11</a> illustrates the results from a grid search to assess <span class="math inline">\(k = 2, 12, 14, \dots, 150\)</span> using repeated 10-fold CV. The error rate displayed represents the average error for each value of <em>k</em> across all the repeated CV folds. On average, <span class="math inline">\(k=46\)</span> was the optimal hyperparameter value to minimize error (in this case, RMSE which is discussed in Section <a href="process.html#model-eval">2.6</a>)) on unseen data.</p>
+<div class="figure" style="text-align: center"><span id="fig:modeling-process-knn-tune"></span>
+<img src="02-modeling-process_files/figure-html/modeling-process-knn-tune-1.png" alt="Results from a grid search for a _k_-nearest neighbor model assessing values for _k_ ranging from 2-150.  We see high error values due to high model variance when _k_ is small and we also see high errors values due to high model bias when _k_ is large.  The optimal model is found at _k_ = 46." width="672" />
+<p class="caption">
+Figure 2.11: Results from a grid search for a <em>k</em>-nearest neighbor model assessing values for <em>k</em> ranging from 2-150. We see high error values due to high model variance when <em>k</em> is small and we also see high errors values due to high model bias when <em>k</em> is large. The optimal model is found at <em>k</em> = 46.
+</p>
+</div>
+<p>Throughout this book you’ll be exposed to different approaches to performing grid searches. In the above example, we used a <em>full cartesian grid search</em>, which assesses every hyperparameter value manually defined. However, as models get more complex and offer more hyperparameters, this approach can become computationally burdensome and requires you to define the optimal hyperparameter grid settings to explore. Additional approaches we’ll illustrate include <em>random grid searches</em> <span class="citation">(Bergstra and Bengio <a href="#ref-bergstra2012random">2012</a>)</span> which explores randomly selected hyperparameter values from a range of possible values, <em>early stopping</em> which allows you to stop a grid search once reduction in the error stops marginally improving, <em>adaptive resampling</em> via futility analysis <span class="citation">(Kuhn <a href="#ref-kuhn2014futility">2014</a>)</span> which adaptively resamples candidate hyperparameter values based on approximately optimal performance, and more.</p>
+</div>
+</div>
+<div id="model-eval" class="section level2">
+<h2><span class="header-section-number">2.6</span> Model evaluation</h2>
+<p>Historically, the performance of statistical models was largely based on goodness-of-fit tests and assessment of residuals. Unfortunately, misleading conclusions may follow from predictive models that pass these kinds of assessments <span class="citation">(Breiman and others <a href="#ref-breiman2001statistical">2001</a>)</span>. Today, it has become widely accepted that a more sound approach to assessing model performance is to assess the predictive accuracy via <em>loss functions</em>. Loss functions are metrics that compare the predicted values to the actual value (the output of a loss function is often referred to as the <em>error</em> or pseudo <em>residual</em>). When performing resampling methods, we assess the predicted values for a validation set compared to the actual target value. For example, in regression, one way to measure error is to take the difference between the actual and predicted value for a given observation (this is the usual definition of a residual in ordinary linear regression). The overall validation error of the model is computed by aggregating the errors across the entire validation data set.</p>
+<p>There are many loss functions to choose from when assessing the performance of a predictive model, each providing a unique understanding of the predictive accuracy and differing between regression and classification models. Furthermore, the way a loss function is computed will tend to emphasize certain types of errors over others and can lead to drastic differences in how we interpret the “optimal model”. Its important to consider the problem context when identifying the preferred performance metric to use. And when comparing multiple models, we need to compare them across the same metric.</p>
+<div id="regression-models" class="section level3">
+<h3><span class="header-section-number">2.6.1</span> Regression models</h3>
+<ul>
+<li><p><strong>MSE</strong>: Mean squared error is the average of the squared error (<span class="math inline">\(MSE = \frac{1}{n} \sum^n_{i=1}(y_i - \hat y_i)^2\)</span>)<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>. The squared component results in larger errors having larger penalties. This (along with RMSE) is the most common error metric to use. <strong>Objective: minimize</strong></p></li>
+<li><p><strong>RMSE</strong>: Root mean squared error. This simply takes the square root of the MSE metric (<span class="math inline">\(RMSE = \sqrt{\frac{1}{n} \sum^n_{i=1}(y_i - \hat y_i)^2}\)</span>) so that your error is in the same units as your response variable. If your response variable units are dollars, the units of MSE are dollars-squared, but the RMSE will be in dollars. <strong>Objective: minimize</strong></p></li>
+<li><p><strong>Deviance</strong>: Short for mean residual deviance. In essence, it provides a degree to which a model explains the variation in a set of data when using maximum likelihood estimation. Essentially this compares a saturated model (i.e. fully featured model) to an unsaturated model (i.e. intercept only or average). If the response variable distribution is Gaussian, then it will be approximately equal to MSE. When not, it usually gives a more useful estimate of error. Deviance is often used with classification models.<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a> <strong>Objective: minimize</strong></p></li>
+<li><p><strong>MAE</strong>: Mean absolute error. Similar to MSE but rather than squaring, it just takes the mean absolute difference between the actual and predicted values (<span class="math inline">\(MAE = \frac{1}{n} \sum^n_{i=1}(\vert y_i - \hat y_i \vert)\)</span>). This results in less emphasis on larger errors than MSE. <strong>Objective: minimize</strong></p></li>
+<li><p><strong>RMSLE</strong>: Root mean squared logarithmic error. Similar to RMSE but it performs a <code>log()</code> on the actual and predicted values prior to computing the difference (<span class="math inline">\(RMSLE = \sqrt{\frac{1}{n} \sum^n_{i=1}(log(y_i + 1) - log(\hat y_i + 1))^2}\)</span>). When your response variable has a wide range of values, large response values with large errors can dominate the MSE/RMSE metric. RMSLE minimizes this impact so that small response values with large errors can have just as meaningful of an impact as large response values with large errors. <strong>Objective: minimize</strong></p></li>
+<li><p><strong><span class="math inline">\(R^2\)</span></strong>: This is a popular metric that represents the proportion of the variance in the dependent variable that is predictable from the independent variable(s). Unfortunately, it has several limitations. For example, two models built from two different data sets could have the exact same RMSE but if one has less variability in the response variable then it would have a lower <span class="math inline">\(R^2\)</span> than the other. You should not place too much emphasis on this metric. <strong>Objective: maximize</strong></p></li>
+</ul>
+<p>Most models we assess in this book will report most, if not all, of these metrics. We will emphasize MSE and RMSE but it’s important to realize that certain situations warrant emphasis on some metrics more than others.</p>
+</div>
+<div id="classification-models" class="section level3">
+<h3><span class="header-section-number">2.6.2</span> Classification models</h3>
+<ul>
+<li><p><strong>Misclassification</strong>: This is the overall error. For example, say you are predicting 3 classes ( <em>high</em>, <em>medium</em>, <em>low</em> ) and each class has 25, 30, 35 observations respectively (90 observations total). If you misclassify 3 observations of class <em>high</em>, 6 of class <em>medium</em>, and 4 of class <em>low</em>, then you misclassified 13 out of 90 observations resulting in a 14% misclassification rate. <strong>Objective: minimize</strong></p></li>
+<li><p><strong>Mean per class error</strong>: This is the average error rate for each class. For the above example, this would be the mean of <span class="math inline">\(\frac{3}{25}, \frac{6}{30}, \frac{4}{35}\)</span>, which is 14.5%. If your classes are balanced this will be identical to misclassification. <strong>Objective: minimize</strong></p></li>
+<li><p><strong>MSE</strong>: Mean squared error. Computes the distance from 1.0 to the probability suggested. So, say we have three classes, A, B, and C, and your model predicts a probability of 0.91 for A, 0.07 for B, and 0.02 for C. If the correct answer was A the <span class="math inline">\(MSE = 0.09^2 = 0.0081\)</span>, if it is B <span class="math inline">\(MSE = 0.93^2 = 0.8649\)</span>, if it is C <span class="math inline">\(MSE = 0.98^2 = 0.9604\)</span>. The squared component results in large differences in probabilities for the true class having larger penalties. <strong>Objective: minimize</strong></p></li>
+<li><p><strong>Cross-entropy (aka Log Loss or Deviance)</strong>: Similar to MSE but it incorporates a log of the predicted probability multiplied by the true class. Consequently, this metric disproportionately punishes predictions where we predict a small probability for the true class, which is another way of saying having high confidence in the wrong answer is really bad. <strong>Objective: minimize</strong></p></li>
+<li><p><strong>Gini index</strong>: Mainly used with tree-based methods and commonly referred to as a measure of <em>purity</em> where a small value indicates that a node contains predominantly observations from a single class. <strong>Objective: minimize</strong></p></li>
+</ul>
+<p>When applying classification models, we often use a <em>confusion matrix</em> to evaluate certain performance measures. A confusion matrix is simply a matrix that compares actual categorical levels (or events) to the predicted categorical levels. When we predict the right level, we refer to this as a <em>true positive</em>. However, if we predict a level or event that did not happen this is called a <em>false positive</em> (i.e. we predicted a customer would redeem a coupon and they did not). Alternatively, when we do not predict a level or event and it does happen that this is called a <em>false negative</em> (i.e. a customer that we did not predict to redeem a coupon does).</p>
+<div class="figure" style="text-align: center"><span id="fig:modeling-process-confusion-matrix1"></span>
+<img src="images/confusion-matrix.png" alt="Confusion matrix and relationships to terms such as true-positive and false-negative." width="100%" height="100%" />
+<p class="caption">
+Figure 2.12: Confusion matrix and relationships to terms such as true-positive and false-negative.
+</p>
+</div>
+<p>We can extract different levels of performance for binary classifiers. For example, given the classification (or confusion) matrix illustrated in Figure <a href="process.html#fig:modeling-process-confusion-matrix2">2.13</a> we can assess the following:</p>
+<ul>
+<li><p><strong>Accuracy</strong>: Overall, how often is the classifier correct? Opposite of misclassification above. Example: <span class="math inline">\(\frac{TP + TN}{total} = \frac{100+50}{165} = 0.91\)</span>. <strong>Objective: maximize</strong></p></li>
+<li><p><strong>Precision</strong>: How accurately does the classifier predict events? This metric is concerned with maximizing the true positives to false positive ratio. In other words, for the number of predictions that we made, how many were correct? Example: <span class="math inline">\(\frac{TP}{TP + FP} = \frac{100}{100+10} = 0.91\)</span>. <strong>Objective: maximize</strong></p></li>
+<li><p><strong>Sensitivity (aka recall)</strong>: How accurately does the classifier classify actual events? This metric is concerned with maximizing the true positives to false negatives ratio. In other words, for the events that occurred, how many did we predict? Example: <span class="math inline">\(\frac{TP}{TP + FN} = \frac{100}{100+5} = 0.95\)</span>. <strong>Objective: maximize</strong></p></li>
+<li><p><strong>Specificity</strong>: How accurately does the classifier classify actual non-events? Example: <span class="math inline">\(\frac{TN}{TN + FP} = \frac{50}{50+10} = 0.83\)</span>. <strong>Objective: maximize</strong></p></li>
+</ul>
+<div class="figure" style="text-align: center"><span id="fig:modeling-process-confusion-matrix2"></span>
+<img src="images/confusion-matrix2.png" alt="Example confusion matrix." width="50%" height="50%" />
+<p class="caption">
+Figure 2.13: Example confusion matrix.
+</p>
+</div>
+<ul>
+<li><strong>AUC</strong>: Area under the curve. A good binary classifier will have high precision and sensitivity. This means the classifier does well when it predicts an event will and will not occur, which minimizes false positives and false negatives. To capture this balance, we often use a ROC curve that plots the false positive rate along the x-axis and the true positive rate along the y-axis. A line that is diagonal from the lower left corner to the upper right corner represents a random guess. The higher the line is in the upper left-hand corner, the better. AUC computes the area under this curve. <strong>Objective: maximize</strong></li>
+</ul>
+<div class="figure" style="text-align: center"><span id="fig:modeling-process-roc"></span>
+<img src="02-modeling-process_files/figure-html/modeling-process-roc-1.png" alt="ROC curve." width="480" />
+<p class="caption">
+Figure 2.14: ROC curve.
+</p>
+</div>
+</div>
+</div>
+<div id="put-process-together" class="section level2">
+<h2><span class="header-section-number">2.7</span> Putting the processes together</h2>
+<p>To illustrate how this process works together via R code, let’s do a simple assessment on the <code>ames</code> housing data. First, we perform stratified sampling as illustrated in Section <a href="process.html#stratified">2.2.2</a> to break our data into training vs. test data while ensuring we have consistent distributions between the training and test sets.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Stratified sampling with the rsample package</span>
+<span class="kw">set.seed</span>(<span class="dv">123</span>)
+split &lt;-<span class="st"> </span><span class="kw">initial_split</span>(ames, <span class="dt">prop =</span> <span class="fl">0.7</span>, 
+                       <span class="dt">strata =</span> <span class="st">&quot;Sale_Price&quot;</span>)
+ames_train  &lt;-<span class="st"> </span><span class="kw">training</span>(split)
+ames_test   &lt;-<span class="st"> </span><span class="kw">testing</span>(split)</code></pre>
+<p>Next, we’re going to apply a <em>k</em>-nearest neighbor regressor to our data. To do so, we’ll use <strong>caret</strong>, which is a meta-engine to simplify the resampling, grid search, and model application processes. The following defines:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Resampling method</strong>: we use 10-fold CV repeated 5 times.</li>
+<li><strong>Grid search</strong>: we specify the hyperparameter values to assess (<span class="math inline">\(k = 2, 3, 4, \dots, 25\)</span>).</li>
+<li><strong>Model training &amp; Validation</strong>: we train a <em>k</em>-nearest neighbor (<code>method = &quot;knn&quot;</code>) model using our pre-specified resampling procedure (<code>trControl = cv</code>), grid search (<code>tuneGrid = hyper_grid</code>), and preferred loss function (<code>metric = &quot;RMSE&quot;</code>).</li>
+</ol>
+<div class="warning">
+<p>
+This grid search takes approximately 3.5 minutes
+</p>
+</div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Specify resampling strategy</span>
+cv &lt;-<span class="st"> </span><span class="kw">trainControl</span>(
+  <span class="dt">method =</span> <span class="st">&quot;repeatedcv&quot;</span>, 
+  <span class="dt">number =</span> <span class="dv">10</span>, 
+  <span class="dt">repeats =</span> <span class="dv">5</span>
+)
+
+<span class="co"># Create grid of hyperparameter values</span>
+hyper_grid &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">k =</span> <span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">25</span>, <span class="dt">by =</span> <span class="dv">1</span>))
+
+<span class="co"># Tune a knn model using grid search</span>
+knn_fit &lt;-<span class="st"> </span><span class="kw">train</span>(
+  Sale_Price <span class="op">~</span><span class="st"> </span>., 
+  <span class="dt">data =</span> ames_train, 
+  <span class="dt">method =</span> <span class="st">&quot;knn&quot;</span>, 
+  <span class="dt">trControl =</span> cv, 
+  <span class="dt">tuneGrid =</span> hyper_grid,
+  <span class="dt">metric =</span> <span class="st">&quot;RMSE&quot;</span>
+)</code></pre>
+<p>Looking at our results we see that the best model coincided with <span class="math inline">\(k=\)</span> 7, which resulted in an RMSE of 43439.07. This implies that, on average, our model mispredicts the expected sale price of a home by $43,439. Figure <a href="process.html#fig:modeling-process-example-process-assess">2.15</a> illustrates the cross-validated error rate across the spectrum of hyperparameter values that we specified.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Print and plot the CV results</span>
+knn_fit
+<span class="co">## k-Nearest Neighbors </span>
+<span class="co">## </span>
+<span class="co">## 2053 samples</span>
+<span class="co">##   80 predictor</span>
+<span class="co">## </span>
+<span class="co">## No pre-processing</span>
+<span class="co">## Resampling: Cross-Validated (10 fold, repeated 5 times) </span>
+<span class="co">## Summary of sample sizes: 1848, 1848, 1848, 1847, 1849, 1847, ... </span>
+<span class="co">## Resampling results across tuning parameters:</span>
+<span class="co">## </span>
+<span class="co">##   k   RMSE      Rsquared   MAE     </span>
+<span class="co">##    2  47844.53  0.6538046  31002.72</span>
+<span class="co">##    3  45875.79  0.6769848  29784.69</span>
+<span class="co">##    4  44529.50  0.6949240  28992.48</span>
+<span class="co">##    5  43944.65  0.7026947  28738.66</span>
+<span class="co">##    6  43645.76  0.7079683  28553.50</span>
+<span class="co">##    7  43439.07  0.7129916  28617.80</span>
+<span class="co">##    8  43658.35  0.7123254  28769.16</span>
+<span class="co">##    9  43799.74  0.7128924  28905.50</span>
+<span class="co">##   10  44058.76  0.7108900  29061.68</span>
+<span class="co">##   11  44304.91  0.7091949  29197.78</span>
+<span class="co">##   12  44565.82  0.7073437  29320.81</span>
+<span class="co">##   13  44798.10  0.7056491  29475.33</span>
+<span class="co">##   14  44966.27  0.7051474  29561.70</span>
+<span class="co">##   15  45188.86  0.7036000  29731.56</span>
+<span class="co">##   16  45376.09  0.7027152  29860.67</span>
+<span class="co">##   17  45557.94  0.7016254  29974.44</span>
+<span class="co">##   18  45666.30  0.7021351  30018.59</span>
+<span class="co">##   19  45836.33  0.7013026  30105.50</span>
+<span class="co">##   20  46044.44  0.6997198  30235.80</span>
+<span class="co">##   21  46242.59  0.6983978  30367.95</span>
+<span class="co">##   22  46441.87  0.6969620  30481.48</span>
+<span class="co">##   23  46651.66  0.6953968  30611.48</span>
+<span class="co">##   24  46788.22  0.6948738  30681.97</span>
+<span class="co">##   25  46980.13  0.6928159  30777.25</span>
+<span class="co">## </span>
+<span class="co">## RMSE was used to select the optimal model using the smallest value.</span>
+<span class="co">## The final value used for the model was k = 7.</span>
+<span class="kw">ggplot</span>(knn_fit)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:modeling-process-example-process-assess"></span>
+<img src="02-modeling-process_files/figure-html/modeling-process-example-process-assess-1.png" alt="Results from a grid search for a _k_-nearest neighbor model on the Ames housing data assessing values for _k_ ranging from 2-25." width="672" />
+<p class="caption">
+Figure 2.15: Results from a grid search for a <em>k</em>-nearest neighbor model on the Ames housing data assessing values for <em>k</em> ranging from 2-25.
+</p>
+</div>
+<p>The question remains: “Is this the best predictive model we can find?” We may have identified the optimal <em>k</em>-nearest neighbor model for our given data set, but this doesn’t mean we’ve found the best possible overall model. Nor have we considered potential feature and target engineering options. The remainder of this book will walk you through the journey of identifying alternative solutions and, hopefully, a much more optimal model.</p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-bergstra2012random">
+<p>Bergstra, James, and Yoshua Bengio. 2012. “Random Search for Hyper-Parameter Optimization.” <em>Journal of Machine Learning Research</em> 13 (Feb): 281–305.</p>
+</div>
+<div id="ref-breiman2001statistical">
+<p>Breiman, Leo, and others. 2001. “Statistical Modeling: The Two Cultures (with Comments and a Rejoinder by the Author).” <em>Statistical Science</em> 16 (3). Institute of Mathematical Statistics: 199–231.</p>
+</div>
+<div id="ref-chawla2002smote">
+<p>Chawla, Nitesh V, Kevin W Bowyer, Lawrence O Hall, and W Philip Kegelmeyer. 2002. “SMOTE: Synthetic Minority over-Sampling Technique.” <em>Journal of Artificial Intelligence Research</em> 16: 321–57.</p>
+</div>
+<div id="ref-davison1997bootstrap">
+<p>Davison, Anthony Christopher, David Victor Hinkley, and others. 1997. <em>Bootstrap Methods and Their Application</em>. Vol. 1. Cambridge University Press.</p>
+</div>
+<div id="ref-efron1983estimating">
+<p>Efron, Bradley. 1983. “Estimating the Error Rate of a Prediction Rule: Improvement on Cross-Validation.” <em>Journal of the American Statistical Association</em> 78 (382). Taylor &amp; Francis: 316–31.</p>
+</div>
+<div id="ref-efron1986bootstrap">
+<p>Efron, Bradley, and Robert Tibshirani. 1986. “Bootstrap Methods for Standard Errors, Confidence Intervals, and Other Measures of Statistical Accuracy.” <em>Statistical Science</em>. JSTOR, 54–75.</p>
+</div>
+<div id="ref-efron1997improvements">
+<p>Efron, Bradley, and Robert Tibshirani. 1997. “Improvements on Cross-Validation: The 632+ Bootstrap Method.” <em>Journal of the American Statistical Association</em> 92 (438). Taylor &amp; Francis: 548–60.</p>
+</div>
+<div id="ref-hawkins2003assessing">
+<p>Hawkins, Douglas M, Subhash C Basak, and Denise Mills. 2003. “Assessing Model Fit by Cross-Validation.” <em>Journal of Chemical Information and Computer Sciences</em> 43 (2). ACS Publications: 579–86.</p>
+</div>
+<div id="ref-hyndman2018forecasting">
+<p>Hyndman, Rob J, and George Athanasopoulos. 2018. <em>Forecasting: Principles and Practice</em>. OTexts.</p>
+</div>
+<div id="ref-kim2009estimating">
+<p>Kim, Ji-Hyun. 2009. “Estimating Classification Error Rate: Repeated Cross-Validation, Repeated Hold-Out and Bootstrap.” <em>Computational Statistics &amp; Data Analysis</em> 53 (11). Elsevier: 3735–45.</p>
+</div>
+<div id="ref-kuhn2014futility">
+<p>Kuhn, Max. 2014. “Futility Analysis in the Cross-Validation of Machine Learning Models.” <em>arXiv Preprint arXiv:1405.6974</em>.</p>
+</div>
+<div id="ref-kuhnFormula">
+<p>Kuhn, Max. 2017b. “The R Formula Method: The Bad Parts.” <em>R Views</em>. <a href="https://rviews.rstudio.com/2017/03/01/the-r-formula-method-the-bad-parts/">https://rviews.rstudio.com/2017/03/01/the-r-formula-method-the-bad-parts/</a>.</p>
+</div>
+<div id="ref-apm">
+<p>Kuhn, Max, and Kjell Johnson. 2013. <em>Applied Predictive Modeling</em>. Vol. 26. Springer.</p>
+</div>
+<div id="ref-molinaro2005prediction">
+<p>Molinaro, Annette M, Richard Simon, and Ruth M Pfeiffer. 2005. “Prediction Error Estimation: A Comparison of Resampling Methods.” <em>Bioinformatics</em> 21 (15). Oxford University Press: 3301–7.</p>
+</div>
+<div id="ref-wolpert1996lack">
+<p>Wolpert, David H. 1996. “The Lack of a Priori Distinctions Between Learning Algorithms.” <em>Neural Computation</em> 8 (7). MIT Press: 1341–90.</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>See <a href="https://www.fatml.org/resources/relevant-scholarship" class="uri">https://www.fatml.org/resources/relevant-scholarship</a> for many discussions regarding implications of poorly applied and interpreted ML.<a href="process.html#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>Many of these drawbacks and inconsistencies were originally organized and presented by <span class="citation">Kuhn (<a href="#ref-amlTraining">2018</a>)</span>.<a href="process.html#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p>This table was modified from <span class="citation">Kuhn (<a href="#ref-kuhnMLtraining2019">2019</a>)</span><a href="process.html#fnref3" class="footnote-back">↩</a></p></li>
+<li id="fn4"><p>The <strong>caret</strong> package has been the preferred meta engine over the years; however, the author is now transitioning to full-time development on <strong>parsnip</strong>, which is designed to be a more robust and tidy meta engine.<a href="process.html#fnref4" class="footnote-back">↩</a></p></li>
+<li id="fn5"><p><code>rsample::vfold_cv()</code> results in a nested data frame where each element in <code>splits</code> is a list containing the training data frame and the observation IDs that will be used for training the model vs. model validation.<a href="process.html#fnref5" class="footnote-back">↩</a></p></li>
+<li id="fn6"><p>See their open source book at <a href="https://www.otexts.org/fpp2" class="uri">https://www.otexts.org/fpp2</a><a href="process.html#fnref6" class="footnote-back">↩</a></p></li>
+<li id="fn7"><p>This phrase comes from Brad Efron’s comments in <span class="citation">Breiman and others (<a href="#ref-breiman2001statistical">2001</a>)</span><a href="process.html#fnref7" class="footnote-back">↩</a></p></li>
+<li id="fn8"><p>At least in the ordinary sense. You could think of polynomial regression as having a single hyperparameter, the degree of the polynomial.<a href="process.html#fnref8" class="footnote-back">↩</a></p></li>
+<li id="fn9"><p>This deviates slightly from the usual definition of MSE in ordinary linear regression, where we divide by <span class="math inline">\(n-p\)</span> (to adjust for bias) as opposed to <span class="math inline">\(n\)</span>.<a href="process.html#fnref9" class="footnote-back">↩</a></p></li>
+<li id="fn10"><p>See this StackExchange thread (<a href="http://bit.ly/what-is-deviance" class="uri">http://bit.ly/what-is-deviance</a>) for a good overview of deviance for different models and in the context of regression versus classification.<a href="process.html#fnref10" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="engineering.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,332 @@
+Price Prediction of Ford Cars Applying Multiple Machine Learning
+                                      Methods
+
+                                                 Yicheng Wang a
+
+               School of Computer, Nanjing University of Information Science & Technology, Jiangsu, China
+
+Keywords:  Price prediction, Ford Motors, Machine Learning, eXtreme Gradient Boosting.
+Abstract:
+           The growing supply of used cars and lower prices compared with their counterparts make the used car market
+           highly competitive. Such a dynamic and sophisticated market underscores the necessity for accurate price
+           prediction, which is crucial for both buyers and sellers. Nowadays, the popularisation of online databases and
+           advanced machine learning techniques have made price prediction based on machine learning models an
+           obvious trend in the used car trading industry. This study delves into the performance evaluation of multiple
+           machine learning methods for predicting used Ford car prices. Utilizing a comprehensive dataset from Kaggle,
+           encompassing 17,966 entries with nine distinct features, the researcher employed a battery of regression
+           models, including linear regression (LR), decision tree (DT), random forest (RF) and eXtreme Gradient
+           Boosting (XGBoost). The approach involved rigorous feature engineering, model training and cross-
+           validation evaluation, employing Mean Squared Error (MSE), Mean Absolute Error (MAE), and R-squared
+           ( ) as key performance indicators. The results indicate that XGBoost and RF surpass traditional models in
+           predictive accuracy, with XGBoost demonstrating the highest  value of 0.9347. This study compares the
+           performance of several widespread models and offers practical implications for stakeholders seeking to
+           enhance transactional outcomes through data-driven pricing strategies.
+
+1 INTRODUCTION                                          Vehicle Value Index to reflect the fluctuation of
+                                                        America's used car prices (Manheim, 2023). The
+Ford Motors is the second largest automobile            index showed an upward trend in price over the last
+manufacturer in the United States. Since 1903, the      five years.
+company has launched countless iconic models like
+Mustang, Bronco, Cortina and Transit. As the first          Accurate price prediction for used cars is not only
+motor manufacturer that implements assembly lines       crucial for buyers seeking value but also essential for
+and vertical integration into industrial production,    sellers aiming to maximize their profits. As the
+Ford contributes a lot to the modern car industry       volume of transactions continues to grow, the
+(Mead & Brinkley, 2003). Trusted quality and            precision of used car pricing has garnered
+moderate depreciation rate make used Ford cars          considerable interest, prompting researchers to
+popular in the market.                                  pursue better performance of various predictive
+                                                        models.
+    Over the past few decades, the flourishing second-
+hand car market has become a vibrant sector within          The complexity of the used car market requires
+the automotive industry, offering consumers a           advanced and sophisticated analytical tools to
+reasonably-priced alternative to a brand-new            evaluate the fair value of vehicles based on multi-
+counterpart. According to Edmunds, an online            dimensional factors. The manufacturer who produces
+resource that provides car buying information and       the vehicle, mileage, transmission and fuel economy
+vehicle sales data, approximately 39 million used       all contribute to the training process of machine
+vehicles were sold in the U.S. throughout the year      learning models. The application of data-driven
+2021. Manheim, a global provider of vehicle             models has transformed the way prices are estimated,
+remarketing services, introduced Manheim Used           moving from heuristic methods to evidence-based
+                                                        approaches. Cui et al. (2022) discussed the integration
+a https://orcid.org/0009-0006-7569-6219
+
+280
+
+Wang, Y.
+Price Prediction of Ford Cars Applying Multiple Machine Learning Methods.
+DOI: 10.5220/0013214800004568
+In Proceedings of the 1st International Conference on E-commerce and Artificial Intelligence (ECAI 2024), pages 280-285
+ISBN: 978-989-758-726-9
+Copyright © 2025 by Paper published under CC license (CC BY-NC-ND 4.0)
+Price Prediction of Ford Cars Applying Multiple Machine Learning Methods
+
+of machine learning algorithms in predicting used car    information on 17,966 used Ford vehicles priced in
+prices, which is vital in enhancing the accuracy and     U.S. dollars. The introduction of characteristic
+efficiency of predictions.                               properties used during the research is shown in Table
+                                                         1.
+    Previous scholarly endeavours in the domain of
+used car price prediction have primarily leveraged       Table 1: Basic characteristic properties of the data.
+models such as linear regression (LR), decision tree
+(DT), and neural networks. LR models, despite their      ID  Features             Type
+simplicity, offer a baseline for understanding the
+relationship between car attributes and their actual     1   model                object
+price (Dahal, 2023). Jin (2021) constructed DT
+models, including ensemble methods such as random        2   year                 int64
+forest (RF) in their research. Ensemble models were
+also widely applied due to their ability to deal with    3   price                int64
+feature interactions under non-linear correlations and
+provided robust predictions. Neural networks,            4   transmission         object
+particularly deep learning architectures, have
+demonstrated remarkable potential in capturing           5   mileage              int64
+complex patterns, especially when applied to datasets
+on a large scale (Huang et al., 2023).                   6   feulType             object
+
+    The evolution of these models reflects the           7   tax                  int64
+growing need for more nuanced and dynamic pricing
+strategies. However, the heterogeneity of used cars      8   mpg                  float64
+and the rapid pace of technological advancements in
+the automotive industry present ongoing challenges.      9   engineSize           float64
+The quest for more accurate and efficient predictive
+models continues, with recent studies exploring              Among the features mentioned in Table 1,
+ensemble methods and hybrid approaches that              transmission tells the researcher what kind of gearbox
+combine the strengths of multiple algorithms.            the car is equipped with, including manual, semi-auto
+                                                         and automatic. Mpg stands for mile per gallon, which
+    The previous study has shown the necessity of        is an indicator of vehicle's fuel economy. The figure
+combining multiple regressors to better evaluate used    of engine size indicates how many litres the engine
+cars' prices. This paper aims to evaluate the            has in swept volume.
+performance of different regressors and discover
+critical factors that influence used cars' value. The        To better carry out the following research, the
+author will first introduce the dataset used during the  author first conducted the Exploratory Data Analysis
+study, and then discuss the main methodologies and       (EDA). The data chosen doesn't have null values and
+techniques applied. At the end, the author will offer    the size of duplicate records is relatively small.
+an overview of the research and discuss limitations      However, it is worth noting that the distribution of
+and possible optimization methods.                       samples on model, transmission and fuel type is
+                                                         highly imbalanced. To improve the performance of
+2 DATASETS AND METHODS                                   models applied, the paper dealt with those rare data
+                                                         through feature engineering.
+2.1 Data Collection and Description
+                                                         2.2 Feature Engineering
+The dataset used in the research is obtained through
+Kaggle. It highlights 9 features that might influence    Before model training, it is vital to ensure data quality
+the pricing procedure of used Ford vehicles. Those       through data pre-processing. To optimize the
+features include the specific model of the car and its   performance of selected models, the author processes
+production year, both of which depict the overall        the data with the following steps. The first step is to
+price section of certain models. However, prices of      divide characteristic properties into two groups,
+the same models vary significantly as each car has       numerical and categorical. The classification standard
+different mileage, engine size, transmission, fuel       is slightly different from the ordinary one, that is the
+consumption and tax. The dataset collects detailed       researcher treats engine size and tax as categorical
+                                                         features as they cluster at a few discrete values.
+
+                                                             After grouping, the researcher focuses on rare data
+                                                         among the categorical features. To reduce the
+                                                         disturbance of those records, a threshold of 0.05 is set
+                                                         in the paper. Features with a ratio less than 5% will
+                                                         be added to a new group called "Other". Figure 1
+                                                         shows the distribution of values on 4 features,
+                                                         including model, engine size, fuel type and tax. All
+                                                         kinds of transmission options meet the threshold of
+                                                         0.05 so it is not necessary to update the bar chart.
+
+                                                                                           281
+ECAI 2024 - International Conference on E-commerce and Artificial Intelligence
+
+Figure 1: Distribution of values across selected features. (a) Distribution of Model types, (b) Distribution of Fuel types, (c)
+Distribution of Tax, (d) Distribution of Engine Size (Photo/Picture credit: Original).
+
+    For each categorical feature f, this paper applies    variables. It searches for the best-fitting line through
+functions to perform one-hot encoding. This function      data points under the supposition that the variables
+converts the categorical feature into a series of binary  have linear correlations. The coefficient of
+columns, where each column represents a category,         determination is used to gauge the strength of the
+and each sample has only 1 in the corresponding           model, which is usually expressed as an equation. LR
+column, with 0s in all others. After the encoding         is extensively employed in various domains for
+procedure, the author checked each option's               forecasting, inference, and prediction.
+correlation with the price tag of the vehicle. By
+sorting them into descending order, the study dropped     2.4 Decision Tree & Random Forest
+three low-correlated features with an influence
+coefficient below 0.05. As for the numerical features,    Decision Tree (DT) is a machine-learning algorithm
+this study has found that none of the three features      based on tree-like model to predict continuous
+follows normal distribution according to respective       outcomes. It works by splitting the data into subsets
+count figures. In this case, it is essential to apply     based on feature values, creating a tree of decisions
+scalers to reduce the size of evaluation metrics in the   that ultimately yield a prediction. This method is
+following tests. This paper applies MinMaxScaler to       robust, easy to interpret, and capable of handling non-
+process corresponding values.                             linear relationships and feature interactions.
+
+2.3 Linear Regression                                         Random Forest (RF) is a versatile ensemble
+                                                          learning method that effectively addresses regression
+Linear regression (LR) is a statistical methodology       challenges by combining the predictions of multiple
+employed to model the correlation between the             decision trees (Fawagreh et al., 2014). It harnesses the
+variable to be predicted and a set of independent         power of bagging (Bootstrap Aggregating) to
+                                                          enhance the stability and accuracy of the model.
+
+282
+Price Prediction of Ford Cars Applying Multiple Machine Learning Methods
+
+    The training procedure of each tree involves              MSE is the average squared difference between
+different bootstrap samples of the data and the model    the estimated values and the actual values. The
+makes its final prediction by averaging the individual   formula for MSE is shown in Equation (1).
+tree predictions, thereby reducing the variance and
+preventing overfitting.                                                    = 1  -  1
+
+    The algorithm incorporates randomness by                 In Equation (1), Y stands for the actual value
+selecting a random subset of features to consider at     while  means predicted value. The character n is the
+each split in the trees, which promotes diversity        size of observations involved.
+among the trees and improves the model's
+generalization capabilities. RF is particularly useful       MAE measures the average magnitude of errors
+for high-dimensional datasets and is known for its       among predictions without considering their
+robustness to outliers and noise.                        direction. Therefore, the figure is always non-
+                                                         negative. The formula for MAE is shown in Equation
+    In the research, the author applied early stopping   (2).
+to select a suitable value for n_estimators, which
+indicates the number of DT. Normally speaking,                              = 1  -  2
+implementing more DT enables the model to achieve
+better performance. However, after the n_estimator            is a metric that indicates how effectively the
+reaches the performance saturation point, adding         model is likely to predict future outcomes. It
+more trees to the ensemble no longer leads to            demonstrates the proportion of the variance in the
+significant improvements in the model's predictive       dependent variable which can be predicted from the
+performance. Early stopping assists the computer in      independent variables. According to Chicco et al.
+making the trade-off between computation time and        (2021),  is capable of overcoming the
+model's performance by stopping the optimization         interpretability limitations of MSE and MAE. The
+process when the improvement is lower than the           formula for  is shown in Equation (3).
+significance threshold set before the evaluation.
+                                                                          = 1 -   -    -  3
+2.5 Extreme Gradient Boosting
+                                                         3.2 Model Training
+The eXtreme Gradient Boosting (XGBoost) is
+another efficient ensemble method designed for           Before the author fits the data into the DT, LR is
+regression and classification tasks (Chen & Guestrin,    applied to set a baseline, achieving an  of 0.7779.
+2016). It builds models in an additive manner by         The result of DT significantly improves the
+focusing on minimizing a loss function through a         performance with the MSE in 8e-3, MAE in 0.0201
+gradient-boosting framework. XGBoost employs a           and  in 0.8832.
+tree-based approach, enhancing the predictive
+accuracy by scaling the weak learners and adding             To further optimize the performance of the model,
+them to the final prediction. It also introduces         this study applies the method of Bootstrap
+regularization to control overfitting, making it robust  Aggregating by increasing the number of DT during
+for a wide range of data sets (Yang et al., 2023). With  the predicting procedure. The approach has proved
+its user-friendly interface and high performance,        effective in strengthening the model's robustness and
+XGBoost has become a go-to tool for data scientists      preventing overfitting. To find a suitable number of
+and machine learning practitioners in various            trees acquired, the researcher uses an iterative
+competitions and industries.                             algorithm that compares the cross-validation score
+                                                         between two nearby rounds. The improvement
+3 RESULTS AND DISCUSSION                                 threshold is set at 0.1%, indicating that the algorithm
+                                                         will stop after the model fails to reach the
+3.1 Evaluation Metrics                                   improvement threshold for 5 consecutive tries. The
+                                                         cross-validation score is calculated based on model's
+The performance of selected models in this study was      figure. Eventually, the performance saturated after
+assessed using Mean Squared Error (MSE), Mean            22 trees. The  figure reached 0.9222. Table 2
+Absolute Error (MAE), and R-Square ( ).                  shows the performance evaluation of three regression
+                                                         trained so far.
+
+                                                         283
+ECAI 2024 - International Conference on E-commerce and Artificial Intelligence
+
+         Table 2: Performance Evaluation of three regression.
+
+     ID      Model                                                                                
+                                                                                                0.7779
+     1   Linear Regression                                1.68e-3               0.0283          0.8832
+                                                                                                0.9222
+     2   Decision Tree                                    8.81e-4               0.0201
+
+     3   Random Forest                                    5.86e-4               0.0166
+
+         Table 3: Performance Evaluation of four regression.
+
+     ID  Model                                                                                  CV Score
+
+     1   LR             1.68e-3                                    0.0283               0.7779  79.1941
+
+     2   DT             8.81e-4                                    0.0201               0.8832  87.9012
+
+     3   RF             5.86e-4                                    0.0166               0.9222  91.7158
+
+     4   XGBoost        4.93e-4                                    0.0152               0.9347  93.0520
+
+    Then researcher generates importance values of        The final iteration result indicates that the model
+different features by implementing functions of DT.       scores 0.9347 in  . Figure 3 shows the change of
+Among all the features, the top seven characteristic
+properties show a higher correlation with the price of    Root Mean Squared Error (RMSE) figure as iteration
+used vehicles. Figure 2 demonstrates their important
+value to the price of cars.                               grows.
+
+Figure 2: Top 7 features that influence vehicle pricing   Figure 3: RMSE value as the iteration grows (Photo/Picture
+(Photo/Picture credit: Original).                         credit: Original).
+
+    From Figure 2, it is obvious that consumers               Table 3 compares the performance of four
+consider production year as the most vital factor when    selected models. CV Score demonstrates their
+purchasing used vehicles, followed by engine size of      performance on cross-validation accuracy judged by
+2.0 and mpg. The study also finds that consumers may      the  figure.
+prefer an engine size of 2.0 to 1.2 or other options.
+Ford Kuga generally has a higher price according to           From the results shown above, it is obvious that
+both Figure 2 and the original dataset.                   XGBoost outperforms its counterpart at the price
+                                                          prediction of the given dataset. Closely followed by
+    The study then trains the XGBoost model and           RF. Despite its simplicity, LR still achieves a
+makes it continue to optimize its performance based       moderate performance.
+on the results of previous models. Yet the
+improvement of the model will reach a bottleneck          4 CONCLUSIONS
+where further optimization is less evident but time-
+consuming. To avoid the situation, an early-stopping      Tens of thousands of used vehicles are traded every
+algorithm is applied with the threshold set at 5 rounds.  day around the world, making timely and accurate
+
+284
+Price Prediction of Ford Cars Applying Multiple Machine Learning Methods
+
+price predictions essential to boost the efficiency and          Car Price Prediction. IEEE Transactions on
+profit of the industry. Therefore, applying machine              Engineering Management, 1-11.
+learning methods to assist participants with decision-       Jin, C., 2021. Price prediction of used cars using machine
+making is promising. This study offers insightful                learning. In 2021 IEEE International Conference on
+information about used automobile pricing                        Emergency Science and Information Technology
+predictions. Not only has it found the key features              (ICESIT) (pp. 223-230). Chongqing, China.
+which might affect the price of cars, but also shown             https://doi.org/10.1109/ICESIT53460.2021.9696839.
+the preference of customers for those features. For          Manheim., 2023. Summary Methodology for Manheim
+example, the importance values of various features               Used Vehicle Value Index. https://site.manheim.
+indicate that a 2.0-litre engine affects the price more          com/wp-content/uploads/sites/2/2023/07/Used-
+than its 1.2-litre counterparts. This study also                 Vehicle-Summary-Methodology.pdf.
+demonstrates the effectiveness of used car price             Mead, W. R., Brinkley, D., 2003. Wheels for the World:
+prediction based on machine learning methodology,                Henry Ford, his Company, and A Century of Progress,
+with XGBoost and RF showing superior                             1903-2003. Foreign Affairs, 82(5), 176.
+performance. The cross-validation scores indicate            Yang, Q., He, K., Zheng, L., Wu, C., Yu, Y., Zou, Y., 2023.
+that these models offer a high level of accuracy and             Forecasting crude oil futures prices using Extreme
+are capable of providing reliable price predictions for          Gradient Boosting. Procedia Computer Science, 221,
+used cars. However, the research has some limitations            920-926.
+at the present stage. Firstly, the car market is a
+sophisticated system and the detailed information on
+models involves complicated terms. The dataset
+selected focused on a single manufacturer Ford and
+simplified the issue. More work on data pre-
+processing is acquired to predict data of a much larger
+scale, such as annual domestic used car trading. Apart
+from that, more features involved will inevitably lead
+to the Multi-collinearity problem. In that case
+additional machine learning methods need to be
+implemented to handle that issue.
+
+REFERENCES
+
+Chen, T., Guestrin, C., 2016. XGBoost: A scalable tree
+    boosting system. arXiv preprint arXiv:1603.02754.
+
+Chicco, D., Warrens, M. J., Jurman, G., 2021. The
+    coefficient of determination R-squared is more
+    informative than SMAPE, MAE, MAPE, MSE and
+    RMSE in regression analysis evaluation. PeerJ
+    Computer Science, 7, e623.
+
+Cui, B., Ye, Z., Zhao, H., Renqing, Z., Meng, L., Yang, Y.,
+    2022. Used car price prediction based on the iterative
+    framework of XGBOOST + LightGBM. Electronics,
+    11(18), 2932.
+
+Dahal, R., 2023. Used car price prediction using Linear
+    regression. https://www.researchgate.net/publication/
+    375697258_Used_car_price_prediction_using_Linear
+    _ regression.
+
+Fawagreh, K., Gaber, M. M., Elyan, E., 2014. Random
+    forests: from early developments to recent
+    advancements. Systems Science & Control
+    Engineering, 2(1), 602-609.
+
+Huang, J., Saw, S. N., Feng, W., Jiang, Y., Yang, R., Qin,
+    Y., Seng, L. S., 2023. A Latent Factor-Based Bayesian
+    Neural Networks Model in Cloud Platform for Used
+
+                                                             285
+

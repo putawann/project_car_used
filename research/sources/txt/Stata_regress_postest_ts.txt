@@ -1,0 +1,660 @@
+regress postestimation time series -- Postestimation tools for regress with time series
+
+         Postestimation commands         estat archlm          estat bgodfrey
+         estat durbinalt                 estat dwatson         Remarks and examples
+         Stored results                  Methods and formulas  Acknowledgment
+         References                      Also see
+
+Postestimation commands
+
+The following postestimation commands for time series are available for regress:
+
+Command          Description
+
+estat archlm     test for ARCH effects in the residuals
+estat bgodfrey   Breusch-Godfrey test for higher-order serial correlation
+estat durbinalt  Durbin's alternative test for serial correlation
+estat dwatson    Durbin-Watson  statistic to test for first-order serial correlation
+estat sbcusum    perform cumulative sum test for parameter stability
+estat sbknown    perform tests for a structural break with a known break date
+estat sbsingle   perform tests for a structural break with an unknown break date
+
+These commands provide regression diagnostic tools specific to time series. You must tsset your data before using these
+    commands; see [TS] tsset.
+
+estat archlm
+
+Description for estat archlm
+
+      estat archlm performs Engle's Lagrange multiplier (LM) test for the presence of autoregressive
+  conditional heteroskedasticity.
+
+Menu for estat
+
+   Statistics > Postestimation
+
+Syntax for estat archlm
+      estat archlm [ , archlm options ]
+
+archlm options   Description
+
+lags(numlist)    test numlist lag orders
+force            allow test after regress, vce(robust)
+
+collect is allowed; see [U] 11.1.10 Prefix commands.
+
+                                                      1
+                regress postestimation time series -- Postestimation tools for regress with time series 2
+
+Options for estat archlm
+  lags(numlist) specifies a list of numbers, indicating the lag orders to be tested. The test will be per-
+      formed separately for each order. The default is order one.
+  force allows the test to be run after regress, vce(robust). The command will not work if the
+      vce(cluster clustvar) option is specified with regress; see [R] regress.
+
+estat bgodfrey
+
+Description for estat bgodfrey
+
+      estat bgodfrey performs the Breusch-Godfrey test for higher-order serial correlation in the distur-
+  bance. This test does not require that all the regressors be strictly exogenous.
+
+Menu for estat
+
+   Statistics > Postestimation
+
+Syntax for estat bgodfrey
+      estat bgodfrey [ , bgodfrey options ]
+
+bgodfrey options  Description
+
+lags(numlist)     test numlist lag orders
+nomiss0           do not use Davidson and MacKinnon's approach
+small             obtain -values using the  or  distribution
+
+collect is allowed; see [U] 11.1.10 Prefix commands.
+
+Options for estat bgodfrey
+
+  lags(numlist) specifies a list of numbers, indicating the lag orders to be tested. The test will be per-
+      formed separately for each order. The default is order one.
+
+  nomiss0 specifies that Davidson and MacKinnon's approach (1993, 358), which replaces the missing
+      values in the initial observations on the lagged residuals in the auxiliary regression with zeros, not be
+      used.
+
+  small specifies that the -values of the test statistics be obtained using the  or  distribution instead of
+      the default 2 or normal distribution.
+                regress postestimation time series -- Postestimation tools for regress with time series 3
+
+estat durbinalt
+
+Description for estat durbinalt
+
+      estat durbinalt performs Durbin's alternative test for serial correlation in the disturbance. This
+  test does not require that all the regressors be strictly exogenous.
+
+Menu for estat
+
+   Statistics > Postestimation
+
+Syntax for estat durbinalt
+      estat durbinalt [ , durbinalt options ]
+
+durbinalt options               Description
+
+lags(numlist)                   test numlist lag orders
+nomiss0                         do not use Davidson and MacKinnon's approach
+robust                          compute standard errors using the robust/sandwich estimator
+small                           obtain -values using the  or  distribution
+force                           allow test after regress, vce(robust) or after newey
+
+collect is allowed; see [U] 11.1.10 Prefix commands.
+
+Options for estat durbinalt
+
+  lags(numlist) specifies a list of numbers, indicating the lag orders to be tested. The test will be per-
+      formed separately for each order. The default is order one.
+
+  nomiss0 specifies that Davidson and MacKinnon's approach (1993, 358), which replaces the missing
+      values in the initial observations on the lagged residuals in the auxiliary regression with zeros, not be
+      used.
+
+  robust specifies that the Huber/White/sandwich robust estimator for the variance-covariance matrix be
+      used in Durbin's alternative test.
+
+  small specifies that the -values of the test statistics be obtained using the  or  distribution instead of
+      the default 2 or normal distribution. This option may not be specified with robust, which always
+      uses an  or a  distribution.
+
+  force allows the test to be run after regress, vce(robust) and after newey (see [R] regress and
+      [TS] newey). The command will not work if the vce(cluster clustvar) option is specified with
+      regress.
+                regress postestimation time series -- Postestimation tools for regress with time series 4
+
+estat dwatson
+
+Description for estat dwatson
+
+      estat dwatson computes the Durbin-Watson  statistic (Durbin and Watson 1950) to test for first-
+  order serial correlation in the disturbance when all the regressors are strictly exogenous.
+
+Menu for estat
+
+   Statistics > Postestimation
+
+Syntax for estat dwatson
+      estat dwatson
+
+   collect is allowed; see [U] 11.1.10 Prefix commands.
+
+Remarks and examples
+
+      The Durbin-Watson test is used to determine whether the error term in a linear regression model
+  follows an AR(1) process. For the linear model
+
+                                      = x + 
+
+the AR(1) process can be written as
+
+                                      = -1 + 
+
+In general, an AR(1) process requires only that  be independent and identically distributed (i.i.d.). The
+Durbin-Watson test, however, requires  to be distributed  (0, 2) for the statistic to have an exact
+distribution. Also, the Durbin-Watson test can be applied only when the regressors are strictly exoge-
+
+nous. A regressor  is strictly exogenous if Corr(, ) = 0 for all  and , which precludes the use of
+the Durbin-Watson statistic with models where lagged values of the dependent variable are included as
+
+regressors.
+
+   The null hypothesis of the test is that there is no first-order autocorrelation. The Durbin-Watson
+ statistic can take on values between 0 and 4 and under the null  is equal to 2. Values of  less
+than 2 suggest positive autocorrelation ( > 0), whereas values of  greater than 2 suggest negative
+autocorrelation ( < 0). Calculating the exact distribution of the  statistic is difficult, but empirical
+upper and lower bounds have been established based on the sample size and the number of regressors.
+Extended tables for the  statistic have been published by Savin and White (1977). For example, suppose
+you have a model with 30 observations and three regressors (including the constant term). For a test of the
+null hypothesis of no autocorrelation versus the alternative of positive autocorrelation, the lower bound
+of the  statistic is 1.284, and the upper bound is 1.567 at the 5% significance level. You would reject
+the null if  < 1.284, and you would fail to reject if  > 1.567. A value falling within the range (1.284,
+1.567) leads to no conclusion about whether or not to reject the null hypothesis.
+regress postestimation time series -- Postestimation tools for regress with time series 5
+
+   When lagged dependent variables are included among the regressors, the past values of the error
+term are correlated with those lagged variables at time , implying that they are not strictly exogenous
+regressors. The inclusion of covariates that are not strictly exogenous causes the  statistic to be biased
+toward the acceptance of the null hypothesis. Durbin (1970) suggested an alternative test for models with
+lagged dependent variables and extended that test to the more general AR() serial correlation process
+
+                                          = 1-1 + · · · + - + 
+
+where  is i.i.d. with variance 2 but is not assumed or required to be normal for the test.
+   The null hypothesis of Durbin's alternative test is
+
+0  1 = 0, . . . ,  = 0
+
+and the alternative is that at least one of the 's is nonzero. Although the null hypothesis was originally
+derived for an AR() process, this test turns out to have power against MA() processes as well. Hence, the
+actual null of this test is that there is no serial correlation up to order  because the MA() and the AR()
+models are locally equivalent alternatives under the null. See Godfrey (1988, 113-115) for a discussion
+of this result.
+
+   Durbin's alternative test is in fact a LM test, but it is most easily computed with a Wald test on the
+coefficients of the lagged residuals in an auxiliary OLS regression of the residuals on their lags and all
+the covariates in the original regression. Consider the linear regression model
+
+ = 11 + · · · +  +                                                                          (1)
+
+in which the covariates 1 through  are not assumed to be strictly exogenous and  is assumed to be
+i.i.d. and to have finite variance. The process is also assumed to be stationary. (See Wooldridge [2020,
+sec. 11.1] for a discussion of stationarity.) Estimating the parameters in (1) by OLS obtains the residuals
+. Next another OLS regression is performed of  on -1, . . . , - and the other regressors,
+
+ = 1-1 + · · · + - + 11 + · · · +  +                                                        (2)
+
+where  stands for the random-error term in this auxiliary OLS regression. Durbin's alternative test is
+then obtained by performing a Wald test that 1, . . . ,  are jointly zero. The test can be made robust to
+an unknown form of heteroskedasticity by using a robust VCE estimator when estimating the regression
+in (2). When there are only strictly exogenous regressors and  = 1, this test is asymptotically equivalent
+to the Durbin-Watson test.
+
+   The Breusch-Godfrey test is also an LM test of the null hypothesis of no autocorrelation versus the
+alternative that  follows an AR() or MA() process. Like Durbin's alternative test, it is based on the
+auxiliary regression (2), and it is computed as  2, where  is the number of observations and 2 is the
+simple 2 from the regression. This test and Durbin's alternative test are asymptotically equivalent. The
+test statistic  2 has an asymptotic 2 distribution with  degrees of freedom. It is valid with or without
+the strict exogeneity assumption but is not robust to conditional heteroskedasticity, even if a robust VCE
+is used when fitting (2).
+
+   In fitting (2), the values of the lagged residuals will be missing in the initial periods. As noted by
+Davidson and MacKinnon (1993), the residuals will not be orthogonal to the other covariates in the model
+in this restricted sample, which implies that the 2 from the auxiliary regression will not be zero when
+the lagged residuals are left out. Hence, Breusch and Godfrey's  2 version of the test may overreject
+in small samples. To correct this problem, Davidson and MacKinnon (1993) recommend setting the
+regress postestimation time series -- Postestimation tools for regress with time series 6
+
+missing values of the lagged residuals to zero and running the auxiliary regression in (2) over the full
+sample used in (1). This small-sample correction has become conventional for both the Breusch-Godfrey
+and Durbin's alternative test, and it is the default for both commands. Specifying the nomiss0 option
+overrides this default behavior and treats the initial missing values generated by regressing on the lagged
+residuals as missing. Hence, nomiss0 causes these initial observations to be dropped from the sample
+of the auxiliary regression.
+
+   Durbin's alternative test and the Breusch-Godfrey test were originally derived for the case covered
+by regress without the vce(robust) option. However, after regress, vce(robust) and newey,
+Durbin's alternative test is still valid and can be invoked if the robust and force options are specified.
+
+Example 1: tests for serial correlation
+
+   Using data from Klein (1950), we first fit an OLS regression of consumption on the government wage
+bill:
+
+. use https://www.stata-press.com/data/r19/klein
+
+. tsset yr
+
+Time variable: yr, 1920 to 1941
+            Delta: 1 unit
+
+. regress consump wagegovt
+
+   Source          SS            df      MS       Number of obs =           22
+                                                                       17.72
+    Model   532.567711                            F(1, 20)         =  0.0004
+Residual    601.207167                                                0.4697
+                                 1 532.567711 Prob > F             =  0.4432
+    Total   1133.77488                                                5.4827
+                                 20 30.0603584 R-squared           =
+
+                                                  Adj R-squared =
+
+                                 21 53.9892799 Root MSE            =
+
+ consump    Coefficient Std. err.            t    P>|t|  [95% conf. interval]
+
+wagegovt     2.50744        .5957173      4.21    0.000  1.264796     3.750085
+    _cons   40.84699        3.192183     12.80    0.000  34.18821     47.50577
+
+   If we assume that wagegov is a strictly exogenous variable, we can use the Durbin-Watson test to
+check for first-order serial correlation in the errors.
+
+. estat dwatson                  22) = .3217998
+Durbin-Watson d-statistic( 2,
+
+   The Durbin-Watson  statistic, 0.32, is far from the center of its distribution ( = 2.0). Given 22
+observations and two regressors (including the constant term) in the model, the lower 5% bound is about
+0.997, much greater than the computed  statistic. Assuming that wagegov is strictly exogenous, we
+can reject the null of no first-order serial correlation. Rejecting the null hypothesis does not necessarily
+mean an AR process; other forms of misspecification may also lead to a significant test statistic. If we
+are willing to assume that the errors follow an AR(1) process and that wagegov is strictly exogenous, we
+could refit the model using arima or prais and model the error process explicitly; see [TS] arima and
+[TS] prais.
+regress postestimation time series -- Postestimation tools for regress with time series 7
+
+   If we are not willing to assume that wagegov is strictly exogenous, we could instead use Durbin's
+alternative test or the Breusch-Godfrey to test for first-order serial correlation. Because we have only
+22 observations, we will use the small option.
+
+         . estat durbinalt, small
+         Durbin's alternative test for autocorrelation
+
+lags(p)     F                      df                                      Prob > F
+
+1           35.035                 ( 1, 19 )                               0.0000
+
+                                      H0: no serial correlation
+. estat bgodfrey, small
+Breusch-Godfrey LM test for autocorrelation
+
+lags(p)     F                      df                                      Prob > F
+
+1           14.264                 ( 1, 19 )                               0.0013
+
+            H0: no serial correlation
+
+   Both tests strongly reject the null of no first-order serial correlation, so we decide to refit the model
+with two lags of consump included as regressors and then rerun estat durbinalt and estat bgodfrey.
+Because the revised model includes lagged values of the dependent variable, the Durbin-Watson test is
+not applicable.
+
+. regress consump wagegovt L.consump L2.consump
+
+   Source          SS   df         MS                            Number of obs =           20
+                                                                                      44.01
+    Model   702.660311                                           F(3, 16)   =        0.0000
+Residual    85.1596011                                                               0.8919
+                        3 234.220104 Prob > F                               =        0.8716
+    Total   787.819912                                                                2.307
+                        16 5.32247507 R-squared                             =
+
+                                                                 Adj R-squared =
+
+                        19 41.4642059 Root MSE                              =
+
+ consump    Coefficient Std. err.      t         P>|t|           [95% conf. interval]
+               .6904282 .3295485    2.10         0.052
+wagegovt                                                         -.0081835           1.38904
+                                    7.21         0.000
+ consump    1.420536     .197024   -3.37         0.004            1.002864           1.838208
+       L1.  -.650888    .1933351                 0.084            -1.06074           -.241036
+       L2.                          1.84
+            9.209073    5.006701                                 -1.404659           19.82281
+    _cons
+            regress postestimation time series -- Postestimation tools for regress with time series 8
+
+     . estat durbinalt, small lags(1/2)
+     Durbin's alternative test for autocorrelation
+
+            lags(p)                    F                          df                           Prob > F
+
+                 1                0.080                 ( 1, 15 )                                 0.7805
+
+                 2                0.260                 ( 2, 14 )                                 0.7750
+
+                                           H0: no serial correlation
+     . estat bgodfrey, small lags(1/2)
+     Breusch-Godfrey LM test for autocorrelation
+
+            lags(p)                    F                          df                           Prob > F
+
+                 1                0.107                 ( 1, 15 )                                 0.7484
+
+                 2                0.358                 ( 2, 14 )                                 0.7056
+
+                                       H0: no serial correlation
+
+Although wagegov and the constant term are no longer statistically different from zero at the 5% level, the
+output from estat durbinalt and estat bgodfrey indicates that including the two lags of consump
+has removed any serial correlation from the errors.
+
+   Engle (1982) suggests an LM test for checking for autoregressive conditional heteroskedasticity
+(ARCH) in the errors. The th-order ARCH model can be written as
+
+                                          2   =  (2 |-1,       .  .  .  ,  -)
+
+                                            
+
+                                              = 0 + 12-1 + · · · + 2-
+
+To test the null hypothesis of no autoregressive conditional heteroskedasticity (that is, 1 = · · · =  =
+
+0), we first fit the OLS model (1), obtain the residuals , and run another OLS regression on the lagged
+
+residuals:
+
+                                       2 = 0 + 12-1 + · · · + 2- +                                                   (3)
+
+The test statistic is  2, where  is the number of observations in the sample and 2 is the 2 from
+
+the  regression  in  (3).  Under  the  null  hypothesis,  the  test        statistic  follows  a  2   distribution.
+
+                                                                                                    
+
+Example 2: estat archlm
+
+   We refit the original model that does not include the two lags of consump and then use estat archlm
+to see if there is any evidence that the errors are autoregressive conditional heteroskedastic.
+
+     . regress consump wagegovt
+
+            Source                SS             df               MS       Number of obs =                      22
+                                                                                                           17.72
+                                                                           F(1, 20)                   =   0.0004
+                                                                                                          0.4697
+                Model      532.567711            1 532.567711 Prob > F                                =   0.4432
+            Residual       601.207167                                                                     5.4827
+                                                 20 30.0603584 R-squared                              =
+
+                                                                           Adj R-squared =
+
+                 Total 1133.77488                21 53.9892799 Root MSE                               =
+
+             consump       Coefficient Std. err.              t            P>|t|      [95% conf. interval]
+
+            wagegovt        2.50744           .5957173     4.21            0.000      1.264796           3.750085
+                _cons      40.84699           3.192183    12.80            0.000      34.18821           47.50577
+regress postestimation time series -- Postestimation tools for regress with time series 9
+
+. estat archlm, lags(1 2 3)
+LM test for autoregressive conditional heteroskedasticity (ARCH)
+
+lags(p)          chi2                               df       Prob > chi2
+
+1                5.543                              1             0.0186
+                                                                  0.0090
+2                9.431                              2             0.0288
+
+3                9.039                              3
+
+   H0: no ARCH effects  vs. H1: ARCH(p) disturbance
+
+   estat archlm shows the results for tests of ARCH(1), ARCH(2), and ARCH(3) effects, respectively. At
+the 5% significance level, all three tests reject the null hypothesis that the errors are not autoregressive
+conditional heteroskedastic. See [TS] arch for information on fitting ARCH models.
+
+Stored results
+
+estat archlm stores the following in r():
+
+Scalars          number of observations
+      r(N)       number of regressors
+      r(k)       number of gaps
+      r(N gaps)
+                 lag order
+Macros
+      r(lags)    test statistic for each lag order
+                 degrees of freedom
+Matrices         two-sided -values
+      r(arch)
+      r(df)
+      r(p)
+
+estat bgodfrey stores the following in r():
+
+Scalars          number of observations
+      r(N)       number of regressors
+      r(k)       number of gaps
+      r(N gaps)
+                 lag order
+Macros
+      r(lags)    2 statistic for each lag order
+                  statistic for each lag order (small only)
+Matrices         residual degrees of freedom (small only)
+      r(chi2)    degrees of freedom
+      r(F)       two-sided -values
+      r(df r)
+      r(df)
+      r(p)
+regress postestimation time series -- Postestimation tools for regress with time series 10
+
+estat durbinalt stores the following in r():
+
+Scalars          number of observations
+      r(N)       number of regressors
+      r(k)       number of gaps
+      r(N gaps)
+                 lag order
+Macros
+      r(lags)    2 statistic for each lag order
+                  statistic for each lag order (small only)
+Matrices         residual degrees of freedom (small only)
+      r(chi2)    degrees of freedom
+      r(F)       two-sided -values
+      r(df r)
+      r(df)
+      r(p)
+
+estat dwatson stores the following in r():
+
+Scalars          number of observations
+      r(N)       number of regressors
+      r(k)       number of gaps
+      r(N gaps)  Durbin-Watson statistic
+      r(dw)
+
+Methods and formulas
+
+Consider the regression
+
+                          = 11 + · · · +  +                  (4)
+
+in which some of the covariates are not strictly exogenous. In particular, some of the  may be lags of
+the dependent variable. We are interested in whether the  are serially correlated.
+
+The Durbin - Watson  statistic reported by estat dwatson is
+
+                                          -1
+
+                                           (+1 - )2
+
+                          = =1                 
+
+                                               2
+
+                                              =1
+
+where  represents the residual of the th observation.
+
+   To compute Durbin's alternative test and the Breusch-Godfrey test against the null hypothesis that
+there is no th order serial correlation, we fit the regression in (4), compute the residuals, and then fit the
+following auxiliary regression of the residuals  on  lags of  and on all the covariates in the original
+regression in (4):
+
+                  = 1-1 + · · · + - + 11 + · · · +  +        (5)
+
+Durbin's alternative test is computed by performing a Wald test to determine whether the coefficients
+
+of -1, . . . , - are jointly different from zero. By default, the statistic is assumed to be distributed
+2(p). When small is specified, the statistic is assumed to follow an (,  -  - ) distribution.
+The reported -value is a two-sided -value. When robust is specified, the Wald test is performed
+using the Huber/White/sandwich estimator of the variance-covariance matrix, and the test is robust to
+
+an unspecified form of heteroskedasticity.
+               regress postestimation time series -- Postestimation tools for regress with time series 11
+
+      The Breusch-Godfrey test is computed as  2, where  is the number of observations in the aux-
+  iliary regression (5) and 2 is the 2 from the same regression (5). Like Durbin's alternative test, the
+  Breusch-Godfrey test is asymptotically distributed 2(), but specifying small causes the -value to
+  be computed using an  (,  -  - ).
+
+      By default, the initial missing values of the lagged residuals are replaced with zeros, and the auxiliary
+  regression is run over the full sample used in the original regression of (4). Specifying the nomiss0
+  option causes these missing values to be treated as missing values, and the observations are dropped
+  from the sample.
+
+      Engle's LM test for ARCH() effects fits an OLS regression of 2 on 2-1, . . . , 2-:
+
+                                         2 = 0 + 12-1 + · · · + 2- + 
+
+  The test statistic is 2 and is asymptotically distributed 2().
+
+Acknowledgment
+
+      The original versions of estat archlm, estat bgodfrey, and estat durbinalt were written by
+  Christopher F. Baum of the Department of Economics at Boston College and author of the Stata Press
+  books An Introduction to Modern Econometrics Using Stata and An Introduction to Stata Programming
+  and coauthor of the Stata Press book Environmental Econometrics Using Stata.
+
+References
+
+   Baum, C. F. 2006. An Introduction to Modern Econometrics Using Stata. College Station, TX: Stata Press.
+   Beran, R. J., and N. I. Fisher. 1998. A conversation with Geoff Watson. Statistical Science 13: 75-93. https://doi.org/10.
+
+      1214/ss/1028905975.
+   Breusch, T. S. 1978. Testing for autocorrelation in dynamic linear models. Australian Economic Papers 17: 334-355.
+
+      https://doi.org/10.1111/j.1467-8454.1978.tb00635.x.
+   Davidson, R., and J. G. MacKinnon. 1993. Estimation and Inference in Econometrics. New York: Oxford University Press.
+   Durbin, J. 1970. Testing for serial correlation in least-squares regressions when some of the regressors are lagged depen-
+
+      dent variables. Econometrica 38: 410-421. https://doi.org/10.2307/1909547.
+   Durbin, J., and S. J. Koopman. 2012. Time Series Analysis by State Space Methods. 2nd ed. Oxford: Oxford University
+
+      Press.
+   Durbin, J., and G. S. Watson. 1950. Testing for serial correlation in least squares regression. I. Biometrika 37: 409-428.
+
+      https://doi.org/10.2307/2332391.
+   ------. 1951. Testing for serial correlation in least squares regression. II. Biometrika 38: 159-177. https://doi.org/10.
+
+      2307/2332325.
+   Engle, R. F. 1982. Autoregressive conditional heteroscedasticity with estimates of the variance of United Kingdom in-
+
+      flation. Econometrica 50: 987-1007. https://doi.org/10.2307/1912773.
+   Fisher, N. I., and P. Hall. 1998. Geoffrey Stuart Watson: Tributes and obituary (3 December 1921-3 January 1998).
+
+      Australian and New Zealand Journal of Statistics 40: 257-267. https://doi.org/10.1111/1467-842X.00030.
+   Godfrey, L. G. 1978. Testing against general autoregressive and moving average error models when the regressors include
+
+      lagged dependent variables. Econometrica 46: 1293-1301. https://doi.org/10.2307/1913829.
+   ------. 1988. Misspecification Tests in Econometrics: The Lagrange Multiplier Principle and Other Approaches. Economet-
+
+      ric Society Monographs, No. 16. Cambridge: Cambridge University Press. https://doi.org/10.1017/CCOL0521266165.
+   Klein, L. R. 1950. Economic Fluctuations in the United States 1921-1941. New York: Wiley.
+   Koopman, S. J. 2012. James Durbin, FBA, 1923-2012. Journal of the Royal Statistical Society, A ser., 175: 1060-1064.
+
+      https://doi.org/10.1111/j.1467-985X.2012.01068.x.
+   regress postestimation time series -- Postestimation tools for regress with time series 12
+
+Phillips, P. C. B. 1988. The ET Interview: Professor James Durbin. Econometric Theory 4: 125-157. https://doi.org/10.
+   1017/S0266466600011907.
+
+Savin, N. E., and K. J. White. 1977. The Durbin-Watson test for serial correlation with extreme sample sizes or many
+   regressors. Econometrica 45: 1989-1996. https://doi.org/10.2307/1914122.
+
+Wooldridge, J. M. 2020. Introductory Econometrics: A Modern Approach. 7th ed. Boston: Cengage.
+
+£
+
+   James Durbin (1923-2012) was a British statistician who was born in Wigan, near Manchester. He
+   studied mathematics at Cambridge and after military service and various research posts joined the
+   London School of Economics in 1950. Later in life, he was also affiliated with University College
+   London. His many contributions to statistics centered on serial correlation, time series (including
+   major contributions to structural or unobserved components models), sample survey methodology,
+   goodness-of-fit tests, and sample distribution functions, with emphasis on applications in the so-
+   cial sciences. He served terms as president of the Royal Statistical Society and the International
+   Statistical Institute.
+
+   Geoffrey Stuart Watson (1921-1998) was born in Victoria, Australia, and earned degrees at Mel-
+   bourne University and North Carolina State University. After a visit to the University of Cam-
+   bridge, he returned to Australia, working at Melbourne and then the Australian National University.
+   Following periods at Toronto and Johns Hopkins, he settled at Princeton. Throughout his wide-
+   ranging career, he made many notable accomplishments and important contributions, including the
+   Durbin-Watson test for serial correlation, the Nadaraya-Watson estimator in nonparametric regres-
+   sion, and methods for analyzing directional data.
+
+   Leslie G. Godfrey (1946-2025) was born in London and earned degrees at the Universities of Exeter
+   and London. He was a professor of econometrics at the University of York. His interests centered
+   on implementation and interpretation of tests of econometric models, including nonnested models.
+
+   Trevor Stanley Breusch (1953- ) was born in Queensland and earned degrees at the University of
+
+   Queensland and Australian National University (ANU). After a post at the University of Southamp-
+
+   ton, he returned to work at ANU. His background is in econometric methods and his recent interests
+
+   include political values and social attitudes, earnings and income, and measurement of underground
+
+   economic activity.
+
+¢                                                                                                       ¡
+
+Also see
+
+  [R] regress -- Linear regression+
+  [R] regress postestimation -- Postestimation tools for regress
+  [R] regress postestimation diagnostic plots -- Postestimation plots for regress
+  [TS] tsset -- Declare data to be time-series data
+
+Stata, Stata Press, Mata, NetCourse, and NetCourseNow are registered trademarks of StataCorp
+
+LLC. Stata and Stata Press are registered trademarks with the World Intellectual Property Or-   ®
+
+ganization of the United Nations. StataNow is a trademark of StataCorp LLC. Other brand and
+
+product names are registered trademarks or trademarks of their respective companies. Copyright
+
+© 1985-2025 StataCorp LLC, College Station, TX, USA. All rights reserved.
+
+For suggested citations, see the FAQ on citing Stata documentation.
+

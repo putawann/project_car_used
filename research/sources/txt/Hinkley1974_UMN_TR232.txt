@@ -1,0 +1,1227 @@
+       ~ .;                                  ON POWER TRANSFORMATIONS TO SYMMETRY
+ · I                                                        By David Hinkley
+
+I .                                                    School of Statistics
+                                                      University of Minnesota
+w                                                    Technical Report No. 232
+
+ ! I                                                    September 10, 1974
+
+LI
+
+ j (
+
+.LI
+
+  I I
+
+_I I
+
+6J
+
+                                    I
+
+1-f
+
+ I
+
+-w
+
+u
+
+ . I
+  I I
+
+ bJ
+
+ I I
+
+w
+
+ -~
+
+                                          I
+
+   I I
+
+w
+....
+
+                                Summary.
+                                        Transformations to symmetry, or approximate symmetry, are
+
+                                considered. In particular, properties of simple estimates based
+                               on equitailed order statistics are derived. Examples include
+                                transformation of exponential and ganuna random variables. Errors
+                                in previous work are discovered and partially corrected.
+                               Some key words:
+
+                                         Symmetry; Transformation; Robustness; Maximum likelihood.
+
+-
+1. Introduction.
+
+Box and Cox (1964) discussed estimation of data transformations
+
+which would yield variables satisfying a normal-error additive linear
+
+model. In particular, a family of power transformations was con-
+
+sidered, which in its simple form consists of transformations
+
+- yA - 1                                             A :J= O ,    (1.1)
+                                                     X= O ·
+                                                  A
+
+       Izx =
+                                           logy
+
+111111
+
+                           Here y might be an observable quantity or a residual from a fitted
+
+model. A conventional assumption underlying the use of the transformation
+
+is that, for some X, ZA has a normal distribution.
+
+One method of estimating X discussed by Box and Cox is that of
+
+maximum likelihood. This was further explored by Draper and Cox (1969),
+
+who derived expressions for the precision of the maximum likelihood
+
+estimate. Other aspects of normal-theory estimation and inference
+
+about X in (1.1) have been investigated by Andrews (1971) and
+
+Atkinson (1973).
+
+It is frequently assumed in connextion with (1.1) that y is
+
+positive; if y could be negative many values of X would be clearly
+
+inadmissible. Note, however, that if y is positive then         can
+
+                                                                                                 -1
+
+have a normal distribution only if X is zero or if X is an even
+
+integer. Nevertheless, one can often obtain a transformation for which
+
+zA, although bounded below, is very nearly normal, or "close enough
+
+to normal for practical purposes."
+
+                                                     - 1-
+-
+
+                                      There are three reservations that one might have about fitting
+                             (1.1) with a normal distribution assumption by maximum likelihood.
+                            First, the maximum likelihood method involves a great deal of calculation
+
+                       even in the normal case. Secondly, as Andrews (1971) has shown, the
+
+                            maximum likelihood method can be very sensitive to outliers; this
+                            reservation is actually unjustified in the sense that all reasonably
+                            efficient methods depend critically on the extreme observations.
+                            Thirdly, if we are aiming to use a linear model for the transformed
+                            data we may not want to make a normality assumption at any stage for
+                            fear of non-robustness. We may be planning to use now-popular robust
+
+                       methods of analysis (Huber, 1973), and the assumption of normality in
+                       connexion with (1.1) would seem contradictory.
+
+                                     In this paper we discuss simple and not-so-simple methods of
+                            estimating A to give (approximate) symmetry for the distribution of
+
+                   zA. The methods are based on synnnetrizing order statistics about the
+
+                            median.
+
+                              As were Draper and Cox (1969), we are not concerned here with the
+
+                            requirement of an additive linear model for transformed data. We do
+                            assume that the Y's have a common distribution with unknown location
+                            and scale.
+
+                                     In Section 2 we discuss a very simple order statistic estimate
+                            of A and derive its large-sample properties. Corresponding results
+                            for the normal-theory maximum likelihood estimate are outlined in
+
+                         Section 3, which includes corrections to the results of Draper and Cox
+
+                       (1969). Section 4 then gives several illustrations of the results, for
+
+                            gamma, log normal and other distributions. Generalizations of the
+
+                        simple estimate of Section 2 are discussed in Section 5, with an example
+                        given in Section 6.
+
+                                                                                            - 2-
+        2. A Quick Estimate.
+
+        2.1. Definition of the Estimate.
+
+                 Suppose that Y , ··· ,Yn are continuous non-negative independent
+                                       1
+
+        and identically distributed random variables; the restriction to
+
+        positive variables is necessary if the                family (1.1) is to
+
+        be sensible. If there exists a A such that ZA in (1.1) has
+
+        a symmetric distribution, then the p and 1-p quantiles will be
+
+-       sytJD11etrically placed about the median. This symmetry of population
+
+     I  quantiles for ZA suggests a simple method for estimating A, namely
+
+-       that of symmetrizing the sample quantiles corresponding to tail
+        probabilities p and 1-p for some p. As we suggested in the
+
+        Introduction, ZA cannot have exact symmetry for most A, but we
+
+        assume that a value of A. exists which "nearly" gives symmetry.
+
+        More will be said about this later.
+
+                 Let  Y , ··· ,Yn have the common distribution function  F(y),    with
+        quantiles      1
+
+                      r:    defined by
+                      '=>s
+
+                       F(I;s ) = s O<s<l.
+
+        Then we week that transformation in the family (1.1) for which
+
+                                                                         (2.1)
+
+        If we denote the ordered values of Y1 , ... ,Yn by x1 ~ x2 ~ ·.. ~ Xn,
+
+                                                                       N
+
+        and define the median X in the usual way, then the sample analog of
+
+        (2.1) is
+
+                      Ox!A - XAr -- XAn-r+l - X~  r = [np] '             (2.2)
+
+        which is an estimating equation for A·. There are only two solutions
+
+        to (2.2), one of them being A= 0. However, by comparison with (1.1)
+
+                                                  - 3-
+-.
+
+.. we exclude A= 0 unless
+
+    N    X  n-r+l
+    X
+         = N                                              (2.3)
+    xr X
+
+which is the condition for sample quantiles of log Y to be synnnetric
+
+about the median.
+
+       For computation purposes it is easier to rewrite (2.2) in the form
+
+                                                          (2.4)
+
+    The existence of one non-zero solution to (2.4) is easily proved
+
+directly, or as a special case of the lemma in Section 5. The non-zero
+
+solution T of (2.4) is positive if and only if
+
+    X r  -X         >'x'2
+
+           --n-r+l
+
+and is otherwise negative if (2.3) is not satisfied; this is obviously sensible
+
+on  physical grounds. Moreover it is easy to verify that
+
+              fTf > llog iog{Xn-r+1/'x.) - log log(X/Xr )lfllog{Xr /xn-r+1)
+
+which may be useful in solving (2.4).
+         The estimator defined by (2.3) and (2.4) is somewhat naive. One
+
+would expect that in order to obtain a reasonably efficient estimator one
+would have to combine the equations (2.2) corresponding to several p
+
+values in some sensible way. This we do in Section 5. However the simplicity
+
+of (2.2) is appealing, and there is some flexibility in our ability to choose
+p. Also the reasonableness of the basic idea and some generally useful
+properties of the estimator are most easily discussed in the simple case.
+
+                           - 4-
+-.-  2 ;2. Properties of the Quick Estimate ·
+
+'A            We have already seen that  T, the non-zero estimator satisfying (2.4),
+     is unique. We now show that as      n ~ 00 the estimator T defined by (2.4)
+
+     has a limiting normal distribution. To do this we use the joint asymptotic
+
+     normality of the order statistics Xr , ··· ,X for
+                                         1     rm
+
+     0 <pl<···< pm< 1. Specifically, if the original distribution function
+
+     F(y) has density f(y) and quantiles                  then the vector
+
+     {x , ··· ,X ) has a limiting multivariate normal distribution with mean
+     rl  rm
+
+     (Sp , ··· ,~m), and covariance matrix determined by
+
+         1
+
+                                = pi(l-pj)     i ~j ·       (2.5)
+         n cov(Xr . ,Xr. )
+
+                     1 J f(I; )f(I; )
+                                        pi pj
+
+              The first property of the estimator T that we need is consistency,
+     which strictly means that
+
+         T = X + op (1)
+
+     where X is the solution of (2.1); if there is a transformation in the
+     class (1.1) giving exact symmetry, then the solution to (2.1) gives it,
+
+     whatever p. Actually consistency is easy to verify from continuity of
+
+     the left-hand side of (2.4) and consistency of X, X                   N
+                                                   r n-r+1
+                                                            and X for
+
+                                                                                                                                   N
+
+     the respective quantiles. Note that X is asymptotically equivalent to
+
+         which fact we shall use.
+
+                                         - 5-
+.9.     ..
+
+     ·
+
+            Now let us suppose A+ 0, and write
+
+                                    1                 1
+            X = I; ( 1 + n- 2 W ) X          = 1; ( 1 + n-2 W ) J r = [np] , p+q = 1 ,
+            r p                        p , n-r+1 1-p             q
+
+            and
+                                                                                                            (2.6)
+
+            Then the es time.ting equation (2.4) can be written
+
+            where as= 1;s/so.5 and the a's satisfy
+
+                        1                                                                                          (2.8)
+               J-+a =2
+
+                p q
+
+            by definition. Since T is consistent, expansion of (2.7) about T = A
+
+            gives, using (2.8),
+
+-A                               1           1 1                 1
+
+                                             2
+            (T-l)(a log a +a-log a)+ ln- {a (w -w0 ) + a (w -w )l + o (T-1)
+            P    P q                   q     P P ·5              q q 0.5  P
+
+                                                                       1
+
+                                                      + op (n-2 ) = 0.
+
+            That is, to first order,
+
+                 2W -J-w -ciw
+            ,/n(T-1)/1 = o.5 P P 9 9                                              (2.9)
+                                 1        1
+                 a_ log a + a log a
+                                 p     p q   q
+·1.
+
+            We then use the limiting joint normality of the W's, whose covariance
+
+            matrix is determined by (2.5) and the transformation (2.6), to obtain the
+
+            limiting normal distribution of T. If we define h-l = I; f(I; ), the
+                                                                 s  s s
+
+            variance of the limiting normal distribution of Jn.(T-A) is found to be
+
+                                             - 6-
+An alternative expression, in terms of the p.d.f. g(z) for the transformed
+
+variable ¾_, is
+
+_, A4{g1-2 + pq (g-2+ g-2) - 2p (g-1 g1-1+ g-1 g1-1) + 2p2g-1 g-1)                              (2.11)
+VT(A,p) =   2          P q                       P2 q2                     p q
+
+            {(l+AK )log(l+AK) + (l+AK )log(l+AK) - 2(1+AK1 )1og(l+AK1)} 2
+               P       P                   q        q                   2       2
+
+where K is the quantile defined by G(K) = s and g = g(K ).
+s                                                s                      s  s
+
+                           Notice that the properties of T are invariant under s~ale change of
+
+.,,1
+
+                 Y, as is immediately obvious from the estimating equation (2.4).
+
+The above results hold also for A= O, when Z = log Y. Slightly
+
+more generally, (2.11) for small A may be written as
+
+               g1-2 + pq <g-2 + g-2> - 2pg1-1c g-1 + g-1) + ~2 g-1 g-1
+                  2    P q                       2P 9                      P 9
+                                                                                                (2.12)
+
+               {~(K2       2  -  2K2 )  -     l  A(K3 + K3  -  2K3)} 2
+                       + K       ½b p q                        ½
+                  2 p  q
+
+This contradicts the type of result·obtained by Draper and Cox, but their
+
+results are wrong as we show in the next section.
+
+several examples illustrating the results of this section are given in
+
+Section 4.
+
+                                        - 7-
+._.
+
+     3, Normal-theory Maximum Likelihood.
+
+              As we pointed out in the introduction, previous work on power
+
+     trangformations has assumed the transformed variable ¾_ to be normally
+
+     distributed; in the simplest case the variables are taken to be homogeneous
+
+     N(µ,,v). Draper and Cox derived large-sample properties of the estimator
+     "'
+     AN obtained by maximizing the N(µ,,v) likelihood. These properties
+
+     would provide useful standards by which to judge the simple estimate T
+
+     described in Section 2; however some of the Draper and Cox results are
+
+     incorrect and others are incomplete. We therefore briefly outline the basic
+
+                                                                                                              "'
+     properties of the normal-theory maximum likelihood estimate AN here.
+
+     The N(µ,, v) likelihood eL for          leads directly to
+
+     the efficient sccre vector U. given by
+
+     U = ~L = v-l 6 (z .-µ,)
+     µ,. oµ,  J
+
+     An obvious feature of the component likelihood equation uA. = 0 is its
+     invariance under scale transformation of the original variable Y.
+
+              Provided that the density f(y) of Y is regular and a unique solution
+     of E(U.) = O exists, as is the case for standard continuous distributions
+
+     on (0, oo), the normal-theory maximum likelihood estimate converges
+
+     stochastically to the solution of E(U,) = 0 and has a limiting normal
+     distribution.
+
+                                                           - 8-
+        Let                                                                                ,.  with
+limit ~·     8 = {A,µ,,") and denote the norma~-theory m.l.e. by 9N
+              A standard expansion of the likelihood equation gives
+
+                     = { - .! o2r, I )-1 1 U. ( 9N) + op ( 1) ;                                (3.2)
+                          n o92 9=~ -;n.
+
+see, for example, Cox and Hinkley (1974, Chapter 9). Then Jn(8N - 9N)
+
+has a limiting normal distribution with covariance matrix
+
+where        nJ = E (- -o~ I )                                          (3.3)
+and
+              N f 082 9=8N                                              (3.4)
+
+here Ef denotes expectation with respect to the density f{y) of Y.
+
+Note that LJ = I-1 only if f is the normal density because I = J
+             N  N    --
+
+only if L is the log likelihood according to the density f. The
+                                                                                                    ,.
+
+general form (3.3) is required when examining properties of ~ under
+
+non-normal distributions, as we do in Section 4.
+
+                                                           ,.                                  -1
+       Draper and Cox incorrectly obtain the variance of ~ from I ·
+
+Their method of expanding U. as a power series in A does lead to
+
+approximations for ,t and ,J up to any order in A, but the results for
+
+      are very complicated {involving the first six moments of ZA) and of
+
+N
+
+limited usefulness.  In particular cases one can evaluate        ~ ·    Some general
+
+                                                                 flt,J
+
+results for the case A= 0 are given in Section 4.
+
+                                - 9-
+4. EXAMPLES
+4.1. Exponential and gamma cases.
+
+         To illustrate the discussion up to this point we first examine in
+some detail the example chosen by Draper and Cox, where the original
+variables Y1 , ··· ,Yn are exponentially distributed with density
+
+                 f {y) = p exp {-p y) ·
+
+         In this particular case (2.2) becomes
+
+       ( -log p )1'- + ( - log q / = 2 ( log 2) A , p + q = 1.      (4.1)
+The quantiles of yA are                                             (4.2)
+
+- and the quantiles Ks(p,p) of ¾_ are given by K = (~-1)/l. A crude
+                      outlier-free measure of asymmetry for ZA is the "tilt factor"
+'r{s ,p) = _ ~1_ -s(_ p,p_) _ - ~....0...,....5,__(_p_,p_ )
+                                                             O<s<½  (4.3)
+          ~o.5(p,p) - ~s(p,p)
+
+Note that the non-zero solution A of (4.1) and 'r(s,p) are both independent
+
+                                                          p
+
+of the scale parameter.
+
+        Table 1 gives some values of 1p and 'r{s,p) for p, s ~ 0.01.
+The entries show that A is very nearly constant for p > 0.10; and,
+
+                                         p
+
+related to this stability, there is a high degree of symmetry as far as the
+
+upper and lower 5% points of the transformed distributions. Much the
+
+same conclusions were reached by Draper and Cox, who noted that small
+
+changes in A have little visible effect on the symmetry. The Weibull
+
+distribution of z is quite close to normal except in the extreme tails.
+                         1
+
+- 10 -
+           Table 1. Transformations and tilt factors in the
+                              exponential case ·
+
+Quantile p                 · 005  0.01    0.05 0.10 0.20 0.30 o.4o
+                          .272    0.28    0.291 0.297 0.303 0.305 0.307
+Transformation
+power A                  0. 970
+                         0.963
+              p          0.964
+                         0.973
+                 s=0.2   0.985    O. 978 O. 989 ·995 1.000 1. 002 1 ·004
+                                  0.975 0.991 1.000 1.009 1.018 1.015
+Tilt factor      s=0.1            0.979 1.000 1.011 1.023 1.027 1.031
+                                  0.992 1.019 1.034 1.047 1.054 1.059
+'T"{s ,P)        s=0.05           1.007 1.038 1.055 1.072 1.078 1.084
+
+                 s=0.02
+
+                 S=0.01
+
+         The limiting normal distribution of T is s:ale invariant, as we
+noted in Section 2, and hence independent of p. The variance VT is
+given in Table 2 for the same transformations described in Table 1; rows
+below that for the exponential case are defined later.
+
+                              Table 2. Large-sample variance VT of the quantile transformation
+                                              estimate for exponential and ganuna distributions.
+
+w
+                                              p .005 0.01 0.05 0.10 0.20
+
+                                        r
+
+'-' 1, exponential 0.589 0.582 1.012 1.894 6.271
+
+2                1.704 1.670 2.968 6.148 19.916
+
+3                2.841 2. 718 4.507 8.982 36.069
+
+4                3.977 3.748 5.936 11.442 43.420
+
+                                  - 11 -
+-.II
+
+      It is interesting to see that rather extreme order statistics
+
+      give the best precision, p = .01 being close to optimal. This is
+
+--    a pity, in a sense, because rather large samples would be required for
+
+      anyone to have faith in the results! Also the method is consequently
+      sensitive to outliers.
+
+                                                                                                                                                                                                                                                                    A
+
+           The corresponding results for the normal-theory m.l.e. \J are
+
+      easily derived using the efficient score formulae in (3.1) together
+
+      with the identity
+
+-     ~ 8                dr
+      J (log y)r y e-y dy = - r(l+s)  s ~ o,
+
+      0                  dsr
+
+      which is related to the polyganuna functions. The maximum likelihood
+
+                                               A
+
+      estimate ~ converges to 0.265 (cf. Draper and Cox's approximation
+
+      0.268), and
+
+                                                                                                                                                                                                                                                                A
+
+      The variance VN of the limiting normal distribution of ./ti(~ - XN)
+
+      is 0.314. Note from Table 1 that A= 0.265 gives a relatively poor
+
+      degree of synunetry.
+               The above calculations for the exponential case are easily extended
+
+      to the general gamma density
+
+                             f{y) = yr-l e-y; r{r) ,
+
+      and we have added such calculations in Tables 2 and 3 for r = 2,3 and
+
+      4. The correct transformation power X for T is quite stable at about
+
+                                                                        p
+      0.32 for these cases, i.e., close to the conventional cube root transformation.
+
+                         - 12 -
+w.
+
+    As r increases, the transformed variable ZA is closer to symmetry
+    (and normality}.
+
+    Table 3.  Large-sample limit AN and variance VN of the normal-theory
+              MLE of A for exponential and gamma distributions.
+
+              r 1, exponential         2     3     4
+                                          0.312  0.318
+                          0.2654  0.301
+                          0.314   0.914   1.567 2.229
+
+                                  - 13 -
+'- . .
+
+        4.2. Examples with A= O.
+
+                 For the special case· A= 0 equation (2.12) gives a simple expression
+
+                    the large-sample variance of Jn(T-Ap ). A corresponding result for
+
+        the normal-theory maximum likelihood estimate is quite easily derived from
+
+        (3.3). Lengthy algebra gives
+
+        where  µ,(r)     is the  r th     central moment of  z = log Y. We now look at
+
+                                                              0
+
+        two specific examples.
+
+               When log Y .has the N(µ,v)                 · density, {2.12) and (4.4) simplify to
+
+               _ -4 -l(r/J-2              r/J-2     d-1 -1)                             (4.5)
+               VT - xp v 0.5 + 2p p - 4p"'p r/J0.5 ,
+
+        where  l{xs) = s         and  r/J = r/J(x) , and
+                                       s         s
+
+                                 2 -1
+
+                          VN = 3 " .
+
+        Some numerical values of VT are given in Table 4. The smallest value
+
+        of VT occurs at p = 0.01, at which point VN/VT ~ 2/n, rather interestingly.
+
+        Table 4. Large-sample Variances VT for quantile transformation estimate
+
+                      in log normal and log double exponential cases.
+
+                                                                       Normal-theory
+
+                      p   0.005           0.01 0.02 0.05 0.10          maximum
+                                                                       likelihood
+
+        Normal: "VT 1.15                  1.04 1.08 1.48 2.62          0.667
+
+        Double            0.881           0.837 o.894 1.28 2.39        1.491
+        exponential:
+
+                 p-2vT
+
+                      Note: The variances of Y are respectively v and 2P -2 ·
+
+                                                    - 14 -
+     ·      The effect of unknown A on estimation of ~ and v is seen
+
+        from the complete covariance matrix
+
+            ~ = n var(~) = -2\)-1                 2       4
+                                               ~
+                                 3                3V      ~
+
+                                              { v+µ,2)2            2
+-.J. · \) + 6v                                            2~{v+~)
+
+                                    ·          ·          2 82
+                                                         2V + ~ V
+-.I
+
+        The potentially heavy increase in var{~) due to not knowing A is clearly
+        worth investigating in more generality.
+
+            If log Y has a distribution close to the normal, so that the standard-
+
+        ized moments y1                                              etc. are of successively
+        lower order in some
+                             notional parameter, we can approximate VN from (4.4)
+
+        by
+
+            2 -1             16        11 2
+            VN = 3" (l - 9 y2 + b yl) ·
+
+        In a sense this corresponds to (9) of Draper and Cox, their factor e2
+
+        being incorrect ·
+
+            A corresponding approximation for VT is easily constructed from
+
+        (2.12) using a Fisher-Cornish expansion for Ks and an Edgeworth expansion
+
+        for g(z). The result is somewhat complicated and will not be given here.
+
+            A distribution characterising much longer tails than the normal is
+
+        the double exponential, with density
+
+            g(z) = ½p exp(-plzl)               -oo<z<oo.
+
+        If log Y has this distribution, it is. easy to show that (2.12) becomes
+
+                                       - 15 -
+   VT = P2( log 2p )-4( 2p-1 - 4)
+
+   with values as in Table 4. The corresponding value of VN calculated
+   from (4.4) is 1.491p 2 so that T is superior to ~ in large samples A
+
+   for p ~ .06. In terms of the variance v of    Z, the smallest value
+                                                 in the log-normal case.
+   -1                                        -1
+   of VT here is 1. 674v , compared to 1.044v
+
+-
+
+       - 16 -
+0
+
+   5. GENERALIZATION OF THE QUICK ESTIMATE.
+
+   5.1. The generalization.
+
+   There are several ways in which one could generalize the estimator
+
+   T defined by (2.2). First, we could solve (2.2) for several values of p
+
+   and average the resulting estimates of 0. Secondly, we could, as it were,
+
+   average the equation (2.2) for several p values and then solve for the
+
+   estimator. Other possible methods exist, but this latter method is the
+
+   one we examine here.
+
+   We propose, then, to use theequation (2.2) for several values of p,
+
+   say p1 < ··· <pm< 1/2, and in fact to form the combined equation
+
+                                    m                      (5.1)
+
+                               2 ~c.x'f
+
+                                  J. =1 J
+
+   where r. = [np.]; the solution T = 0 is chosen only if
+   J      J
+
+   ~ c. log{X X             ) = 2 ~ c. log(X) ,            (5.2)
+   J      r. n-r.+1                   J
+             J           J
+
+   corresponding to (2.3). The coefficients c1 , ··· ,cm in (5.1-2) are
+
+   arbitrary weights to be chosen. A more convenient form of (5.1) is
+
+      Xr                 X  n-r.+1 T
+
+   ~ C · { ( "'j )T + ( N J ) ) = 2 ~ C · ·                (5.3)
+   J X                      X
+                                              J
+
+   In practice it would be sensible to choose all C I j S positive, particularly
+   if a monotone transformation of Y is symmetrically distributed, since
+
+   otherwise asynmetry of quantile pairs tends to cancel out in the sununation.
+
+                                      - 17 -
+la  The existence of a unique non-zero solution to (5.3) for positive
+
+    cj is easily proved by the following lemma.
+
+    Lemma. For arbitrary positive constants
+
+    ~c.(a: + b~) = 2 L) c.                                             (5.4)
+       JJ J                   J
+
+    has a single non-zero real solution unless
+
+    L)c. log(a.b.) = 0
+       J  J J
+
+    in which case t = 0 is the only solution.
+
+    Proof is obvious by defining a random variable U with values log a.
+
+                                                                                                                                          J
+
+    and log b. (j = l, ··· ,m), and probabilities c./(2~c.) at U = log a.
+    J                                            J  1                                                                                        J
+
+    and log b .· Then (5.4) is the equation
+
+                       J
+
+                                                                       (5.5)
+
+    which has a unique non-zero solution unl~ss E(U) = O. (It is interesting
+
+    to note that the strong ordering a 1 < ··· <am< 1 < bm < ··· < h1   is not
+    used here, suggesting that a stronger result holds for T.)
+
+    A useful and obvious corollary of the representation (5.5) is that
+
+    T is negative (positive) if the left side of (5.2) is greater than
+
+    (less than) the right side.
+
+         Although the general equation (5.2) is interesting theoretically for
+
+    any value of m, in practice one might well restrict attention to m = 2
+
+    or 3 and use equal weights C · · Potentially the use of m > 1 could
+
+                                                               J
+
+    accomplish two things: (i) increased precision of the transformation estimate,
+
+    (ii) an averaging out of the asynunetry·in Zr when no ¾_ has a
+
+    synunetric distribution.
+
+                                 - 18 -
+·
+
+   5.2. Large-sample properties.
+
+   The groundwork for establishing large-sample properties of T as
+
+   been laid in Section 2.2. Here we outline the main steps and results.
+
+   By continuity of (5.2) and consistency of the order statistics, T
+
+   is consistent for that value A of A satisfying
+                                                       p
+
+             E (;A r;A                 A
+                c j P j + ':>q j ) = 2 E c j ;o. 5 ,
+
+   which would be common to all p if ZA is symmetrically distributed.
+   By the same expansion route used in Section 2.2 we find that for all A
+
+                         2W - ~ c(rl w + a.A w )
+   Jn(T-A) · A= 0 ·5                   P P q 9 + o (1) .
+                                                                   (5.6)
+
+                         :E c(a.A log a + a.A log a ) P
+                            p       p  q              q
+
+   (Here and below the suffix j on c., p. and q. has been dropped for
+                                       J J               J
+
+   typographical convenience.) The resulting limiting normal distribution
+
+   for T is again obtained from the limiting joint normal distribution of
+
+   order statistics, and using (2.5) the variance VT(A,p) is found to be
+
+   equal to
+
+                42                                          2   2          2
+   VT(A,p) = A [h0 - 2ho LI cp(J h + a.A h ) + LI c {pq(cx2A h + r}A h )
+                    · 5     · 5        pp q q                  pp q q
+
+             + 2p2 a.A a.A h h ) + 2 6 cc ' {pq' (a.A a\ h h , + J a.A, h h , )
+                    p q p q            p<p'              pp pp     qq qq
+
+             + pp'(aA a.A, h h, + cf._, a.Ah, hq))]
+                    pq pq              p qp
+
+             .:. { :E c(cl- log a + a.A log a )]2 ·                (5.7)
+             ·           p       p  q        q
+
+   The notation throughout is that of Section 2.2.
+
+            A corresponding expression for ~T in terms of the p.d.f. g(z)
+
+   can be obtained from (5.7) in the
+
+                                       - 19 -
+same way that (2.11) was derived from (2.10). This siuq,ly amounts to sub-
+
+stituting g-l for aA h in the numerator and {l+AK.)log(l+XK)
+    S        S 8                                           S  S
+
+- (l+XK0 ·5)1og(l+AK0 ·5) for a;- log a8 in the denominator of (5.7),
+
+where we recall that G{K8 ) = s and gs= g(K8 ).
+
+The result (5.7) as we have given it is for finite m, and would
+
+apply when m is small relative to n. If all the order statistics X.
+
+                                                                                                                                        J
+
+are used, so that m = [~] in (5.1), a corresponding asymptotic result
+
+can be obtained for a smooth weight function c{x) defined by
+
+    cj = c(n!l) ·
+
+In terms of the p.d.f. g(z) the result is
+
+_4           {t(½)J 2  -  2t(½)A1(c)     + A2(c)  + A (c)
+
+A VT(A,c) =                                           3
+
+                       {B(c)) 2
+
+where w(x) = 1/g{G-1(x)) and
+
+A1 (c) =J c(x)x{w{x) + *Cl-x))dx, I
+               O
+
+A (c) = J x{l-x)c (x){w {x) + i,2(1-x))dx,122
+
+2      0
+
+A {c) = j j c(x)c(x')[x(l-x'){t(x)v(x') + v(l-x)$(1-x'))
+
+ 3 x<x'
+
+             + xx'{w(x)v(l-x') + v(1-x)t(x')}]dxdx'
+
+and
+
+    B(c) = Jl c(x)[{l+AG-1 (x ))log{l+AG-1(x )}+{l+AG-1( 1-x))
+                      0
+
+                      log{l+AG-1 (1-x))]dx-2{l+AG-1 (21))log{l+AG-1(21) ) .
+
+A discussion of conditions required for this result will not be given here;
+
+a recent reference is the paper by Stigler (1974).
+
+                                 - 20 -
+\-.I'  ..
+
+           6. AN EXAMPLE.
+
+              After introducing the generalization of T in Section 5, we need
+
+           to assess what is gained in precision at the expense of complication.
+
+           From calculations we have done it would seem that little is to be
+
+           gained using the generalization. Here we give only one example, the case
+
+           where log Y is normally distributed.
+
+              When 1 = 0 and Z = log Y is N(µ,v), we saw in Section 4.2
+
+           that T has minimum large-sample variance at p = 0.01, where
+
+           VT = 1.o4 v-1 · Using a simplified form of (5.7) corresponding to {2.12),
+           we obtain the results given in Table 4. The right hand column of the
+
+           table gives values of vVT' and the other entries indicate  values of c.;
+           the c j 's sum to one in each case.
+                                                                                            J
+
+                                           TABLE 4.
+
+              Large-sample variance VT of the generalized version of T
+
+                           when log Y is N(µ,v).
+
+           p  0.01          0.02                 0.05  0.10                   "VT
+                           ·O                    0     0                      1.04
+              1                                  0     0                      0.92
+                             l.                  0     0                      1.08
+              l.                                       0                      0.91
+                            2                    ½     0                      1.48
+              2                                        0                      1.04
+                            1                    1     1/3                    1.54
+              0             0                                                 1.64
+                            0                    1     ½                      2.62
+              ½                                                               o.88
+                           ½                     2     1                      1.12
+              0                                        0
+                            0                    2/3   1/3
+           C  0             0
+                            0                    ½
+              0             1/3
+                            1/3                  0
+              0                                  1/3
+                                                 1/3
+              0
+
+              1/3
+
+              0
+
+                                  - 21 -
+1,.-     ·
+
+      ·
+
+'-                  Some general features are apparent from this small set of results.
+            Most striking is the fact that if all values of p exceed .05, then m = 1
+~           (one pair of order statistics) cannot be markedly improved on by m = 2. Use
+
+la.;        of m = 3 with one value of p equal to .01 can give up to 15%
+
+\a          improvement in precision, which is a little better than using m = 2.
+
+-           With p = .05, .10, .15, and .20 and each c. equal to 1/4, " VT = 2.23.
+
+\a                                                                                            J
+
+'-1         We conclude that it is not possible to escape the extreme tails (p ~ .02)
+
+1.-1        and keep precision, unless perhaps m is considerably larger than 3.
+
+\al                                                           - 22 -
+
+~
+
+\im
+
+,_.
+
+"-
+
+la
+
+\aal
+
+'-'
+
+'-
+
+la
+"-' . .·
+
+          7. FURTHER DISCUSSION.
+
+                Use of power transformations such as (1.1) occurs most frequently
+
+          with more complicated linear models than the single mean case discussed
+          in this paper. The ability to generalize the estimator T defined by
+
+          (5.1) depends to some extent on whether or not the linear model design includes
+
+          replication.
+                 Suppose that Yij' j = l, ··· ,ri, are replicates of the i th cell
+
+          of a linear model, meaning that for some A
+
+                                  e. . ·                                  (7.1)
+                                   l.J
+
+                 We can generalize (2.2) and (2.3), or (5.1) and (5.2), as follows.
+
+          Let Yi be the median of variables in the i th cell, and define
+
+                   Ai. = Y· ·fl. ,        j = 1, ... ,ri, i = l, ... ,I.   (7.2)
+
+                      J l.J ].
+
+          Then the ordered values of Aij replace the ratios Xi/X in (5.1) and
+
+          (5.2). The estimating equation so defined is not a trivial generalization,
+
+          although the consistency of T for fixed I and large n = LJr. is still
+                                                                                                                                                                                                                   ].
+
+          assured. The problem is that the standardization in (7.2) is non-homogeneous,
+
+          the more so if the variability of µi is large relative to that of the
+
+          eij in (7.1). Assuming that the eij are homogeneous errors, it is clear
+
+          that if
+
+                   var{Y .. ) a: {E{Y .)) b
+                   l.J              1J
+
+          then cells with larger             means will dominate the estimating equation,
+
+          and hence T, if b > 2 ·            For example, if A= 1 in (7.1) then
+
+          b = O and cells with small means dominate T; if A= 0 then b = 2
+
+          and no cell dominates T.
+                 While we have not examined this problem in any detail, this does seem to be a
+
+                                             - 23 -
+suitable situation for use of the generalization (5.1) with m = [ifi]
+
+and c. = constant.  This has the disadvantage of requiring a large amount
+
+           J
+
+of computation.
+
+An example that fits into this discussion is the first numerical example
+
+in Box and Cox (1964), which is a fourfold replicate of a 3 x 4 design.
+
+The normal-theory likelihood suggests that 'k = - 1, although one would
+
+not discount values -1< 'k < 0. The three outmost pairs of ordered Aij's
+
+each yield the estimate T = 0 by the method of Section 2. Fitting the
+
+additive two-way linear model by least squares with 'k = -1 and 1 = O
+
+gives negligible interactions. Normal plots of residuals reveal that
+
+1 = -1 gives a better fit to normality, although the closeness to symmetry
+
+is about the same for both 'k = -1 and X = O; in each case there are
+
+two or three moderately large outliers (not the same data points). There
+
+is some evidence that extreme A.. 's are associated with large cell means,
+
+                                                        1J
+
+which suggests that 1 is somewhat negative. Strangely, use of less
+
+extreme A.. 's indicates 'k to be around 0.5 although there is no consistent
+
+                 1J
+
+value for any particular pair.
+
+This discussion is intended to suggest that there are difficulties
+
+with the order-statistic method, particularly in connexion with complex
+
+models. When one is able to use the simple estimating equation (2.2),
+
+either in the original form or with the A.. defined in (7.2), the
+
+                                                                                 1.J
+
+estimate T should be reasonably constant over the outermost pairs of
+
+order statistics in order to be convincing. It would be helpful to under-
+
+stand more clearly the problem of heterogeneity in the  A1 j ' s ,  particularly
+through experience with applications.
+
+One must conclude, however, that the need to use fairly extreme order
+
+                    - 24 -
+statistics in order to achieve precise estimates of X makes the quick
+method of Section 2 unappealing with moderate amounts of data containing
+genuine outliers. It would seem that data transformation in the presence
+of outliers is a risky business.
+
+                                            - 25 -
+, ·
+
+                             References
+
+     Andrews, D. F. (1971). A note on the selection of data transformations.
+
+     Biometrika 58, 249-54.
+
+     Atkinson, A. C. (1973). Testing transformations to normality. J. R. Statist.
+
+            Soc. B 35, 473-9.             An analysis of transformations
+     Box, G. E. P. and Cox, D.R. (1964).
+
+     {with discussion). J. R. Statist. Soc. B 26, 211-52.
+
+     Cox, D.R. and Hinkley, D. V. (1974). Theoretical Statistics. New York:
+
+     Wiley; London: Chapman-Hall.
+
+     Draper, N. R. and Cox, D.R. (1969). On distributions and their trans-
+
+     formation to normality. J. R. Statist. Soc. B 31, 472-6.
+
+     Huber, P. J. (1973). Robust regression: Asymptotics, conjectures and
+
+           Monte Carlo. Ann. Statist · .!, 799-821.
+
+     Stigler, S. M. (1974). Linear functions of order statistics with
+
+     smooth weight functions. Ann. Statist. g,~676-93.
+
+                             - 26 -
+

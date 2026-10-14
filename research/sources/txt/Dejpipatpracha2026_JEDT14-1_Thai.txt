@@ -1,0 +1,831 @@
+                                                                                             Journal of Engineering and Digital Technology (JEDT)
+                                                                                                                  Vol.14 No.1 January - April 2026
+
+      
+                     
+
+             1  2*  3  4
+
+                   1,3,4 , , 
+                        2* , , 
+
+                                        * : worrarat.j@pkru.ac.th
+                  :7  2568; : 8  2568; : 5  2569
+
+                                              : 27  2569
+
+                                                
+   
+  Kaidee.com, One2Car.com  Chobrod.com
+ 55,989   42,823   13 
+  1)   2)  6 
+      
+   XGBoost, Random
+Forest, LightGBM, CatBoost  Gradient Boosting  MAE, RMSE, MAPE, R²  Accuracy 
+XGBoost    R²  0.9262  0.9419  Accuracy  89.42 
+ 92.38  MAPE  10.58  7.62 
+    
+   
+ 
+:     
+
+                                                           67
+Journal of Engineering and Digital Technology (JEDT)
+Vol.14 No.1 January - April 2026
+
+Used Car Price Prediction Using Web Scraping and Machine Learning Models
+
+     Bhurisub Dejpipatpracha1 Worrarat Jongkraijak2* Akarachai Inthanil3 Wimonnat Sukpol4
+
+             1,3,4Faculty of Science and Technology, Phuket Rajabhat University, Phuket, Thailand
+              2*Faculty of Management Sciences, Phuket Rajabhat University, Phuket, Thailand
+
+                                     *Corresponding author e-mail: worrarat.j@pkru.ac.th
+                         Received: 7 August 2025; Revised: 8 October 2025; Accepted: 5 February 2026
+
+                                              Published online: 27 April 2026
+
+                                               Abstract
+   This study aimed to develop a predictive model for used car prices in Thailand using web scraping techniques
+and machine learning algorithms. Data were collected from Kaidee.com, One2Car.com, and Chobrod.com, totaling
+55,989 records. After data cleaning, 42,823 valid records remained, containing 13 fundamental attributes for model
+construction. Two experiments were conducted: (1) using only the basic features and (2) incorporating six newly
+engineered features--car age, annual usage rate, squared mileage, squared engine size, cumulative usage load,
+and temporal load--to enhance the model's learning capability. The performance of five models, including
+XGBoost, Random Forest, LightGBM, CatBoost, and Gradient Boosting, was compared using MAE, RMSE, MAPE, R²,
+and accuracy. The results showed that XGBoost achieved the best prediction performance. With the additional
+features, the R² value improved from 0.9262 to 0.9419, accuracy increased from 89.42% to 92.38%, and MAPE
+decreased from 10.58% to 7.62%, indicating that feature engineering significantly enhanced model accuracy.
+Feature importance analysis revealed that the most influential factors affecting used car prices were fuel type, car
+type, engine size, brand, and squared engine size. The findings confirm that integrating machine learning with
+feature engineering substantially improves predictive performance and can serve as a decision-support tool for
+buyers, sellers, and financial institutions to promote transparency and fairness in Thailand's used car market.
+
+Keywords: Data analysis, Machine learning, Price prediction, Used car, Web scraping
+
+                                                           68
+                                                                                             Journal of Engineering and Digital Technology (JEDT)
+                                                                                                                  Vol.14 No.1 January - April 2026
+
+
+
+    
+ 
+   
+   
+  
+       
+ [1], [2]  
+   
+    
+  [3], [4]
+
+      (machine learning) 
+   [5] 
+ 
+  (web scraping) 
+  Kaidee.com, One2Car.com  Chobrod.com  
+ 
+ 
+  
+  
+ 
+
+
+
+
+    
+    
+   4 
+ 1)  2)  3) 
+  4)  
+1. 
+
+       
+  HTML 
+
+  [6]   HTTP
+programming, DOM parsing  HTML parsers 
+ BeautifulSoup  Scrapy 
+    
+ 
+
+                                                           69
+Journal of Engineering and Digital Technology (JEDT)
+Vol.14 No.1 January - April 2026
+
+2. 
+      
+
+  4   1)  (supervised learning) 
+  
+   (classification)  (regression)  [7] 2) 
+ (unsupervised learning)   
+ (clustering)  (association rule mining)  (dimensionality
+reduction)  [8] 3)  (semi-supervised learning) 
+ 
+ [9] 4)  (reinforcement learning) 
+ [10]
+
+3. 
+    
+
+  Ground truth 
+  Silhouette score  Davies-Bouldin index  Ground
+truth   Adjusted rand index  Normalized mutual information 
+
+ Accuracy, Precision, Recall, F1-score  Receiver-
+operator curve  [11], [12], [13]  Matthews correlation coefficient  Cohen's kappa
+  
+
+  (RMSE)  (MAE) 
+ (MAPE)  (R2)  (Forecast
+Accuracy: FA)  [18], [19]  
+
+
+4. 
+    
+
+   
+
+  1
+
+                1: 
+
+               /                                                  
+                                                          
+
+1 Forecasting the Used -   - Mean 
+
+  Car Price Index Using -   (.. 2562 - .. Absolute 
+
+  Time Series Forecasting                             2566, 60 ) Deviation MAD = 3.9535  MAPE = 4.0722
+
+  Methods [4]                                             (MAD)
+
+                                                          - MAPE
+
+                                                      70
+                                                                         Journal of Engineering and Digital Technology (JEDT)
+                                                                                              Vol.14 No.1 January - April 2026
+
+                             1:  ()
+
+                            /                                               
+                                                                   
+
+2 Comparative Analysis of - Multiple Linear      Car Dekho - R2             Random Forest Regression 
+                                                                             94.10  Decision
+  Supervised Learning Regression                (13 , - RMSE                Tree       92.45    Multiple
+                                                                            Linear Regression  89.85
+  Algorithms for Valuating - Decision Tree Regression 19974 ) - MAE
+
+  Used Car Prices [11] - Random Forest
+
+                            Regression
+
+3 Comparative Analysis of - XGBoost              OLX               - R2      Random Forest
+    XGBoost and Random - Random Forest          Indonesia (40,596  - RMSE    (R2 = 0.9485) 
+    Forest for Used Car                         , 7                - MAE    
+    Price Prediction [12]                         11                        
+                                                )                           XGBoost 
+                                                                              Toyota 
+                                                                            R2  0.96
+
+4 Predicting the Selling Feed-forward            BMW  Mean Error            
+    Price of Cars Using Backpropagation         Kaggle (15                   11.46
+    Business Intelligence                       , 325 ,  ..
+    with the Feed-forward                       1995-2017)
+    Backpropagation
+    Algorithms [13]
+
+5 Predicting Used Car Artificial Neural Network  - MAE -  Hyperparameter:
+
+  Prices in Metro Manila (ANN) - Multilayer     "cars.trovit.ph"  - MSE     MSE = 31,905,395,405.08,
+
+  Using Artificial Neural Feedforward Neural Metro Manila - RMSE RMSE = 179,402.63,
+
+  Networks on Web- Network (MFFNN) with                            - R2     MAE = 125,546.52,
+
+  Scraped Data [14] Back Propagation                               - Adjusted R2 Score = 0.7031
+
+                            Algorithm                              R2       -  RMSE  MAE 
+
+                                                                            
+
+6 Prediction of Used Car - Extra Trees Regressor  Ali - R2                  -  Extra Trees Regressor
+                                                                            (ET)  (R2 = 0.9807
+  Price Based on            - Random Forest     Tian Chi ( .. - MAE         )  RF (0.8448),
+                                                                            Ridge (0.8417), DT (0.8001)
+  Supervised Learning Regressor (RF)            1996-2019, 6019 - MSE       -                     
+                                                                            (automatic transmission) 
+  Algorithm [15]            - Ridge Regression  , 12               - RMSE   
+
+                            - Decision Tree Regressor )            - RMSLE
+
+                            (DT)                                   - MAPE
+
+7 Predictive Analytics on Bayesian Networks (BN) -  Craigslist Accuracy     -  
+                                                                             ( 83.5)
+  Used Car Prices Using Probabilistic Modelling (18,319 :                   - BN 
+                                                                            
+  Business Intelligence of                      2,884 , 15,435
+
+  Bayesian Networks for                         )
+
+  Sales Risk Reduction
+
+  [16]
+
+                                                71
+Journal of Engineering and Digital Technology (JEDT)
+Vol.14 No.1 January - April 2026
+
+                     1: 
+
+                    /                                         
+                                                            
+
+8 Residual Value of Used Neural Network, CatBoost,  - MAE     -  CatBoost 
+                                                                                   
+  Car Analysis and  XGBoost, LightGBM,  ( - MAPE              (MAE = 1195.29, MAPE =  5.88)
+                                                              -  
+  Prediction [17]   Random Forest, Decision 7,800 )            50
+                                                              - 
+                    Tree, LASSO regression                    
+
+    
+  Random Forest, XGBoost, Extra Trees  Neural Network 
+  
+  R², RMSE, MAE  MAPE  R² 
+   
+
+
+
+
+    6   1
+
+                                                                
+                                                                
+                                                              
+                                                                   
+                                                                
+
+                                                           
+                                                          
+
+                                                       1: 
+
+1.  
+     Kaidee.com One2Car.com 
+
+Chobrod.com   Requests Library  Beautiful Soup  Python 
+  2      
+     .csv 
+     
+
+  
+
+
+                                                      72
+                                                                                             Journal of Engineering and Digital Technology (JEDT)
+                                                                                                                  Vol.14 No.1 January - April 2026
+
+                                          2:  
+
+2. 
+     
+   2.1 :   
+
+  
+   2.2 :  
+
+   75   
+
+
+   2.3 : 
+  
+
+
+   2.4 :    
+ //   
+
+   2.5 :  
+  "TOYOTA" "Toyota"  "toyota"
+
+   2.6 : 
+ "toyota"  "honda"   1  0 
+
+
+   2.7 :   Giulia  Giulis  Giulia 
+
+
+   
+
+
+3. 
+    
+
+ 
+
+                                                           73
+Journal of Engineering and Digital Technology (JEDT)
+Vol.14 No.1 January - April 2026
+
+3.1 : 
+
+                                                      A=v YP - YM    (1)
+
+ Av  
+
+  YP   .. 
+
+  YM   .. 
+
+3.2 :  
+
+                                                      U A = M v Av (2)
+
+UA   (/)
+
+  Mv   ()
+
+3.3 : 
+
+ 
+
+                                                      M s = M v2     (3)
+
+ Ms  
+
+3.4 :  
+
+
+
+                                                      Es = Ev2       (4)
+
+ Es  
+
+  Ev  
+
+3.5 : 
+
+                                                      = Vl M v × EV  (5)
+
+Vl  
+
+3.6 :  
+
+                                                      = Vt M v × Av  (6)
+
+Vt  
+
+4. 
+    2      80 
+
+ 20 
+ 
+
+
+5. 
+    5   
+
+ XGBoost, Random Forest LightGBM, CatBoost  Gradient Boosting 
+
+   5 
+
+
+                                                      74
+                Journal of Engineering and Digital Technology (JEDT)
+                                     Vol.14 No.1 January - April 2026
+
+6. 
+     RMSE, MAE, MAPE  R² score 
+
+
+
+
+
+    
+
+1. 
+      55,989  3   Kaidee.com,
+
+One2Car.com  Chobrod.com        
+
+  .csv
+
+2. 
+    1  42,823
+
+     
+
+ 2
+
+ 2: 
+
+              
+
+brand         
+
+brand_model 
+
+cartype       
+
+color         
+
+fuel          
+
+engine    
+
+gear          
+
+mileage 
+
+model         
+
+province      
+
+submodel      
+
+WD            
+
+year          
+
+3. 
+    6      
+
+   
+
+  3
+
+          75
+Journal of Engineering and Digital Technology (JEDT)
+Vol.14 No.1 January - April 2026
+
+           3:  
+
+                                                                   
+
+                                                      car_age      
+
+          mileage_per_year                                         
+
+          mileage_squared                                          
+
+          engine_squared                                           
+
+          mileage_engine_interaction 
+
+          age_mileage_interaction                                  
+
+4. 
+    42,823   34,258  8,565  
+
+ 5   XGBoost, Random Forest, LightGBM, CatBoost  Gradient Boosting 
+
+   
+   2   1) 
+ 2  4  3-4  2) 
+
+ 3  5  5-6
+
+ 4:  2
+
+Model     MAE () RMSE () MAPE (%) R2 Accuracy (%)
+
+XGBoost   43,141.89 66,871.3 10.58 0.9262 89.42
+
+Random Forest 43,042.89 69,872.79 10.68 0.9195 89.32
+
+LightGBM  53,140.07 79,131.83 13.09 0.8967 86.91
+
+CatBoost  56,009.61 82,600.02 13.68 0.8875 86.32
+
+Gradient Boosting 77,812.95 111,318.41 19.25 0.7956 80.75
+
+           R2  Accuracy
+                          2
+
+                                                      Forecast Accuracy R²
+
+92                                                                                    0.95
+
+9088 0.9
+
+86Accuracy (%)                                                                        0.85
+                                                                            R²
+84                                                                                    0.8
+
+82
+
+80 0.75
+78
+
+76                                                                                    0.7
+
+          XGBoost Random LightGBM CatBoost Gradient
+
+                                                      Forest                Boosting
+
+ 3:   R2  FA  2
+
+                                                               76
+                      Journal of Engineering and Digital Technology (JEDT)
+                                           Vol.14 No.1 January - April 2026
+
+ MAE, RMSE  MAPE  
+                     2
+
+        MAE     RMSE  MAPE (%)                      (%)
+
+120000                                             20
+
+100000
+                                                                  15
+
+ 80000
+
+60000                                              10
+
+40000
+                                                                 5
+
+20000
+
+  0                                                0
+
+        XGBoost Random LightGBM CatBoost Gradient
+
+        Forest        Boosting
+
+      4:  MAE, RMSE  MAPE   2
+
+    5  4  XGBoost   R² 
+0.9265  FA  89.42  R²  FA  3 
+ MAE, RMSE  MAPE  4  XGBoost 
+ RMSE  66,732.61   MAPE  10.58  
+ XGBoost  
+  Random Forest  MAE  42,954.29 
+ MAE, RMSE  MAPE  4  RMSE  MAPE 
+Random Forest  XGBoost   FA   Random Forest
+ FA  89.39  Random Forest 
+  LightGBM  CatBoost  R²  0.89-0.90  FA  86-87 
+ XGBoost  Random Forest  4  MAE, RMSE  MAPE
+   
+Gradient Boosting  R²  0.8037  FA  81.18  4  MAE,
+RMSE  MAPE  
+
+
+    4  XGBoost  Random Forest 
+  R²  Accuracy  0.92  89   
+ RMSE  MAPE   
+  
+ 
+6   5
+
+                77
+Journal of Engineering and Digital Technology (JEDT)
+Vol.14 No.1 January - April 2026
+
+ 5:  3
+
+Model        MAE () RMSE () MAPE (%) R2 Accuracy (%)
+
+XGBoost      38,900.23 56,447.83 7.62 0.9419 92.38
+
+Random Forest 39,786.85 61,090.38 7.79 0.932 92.21
+
+LightGBM     47,452.14 67,447.82 9.33 0.9171 90.67
+
+CatBoost     48,369.00 67,899.4 9.51 0.916 90.49
+
+Gradient Boosting 67,275.87 92,400.97 13.4 0.8444 86.6
+
+           R2  Accuracy
+                        3
+
+                                                              Forecast Accuracy R²
+
+94                                                                                            0.9600
+92 0.9400
+                                                                                              0.9200
+90                                                                                            0.9000
+Accuracy (%)
+                                                                            R²
+88 0.8800
+                                                                                              0.8600
+86                                                                                            0.8400
+84 0.8200
+                                                                                              0.8000
+82                                                                                            0.7800
+
+          XGBoost Random LightGBM CatBoost Gradient
+
+                                                      Forest                        Boosting
+
+ 5:   R2  FA  3
+
+  MAE, RMSE  MAPE  
+              3
+
+ MAE RMSE MAPE (%)  (%)
+
+100000                                                                              15
+
+80000
+60000 10
+
+40000 5
+20000
+
+          0                                                                         0
+
+             XGBoost Random LightGBM CatBoost Gradient
+
+                                                      Forest      Boosting
+
+ 6:  MAE, RMSE  MAPE  3
+
+                                                              78
+                                                                              Journal of Engineering and Digital Technology (JEDT)
+                                                                                                   Vol.14 No.1 January - April 2026
+
+    5  3
+  4  
+ 
+  5  R²  FA  5  
+XGBoost   R²  0.9419  Accuracy  92.38 
+89.42  4  Random Forest  (R² = 0.932, Accuracy =  92.21) 
+ (MAE, RMSE, MAPE)   6 
+ MAE, RMSE  MAPE   XGBoost  Random Forest 
+  XGBoost  MAE  38,900.23   MAPE  7.62 
+  Random Forest  MAE  
+
+
+    LightGBM  CatBoost  R²  0.916 - 0.917  Accuracy  90-91 
+ 
+  Gradient Boosting  (R² = 0.8444, Accuracy =  86.6) 
+MAE  RMSE  
+
+    
+ XGBoost   7
+
+                                             
+
+                                (fuel)                              0.083936                     0.196153
+                           (cartype)                               0.082486               0.172880
+                       (engine)                             0.056879             0.140837
+                                                          0.052118
+                                 (brand)                 0.045848             0.150000 0.200000 0.250000
+    (engine_squared)                                    0.043276
+                                                       0.039023
+                                (year)                0.035165
+                                  (model)       0.016377
+                                             0.006893
+                           (WD)              0.006423
+                              (car_age)      0.005939
+                                             0.004401
+                     (brand_model)           0.004174
+                           (submodel)        0.003620
+                              (gear)         0.003572
+
+ (age_mileage_interaction)
+    (mileage_per_year)
+                   (mileage)
+    (mileage_squared)
+            ...
+                                    (color)
+                             (province)
+
+0.000000 0.050000 0.100000
+
+ 7: 
+
+                                             79
+Journal of Engineering and Digital Technology (JEDT)
+Vol.14 No.1 January - April 2026
+
+    7   5   
+     68 
+  
+          
+0.004 
+
+    5  5-6  
+ 1)  2)  3)  4) 
+5)  6)  
+  XGBoost 
+
+
+
+
+    
+  Kaidee.com, One2Car.com  Chobrod.com  55,989  
+ 42,823  
+ 80  20  5   XGBoost, Random Forest,
+LightGBM, CatBoost  Gradient Boosting
+
+     XGBoost  (R² = 0.9262,
+Accuracy =  89.42)  Random Forest (R² = 0.9195, Accuracy =  89.32)  LightGBM 
+CatBoost   Gradient Boosting  
+
+
+     1)  2) 
+ 3)  4)  5)   6)  
+  XGBoost  R²  0.9419  Accuracy 
+ 92.38  MAPE  7.62 
+  
+
+      XGBoost 
+5        
+ 68     
+  
+5  (MAE, RMSE,
+MAPE) 
+
+   
+  XGBoost 
+   
+  
+
+                                                           80
+                                                                                             Journal of Engineering and Digital Technology (JEDT)
+                                                                                                                  Vol.14 No.1 January - April 2026
+
+
+
+       
+  
+   Kaidee.com One2Car.com  Chobrod.com 
+
+
+REFERENCES
+
+[1] S. Bergmann and S. Feuerriegel, "Machine learning for predicting used car resale prices using granular vehicle equipment
+     information," Expert Syst. Appl., vol. 263, 2025, Art. no. 125640, doi: 10.1016/j.eswa.2024.125640.
+
+[2] L. Bukvi, J. P. Skrinjar, T. Fratrovi, and B. Abramovi, "Price prediction and classification of used-vehicles using supervised
+     machine learning," Sustainability, vol. 14, no. 24, 2022, Art. no. 17034, doi: 10.3390/su142417034.
+
+[3] M. Nandan and D. Ghosh, "Pre-owned car price prediction by employing machine learning techniques," J. Decis. Anal. Intell.
+     Comput., vol. 3, no. 1, pp. 167-184, 2023, doi: 10.31181/jdaic10008102023n.
+
+[4] A. Theppanya and N. Netpradit, "Forecasting the used car price index using time series forecasting methods," (in Thai), Maejo
+     Bus. Rev., vol. 6, no. 2, pp. 81-95, 2024, doi: 10.14456/mbr.2024.10.
+
+[5] A. AlShared, "Used cars price prediction and valuation using data mining techniques," M.S. thesis, Rochester Inst. Technol.,
+     Rochester, NY, USA, 2021. [Online]. Available: https://repository.rit.edu/theses/11086
+
+[6] V. Singrodia, A. Mitra, and S. Paul, "A review on web scrapping and its applications," in Proc. Int. Conf. Comput. Commun. Inform.
+     (ICCCI), Coimbatore, India, 2019, pp. 1-6, doi: 10.1109/ICCCI.2019.8821809.
+
+[7] N.Burkart and M.F.Huber, "A survey on the explainability of supervised machine learning," J. Artif. Intell. Res., vol.70, pp.245-
+     317, 2021, doi:10.1613/jair.1.12228.
+
+[8] B. Rolf et al., "A review on unsupervised learning algorithms and applications in supply chain management," Int. J. Prod. Res.,
+     vol. 63, no.5, pp.1933-1983, 2025, doi:10.1080/00207543.2024.2390968.
+
+[9] L.-Z. Guo, L.-H. Jia, J.-J. Shao, and Y.-F. Li, "Robust semi-supervised learning in open environments," Front. Comput. Sci., vol.19,
+     2025, Art.no.198345, doi:10.1007/s11704-024-40646-w.
+
+[10] H. Xie et al., "Reinforcement learning for vehicle-to-grid: A review," Advances Appl. Energy, vol. 17, 2025, Art. no. 100214, doi:
+     10.1016/j.adapen.2025.100214.
+
+[11] J. S. Jhala and D. Anand, "Comparative analysis of supervised learning algorithms for valuating used car prices," in Proc. Int.
+     Conf. Advancement Comput. Comput. Technol. (InCACCT), Gharuan, India, 2023, pp. 265-270, doi: 10.1109/InCACCT575
+     35.2023.10141827.
+
+[12] R. Nuzulia, A. Misbullah, L. Farsiah, Rasudin, Husaini, and S. A. Nazhifah, "Comparative analysis of XGBoost and random forest
+     for used car price prediction," in Proc. Int. Conf. Elect. Eng. Inform. (ICELTICs), Banda Aceh, Indonesia, 2024, pp. 125-129, doi:
+     10.1109/ICELTICs62730.2024.10776051.
+
+[13] N. O. Idris, A. Achban, S. A. Utiarahman, J. Karim, and F. Pontoiyo, "Predicting the selling price of cars using business intelligence
+     with the feed-forward backpropagation algorithms," in Proc. 5th Int. Conf. Inform. Comput. (ICIC), Gorontalo, Indonesia, 2020,
+     pp. 1-6, doi: 10.1109/ICIC50835.2020.9288594.
+
+[14] R. B. A. Supleo, R. G. De Luna, and A. C. Padilla, "Predicting used car prices in Metro Manila using artificial neural networks on
+     web-scraped data," in Proc. 7th Int. Conf. Inform. Comput. Sci. (ICICoS), Semarang, Indonesia, 2024, pp. 30-35, doi:
+     10.1109/ICICoS62600.2024.10636891.
+
+[15] F. Wang, X. Zhang, and Q. Wang, "Prediction of used car price based on supervised learning algorithm," in Proc. Int. Conf. Netw.,
+     Commun. Inf. Technol. (NetCIT), Manchester, U.K., 2021, pp. 143-147, doi: 10.1109/NetCIT54147.2021.00036.
+
+                                                           81
+Journal of Engineering and Digital Technology (JEDT)
+Vol.14 No.1 January - April 2026
+
+[16] J. D. Apeko, I. O. Osunmakinde, M. M. Abdulgader, and K. C. Nwosu, "Predictive analytics on used car prices using business
+     intelligence of Bayesian networks for sales risk reduction," in Proc. Int. Conf. Elect., Comput. Energy Technol. (ICECET), Cape
+     Town, South Africa, 2023, pp. 1-6, doi: 10.1109/ICECET58911.2023.10389200.
+
+[17] H.Jing, X.Ye, and S.Manoharan, "Residual value of used car analysis and prediction," in Proc. Int. Conf. Elect. Comput. Energy
+     Technol (ICECET), Cape Town, South Africa, 2023, pp.1-6, doi:10.1109/ICECET58911.2023.10389355.
+
+[18] G. Buturac, "Measurement of economic forecast accuracy: a systematic overview of the empirical literature," J. Risk Financial
+     Manage., vol. 15, no. 1, 2022, Art. no. 1, doi: 10.3390/jrfm15010001.
+
+[19] J. O'Trakoun, "Business forecasting during the pandemic," Bus. Econ., vol. 57, no. 3, pp. 95-110, 2022.
+
+                                                           82
+

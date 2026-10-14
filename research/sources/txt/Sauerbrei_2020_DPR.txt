@@ -1,0 +1,1204 @@
+Sauerbrei et al. Diagnostic and Prognostic Research  (2020) 4:3         Diagnostic and
+https://doi.org/10.1186/s41512-020-00074-3                       Prognostic Research
+
+COMMENTARY                                                       Open Access
+
+State of the art in selection of variables and
+functional forms in multivariable
+analysis--outstanding issues
+
+Willi Sauerbrei1*, Aris Perperoglou2, Matthias Schmid3, Michal Abrahamowicz4, Heiko Becher5, Harald Binder1,
+Daniela Dunkler6, Frank E. Harrell Jr7, Patrick Royston8, Georg Heinze6 and for TG2 of the STRATOS initiative
+
+Abstract
+
+Background: How to select variables and identify functional forms for continuous variables is a key concern when
+creating a multivariable model. Ad hoc `traditional' approaches to variable selection have been in use for at least 50
+years. Similarly, methods for determining functional forms for continuous variables were first suggested many years
+ago. More recently, many alternative approaches to address these two challenges have been proposed, but
+knowledge of their properties and meaningful comparisons between them are scarce. To define a state of the art
+and to provide evidence-supported guidance to researchers who have only a basic level of statistical knowledge,
+many outstanding issues in multivariable modelling remain. Our main aims are to identify and illustrate such gaps
+in the literature and present them at a moderate technical level to the wide community of practitioners, researchers
+and students of statistics.
+
+Methods: We briefly discuss general issues in building descriptive regression models, strategies for variable selection,
+different ways of choosing functional forms for continuous variables and methods for combining the selection of
+variables and functions. We discuss two examples, taken from the medical literature, to illustrate problems in the
+practice of modelling.
+
+Results: Our overview revealed that there is not yet enough evidence on which to base recommendations for the
+selection of variables and functional forms in multivariable analysis. Such evidence may come from comparisons
+between alternative methods. In particular, we highlight seven important topics that require further investigation and
+make suggestions for the direction of further research.
+
+Conclusions: Selection of variables and of functional forms are important topics in multivariable analysis. To define a
+state of the art and to provide evidence-supported guidance to researchers who have only a basic level of statistical
+knowledge, further comparative research is required.
+
+Keywords: Descriptive modelling, Methods for variable selection, Spline procedures, Fractional polynomials, Categorisation,
+Bias, Shrinkage, Empirical evidence, STRATOS initiative
+
+* Correspondence: wfs@imbi.uni-freiburg.de
+1Institute of Medical Biometry and Statistics, Faculty of Medicine and Medical
+Center, University of Freiburg, Freiburg, Germany
+Full list of author information is available at the end of the article
+
+                                                     © The Author(s). 2020 Open Access This article is licensed under a Creative Commons Attribution 4.0 International License,
+                                                     which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give
+                                                     appropriate credit to the original author(s) and the source, provide a link to the Creative Commons licence, and indicate if
+                                                     changes were made. The images or other third party material in this article are included in the article's Creative Commons
+                                                     licence, unless indicated otherwise in a credit line to the material. If material is not included in the article's Creative Commons
+                                                     licence and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain
+                                                     permission directly from the copyright holder. To view a copy of this licence, visit http://creativecommons.org/licenses/by/4.0/.
+Sauerbrei et al. Diagnostic and Prognostic Research  (2020) 4:3   Page 2 of 18
+
+Introduction                                                      models for prediction may be optimised for predictive accur-
+Progress in the theory of mathematical statistics and ex-         acy and can then be more complex (more variables included,
+pansion of computational resources and technology have            more complex functions allowed). With very complex and
+led to rapid developments in statistical methodology,             interrelated associations of covariates with the outcome and
+resulting in many more complex and flexible statistical           enough data to unravel such associations, algorithmic model-
+modelling techniques. Unfortunately, many of these                ling approaches may become valuable modelling tools. No
+methodological developments are ignored in the analysis           matter if descriptiveness is important or not, biasses are in-
+of medical data. Consequently, design and analysis of             troduced by deriving the `final' model data-dependently.
+observational studies often exhibit serious weaknesses.           However, the relevance of critical issues (such as biasses,
+To help bridge the gap between recent methodological              large variances, number of variables included and model
+developments and applications, the STRengthening Ana-             complexity) must be weighed against advantages with respect
+lytical Thinking for Observational Studies (STRATOS)              to the intended purpose of modelling.
+initiative was launched in 2013 [98]. Currently, the ini-
+tiative has nine topic groups working on various statis-            To obtain good descriptive models, the (interrelated)
+tical issues in planning and analysis of observational            challenges of selection of variables for inclusion and
+studies. Here we concentrate on issues relevant to topic          choice of the functional forms for continuous variables
+group 2 (TG2) `selection of variables and functional              must be tackled [50, 96], and this constitutes the main
+forms in multivariable analysis', which focuses on identi-        aim of TG2. In general, the analyst is expected to con-
+fying influential variables and gaining insight into their        duct the analysis according to state of the art (SOTA)
+individual and joint relationships with the outcome.              methodology, which is defined in Wikipedia [124] as
+                                                                  `State of the art refers to the highest level of general de-
+  By definition, work in TG2 is primarily concerned with          velopment, as of a device, technique, or scientific field
+statistical model building. In this respect, it should be         achieved at a particular time'. SOTA also plays a key role
+noted that STRATOS also has related topic groups                  in applications for funding of a research project, where a
+working on prediction (TG6) and modelling issues in               brief section summarising SOTA is often requested.
+causal inference (TG7). In a thought-provoking paper,             However, do we have enough evidence to define SOTA
+Breiman [16] differentiated between a data modelling              methodology for the selection of variables and functional
+culture and an algorithmic modelling culture. In several          forms for continuous variables?
+comments to this paper [26, 35], differences between
+possible ways of statistical modelling were discussed.              About three decades ago, Picard and Cook [85] stated
+TG2 concentrates mainly on the data modelling culture.            `Exact distributional results [on maximum likelihood esti-
+As the conflation and confusion between topics and ap-            mates and test statistics] are virtually impossible to obtain
+proaches in modelling are common, we will clarify our             [because of data-dependent model building], even for the
+background and aim by referring to the paper `To Ex-              simplest of common subset selection algorithms'. Al-
+plain or to Predict' by Shmueli [106]. The latter author          though there is substantial progress, current developments
+explains differences in three conceptual modelling                and empirical comparisons are inadequate to identify ad-
+approaches: descriptive, predictive and explanatory mod-          vantages and disadvantages of the many variable selection
+elling. Descriptive modelling is the most commonly used           techniques and to provide evidence-supported arguments
+approach, and it mainly builds on the data modelling              regarding SOTA strategies for variable selection.
+culture. It does not directly aim at obtaining optimal
+predictive performance, but at capturing the data struc-            For more than 50 years, suitable algorithms have been
+ture parsimoniously. Nevertheless, a suitable descriptive         available for various stepwise variable selection tech-
+model is often also an acceptable predictive model. In            niques [37]. Triggered by the intention to derive suitable
+some fields, the term explanatory modelling is used               `omics' predictors (often called `gene signatures') in
+exclusively for testing causal theory. As this paper con-         high-dimensional data with many more explanatory vari-
+centrates on issues in descriptive modelling, aspects of          ables than observations, various techniques for selecting
+causal modelling will be ignored as causal inferences             variables have been proposed during the last two de-
+cannot be drawn from models formulated using a de-                cades, adding to the long list of `traditional' approaches.
+scriptive approach. See Dorie et al. [31] and several com-        Consequently, analysts may have access to many toolkits,
+ments to this paper for a discussion of the large number          but it is not straightforward which variable selection ap-
+of issues in causal inference.                                    proach they should use and under what circumstances.
+                                                                  Will the results be (seriously) influenced by the variable
+  The intended use of a model is a key consideration when         selection method chosen?
+choosing a suitable analysis strategy. For a descriptive model,
+interpretability, transportability and general usability are im-    Similar arguments apply to the methodology for deter-
+portant criteria. By contrast, if descriptiveness plays no role,  mining the functional form for continuous variables
+                                                                  such as age, blood pressure, values of laboratory tests,
+                                                                  exposure intensity or dose of a substance which often
+Sauerbrei et al. Diagnostic and Prognostic Research  (2020) 4:3  Page 3 of 18
+
+play an important predictive or explanatory role. Assuming       and/or modelling of a given variable may depend, some-
+linear effects of such variables on the outcome is often the     times critically, on whether and how some of the other
+default choice and rarely questioned, but the reason for this    variables are represented in the multivariable model.
+is often ignorance and not the result of carefully considering   The current paper focuses on popular multivariable re-
+the most plausible functional form. Hence, the variable selec-   gression models, such as a normal-errors regression
+tion problem needs to be combined with the selection of          model for continuous outcomes, a logistic regression
+suitable functional form(s) for continuous variables, i.e. the   model for binary outcomes or the Cox proportional haz-
+dose-response function, substantially increasing the complex-    ards model for censored survival data. Arguably, these
+ity of the modelling issues. For function selection, at least    are the main types of regression models used in health
+four general approaches, with several variations, are used in    sciences applications. In health research, depending on
+recent studies: assuming a priori a linear relationship, cat-    the context, the terms risk factor, prognostic factor, pre-
+egorisation, fractional polynomials and different spline-based   dictor, exposure, covariate or confounder are often used
+methods. Yet, while all rely on important explicit or implicit   for variables. Here we will use them interchangeably.
+assumptions and have some limitations, there is little guid-
+ance to choose between these approaches. Reasons for               It is generally acknowledged that subject-matter know-
+selecting one or the other are rarely explained. Several         ledge should guide multivariable model-building. A study
+methods have been published, but the number of studies           should be carefully planned, guided by the research ques-
+comparing alternative strategies is limited. Consequently,       tions and consideration of the methods envisaged for ana-
+there are strong barriers concerning knowledge transfer [86].    lysing the data. In randomised trials, a detailed analysis
+                                                                 plan is written before the final data are collected and the
+  With a focus on applications in observational studies          analysis starts. However, the situation is more complex
+of human health, we provide a brief overview of existing         with observational studies [96]. For example, when con-
+methods for variable selection, identify some issues with        sidering the association between a continuous exposure
+each of the four approaches to represent the functional          and the probability of developing a disease, subject-matter
+form for continuous variables and discuss topics requir-         knowledge does not always give clear advice for the set of
+ing further research. This is an important step on the           potential confounders that the model should be adjusted
+long way to provide evidence-supported arguments re-             for nor in particular for the functional forms of their asso-
+garding SOTA methodology for building multivariable              ciation with the outcome [10]. Since subject-matter know-
+models with continuous variables. Experienced statisticians      ledge is often limited or at best fragile, data-dependent
+belonging to the STRATOS `level 2' category (Table 1 in          model building is necessary [49]. Pre-specifying all aspects
+[98]) are the intended audience for this paper.                  of a model is almost invariably unrealistic in observational
+                                                                 studies. The gain of preventing bias by avoiding data-
+  In the `General issues in building descriptive regres-         dependent model building is offset by the high cost of ig-
+sion models' section, we discuss general issues in build-        noring models which may fit the data much better than
+ing descriptive regression models. In the `Variable              the pre-specified one. Also, what if assumptions under-
+selection strategies' section, we briefly summarise the          lying the pre-specified model are violated?
+most popular methods of variable selection. Approaches
+to handle continuous variables are outlined in the `Con-           A key issue of variable selection is which of the candi-
+tinuous variables--to categorise or to model?' section,          date variables to include in the `final' model. Some re-
+and the combination of methods for variable and func-            searchers argue that variables with `strong' effects will be
+tional form selection is discussed in the `Combining vari-       included by any sensible variable selection strategy and
+able and function selection' section. In the `Examples           that it is less important to include a larger number of vari-
+illustrating the problems' section, we provide two exam-         ables with no or a `small' effect [99]. The potential cost of
+ples of potentially suboptimal approaches to illustrate          obtaining information on all selected variables also im-
+weaknesses in analyses related to TG2 issues. In the `To-        pinges on the general usability of a model. If the originally
+wards state of the art--research required!' section, we          selected model indicates that a variable whose values are
+identify some unsolved methodological issues that re-            difficult to obtain has only a small effect on the outcome,
+quire further research towards establishing SOTA meth-           such a model will be infrequently used in practice.
+odology, before giving concluding remarks in the
+`Discussion' section.                                              Breiman [14] states `When a regression problem con-
+                                                                 tains many predictor variables, it is rarely wise to try to
+General issues in building descriptive regression                fit the data by means of a least squares regression on all
+models                                                           of the predictor variables. Usually, a regression equation
+In most observational studies, a mix of continuous and           based on a few variables will be more accurate and cer-
+categorical variables are collected. Many of these vari-         tainly simpler.'
+ables are correlated, implying that the results of selection
+                                                                   Variable selection methods aim to eliminate all un-
+                                                                 influential variables, at least at a defined evidential level
+Sauerbrei et al. Diagnostic and Prognostic Research  (2020) 4:3  Page 4 of 18
+
+(e.g. a nominal significance level). Data-dependent model        Traditional variable selection strategies
+building certainly introduces several types of bias and          Traditional variable selection methods involve auto-
+problems [49, 56, 108], including replication stability, se-     mated iterative stepwise model building procedures that
+lection bias, omitted variable bias, underestimation of          rely on testing the statistical significance of the regres-
+variance and overestimation of the predictive ability of a       sion coefficients for all variables considered at a given
+model. These are critically important for weak risk fac-         step. One popular approach starts from a null model
+tors, but `weak' must be judged in the context of the            containing no variables and adds one variable at a time,
+sample size. The possible magnitude of these biasses             corresponding to the most significant (lowest p value) of
+must be weighed against the advantages of better inter-          their contributions to improving model fit (forward se-
+pretability of smaller models.                                   lection (FS)). Alternatively, a `full model' including all
+                                                                 potential explanatory variables is estimated first and then
+  Another crucial issue for model building is the                the least significant variables are eliminated one-by-one
+functional form with which variables should enter the            (backward elimination (BE)). The `stepwise' approach
+variable selection procedure. In practice, continuous            implemented in some software packages combines for-
+variables are often categorised before being subjected           ward selection with additional backward steps. The sig-
+to variable selection, although major weaknesses of              nificance level used as the stopping threshold is the
+categorising continuous variables have been well-                tuning parameter that determines the size of the final
+known for decades [3, 94]. Aside from categorisation             model [96]. The smaller the level, the fewer variables will
+[105], assuming linearity is the norm. Flexible model-           be selected.
+ling techniques based on various types of smoothers,
+including fractional polynomials [93, 96] and several              Biostatisticians widely agree that among the selection
+types of splines [30, 38, 128], are available but are            procedures just described, backward elimination, with or
+still underused. Although selection of variables and             without additional forward steps, is the preferable
+functional forms for continuous variables both apply             method as it already starts with a plausible model [73].
+to many analyses, suitable methods that address both             The backward elimination algorithm sets some regres-
+issues are not often utilised.                                   sion coefficients exactly to zero contrary to the actual
+                                                                 (unpenalised) maximum likelihood estimates of the re-
+  Of course, many more analysis issues arise, such as the        gression coefficients (which are usually never exactly
+investigation of potential interactions between two or           zero). This means that one intentionally moves away
+more predictors or interactions between a predictor and          from the maximum likelihood solution by inducing bias.
+follow-up time in a survival analysis (time-dependent ef-        Particularly for weak predictors, this bias may decrease
+fects). We do not consider them in what follows. Finally,        the variance because of an implicit shrinkage towards
+we stress that many decisions are required before model          zero. However, if a weak predictor is `selected' by the al-
+building can start. For a discussion of several issues, we       gorithm, its corresponding regression coefficient may be
+refer to Chatfield [22], to the paper of Mallows [72] on         seriously biassed away from zero [25, 79, 97]. The in-
+the `zeroth' problem and to the first paper by the STRA          creased bias usually also increases the mean squared
+TOS topic group TG3 (Initial data analysis), which dis-          error (MSE) of the predicted value of the outcome, and
+cusses a conceptual framework to handle the large num-           the random element contributed by an uncertain selec-
+ber of issues [63].                                              tion decision further contributes to MSE inflation. In a
+                                                                 recent review, Heinze et al. [56] proposed some
+Variable selection strategies                                    resampling-based measures to estimate the bias condi-
+Virtually any statistical software package contains proce-       tional on selection and the inflation in (root) MSE
+dures for variable selection. This made their use very           caused by the selection. Although intuitively appealing,
+popular, particularly with end-users without a formal            their proposals are still to be validated in simulation
+background in statistics. However, this wide availability        studies.
+has been a breeding ground for common misapprehen-
+sions of the role and necessity for variable selection [56].       Backward elimination and other stepwise selection
+In six subsections, we will briefly discuss key issues of        methods are shortcuts to the computationally more ex-
+traditional variable selection strategies, `change in esti-      pensive best subset selection, where all possible models
+mate' procedures, and modern variable selection strategies       are estimated and their fit is compared using some infor-
+based on penalisation, boosting and resampling. Shrinkage        mation criterion. Different information criteria have been
+methods were proposed to correct for selection bias, a key       proposed, among which Akaike's information criterion
+issue caused by data-dependent modelling. This section           (AIC) is in principle preferable for predictive models and
+ends with a short summary of post-selection inference.           Schwartz's Bayesian information criterion (BIC) for de-
+Two examples illustrating problems will be discussed in          scriptive models [19]. The purpose of AIC is to approxi-
+the `Examples illustrating the problems' section.                mate the predictive performance, quantified by the model
+Sauerbrei et al. Diagnostic and Prognostic Research  (2020) 4:3  Page 5 of 18
+
+deviance, which would be expected in validation in an in-        change-in-estimate criterion evaluates if elimination of a
+dependent sample drawn from the same population. By              potential confounder from the model would lead to a rele-
+contrast, BIC aims at selecting the true predictor variables     vant change in the regression coefficients of the exposure
+[87]. However, BIC cannot reach this goal unless the             variable of interest. `Relevance' is often defined as more
+model space searched includes the `true data generating          than, e.g. a 10% change in the regression coefficient of the
+model' and the data set is large enough for such an ap-          exposure of interest [66]. Hosmer, Lemeshow and col-
+proximation to work. For comparison of two hierarchic-           leagues incorporated the change-in-estimate criterion into
+ally nested models differing in only one model term with         significance-based selection procedures, yielding their
+one degree of freedom (df), AIC and BIC can be directly          `purposeful selection' [20, 61, 62]. This was later revisited
+translated into significance tests of that model term. For       by Dunkler et al. [33], who proposed modifying the
+AIC, the corresponding threshold p value is 0.157. For           change-in-estimate. In their `augmented backward elimin-
+BIC, the threshold depends on the sample size; the penalty       ation' procedure, non-significant variables are not omitted
+parameter is log(n) [111]. For example, sample sizes of          from a model if a standardised change in estimate follow-
+100 or 400 correspond to significance levels of 0.032 or         ing their elimination exceeds a certain pre-specified
+0.014. Thus, while AIC will include more and more (weak)         threshold. They argue that their algorithm will generate
+predictors with increasing sample size, selection by BIC         final models that are close to the starting model and will
+will become more and more strict. Originally, these cri-         only eliminate really unnecessary variables. Therefore, the
+teria were developed to compare a small number of pre-           resulting bias is likely to be smaller than that induced by
+specified models, not to screen a large model space. How-        the conventional backward elimination procedure.
+ever, nowadays, they are used more generally as a prag-
+matic approach to model selection.                               Modern variable selection strategies
+                                                                 Penalised likelihood
+  Best subset selection may not pose a big computa-              Ridge regression, proposed by Hoerl and Kennard [58],
+tional challenge in the era of parallel computing, but           introduced a penalty term into the log-likelihood which
+even so, it may not be preferable to backward elimin-            is proportional to the sum of squared regression coeffi-
+ation. The increased flexibility may engender a higher           cients (L2-norm, L2 penalisation). While this approach
+probability of selecting `spurious' predictors, i.e., to in-     provided shrinkage and solved issues of near-collinearity
+crease selection uncertainty. Furthermore, if variable se-       and overfit, it did not yet address variable selection. Two
+lection is to be combined with selection of the                  approaches to combining variable selection with shrink-
+functional forms of continuous variables (see the `Com-          age were proposed in the mid-1990s. The non-negative
+bining variable and function selection' section), a best         garrotte starts with ordinary least squares estimates from
+subset selection procedure would increase the number             the full model and estimates parameterwise shrinkage
+of candidate models substantially. To the best of our            factors under a specified constraint [15]. For coefficients
+knowledge, it has never been suggested.                          with a stronger effect, the shrinkage factor will be close
+                                                                 to 1. For variables that are weakly associated with the re-
+  `Univariate selection', i.e. selection of variables based on   sponse, the least-squares estimate is likely to be small
+significance in univariable regression models, is still popu-    and consequently, the shrinkage factor will tend towards
+lar, notably in high-dimensional studies in the fields of        zero, corresponding to variable elimination. As an esti-
+bioinformatics and (epi-)genetics [44, 125]. For example,        mate from the full model is needed, the approach cannot
+the FDA-recommended CKD273 signature for diagno-                 be used for the analysis of high-dimensional data. We
+sis of early kidney disease is based on univariate               consider this as one of the main reasons that the ap-
+protein filtering followed by a machine learning algo-           proach did not become more popular.
+rithm applied to the filtered features [27, 46, 83].
+Among non-statisticians, many (seem to) believe that               Shortly after the non-negative garrotte, Tibshirani
+univariate significance is a prerequisite for including a        [112] proposed the popular Lasso method, which con-
+variable in a multivariable model [55]. In contrast, it          sists of penalising the log-likelihood of a model with a
+is generally accepted among statisticians that the dif-          multiple of the sum of absolute regression coefficients
+ference between unadjusted and adjusted effects of a             (L1 penalisation). Consequently, some of the regression
+variable can go in either direction; therefore, that uni-        coefficients become exactly zero, and hence the method
+variable selection may be misleading [109].                      provides a variable selection. The strength of the penalty,
+                                                                 i.e. the multiplier of the penalty term, often symbolised
+Procedures based on `change-in-estimate'                         by , determines the size of the resulting model. Usually,
+Selection procedures based on the change-in-estimate are          is estimated from the data. It can be determined in
+particularly popular in epidemiology, especially for the         various ways, cross-validation being the most common.
+situation where the effect of an exposure of main interest       A practical problem with the Lasso penalty is that the
+should be adjusted for confounders [48, 66, 71]. The
+Sauerbrei et al. Diagnostic and Prognostic Research  (2020) 4:3  Page 6 of 18
+
+regression coefficients of different variables should all        [76] for a comparison). Regardless of their conceptual dif-
+have the same scaling. This is usually achieved by work-         ferences, both approaches make use of the same basic idea
+ing with standardised covariates, i.e. by first dividing         for variable selection: starting with an empty model, only
+each covariate by its empirical standard deviation. How-         one regression coefficient is updated in each step of the
+ever, different choices for standardisation may lead to          boosting algorithm (`component-wise' updates). In con-
+different results. Therefore, one should bear in mind            trast to traditional forward selection, updates are done by
+that the Lasso, unlike the traditional significance-based        adding only small fractions (e.g. one tenth or one hun-
+selection procedures, is not invariant to transformations        dredth) of the estimated regression coefficients to the esti-
+of the covariates. Nowadays, the Lasso is widely access-         mates obtained in previous steps (`stagewise' procedure).
+ible because of many implementations in R (the glmnet            Variable selection (i.e. selection of the regression coeffi-
+package being the most popular [43] and in other soft-           cient to update) is done by evaluating in each step all uni-
+ware packages.                                                   variable regression models conditional on the estimates of
+                                                                 the previous steps (used as offsets) and to select the vari-
+  The Lasso tends to screen variables rather than to se-         able corresponding to the best-fitting univariable model.
+lect them, meaning that it often includes variables with         Stopping the boosting algorithm before convergence
+very weak effects. Furthermore, in the presence of collin-       (`early stopping') results in variable selection and shrink-
+ear or grouped variables, the Lasso fails to select all vari-    age, like the Lasso. In fact, boosting and the LASSO are
+ables in the group. For high-dimensional data where `p >         equivalent in specific settings and can even be shown to
+n', the Lasso can only select up to n variables. To ad-          be modifications of the same underlying algorithm (least
+dress these issues, modifications have been suggested in-        angle regression (LARS)) [36], which explains their similar
+cluding the Elastic Net [129] and the Adaptive Lasso             performance in many applications. The number of boost-
+[130]. The Elastic Net combines L1 (equivalent to the            ing steps is the main tuning parameter of the procedure,
+Lasso) and L2 (Ridge) penalisation, removing the limita-         often optimised by cross-validation. Boosting algorithms
+tion on the number of selected variables but also en-            are particularly useful in high-dimensional settings but
+couraging grouped selection. An advantage of the Elastic         can also be applied in the low-dimensional case.
+Net is that it includes L1 and L2 penalisation as special
+cases. The Adaptive Lasso penalises the log-likelihood           Resampling-based variable selection procedures
+with  times a weighted sum of absolute regression coef-          Since the mid-eighties of the last century, resampling
+ficients, where the weights are determined in a pre-             procedures (usually the nonparametric bootstrap) have
+estimation step, usually as the reciprocal absolute regres-      been proposed to assess model (in-)stability. The boot-
+sion coefficients from a maximum likelihood or ridge re-         strap inclusion frequencies (BIF) from a large number of
+gression fit. The rationale for this is to down-weight           resampling replications is used as a criterion for model
+penalties of strong predictors and to up-weight weak             selection [2, 23, 45]. These approaches are based on the
+predictors in the penalty term. Usually, it results in           idea that variables with a `stronger effect' are selected
+models with fewer variables and stronger effects.                with a high probability in each replication, whereas the
+                                                                 selection of others may be a matter of chance. A BIF
+  Another popular modification with the same goal is             threshold needs to be chosen and only variables with lar-
+Smoothly Clipped Absolute Deviation (SCAD) [39], where           ger BIFs are included in the model.
+coefficients larger in an absolute sense are penalised less
+than smaller ones. Further generalisations of the Lasso are        However, this simple `summary' of the selected models
+listed in Tibshirani [113] and Hastie et al. [54].               from resampling replications may result in selecting a
+                                                                 `bad' model if the inclusion of two (or more) variables
+Boosting                                                         depends on each other. One important reason is the cor-
+Component-wise boosting is a forward stagewise regres-           relation structure of the candidate variables, which may
+sion procedure applicable to generalised linear models,          strongly influence BIFs of some variables. It may happen
+Cox models, quantile regression and many other types of          that one of two variables is included in each of the repli-
+statistical regression models [11, 18, 115]. The method is       cations, but the individual BIFs are not much higher
+rooted in the field of machine learning, where it was first      than 50%. Thus, based on its BIF, neither variable may
+used for tree-based binary classification (AdaBoost algo-        be judged important. To cope with such situations,
+rithm) [40]. Based on work by Friedman et al. [42], who          Sauerbrei and Schumacher [103] suggested considering
+discovered the connection between boosting and logistic          dependencies among inclusion fractions. They defined
+regression, many types of boosting algorithms have been          two bootstrap variable selection procedures, one aiming
+proposed. Today, two popular approaches are gradient             for a simpler model including strong factors only,
+boosting [18, 41] and likelihood-based boosting [115],           whereas the other including also weaker factors. The
+which coincide in the case of Gaussian regression but            BIFs and their dependencies are used as criteria to select
+differ in their applicability and assumptions otherwise (see
+Sauerbrei et al. Diagnostic and Prognostic Research  (2020) 4:3    Page 7 of 18
+
+a final model. Recently, a large simulation study showed           estimates should be accompanied by confidence intervals
+promising results [28], but more practical experience is           and sometimes also by p values. For traditional selection
+needed. However, the issue of dependencies among vari-             procedures, virtually any statistical software reports con-
+able inclusions seems to be widely ignored and further             fidence intervals and p values of the final model, derived
+issues need more consideration (such as the central role           under the assumption that the model was given a priori.
+of the originally used variable selection procedure and            This ignores uncertainty in model predictions, estimates
+the effect of influential points).                                 of effects and variance caused by model selection. Brei-
+                                                                   man [14] called this a `quiet scandal'. Meanwhile, under-
+  In the last decade, resampling-based variable selection          estimation of the uncertainty has been confirmed in
+procedures have become more popular. Meinshausen and               numerous simulation studies for different types of
+Bühlmann [78] introduced stability selection, which com-           models. Various approaches for coping with model un-
+bines subsampling (bootstrap without replacement) with             certainty have been proposed, starting with Chatfield
+(high-dimensional) selection algorithms. The method is             [21] and Draper [32]. Recently, Heinze et al. [56] pro-
+very general and is widely applicable. The authors state           posed for different settings: (1) Use the full model for in-
+that stability selection provides finite sample control for        ference about regression coefficients, where the full
+some error rates of false discoveries. Recently, the specific      model is the model including all variables considered for
+type of resampling procedure has become a topic of re-             adjustment, and so each regression coefficient is ad-
+search. Some argue that subsampling may be preferable to           justed for all others. (2) If a small number of pre-
+the nonparametric bootstrap for investigations in the con-         specified competing models is evaluated, use model-
+text of model building [29, 64, 92]. However, issues like          averaging as proposed by Burnham and Anderson [19].
+the most suitable sampling rate (0.632 seems to be the             (3) If the full model is implausible and no evidence for a
+most common) need further investigation.                           small set of candidate variables is available, assess the
+                                                                   variability of the regression coefficients around the full
+Bias and the role of shrinkage methods                             model estimates using the bootstrap, where in each
+The regularised procedures described in the `Procedures            bootstrap replication, the selection procedure is re-
+based on `change-in-estimate" section are so-called shrink-        peated. When comparing this variability with the stand-
+age methods, as they introduce some bias towards zero              ard error in the full model, one often sees variance
+into the regression coefficients to try to reduce the predic-      inflation, even for strong predictors, and variance reduc-
+tion error. Shrinkage methods can also be applied in com-          tion only for highly non-influential variables [56].
+bination with traditional variable selection methods,
+where the use of shrinkage factors has been proposed to              Although statistical inference after data-driven model
+improve the accuracy of predictions. In the latter context,        selection has been deemed impossible [67], recent years
+shrinkage factors may be estimated using resampling and            have seen a couple of advances in that direction [110].
+are then multiplied by the regression coefficients to obtain       There are now even some R packages available with
+shrunken coefficients. Either a common global shrinkage            which confidence intervals for regression parameters se-
+factor [118] or parameter-specific shrinkage factors [97]          lected with the Lasso can be estimated [114]. However,
+can be used for this purpose. van Houwelingen and Sauer-           given that these procedures were developed only re-
+brei [117] revisited these approaches in the context of linear     cently, evidence of their performance in practice is still
+regression models and found that backward elimination in           limited.
+combination with parameter-specific shrinkage factors
+yields models that are similarly or even more accurate than          Parameterwise or joint shrinkage factors [34, 97] have
+those from the modern approaches. These shrinkage                  been proposed in an attempt to reduce overestimation
+methods may also act as a tool to (partly) remove the over-        bias due to selection of variables and functional forms. It
+estimation bias induced by variable selection methods (dis-        is still unclear how a correction for the variance, e.g. by
+cussed in the `Traditional variable selection strategies'          using a sandwich variance estimator that is robust to
+section), even though their construction is not motivated          model misspecification [122, 123], may help in achieving
+by the goal of bias correction. A systematic investigation of      approximately valid confidence intervals.
+this `side effect' is still lacking. Moreover, the proposed esti-
+mation method by leave-one-out cross-validation could be           Continuous variables--to categorise or to model?
+questioned; as in other contexts, other resampling proce-          The effects of continuous predictors are typically modelled
+dures have been preferred [107].                                   by either categorising them (which raises issues such as
+                                                                   the number of categories, cutpoint values, implausibility
+Post-selection inference                                           of the resulting step-function relationships, local biasses,
+Since the main aim of descriptive models is the inter-             power loss or invalidity of inference due to data-
+pretation of the estimated regression coefficients, point          dependent cutpoints) [47] or assuming linear relationships
+                                                                   with the outcome, possibly after a simple transformation
+Sauerbrei et al. Diagnostic and Prognostic Research  (2020) 4:3   Page 8 of 18
+
+(e.g. logarithmic or quadratic). Often, however, the rea-         contained in the data is not used, and the resulting risk
+sons for choosing such conventional representations of            function is a step function. From a biological perspec-
+continuous variables are not discussed and the validity of        tive, a step function may be unrealistic, since individuals
+the underlying assumptions is not assessed [98]. Com-             close to but on opposite sides of a cutpoint are charac-
+monly used methods are summarised by Becher [8].                  terised as having very different risks or prognostic
+                                                                  scores. If the (unknown) underlying relationship with
+  To address limitations caused by categorisation or a            the outcome is expected to be smooth but not necessar-
+questionable assumption of linearity, statisticians have          ily linear, interpretation of step functions is implausible.
+developed flexible modelling techniques based on vari-            Furthermore, categorisation discards information, the
+ous types of smoothers, including fractional polynomials          greatest loss occurring when a variable is dichotomised.
+[93, 96] and several types of splines. The latter include         However, when interest centres on accurate prediction
+restricted regression splines [30, 50], penalised regres-         at small or large values of a variable, van Houwelingen
+sion splines [127] and smoothing splines. For multivari-          [116] produced arguments favouring grouping.
+able analysis, these smoothers have been incorporated in
+generalised additive models [52]. Depending on personal             Some analysts appear to believe that the severe infor-
+preferences of the analyst, usually, one approach for the         mation loss incurred by categorisation may be compen-
+main analysis is chosen, sometimes complemented by al-            sated by finding the `optimal' cutpoint that defines two
+ternative approaches as sensitivity analyses. Some prop-          groups. Every possible cutpoint on x is considered and
+erties of the approaches, which may lead to different             the value of x which minimises the p value is chosen.
+results, are given below.                                         The cutpoint selected is to some extent due to chance
+                                                                  and is not reproducible. Altman et al. [3] called this pro-
+Categorisation                                                    cedure the `minimum p value' approach and stressed
+Categorisation allows researchers to avoid strong assump-         that the estimated effect describing the difference be-
+tions about the functional relationship between the con-          tween two groups is strongly overestimated and that if
+tinuous variable and the outcome of interest. Some                uncorrected, multiple testing increases the type I error
+analysts incorrectly consider categorisation to be `model-        to around 40% instead of a nominal 5%.
+free'. It was often the method of choice in the past when
+analysis was based on contingency tables. The approach              Other methods of determining a cutpoint are to use
+has the advantage that it leads to results that seem to be        recognised values (e.g. > 25 kg/m2 to define `overweight'
+easier to interpret and is therefore often favoured by non-       based on body mass index), to use `round numbers' such
+statisticians. The functional form for the effect of a covari-    as multiples of five or ten, to use the upper limit of a ref-
+ate is often unknown, and an analysis using a categorised         erence interval in healthy individuals or to apply cut-
+variable is simpler than working with continuous variables        points used in previous studies. These methods still
+directly. In general, reporting is easier, and categorisation     incur information loss, but at least not an inflated type I
+allows graphical presentation, e.g. Kaplan-Meier curves           error probability. In the absence of predefined cutpoints,
+can be produced in survival analysis. However, it has some        epidemiological researchers often use three to five cat-
+serious drawbacks.                                                egories based on quantiles of the empirical distribution,
+                                                                  while in clinical studies, the most common choice is
+  Categorisation raises several issues such as the number         dichotomisation, often at the sample median. However,
+of cutpoints, where to place them and how to code the             different cutpoints are used in different studies, so the
+resulting variable for the analysis. Obviously, the use of        results can neither be easily compared nor summarised.
+two groups makes it impossible to detect a non-linear re-         For example, nineteen cutpoints were identified when
+lationship. It is well-known that the results of analyses can     the prognostic value of S-phase fraction in breast cancer
+vary if different cutpoints are used for splitting. Usually,      patients was assessed [3]. Several of them resulted from
+dummy variables are defined and different codings are             an `optimal' cutpoint analysis.
+possible. Alternatively, a coding scheme with a suitable
+choice of scores implying a metric (e.g. {1, 2, 3}, {1, 2, 4} or    Categorising a continuous variable into three or more
+scores representing the median of each category), together        groups reduces the loss of information. Several methods
+with a test for linear trend, is possible. For variables with a   of coding can be used for the categorised variable. Care
+spike at zero (see the `FP procedure to handle variables          is needed to choose the coding in a suitable way, specif-
+with a `spike at zero" section), a natural baseline category      ically if variable selection is used in combination with
+is the unexposed group.                                           dummy variables (4, see the `Modern variable selection
+                                                                  strategies' section). Despite the well-known problems
+  Many objections to categorisation have been raised              caused by categorisation, it is still the preferred approach
+during the last three decades. It is often stressed that          in practice. Descriptive analysis of continuous covari-
+categorisation should not be used to derive the final             ables is often done with frequency tables for which some
+model [80, 57, 3, 94, 119, 121]. The full information             form of grouping is needed. In a recent review of cohort
+Sauerbrei et al. Diagnostic and Prognostic Research  (2020) 4:3  Page 9 of 18
+
+studies in physical activity, the primary exposure was           choosing nominal significance levels, which are the key
+categorised in 21/30 (70%) of studies. In 51 dietary in-         tuning parameters for determining the function's com-
+take studies, all variables were categorised in 27 (53%)         plexity according to the aim of the study.
+and at least one variable in 50 (98%) [105].
+                                                                   It is well-known that data-dependent model building
+  To summarise, categorisation of a continuous or semi-          results in biassed estimates and incorrect p values. How-
+continuous variable may be useful for descriptive presen-        ever, the FSP uses the principle of a closed test proced-
+tation of data, for initial analysis and for checking model      ure which ensures that the overall type 1 error is close
+assumptions. Furthermore, categorisation can help to             to the nominal significance level [74]. For some simula-
+simplify final models, e.g. for presentation, and it is often    tion results on type 1 error and power, see Royston and
+required in clinical decision-making. However, it is un-         Sauerbrei [96], section 4.10.5.
+necessary and often harmful when used to build the final
+statistical model. Several modelling approaches have             Splines
+been proposed and should become the standard to as-              Another common method of modelling nonlinear effects
+sess the functional influence of a continuous variable,          of continuous variables is spline regression. Generally, a
+avoiding the need to categorise.                                 spline function is defined by a set of piecewise polyno-
+                                                                 mial functions of a continuous variable that are joined
+Modelling nonlinear effects of continuous variables              smoothly at a set of knots spread across the support of
+In the following, we will briefly describe and discuss the       the variable [128]. In contrast to fractional polynomials,
+fractional polynomial and spline-based approaches. For           the piecewise polynomial functions defining a spline all
+more details, we refer to the web supplement and the lit-        have the same degree. For example, cubic splines are
+erature referenced in the following paragraphs.                  constructed from a set of piecewise polynomials each of
+                                                                 degree 3. Another conceptual difference between splines
+Fractional polynomials                                           and fractional polynomials is the range over which the
+The class of fractional polynomial (FP) functions is an          components of the two methods are defined. Whereas
+extension of power transformations of a covariate. For           splines are constructed from `local' piecewise functions
+most applications FP1 (1xp1) and FP2 (1xp1 + 2xp2)               (each defined between two consecutive knots), the power
+functions are sufficient. For the exponents p1 and p2, a         functions involved in the construction of a fractional
+set S = {- 2, - 1, - 0.5, 0, 0.5, 1, 2, 3} with 0 = log x has    polynomial are each defined over the whole range of the
+been proposed. For p1 = p2 = p (`repeated powers'), an           continuous variable.
+FP2 function is defined as 1xp + 2xp log x. This defines
+8 FP1 and 36 FP2 models. The class of FP functions ap-             Generalised additive models (GAMs) [52, 128] extend
+pears small, but it includes very different types of shapes      generalised linear models by the inclusion of smooth
+[93]. General FPm functions are well-defined and                 nonlinear effects of continuous variables. Each nonlinear
+straightforward but are rarely used in medical applica-          effect is represented by a spline function (although other
+tions. The main aim of FP modelling is the derivation of         smoothers are in principle possible). Estimation of the
+a suitable function which fits the data well, while being        spline functions is usually carried out by writing splines
+simple, interpretable and generally usable. Therefore, a         as a linear combination of spline basis functions and by
+linear function is the default and a more complex non-           estimating the weights in this combination via (possibly
+linear function is only chosen if strongly supported (ac-        penalised) maximum likelihood optimisation. Generally,
+cording to a chosen significance level) by the data. The         GAMs support a huge number of modelling alternatives
+functional relationship is selected by a function selection      and model fitting techniques. This is because splines
+procedure (FSP) with up to three steps (if FP2 is the            come in many shapes and forms differing, e.g. in the de-
+most complex function considered) [96]. The test at step         gree of the polynomial pieces and/or the number and
+1 is of overall association of the variable with the out-        positions of the knots. Furthermore, it is common to im-
+come. The test at step 2 examines the evidence for non-          pose restrictions on the spline functions, for example
+linearity. The test at step 3 chooses between a simpler          linearity restrictions at the boundaries of the variables'
+FP1 or a more complex FP2 nonlinear model (for details           supports (used, e.g. in natural splines [53]), complexity
+see the web supplement).                                         restrictions imposed by lower-order approximations (e.g.
+                                                                 in thin-plate regression splines [126]), smoothness re-
+  In the `General issues in building descriptive regres-         strictions imposed by `wiggliness' penalties (used, e.g. in
+sion models' section, we emphasised the need for a               smoothing splines and in P-splines, which penalise the
+model building procedure related to the main aim of the          second- or higher-order differences of the basis function
+analysis. For FPs, this can be done by pre-specifying the        coefficients [38]) or imposing monotonicity [89]. If pen-
+most complex FP functions allowed (often FP2, some-              alties are used in GAMs, each spline function is usually
+times FP1, occasionally FPm with m > 2) and by                   associated with a separate hyperparameter determining
+Sauerbrei et al. Diagnostic and Prognostic Research  (2020) 4:3  Page 10 of 18
+
+the weight of the respective penalty in penalised max-           context of parametric modelling of the association be-
+imum likelihood estimation. In addition, the definition          tween smoking intensity and lung cancer. Leffondre
+of the basis functions is not unique, and there exist vari-      et al. [68] demonstrated that it allows researchers to sep-
+ous possibilities on how to define them, each with differ-       arate (i) the `qualitative' difference between ever-
+ent numerical properties. For details, see the web               smokers relative to non-smokers, from (ii) the `quantita-
+supplement. Note that splines can also be used in boost-         tive' dose-response association estimated using data on
+ing algorithms, see, e.g. Schmid and Hothorn [104]. Ob-          smokers only.
+viously, all the aforementioned modelling options affect
+the shapes of the spline functions, and hence also the ef-         Four closely related procedures have been proposed
+fects and the interpretation of the respective variables in      for model building with two (which can be extended to
+a GAM. Perperoglou et al. [84] provide an overview of            more) spike-at-zero variables [65]. Although it is rele-
+the most widely used spline-based techniques and their           vant to the analysis of many studies, practical experience
+implementation in R.                                             is limited.
+
+  In an investigation of the effect of alcohol intake as a       Combining variable and function selection
+risk factor for primary oral cancer, Rosenberg et al. [91]       Variable selection in the presence of non-linear relation-
+discussed several issues of spline modelling when deter-         ships of covariates with the outcome is an even more
+mining the functional form of a continuous variable in           complicated exercise. In fact, decisions regarding the in-
+practice. Abrahamowicz et al. [1] illustrated the practical      clusion/exclusion of specific variables and modelling of
+advantages of spline modelling, implemented with the             the functional forms of both these variables and poten-
+smoothing splines within GAMs, to detect and account             tial confounders may depend on each other in a complex
+for nonlinear associations in the context of cardiovascular      way. Firstly, the `importance' and/or statistical signifi-
+epidemiology. They demonstrated how the flexibility of           cance of a continuous variable may depend strongly on
+the splines may enhance the robustness of the estimates.         how its relationship with the outcome is modelled. For
+                                                                 example, whereas there was no evidence for an associ-
+FP procedure to handle variables with a `spike at zero'          ation of body mass index (BMI) with the logit of the
+In epidemiology and in clinical research, variables often        probability of coronary heart death (CHD) assuming a
+have unusual distributions. Commonly in epidemio-                linear effect, a GAM-based multivariable model with the
+logical studies, a proportion of individuals have zero ex-       same adjustment covariates revealed a non-monotone J-
+posure to the risk factor of interest, whereas for the           shaped association. CHD mortality increased for both
+remainder, the distribution of the risk factor is continu-       very lean and obese subjects [1].
+ous. We call this a `spike at zero' or a `semi-continuous
+variable'. Examples are smoking, duration of breastfeed-         The multivariable fractional polynomial approach
+ing or alcohol consumption. In the first example, a part         The multivariable fractional polynomial (MFP) approach
+of the individuals are non-smokers with dose zero and            is a pragmatic procedure to create a multivariable model
+for smokers, the dose variable, e.g. average number of           with the parallel aims of selecting important variables
+cigarettes per day, is continuous. Furthermore, the empir-       and determining a suitable functional form for continuous
+ical distribution of laboratory values and other measure-        predictors [96, 101]. To select a model, significance levels
+ments may have a semi-continuous distribution because            chosen for the two components (backward elimination
+the lower detection limit of the measurement is assigned a       (BE) and FP functions) are the key settings for determin-
+value of zero. Such a variable cannot directly be analysed       ing model complexity. If more or fewer variables are in-
+with FPs (see the `Fractional polynomials' section) since        cluded, simple linear or more complex non-linear
+some of the transformations needed are only defined for          functions are selected. If an extremely low significance
+positive values. An ad hoc but arguably unsatisfactory           level (e.g. 0.00001) is used to select FP functions, usually
+method is to add a small constant to each observation.           only linear functions are selected and MFP in effect be-
+                                                                 comes just BE. Choosing 0.999 as a significance level in
+  Spike at zero variables can be analysed by categorisa-         the BE component ensures that a specific variable is guar-
+tion, using the zero category as baseline. The method            anteed to enter the model. Although relatively simple and
+has the same disadvantages as mentioned in the `Cat-             easily understood by researchers familiar with the basics
+egorisation' section. A better approach is described [8, 9]      of regression models, the selected models often extract
+and illustrated [70], using an extended version of frac-         most of the important information from the data. Based
+tional polynomials. Briefly, a binary indicator variable Z       on experience in practice but without providing empirical
+(exposed/non-exposed) is generated, and the modelling            evidence, Sauerbrei et al. [102] give several recommenda-
+involves both Z and the spike at zero variable X, where          tions for MFP modelling under some assumptions, e.g. the
+the transformations are applied to the positive part of X        sample size is not too small and there is no interaction
+only. A similar approach was proposed earlier in the
+Sauerbrei et al. Diagnostic and Prognostic Research  (2020) 4:3  Page 11 of 18
+
+between covariates. Models derived are relatively easy to        There also exists a special type of shrinkage smoothers,
+interpret and to report, a pre-requisite for transportability    based on cubic regression splines and thin plate regression
+and general use in practice. Easy to use software in Stata,      spline smoothers in which a modification of the smooth-
+SAS and R is available [100]. Several extensions of MFP          ing penalty would allow strong enough penalisations to
+have been proposed. Only programs in Stata are available         shrink all coefficients of the smooth term to zero [128].
+for these extensions. For more details, see http://mfp.imbi.     Clearly, such penalisation methods are not easily imple-
+uni-freiburg.de/.                                                mented but rely on the availability of a software package
+                                                                 (such as mgcv) to provide the appropriate fitting routines
+  Because of data-dependent selection of variables and           as well as methods for optimisation of the smoothing pa-
+their functional forms, overestimation bias is likely to         rameters. Clearly, since penalisation techniques are rela-
+arise. As with the arguments in the context of variable          tively new, further research is needed to compare their
+selection (see the `Resampling-based variable selection          performance with that of stepwise procedures in GAMs.
+procedures' section), bias may be reduced by estimating
+and applying parameter-specific shrinkage factors (see             Other approaches include the component selection
+the `Resampling-based variable selection procedures' sec-        and smoothing operator (COSSO) [69], SpAM [90] and
+tion). In the context of MFP, an extension to this meth-         the method of Meier et al. [77], all based on a penalised
+odology was proposed by [34]. They suggested providing           likelihood that reduces the problem to Lasso-type esti-
+`joint' shrinkage factors for semantically related regres-       mation [112]. Chouldechova and Hastie [24] introduced
+sion coefficients, e.g. the components of a second-order         generalised additive model selection (GAMSEL) that
+FP. Systematic investigations of their proposal in the           chooses between linear and non-linear fits for the com-
+context of combined variable and functional form selec-          ponent functions. Antoniadis et al. [5] discuss variable
+tion have not been reported.                                     selection using P-splines, based on an extension of the
+                                                                 nonnegative garrotte. These methods have not been
+Spline regression                                                evaluated in practice and further research is needed to
+`Traditional' selection techniques used in generalised           understand their properties.
+linear models (GLMs) are also available for GAMs.
+Many R packages such as mgcv and gamlss imple-                     We finally note that the variable selection procedure
+ment approaches to forward or backwards stepwise                 of the component-wise boosting algorithms described in
+regression based either on p values of the smooth                the `Boosting' section also applies to spline regression. In
+terms or on AIC/BIC-type criteria. These approaches              fact, component-wise boosting can be used to fit a large
+are intuitive and easy to use (and hence popular) but            variety of GAMs, allowing a forward stagewise selection
+have the same weaknesses as GLMs. Additionally,                  of nonlinear effects and an automated determination of
+since smoothness parameters are not fixed but esti-              the appropriate amount of smoothing [60, 104, 115].
+mated, p values associated with the smooth terms are
+approximate and may be biassed.                                    Royston and Sauerbrei proposed transferring the MFP
+                                                                 approach to regression splines and smoothing splines
+  Alternatively, given a specific model structure, model         [95, 96]. The MFP algorithm provides a principled ap-
+selection might be performed using prediction error cri-         proach for systematic selection of variables and FP func-
+teria or likelihood-based methods such as generalised            tions. In the multivariable regression splines (MVRS)
+cross-validation, unbiassed risk estimator (UBRE) or             algorithm, they combined backward elimination with a
+REML with maximum likelihood for smoothness selec-               search for a suitable restricted cubic spline function. In
+tion. Such methods, however, are unlikely to be success-         the multivariable smoothing splines (MVSS) algorithm,
+ful and have known drawbacks [128].                              they replace the FP components by cubic smoothing
+                                                                 splines. For more details and a comparison of results
+  More recent approaches consider penalisation of                from MFP, MVRS and MVSS, we refer to Royston and
+smooth terms to perform variable selection. A penalty            Sauerbrei ([96], chapter 9).
+term on a regression spline penalises the range space of
+the spline, controlling how wiggly the function is. For          Examples illustrating the problems
+example, increasing the weight of a second-order deriva-         In this section, we illustrate by way of selected published
+tive penalty to infinity will effectively force the term to      analyses of observational studies that guidance on many
+linearity. On the other hand, it will not remove the term        aspects of multivariable modelling outlined above is ur-
+from the model, as the null space of the spline remains          gently needed.
+unpenalised. Marra and Wood [75] therefore suggested
+null space penalisation by adding an extra penalty for           A case of popular but highly problematic variable
+each smooth term to the log-likelihood. If all smoothing         selection
+parameters for the term tend to infinity, then it is pena-       Ramaiola et al. [88] conducted linear regression analyses
+lised to zero and is effectively dropped from the model.         to identify prognostic factors of plasma prolifin-1 (Pfn-1)
+Sauerbrei et al. Diagnostic and Prognostic Research  (2020) 4:3  Page 12 of 18
+
+levels in myocardial infarction patients with ST-segment         Also, all other hazard ratios of the categorised analysis are
+elevation. Their study sample comprised 86 patients.             more extreme than would be suggested by the spline ana-
+Eleven explanatory variables were considered: duration of        lysis. The paper contains no explanation of the discrep-
+ischaemia from onset of pain to percutaneous coronary            ancy. We suspect that the less extreme hazard ratios of
+intervention, age, gender, diabetes, hypertension, obesity,      the spline analysis could be caused by ignoring the spike
+dyslipidaemia, tobacco, antithrombic treatments and levels       at zero in that analysis. For patient counselling, the cate-
+of hsC-reactive protein and P-selectin. The authors first        gorised analysis is misleading as it suggests a reduced haz-
+used bivariate correlation analysis or t tests to assess the     ard of mortality (hazard ratio 0.8) already at very low
+association between Pfn-1 and each of the potential ex-          levels of MET (12 min per week), which seems implaus-
+planatory variables. Variables with a significant ( = 0.05)      ible. This is even more crucial as the paper contains the
+association with Pfn-1 were then taken as the starting set       misleading concluding statement `These findings...provide
+in a multivariable model to which backward elimination           important evidence to inactive individuals by showing that
+( = 0.05) was applied. Finally, two variables, duration of       modest amounts of activity provide substantial benefit for
+ischaemia and patient age `remained as independent fac-          postponing mortality'. Since the two analyses give different
+tors for Pfn-1 levels', both with highly significant p values    results, we must conclude that such a statement is not
+lower than 0.001. Surprisingly, the time of ischaemia was        fully supported by the data, implying that at least one ana-
+not mentioned as a candidate variable in the statistical         lysis is questionable.
+methods section. The values of the estimated regression
+coefficients were reported, but not their standard errors,       Towards state of the art--research required!
+and for interpretation purposes, no explicit reference was       In the earlier sections, we have illustrated that many
+made to the measurement scale of the corresponding vari-         variable selection procedures are available. Unfortu-
+ables. No assessment of model assumptions, nonlinearities        nately, for all of them, knowledge of their properties and
+or interactions was mentioned. The stability of the model        the number of informative comparisons are limited. In
+was neither investigated nor questioned.                         all sections, we raised many issues requiring further re-
+                                                                 search. We identified several papers in the literature pro-
+Example of conflicting results for a variable with a spike       viding recommendations for practice [49, 50, 51, 56,
+                                                                 102] or, as expressed by Royston and Sauerbrei [96],
+at zero                                                          `Towards recommendations...under the assumptions...'.
+Arem et al. [6] report on a pooled analysis of 666,137 par-      They state that clear guidance is almost always impos-
+ticipants of 6 studies from the National Cancer Institute        sible and stress that guidance can only be obtained
+Cohort Consortium, investigating the dose-response rela-         under specific assumptions (e.g. large enough sample
+tionship between leisure time physical activity (LTPA) and       size and absence of interactions). Based on the earlier
+mortality. LTPA is measured based on self-reported aver-         sections, in Table 1, we summarise issues we consider as
+age hours per week spent on several physical activities          being the most relevant for further investigations. The-
+over the prior year. These hours per week were then              oretical results derived for specific `sub-problems' and
+transformed into metabolic equivalent (MET) hours per            under strong assumptions may supply important insight,
+week to adjust for different energy expended by the type         but in general, we need empirical evidence based on ex-
+of activity. MET is a continuous variable with a spike at        tensive simulation studies. Difficulties in conducting
+zero (8.0%). The main analysis adjusts MET for several co-
+variates, e.g. sex, smoking, alcohol (categorised into 4         Table 1 Relevant issues in deriving evidence-supported state of
+groups), educational level, marital status, history of cancer,   the art guidance for multivariable modelling
+history of heart disease and body mass index (categorised
+into 5 groups). Age was used as the time scale in Cox re-        No. Item
+gression analysis. While the supplement contains a figure
+in which MET entered the analysis using restricted cubic         1 Investigation and comparison of the properties of variable
+splines, the main paper provides results for categorised               selection strategies
+MET (7 categories including 0 as a category). Details of
+the spline specification are not given. Both analyses with 0     2 Comparison of spline procedures in both univariable and
+MET hours per week as the reference suggest a benefit                  multivariable contexts
+from physical activity but do not agree well numerically.
+For example, the hazard ratio for physical activity between      3 How to model one or more variables with a `spike-at-zero'?
+12 min and 7.5 MET hours per week is 0.8 (95% confi-
+dence interval 0.78 to 0.83), while in the same range of         4 Comparison of multivariable procedures for model and function
+physical activity, the spline analysis suggests a hazard ratio         selection
+smoothly changing from 1 to about 0.82 at 7.5 h per week.
+                                                                 5 Role of shrinkage to correct for bias introduced by data-dependent
+                                                                       modelling
+
+                                                                 6 Evaluation of new approaches for post-selection inference
+
+                                                                 7 Adaption of procedures for very large sample sizes needed?
+Sauerbrei et al. Diagnostic and Prognostic Research  (2020) 4:3  Page 13 of 18
+
+unbiassed and informative simulation studies were dis-           Issue 4: Comparison of multivariable procedures for
+cussed in a letter from the STRATOS simulation panel             model and function selection
+[13]. The need to conduct better designed and analysed           Given the huge number of penalised and spline-based
+simulation studies has been expressed [82].                      approaches recently proposed (see the `Spline regression'
+                                                                 section), additional studies such as Binder et al. [12] are
+Issue 1: Investigation and comparison of the properties of       needed to evaluate their performance. The emphasis
+variable selection strategies                                    should be on accuracy, efficiency, transportability, ease
+Traditional and modern variable selection approaches             of implementation and interpretability of the resulting
+need to be compared in a head-to-head manner in a                multivariable models.
+variety of explanatory modelling situations. To be
+valuable for explanatory modelling, target parameters            Issue 5: Role of shrinkage to correct for bias introduced
+should be those that influence the `correct' inclusion           by data-dependent modelling
+and exclusion of variables, model stability, and model           The usefulness of post-selection shrinkage methods in re-
+complexity. They should address the accuracy of the              moving overestimation bias in the regression coefficients
+effects to be estimated, i.e. the regression coefficients.       and estimated functional forms in multivariable models
+The number of candidate variables, their distributions,          needs further investigation. Guidance in selecting the right
+the correlation structure, the strength of effects and           type of shrinkage factors (parameterwise, joint or global)
+the sample size should be the main meta-parameters               and cross-validation procedure (jackknife, bootstrap) to
+to be varied.                                                    obtain stable shrinkage factors is needed. Comparison
+                                                                 with approaches combining variable selection and shrink-
+Issue 2: Comparison of spline procedures in a univariable        age (see the `Penalised likelihood' section) are needed.
+and multivariable context                                        Post-selection shrinkage can be generally used for models
+In the univariable situation the important questions are         combining variable and functional form selection. This
+whether the results derived with the many suggested              context needs to be investigated.
+spline procedures differ (substantially) from the true
+function, and how much that depends on relevant pa-              Issue 6: Evaluation of new approaches for post-selection
+rameters (e.g. number of knots). Furthermore, permitted          inference
+complexity of the function and usability of procedures           Recently, new procedures for obtaining confidence inter-
+for non-experts are relevant. Criteria in the multivariable      vals for regression coefficients after applying forward se-
+situation are similar, with an additional focus on correct       lection, the Lasso or LARS have been proposed, but they
+variable inclusion and exclusion. We should consider             have not yet been evaluated in typical explanatory mod-
+modifying some of the procedures proposed in light of            elling situations. For traditional variable selection
+results from univariable investigations. The focus should        methods, the performance of alternative variance estima-
+lie on practical data modelling situations with multiple         tors that are robust to model misspecification have not
+variables of mixed types, with splines used for modelling        yet been investigated.
+continuous variables. Different types of functions and
+sample sizes should be the main meta-parameters in the           Issue 7: Adaption of procedures for very large sample
+univariable situation. Additional parameters (as with            sizes needed?
+issue 1) are required in the multivariable situation.            So far, nothing has been said about building of interpret-
+                                                                 able explanatory models with large data sets. In recent
+Issue 3: How to model one or more variables with a               years, more and more enormous data sets, e.g. with sam-
+`spike-at-zero'?                                                 ple size n > 100,000 and number of potential explanatory
+For one variable, a two-step FP-based procedure (see the         variables p > 1,000 have become available for medical re-
+`FP procedure to handle variables with a `spike at zero"         search, e.g. in pharmacoepidemiology, in studies with
+section) has been proposed. Using splines, a one-step ap-        electronic health records or registries and in individual
+proach would be possible and comparisons of various              patient data meta-analyses. Procedures for multivariable
+spline-based approaches with the FP approach are                 model building were developed with much smaller num-
+needed. Main criteria are similar to those mentioned for         bers in mind, with respect to both n and p. Approaches
+the univariable situation in issue 2. The FP approach has        considering the natural or empirical grouping of vari-
+been extended for two spike-at-zero variables. Four              ables (`variable clustering') may become more relevant
+strategies have been suggested, but current knowledge is         here, while the usual settings for tuning parameters for
+limited.                                                         variable selection procedures need to be rethought. Al-
+                                                                 ternative approaches that optimally combine subject-
+Sauerbrei et al. Diagnostic and Prognostic Research  (2020) 4:3  Page 14 of 18
+
+matter knowledge with statistical learning need to be de-        apply for researchers working with survival data (TG8)
+veloped and evaluated.                                           or high-dimensional data (TG9).
+
+  Topics raised in Table 1 will keep our topic group               It is difficult and still unusual to pre-specify a detailed
+(and hopefully others) busy for several years, but what is       analysis plan for observational studies, as is standard for
+the alternative for developing evidence supported guid-          the analysis of RCTs. Consequently, we must assume
+ance for the selection of variables and functional forms         that usually, several analyses are conducted, but that re-
+in multivariable analysis?                                       sults are presented only for some of them. It is well-
+                                                                 known that final models derived data-dependently are at
+Discussion                                                       least partly a result of chance. It is still common practice
+In a joint effort, members of TG2 identified seven issues        to base inference on a `conditional model', as if the
+which we consider key to building a multivariable model          model had been specified a priori. However, we must
+with continuous variables. The list could be extended, as        realise that because the uncertainty of the model-
+other experts in the field may have different experiences        building process is ignored, the parameter estimates may
+and preferences and may consider other issues more im-           be (heavily) biassed and their variances are usually
+portant. We welcome discussion and critique as this              underestimated.
+would trigger urgently needed research in one of the
+most important areas of statistical analysis. We would             With the increasing power of computing environ-
+also be pleased if other experts and research groups were        ments, it became easier to use Bayesian approaches or
+motivated by the `Towards state of the art--research re-         resampling methods aimed at improving predictions and
+quired!' section and decided to do further research on is-       their variances by using model averaging approaches [7,
+sues we raised. Members of our group have considerable           17, 21, 32, 59]. Attempts to quantify model uncertainty
+expertise to guide the necessary research we outlined.           have been known since the 1980s [2, 23]. Researchers
+We consider this work an important step on the long              stress that data-dependent derivations of multivariable
+journey towards evidence-supported guidance on the               models need to be complemented by such investigations
+state of the art. Following the general approach of STRA         [99]. Unfortunately, investigations of model stability are
+TOS, guidance for experienced analysts will later be             a long way from becoming standard practice.
+adapted to researchers at level 1, who have less statistical
+training.                                                          Regarding issues raised in the `Towards state of the
+                                                                 art--research required!' section, we emphasised that
+  It is well-known that the aim of a study strongly af-          mathematical theory is unlikely to help and that appro-
+fects the choice of a suitable analysis. Here we concen-         priate simulation studies are the key tool to assess and
+trate on models for description and mention that some            compare the properties competing approaches. However,
+things change when the main aim is prediction. That is           it is well-known that many simulation studies comparing
+one of the reasons why STRATOS has a separate topic              a suggested new method with existing methods may be
+group for prediction (TG6). We also ignore the recent            (strongly) biassed in favour of the new method [13].
+trend in epidemiological studies to use directed acyclic         Morris et al. [82] provided empirical evidence that simu-
+graphs (DAG) for specifying and deriving confounders             lation studies are often poorly designed, analysed and re-
+to enter regression models. It is a principled approach          ported. They provided a structured approach to
+requiring critical decisions based on subject-matter             planning and reporting simulation studies, which in-
+knowledge. Nevertheless, it may be difficult to handle           volves defining aims, data-generating mechanisms, esti-
+when there are many variables and it does not help in            mands, methods and performance measures (`ADEMP').
+dealing with selection of functional forms for continuous        STRATOS has a simulation panel which has started to
+variables. While in general we do not discourage think-          work on guidance for the design, conduct and reporting
+ing about a DAG to identify a meaningful working set of          of simulation studies. The corresponding authors of the
+variables, the topic is perhaps more relevant for causal         two papers just mentioned are members of this panel.
+inference. Therefore, we leave it for STRATOS topic
+group TG7 (`causal inference'). Naturally, there are many          We outline the research needed to determine which
+other questions we have ignored because they are cov-            procedures could be considered SOTA. To use SOTA
+ered by different topic groups. For example, each ana-           methodology, an experienced scientist with deep know-
+lysis is preceded by many decisions in preparing the data        ledge of statistical methodology is required. However,
+during an initial data analysis, and these decisions can         most analyses are conducted by people with a lower level
+have an important influence on the results. For a de-            of statistical knowledge who need assistance working
+tailed discussion, see the paper of topic group TG3 (`ini-       with the more basic and straightforward methods. Many
+tial data analysis') [63]. Nearly all the issues we discuss      analyses may be done with basic, simple methods not re-
+                                                                 quiring advanced methods regarded as SOTA. One im-
+                                                                 portant aim of the STRATOS initiative is to formulate
+                                                                 guidance for analysts with a lower level of statistical
+Sauerbrei et al. Diagnostic and Prognostic Research  (2020) 4:3  Page 15 of 18
+
+knowledge. See Sauerbrei et al. [98] for an outline of the       overestimates parameters. Improvements may be pos-
+proposed strategy.                                               sible by using shrinkage approaches but their role is not
+                                                                 well-investigated.
+  During the last two decades, reporting guidelines have
+been developed for many types of studies, with the                 Topic group 2 of the STRATOS initiative aims to de-
+EQUATOR network acting as an umbrella. For some of               velop guidance for the selection of variables and func-
+these guidelines, so-called explanation and elaboration pa-      tional forms in multivariable analysis. In this paper, we
+pers have been published. They include statements and            provide a short overview of methods for variable and
+some advice on statistical analysis, but they discuss some       function selection and highlight seven important topics
+more basic issues and aim more at analysts with a lower          that require further investigation. Identifying weaknesses
+level of statistical knowledge. The STROBE, REMARK               of current knowledge is an important step on the long
+and TRIPOD guidelines are probably the most pertinent            way to derive guidance for this highly relevant, but also
+to issues discussed in this paper [4, 81, 120]. To avoid se-     complex topic.
+lective reporting, which gives rise to biassed results and
+misleading interpretation, it is important to report all ana-    Supplementary information
+lyses, preferably by giving key information via a structured
+display. Altman et al. [4] proposed the REMARK profile as        Supplementary information accompanies this paper at https://doi.org/10.
+a suitable means of improving reporting of prognostic            1186/s41512-020-00074-3.
+marker studies. Structured displays still need to be devel-
+oped for other types of studies.                                   Additional file 1. Web supplement.
+
+  The overarching aim of the international STRengthen-           Abbreviation
+ing Analytical Thinking for Observational Studies (STRA          ADEMP: Aims, data-generating mechanisms, estimands, methods and
+TOS) initiative is to provide accessible and accurate guid-      performance measures; AIC: Akaike's information criterion; BE: Backward
+ance documents for relevant topics in the design and ana-        elimination; BIC: Bayesian information criterion; BIF: Bootstrap inclusion
+lysis of observational studies. The topic group TG2              frequencies; BMI: Body mass index; CHD: Coronary heart death;
+working on guidance for the selection of variables and           COSSO: Component selection and smoothing operator; df: Degree of
+functional forms has shown that many open issues exist           freedom; EQUATOR: Enhancing the quality and transparency of health
+and that much research is needed to fill the evidence gap        research; FDA: Food and drug administration; FP: Fractional polynomial;
+when trying to determine which approaches may be                 FPm: Fractional polynomial of degree m (usually 1 or 2); FS: Forward
+termed `state of the art'.                                       selection; FSP: Function selection procedure; GAMs: Generalised additive
+                                                                 models; GAMSEL: Generalised additive model selection; GLMs: Generalised
+Conclusions                                                      linear models; LARS: Least angle regression; Lasso: Least absolute shrinkage
+Selection of variables and identification of functional          and selection operator; LTPA: Leisure time physical activity; MET: Metabolic
+forms for continuous variables is a key concern when             equivalent; MFP: Multivariable fractional polynomial approach;
+deriving a multivariable model. Triggered by high-               MFPI: Multivariable fractional polynomial interactions; MFPT: Multivariable
+dimensional data, several more `modern' variable selec-          fractional polynomial time approach; MSE: Mean squared error;
+tion strategies have been proposed. However, knowledge           MVRS: Multivariable regression splines; MVSS: Multivariable smoothing
+of their properties and the number of informative com-           splines; Omics: Term encompassing multiple molecular disciplines;
+parison studies, ideally based on well-designed and ana-         RCT: Randomised controlled trial; REMARK: Reporting recommendations for
+lysed simulation studies, are scarce. As data are often          tumour marker prognostic studies; REML: Restricted maximum likelihood;
+measured on a continuous scale, it is obvious that the is-       SAS: Statistical analysis system; SCAD: Smoothly clipped absolute deviation;
+sues of variable selection need to be combined with the          SOTA: State of the art; SpAM: Sparse additive model; STRA
+selection of a suitable functional form. Assuming that an        TOS: STRengthening Analytical Thinking for Observational Studies;
+effect is linear or categorising the data and estimating         STROBE: STrengthening the Reporting of OBservational studies in
+step functions are the most popular approaches but can           Epidemiology; TG2: Topic group 2 (selection of variables and functional
+lead to seriously wrong conclusions. Spline-based ap-            forms in multivariable analysis); TG3: Topic group 3 (initial data analysis);
+proaches or fractional polynomials avoid cutpoints, use          TG6: Topic group 6 (Evaluating diagnostic tests and prediction models);
+the full information from the data and can model non-            TG7: Topic group 7 (causal inference); TG8: Topic group 8 (survival analysis);
+linear relationships. However, it is not clear which of the      TG9: Topic group 9 (high-dimensional data); TRIPOD: Transparent reporting
+spline-based approaches should be recommended for                of a multivariable prediction model for individual prognosis or diagnosis;
+practice, and when more flexible spline approaches               UBRE: Unbiassed risk estimator
+should be preferred to simpler approaches like polyno-
+mials or fractional polynomials. In the context of de-           Acknowledgements
+scriptive modelling discussed here, determining the final        This work was supported by the Deutsche Forschungsgemeinschaft [SA580/
+model data-dependently causes a selection bias and               10-1] to Willi Sauerbrei, by the European Commission's programme
+                                                                 Erasmus+ Staff Mobility for Training during the fellowship of Georg Heinze in
+                                                                 Freiburg in November 2018 and by UK Medical Research Council programmes
+                                                                 MC to Patrick Royston [UU_12023/21, MC_UU_12023/29]. We thank Tim
+                                                                 Haeussler, Andreas Ott and Christine Wallisch for administrative assistance.
+                                                                 The international STRengthening Analytical Thinking for Observational
+                                                                 Studies (STRATOS) initiative aims to provide accessible and accurate
+                                                                 guidance for relevant topics in the design and analysis of observational
+                                                                 studies (http://stratos-initiative.org).
+                                                                 Members of TG2 at the time of first submission: Michal Abrahamowicz, Heiko
+                                                                 Becher, Harald Binder, Daniela Dunkler, Frank Harrell, Georg Heinze, Aris
+                                                                 Perperoglou, Geraldine Rauch, Patrick Royston, Willi Sauerbrei and Matthias
+                                                                 Schmid.
+Sauerbrei et al. Diagnostic and Prognostic Research  (2020) 4:3                       Page 16 of 18
+
+Authors' contributions                                                                11. Binder H, Schumacher M. Allowing for mandatory covariates in boosting
+WS expressed first thoughts for such a paper. All authors sent text and                     estimation of sparse high-dimensional survival models. BMC Bioinform.
+comments to various parts of the paper, which were coordinated by WS and                    2008;9:14.
+GH. All authors made substantial contributions to the paper and have
+approved the submitted version. The authors read and approved the final               12. Binder H, Sauerbrei W, Royston P. Comparison between splines and fractional
+manuscript.                                                                                 polynomials for multivariable model building with continuous covariates: a
+                                                                                            simulation study with continuous response. Stat Med. 2013;32:2262-77.
+Funding
+The funding bodies had no influence on any statement in the paper.                    13. Boulesteix AL, Binder H, Abrahamowicz M, Sauerbrei W. On the necessity
+                                                                                            and design of studies comparing statistical methods. Biometrical J. 2018;60:
+Availability of data and materials                                                          216-8.
+Data sharing is not applicable to this article as no datasets were generated
+or analysed during the current study.                                                 14. Breiman L. The little bootstrap and other methods for dimensionality
+                                                                                            selection in regression: X-fixed prediction error. J Am Stat Assoc. 1992;87:
+Ethics approval and consent to participate                                                  738-54.
+Not applicable
+                                                                                      15. Breiman L. Better subset regression using the non- negative Garrote.
+Consent for publication                                                                     Technometrics. 1995;37:373-84.
+Not applicable
+                                                                                      16. Breiman L. Statistical Modeling: The two cultures. Stat Sci. 2001;16:199-231.
+Competing interests
+The authors declare that they have no competing interests.                            17. Buckland ST, Burnham KP, Augustin NH. Model selection: an integral part of
+                                                                                            inference. Biometrics. 1997;53:603-18.
+Author details
+1Institute of Medical Biometry and Statistics, Faculty of Medicine and Medical        18. Bühlmann P. Hothorn. Boosting algorithms: regularization, prediction and
+Center, University of Freiburg, Freiburg, Germany. 2Data Science and Artificial             model fitting. Stat Sci. 2007;22:477-505.
+Intelligence AstraZeneca, Cambridge, UK. 3Department of Medical Biometry,
+Informatics and Epidemiology, Faculty of Medicine, University of Bonn, Bonn,          19. Burnham KP, Anderson DR. Model selection and multimodel inference: a
+Germany. 4McGill University Health Centre, McGill University, Montreal,                     practical information- theoretic approach. New York: Springer; 2002.
+Canada. 5Institute for Medical Biometry and Epidemiology, University Medical
+Center Hamburg-Eppendorf, Hamburg, Germany. 6Section for Clinical                     20. Bursac Z, Gauss CH, Williams DK, Hosmer DW. Purposeful selection of
+Biometrics, Center for Medical Statistics, Informatics and Intelligent Systems,             variables in logistic regression. Source Code Biol Med. 2008;3:17.
+Medical University of Vienna, Vienna, Austria. 7Department of Biostatistics,
+School of Medicine, Vanderbilt University, Nashville, TN, USA. 8MRC Clinical          21. Chatfield C. Model uncertainty, data mining and statistical inference (with
+Trials Unit at UCL, Institute of Clinical Trials and Methodology, University                discussion). J Royal Stat Soc Series B. 1995;158:419-66.
+College London, London, UK.
+                                                                                      22. Chatield C. Confessions of a pragmatic statistician. Statistician. 2002;51:1-20.
+Received: 6 November 2019 Accepted: 18 March 2020
+                                                                                      23. Chen C, George SL. The bootstrap and identification of prognostic factors
+References                                                                                  via Cox's proportional hazards regression model. Stat Med. 1985;4:39-46.
+1. Abrahamowicz M, du Berger R, Grover SA. Flexible modelling of the effects
+                                                                                      24. Chouldechova A, Hastie T. Generalized additive model selection. arXiv
+      of serum cholesterol on coronary heart disease mortality. Am J Epidemiol.             preprint 2015;arXiv:1506.03850.
+      1997;145:714-29.
+2. Altman DG, Andersen PK. Bootstrap investigation of the stability of a Cox          25. Copas JB, Long T. Estimating the residual variance in orthogonal regression
+      regression model. Stat Med. 1989;8:771-83.                                            with variable selection. Journal of the Royal Statistical Society. Series D (The
+3. Altman DG, Lausen B, Sauerbrei W, Schumacher M. The dangers of using                     Statistician). 1991;40:51-59.
+      `optimal'cutpoints in the evaluation of prognostic factors. J Nat Cancer Inst.
+      1994;86:829-35.                                                                 26. Cox DR. Comment on Breiman, L. (2001). Statistical modeling: the two
+4. Altman DG, McShane LM, Sauerbrei W, Taube SE. Reporting                                  cultures. Stat Sci. 2001;16:216-8.
+      recommendations for tumor marker prognostic studies (REMARK):
+      explanation and elaboration. PLoS Med. 2012;9:e1001216.                         27. Dakna M, Harris K, Kalousi A, Carpentier S, Kolch W, Schanstra JP, Haubitz M,
+5. Antoniadis A, Gijbels I, Verhasselt A. Variable selection in additive models             Vlahou A, Mischak H, Girolami M. Addressing the challenge of defining valid
+      using P-splines. Technometrics. 2012;54:425-38.                                       proteomic biomarkers and classifiers. BMC Bioinform. 2010;11:594.
+6. Arem H, Moore SC, Patel A, Hartge P, Berrington DE, Gonzalez A,
+      Visvanathan K, Campbell PT, Freedman M, Weiderpass E, Adami HO, Linet           28. de Bin R, Sauerbrei W. Handling co-dependence issues in resampling-based
+      MS, Lee IM, Matthews CE. Leisure Time physical activity and mortality. A              variable selection procedures: a simulation study. J Stat Comput Simul.
+      detailed pooled analysis of the dose-response relationship. JAMA Intern               2018:8828-55.
+      Med. 2015;175:959-67.
+7. Augustin N, Sauerbrei W, Schumacher M. The practical utility of                    29. de Bin R, Janitza S, Sauerbrei W, Boulesteix AL. Subsampling versus
+      incorporating model selection uncertainty into prognostic models for                  bootstrapping in resampling-based model selection for multivariable
+      survival data. Stat Model. 2015;5:95-118.                                             regression. Biometrics. 2016;72:272-80.
+8. Becher H. Analysis of continuous covariates and dose-effect analysis. In:
+      Ahrens W, Pigeot I (Eds) Handbook of epidemiology. 2nd edition.                 30. de Boor C. A practical guide to splines revised. Revised Edition. New York:
+      Heidelberg: Springer Verlag; 2014.                                                    Springer; 2001.
+9. Becher H, Lorenz E, Royston P, Sauerbrei W. Analysing covariates with spike
+      at zero. a modified FP procedure and conceptual issues. Biometrical J. 2012;    31. Dorie V, Hill J, Shalit U, Scott M, Cervone D. Automated versus do-it-yourself
+      54:686-700.                                                                           methods for causal inference: lessons learned from a data analysis
+10. Benedetti A, Abrahamowicz M. Using generalized additive models to                       competition. Stat Sci. 2019;34:43-68.
+      reduce residual confounding. Stat Med. 2004;23:3781-801.
+                                                                                      32. Draper D. Assessment and propagation of model selection uncertainty
+                                                                                            (with) discussion. J Royal Stat Soc Series B. 1995;57:45-97.
+
+                                                                                      33. Dunkler D, Plischke M, Leffondré K, Heinze G. Augmented backward
+                                                                                            elimination: a pragmatic and purposeful way to develop statistical models.
+                                                                                            PLoS ONE. 2014;9:e113677.
+
+                                                                                      34. Dunkler D, Sauerbrei W, Heinze G. Global, parameterwise and joint
+                                                                                            shrinkage factor estimation. J Stat Softw. 2016;69:1-19.
+
+                                                                                      35. Efron B. Comment on Breiman, L. (2001). Statistical modeling: the two
+                                                                                            cultures. Stat Sci. 2001;16:218-9.
+
+                                                                                      36. Efron B, Hastie T, Johnstone I, Tibshirani R. Least angle regression. Ann
+                                                                                            Statist. 2004;32:407-99.
+
+                                                                                      37. Efroymson MA. Multiple regression analysis. in: Ralston A and Wilf HS(ed.).
+                                                                                            Mathematical methods for digital computers. John Wiley. New York; 1960.
+
+                                                                                      38. Eilers PHC, Marx BD. Flexible smoothing with B-splines and penalties (with
+                                                                                            comments and rejoinder). Stat Sci. 1996;11:89-121.
+
+                                                                                      39. Fan J, Li R. Variable selection via nonconcave penalized likelihood and its
+                                                                                            oracle properties. J Am Stat Assoc. 2001;96:1348-60.
+
+                                                                                      40. Freund Y, Schapire R. Experiments with a new boosting algorithm. In:
+                                                                                            Proceedings of the Thirteenth International Conference on Machine
+                                                                                            Learning Theory. San Francisco, CA: Morgan Kaufmann Publishers Inc; 1996.
+
+                                                                                      41. Friedman JH. Greedy function approximation: a gradient boosting machine.
+                                                                                            Ann Stat. 2001;29:1189-232.
+Sauerbrei et al. Diagnostic and Prognostic Research  (2020) 4:3                       Page 17 of 18
+
+42. Friedman JH, Hastie T, Tibshirani R. Additive logistic regression: a statistical  70. Lorenz E, Jenkner C, Sauerbrei W, Becher H. Modeling variables with a spike at
+      view of boosting (with discussion). Ann Stat. 2000;28:337-407.                        zero. Examples and practical recommendations. Am J Epidemiol. 2017;185:1-39.
+
+43. Friedman J, Hastie T, Tibshirani R. Regularization paths for generalized linear   71. Maldonado G, Greenland S. Simulation of confounder-selection strategies.
+      models via coordinate descent. J Stat Softw. 2010;33:1-22.                            Am J Epidemiol. 1993;138:923-36.
+
+44. Fröhlich H. Including network knowledge into Cox regression models for            72. Mallows CL. The zeroth problem. Am Stat. 1998;52:1-9.
+      biomarker signature discovery. Biometrical J. 2014;56:287-306.
+                                                                                      73. Mantel N. Why stepdown procedures in variable selection? Technometrics.
+45. Gong G. Some ideas on using the bootstrap in assessing model variability.               1970;12:621-5.
+      In: Heiner KW, Sacher RS, Wilkinson JW, editors. Computer Science and
+      Statistics: Proceedings of the 14th Symposium on the Interface. NewYork:        74. Marcus R, Peritz E, Gabriel KR. On closed test procedures with special
+      Springer; 1982.                                                                       reference toordered analysis of variance. Biometrika. 1976;76:655-60.
+
+46. Good DM, Zürbig P, Argilés A, Bauer HW, Behrens G, Coon JJ, Dakna M,              75. Marra G, Wood SN. Practical variable selection for generalized additive
+      Decramer S, Delles C, Dominiczak AF, Ehrich JHH. Naturally occurring                  models. Comput Stat Data Anal. 2011;55:2372-87.
+      human urinary peptides for use in diagnosis of chronic kidney disease. Mol
+      Cell Proteomic. 2010;9:2424-37.                                                 76. Mayr A, Binder H, Gefeller O, Schmid M. The Evolution of boosting
+                                                                                            algorithms - from machine learning to statistical modelling. Methods Inf
+47. Greenland S. Avoiding power loss associated with categorization and                     Med. 2014;53:419-27.
+      ordinal scores in dose-response and trend analysis. Epidemiology. 1995;6:
+      450-4.                                                                          77. Meier L, van de Geer S, Bühlmann P. High-dimensional additive modeling.
+                                                                                            Ann Stat. 2009;37:3779-821.
+48. Groenwold RHH, Klungel OH, van der Graaf Y, Hoes AW, Moons KGM.
+      Adjustment for continuous confounders: an example of how to prevent             78. Meinshausen N, Bühlmann P. Stability selection. J Stat Soc Series B Stat
+      residual confounding. Can Med Assoc J. 2013;185:401-6.                                Methodol. 2010;72:417-73.
+
+49. Harrell FE. Regression modeling strategies. In: With applications to linear       79. Miller A. Selection of subsets of regression variables. Journal of the Royal
+      models, logistic and ordinal regression, and survival analysis. New York:             Statistical Society. Series A (General). 1984;147:389-425.
+      Springer; 2001.
+                                                                                      80. Miller R, Siegmund D. Maximally selected chi-square statistics. Biometrics.
+50. Harrell FE. Regression modeling strategies: with applications to linear                 1982;38:1011-6.
+      models, logistic and ordinal regression, and survival analysis. 2nd ed. New
+      York: Springer; 2015.                                                           81. Moons KG, Altman KG, Reitsma JB, Ioannidis JP, Macaskill P, Steyerberg EW,
+                                                                                            Vickers AJ, Ransohoff DF, Collins GGS. Transparent Reporting of a
+51. Harrell FE, Lee KL, Mark DB. Multivariable prognostic models: issues in
+      developing models, evaluating assumptions and adequacy, and measuring                 multivariable prediction model for Individual Prognosis Or Diagnosis
+      and reducing errors. Stat Med. 1996;15:361-87.                                        (TRIPOD): Explanation and Elaboration. Ann Intern Med. 2015;162:W1-W73.
+
+52. Hastie T, Tibshirani R. Generalized additive models. New York: Chapman &          82. Morris T, White IR, Crowther MJ. Using simulation studies to evaluate
+      Hall/CRC; 1990.                                                                       statistical methods. Stat Med. 2019;38:2074-102.
+
+53. Hastie T, Tibshirani R, Friedman J. The elements of statistical learning. 2nd     83. Nkuipou-Kenfack E, Zürbig P, Mischak H. The long path towards
+      ed. New York: Springer; 2009.                                                         implementation of clinical proteomics: exemplified based on CKD273.
+                                                                                            Proteomics Clin Appl. 2017;11:5-6.
+54. Hastie T, Tibshirani R, Wainwright M. Statistical learning with Sparsity: The
+      lasso and generalizations. CRC Press LLC: Boca Raton. Monographs on             84. Perperoglou A, Sauerbrei W, Abrahamowicz M, Schmid M, on behalf of TG2
+      statistics and applied probability; 2015.                                             of the STRATOS initiative. A review of spline function procedures in R. BMC
+
+55. Heinze G, Dunkler D. Five myths about variable selection. Transplant Int.               Med Res Methodol. 2019;19:46.
+      2017;30:6-10.
+                                                                                      85. Picard RP, Cook RD. Cross-validation of regression models. J Am Stat Assoc.
+56. Heinze G, Wallisch C, Dunkler D. Variable selection - a review and                      1984;79:575-83.
+      recommendations for the practicing statistician. Biometrical J. 2018;60:
+      431-49.                                                                         86. Pullenayegum EM, Platt RW, Barwick M, Feldman BM, Offringa M, Thabane L.
+
+57. Hilsenbeck SG, Clark GM, Mcguire W. Why do so many prognostic factors                   Knowledge translation in biostatistics: a survey of current practices,
+      fail to pan out? Breast Cancer Res Treat. 1992;22:197-206.                            preferences, and barriers to the dissemination and uptake of new statistical
+                                                                                            methods. Stat Med. 2015;35:805-18.
+58. Hoerl AE, Kennard RW. Ridge Regression: biased estimation for
+      nonorthogonal problems. Technometrics. 1970;12:55-67.                           87. Raftery AE. Bayesian model selection in social research. Sociol Methodol.
+                                                                                            1995;25:111-63.
+59. Hoeting JA, Madigan D, Raftery AE, Volinsky CT. Bayesian model averaging:
+      a tutorial. Stat Sci. 1999;14:382-417.                                          88. Ramaiola I, Padró T, Peña E, Juan-Babot O, Cubedo J, Martin-Yuste V, Sabate
+
+60. Hofner B, Hothorn T, Kneib T, Schmid M. A framework for unbiased model                  M, Badimon L. Changes in thrombus composition and profilin-1 release in
+      selection based on boosting. J Comput Graphical Stat. 2011;20:956-71.                 acute myocardial infarction. Eur Heart J. 2015;36:965-75.
+                                                                                      89. Ramsay JO. Monotone regression splines in action. Stat Sci. 1988;3:425-41.
+61. Hosmer D, Lemeshow S, May S. Applied survival analysis (2nd ed.). Wiley.
+      Hoboken, NJ; 2008.                                                              90. Ravikumar P, Liu H, Lafferty J, Wasserman L. Spam. Sparse additive models.
+                                                                                            In Advances in Neural Information Processing Systems. Vol. 20 (eds J. Platt,
+62. Hosmer D, Lemeshow S, Sturdivant RX. Applied logistic regression. 3rd ed.
+      Hoboken: Wiley; 2013.                                                                 D. Koller, Y. Singer S. Roweis). Cambridge, MIT Press; 2008.
+
+63. Huebner M, le Cessie S, Schmidt C, Vach W, On behalf of the Topic Group           91. Rosenberg PS, Katki H, Swanson CA, Brown LM, Wacholder S, Hoover
+      "Initial Data Analysis" of the STRATOS Initiative. A Contemporary Conceptual          RN. Quantifying epidemiologic risk factors using non-parametric
+      Framework for Initial Data Analysis. Observational Studies. 2018;4:171-92.
+                                                                                            regression: model selection remains the greatest challenge. Stat Med.
+64. Janitza S, Binder H, Boulesteix AL. Pitfalls of hypothesis tests and model              2003;22:3369-81.
+      selection on boot- strap samples: causes and consequences in biometrical
+      applications. Biometrical J. 2016;58:447-73.                                    92. Rospleszcz S, Janitza S, Boulesteix AL. Categorical variables with many
+
+65. Jenkner C, Lorenz E, Becher H, Sauerbrei W. Modeling continuous covariates              categories are preferentially selected in bootstrap-based model
+      with a `spike`at zero: bivariate approaches. Biometrical J. 2016;58:783-96.
+                                                                                            selection procedures for multivariable regression models. Biometrical J.
+66. Lee PH. Is a cutoff of 10% appropriate for the change-in-estimate criterion             2016;58:652-73.
+      of confounder identification? J Epidemiol. 2014;24:161-7.
+                                                                                      93. Royston P, Altman DG. Regression using fractional polynomials of continuous
+67. Leeb H, Pötscher BM. Model selection and inference: facts and fiction.                  covariates: parsimonious parametric modelling. Appl Stat. 1994;43:429-67.
+      Econometric Theory. 2005;21:21-59.
+                                                                                      94. Royston P, Altman DG, Sauerbrei W. Dichotomizing continuous predictors in
+68. Leffondre K, Abrahamowicz M, Siemiatycki J, Rachet B. Modeling                          multiple regression: a bad idea. Stat Med. 2006;25:127-41.
+      smoking history: a comparison of different approaches. Am J Epidemiol.
+      2002;156:813-23.                                                                95. Royston P, Sauerbrei W. Multivariable modelling with cubic regression
+                                                                                            splines: a principled approach. Stata J. 2007;7:45-70.
+69. Lin Y, Zhang HH. Component selection and smoothing in multivariate
+      nonparametric American Journal of Epidemiology regression. Ann Stat.            96. Royston P, Sauerbrei W. Multivariable model-building. a pragmatic approach
+      2006;34:2272-97.
+                                                                                            to regression analysis based on fractional polynomials for continuous
+                                                                                            variables. Wiley, Chichester; 2008.
+
+                                                                                      97. Sauerbrei W. The use of resampling methods to simplify regression models
+                                                                                            in medical statistics. Appl Stat. 1999;48:313-29.
+
+                                                                                      98. Sauerbrei W, Abrahamowicz M, Altman DG, le Cessie S, Carpenter J, on
+
+                                                                                            behalf of the STRATOS initiative. STRengthening Analytical Thinking for
+                                                                                            Observational Studies: The STRATOS initiative. Stat Med. 2014;33:5413-32.
+Sauerbrei et al. Diagnostic and Prognostic Research  (2020) 4:3                          Page 18 of 18
+
+99. Sauerbrei W, Buchholz A, Boulesteix AL, Binder H. On stability issues in             130. Zou H. The adaptive LASSO and its oracle properties. J Am Stat Assoc. 2006;
+      deriving multivariable regression models. Biometrical J. 2015:57531-55.                  101:1418-29.
+
+100. Sauerbrei W, Meier-Hirmer C, Benner A, Royston P. Multivariable regression          Publisher's Note
+      model building by using fractional polynomials: description of SAS, STATA
+      and R programs. Comput Stat Data Anal. 2006;50:3464-85.                            Springer Nature remains neutral with regard to jurisdictional claims in
+                                                                                         published maps and institutional affiliations.
+101. Sauerbrei W, Royston P. Building multivariable prognostic and diagnostic
+      models: transformation of the predictors by using fractional polynomials. J
+      Royal Stat Soc A. 1999;162:71-94.
+
+102. Sauerbrei W, Royston P, Binder H. Selection of important variables and
+      determination of functional form for continuous predictors in multivariable
+      model building. Stat Med. 2007;26:5512-28.
+
+103. Sauerbrei W, Schumacher M. A bootstrap resampling procedure for model
+      building: application to the cox regression model. Stat Med. 1992;11:2093-109.
+
+104. Schmid M, Hothorn T. Boosting additive models using componentwise P-
+      splines. Comput Stat Data Anal. 2008;53:298-311.
+
+105. Shaw PA, Deffner V, Dodd KW, Freedman LS, Keogh R, Kipnis V, Küchenhoff
+      H, Tooze JA, on behalf of Measurement Error Working group (TG4) of the
+      STRATOS initiative. Epidemiological analyses with error prone exposures:
+      review of current practise and recommendations. Ann Epidemiol. 2018;28:
+      82-828.
+
+106. Shmueli G. To explain or to predict? Stat Sci. 2010;25:289-310.
+
+107. Smith GCS, Seaman SR, Wood AM, Royston P, White IR. Correcting for
+      Optimistic Prediction in Small Data Sets. Am J Epidemiol. 2014;180:318-24.
+
+108. Steiner M, Kim Y. The Mechanics of omitted variable bias: bias amplification
+      and cancellation of offsetting biases. J Causal Inference. 2016;4:20160009.
+
+109. Sun GW, Shook TL, Kay GL. Inappropriate use of bivariable analysis to screen
+      risk factors for use in multivariable analysis. J Clin Epidemiol. 1996;49:907-16.
+
+110. Taylor J, Tibshirani RJ. Statistical learning and selective inference. Proc Natl
+      Acad Sci USA. 2015;112:7629-34.
+
+111. Teräsvirta T, Mellin I. Model selection criteria and model selection tests in
+      regression models. Scand J Stat. 1986;13:159-71.
+
+112. Tibshirani R. Regression shrinkage and selection via the Lasso. J Royal Stat
+      Soc Series B Methodol. 1996;58:267-88.
+
+113. Tibshirani R. Regression shrinkage and selection via the lasso: a
+      retrospective. J Royal Stat Soc Series B. 2011;73:273-82.
+
+114. Tibshirani R, Taylor J, Loftus J, Reid S. Selective inference: tools for selective
+      inference. Proc Natl Acad Sci USA. 2017;112:7629-34.
+
+115. Tutz G, Binder H. Generalized additive modelling with implicit variable
+      selection by likelihood based boosting. Biometrics. 2016;62:961-71.
+
+116. van Houwelingen HC. From model building to validation and back: a plea
+      for robustness. Stat Med. 2014;33:5223-38.
+
+117. van Houwelingen HC, Sauerbrei W. Cross-validation, shrinkage and variable
+      selection in linear regression revisited. Open J Stat. 2013;3:79-102.
+
+118. van Houwelingen JC, le Cessie S. Predictive value of statistical models. Stat
+      Med. 1990;9:1303-25.
+
+119. van Walraven C, Hart RG. Leave `em alone - why continuous variables
+      should be analyzed as such. Neuroepidemiology. 2008;30:138-9.
+
+120. Vandenbroucke JP, von Elm E, Altman DG, Gotzsche PC, Mulrow CD, Pocock
+      SJ, Poole C, Schlesselman JJ, Egger M. Strengthening the Reporting of
+      Observational Studies in Epidemiology (STROBE): Explanation and
+      Elaboration. Epidemiology. 2007;18:805-35.
+
+121. Vickers AJ, Lilja H. Cutpoints in clinical chemistry: time for fundamental
+      reassessment. Clin Chem. 2009;55:15-7.
+
+122. White H. Using least squares to approximate unknown regression functions.
+      Int Econ Rev. 1980a;21:149-70.
+
+123. White HA. Heteroskedasticity-consistent covariance matrix estimator and a
+      direct test for heteroskedasticity. Econometrica. 1980b;48:817-38.
+
+124. Wikimedia Foundation Inc; 2019. Statistical model. URL https://en.wikipedia.
+      org/wiki/State_of_the_art. Accessed 1 July 2019.
+
+125. Winter C, Kristiansen G, Kersting S, Roy J, Aust D, Knösel T, Rümmele P,
+      Jahnke B, Hentrich V, Rückert F, Niedergethmann M, Weichert W, Bahra M,
+      Schlitt HJ, Settmacher U, Friess H, Büchler M, Saeger H-D, Schroeder M,
+      Pilarsky C, Grützmann R. Google goes cancer: improving outcome
+      prediction for cancer patients by network-based ranking of marker genes.
+      PLOS Comput Biol. 2012;8:e1002511.
+
+126. Wood S. Thin plate regression splines. J Royal Stat Soc Series B. 2003;65:95-114.
+
+127. Wood S. Generalized additive models. New York: Chapman & Hall/CRC; 2006.
+
+128. Wood S. Generalized additive models: an introduction with R. Second
+      Edition: CRC Press; 2017.
+
+129. Zou H, Hastie T. Regularization and variable selection via the elastic net. J
+      Royal Stat Soc Series B (Methodological). 2005;67:301-20.
+

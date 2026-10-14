@@ -1,0 +1,1573 @@
+              Education for Statistics in Practice, DAGStat 2016
+
+ Variable selection - a review and
+recommendations for the practicing
+
+               statistician
+
+                Georg Heinze & Daniela Dunkler
+                   Medical University of Vienna
+
+            CeMSIIS - Section for Clinical Biometrics
+
+ georg.heinze@meduniwien.ac.at, daniela.dunkler@meduniwien.ac.at
+                   Education for Statistics in Practice, DAGStat 2016                                                                                                                       Aims of the lecture
+
+    Variable selection - a review and                                                                                                                                            · To explain the need for variable selection in analyses of
+  recommendations for the practicing                                                                                                                                                observational studies.
+
+                  statistician                                                                                                                                                   · To understand the statistical concepts that variable selection
+                                                                                                                                                                                    could be based on.
+                     Georg Heinze & Daniela Dunkler
+                        Medical University of Vienna                                                                                                                             · To review different variable selection strategies and modeling
+                                                                                                                                                                                    philosophies.
+                 CeMSIIS - Section for Clinical Biometrics
+                                                                                                                                                                                 · To illustrate the urgent need for background knowledge in
+       georg.heinze@meduniwien.ac.at, daniela.dunkler@meduniwien.ac.at                                                                                                              statistical modeling.
+
+                  Agenda                                                                                                                                                                                                                                                                                                    Heinze & Dunkler, 032016; Part I1: 2
+
+· Part I1: Philosophy                                                                                                                                                            PART I1: PHILOSOPHY
+· Part I2: Prerequisites
+· Part I3: Variable selection methods and strategies                                                                                                                               Magritte, Ockham, Einstein
+
+                                 Break                                                                                                                                           Heinze & Dunkler, 032016; Part I1:  4
+· Part II1: Consequences of variable selection
+· Part II2: Case studies
+· Part II3: Recommendations
+
+                                                                                                                                           Heinze & Dunkler, 032016; Part I1: 3
+What is this?                                                                                                                                                                    What is this?
+
+                                                                                                                                           Heinze & Dunkler, 032016; Part I1: 5                                                           ,,This is not a pipe"
+                                                                                                                                                                                                                                    René Magritte, 192829
+What do we mean by a statistical model?
+                                                                                                                                                                                                                                                                                                                            Heinze & Dunkler, 032016; Part I1: 6
+· A set of probability distributions on the sample space S.
+                                                                                                                                                                                 What do we mean by a statistical model?
+    (e.g. Cox and Hinkley, 1974)
+                                                                                                                                                                                 · Statistical models are simple mathematical rules derived from
+· Statistical models summarize patterns of the data available for                                                                                                                   empirical data describing the association between an outcome
+   analysis. (Steyerberg, 2009)                                                                                                                                                     and several explanatory variables.
+
+· A powerful tool for developing and testing theories by way of                                                                                                                      (Dunkler et al, 2014)
+   causal explanation, prediction, and description.
+                                                                                                                                                                                 · They should be valid: provide predictions with acceptable
+    (Shmueli, 2010)                                                                                                                                                                 accuracy.
+
+· A simplification or approximation of reality.                                                                                                                                  · They should be practically useful: allow conclusions such as `how
+                                                                                                                                                                                    large is the expected change in outcome if one of the explanatory
+    (Burnham, Anderson, 2002)                                                                                                                                                       variables changes by one unit'.
+
+· A model represents, often in considerably idealized form, the                                                                                                                  · They should be robust.
+   datagenerating process. (Wikipedia)
+                                                                                                                                                                                                                                                                                                                            Heinze & Dunkler, 032016; Part I1: 8
+                                                                                                                                           Heinze & Dunkler, 032016; Part I1: 7
+What are typical components of a                                    What can we learn from this model?
+          statistical model?
+                                                                    · Prediction
+                                                                       Risk Score = 2%.
+                                                                       Means 2 of 100 people with this level of risk will have a heart
+                                                                       attack in the next 10 years.
+
+                                                                    · Explanation
+                                                                       240 mg/dL and above `high' blood cholesterol. A person with this
+                                                                       level has more than twice the risk of heart disease compared to
+                                                                       someone whose cholesterol is below 200 mg/dL.
+
+                             Heinze & Dunkler, 032016; Part I1: 9   (from http://cvdrisk.nhlbi.nih.gov/)  Heinze & Dunkler, 032016; Part I1: 10
+
+  Purposes of multivariable models                                                   To Explain or to Predict?
+
+· Prediction of an outcome of interest                              · Explanatory models
+· Identification of `important' predictors                              · Strong theory Î interest in coefficients and inference.
+· Understanding the effects of predictors (`explanatory')               · Testing and comparing existing causal theories.
+· Adjustment for predictors uncontrollable by experimental design       · Medicine: often no strong theory, etiological models
+· Stratification by risk
+                                                                    · Predictive models
+                                                                        · Interest in accurate predictions of future observations.
+                                                                        · No concern about causality and confounding (association).
+                                                                        · Medicine: prognostic models versus predictive models.
+
+                                                                    · Descriptive models
+                                                                        · capture the data structure parsimoniously: which factors
+                                                                           affect the outcome and how?
+
+(Royston & Sauerbrei, 2008)  Heinze & Dunkler, 032016; Part I1: 11  (Shmueli, 2010)                       Heinze & Dunkler, 032016; Part I1: 12
+    Why multivariable modeling?                                                                   Classes of modeling processes
+
+· Disease causation is usually multifactorial.                                                    1. The model is predefined. Estimate parameters and check
+· Influential variables can only be identified in a multivariable                                      assumptions. (Randomized trial.)
+
+   context.                                                                                       2. Develop a good predictor. Number of variables should be
+                                                                                                       small.
+                                                                                                                                                                   Datadriven!
+                                                                                                  3. Develop a good predictor. No limits in model complexity.
+                                                                                                  4. Assess the effect of a new factor of interest, adjusting for
+
+                                                                                                       established factors.
+                                                                                                  5. Assess the effect of a new factor of interest, adjusting for
+
+                                                                                                       confounding factors selected by data analysis.
+                                                                                                  6. Hypothesis generation of possible effects of factors in
+
+                                                                                                       studies with many covariates.
+
+(from http://www.cdc.gov/pcd/issues/2010/jul/10_0005.htm)  Heinze & Dunkler, 032016; Part I1: 13  (Royston & Sauerbrei, 2008)  Heinze & Dunkler, 032016; Part I1: 14
+
+         Is there a true model?                                                                            Is there a true model?
+
+A `true model' = a `true data generating mechanism'.                                              A `true model' = a `true data generating mechanism'.
+Pro:                                                                                              Contra:
+· Aristotle: `Nature operates in the shortest way possible.'                                      · `We do not accept the notion that there is a simple "true model"
+· Newton: `We are to admit no more causes of natural things than
+                                                                                                     in the biological sciences.' (Burnham & Anderson, 2002)
+    such as are both true and sufficient to explain their                                         · `We recognize that true models do not exist... A model will only
+    appearances.'
+                                                                                                     reflect underlying patterns, and hence should not be confused
+                                                           Heinze & Dunkler, 032016; Part I1: 15     with reality.' (Steyerberg, 2009)
+                                                                                                  · `I started reading Annals of Statistics, and was bemused: Every
+                                                                                                     article started with ,,Assume that the data are generated by the
+                                                                                                     following model: ..." followed by mathematics exploring
+                                                                                                     inference, hypothesis testing and asymptotics.` (Breiman, 2001)
+                                                                                                  · `All models are wrong, but some are useful.' (Box)
+
+                                                                                                                                                                                                                                             Heinze & Dunkler, 032016; Part I1: 16
+Do we need statistical models at all?                                   Example I: Prediction of recurrence of
+                                                                              venous thromboembolism
+· Statistics starts with data. These data are `generated' inside a
+   black box by nature.
+
+· Statistical culture I: Assume a stochastic data model for the inside
+   of the box.
+
+· Statistical culture II: The inside of the box is complex and
+
+unknown. Find a function    - an algorithm - that operates on
+
+to predict the responses .
+
+(Breiman, 2001)             Heinze & Dunkler, 032016; Part I1: 17       (Eichinger et al, 2010)  Heinze & Dunkler, 032016; Part I1: 18
+
+Example II: Urineproteomic predictor of incidence                                  William of Ockham
+            of early chronic kidney disease
+                                                                        · 14th century logician and Franciscan friar:
+                            Support Vector Machine                         `Pluralitas non est ponenda sine neccesitate.'
+                                                                           (Entities should not be multiplied unnecessarily.)
+(Good et al, 2010)          Heinze & Dunkler, 032016; Part I1: 19
+                                                                        · When you have 2 competing theories that make exactly the same
+                                                                           predictions, the simpler one is the better.
+
+                                                                        · If you have 2 equally likely solutions to a problem, choose the
+                                                                           simplest.
+
+                                                                        · The explanation requiring the fewest assumptions is most likely
+                                                                           to be correct.
+
+                                                                        · `Simplicity is the ultimate sophistication.' (Leonardo da Vinci)
+                                                                        · `Everything should be made as simple as possible, but not
+
+                                                                           simpler.' (~Einstein)
+
+                                                                                                                                                                                                                   Heinze & Dunkler, 032016; Part I1: 20
+                 Summary                                                                                                                                                                Focus of this presentation:
+
+· Models are not reality.                                                                                                                                                         · Methods and consequences of variable selection
+· There is no such thing as a `true model'.
+· There is not a single model that will ultimately explain data                                                                                                                                                                                 Heinze & Dunkler, 032016; Part I1: 22
+
+   generation.                                                                                                                                                                    Statistical prerequisites
+· Models can be useful: for pure prediction or for understanding
+                                                                                                                                                                                  Types of models by distribution of error
+   multidimensional association.
+· If two models have the same explanatory power, we prefer the                                                                                                                                                              Model estimation:
+                                                                                                                                                                                                                            maximum likelihood
+   simpler one.
+· Complex models can be more accurate than simple ones, but are
+
+   often less useful.
+
+                                                                                                                                           Heinze & Dunkler, 032016; Part I1: 21
+
+         Part I2: Prerequisites
+
+                                                                                                                                                                                  Likelihood and informationtheoretic measures
+
+                                                                                                                                                                                  Biasvariance
+                                                                                                                                                                                  tradeoff
+
+                                                                                                                                                                                                                            Changeinestimate criterion
+
+                                                                                                                                                                                                                                                                            Heinze & Dunkler, 032016; Part I2: 2
+Preselection of variables                                                             What models do we typically see?
+
+· Subject matter knowledge                                                         Linear model
+· Chronology
+· Costs of collecting measurements           Discussion                            ·                       
+· Availability at time of model use          with non
+· Quality (measurement errors)               statistical                           ·
+· Confounder criteria                        collaborator!
+
+                                                                                   Logistic model                )a
+                                                                                   ·
+· Availability in data set (missing values)                                        ·.
+· Variability (rare categories)
+
+                                                                                   Cox model
+
+· Preselection = Bayes!                                                            ·                                               
+
+                                             Heinze & Dunkler, 032016; Part I2: 3                                                    Heinze & Dunkler, 032016; Part I2: 4
+
+         Common assumptions                                                           Interpretation of regression coefficients
+
+Linearity: linear combination of variables                                         · Adjusted effect of :
+· (Relaxation: splines, fractional polynomials, GAMs)
+                                                                                   · Expected change in outcome, if  changes by      unit and
+Additivity: sum of effects                                                            all other  stay constant.
+· (Relaxation: include interactions, power functions, etc.)
+                                                                                   ·  measures the `independent' effect of .
+
+                                                                                   · Fundamentally different in different models!
+
+                                             Heinze & Dunkler, 032016; Part I2: 5                                                    Heinze & Dunkler, 032016; Part I2: 6
+Interpretation of regression coefficients                                                   Provided information versus
+                                                                                                  desired knowledge
+· Consider the following models to explain %body fat:
+                                                                                     · Information provided by the data:
+                                                                                         - Number of independent observations
+                                                                                         - Number of events
+                                                                                            (logistic: min(#events, #nonevents), Cox: #events)
+
+                                                                                     · Amount of knowledge desired:
+                                                                                         - Number of unknown regression coefficients (K)
+
+                                                                                     · Summarized by `events per variable'            ,         .
+
+                                                                                     · Often cited minimum            .
+
+   Events Per Variable (EPV)                                                                                                                                                                                                    Heinze & Dunkler, 032016; Part I2: 8
+
+·          (Harrell 2001, p. 61)                                                     Likelihood and the principle of maximum
+                                                                                                        likelihood
+   - Number of candidate variables, not variables in the final
+                                                                                     · Likelihood: probability of data given the model,
+                                                                                                      interpreted as function of model parameters.
+
+   model.
+
+   - Should be considered as lower bound!
+
+· Nonlinearity, interactions, etc. Î   .                                             Fisher (aged 22):
+
+· Prediction Î   (logistic regression          ).                                    · Maximum likelihood principle:
+
+· Modern modeling techniques (random forests, neural networks,                       find such that         Æmax!
+
+   support vector machines) Î times compared to logistic
+
+   regression Î  (van der Ploeg et al. 2014).
+
+                                                                                                            Ronald A. Fisher in 1913
+
+                                               Heinze & Dunkler, 032016; Part I2: 9                                                   Heinze & Dunkler, 032016; Part I2: 10
+     Maximum likelihood theory                                                               Hypothesis tests
+
+· First derivative,                                                              Likelihood ratio test
+· Second derivative,                                                             · Compare likelihood of two hierarchically nested models
+· How to estimate (NewtonRaphson),
+· Fisher Information,                                                                  and  (  nested in )
+· Variance of regression coefficients.                                           · `Nested' means that some `s in  are forced to be .
+
+                                          Heinze & Dunkler, 032016; Part I2: 11                                                                   
+                                                                                                                                  
+
+                                                                                 · where is the difference in number of regression coefficients
+                                                                                    between the two models.
+
+                                                                                 · Needs the fully fitted models  and 
+
+                                                                                                                                                                                                                            Heinze & Dunkler, 032016; Part I2: 12
+
+             Hypothesis tests                                                               Hypothesis tests
+
+Scores test                                                                      Wald test
+
+· Needs only the model fit , where  .                                            · Needs only the model fit , where        .
+                                                                                                                           would not cause a
+· Evaluates if relaxing the restriction   would improve the                      · Evaluates if imposing the restriction 
+   model fit.                                                                       significant drop in model fit.
+
+· Evaluates the first derivative of  in the direction of .                       · Evaluates the estimated variance of  at .
+
+· If slope of  is ,steep`,  should be assumed.
+
+                                                                                 · = Classical `backward' test.
+
+· = Classical `forward' test.
+
+                                          Heinze & Dunkler, 032016; Part I2: 13                                  Abraham Wald, 19021950
+
+                                                                                                                                                                     Heinze & Dunkler, 032016; Part I2: 14
+             Testing models                                                                                                                                                               Testing between models
+
+· Likelihood ratio test is the `state of the art'                                                                                                                                 · What does it mean to test models?
+   and widely considered the most precise test.                                                                                                                                       - OK if the test is `prespecified' - rarely done in practice.
+                                                                                                                                                                                      - Not informative if models result from earlier testing
+· Wald test and scores test are approximations to it,                                                                                                                                    (iterated testing: tests on `generated' hypotheses).
+   at low computational cost.
+                                                                                                                                                                                  · Consequence:
+                                                                                                                                           Heinze & Dunkler, 032016; Part I2: 15      - `Tests' are interpretable if a few, prespecified working
+                                                                                                                                                                                         models are compared.
+           Information theory                                                                                                                                                         - We cannot trust the pvalues from selected models!
+
+· Suppose Likelihood = 1                                                                                                                                                          · Modeling and hypothesis testing - two hostile brothers?
+· This is achieved if the datagenerating mechanism is fully known.
+· Expressed differently, log(likelihood) = entropy = 0.                                                                                                                                                                                                                                                                      Heinze & Dunkler, 032016; Part I2: 16
+
+                                                                                                                                           Heinze & Dunkler, 032016; Part I2: 17             Information theory
+
+                                                                                                                                                                                                                                 Ludwig Boltzmann, 18441906
+                                                                                                                                                                                                                                 Physicist and Philosopher
+
+                                                                                                                                                                                                                                       Photo by Janez Stare, http://graves.mf.unilj.si/
+
+                                                                                                                                                                                  · KullbackLeibler information happened to be the negative of
+                                                                                                                                                                                     Boltzmann`s entropy developed 50 years earlier.
+
+                                                                                                                                                                                                                                                                                                                             Heinze & Dunkler, 032016; Part I2: 18
+Akaike information criterion                                                                    Smallsample correction
+
+· Akaike showed that for model selection we need to maximize the                        · For small data sets:
+
+`crossvalidated' expectation of across several competitive
+
+models:
+
+                                              Model developed on ,
+                                              Evaluated on .
+
+· This can be approximated by                 Model developed on ,                                               ... number of parameters
+                                              Evaluated on .                                                     ... sample size
+                        
+
+· He defined                                  .                                         · Use for  .
+
+                                                                                                          
+
+                                               ... number of parameters
+
+              Hirotumi Akaike, 19272009,
+
+              (from http://andrewgelman.com)
+
+                                                 Heinze & Dunkler, 032016; Part I2: 19                                           Heinze & Dunkler, 032016; Part I2: 20
+
+              The value of AIC                                                          Comparing models with AIC
+
+· We can compare two nonhierarchical models.                                            AIC                  as likelihood of the model, given data.
+· We can compare several models.                                                        · Interpret
+· Hierarchical models: corresponding pvalues                                                                 
+
+Degrees of freedom difference  Equivalent pvalue in LR test                             Evidence Ratios (ER)
+                  1                          0.157
+                  2                          0.135                                                                             
+                  3                          0.117
+                  4                          0.092
+
+· General: 1-pchisq(2*df, df)                                                           · ER = `How much likelier is  than ?'
+
+                                                 Heinze & Dunkler, 032016; Part I2: 21                                           Heinze & Dunkler, 032016; Part I2: 22
+   Comparing models with AIC                                                                Schwarz`s Bayesian Information Criterion
+                                                                                                                  (BIC)
+AIC differences                                    1/ER Level of empirical
+                                                                                            · Defined as       
+                                                     support for Model i
+                                                                                            · If the ,true` model is among the candidate models, then BIC will select
+·                                          02    1  2.7 Substantial                            the true model as    (consistent model selection)
+
+                                           47 7.4  33.1 Considerably less                   · For Cox or logistic models,
+                                                                                               , ` is the number of events, or min(events, nonevents)
+                                           > 10    >148 Essentially none
+                                                                                            · More stringent selection for large N than for small N
+AIC weights                                                                                 · Compute equivalent pvalue in R by 1-pchisq(log(N)*K, K)
+                                                                                            · For K=1, N=100: equivalent to   
+                                                   
+                                                                                            · ÆAIC selects more variables than BIC
+·  is considered the weight of evidence in favor of  being the
+   actual KulbackLeibler best model given that one of the models                                                                                                                                                                       Heinze & Dunkler, 032016; Part I2: 24
+
+must be the KulbackLeibler best model in that set.                                                    Resampling methods
+
+(Burnham & Anderson, 2002)                           Heinze & Dunkler, 032016; Part I2: 23  · Other uses of the bootstrap in model selection:
+                                                                                            · Bootstrap inclusion frequencies (BIF) of each
+     Resampling methods
+                                                                                               regression coefficient.
+Bootstrap                                                                                   · Pairwise inclusion tables. (Sauerbrei & Schumacher, 1992)
+· Draw samples with replacement from original data set.                                     · Distribution of coefficients.
+· Perform model selection on each sample.
+· Compute probability of selection of each model.                                           · Stability paths
+                                                                                               (Meinshausen & Bühlmann, 2010):
+· Yields selection probabilities which are correlated with, but not                            useful to assess dependence of
+   identical to, Akaike weights.                                                               inclusion on inclusion threshold.
+
+· (Akaike weights consider the full ranked list of models in a data                                                                                                                                                                    Heinze & Dunkler, 032016; Part I2: 26
+   set, bootstrap only the ,winner model` in each resample.)
+
+· See      (Part II2).
+
+                                                     Heinze & Dunkler, 032016; Part I2: 25
+                 Shrinkage                                                                           Shrinkage
+
+The phenomenon                                                                       The method(s)
+· Observed values in new samples are closer to overall mean                          · Anticipate shrinkage (of calibration slope) by crossvalidation
+                                                                                     · `Shrink' regression coefficients such that a calibration slope of 1
+   than predicted values.
+                                                                                        would be expected.
+Calibration slope =                           Calibration slope < 
+                                                                                                                                                                         Calibration slope = 
+
+Training sample                               Test sample      27                                                                                                                                                               Heinze & Dunkler, 032016; Part I2: 28
+
+Shrinkage methods                                                                                    Shrinkage
+
+· Postestimation shrinkage factor estimation                                         · Empirical Bayes interpretation:
+                                                                                        penalty = datadependent prior on regression coefficients.
+- Verweij & Van Houwelingen 1993:
+                                                                                     · Consequences of shrinkage:
+global shrinkage factor (  Î poor model)                                                 - Controlling variance, not bias.
+                                                                                         - Effect estimation after shrinkage?
+- Sauerbrei, 1999: parameterwise shrinkage factors
+                                                                                     · Selection = extreme shrinkage!
+- Dunkler, 2016: joint shrinkage factors, R package shrink                                            "If it's close to , set it to ."
+
+· Regularized regression                                                             · Not to be confused with bias correction!
+    - Ridge regression: L2 penalty on regression coefficients                            - It does not aim at unbiased regression coefficients!
+    - Lasso: L1 penalty (Tibshirani, 1996 & 2011)
+    - Elastic net: L2 and L1 penalty                                                                                                                                                                                            Heinze & Dunkler, 032016; Part I2: 30
+
+                                              Heinze & Dunkler, 032016; Part I2: 29
+             Bias & efficiency                                                                 Bias & efficiency
+
+                                                                                                                                
+
+                                                        Heinze & Dunkler, 032016; Part I2: 31  (Figure 1 from Greenland, 2000)                      Heinze & Dunkler, 032016; Part I2: 32
+
+        Biasvariance tradeoff                                                                  Biasvariance tradeoff
+
+Assume       , with                              and        :                                                                            Model
+
+· Expected prediction error of a regression fit         at       :
+
+                                                                                                                                Complex             Simple
+
+                                                                                                                 Large                   Variance 
+                                                                                               Sample size
+                                                                                                                                         Bias +
+                                                                                                                 Small
+                                                                 
+                       
+Irreducible                                                                                                                     Variance +
+error
+                     
+
+(Hastie, Tibshirani and Friedman, 2009, p. 223)         Heinze & Dunkler, 032016; Part I2: 33                                                       Heinze & Dunkler, 032016; Part I2: 34
+        To explain or to predict?                                                          Penalized likelihood: regularized regression
+
+Expected prediction error = Irreducible error + Bias2 + Variance                            · LASSO: minimize    
+                                                                                            · Imposes a penalty on the regression coefficients.
+                                          Important in explanatory modeling                 · Prerequisite: adequate standardization of effects.
+Important in predictive modeling
+                                                                                            · What we obtain
+                                                    Heinze & Dunkler, 032016; Part I2: 35        - A prediction formula with less error than
+                                                                                                    ordinary least squares,
+                                                                                                 - Variable selection.
+
+                                                                                            · What we not obtain
+                                                                                                 - Unbiased regression coefficients,
+                                                                                                 - CI - even with bootstrap, variance of estimate is not helpful as
+                                                                                                    it is not centered around true value.
+
+                                                                                                                                                                                                                                           Heinze & Dunkler, 032016; Part I2: 36
+
+Inclusion for addressing confounding                                                       Changeinestimate criterion
+
+Directed acyclic graph (DAG)                 X2                                            · In epidemiologic studies, it is often not
+
+· = A graph with oneway edges containing            a                                         clear whether adjustment for a variable 
+                                                                                              is necessary or not.
+no cycles describing causal relationships.       b
+
+                                                    X1 c Y                                                                              Abdomen
+
+Confounding                                                                                Changeinestimate criterion                            a
+
+· Effect of  on is confounded by ,                                                         · If  (abdomen circumference) is a b                       Body fat
+   if  is effect of both  and .                                                                                                                     Body fat
+                                                                                           confounder ( and exist), then its removal Weight c
+· Î  must be considered to regain
+   causal interpretation of effect of  on .                                                will change our assessment of arrow from
+
+                                                                                           weight to body fat.                          Weight c`
+
+                                                                                           · So we could remove `abdomen' and see
+
+                                                                                           what happens to :           .
+
+(Pearl, 1995)                                       Heinze & Dunkler, 032016; Part I2: 37                                               Heinze & Dunkler, 032016; Part I2: 38
+Changeinestimate criterion                                                                         Significance of changeinestimate
+
+· M1:                                                                                             · Tests for collapsibility by bootstrapping or
+· M2:                                                                                             · Dunkler et al (2014) approximate the changeinestimate and
+
+· Change in estimate criterion: leave   in the model                                                 derive a simple test for   .
+   if   ,
+  often proxied by                                                                                They show:
+                                                                                                  · Elimination of a ,significant` variable  from a model leads to a
+                                 
+                                                                                                     significant change  .
+· This leads to inconsistent variable selection                                                   · Elimination of a `nonsignificant' variable  from a model leads
+
+    (Maldonado & Greenland, 1993)                                                                    to a nonsignificant change  .
+
+· To get a consistent estimator, we could test for                                                · Î Test of collapsibility = Test of omitted variable.
+      (collapsibility of the two models).
+
+(see also Lee, 2014)                                Heinze & Dunkler, 032016; Part I2: 39                                                                     Heinze & Dunkler, 032016; Part I2: 40
+
+       Prior knowledge:                                                                                  Prior knowledge:
+simple illustrative simulations                                                                   simple illustrative simulations
+
+· How poor prior knowledge can result in poor results                                             · How poor prior knowledge can result in poor results
+
+(simulation with                ).                                                                (simulation with                 ).
+
+True      3                                                                                       True       
+
+A weak :                                                                                          A strong :
+
+Setting it to  will more often                                                                    Setting it to  will always push
+push  towards its true value                                                                       away from its true value.
+than away from it.
+Shrinkage effect on !                                                                             RMSE( = 0.68
+                                                                                                  RMSE( = 0.67
+RMSE( = 0.67                                                                                      Bias(  
+RMSE( = 0.65                                                                                      Bias = +0.33
+Bias(  
+Bias = +0.03
+
+                                    Î `Selection is good.' Heinze & Dunkler, 032016; Part I2: 41                                       Î `Selection is bad.'  Heinze & Dunkler, 032016; Part I2: 42
+        Prior knowledge                                                         Part I3:
+
+We should have known the likely role of  in advance:                                 Variable selection
+· If it is considered a strong effect, never let it be deleted from the                   methods
+
+   model!                                                                             The `Full' model
+· If it is considered a weak effect, selection can improve
+                                                                         · Means: do not perform any datadriven variable selection.
+   performance. Î less variance (Shmueli, 2010)                          · Select, for each variable, a desired level of nonlinearity
+· If it is considered no effect, it should better not be used upfront
+                                                                            (including spline transformations).
+   (`instrumental variabale').                                           · Select some biologically plausible interactions.
+                                                                         · Variables should be preselected by `expertise'.
+X2  X1  Y
+
+                         Heinze & Dunkler, 032016; Part I2: 43
+
+            Basic algorithms
+
+· `Full' model
+· Univariable filtering
+· Best subset selection
+· Forward selection
+· Backward elimination
+· Changeinestimate: Purposeful variable selection and
+
+   augmented backward selection
+· Informationtheoretic approach
+· Directed acyclic graph (DAG)based selection
+
+                         Heinze & Dunkler, 032016; Part I3: 2            Heinze & Dunkler, 032016; Part I3: 3
+          Univariable filtering                                                 Pros and cons of univariate selection
+
+· Still by far the most often applied variable selection method in              · Easy. (You can do that with any software.)
+   medical literature!                                                          · Retraceable.
+
+· Select a significance level (e.g., =0.20 or =0.157)                           · Problematic:                                      X1
+· Perform univariable models.                                                   · The univariate effect of  on is                                  a
+· Use all variables in multivariable model with
+                                                                                                                                        b
+   univariable value < .
+· Sometimes accompanied by subsequent backward elimination.                                                                   .
+
+                                                                                                                                             X2 c Y
+
+                                                                                a          b          c          Consequence
+
+                                                                                Pos.       Pos.       Neg.        falsely not selected (if   )
+                                                                                0          Pos./Neg.  Pos./Neg.   falsely selected.
+                                                                                Pos./neg   0          Pos./neg    correctly selected (only if    or   ).
+
+                                                                                ÎUnivariate selection works only with uncorrelated variables.
+
+                                          Heinze & Dunkler, 032016; Part I3: 4                                                     Heinze & Dunkler, 032016; Part I3: 5
+
+          Best subset selection                                                                       Forward selection
+
+· Perform all  regressions.                                                     · Select a significance level  .
+· Select the model that has the lowest AIC.
+                                                                                · `Estimate' a null model.
+
+                                                                                · Repeat:
+
+Modification:                                                                      - While the most significant excluded term has  ,
+
+· Prespecify a small number (  ) of plausible models.                              add it and reestimate.
+
+· Select those that have AIC < AICmin+2.                                        Variant: Stepwise forward                     Software:
+                                                                                · Select  and .                                   
+· Perform multimodel inference on the selected models.                          · Repeat:                                     R step()
+
+In practice:                                                                       - While the most significant excluded term has  ,
+· Approximated by stepwise approaches!
+                                                                                   add it and reestimate.
+
+(Burnham & Anderson, 2002)                Heinze & Dunkler, 032016; Part I3: 6     - If least significant included term has   ,
+                                                                                     remove it and reestimate.
+                                                                                                                                       Heinze & Dunkler, 032016; Part I3: 7
+           Backward elimination                                                                    Purposeful selection
+
+· Select a significance level .                                                          · Proposed by Hosmer and Lemeshow in their books on applied
+· Estimate full model.                                                                      logistic regression and applied survival analysis.
+
+· Repeat:                                                                                · Starts with univariate screening.
+                                                                                         · Then performs backward elimination, but leaves variables in the
+- While least significant term has       ,
+                                                                                            model if omission would cause a large (proportional)
+remove it and reestimate.                                                                   changeinestimate in other variables.
+                                                                                         · Additional forward steps.
+Variant: Stepwise backward                       Software:
+                                                 R mfp:mfp()                             · A bit outdated.
+· Select  and .
+· Repeat:                                   ,
+
+- While least significant term has       ,         Heinze & Dunkler, 032016; Part I3: 8
+
+remove it and reestimate.
+
+- If most significant excluded term has                                                  (Hosmer & Lemeshow, 1999 & 2000)
+  add it and reestimate.
+
+                                                                                                                           Heinze & Dunkler, 032016; Part I3: 9
+
+Augmented backward elimination                                                                Opinions on variable selection
+
+· Proposed by Dunkler et al, 2014.                                                       for models with focus on prediction and explanation.
+· Reinvestigated the changeinestimate criterion and proposed a
+                                                                                         No!  Variable selection                               Yes!
+   standardized version and a shortcut approximation to it.
+
+· Based on backward elimination with level .
+· Leaves variable in a model if maximum of standardized changes
+
+   inestimate greater than .
+
+· Simulation study showed that results and performance are
+   always close to the full model, but fewer variables are selected.
+
+Software:                                                                                (Harrell, 2001; Steyerberg, 2009; Burnham & Anderson, 2002, Royston & Sauerbrei, 2008)
+SAS macro %ABE
+                                                                                                                                                                                                                                         Heinze & Dunkler, 032016; Part I3: 11
+                                            Heinze & Dunkler, 032016; Part I3: 10
+Harrell`s recommendations                                                               Steyerberg`s recommendations
+
+· Focus on prediction models.                                                           · Focus on prediction models.
+
+· `Effects cannot be assumed to be exactly .'                                           · False inclusion is better than false exclusion of variables.
+
+· `Selection invalidates confidence intervals and pvalues.'                             · Stepwise methods may lead to
+                                                                                            - Instability of selection,
+· Specify a full model, including meaningful interactions and                               - Biased estimation of coefficients,
+                                                                                            - Misspecification of variability (exaggerated values),
+nonlinear effects.                                                                          - Predictions of worse quality than from a full model.
+
+· Perform global tests for interactions or nonlinear effects.
+
+· At most: do a mild backward selection at       .
+
+· Model simplification using crossvalidated predicted values as
+
+outcome.
+
+(see also Harrell, 1996)                         Heinze & Dunkler, 032016; Part I3: 12                                     Heinze & Dunkler, 032016; Part I3: 13
+
+BurnhamAnderson`s recommendations                                                                         Model averaging
+
+· Strong focus on explanatory models.                                                   ·                    ... inclusion of  in model
+                                                                                                             ... sum of weights of models
+· Select a set of models that are biologically plausible.                                                   including 
+
+· These are subset models of a global model.
+
+· Apply informationtheoretic approach.
+
+· Compute AIC weights or bootstrap weights.
+
+· Perform multimodel inference                Model                                                                           
+                                                                                                                           
+
+(problem: no variable selection!). 1 0                     1   0.431                    ·                              
+
+                                              2  1.2 0.5488    0.237
+
+                          90% confidence set  3  1.9 0.3867    0.167
+
+                                              4  3.5 0.1738    0.075                                      weight withinmodel betweenmodel
+
+                                              5  4.1 0.1287    0.056                                        variance  variance
+
+Akaike weight:                                6  5.8 0.0550    0.024
+
+                                              7  7.3 0.0260    0.010                    (Buckland, 1997)                   Heinze & Dunkler, 032016; Part I3: 15
+                                                 Heinze & Dunkler, 032016; Part I3: 14
+BurnhamAnderson`s recommendations                                                          RoystonSauerbrei `s recommendations
+
+For explanatory model                                                                     · Focus on explanatory and descriptive models.
+                                                                                          · Initial working set of variables.
+· If there is a dominating model with    , just report                                    · Coding matters.
+   this one unconditionally.                                                              · Backward elimination with additional forward steps.
+                                                                                          · Function selection. (not covered here)
+· Otherwise, report the best performing model, with unconditional                         · `If you have a large enough sample, you can use selection
+   variance based on modelaveraged inference on the models of
+   the 90% confidence set.                                                                   methods.'
+                                                                                          · They propose backward elemination.
+For prediction model                                                                      · Select  according to needs; larger value means larger model.
+                                                                                          · Emphasize importance of investigation of model stability Î by
+· Perform modelaveraged inference (averaged point estimate and
+   variance).                                                                                means of resampling.
+
+Bootstrap model frequencies can replace the Akaike weights.                                                                                                                                                                          Heinze & Dunkler, 032016; Part I3: 17
+
+Relative importance of a variable :                                                             Differences (and similarities) in
+                                                                                                prediction and causal modeling
+                                                   Heinze & Dunkler, 032016; Part I3: 16
+                                                                                          · Both are using maximum likelihood Î prediction as vehicle to
+                             Coding                                                          find estimates.
+
+· One interesting aspect (out of many) in the RoystonSauerbrei                            · While prediction focusses on ,
+   book is coding of categorical variables:                                                  causal modeling focusses on
+
+· Nominal variables: choose an appropriate reference.                                     · In prediction, important prerequisites for selecting variables are:
+                                                                                              - Chronology (do not use future values!,
+- Frequent, standard group, etc.                                                                 e.g. timedependent variables in survival analysis),
+                                                                                              - Availability at time of prediction.
+- Variable selection on dummys - collapse rare groups with
+  reference                                                                               · In causal modeling, it is confounder control.
+                                                                                             ÎDAG methodology
+· Ordinal variables: advantages of ordinal coding
+                                                                                                                                                                                                                                     Heinze & Dunkler, 032016; Part I3: 19
+- Variable selection can then collapse adjacent groups with
+
+similar outcome                   Level  Dummy1 Dummy2
+
+                                  0                0         0
+
+                                  1                1         0
+
+                                  2                1         1
+
+(Royston & Sauerbrei, 2008)       Etc.             Heinze & Dunkler, 032016; Part I3: 18
+ Preselection for prediction models                                                                                                                                                       Example: quality of wine
+
+· Chronology:                                                                                                                                                                     · Chronology:
+            Harvesting covariates                                                                                                                                                       Harvesting covariates
+                                Outcome observation
+                                                                                                                                                                                                                       Outcome
+
+Inclusion Index date                           time                                                                                                                                                                    time
+
+                                                                                                                                                                                  Spring  Harvest
+
+                                                                                                                                                                                          Grapes on vine       Barrel
+
+· Don`t use information from the future for                                                                                                                                                                                                                                                                                  Heinze & Dunkler, 032016; Part I3: 21
+   prediction/effect estimation!
+   (This is one of the most often violated conditions in practice!)                                                                                                                     Implication of the DAG view on
+                                                                                                                                                                                               explanatory models
+· must be available also in prediction situation.
+                                                                                                                                                                                  · This implies that there cannot be a single model explaining ,
+                                                                                                                                           Heinze & Dunkler, 032016; Part I3: 20  · But the choice of model depends on what we want to estimate:
+                                                                                                                                                                                  · E.g., the causal effect of on .
+       Using causal DAGs to identify
+                 confounders                                                                                                                                                      · If we were interested in the effect of  on ,
+                                                                                                                                                                                     we would not adjust for
+· Pearl (1995) described causal relationships                                                                                                                                        (and not for any other variable).
+   by DAGs.
+
+· We are interested in the effect of  on .
+
+· Confounder adjustment should
+   be made for:
+
+· Confounders (parents of  and : )           (BIAS)
+
+· Backdoor path blockers (they look like confounders: ) (BIAS)
+
+· NOT for instruments ( if  were not there)  (VARIANCE)
+
+· NOT for colliders ()                       (BIAS)
+
+                                             Heinze & Dunkler, 032016; Part I3: 22                                                                                                                                     Heinze & Dunkler, 032016; Part I3: 23
+     Confounder selection criteria                                                                                                                                                The disjunctive cause criterion (DCC)
+
+In practice, true causal relationship is usually unknown.                                                                                                                         VanderWeele & Shpitser (2011) argue that with DCC,
+                                                                                                                                                                                  · No detailed knowledge about all causal relationships is needed,
+Pretreatment criterion (Rubin, 2009)                                                                                                                                              · If any subset of the observed variables suffices to control
+· All variables preceding .
+                                                                                                                                                                                     confounding, those identified by DCC will also suffice.
+Common cause criterion (Glymour et al, 2008)                                                                                                                                      · Further backward elimination can improve confounder control in
+· Variables that are cause of and of .
+                                                                                                                                                                                     efficiency.
+Disjunctive cause criterion (VanderWeele & Shpitser, 2011)                                                                                                                        · Disadvantage: the DCC can amplify bias by unmeasured
+· Variables that are cause of or of .
+                                                                                                                                                                                     confounding.
+                                                                                                                                           Heinze & Dunkler, 032016; Part I3: 24
+                                                                                                                                                                                  · Disadvantage: we are never completely sure about the arrows in
+                   DAGs                                                                                                                                                              the DAG.
+
+'..., there are known knowns; there are things we know we know.                                                                                                                                                                                                                                                              Heinze & Dunkler, 032016; Part I3: 25
+We also know there are known unknowns; that is to say we know
+there are some things we do not know. But there are also unknown                                                                                                                         Using causal DAGs to identify
+unknowns - the ones we don't know we don't know. And if one                                                                                                                                        confounders
+looks throughout the history of our country and other free countries,
+it is the latter category that tend to be the difficult ones.`                                                                                                                    Consider `always selected'.
+
+Donald Rumsfeld, February 12, 2002 about the lack of evidence                                                                                                                     · Confounding control is
+linking the government of Iraq with the supply of weapons of mass                                                                                                                   by adjusting for
+destruction to terrorist groups.
+                                                                                                                                                                                  ·  (a confounder of ),
+                                                                                                                                                                                  ·  (a seeming confounder of ),
+                                                                                                                                                                                  · but not for  (a collider).
+
+Heinze & Dunkler, 032016; Part I3: 26                                                                                                                                             Heinze & Dunkler, 032016; Part I3: 27
+ Performance of various approaches                                                                                                                                                        An Example - Confounder
+
+· Pretreatment criterion: , ,                                                                                                                                                     R Code  100000    rnorm(N)  rnorm(N)
+· Common cause:                                                                                                                                                                   > N <-  rnorm(N)  .3 * w +
+· DCC: ,                                                                                                                                                                          > w <-  .5 * w +
+· Univariate selection: ( ), ,                                                                                                                                                    > x <-  .4 * x +
+· Backward elimination, Lasso & Co: , ,                                                                                                                                           > y <-
+· Backward elimination after DCC: , 
+                                                                                                                                                                                  > summary(lm(y ~ x))
+                                                                                                                                           Heinze & Dunkler, 032016; Part I3: 28
+                                                                                                                                                                                          Estimate      Std. Error      Pr(>|t|)
+                                                                                                                                                                                                                 0.003       0.332
+                                                                                                                                                                                  Intercept -0.003               0.003
+                                                                                                                                                                                                                           <2e-16
+                                                                                                                                                                                  x       0.522
+
+                                                                                                                                                                                    Adjusted R-squared: 0.2436
+
+                                                                                                                                                                                  (http://anythingbutrbitrary.blogspot.co.at/2016/01/howtocreateconfounderswith.html ) Heinze & Dunkler, 032016; Part I3: 29
+
+        An Example - Confounder                                                                                                                                                           An Example - Collider
+
+R Code  100000    rnorm(N)  rnorm(N)                                                                                                                                              R Code  100000              rnorm(N)
+> N <-  rnorm(N)  .3 * w +                                                                                                                                                        > N <-  rnorm(N)
+> w <-  .5 * w +                                                                                                                                                                  > x <-  .7 * x + rnorm(N)
+> x <-  .4 * x +                                                                                                                                                                  > y <-  1.2 * x + .6 * y +
+> y <-                                                                                                                                                                            > w <-
+
+> summary(lm(y ~ x + w))                                                                                                                                                          > summary(lm(y ~ x))
+
+        Estimate Std. Error  Pr(>|t|)                                                                                                                                                     Estimate      Std. Error      Pr(>|t|)
+                                  0.373                                                                                                                                                                          0.003   0.00486
+Intercept -0.002  0.003                                                                                                                                                           Intercept -0.009               0.003     <2e-16
+                                <2e-16
+x       0.403     0.003         <2e-16                                                                                                                                            x       0.702
+
+w       0.298     0.004
+
+                                                                                                                                                                                  Adjusted R-squared: 0.3285
+
+Adjusted R-squared: 0.294             Heinze & Dunkler, 032016; Part I3: 30                                                                                                                                             Heinze & Dunkler, 032016; Part I3: 31
+        An Example - Collider                                                             DAG: summary
+
+R Code  100000              rnorm(N)                                         · In causal effect estimation, setting up a DAG can help to identify
+> N <-  rnorm(N)                                                                the set of adjustment variables.
+> x <-  .7 * x + rnorm(N)
+> y <-  1.2 * x + .6 * y +                                                   · The DAG is `rife with assumptions'.
+> w <-                                                                       · Rules like `pretreatment', `disjunctive cause criterion', etc. help to
+
+> summary(lm(y ~ x + w))                                                        make the results robust against violations.
+
+        Estimate Std. Error           Pr(>|t|)                                                                                                                                                                          Heinze & Dunkler, 032016; Part I3: 33
+                                         0.0135
+Intercept -0.007            0.003        0.0008                                               Summary
+                                         <2e-16
+x       -0.016              0.005                                            · There exists no single, simple `true model'.
+                                                                             · Different variable selection strategies have been favored by
+w       0.443               0.002
+                                                                                different authors.
+Adjusted R-squared: 0.5075                                                   · Depending on the data they usually see.
+                                                                             · All have in common that:
+                                      Heinze & Dunkler, 032016; Part I3: 32
+                                                                                 - existing knowledge should be used,
+ Effect estimation and use of penalized                                          - models should be interpretable.
+             likelihood methods
+
+· The effect of interest should not be penalized to obtain an
+   unbiased estimate.
+
+· But: penalizing all other effects (confounders) can be harmful, as
+   their effective degrees of freedom are reduced.
+
+· The extreme case is that the confounder effects are shrunken
+   such that essentially an unadjusted effect is estimated.
+
+· It seems that an unbiased effect estimate can sometimes only be
+   obtained at the cost of a large variance.
+
+                                      Heinze & Dunkler, 032016; Part I3: 34  Heinze & Dunkler, 032016; Part I3: 35
+Part II1: Consequences of variable                                                                                                                  Questions
+   selection - some simulations
+                                                                                                                                    · How stable is variable selection?
+                                                                                                                                    · Does variable selection induce bias of ?
+                                                                                                                                    · Does variable selection increase RMSE of ?
+                                                                                                                                    · Does variable selection lead to biased or inaccurate predictions?
+                                                                                                                                    · How does background knowledge improve results?
+
+                              (from http://whatnextbook.com/wordpress/tag/decisions/)                                                                                                                                                                                     Heinze & Dunkler, 032016; Part II1: 2
+
+               Simulation setup                                                                                                             Correlation structure
+
+· Binder et al (2011) setup.                                                                                                        Total R2=46%
+                                                                                                                                    Partial R2:
+· Linear regression                                                                                                                 X1 = 0.3%
+                                                                                                                                    X3 = 2.2%
+· Sample size such that                                                                                                             X4 = 0.8%
+                                                                                                                                    X5 = 4.0%
+· Methods:                                                                                                                          X6 = 3.3%
+                                                                                                                                    X8 = 1.8%
+- Full model,                                                                                                                       X10 = 1.8%
+                                                                                                                                    X11 = 5.0%
+- BW(AIC)                ... Backward elemination with           ,
+                                                                                                                                                                                                                                                                          Heinze & Dunkler, 032016; Part II1: 4
+- FW(AIC)                ... Forward selection with     ,
+
+- Lasso(10CV)            ... LASSO with 10fold crossvalidation,
+
+- MLafterLasso(10CV) ... MaximumLikelihood after LASSO,
+
+- BW(          )
+
+- Uni                         ... univariate selection
+
+                                                                                             Heinze & Dunkler, 032016; Part II1: 3
+ Simulation study: a note of caution                                                                                                                                              Results: selection Type I and II error
+
+· We assume a `true model', even if we doubted its existence in                                                                                                                                                                                                                                                          Heinze & Dunkler, 032016; Part II1: 6
+   Part I.
+                                                                                                                                                                                  Results: selection Type I and II error
+· We assume that a variable selection method may discover that
+   `true model'.
+
+· This way we can learn about the behavior of variable selection
+   methods under known population properties.
+
+· We can also evaluate `explanatory performance' of the model
+   (bias/RMSE of regression coefficients).
+
+· Other way to compare methods: best crossvalidated
+   performance in complex data sets.
+
+· No general properties can be derived!
+
+                                                                                                                                           Heinze & Dunkler, 032016; Part II1: 5
+
+ Results: selection Type I and II error
+
+Heinze & Dunkler, 032016; Part II1: 7                                                                                                                                             Heinze & Dunkler, 032016; Part II1: 8
+Results: regression coefficients,                                                                                                                           Results: regression coefficients,
+          unconditional                                                                                                                                               unconditional
+
+In these scenarios, unconditional bias of true positive E is towards null!                                                                                  In these scenarios, unconditional bias of true positive E is towards null!
+
+                In these scenarios, unconditional bias of E is towards null!                                                                                                In these scenarios, unconditional bias of E is towards null!
+
+                                                                                                                     Heinze & Dunkler, 032016; Part II1: 9                                                                                                                       Heinze & Dunkler, 032016; Part II1: 10
+
+Results: regression coefficients,                                                                                                                           Results: regression coefficients,
+          unconditional                                                                                                                                               unconditional
+
+In these scenarios, unconditional bias of E is towards null!                                                                                                In these scenarios, unconditional bias of E is towards null!
+
+                                                                                      Heinze & Dunkler, 032016; Part II1: 11                                                                                                                      Heinze & Dunkler, 032016; Part II1: 12
+Regression coefficients, conditional                                                                                                                                          Regression coefficients, conditional
+
+                                               Conditional bias of E is away from null!                                                                                                                                                                                                             Heinze & Dunkler, 032016; Part II1: 14
+
+                                                                                                                                      Heinze & Dunkler, 032016; Part II1: 13  RMSE of regression coefficients,
+                                                                                                                                                                                         unconditional
+Regression coefficients, conditional
+
+Heinze & Dunkler, 032016; Part II1: 15                                                                                                                                        Heinze & Dunkler, 032016; Part II1: 16
+RMSE of regression coefficients,                                                                                                                              RMSE of regression coefficients,
+           unconditional                                                                                                                                                 unconditional
+
+                                                                                                                      Heinze & Dunkler, 032016; Part II1: 17                                                                                                                                         Heinze & Dunkler, 032016; Part II1: 18
+
+RMSE of regression coefficients,                                                                                                                              Coverage of 95% CI for E, unconditional
+           unconditional
+
+Heinze & Dunkler, 032016; Part II1: 19                                                                                                                        Heinze & Dunkler, 032016; Part II1: 20
+Coverage of 95% CI for E, conditional                                                                                                                                             Coverage of 95% CI for E, conditional
+
+Conditional coverage for `null' variables: how often selected and nonsignificant?                                                                                                 Conditional coverage for `null' variables: how often selected and nonsignificant?
+For BW(AIC) this happens in >50%.
+                                                                                                                                                                                                                                                                                                                           Heinze & Dunkler, 032016; Part II1: 22
+                                                                                                                                          Heinze & Dunkler, 032016; Part II1: 21
+                                                                                                                                                                                          Accuracy of predictions
+Coverage of 95% CI for E, conditional
+
+Conditional coverage for `null' variables: how often selected and nonsignificant?
+
+Of course, for BW(  ) this happens only in 5%.  Heinze & Dunkler, 032016; Part II1: 23                                                                                            Heinze & Dunkler, 032016; Part II1: 24
+Accuracy of predictions                                                                A network of dependencies...
+
+                                                                                    False inclusion of variables
+
+                                                                                    False exclusion
+
+                                            Heinze & Dunkler, 032016; Part II1: 25                                              Heinze & Dunkler, 032016; Part II1: 26
+
+A network of dependencies...                                                        A network of dependencies...
+
+False inclusion of variables                                                        False inclusion of variables
+
+                 Variance of                                                                         Variance of                                 RMSE of predictions
+                                                                                                                                      RMSE of 
+Competition!                                                                        Competition!
+                                                                                                                                                Bias of predictions
+                 Omission!                                                                           Omission!                  Undercoverage of CI for 
+False exclusion               Bias of                                               False exclusion               Bias of 
+
+                 Variance underestimation                                                            Variance underestimation 
+
+                                            Heinze & Dunkler, 032016; Part II1: 27                                              Heinze & Dunkler, 032016; Part II1: 28
+    Using background knowledge                                                                                                                              Using background knowledge:
+                                                                                                                                                          conditional regression coefficients
+· Suppose, background knowledge is available,
+   e.g., from a former study of equal size.
+
+· One could simulate this background knowledge by first drawing
+   the `former study' to select variables, then drawing the `actual
+   study' to estimate effects.
+
+                                                                                                                  Heinze & Dunkler, 032016; Part II1: 29                                                                                                                    Heinze & Dunkler, 032016; Part II1: 30
+
+Using background knowledge:                                                                                                                               Using background knowledge:
+     conditional coverage                                                                                                                                       unconditional RMSE
+
+Heinze & Dunkler, 032016; Part II1: 31                                                                                                                    Heinze & Dunkler, 032016; Part II1: 32
+Using background knowledge:                                                                      Summary from simulation study
+bias and RMSE of predictions
+                                                                                              · Careful interpretation of conditional and unconditional
+                                                                                                 performance!
+
+                                                                                              · E.g. conditional coverage - not meaningful for variables selected
+                                                                                                 in 5%.
+
+                                                                                              · Variable selection methods have been described with `bias away
+                                                                                                 from zero', but this concerns the conditional bias only.
+
+                                                                                              · Unconditionally, there is bias towards .
+                                                                                              · Univariate filtering results strongly depending on correlation
+
+                                                                                                 structure!
+
+                                                      Heinze & Dunkler, 032016; Part II1: 33                                                                                                                                             Heinze & Dunkler, 032016; Part II1: 34
+
+Summary from simulation study                                                                    Summary from simulation study
+
+· For large samples (  ), BW(0.05) dominates all other                                        · Forward selection inferior to backward elimination.
+                                                                                              · Lasso performs well in the `center', but shrinks towards the mean
+methods in predictive accuracy.
+                                                                                                 (pessimistic).
+· It is close to BIC - discover the true model if it is in the scope of                       · Lasso - problem with interpretability.
+                                                                                              · Background knowledge improves conditional measures and
+models evaluated.
+                                                                                                 predictive accuracy because selection and estimation are
+· BW works if true positive rate (TPR) is high for `true effects' and                            disentangled.
+
+false positive rate (FPR) is low for `null effects'.                                                                                                                                                                                     Heinze & Dunkler, 032016; Part II1: 36
+
+· Therefore, bootstrap inclusion frequencies (BIFs) may provide a
+
+guide towards whether we can trust the best BW model:
+
+- BIFs should be routinely computed and reported,
+
+- report also performance of `secondline' models,
+
+- don`t trust a single model if selection is not sure.
+
+                                                      Heinze & Dunkler, 032016; Part II1: 35
+   Summary from simulation study                                  Part II2: Case studies
+
+· Datadriven selection is a bad idea with small samples.
+· Better to work with simple, defendable, fixed models.
+
+                       Heinze & Dunkler, 032016; Part II1: 37                                                          (from http://barnraisersllc.com/2015/08/10compellingcharacteristicsofgreatcasestudies/)
+
+Consulting situations                                              Case study 1: body fat approximation
+
+· `We would like to approximate the proportion of body fat by     · Johnson`s (1996) body fat data example
+   simple anthropometric measures.'                               · Publicly available
+                                                                  · 251 males aged 21 to 81
+· `We want a prediction model for recurrent venous                · Response variable: %body fat (Siri formula), based on costly
+   thromboembolism. Many risk factors were previously
+   described, but the model should be clinically applicaple for      underwater density measurement
+   making therapy decisions. Can you please develop a             · Predictors: age, height, weight, +10 circumference measures
+   parsimonious model?'                                           · First goal: approximation of %body fat
+
+· `We want a prediction model for survival after cervical cancer                                                                                                   www.frHeeeindzieet&inDgu.nckolemr, 032016; Part II2: 3
+
+diagnosis. We know our predictors. There are only few
+
+events.'               Heinze & Dunkler, 032016; Part II2: 2
+Case study 1: correlation of predictors                                                                                                                        Case study 1: selection by backward(AIC)
+
+Correlations between
+predictor variables
+are quite high:
+
+                                                                      |r>0.9| |r>0.9|                                                                                                                                                                     Heinze & Dunkler, 032016; Part II2: 5
+                                                    |r > 0.5|
+                                                                                                                                                               Case study 1: BIFs
+                                                                                                                        Heinze & Dunkler, 032016; Part II2: 4
+                                                                                                                                                                      unlikely/close to nominal type I error
+Case study 1: selection by backward(AIC)
+                                                                                                                                                                                       not so sure
+                                                                                                                        Heinze & Dunkler, 032016; Part II2: 6                                               certain
+
+                                                                                                                                                                                                                                                          Heinze & Dunkler, 032016; Part II2: 7
+Case study 1: pairwise inclusion                                                                                                                                         Case study 1: pairwise inclusion
+            frequencies                                                                                                                                                              frequencies
+
+                                                                                                                                                                                                                      Competitive selection!
+
+                    (Cf. Sauerbrei and Schumacher, 1992) Heinze & Dunkler, 032016; Part II2: 8                                                                                                     (Cf. Sauerbrei and Schumacher, 1992) Heinze & Dunkler, 032016; Part II2: 9
+
+Case study 1: Distribution of                                                                                                                                            Case study 1: bootstrap model averaging
+   regression coefficients
+
+Interesting: variables with `negative' and `positive' parts.                                                                                                             Heinze & Dunkler, 032016; Part II2: 11
+These are very unstable predictors.
+
+                                                                                                                                 Heinze & Dunkler, 032016; Part II2: 10
+     Case study 1: bootstrap model                                                                                                                                              Case study 1: an explanatory model
+                  averaging
+                                                                                                                                                                              · In the textbook by Burnham & Anderson (2002), an
+· Since many models are equally plausible, reporting a single                                                                                                                    interesting alternative model is developed based on
+   model is problematic.                                                                                                                                                         6 derived explanatory variables.
+
+· Instead, report modelaveraged predictors.
+· SAS offers a `refit' option to repeat the bootstrap with a
+
+   reduced set of predictors (e.g. with BIF>0.2).
+· In the refitting bootstrap, no selection is performed.
+· The refittingbootstrap standard errors are very close to
+
+   refitting the original data with the selected variables.
+
+                                                                                                                                      Heinze & Dunkler, 032016; Part II2: 12                                                                                                                                Heinze & Dunkler, 032016; Part II2: 13
+
+  Case study 1: an explanatory model                                                                                                                                          Case study 1: an explanatory model
+
+· In the textbook by Burnham & Anderson (2002), an
+   interesting alternative model is developed based on
+   6 derived explanatory variables.
+
+Heinze & Dunkler, 032016; Part II2: 14                                                                                                                                        Heinze & Dunkler, 032016; Part II2: 15
+  Case study 1: an explanatory model                                                                                                                                          Case study 2: Prediction of recurrence
+                                                                                                                                                                                    of venous thromboembolism
+· Top two models selected in 86%
+· Top three in 92.1%                                                                                                                                                          · The question: `We want a prediction model for recurrent venous
+· Debatable variable: heavyset (P=0.09),                                                                                                                                         thromboembolism. Many risk factors were previously described,
+· Irrelevant: age2 (P=0.89)                                                                                                                                                      but the model should be clinically applicaple for making therapy
+                                                                                                                                                                                 decisions. Can you please develop a parsimonious model?'
+                                                                                                                                      Heinze & Dunkler, 032016; Part II2: 16
+                                                                                                                                                                              anticoagulation 3 wks
+Case study 2: Prediction of recurrence
+      of venous thromboembolism                                                                                                                                               1st thrombosis  end prediction baseline  recurrence?
+
+· The data set: AUREC, a prospective observational study.                                                                                                                     · Patients at high risk for recurrence should continuously receive
+     - 929 patients included 3 weeks after end of anticoagulation therapy                                                                                                        anticoagulation therapy,
+        after first thrombosis
+     - median followup for 30.5 months                                                                                                                                        · In patients at low risk for recurrence, no therapy should be given
+     - 147 recurrence events                                                                                                                                                     because of increased bleeding risk.
+     - 8 risk factors (9DF, EPV=16.3)
+                                                                                                                                                                              · The strategy: selection by AIC, shrinkage correction.
+· Risk factors:
+     - Sex (males [60%] are at higher risk)                                                                                                                                                                            Heinze & Dunkler, 032016; Part II2: 17
+     - DDimer (363, 232568) Æ log2
+     - Location of first thrombosis (distal 18%/proximal 35%/pulmonary                                                                                                        Case study 2: risk factors and global
+        embolism 47%)                                                                                                                                                                          model
+     - BMI (2430), Age (4463)
+     - Duration of anticoagulation therapy (7wk, 59)                                                                                                                                                                   Heinze & Dunkler, 032016; Part II2: 19
+     - Factor V Leiden (23%), Factor II mutation (4.8%)
+
+                                                                                                                                      Heinze & Dunkler, 032016; Part II2: 18
+Case study 2: backward (AIC)                                                                                                                                             Case study 2: BIFs
+
+Æ this was the final model.                                                                                                                                                                                                                                                                                    Heinze & Dunkler, 032016; Part II2: 21
+[For selection with   , use k=qchisq(1-0.05,1).]
+                                                                                                                                                                         Case study 2: Model selection frequencies
+                                                                                                                                 Heinze & Dunkler, 032016; Part II2: 20
+                                                                                                                                                                         Top 10 models:
+Case study 2: bootstrapped coefficients                                                                                                                                  9 of them contain
+                                                                                                                                                                         sex, loc, log2ddim
+                                 beta of sex.male                        beta of loc.distal                  beta of loc.proximal
+                                                                                                                                                                                                                                                                                                               Heinze & Dunkler, 032016; Part II2: 23
+                Frequency                                Frequency                           Frequency
+                     0 100 200                                0 100 250                           0 100 250
+
+                                 0.0 0.4 0.8 1.2                         -2.0 -1.0 0.0                         -0.8 -0.4 0.0 0.4
+                                          sex.male                             loc.distal                            loc.proximal
+
+                                   beta of log2ddim                      beta of durther                     beta of fvleid.present
+
+including 0`s!  Frequency                                Frequency                           Frequency
+                     0 100                                    0 300                               0 400 800
+
+                                  0.0 0.2 0.4                            -0.05      0.05                     -0.8 -0.4 0.0 0.4
+                                           log2ddim                             durther                             fvleid.present
+
+                Frequency        beta of fiimut.present                  beta of age                               beta of bmi
+                     0 400 1000
+                                                         Frequency                           Frequency
+                                                              0 400 800                           0 400 800
+
+                                 -15  -5 0                               -0.03  -0.01  0.01                  -0.06 0.00 0.04
+                                                                                  age
+                                 fiimut.present                                           Heinze & Dunkler, 0320b1m6i; Part II2: 22
+ Case study 2: further refinement                                                                                                                                                  Case study 2: shrinkage factor
+                                                                                                                                                                                               estimation
+  Æ Use dummies as `standard' variables, collapse categories by selection.
+  Æ Locations `proximal' and `pulmonary embolism' are collapsed.                                                                                                                                                                                       Å Global shrinkage factor
+
+                                                                                                                                      Heinze & Dunkler, 032016; Part II2: 24                                                                           Å Parameterwise shr. factors
+
+    Case study 2: further aspects                                                                                                                                                                                                                      Å Parameterwise shr. factors
+                                                                                                                                                                                                                                                                     (Dunkler et al., 2016)
+· Global shrinkage factor was used.
+· Clinical practicability: 3 simple, easily available clinical parameters.                                                                                                                                                                                                                                          Heinze & Dunkler, 032016; Part II2: 25
+· Study was published in Circulation. (Eichinger et al, 2010)
+· Presented as nomogram and as web calculator.                                                                                                                                Case study 3: cervical cancer prognosis
+· First prediction model for recurrent thromboembolism.
+· External validation of the model suggested age as additional                                                                                                                · The question: `We want a prediction model for survival after
+                                                                                                                                                                                 cervical cancer diagnosis. We know our predictors. There are only
+   predictor.                                                                                                                                                                    few events.'
+   In our study, age was an `explanatory', but not a `predictor'.
+· Followup paper on dynamic prediction. (Eichinger et al, 2014)                                                                                                               · The data set: baseline and followup data from 692 consecutive
+                                                                                                                                                                                 patients diagnosed with cervical cancer from two centers
+                                                                                                                                      Heinze & Dunkler, 032016; Part II2: 26     (Vienna, Innsbruck)
+
+                                                                                                                                                                              · Followup: median 46 months
+
+                                                                                                                                                                                                                                                                                                                    Heinze & Dunkler, 032016; Part II2: 27
+Case study 3: cervical cancer prognosis                                                                                                                                       Case study 3: cervical cancer prognosis
+
+· Risk factors:                                                                                                                                                               · Because of the critical EPV (7.7), we did not attempt to
+    - FIGO stage (I, II, III, IV) (3df)                                                                                                                                          perform any variable selection.
+    - Tumour size (<2cm, >2cm)
+    - Age                                                                                                                                                                     · Instead, L2penalization (ridge regression) was used.
+    - Histologic subtype (squamous cell carcinoma, adenocarcinoma,
+        other) (2df)                                                                                                                                                          · Clinical collaborators asked for
+    - Proportion positive lymph nodes (2df)                                                                                                                                      dividing the data into `training'
+    - Parametrical involvement (yes/no)                                                                                                                                           and `validation' sets.
+
+· 528 patients had all these variables available                                                                                                                              · I said: `No way!'
+· 77 deaths Æ EPV=7.7
+                                                                                                                                                                              · Bootstrap validation revealed
+                                                                                                                                      Heinze & Dunkler, 032016; Part II2: 28     a decent performance of the
+                                                                                                                                                                                 model:
+Case study 3: cervical cancer prognosis
+                                                                                                                                                                              (Polterauer et al, Br J Cancer 2012)  Heinze & Dunkler, 032016; Part II2: 29
+· The model was
+   implemented as                                                                                                                                                             Case study 3: cervical cancer prognosis
+   nomogram and web
+   calculator.                                                                                                                                                                · Recently, the prognosis model was validated using data from
+                                                                                                                                                                                 an Australian center.
+· Nomogram nicely
+   shows the relative                                                                                                                                                         · Confirms the performance estimate (cindex) presented in
+   importance of the                                                                                                                                                             paper.
+   prognostic factors.
+                                                                                                                                                                              · Æ good idea to use penalized model
+
+(Polterauer et al, Br J Cancer 2012)  Heinze & Dunkler, 032016; Part II2: 30                                                                                                                                        Heinze & Dunkler, 032016; Part II2: 31
+      Summary of case studies                                                                                                                                                    Part II3:
+
+· Variable selection may sometimes be an option,                                                                                                                              Importance of background knowledge
+   sometimes not.
+                                                                                                                                                                              · Incorporating background knowledge is like increasing the
+· Variable selection should always be accompanied by                                                                                                                             sample size.
+   stability investigation.
+                                                                                                                                                                              · Can be seen (or even implemented) as a Bayesian procedure.
+· While AIC selection provides a useful point of reference,                                                                                                                   · Select in one data set - estimate in another.
+   size of models can be accommodated to practical needs.                                                                                                                     · Avoids the overestimation bias conditional on selection.
+                                                                                                                                                                              · Background knowledge is also important for preselecting
+· `Significance' level for selection can be used to
+   control size of models.                                                                                                                                                       variables, for specifying their coding, interactions,
+                                                                                                                                                                                 transformations, ...
+· For good explanatory models, use substance matter
+   knowledge (or brains).                                                                                                                                                                                                                                                                                            Heinze & Dunkler, 032016; Part II3: 3
+
+                                                                                                                                      Heinze & Dunkler, 032016; Part II2: 32
+
+         The `best' procedure
+
+· Depends on information provided and knowledge desired:
+· Small data set - large data set?
+· Many unknowns or few?
+
+Go for a good enough model?
+· No or mild selection (AIC) with small to moderate data sets.
+· AIC provides the best approximating model among a
+
+   candidate set of models.
+
+Go for the `true' model?
+· More stringent (BW/ value) selection in large samples.
+
+                                                                                                                                       Heinze & Dunkler, 032016; Part II3: 2
+  Some recommendations: after selection                                                                                                                                                  Our own strategy
+
+· Regression coefficients, confidence intervals and pvalues                                                                                                                   · In our environment, we work a lot with reallife data sets.
+   conditional on the selected model often biased/too optimistic.                                                                                                             · We try to get as much information from of our clinical
+
+· Important: is there one dominating model?                                                                                                                                      collaborators as possible to determine a working set of
+· Stability investigation by bootstrap!                                                                                                                                          variables.
+· In large samples, the optimism is often not too severe (simulation).                                                                                                        · We do not select variables in small samples.
+                                                                                                                                                                              · Otherwise, we recommend backward elimination.
+Estimation/correction of optimism:                                                                                                                                            · In backward elemination, should be set according to the
+· Shrinkage methods (Sauerbrei, 1999; Dunkler et al, 2016)                                                                                                                       sample size/events per variable.
+· Model averaging (Buckland et al, 1997)                                                                                                                                      · Stability investigation based on the bootstrap is helpful.
+· Bootstrap resampling (Sauerbrei et al, 2014)
+· Unfortunately these methods are still missing in standard packages                                                                                                          · Background knowledge  univariate selection.
+
+   (SPSS)!                                                                                                                                                                                                                                                                                                           Heinze & Dunkler, 032016; Part II3: 5
+
+                                                                                                                                       Heinze & Dunkler, 032016; Part II3: 4
+
+     Implementations: SAS and SPSS                                                                                                                                                                 Implementations: R
+
+What        PROC         PROC  PROC LOGISTIC %ABE  SPSS
+
+            GLMSELECT REG      PROC PHREG macro                                                                                                                               What                 lm(), glm(), step() mfp glmulti  glmnet, rms
+                                                                                                                                                                                                   survival                         penalized
+Backward    Yes          Yes   Yes          Yes    Yes                                                                                                                        Backward
+                                                                                                                                                                              Forward
+Forward     Yes          Yes   Yes          No     Yes                                                                                                                        Stepwise forward     No       Yes No No               No   Yes
+                                                                                                                                                                              Stepwise backward
+Stepwise forward Yes     Yes   Yes          No     Yes                                                                                                                        All subsets/other    No       Yes No No               No   No
+                                                                                                                                                                              LASSO
+Stepwise    No           No    No           No     No                                                                                                                         Multimodel           No       Yes No No               No   No
+                                                                                                                                                                              inference
+backward                                                                                                                                                                      Bootstrap stability  No       No Yes No               No   No
+                                                                                                                                                                              investigation
+Augmented   No           No    No           Yes    No                                                                                                                         Linear               No       No No Yes               No   No
+                                                                                                                                                                              Logistic
+backward                                                                                                                                                                      Cox
+
+LASSO       Yes          No    No           No     No                                                                                                                                              No       No No No                Yes  No
+
+Multimodel  (Yes)        No    No           No     No                                                                                                                                              No       No No Yes               No   (Yes)
+
+inference
+
+Bootstrap stability Yes  No    No           (No)   No(!)                                                                                                                                           No       No No No                No   (Yes)
+investigation
+
+Linear      Yes          Yes   No           Yes    Yes                                                                                                                                             lm()     Yes Yes Yes             Yes  Yes
+                                                                                                                                                                                                   glm()    Yes Yes Yes
+Logistic    No           No    Yes (LOGISTIC) Yes  Yes                                                                                                                                             coxph()  Yes Yes ?               Yes  Yes
+
+Cox         No           No    Yes (PHREG)  Yes    Yes                                                                                                                                                                              Yes  Yes
+
+                                                   Heinze & Dunkler, 032016; Part II3: 6                                                                                                                                                 Heinze & Dunkler, 032016; Part II3: 7
+     Software implementations                                         Principle of Parsimony
+
+· Background knowledge is not implemented in any standard
+   software.
+
+                              Heinze & Dunkler, 032016; Part II3: 8   (https://www.zoovienna.at/news/elefantenbaby/)  Heinze & Dunkler, 032016; Part II3: 9
+
+Principle of parsimony                                                        Principle of parsimony
+
+· Avoid overfitting to                                                · Avoid overfitting to
+   achieve a good model fit.                                              achieve a good model fit.
+
+· Wel 1975:                                                                                                                                K=36
+   `How many parameters
+   does it take to fit an                                             ÎPrinciple of parsimony should lead to
+   elephant?'                                                            the smallest possible number of parameters
+                                                                         for adequate representation of the data.
+· `E may not satisfy the
+   thirdgrade art teacher,                                            ÎThis number of parameters might be different
+   but would carry most                                                  for explanatory and predictive purposes. K=30
+   chemical engineers
+   into preliminary design."
+
+                              Heinze & Dunkler, 032016; Part II3: 10                                                  Heinze & Dunkler, 032016; Part II3: 11
+            Recipe for disaster
+
+· Prepare a long list of poorly conceived predictors.
+· Add only small .
+· Mix together in an extensive iterative data dredging.
+· Select the model with the smallest values.
+· Present this final model without
+
+   further considerations.
+  Bon appétit!
+
+                                                                                                                                       Heinze & Dunkler, 032016; Part II3: 12
+References -
+`Variable selection - a review and recommendations
+for the practicing statistician'
+by Georg Heinze and Daniela Dunkler, March 2016
+
+All references are only stated at their first appearance.
+
+Part I-1: Philosophy
+
+Breiman, L. (2001). Statistical Modeling: The Two Cultures. Statistical Science, 16(3), 199-231.
+         doi:DOI 10.1214/ss/1009213726
+
+Burnham, K. P., & Anderson, D. R. (2002). Model Selection and Multimodel Inference: A Practical
+         Information-Theoretic Approach: Springer.
+
+Cox, D. R., & Hinkley, D. V. (1979). Theoretical Statistics (1 ed.). Boca Raton: Chapman and Hall/CRC.
+Dunkler, D., Plischke, M., Leffondré, K., & Heinze, G. (2014). Augmented Backward Elimination: A
+
+         Pragmatic and Purposeful Way to Develop Statistical Models. PLoS ONE, 9(11), e113677.
+         doi:doi:10.1371/journal.pone.0113677
+         SAS %ABE macro available at: http://cemsiis.meduniwien.ac.at/en/kb/science-
+         research/software/statistical-software/abe/
+
+Eichinger, S., Heinze, G., Jandeck, L., M., & Kyrle, P., A. (2010). Risk Assessment of Recurrence in
+         Patients With Unprovoked Deep Vein Thrombosis or Pulmonary Embolism. The Vienna
+         Prediction Model. Circulation, 121(14), 1630-1636.
+
+Good, D. M., Zurbig, P., Argiles, A., Bauer, H. W., Behrens, G., Coon, J. J., . . . Schmitt-Kopplin, P.
+         (2010). Naturally Occurring Human Urinary Peptides for Use in Diagnosis of Chronic Kidney
+         Disease. Molecular & Cellular Proteomics, 9(11), 2424-2437. doi:10.1074/mcp.M110.001917
+
+Royston, P., & Sauerbrei, W. (2008). Multivariable model-building. A pragmatic approach to
+         regression analysis based on fractional polynomials for modelling continuous variables.
+         Chichester: John Wiley & Sons, Ltd.
+
+Shmueli, G. (2010). To explain or to predict? Statistical Science, 25(3), 289-310.
+Steyerberg, E., W. (2009). Clinical Prediction Models. A practical approach to developement,
+
+         validation, and updating: Springer.
+
+Part 1-2: Prerequisites
+
+Dunkler, D., Sauerbrei, W., & Heinze, G. (2016). Global, parameterwise and joint shrinkage factor
+         estimation. Journal of Statistical Software, 69(8), 1-19. doi:doi:10.18637/jss.v069.i08
+
+Greenland, S. (2000). Principles of multilevel modelling. International Journal of Epidemiology,
+         29(1), 158-167. doi:10.1093/ije/29.1.158
+
+Harrell Jr., F. E. (2001). Regression modeling strategies. With applications to linear models, logistic
+         regression, and survival analysis. New York, Berlin, Heidelberg: Springer Verlag.
+Hastie, T., Tibshirani, R., & Friedman, J. H. (2009). The elements of statistical learning: data mining,
+         inference, and prediction (2nd ed.). New York, NY: Springer.
+
+Lee, P. H. (2014). Is a cutoff of 10% appropriate for the change-in-estimate criterion of confounder
+         identification? Journal of Epidemiology, 24(2), 161-167.
+
+Maldonado, G., & Greenland, S. (1993). Simulation study of confounder-selection strategies.
+         American Journal of Epidemiology, 138(11), 923-936.
+
+Meinshausen, N., & Buhlmann, P. (2010). Stability selection. Journal of the Royal Statistical Society
+         Series B-Statistical Methodology, 72, 417-473.
+
+Pearl, J. (1995). Causal diagrams for empirical research. Biometrika, 82(4), 669-688.
+         doi:10.1093/biomet/82.4.669
+
+Sauerbrei, W. (1999). The Use of Resampling Methods to Simplify Regression Models in Medical
+         Statistics. Journal of the Royal Statistical Society, Series C (Applied Statistics), 48(3), 313-329.
+         doi:10.1111/1467-9876.00155
+
+Sauerbrei, W., & Schumacher, M. (1992). A bootstrap resampling procedure for model building:
+         Application to the cox regression model. Statistics in Medicine, 11(16), 2093-2109.
+         doi:10.1002/sim.4780111607
+
+Tibshirani, R. (1996). Regression shrinkage and selection via the LASSO. Journal of the Royal
+         Statistical Society, Series B, 58(1), 267-288.
+
+Tibshirani, R. (2011). Regression shrinkage and selection via the lasso: a retrospective. Journal of
+         the Royal Statistical Society: Series B (Statistical Methodology), 73(3), 273-282.
+
+van der Ploeg, T., Austin, P., C., & Steyerberg, E., W. (2014). Modern modelling techniques are data
+         hungry: a simulation study for predicting dichotomous endpoints. BMC Medical Research
+         Methodology, 4(137).
+
+Verweij, P., J.M., & Houwelingen Hans C., v. (1993). Cross-validation in survival analysis. Statistics in
+         Medicine, 12(24), 2305-2314.
+
+Part I-3: Variable selection methods
+
+Buckland, S. T., Burnham, K. P., & Augustin, N. H. (1997). Model Selection: An Integral Part of
+         Inference. Biometrics, 53(2), 603-618.
+
+Glymour, M. M., Weuve, J., & Chen, J. (2008). Methodological challenges in causal research on
+         racial and ethnic patterns of cognitive trajectories: Measurement, selection, and bias.
+         Neuropsychology Review, 18(3), 194-213.
+
+Harrell Jr., F. E., Lee, K. L., & Mark, D. B. (1996). Multivariable prognostic models: issues in
+         developing models, evaluating assumptions and adequacy, and measuring and reducing
+         errors. Statistics in Medicine, 15(4), 361-387.
+
+Hosmer, D., W.Jr., Lemeshow, S., & May, S. (1999). Applied Survival Analysis: Regression Modeling
+         of Time to Event Data: Chapter 5 Model Developement Applied Survival Analysis: Regression
+         Modeling of Time to Event Data (pp. 1-416): John Wiley & Sons.
+
+Hosmer, D. W., & Lemeshow, S. (2000). Applied Logistic Regression (2 ed.). New York: John Wiley &
+         Sons, Inc.
+
+Rubin, D. B. (2009). Should observational studies be designed to allow lack of balance in covariate
+         distributions across treatment groups? Statistics in Medicine, 28(9), 1420-1423.
+
+VanderWeele, T. J., & Shpitser, I. (2011). A new criterion for confounder selection. Biometrics,
+         67(4), 1406-1413. doi:10.1111/j.1541-0420.2011.01619.x
+Part II-1: Consequences
+
+Binder, H., Sauerbrei, W., & Royston, P. (2011). Multivariable model-building with continuous
+         covariates: 1. Performance measures and simulation design. Technical Report FDM-Preprint
+         105, University of Freiburg, Germany.
+
+Part II-2: Case studies
+
+Eichinger, S., Heinze, G., & Kyrle, P. A. (2014). d-Dimer Levels Over Time and the Risk of Recurrent
+         Venous Thromboembolism: An Update of the Vienna Prediction Model. Journal of the
+         American Heart Association, 3:e000467. doi:doi:10.1161/JAHA.113.000467
+
+Johnson, R. W. (1996). Fitting percentage of body fat to simple body measurements. Journal of
+         Statistics Education, 4(1).
+
+Polterauer, S., Grimm, C., Hofstetter, G., Concin, N., Nattern, C., Sturdza, A., . . . Heinze, G. (2012).
+         Nomogram prediction for overall survival of patients diagnosed with cervical cancer. British
+         Journal of Cancer, 107, 918-824.
+
+Part II-3: Recommendations
+
+Sauerbrei, W., Buchholz, A., Boulesteix, A.-L., & Binder, H. (2015). On stability issues in deriving
+         multivariable regression models. Biometrical Journal, 57(4), 531-555.
+         doi:10.1002/bimj.201300222
+
+Wel, J. (1975). Least squares fitting of an elephant. Chemtech, Feb., 128-129.
+

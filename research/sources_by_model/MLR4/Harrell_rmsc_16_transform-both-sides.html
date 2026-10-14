@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>16&nbsp; Transform-Both-Sides Regression – Regression Modeling Strategies</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./surv.html" rel="next">
+<link href="./cony.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-9c5e1a58ae97b3faeeb5cca0e0e2eaf1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-39d25629837ca44e2eea0020ef944eda.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-FN79JJ28KR"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-FN79JJ28KR', { 'anonymize_ip': true});
+</script>
+<script type="application/json" class="js-hypothesis-config">
+{
+  "theme": "clean",
+  "openSidebar": false,
+  "enableExperimentalNewNoteButton": true
+}
+</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="h.css">
+<meta name="twitter:title" content="16&nbsp; Transform-Both-Sides Regression – Regression Modeling Strategies">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://hbiostat.org/rms/areg_files/figure-html/fig-areg-trans-1.png">
+<meta name="twitter:creator" content="f2harrell">
+<meta name="twitter:site" content="f2harrell">
+<meta name="twitter:image-height" content="768">
+<meta name="twitter:image-width" content="960">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar floating nav-fixed slimcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-xl " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class='navbar-brand' href='/rmsc/'>
+    <span class="navbar-title">Regression Modeling Strategies</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools tools-end">
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href='/rmsc/areg'><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Transform-Both-Sides Regression</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link' href='/rmsc/'>
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link' href='/rmsc/intro'>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link' href='/rmsc/genreg'>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">General Aspects of Fitting Regression Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link' href='/rmsc/missing'>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Missing Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link' href='/rmsc/multivar'>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Multivariable Modeling Strategies</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link' href='/rmsc/validate'>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Describing, Resampling, Validating, and Simplifying the Model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link' href='/rmsc/software'>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">R Software</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link' href='/rmsc/long'>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Modeling Longitudinal Responses using Generalized Least Squares</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link' href='/rmsc/impred'>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Case Study in Data Reduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link' href='/rmsc/mle'>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Overview of Maximum Likelihood Estimation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link' href='/rmsc/lrm'>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Binary Logistic Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link' href='/rmsc/lrcase1'>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Binary Logistic Regression Case Study 1</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link' href='/rmsc/titanic'>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Logistic Model Case Study: Survival of Titanic Passengers</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link' href='/rmsc/ordinal'>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Ordinal Logistic Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link' href='/rmsc/ordcase'>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Case Study in Ordinal Regression, Data Reduction, and Penalization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link' href='/rmsc/cony'>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Regression Models for Continuous <span class="math inline">\(Y\)</span> and Case Study in Ordinal Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link active' href='/rmsc/areg'>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Transform-Both-Sides Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link' href='/rmsc/surv'>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Introduction to Survival Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link' href='/rmsc/parsurv'>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Parametric Survival Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link' href='/rmsc/psmcase'>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Case Study in Parametric Survival Modeling and Model Approximation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link' href='/rmsc/cox'>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Cox Proportional Hazards Regression Model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link' href='/rmsc/coxcase'>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Case Study in Cox Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link' href='/rmsc/markov'>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Semiparametric Ordinal Longitudinal Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link' href='/rmsc/bodyfat'>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Body Fat: Case Study in Linear Modeling</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link' href='/rmsc/bacteremia'>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Bacteremia: Case Study in Nonlinear Data Reduction with Imputation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a class='sidebar-item-text sidebar-link' href='/rmsc/ordsurv'>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Ordinal Semiparametric Regression for Survival Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./figures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">List of Figures</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">16.1</span> Background</a></li>
+  <li><a href="#generalized-additive-models" id="toc-generalized-additive-models" class="nav-link" data-scroll-target="#generalized-additive-models"><span class="header-section-number">16.2</span> Generalized Additive Models</a></li>
+  <li><a href="#nonparametric-estimation-of-y-transformation" id="toc-nonparametric-estimation-of-y-transformation" class="nav-link" data-scroll-target="#nonparametric-estimation-of-y-transformation"><span class="header-section-number">16.3</span> Nonparametric Estimation of <span class="math inline">\(Y\)</span>-Transformation</a>
+  <ul class="collapse">
+  <li><a href="#ace" id="toc-ace" class="nav-link" data-scroll-target="#ace"><span class="header-section-number">16.3.1</span> ACE</a></li>
+  <li><a href="#avas" id="toc-avas" class="nav-link" data-scroll-target="#avas"><span class="header-section-number">16.3.2</span> AVAS</a></li>
+  <li><a href="#overfitting" id="toc-overfitting" class="nav-link" data-scroll-target="#overfitting"><span class="header-section-number">16.3.3</span> Overfitting</a></li>
+  </ul></li>
+  <li><a href="#obtaining-estimates-on-the-original-scale" id="toc-obtaining-estimates-on-the-original-scale" class="nav-link" data-scroll-target="#obtaining-estimates-on-the-original-scale"><span class="header-section-number">16.4</span> Obtaining Estimates on the Original Scale</a></li>
+  <li><a href="#r-functions" id="toc-r-functions" class="nav-link" data-scroll-target="#r-functions"><span class="header-section-number">16.5</span> <code>R</code> Functions</a></li>
+  <li><a href="#sec-areg-case" id="toc-sec-areg-case" class="nav-link" data-scroll-target="#sec-areg-case"><span class="header-section-number">16.6</span> Case Study</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-areg" class="quarto-section-identifier"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Transform-Both-Sides Regression</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="background" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="background"><span class="header-section-number">16.1</span> Background</h2>
+<ul>
+<li>Challenges of traditional modeling (e.g.&nbsp;OLS) for estimation or inference
+<ul>
+<li>How should continuous predictors be transformed so as to get a good fit?</li>
+<li>Is it better to transform the response variable? How does one find a good transformation that simplifies the right-hand side of the equation?</li>
+<li>What if <span class="math inline">\(Y\)</span> needs to be transformed non-monotonically (e.g., <span class="math inline">\(|Y - 100|\)</span>) before it will have any correlation with <span class="math inline">\(X\)</span>?</li>
+</ul></li>
+<li>Challenges from need for normality and equal variance assumptions to draw accurate inferences
+<ul>
+<li>If for the untransformed original scale of the response <span class="math inline">\(Y\)</span> the distribution of the residuals is not normal with constant spread, ordinary methods will not yield correct inferences (e.g., confidence intervals will not have the desired coverage probability and the intervals will need to be asymmetric).</li>
+<li>Quite often there is a transformation of <span class="math inline">\(Y\)</span> that will yield well-behaving residuals. How do you find this transformation? Can you find a transformation for the <span class="math inline">\(X\)</span>s at the same time?</li>
+<li>All classical statistical inferential methods assume that the full model was pre-specified, that is, the model was not modified after examining the data. How does one correct confidence limits, for example, for data-based model and transformation selection?</li>
+</ul></li>
+</ul>
+</section>
+<section id="generalized-additive-models" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="generalized-additive-models"><span class="header-section-number">16.2</span> Generalized Additive Models</h2>
+<ul>
+<li><span class="citation" data-cites="has90gen">Hastie &amp; Tibshirani (<a href="#ref-has90gen" role="doc-biblioref">1990</a>)</span> developed GAMs for a variety of <span class="math inline">\(Y\)</span> distributions</li>
+<li>Most GAMs are highly parametric, just relaxing assumptions about <span class="math inline">\(X\)</span></li>
+<li>Nonparametrically estimate all <span class="math inline">\(X\)</span> transformations</li>
+<li>GAMs assume <span class="math inline">\(Y\)</span> is already well transformed</li>
+<li>Excellent software for GAMs: <code>R</code> packages <code>gam</code>, <code>mgcv</code>, <code>robustgam</code>.</li>
+</ul>
+</section>
+<section id="nonparametric-estimation-of-y-transformation" class="level2" data-number="16.3">
+<h2 data-number="16.3" class="anchored" data-anchor-id="nonparametric-estimation-of-y-transformation"><span class="header-section-number">16.3</span> Nonparametric Estimation of <span class="math inline">\(Y\)</span>-Transformation</h2>
+<p>There are a few approaches that also estimate the <span class="math inline">\(Y\)</span>-transformation</p>
+<section id="ace" class="level3" data-number="16.3.1">
+<h3 data-number="16.3.1" class="anchored" data-anchor-id="ace"><span class="header-section-number">16.3.1</span> ACE</h3>
+<ul>
+<li><span class="citation" data-cites="bre85est">Breiman &amp; Friedman (<a href="#ref-bre85est" role="doc-biblioref">1985</a>)</span>: <em>alternating conditional expectation</em> (ACE)</li>
+<li>Simultaneously transforms <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> to maximize <span class="math inline">\(R^2\)</span></li>
+</ul>
+<p><span id="eq-areg-aceavas"><span class="math display">\[g(Y) = f_{1}(X_{1}) + f_{2}(X_{2}) + \ldots + f_{p}(X_{p}) \tag{16.1}\]</span></span></p>
+<ul>
+<li>Allows analyst to impose monotonicity restrictions on transformations</li>
+<li>Categorical <span class="math inline">\(X\)</span> automatically numerically scored</li>
+<li><span class="math inline">\(Y\)</span>-transform allowed to be non-monotonic
+<ul>
+<li>can create an identifiability problem</li>
+</ul></li>
+<li>Estimates <em>maximal correlation</em> between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span></li>
+<li>Basis for nonparametric estimation for continuous <span class="math inline">\(X\)</span>: “super smoother” (R <code>supsmu</code> function)</li>
+</ul>
+</section>
+<section id="avas" class="level3" data-number="16.3.2">
+<h3 data-number="16.3.2" class="anchored" data-anchor-id="avas"><span class="header-section-number">16.3.2</span> AVAS</h3>
+<ul>
+<li><span class="citation" data-cites="tib88est">Tibshirani (<a href="#ref-tib88est" role="doc-biblioref">1988</a>)</span>: <em>additivity and variance stabilization</em> (AVAS)</li>
+<li>Forces <span class="math inline">\(g(Y)\)</span> to be monotonic</li>
+<li>Maximizes <span class="math inline">\(R^2\)</span> while forcing <span class="math inline">\(g(Y)\)</span> to have nearly constant variance of residuals</li>
+<li>Model specification still <a href="#eq-areg-aceavas" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-areg-aceavas</span></a></li>
+</ul>
+</section>
+<section id="overfitting" class="level3" data-number="16.3.3">
+<h3 data-number="16.3.3" class="anchored" data-anchor-id="overfitting"><span class="header-section-number">16.3.3</span> Overfitting</h3>
+<ul>
+<li>Estimating so many transformations, especially <span class="math inline">\(g(Y)\)</span> effectively adds many parameters to the model</li>
+<li>Results in overfitting (<span class="math inline">\(R^2\)</span> inflation)</li>
+<li>Also no inferential measures provided</li>
+<li>Use the bootstrap to correct apparent <span class="math inline">\(R^2\)</span> (<span class="math inline">\(R^{2}_{app}\)</span>) for overfitting</li>
+<li>Estimates the optimism (bias) in <span class="math inline">\(R^{2}_{app}\)</span> and subtracts this optimism from <span class="math inline">\(R^{2}_{app}\)</span> to get an optimism-corrected estimate</li>
+<li>Also used to compute confidence limits for all estimated transformations</li>
+<li>And for predictor partial effects</li>
+<li>Must repeat <strong>all</strong> supervised learning steps afresh for each resample</li>
+<li>Limited testing has shown that the sample size needs to exceed 100 for ACE and AVAS to provide stable estimates</li>
+</ul>
+</section>
+</section>
+<section id="obtaining-estimates-on-the-original-scale" class="level2 page-columns page-full" data-number="16.4">
+<h2 data-number="16.4" class="anchored" data-anchor-id="obtaining-estimates-on-the-original-scale"><span class="header-section-number">16.4</span> Obtaining Estimates on the Original Scale</h2>
+<ul>
+<li>Traditional approach: take transformations of <span class="math inline">\(Y\)</span> before fitting</li>
+<li>Logarithm is the most common transformation.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
+<li>If residuals on <span class="math inline">\(g(Y)\)</span> have median 0, inverse transformed predicted values estimate median <span class="math inline">\(Y | X\)</span> (quantiles are transformation-preserving, unlike mean)</li>
+<li>How to estimate general parameters such as means on original <span class="math inline">\(Y\)</span> scale?</li>
+<li>Easy of residuals known to be Gaussian</li>
+<li>More general: <span class="citation" data-cites="dua83sme">Duan (<a href="#ref-dua83sme" role="doc-biblioref">1983</a>)</span> “smearing estimator”</li>
+<li>One-sample case, log transformation
+<ul>
+<li><span class="math inline">\(\hat{\theta} = \sum_{i=1}^{n} \log(Y_{i})/n\)</span>,</li>
+<li>residuals from this fitted value are given by <span class="math inline">\(e_{i} = \log(Y_{i}) - \hat{\theta}\)</span></li>
+<li>smearing estimator of the population mean is <span class="math inline">\(\sum \exp(\hat{\theta} + e_{i})/n\)</span></li>
+<li>is the ordinary sample mean <span class="math inline">\(\overline{Y}\)</span></li>
+</ul></li>
+<li>Smearing estimator needed when doing regression</li>
+<li>Regression run on <span class="math inline">\(g(Y)\)</span>
+<ul>
+<li>estimated values <span class="math inline">\(\hat{g}(Y_{i}) = X_{i}\hat{\beta}\)</span></li>
+<li>residuals on transformed scale <span class="math inline">\(e_{i} = \hat{g}(Y_{i}) - X_{i}\hat{\beta}\)</span></li>
+</ul></li>
+<li>Without restricting ourselves to estimating the population mean, let <span class="math inline">\(W(y_{1}, y_{2}, \ldots, y_{n})\)</span> denote any function of a vector of untransformed response values</li>
+<li>To estimate the population mean in the homogeneous one-sample case, <span class="math inline">\(W\)</span> is the simple average of all of its arguments</li>
+<li>To estimate the population 0.25 quantile, <span class="math inline">\(W\)</span> is the sample 0.25 quantile of <span class="math inline">\(y_{1}, \ldots, y_{n}\)</span></li>
+<li>Smearing estimator of the population parameter estimated by <span class="math inline">\(W\)</span> given <span class="math inline">\(X\)</span> is <span class="math inline">\(W(g^{-1}(a + e_{1}), g^{-1}(a + e_{2}), \ldots, g^{-1}(a +
+e_{n}))\)</span>, where <span class="math inline">\(g^{-1}\)</span> is the inverse of the <span class="math inline">\(g\)</span> transformation and <span class="math inline">\(a
+= X\hat{\beta}\)</span></li>
+<li>With AVAS algorithm, monotonic transformation <span class="math inline">\(g\)</span> is estimated from the data</li>
+<li>Predicted value of <span class="math inline">\(\hat{g}(Y)\)</span> from <a href="#eq-areg-aceavas" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-areg-aceavas</span></a></li>
+<li>Extend the smearing estimator as <span class="math inline">\(W(\hat{g}^{-1}(a + e_{1}), \ldots, \hat{g}^{-1}(a + e_{n}))\)</span>, where <span class="math inline">\(a\)</span> is the predicted transformed response given <span class="math inline">\(X\)</span></li>
+<li><span class="math inline">\(\hat{g}\)</span> is nonparametric (i.e., a table look-up)</li>
+<li>R <code>areg.boot</code> function computes <span class="math inline">\(\hat{g}^{-1}\)</span> using reverse linear interpolation</li>
+<li>If assume residuals from <span class="math inline">\(\hat{g}(Y)\)</span> assumed to be symmetrically distributed, their population median is zero</li>
+<li>Then can estimate the median on the untransformed scale by computing <span class="math inline">\(\hat{g}^{-1}(X\hat{\beta})\)</span> <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</li>
+<li>For estimating quantiles of <span class="math inline">\(Y\)</span>, quantile regression <span class="citation" data-cites="koe78reg">(<a href="#ref-koe78reg" role="doc-biblioref">Koenker &amp; Bassett, 1978</a>)</span> is more direct; see <span class="citation" data-cites="aus05tut">Austin et al. (<a href="#ref-aus05tut" role="doc-biblioref">2005</a>)</span> for a case study</li>
+</ul>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;A disadvantage of transform-both-sides regression is this difficulty of interpreting estimates on the original scale. Sometimes the use of a special generalized linear model can allow for a good fit without transforming <span class="math inline">\(Y\)</span>.</p></div><div id="fn2"><p><sup>2</sup>&nbsp;To be safe, <code>areg.boot</code> adds the median residual to <span class="math inline">\(X\hat{\beta}\)</span> when estimating the population median (the median residual can be ignored by specifying <code>statistic='fitted'</code> to functions that operate on objects created by <code>areg.boot</code>)</p></div></div></section>
+<section id="r-functions" class="level2" data-number="16.5">
+<h2 data-number="16.5" class="anchored" data-anchor-id="r-functions"><span class="header-section-number">16.5</span> <code>R</code> Functions</h2>
+<ul>
+<li><code>R</code> <code>acepack</code> package: <code>ace</code> and <code>avas</code> functions</li>
+<li><code>Hmisc</code> <code>areg.boot</code>: R modeling language notation and also implements a parametric spline version; estimates partial effects on <span class="math inline">\(g(Y)\)</span> and <span class="math inline">\(Y\)</span> varying one of the <span class="math inline">\(X\)</span>s over two values</li>
+<li>Resamples every part of modeling process, as with <span class="citation" data-cites="far92cos">Faraway (<a href="#ref-far92cos" role="doc-biblioref">1992</a>)</span></li>
+<li><code>monotone</code> function restricts a variable’s transformation to be monotonic</li>
+<li><code>I</code> function restricts it to be linear</li>
+</ul>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">areg.boot</span>(Y <span class="sc">~</span> <span class="fu">monotone</span>(age) <span class="sc">+</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>               sex <span class="sc">+</span> weight <span class="sc">+</span> <span class="fu">I</span>(blood.pressure))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(f)       <span class="co">#show transformations, CLs</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">Function</span>(f)   <span class="co">#generate S functions</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>              <span class="co">#defining transformations</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(f)    <span class="co">#get predictions, smearing estimates</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(f)    <span class="co">#compute CLs on effects of each X</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">smearingEst</span>() <span class="co">#generalized smearing estimators</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">Mean</span>(f)       <span class="co">#derive S function to</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>              <span class="co">#compute smearing mean Y</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">Quantile</span>(f)   <span class="co">#derive function to compute smearing quantile</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>The methods are best described in a case study.</p>
+</section>
+<section id="sec-areg-case" class="level2 page-columns page-full" data-number="16.6">
+<h2 data-number="16.6" class="anchored" data-anchor-id="sec-areg-case"><span class="header-section-number">16.6</span> Case Study</h2>
+<ul>
+<li>Simulated data where conditional distribution of <span class="math inline">\(Y\)</span> is log-normal given <span class="math inline">\(X\)</span>, but where transform-both-sides regression methods use un-logged <span class="math inline">\(Y\)</span></li>
+<li>Predictor <span class="math inline">\(X_1\)</span> is linearly related to log <span class="math inline">\(Y\)</span></li>
+<li><span class="math inline">\(X_2\)</span> is related by <span class="math inline">\(|X_{2} - \frac{1}{2}|\)</span></li>
+<li>Categorical <span class="math inline">\(X_3\)</span> has reference group <span class="math inline">\(a\)</span> effect of zero, group <span class="math inline">\(b\)</span> effect of 0.3, and group <span class="math inline">\(c\)</span> effect of 0.5</li>
+</ul>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(rms)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">400</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">runif</span>(n)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">runif</span>(n)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>x3 <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">'a'</span>,<span class="st">'b'</span>,<span class="st">'c'</span>), n, <span class="cn">TRUE</span>))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>y  <span class="ot">&lt;-</span> <span class="fu">exp</span>(x1 <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span><span class="fu">abs</span>(x2 <span class="sc">-</span> .<span class="dv">5</span>) <span class="sc">+</span> .<span class="dv">3</span><span class="sc">*</span>(x3<span class="sc">==</span><span class="st">'b'</span>) <span class="sc">+</span> .<span class="dv">5</span><span class="sc">*</span>(x3<span class="sc">==</span><span class="st">'c'</span>) <span class="sc">+</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>          .<span class="dv">5</span><span class="sc">*</span><span class="fu">rnorm</span>(n))</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># For reference fit appropriate OLS model</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">ols</span>(<span class="fu">log</span>(y) <span class="sc">~</span> x1 <span class="sc">+</span> <span class="fu">rcs</span>(x2, <span class="dv">5</span>) <span class="sc">+</span> x3), <span class="at">coefs=</span><span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<p><strong>Linear Regression Model</strong></p>
+
+<pre>ols(formula = log(y) ~ x1 + rcs(x2, 5) + x3)
+</pre>
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_517ilc5n033l5jz0z8ba = TinyTable.createTableFunctions("tinytable_517ilc5n033l5jz0z8ba");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '3', j: 3 } ], css_id: 'tinytable_css_uy6505htd8go1qysxzh6',}, 
+          { positions: [ { i: '2', j: 3 } ], css_id: 'tinytable_css_v4di8equ0m44jx3vz3x1',}, 
+          { positions: [ { i: '1', j: 3 } ], css_id: 'tinytable_css_c1j3uqzao7ivvklpjrmo',}, 
+          { positions: [ { i: '0', j: 3 } ], css_id: 'tinytable_css_7znd7fu8jm09tkpbe4mr',}, 
+          { positions: [ { i: '3', j: 1 }, { i: '3', j: 2 } ], css_id: 'tinytable_css_g6ivxr80sl1mlf4ncbrt',}, 
+          { positions: [ { i: '2', j: 1 }, { i: '2', j: 2 } ], css_id: 'tinytable_css_5m1rju35uc2ic3ihko37',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '1', j: 2 } ], css_id: 'tinytable_css_5w94zougdng72q1z4zcz',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 } ], css_id: 'tinytable_css_iv8r0ko3cn41l2ewd8nw',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_517ilc5n033l5jz0z8ba.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_517ilc5n033l5jz0z8ba td.tinytable_css_uy6505htd8go1qysxzh6, #tinytable_517ilc5n033l5jz0z8ba th.tinytable_css_uy6505htd8go1qysxzh6 {  position: relative; --border-bottom: 1; --border-left: 1; --border-right: 1; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left; background-color: #ededed }
+    #tinytable_517ilc5n033l5jz0z8ba td.tinytable_css_v4di8equ0m44jx3vz3x1, #tinytable_517ilc5n033l5jz0z8ba th.tinytable_css_v4di8equ0m44jx3vz3x1 {  position: relative; --border-bottom: 0; --border-left: 1; --border-right: 1; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_517ilc5n033l5jz0z8ba td.tinytable_css_c1j3uqzao7ivvklpjrmo, #tinytable_517ilc5n033l5jz0z8ba th.tinytable_css_c1j3uqzao7ivvklpjrmo {  position: relative; --border-bottom: 0; --border-left: 1; --border-right: 1; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left; background-color: #ededed }
+    #tinytable_517ilc5n033l5jz0z8ba td.tinytable_css_7znd7fu8jm09tkpbe4mr, #tinytable_517ilc5n033l5jz0z8ba th.tinytable_css_7znd7fu8jm09tkpbe4mr {  position: relative; --border-bottom: 1; --border-left: 1; --border-right: 1; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; font-weight: bold; text-align: center }
+    #tinytable_517ilc5n033l5jz0z8ba td.tinytable_css_g6ivxr80sl1mlf4ncbrt, #tinytable_517ilc5n033l5jz0z8ba th.tinytable_css_g6ivxr80sl1mlf4ncbrt {  position: relative; --border-bottom: 1; --border-left: 1; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left; background-color: #ededed }
+    #tinytable_517ilc5n033l5jz0z8ba td.tinytable_css_5m1rju35uc2ic3ihko37, #tinytable_517ilc5n033l5jz0z8ba th.tinytable_css_5m1rju35uc2ic3ihko37 {  position: relative; --border-bottom: 0; --border-left: 1; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_517ilc5n033l5jz0z8ba td.tinytable_css_5w94zougdng72q1z4zcz, #tinytable_517ilc5n033l5jz0z8ba th.tinytable_css_5w94zougdng72q1z4zcz {  position: relative; --border-bottom: 0; --border-left: 1; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left; background-color: #ededed }
+    #tinytable_517ilc5n033l5jz0z8ba td.tinytable_css_iv8r0ko3cn41l2ewd8nw, #tinytable_517ilc5n033l5jz0z8ba th.tinytable_css_iv8r0ko3cn41l2ewd8nw {  position: relative; --border-bottom: 1; --border-left: 1; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; font-weight: bold; text-align: center }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_517ilc5n033l5jz0z8ba" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1"></th>
+                <th scope="col" data-row="0" data-col="2">Model Likelihood<br>Ratio Test</th>
+                <th scope="col" data-row="0" data-col="3">Discrimination<br>Indexes</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1"><span style="display:flex;justify-content:space-between"><span>Obs</span><span>400</span></span></td>
+                  <td data-row="1" data-col="2"><span style="display:flex;justify-content:space-between"><span>LR χ<sup>2</sup></span><span>252.16</span></span></td>
+                  <td data-row="1" data-col="3"><span style="display:flex;justify-content:space-between"><span><i>R</i><sup>2</sup></span><span>0.468</span></span></td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1"><span style="display:flex;justify-content:space-between"><span>σ</span><span>0.4826</span></span></td>
+                  <td data-row="2" data-col="2"><span style="display:flex;justify-content:space-between"><span>d.f.</span><span>7</span></span></td>
+                  <td data-row="2" data-col="3"><span style="display:flex;justify-content:space-between"><span><i>R</i><sup><span style="font-size: 70%;">2</span></sup><sub style="position: relative; left: -.47em; bottom: -.4em;"><span style="font-size: 70%;">adj</span></sub></span><span>0.458</span></span></td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1"><span style="display:flex;justify-content:space-between"><span>d.f.</span><span>392</span></span></td>
+                  <td data-row="3" data-col="2"><span style="display:flex;justify-content:space-between"><span><i>P</i>(&gt;χ<sup>2</sup>)</span><span>0.0000</span></span></td>
+                  <td data-row="3" data-col="3"><span style="display:flex;justify-content:space-between"><span><i>g</i></span><span>0.510</span></span></td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+
+<p>Residuals</p>
+
+<pre>     Min       1Q   Median       3Q      Max 
+-1.35353 -0.31381 -0.02378  0.32048  1.50329 
+</pre>
+</div>
+</div>
+<ul>
+<li>Use 300 bootstrap resamples and run <code>avas</code></li>
+<li>Only first 20 bootstraps are plotted</li>
+<li>Had we restricted <code>x1</code> to be linear would have specified <code>I(x1)</code></li>
+</ul>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>f  <span class="ot">&lt;-</span> <span class="fu">areg.boot</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3, <span class="at">method=</span><span class="st">'avas'</span>, <span class="at">B=</span><span class="dv">300</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>f</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+avas Additive Regression Model
+
+areg.boot(x = y ~ x1 + x2 + x3, B = 300, method = "avas")
+
+
+Predictor Types
+
+   type
+x1    s
+x2    s
+x3    c
+
+y type: s
+
+n= 400   p= 3 
+
+Apparent R2 on transformed Y scale: 0.46
+Bootstrap validated R2            : 0.435
+
+Coefficients of standardized transformations:
+
+    Intercept            x1            x2            x3 
+-1.020252e-15  1.065165e+00  1.165510e+00  1.000794e+00 
+
+
+Residuals on transformed scale:
+
+          Min            1Q        Median            3Q           Max 
+-2.015488e+00 -5.182439e-01 -1.186501e-02  5.257140e-01  2.198222e+00 
+         Mean          S.D. 
+-2.997602e-17  7.328266e-01 </code></pre>
+</div>
+</div>
+<ul>
+<li>Coefficients hard to interpret as scale of transformations arbitrary</li>
+<li>Model was very slightly overfitted (<span class="math inline">\(R^2\)</span> dropped from 0.46 to 0.43), and <span class="math inline">\(R^2\)</span> are in agreement with the OLS model fit</li>
+<li>Plot the transformations, 0.95 confidence bands, and a sample of the bootstrap estimates</li>
+</ul>
+<div class="cell page-columns page-full" data-h="4" data-w="5" data-cap="`avas` transformations: overall estimates, pointwise $0.95$ confidence bands, and $20$ bootstrap estimates (red lines)." data-scap="Transformations estimated by `avas`">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">spar</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="at">ps=</span><span class="dv">10</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(f, <span class="at">boot=</span><span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-areg-trans" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-fig-scap="Transformations estimated by `avas`">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-areg-trans-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="areg_files/figure-html/fig-areg-trans-1.png" class="img-fluid figure-img" data-fig-scap="Transformations estimated by `avas`" width="672">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-areg-trans-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;16.1: <code>avas</code> transformations: overall estimates, pointwise <span class="math inline">\(0.95\)</span> confidence bands, and <span class="math inline">\(20\)</span> bootstrap estimates (red lines).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Nonparametrically estimated transformation of <code>x1</code> almost linear</li>
+<li>Transformation of <code>x2</code> is close to <span class="math inline">\(|x2 - 0.5|\)</span></li>
+<li>True transformation of <code>y</code> is <span class="math inline">\(\log(y)\)</span>, so variance stabilization and normality of residuals will be achieved if the estimated <code>y</code>-transformation is close to <span class="math inline">\(\log(y)\)</span>.</li>
+</ul>
+<div class="cell page-columns page-full" data-w="4" data-h="3" data-cap="Checking estimated against optimal transformation">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">spar</span>(<span class="at">bty=</span><span class="st">'l'</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ys <span class="ot">&lt;-</span> <span class="fu">seq</span>(.<span class="dv">8</span>, <span class="dv">20</span>, <span class="at">length=</span><span class="dv">200</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>ytrans <span class="ot">&lt;-</span> <span class="fu">Function</span>(f)<span class="sc">$</span>y   <span class="co"># Function outputs all transforms</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log</span>(ys), <span class="fu">ytrans</span>(ys), <span class="at">type=</span><span class="st">'l'</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(<span class="fu">ytrans</span>(ys) <span class="sc">~</span> <span class="fu">log</span>(ys)), <span class="at">col=</span><span class="fu">gray</span>(.<span class="dv">8</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-areg-ytrans" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-areg-ytrans-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="areg_files/figure-html/fig-areg-ytrans-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-areg-ytrans-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;16.2: Checking estimated against optimal transformation
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Approximate linearity = estimated transformation <span class="math inline">\(\log\)</span>-like.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></li>
+<li>Obtain approximate tests of effects of each predictor</li>
+<li><code>summary</code> sets all other predictors to reference values (e.g., medians)</li>
+<li>Compares predicted responses for a given level of the predictor <span class="math inline">\(X\)</span> with predictions for lowest setting of <span class="math inline">\(X\)</span></li>
+<li>Default predicted response for <code>summary</code> is the median; tests are for differences in medians</li>
+</ul>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;Beware that use of a data–derived transformation in an ordinary model, as this will result in standard errors that are too small. This is because model selection is not taken into account. <span class="citation" data-cites="far92cos">(<a href="#ref-far92cos" role="doc-biblioref">Faraway, 1992</a>)</span></p></div></div><div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(f, <span class="at">values=</span><span class="fu">list</span>(<span class="at">x1=</span><span class="fu">c</span>(.<span class="dv">2</span>, .<span class="dv">8</span>), <span class="at">x2=</span><span class="fu">c</span>(.<span class="dv">1</span>, .<span class="dv">5</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>summary.areg.boot(object = f, values = list(x1 = c(0.2, 0.8), 
+    x2 = c(0.1, 0.5)))
+
+Estimates based on 300 resamples
+
+
+
+Values to which predictors are set when estimating
+effects of other predictors:
+
+      y      x1      x2      x3 
+3.66995 0.50000 0.30000 2.00000 
+
+Estimates of differences of effects on Median Y (from first X
+value), and bootstrap standard errors of these differences.
+Settings for X are shown as row headings.
+
+
+Predictor: x1 
+     
+x     Differences       S.E Lower 0.95 Upper 0.95        Z     Pr(|Z|)
+  0.2     0.00000        NA         NA         NA       NA          NA
+  0.8     1.59603 0.5947651   0.430312   2.761748 2.683463 0.007286405
+
+
+Predictor: x2 
+     
+x     Differences      S.E Lower 0.95 Upper 0.95         Z    Pr(|Z|)
+  0.1    0.000000       NA         NA         NA        NA         NA
+  0.5   -2.139942 1.164492  -4.422304  0.1424209 -1.837661 0.06611238
+
+
+Predictor: x3 
+   
+x   Differences      S.E Lower 0.95 Upper 0.95         Z   Pr(|Z|)
+  a   0.0000000       NA         NA         NA        NA        NA
+  b   0.9653569 1.135403 -1.2599925   3.190706 0.8502327 0.3951957
+  c   1.5631296 1.289487 -0.9642189   4.090478 1.2122102 0.2254319</code></pre>
+</div>
+</div>
+<ul>
+<li>Example: when <code>x1</code> increases from 0.2 to 0.8 predict an increase in median <code>y</code> by 1.55 with bootstrap standard error 0.21, when all other predictors are held to constants<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></li>
+<li>Depict the fitted model by plotting predicted values</li>
+<li><code>x2</code> varies on <span class="math inline">\(x\)</span>-axis, 3 curves correspond to three values of <code>x3</code></li>
+<li><code>x1</code> set to 0.5</li>
+<li>Show estimates of both the median and the mean <code>y</code>.</li>
+</ul>
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;Setting them to other constants will yield different estimates of the <code>x1</code> effect, as the transformation of <code>y</code> is nonlinear.</p></div></div><div class="cell page-columns page-full" data-h="3.5" data-w="4.75" data-cap="Predicted median (left panel) and mean (right panel) `y` as a function of `x2` and `x3`.  True population curves are pointed." data-scap="Predicted `y` as a function of `x2` and `x3`">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ggplot2)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x2=</span><span class="fu">seq</span>(.<span class="dv">05</span>, .<span class="dv">95</span>, <span class="at">length=</span><span class="dv">200</span>),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">x3=</span><span class="fu">c</span>(<span class="st">'a'</span>,<span class="st">'b'</span>,<span class="st">'c'</span>), <span class="at">x1=</span>.<span class="dv">5</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">statistic=</span><span class="fu">c</span>(<span class="st">'median'</span>, <span class="st">'mean'</span>))</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>yhat <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">predict</span>(f, <span class="fu">subset</span>(newdat, statistic<span class="sc">==</span><span class="st">'median'</span>),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">statistic=</span><span class="st">'median'</span>),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>          <span class="fu">predict</span>(f, <span class="fu">subset</span>(newdat, statistic<span class="sc">==</span><span class="st">'mean'</span>),</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">statistic=</span><span class="st">'mean'</span>))</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>newdat <span class="ot">&lt;-</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">upData</span>(newdat,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">lp =</span> x1 <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span><span class="fu">abs</span>(x2 <span class="sc">-</span> .<span class="dv">5</span>) <span class="sc">+</span> .<span class="dv">3</span><span class="sc">*</span>(x3<span class="sc">==</span><span class="st">'b'</span>) <span class="sc">+</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>              .<span class="dv">5</span><span class="sc">*</span>(x3<span class="sc">==</span><span class="st">'c'</span>),</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">ytrue =</span> <span class="fu">ifelse</span>(statistic<span class="sc">==</span><span class="st">'median'</span>, <span class="fu">exp</span>(lp),</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>           <span class="fu">exp</span>(lp <span class="sc">+</span> <span class="fl">0.5</span><span class="sc">*</span>(<span class="fl">0.5</span><span class="sc">^</span><span class="dv">2</span>))), <span class="at">print=</span><span class="cn">FALSE</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(newdat, <span class="fu">aes</span>(<span class="at">x=</span>x2, <span class="at">y=</span>yhat, <span class="at">col=</span>x3)) <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>x2, <span class="at">y=</span>ytrue, <span class="at">col=</span>x3)) <span class="sc">+</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> statistic) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="fu">expression</span>(<span class="fu">hat</span>(y)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-areg-pred" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-fig-scap="Predicted `y` as a function of `x2` and `x3`">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-areg-pred-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="areg_files/figure-html/fig-areg-pred-1.png" class="img-fluid figure-img" data-fig-scap="Predicted `y` as a function of `x2` and `x3`" width="672">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-areg-pred-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;16.3: Predicted median (left panel) and mean (right panel) <code>y</code> as a function of <code>x2</code> and <code>x3</code>. True population curves are pointed.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+
+
+<!-- -->
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-aus05tut" class="csl-entry" role="listitem">
+Austin, P. C., Tu, J. V., Daly, P. A., &amp; Alter, D. A. (2005). Tutorial in <span>Biostatistics</span>:<span>The</span> use of quantile regression in health care research: A case study examining gender differences in the timeliness of thrombolytic therapy. <em>Stat Med</em>, <em>24</em>, 791–816.
+</div>
+<div id="ref-bre85est" class="csl-entry" role="listitem">
+Breiman, L., &amp; Friedman, J. H. (1985). Estimating optimal transformations for multiple regression and correlation (with discussion). <em>J Am Stat Assoc</em>, <em>80</em>, 580–619.
+</div>
+<div id="ref-dua83sme" class="csl-entry" role="listitem">
+Duan, N. (1983). Smearing estimate: <span>A</span> nonparametric retransformation method. <em>J Am Stat Assoc</em>, <em>78</em>, 605–610.
+</div>
+<div id="ref-far92cos" class="csl-entry" role="listitem">
+Faraway, J. J. (1992). The cost of data analysis. <em>J Comp Graph Stat</em>, <em>1</em>, 213–229.
+</div>
+<div id="ref-has90gen" class="csl-entry" role="listitem">
+Hastie, T., &amp; Tibshirani, R. (1990). <em>Generalized <span>Additive Models</span></em>. <span>Chapman and Hall</span>.
+</div>
+<div id="ref-koe78reg" class="csl-entry" role="listitem">
+Koenker, R., &amp; Bassett, G. (1978). Regression quantiles. <em>Econometrica</em>, <em>46</em>, 33–50.
+</div>
+<div id="ref-tib88est" class="csl-entry" role="listitem">
+Tibshirani, R. (1988). Estimating transformations for regression via additivity and variance stabilization. <em>J Am Stat Assoc</em>, <em>83</em>, 394–405.
+</div>
+</div>
+</section>
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/hbiostat\.org\/rms");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
+            }
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a aria-label='Regression Models for Continuous $Y$ and Case Study in Ordinal Regression' class='pagination-link' href='/rmsc/cony'>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Regression Models for Continuous <span class="math inline">\(Y\)</span> and Case Study in Ordinal Regression</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a aria-label='Introduction to Survival Analysis' class='pagination-link' href='/rmsc/surv'>
+        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Introduction to Survival Analysis</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r include=FALSE}</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(Hmisc)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">qproject=</span><span class="st">'rms'</span>, <span class="at">prType=</span><span class="st">'html'</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(qreport)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">getRs</span>(<span class="st">'qbookfun.r'</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">hookaddcap</span>()</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">set_alias</span>(<span class="at">w =</span> <span class="st">'fig.width'</span>, <span class="at">h =</span> <span class="st">'fig.height'</span>, <span class="at">cap =</span> <span class="st">'fig.cap'</span>, <span class="at">scap =</span><span class="st">'fig.scap'</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="fu"># Transform-Both-Sides Regression {#sec-areg}</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Background</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Challenges of traditional modeling (e.g. OLS) for estimation or inference</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="ss">   + </span>How should continuous predictors be transformed so as to get a</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>        good fit?</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="ss">   + </span>Is it better to transform the response variable?  How does one</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>        find a good transformation that simplifies the right-hand side</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>        of the equation?</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="ss">   + </span>What if $Y$ needs to be transformed non-monotonically (e.g.,</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>        $|Y - 100|$) before it will have any</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>        correlation with $X$?</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Challenges from need for normality and equal variance assumptions to draw accurate inferences</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="ss">   + </span>If for the untransformed original scale of the response $Y$</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>        the distribution of the residuals is not normal with constant</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>        spread, ordinary methods will not yield correct inferences</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>        (e.g., confidence intervals will not have the desired coverage</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>        probability and the intervals will need to be asymmetric).</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a><span class="ss">   + </span>Quite often there is a transformation of $Y$ that will yield</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>        well-behaving residuals.  How do you find this</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>        transformation?  Can you find a transformation for the $X$s at</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>        the same time?</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a><span class="ss">   + </span>All classical statistical inferential methods assume that the</span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>        full model was pre-specified, that is, the model was not</span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>        modified after examining the data.  How does one correct</span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>        confidence limits, for example, for data-based model and</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>        transformation selection?</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## Generalized Additive Models</span></span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>@has90gen developed GAMs for a variety of $Y$ distributions</span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Most GAMs are highly parametric, just relaxing assumptions about $X$</span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Nonparametrically estimate all $X$ transformations</span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>GAMs assume $Y$ is already well transformed</span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Excellent software for GAMs: <span class="in">`R`</span> packages <span class="in">`gam`</span>, <span class="in">`mgcv`</span>, <span class="in">`robustgam`</span>.</span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a><span class="fu">## Nonparametric Estimation of $Y$-Transformation</span></span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>There are a few approaches that also estimate the $Y$-transformation</span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a><span class="fu">### ACE</span></span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>@bre85est: _alternating conditional expectation_ (ACE)</span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Simultaneously transforms $X$ and $Y$ to maximize $R^2$</span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a>$$g(Y) = f_{1}(X_{1}) + f_{2}(X_{2}) + \ldots + f_{p}(X_{p})$$ {#eq-areg-aceavas}</span>
+<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Allows analyst to impose monotonicity restrictions on transformations</span>
+<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Categorical $X$ automatically numerically scored</span>
+<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>$Y$-transform allowed to be non-monotonic</span>
+<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a><span class="ss">   + </span>can create an identifiability problem</span>
+<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Estimates _maximal correlation_ between $X$ and $Y$</span>
+<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Basis for nonparametric estimation for continuous $X$: "super smoother" (R <span class="in">`supsmu`</span> function)</span>
+<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a><span class="fu">### AVAS</span></span>
+<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>@tib88est: _additivity and variance stabilization_ (AVAS)</span>
+<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Forces $g(Y)$ to be monotonic</span>
+<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Maximizes $R^2$ while forcing $g(Y)$ to have nearly constant variance of residuals</span>
+<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Model specification still @eq-areg-aceavas</span>
+<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a><span class="fu">### Overfitting</span></span>
+<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Estimating so many transformations, especially $g(Y)$ effectively adds many parameters to the model</span>
+<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Results in overfitting ($R^2$ inflation)</span>
+<span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Also no inferential measures provided</span>
+<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Use the bootstrap to correct apparent $R^2$ ($R^{2}_{app}$) for overfitting</span>
+<span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Estimates the optimism (bias) in $R^{2}_{app}$ and subtracts this optimism from</span>
+<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a>$R^{2}_{app}$ to get an optimism-corrected estimate</span>
+<span id="cb11-83"><a href="#cb11-83" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Also used to compute confidence limits for all estimated transformations</span>
+<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>And for predictor partial effects</span>
+<span id="cb11-85"><a href="#cb11-85" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Must repeat **all** supervised learning steps afresh for each resample</span>
+<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Limited testing has shown that the sample size needs to exceed 100 for</span>
+<span id="cb11-87"><a href="#cb11-87" aria-hidden="true" tabindex="-1"></a>ACE and AVAS to provide stable estimates</span>
+<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-89"><a href="#cb11-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-90"><a href="#cb11-90" aria-hidden="true" tabindex="-1"></a><span class="fu">## Obtaining Estimates on the Original Scale</span></span>
+<span id="cb11-91"><a href="#cb11-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-92"><a href="#cb11-92" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Traditional approach: take transformations of $Y$ before fitting</span>
+<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Logarithm is the most common transformation.^<span class="co">[</span><span class="ot">A disadvantage of transform-both-sides regression is this difficulty of interpreting estimates on the original scale.  Sometimes the use of a special generalized linear model can allow for a good fit without transforming $Y$.</span><span class="co">]</span></span>
+<span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>If residuals on $g(Y)$ have median 0, inverse transformed predicted values estimate median $Y | X$ (quantiles are transformation-preserving, unlike mean)</span>
+<span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>How to estimate general parameters such as means on original $Y$ scale?</span>
+<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Easy of residuals known to be Gaussian</span>
+<span id="cb11-97"><a href="#cb11-97" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>More general: @dua83sme "smearing estimator"</span>
+<span id="cb11-98"><a href="#cb11-98" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>One-sample case, log transformation</span>
+<span id="cb11-99"><a href="#cb11-99" aria-hidden="true" tabindex="-1"></a><span class="ss">   + </span>$\hat{\theta} = \sum_{i=1}^{n} \log(Y_{i})/n$,</span>
+<span id="cb11-100"><a href="#cb11-100" aria-hidden="true" tabindex="-1"></a><span class="ss">   + </span>residuals from this fitted value are given by $e_{i} = \log(Y_{i}) - \hat{\theta}$</span>
+<span id="cb11-101"><a href="#cb11-101" aria-hidden="true" tabindex="-1"></a><span class="ss">   + </span>smearing estimator of the population mean is $\sum \exp(\hat{\theta} + e_{i})/n$</span>
+<span id="cb11-102"><a href="#cb11-102" aria-hidden="true" tabindex="-1"></a><span class="ss">   + </span>is the ordinary sample mean $\overline{Y}$</span>
+<span id="cb11-103"><a href="#cb11-103" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Smearing estimator needed when doing regression</span>
+<span id="cb11-104"><a href="#cb11-104" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Regression run on $g(Y)$</span>
+<span id="cb11-105"><a href="#cb11-105" aria-hidden="true" tabindex="-1"></a><span class="ss">   + </span>estimated values $\hat{g}(Y_{i}) = X_{i}\hat{\beta}$</span>
+<span id="cb11-106"><a href="#cb11-106" aria-hidden="true" tabindex="-1"></a><span class="ss">   + </span>residuals on transformed scale $e_{i} = \hat{g}(Y_{i}) - X_{i}\hat{\beta}$</span>
+<span id="cb11-107"><a href="#cb11-107" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Without restricting ourselves to estimating the population mean,</span>
+<span id="cb11-108"><a href="#cb11-108" aria-hidden="true" tabindex="-1"></a>let $W(y_{1}, y_{2}, \ldots, y_{n})$ denote any function of a vector</span>
+<span id="cb11-109"><a href="#cb11-109" aria-hidden="true" tabindex="-1"></a>of untransformed response values</span>
+<span id="cb11-110"><a href="#cb11-110" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>To estimate the population mean in the homogeneous one-sample case, $W$ is the simple average of all of</span>
+<span id="cb11-111"><a href="#cb11-111" aria-hidden="true" tabindex="-1"></a>its arguments</span>
+<span id="cb11-112"><a href="#cb11-112" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>To estimate the population 0.25 quantile, $W$ is the</span>
+<span id="cb11-113"><a href="#cb11-113" aria-hidden="true" tabindex="-1"></a>sample 0.25 quantile of $y_{1}, \ldots, y_{n}$</span>
+<span id="cb11-114"><a href="#cb11-114" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Smearing estimator of the population parameter estimated by $W$ given $X$ is</span>
+<span id="cb11-115"><a href="#cb11-115" aria-hidden="true" tabindex="-1"></a>$W(g^{-1}(a + e_{1}), g^{-1}(a + e_{2}), \ldots, g^{-1}(a +</span>
+<span id="cb11-116"><a href="#cb11-116" aria-hidden="true" tabindex="-1"></a>e_{n}))$, where $g^{-1}$ is the inverse of the $g$ transformation and $a</span>
+<span id="cb11-117"><a href="#cb11-117" aria-hidden="true" tabindex="-1"></a>= X\hat{\beta}$</span>
+<span id="cb11-118"><a href="#cb11-118" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>With AVAS algorithm, monotonic transformation $g$ is</span>
+<span id="cb11-119"><a href="#cb11-119" aria-hidden="true" tabindex="-1"></a>estimated from the data</span>
+<span id="cb11-120"><a href="#cb11-120" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Predicted value of $\hat{g}(Y)$ from @eq-areg-aceavas</span>
+<span id="cb11-121"><a href="#cb11-121" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Extend the smearing estimator as $W(\hat{g}^{-1}(a + e_{1}), \ldots, \hat{g}^{-1}(a + e_{n}))$, where $a$ is the predicted transformed response given $X$</span>
+<span id="cb11-122"><a href="#cb11-122" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>$\hat{g}$ is nonparametric (i.e., a table look-up)</span>
+<span id="cb11-123"><a href="#cb11-123" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>R <span class="in">`areg.boot`</span> function computes $\hat{g}^{-1}$ using reverse linear interpolation</span>
+<span id="cb11-124"><a href="#cb11-124" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>If assume residuals from $\hat{g}(Y)$ assumed to be symmetrically distributed,</span>
+<span id="cb11-125"><a href="#cb11-125" aria-hidden="true" tabindex="-1"></a>their population median is zero</span>
+<span id="cb11-126"><a href="#cb11-126" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Then can estimate the median on the untransformed scale by computing $\hat{g}^{-1}(X\hat{\beta})$ ^<span class="co">[</span><span class="ot">To be safe, `areg.boot` adds the median residual to $X\hat{\beta}$ when estimating the population median (the median residual can be ignored by specifying `statistic='fitted'` to functions that operate on objects created by `areg.boot`)</span><span class="co">]</span>.</span>
+<span id="cb11-127"><a href="#cb11-127" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>For estimating quantiles of $Y$, quantile regression <span class="co">[</span><span class="ot">@koe78reg</span><span class="co">]</span> is more direct; see @aus05tut for a case study</span>
+<span id="cb11-128"><a href="#cb11-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-129"><a href="#cb11-129" aria-hidden="true" tabindex="-1"></a><span class="fu">## `R` Functions</span></span>
+<span id="cb11-130"><a href="#cb11-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-131"><a href="#cb11-131" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`R`</span> <span class="in">`acepack`</span> package: <span class="in">`ace`</span> and <span class="in">`avas`</span> functions</span>
+<span id="cb11-132"><a href="#cb11-132" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`Hmisc`</span> <span class="in">`areg.boot`</span>: R modeling language notation and also implements a parametric spline version; estimates partial effects on $g(Y)$ and $Y$ varying one of the $X$s over two values</span>
+<span id="cb11-133"><a href="#cb11-133" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Resamples every part of modeling process, as with @far92cos</span>
+<span id="cb11-134"><a href="#cb11-134" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`monotone`</span> function restricts a variable's</span>
+<span id="cb11-135"><a href="#cb11-135" aria-hidden="true" tabindex="-1"></a>transformation to be monotonic</span>
+<span id="cb11-136"><a href="#cb11-136" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`I`</span> function restricts it to be linear</span>
+<span id="cb11-137"><a href="#cb11-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-138"><a href="#cb11-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-139"><a href="#cb11-139" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=FALSE}</span></span>
+<span id="cb11-140"><a href="#cb11-140" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">areg.boot</span>(Y <span class="sc">~</span> <span class="fu">monotone</span>(age) <span class="sc">+</span></span>
+<span id="cb11-141"><a href="#cb11-141" aria-hidden="true" tabindex="-1"></a>               sex <span class="sc">+</span> weight <span class="sc">+</span> <span class="fu">I</span>(blood.pressure))</span>
+<span id="cb11-142"><a href="#cb11-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-143"><a href="#cb11-143" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(f)       <span class="co">#show transformations, CLs</span></span>
+<span id="cb11-144"><a href="#cb11-144" aria-hidden="true" tabindex="-1"></a><span class="fu">Function</span>(f)   <span class="co">#generate S functions</span></span>
+<span id="cb11-145"><a href="#cb11-145" aria-hidden="true" tabindex="-1"></a>              <span class="co">#defining transformations</span></span>
+<span id="cb11-146"><a href="#cb11-146" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(f)    <span class="co">#get predictions, smearing estimates</span></span>
+<span id="cb11-147"><a href="#cb11-147" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(f)    <span class="co">#compute CLs on effects of each X</span></span>
+<span id="cb11-148"><a href="#cb11-148" aria-hidden="true" tabindex="-1"></a><span class="fu">smearingEst</span>() <span class="co">#generalized smearing estimators</span></span>
+<span id="cb11-149"><a href="#cb11-149" aria-hidden="true" tabindex="-1"></a><span class="fu">Mean</span>(f)       <span class="co">#derive S function to</span></span>
+<span id="cb11-150"><a href="#cb11-150" aria-hidden="true" tabindex="-1"></a>              <span class="co">#compute smearing mean Y</span></span>
+<span id="cb11-151"><a href="#cb11-151" aria-hidden="true" tabindex="-1"></a><span class="fu">Quantile</span>(f)   <span class="co">#derive function to compute smearing quantile</span></span>
+<span id="cb11-152"><a href="#cb11-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-153"><a href="#cb11-153" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-154"><a href="#cb11-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-155"><a href="#cb11-155" aria-hidden="true" tabindex="-1"></a>The methods are best described in a case study.</span>
+<span id="cb11-156"><a href="#cb11-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-157"><a href="#cb11-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-158"><a href="#cb11-158" aria-hidden="true" tabindex="-1"></a><span class="fu">## Case Study {#sec-areg-case}</span></span>
+<span id="cb11-159"><a href="#cb11-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-160"><a href="#cb11-160" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Simulated data where conditional distribution of $Y$ is</span>
+<span id="cb11-161"><a href="#cb11-161" aria-hidden="true" tabindex="-1"></a>log-normal given $X$, but where transform-both-sides regression</span>
+<span id="cb11-162"><a href="#cb11-162" aria-hidden="true" tabindex="-1"></a>methods use un-logged $Y$</span>
+<span id="cb11-163"><a href="#cb11-163" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Predictor $X_1$ is linearly related to log $Y$</span>
+<span id="cb11-164"><a href="#cb11-164" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>$X_2$ is related by $|X_{2} - \frac{1}{2}|$</span>
+<span id="cb11-165"><a href="#cb11-165" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Categorical $X_3$ has reference group $a$ effect of</span>
+<span id="cb11-166"><a href="#cb11-166" aria-hidden="true" tabindex="-1"></a>zero, group $b$ effect of 0.3, and group $c$ effect of 0.5</span>
+<span id="cb11-167"><a href="#cb11-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-168"><a href="#cb11-168" aria-hidden="true" tabindex="-1"></a><span class="in">```{r sim}</span></span>
+<span id="cb11-169"><a href="#cb11-169" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(rms)</span>
+<span id="cb11-170"><a href="#cb11-170" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
+<span id="cb11-171"><a href="#cb11-171" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">400</span></span>
+<span id="cb11-172"><a href="#cb11-172" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">runif</span>(n)</span>
+<span id="cb11-173"><a href="#cb11-173" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">runif</span>(n)</span>
+<span id="cb11-174"><a href="#cb11-174" aria-hidden="true" tabindex="-1"></a>x3 <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">'a'</span>,<span class="st">'b'</span>,<span class="st">'c'</span>), n, <span class="cn">TRUE</span>))</span>
+<span id="cb11-175"><a href="#cb11-175" aria-hidden="true" tabindex="-1"></a>y  <span class="ot">&lt;-</span> <span class="fu">exp</span>(x1 <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span><span class="fu">abs</span>(x2 <span class="sc">-</span> .<span class="dv">5</span>) <span class="sc">+</span> .<span class="dv">3</span><span class="sc">*</span>(x3<span class="sc">==</span><span class="st">'b'</span>) <span class="sc">+</span> .<span class="dv">5</span><span class="sc">*</span>(x3<span class="sc">==</span><span class="st">'c'</span>) <span class="sc">+</span></span>
+<span id="cb11-176"><a href="#cb11-176" aria-hidden="true" tabindex="-1"></a>          .<span class="dv">5</span><span class="sc">*</span><span class="fu">rnorm</span>(n))</span>
+<span id="cb11-177"><a href="#cb11-177" aria-hidden="true" tabindex="-1"></a><span class="co"># For reference fit appropriate OLS model</span></span>
+<span id="cb11-178"><a href="#cb11-178" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">ols</span>(<span class="fu">log</span>(y) <span class="sc">~</span> x1 <span class="sc">+</span> <span class="fu">rcs</span>(x2, <span class="dv">5</span>) <span class="sc">+</span> x3), <span class="at">coefs=</span><span class="cn">FALSE</span>)</span>
+<span id="cb11-179"><a href="#cb11-179" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-180"><a href="#cb11-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-181"><a href="#cb11-181" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Use 300 bootstrap resamples and run <span class="in">`avas`</span></span>
+<span id="cb11-182"><a href="#cb11-182" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Only first 20 bootstraps are plotted</span>
+<span id="cb11-183"><a href="#cb11-183" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Had we restricted <span class="in">`x1`</span> to be linear would have specified <span class="in">`I(x1)`</span></span>
+<span id="cb11-184"><a href="#cb11-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-185"><a href="#cb11-185" aria-hidden="true" tabindex="-1"></a><span class="in">```{r aregboot,results='hide'}</span></span>
+<span id="cb11-186"><a href="#cb11-186" aria-hidden="true" tabindex="-1"></a>f  <span class="ot">&lt;-</span> <span class="fu">areg.boot</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3, <span class="at">method=</span><span class="st">'avas'</span>, <span class="at">B=</span><span class="dv">300</span>)</span>
+<span id="cb11-187"><a href="#cb11-187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-188"><a href="#cb11-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-191"><a href="#cb11-191" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb11-192"><a href="#cb11-192" aria-hidden="true" tabindex="-1"></a>f</span>
+<span id="cb11-193"><a href="#cb11-193" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-194"><a href="#cb11-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-195"><a href="#cb11-195" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Coefficients hard to interpret as scale of transformations arbitrary</span>
+<span id="cb11-196"><a href="#cb11-196" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Model was very slightly overfitted ($R^2$ dropped from</span>
+<span id="cb11-197"><a href="#cb11-197" aria-hidden="true" tabindex="-1"></a><span class="in">`r round(f$rsquared.app,2)`</span> to <span class="in">`r round(f$rsquared.val,2)`</span>),</span>
+<span id="cb11-198"><a href="#cb11-198" aria-hidden="true" tabindex="-1"></a>and $R^2$ are in agreement with the OLS model fit</span>
+<span id="cb11-199"><a href="#cb11-199" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Plot the transformations, 0.95 confidence bands, and a sample</span>
+<span id="cb11-200"><a href="#cb11-200" aria-hidden="true" tabindex="-1"></a>of the bootstrap estimates</span>
+<span id="cb11-201"><a href="#cb11-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-202"><a href="#cb11-202" aria-hidden="true" tabindex="-1"></a>``<span class="in">`{r trans,h=4,w=5,cap='`</span>avas<span class="in">` transformations: overall estimates, pointwise $0.95$ confidence bands, and $20$ bootstrap estimates (red lines).',scap='Transformations estimated by `</span>avas`'}</span>
+<span id="cb11-203"><a href="#cb11-203" aria-hidden="true" tabindex="-1"></a>#| label: fig-areg-trans</span>
+<span id="cb11-204"><a href="#cb11-204" aria-hidden="true" tabindex="-1"></a>spar(mfrow=c(2,2), ps=10)</span>
+<span id="cb11-205"><a href="#cb11-205" aria-hidden="true" tabindex="-1"></a>plot(f, boot=20)</span>
+<span id="cb11-206"><a href="#cb11-206" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-207"><a href="#cb11-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-208"><a href="#cb11-208" aria-hidden="true" tabindex="-1"></a><span class="in">* Nonparametrically estimated transformation of `x1` almost linear</span></span>
+<span id="cb11-209"><a href="#cb11-209" aria-hidden="true" tabindex="-1"></a><span class="in">* Transformation of `x2` is close to $|x2 - 0.5|$</span></span>
+<span id="cb11-210"><a href="#cb11-210" aria-hidden="true" tabindex="-1"></a><span class="in">* True transformation of `y` is $\log(y)$, so variance</span></span>
+<span id="cb11-211"><a href="#cb11-211" aria-hidden="true" tabindex="-1"></a><span class="in">stabilization and normality of residuals will be achieved if the</span></span>
+<span id="cb11-212"><a href="#cb11-212" aria-hidden="true" tabindex="-1"></a><span class="in">estimated `y`-transformation is close to $\log(y)$. </span></span>
+<span id="cb11-213"><a href="#cb11-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-214"><a href="#cb11-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-215"><a href="#cb11-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-216"><a href="#cb11-216" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ytrans,w=4,h=3,cap='Checking estimated against optimal transformation'}</span></span>
+<span id="cb11-217"><a href="#cb11-217" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-areg-ytrans</span></span>
+<span id="cb11-218"><a href="#cb11-218" aria-hidden="true" tabindex="-1"></a><span class="in">spar(bty='l')</span></span>
+<span id="cb11-219"><a href="#cb11-219" aria-hidden="true" tabindex="-1"></a><span class="in">ys &lt;- seq(.8, 20, length=200)</span></span>
+<span id="cb11-220"><a href="#cb11-220" aria-hidden="true" tabindex="-1"></a><span class="in">ytrans &lt;- Function(f)$y   # Function outputs all transforms</span></span>
+<span id="cb11-221"><a href="#cb11-221" aria-hidden="true" tabindex="-1"></a><span class="in">plot(log(ys), ytrans(ys), type='l')</span></span>
+<span id="cb11-222"><a href="#cb11-222" aria-hidden="true" tabindex="-1"></a><span class="in">abline(lm(ytrans(ys) ~ log(ys)), col=gray(.8))</span></span>
+<span id="cb11-223"><a href="#cb11-223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-224"><a href="#cb11-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-225"><a href="#cb11-225" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Approximate linearity = estimated transformation $\log$-like.^<span class="co">[</span><span class="ot">Beware that use of a data--derived transformation in an ordinary model, as this will result in standard errors that are too small.  This is because model selection is not taken into account. [@far92cos]</span><span class="co">]</span></span>
+<span id="cb11-226"><a href="#cb11-226" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Obtain approximate tests of effects of each predictor</span>
+<span id="cb11-227"><a href="#cb11-227" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`summary`</span> sets all other predictors to reference values (e.g., medians)</span>
+<span id="cb11-228"><a href="#cb11-228" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Compares predicted responses for a given level of the predictor $X$ with predictions for lowest setting of $X$</span>
+<span id="cb11-229"><a href="#cb11-229" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Default predicted response for <span class="in">`summary`</span> is the median; tests are for differences in medians</span>
+<span id="cb11-230"><a href="#cb11-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-231"><a href="#cb11-231" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb11-232"><a href="#cb11-232" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(f, <span class="at">values=</span><span class="fu">list</span>(<span class="at">x1=</span><span class="fu">c</span>(.<span class="dv">2</span>, .<span class="dv">8</span>), <span class="at">x2=</span><span class="fu">c</span>(.<span class="dv">1</span>, .<span class="dv">5</span>)))</span>
+<span id="cb11-233"><a href="#cb11-233" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-234"><a href="#cb11-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-235"><a href="#cb11-235" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Example:  when <span class="in">`x1`</span> increases from 0.2 to 0.8 predict an</span>
+<span id="cb11-236"><a href="#cb11-236" aria-hidden="true" tabindex="-1"></a>increase in median <span class="in">`y`</span> by 1.55 with bootstrap standard error 0.21, when all</span>
+<span id="cb11-237"><a href="#cb11-237" aria-hidden="true" tabindex="-1"></a>other predictors are held to constants^<span class="co">[</span><span class="ot">Setting them to other constants will yield different estimates of the `x1` effect, as the transformation of `y` is nonlinear.</span><span class="co">]</span></span>
+<span id="cb11-238"><a href="#cb11-238" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Depict the fitted model by plotting predicted values</span>
+<span id="cb11-239"><a href="#cb11-239" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`x2`</span> varies on $x$-axis, 3 curves correspond to three values of <span class="in">`x3`</span></span>
+<span id="cb11-240"><a href="#cb11-240" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`x1`</span> set to 0.5</span>
+<span id="cb11-241"><a href="#cb11-241" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Show estimates of both the median and the mean <span class="in">`y`</span>.</span>
+<span id="cb11-242"><a href="#cb11-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-243"><a href="#cb11-243" aria-hidden="true" tabindex="-1"></a>``<span class="in">`{r pred,h=3.5,w=4.75,cap='Predicted median (left panel) and mean (right panel) `</span>y<span class="in">` as a function of `</span>x2<span class="in">` and `</span>x3<span class="in">`.  True population curves are pointed.',scap='Predicted `</span>y<span class="in">` as a function of `</span>x2<span class="in">` and `</span>x3`'}</span>
+<span id="cb11-244"><a href="#cb11-244" aria-hidden="true" tabindex="-1"></a>#| label: fig-areg-pred</span>
+<span id="cb11-245"><a href="#cb11-245" aria-hidden="true" tabindex="-1"></a>require(ggplot2)</span>
+<span id="cb11-246"><a href="#cb11-246" aria-hidden="true" tabindex="-1"></a>newdat &lt;- expand.grid(x2=seq(.05, .95, length=200),</span>
+<span id="cb11-247"><a href="#cb11-247" aria-hidden="true" tabindex="-1"></a>                      x3=c('a','b','c'), x1=.5,</span>
+<span id="cb11-248"><a href="#cb11-248" aria-hidden="true" tabindex="-1"></a>                      statistic=c('median', 'mean'))</span>
+<span id="cb11-249"><a href="#cb11-249" aria-hidden="true" tabindex="-1"></a>yhat &lt;- c(predict(f, subset(newdat, statistic=='median'),</span>
+<span id="cb11-250"><a href="#cb11-250" aria-hidden="true" tabindex="-1"></a>                  statistic='median'),</span>
+<span id="cb11-251"><a href="#cb11-251" aria-hidden="true" tabindex="-1"></a>          predict(f, subset(newdat, statistic=='mean'),</span>
+<span id="cb11-252"><a href="#cb11-252" aria-hidden="true" tabindex="-1"></a>                  statistic='mean'))</span>
+<span id="cb11-253"><a href="#cb11-253" aria-hidden="true" tabindex="-1"></a>newdat &lt;-</span>
+<span id="cb11-254"><a href="#cb11-254" aria-hidden="true" tabindex="-1"></a>  upData(newdat,</span>
+<span id="cb11-255"><a href="#cb11-255" aria-hidden="true" tabindex="-1"></a>         lp = x1 + 2*abs(x2 - .5) + .3*(x3=='b') +</span>
+<span id="cb11-256"><a href="#cb11-256" aria-hidden="true" tabindex="-1"></a>              .5*(x3=='c'),</span>
+<span id="cb11-257"><a href="#cb11-257" aria-hidden="true" tabindex="-1"></a>         ytrue = ifelse(statistic=='median', exp(lp),</span>
+<span id="cb11-258"><a href="#cb11-258" aria-hidden="true" tabindex="-1"></a>           exp(lp + 0.5*(0.5^2))), print=FALSE)</span>
+<span id="cb11-259"><a href="#cb11-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-260"><a href="#cb11-260" aria-hidden="true" tabindex="-1"></a>ggplot(newdat, aes(x=x2, y=yhat, col=x3)) + geom_line() +</span>
+<span id="cb11-261"><a href="#cb11-261" aria-hidden="true" tabindex="-1"></a>  geom_line(aes(x=x2, y=ytrue, col=x3)) +</span>
+<span id="cb11-262"><a href="#cb11-262" aria-hidden="true" tabindex="-1"></a>  facet_wrap(~ statistic) + ylab(expression(hat(y)))</span>
+<span id="cb11-263"><a href="#cb11-263" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-264"><a href="#cb11-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-265"><a href="#cb11-265" aria-hidden="true" tabindex="-1"></a><span class="in">```{r echo=FALSE}</span></span>
+<span id="cb11-266"><a href="#cb11-266" aria-hidden="true" tabindex="-1"></a><span class="in">saveCap('16')</span></span>
+<span id="cb11-267"><a href="#cb11-267" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ Copyright 2026, Frank E Harrell Jr
+  </li>  
+</ul>
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="http://creativecommons.org/licenses/by-nc-sa/4.0">
+<p>License</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
